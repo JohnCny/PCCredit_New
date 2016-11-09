@@ -15,10 +15,10 @@ allprojects {
     buildscript {
         repositories {
             
-//            maven {
-//                name "nexus"
-//                url "http://192.168.1.116:8081/repository/qkjr/"
-//            }
+            maven {
+                name "nexus"
+                url "http://192.168.1.116:8081/repository/qkjr/"
+            }
 
             maven {
                 url "https://plugins.gradle.org/m2/"
@@ -38,10 +38,10 @@ allprojects {
         flatDir {
             dirs "$rootProject.projectDir/libs"
         }
-//        maven {
-//            name "nexus"
-//            url "http://192.168.1.116:8081/repository/qkjr/"
-//        }
+        maven {
+            name "nexus"
+            url "http://192.168.1.116:8081/repository/qkjr/"
+        }
         jcenter()
         mavenCentral()
     }
