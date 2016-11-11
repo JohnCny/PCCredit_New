@@ -14,15 +14,18 @@ allprojects {
     //定义repositories
     buildscript {
         repositories {
-            
-            maven {
-                name "nexus"
-                url "http://192.168.1.116:8081/repository/qkjr/"
+            maven{
+                url "http://maven.aliyun.com/nexus/content/groups/public/"
             }
 
             maven {
                 url "https://plugins.gradle.org/m2/"
             }
+
+//            maven {
+//                name "nexus"
+//                url "http://192.168.1.116:8081/repository/qkjr/"
+//            }
 
             mavenCentral()
             jcenter()
@@ -38,9 +41,13 @@ allprojects {
         flatDir {
             dirs "$rootProject.projectDir/libs"
         }
-        maven {
-            name "nexus"
-            url "http://192.168.1.116:8081/repository/qkjr/"
+//        maven {
+//            name "nexus"
+//            url "http://192.168.1.116:8081/repository/qkjr/"
+//        }
+
+        maven{
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
         }
         jcenter()
         mavenCentral()
@@ -49,8 +56,8 @@ allprojects {
 
 //子project属性
 subprojects {
-    apply plugin: 'checkstyle'
-    apply plugin: 'findbugs'
+//    apply plugin: 'checkstyle'
+//    apply plugin: 'findbugs'
 
     //引入依赖文件路径
     apply from: "$rootDir/gradle/dependency.gradle"
@@ -139,6 +146,13 @@ subprojects {
                 libraries."mybatis",
                 libraries."mybatis-spring",
                 libraries."mysql-connector-java",
+
+                //通用mapper
+                libraries."mysql-connector",
+                libraries."tk.mybatis",
+
+                //分页插件
+                libraries."pagehelper",
         )
         testCompile (
                 libraries."junit",

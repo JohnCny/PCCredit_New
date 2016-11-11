@@ -68,6 +68,14 @@ ext.libraries = [
         "mybatis-spring":"org.mybatis:mybatis-spring:1.2.4",
         "mysql-connector-java":"mysql:mysql-connector-java:5.1.38",
 
+        //通用mapper
+
+        "mysql-connector":"mysql:mysql-connector-java:5.1.30",
+        "tk.mybatis":"tk.mybatis:mapper:3.3.9",
+
+        //分页插件
+        "pagehelper":"com.github.pagehelper:pagehelper:4.1.6",
+
         //单元测试
         "junit":"junit:junit:4.12",
         "spring-test":"org.springframework:spring-test:$spring_version",
