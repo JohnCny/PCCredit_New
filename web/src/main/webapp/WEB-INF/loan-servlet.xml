@@ -67,7 +67,7 @@
         <property name="contentType" value="text/html; charset=UTF-8"/>
     </bean>
 
-    <!--<mvc:view-controller path="/" view-name="/api/user/nologin"/>-->
+    <!--<mvc:view-BasicController path="/" view-name="/api/user/nologin"/>-->
 
     <!--设置视图解析器 采用freemarker-->
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
