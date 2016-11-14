@@ -28,6 +28,17 @@
 
     <!-- 开启shiro spring AOP权限注解支持 -->
     <aop:config proxy-target-class="true"></aop:config>
+    <!-- Standard xml based mvc config-->
+    <mvc:annotation-driven/>
+
+    <!-- Enables swgger ui-->
+    <mvc:resources mapping="*.html" location="/"/>
+    <mvc:resources mapping="/**" location="/"/>
+
+    <!-- Include a swagger configuration-->
+    <bean name="applicationSwaggerConfig" class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
+    <!-- <bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration" />
+   <bean class="springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration" />-->
 
     <!--&lt;!&ndash;配置支持freemarkewr标签支持&ndash;&gt;-->
     <!--<bean id="freemarkerConfig"-->

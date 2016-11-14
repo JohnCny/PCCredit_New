@@ -1,6 +1,7 @@
 package com.cardpay.basic.base.model;
 
-import javax.persistence.Transient;
+import com.cardpay.basic.util.DozerUtil;
+
 import java.io.Serializable;
 
 /**
@@ -20,4 +21,6 @@ public abstract class GenericEntity<PK extends Serializable> implements Serializ
      * @return 主键
      */
     public abstract PK getPK();
+
+
 }

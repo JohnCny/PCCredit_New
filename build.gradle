@@ -153,6 +153,18 @@ subprojects {
 
                 //分页插件
                 libraries."pagehelper",
+
+                //Dozer-spring
+                libraries."dozer",
+                libraries."dozer-spring",
+
+                //spring-fox
+                libraries."springfox-swagger2",
+                libraries."springfox-swagger-ui",
+                libraries."springfox-data-rest",
+                libraries."springfox-bean-validators",
+
+
         )
         testCompile (
                 libraries."junit",

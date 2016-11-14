@@ -21,6 +21,10 @@
         </property>
     </bean>
 
+
+
+
+
     <!--&lt;!&ndash;yml第三方propertities读取&ndash;&gt;-->
     <!--<context:annotation-config/>-->
     <!--<bean id="yamlProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">-->
