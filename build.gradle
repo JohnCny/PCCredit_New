@@ -156,7 +156,7 @@ subprojects {
         )
         testCompile (
                 libraries."junit",
-                libraries."spring-test",
+                libraries."spring-mgt",
                 libraries."mockito-core",
                 libraries."powermock-module-junit4",
                 libraries."powermock-api-mockito",

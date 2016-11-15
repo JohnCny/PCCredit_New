@@ -65,14 +65,14 @@
     <!-- 设置servlet 编码结束 -->
 
     <!-- REST涉及的过滤器 -->
-    <filter>
+<!--    <filter>
         <filter-name>HttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>HttpMethodFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <!--获取put表单中的参数值-->
     <filter>
