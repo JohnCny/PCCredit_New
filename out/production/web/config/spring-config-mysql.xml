@@ -45,16 +45,9 @@
     -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!--<property name="configLocation" value="classpath:conf/mybatis-config.xml"/>-->
-        <property name="typeAliasesPackage" value="com.cardpay"/>
-        <!-- sql映射文件路径 -->
-        <!--<property name="mapperLocations" value="classpath:**/**/*.xml"/>-->
-
         <!--Map的拦截器配置-->
         <property name="plugins">
             <array>
-                <bean class="com.cardpay.common.intercepts.SqlTimeInterceptor"/>
-                <bean class="com.cardpay.common.intercepts.MapInterceptor"/>
                 <bean class="com.github.pagehelper.PageHelper">
                     <property name="properties">
                         <value>
@@ -68,12 +61,19 @@
         </property>
     </bean>
 
-    <!-- 扫描mapper, 会有问题-->
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!-- 这里如果全部扫描的话, 会有问题-->
-        <property name="basePackage" value="com.cardpay"/>
-        <!--扫描的mapper必须继承接口-->
-        <property name="markerInterface" value="com.cardpay.common.base.dao.IBaseDao"/>
+        <property name="basePackage" value="com.loan" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.loan"/>
+        <property name="properties">
+            <value>
+                mappers=tk.mybatis.mapper.common.Mapper
+            </value>
+        </property>
     </bean>
 
     <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->

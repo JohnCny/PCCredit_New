@@ -4,6 +4,8 @@ import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -19,8 +21,8 @@ public class BaseController<T> extends BasicController
     /*
         选择查询名称
      */
-    String SELECT = "selectlists";
-    String SELECT_BY_PRIMARYKEY = "selectPk";
+    String SELECT = "selectLists";
+    String SELECT_BY_PRIMARY_KEY = "selectPk";
     String SELECT_ALL = "selectAll";
     String SELECT_ONE = "selectOne";
     /*
@@ -72,7 +74,7 @@ public class BaseController<T> extends BasicController
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName( viewName);
         Map<String,Object> map = new HashMap<>();
-        map.put(SELECT_BY_PRIMARYKEY,baseService.selectByPrimaryKey(record));
+        map.put(SELECT_BY_PRIMARY_KEY,baseService.selectByPrimaryKey(record));
         modelAndView.addObject(map);
         return modelAndView;
     }
@@ -106,6 +108,7 @@ public class BaseController<T> extends BasicController
      * 查询全部结果，select(null)方法能达到同样的效果
      * @return resultTo，包含查找结果集合
      */
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ResultTo selectAll(){
         ResultTo result = new ResultTo();
         result.setData(baseService.selectAll());
