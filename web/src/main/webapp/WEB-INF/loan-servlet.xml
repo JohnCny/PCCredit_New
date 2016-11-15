@@ -25,18 +25,21 @@
     <!--配置静态资源访问路径 -->
     <mvc:resources location="/static/" mapping="/static/**"/>
     <mvc:resources location="/upload/file/" mapping="/file/**" cache-period="604800"/>
-    <!--配置spring-fox访问路径 -->
-    <mvc:resources mapping="/dist/**" location="/WEB-INF/dist/"/>
 
     <!-- 开启shiro spring AOP权限注解支持 -->
     <aop:config proxy-target-class="true"></aop:config>
     <!-- Standard xml based mvc config-->
     <mvc:annotation-driven/>
 
-    <!-- Include a swagger configuration-->
+
+    <!--  swgger ui-->
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
+    <!--  spring-fox 配置-->
     <bean name="applicationSwaggerConfig" class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
-    <!-- <bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration" />
-   <bean class="springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration" />-->
+    <!--<bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration" />
+    <bean class="springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration" />-->
 
     <!--&lt;!&ndash;配置支持freemarkewr标签支持&ndash;&gt;-->
     <!--<bean id="freemarkerConfig"-->

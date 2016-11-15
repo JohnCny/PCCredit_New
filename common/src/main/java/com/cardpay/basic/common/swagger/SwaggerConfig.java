@@ -23,11 +23,11 @@ public class SwaggerConfig {
     public Docket customDocket(){
         Docket docket = new Docket(DocumentationType.SWAGGER_2);
         ApiInfo apiInfo = new ApiInfo(
-                "restfule API",
+                "快信 API",
                 "API Document管理",
-                "V3.8.0",
-                "www.baidu.com",
-                "我的邮箱",
+                "V1.1.0",
+                "http://www.cardpay-sh.com/",
+                "乾康西安研发中心",
                 "",
                 "");
         docket.apiInfo(apiInfo);
