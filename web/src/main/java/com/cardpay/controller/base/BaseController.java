@@ -3,6 +3,7 @@ package com.cardpay.controller.base;
 import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -108,7 +109,9 @@ public class BaseController<T> extends BasicController
      * 查询全部结果，select(null)方法能达到同样的效果
      * @return resultTo，包含查找结果集合
      */
+
     @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ApiOperation("查询全部结果，select(null)方法能达到同样的效果")
     public ResultTo selectAll(){
         ResultTo result = new ResultTo();
         result.setData(baseService.selectAll());
