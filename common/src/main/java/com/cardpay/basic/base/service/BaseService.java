@@ -4,6 +4,7 @@ import com.cardpay.basic.util.LogUtil;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;

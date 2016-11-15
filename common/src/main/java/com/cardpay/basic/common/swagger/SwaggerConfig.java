@@ -14,9 +14,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Created by chenkai on 2016/11/14.
  */
 @Configuration
-@EnableWebMvc
-@EnableSwagger2
-@ComponentScan(basePackages ={"com.cardpay"})//指定扫描路径
+@EnableSwagger2 //启动swagger注解
+@EnableWebMvc //非springboot框架需要引入此注解
+@ComponentScan(basePackages ={"com.cardpay"})//指定扫描controller路径
 public class SwaggerConfig {
 
     @Bean
@@ -33,7 +33,6 @@ public class SwaggerConfig {
         docket.apiInfo(apiInfo);
         return docket;
     }
-
-    }
+}
 
 

@@ -4,6 +4,7 @@ import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;

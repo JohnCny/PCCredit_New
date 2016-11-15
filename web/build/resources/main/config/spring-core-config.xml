@@ -8,7 +8,7 @@
 	    http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <!--扫描注解-->
-    <context:component-scan base-package="com.cardpay.core,com.cardpay.basic">
+    <context:component-scan base-package="com.cardpay.basic">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
@@ -20,9 +20,6 @@
             </list>
         </property>
     </bean>
-
-
-
 
 
     <!--&lt;!&ndash;yml第三方propertities读取&ndash;&gt;-->
@@ -104,5 +101,5 @@
     <!--<import resource="classpath:config/spring-config-redis.xml"/>-->
     <!--<import resource="classpath:config/spring-config-rabbitmq.xml"/>-->
     <!--&lt;!&ndash;<import resource="classpath:spring-config-activiti.xml"/>&ndash;&gt;-->
-    <!--<import resource="classpath:config/spring-config-mysql.xml"/>-->
+       <!-- <import resource="classpath:config/spring-config-mysql.xml"/>-->
 </beans>
