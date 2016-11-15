@@ -32,7 +32,8 @@
     <mvc:annotation-driven/>
 
 
-    <!--  swgger ui-->
+    <!--  WebJar sping-fox配置-->
+    <mvc:default-servlet-handler />
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 

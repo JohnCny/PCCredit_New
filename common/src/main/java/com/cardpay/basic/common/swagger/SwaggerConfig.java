@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -21,17 +24,22 @@ public class SwaggerConfig {
 
     @Bean
     public Docket customDocket(){
-        Docket docket = new Docket(DocumentationType.SWAGGER_2);
-        ApiInfo apiInfo = new ApiInfo(
-                "快信 API",
-                "API Document管理",
-                "V1.1.0",
-                "http://www.cardpay-sh.com/",
-                "乾康西安研发中心",
-                "",
-                "");
-        docket.apiInfo(apiInfo);
-        return docket;
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select() // 选择那些路径和api会生成document
+                .apis(RequestHandlerSelectors.basePackage("com.cardpay")) // 对所有api进行监控
+                .paths(PathSelectors.any()) // 对所有路径进行监控
+                .build();
+
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("快贷 API")
+                .termsOfServiceUrl("http://www.cardpay-sh.com/")
+                .contact("乾康西安研发中心")
+                .version("1.0")
+                .build();
     }
 }
 
