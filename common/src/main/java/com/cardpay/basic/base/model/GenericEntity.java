@@ -1,7 +1,5 @@
 package com.cardpay.basic.base.model;
 
-import com.cardpay.basic.util.DozerUtil;
-
 import java.io.Serializable;
 
 /**

@@ -92,4 +92,5 @@
     <import resource="classpath:config/spring-config-rabbitmq.xml"/>
     <import resource="classpath:config/spring-config-mysql.xml"/>
     <import resource="classpath:config/spring-config-httpclient.xml"/>
+    <import resource="classpath:config/spring-config-dozer.xml"/>
 </beans>

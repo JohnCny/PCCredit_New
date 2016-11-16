@@ -1,7 +1,11 @@
 package com.cardpay.controller.base;
 import com.cardpay.mgt.model.TModel;
+import com.cardpay.mgt.model.TestModel;
 import io.swagger.annotations.*;
+import org.dozer.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 /**
  * http://localhost/swagger-ui.html
@@ -10,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "/test", description = "测试类")
 @RestController
 @RequestMapping("/test")
+
 public class TestController extends BaseController<TModel> {
+
 
     @ApiOperation(value = "测试接口", notes = "测试spring-fox",  httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
@@ -19,9 +25,19 @@ public class TestController extends BaseController<TModel> {
     public String test(@ApiParam(required = true, value ="对象" )@ModelAttribute TModel tModel,
                        @ApiParam(value ="Json" )@RequestBody TModel jsonModel,
                        @ApiParam(value = "测试数据") @RequestParam String str){
-        TModel tModel1 = new TModel();
-        tModel1.setId(1);
-        selectByPrimaryKey(tModel1);
         return "dist/index";
     }
+
+    @ApiOperation(value = "测试Dozer")
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public void testDozer(){
+        TModel po = new TModel();
+        po.setId(1);
+        po.setName("测试");
+        
+        TestModel vo = dozerMapper.map(po, TestModel.class);
+        System.out.println(vo.getModelName());
+    }
+
+
 }
