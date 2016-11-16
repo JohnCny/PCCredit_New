@@ -18,7 +18,7 @@
         </listener-class>
     </listener>
 
-    <!-- shiro filter
+    <!-- shiroback filter-->
     <filter>
         <filter-name>shiroFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -31,7 +31,7 @@
         <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    -->
+
     <!--配置logback-->
     <listener>
         <listener-class>
@@ -65,14 +65,14 @@
     <!-- 设置servlet 编码结束 -->
 
     <!-- REST涉及的过滤器 -->
-<!--    <filter>
+   <filter>
         <filter-name>HttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>HttpMethodFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
 
     <!--获取put表单中的参数值-->
     <filter>
@@ -84,7 +84,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--durid过滤器
+    <!--durid过滤器-->
     <filter>
         <filter-name>DruidWebStatFilter</filter-name>
         <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
@@ -105,7 +105,6 @@
         <servlet-name>DruidStatView</servlet-name>
         <url-pattern>/druid/*</url-pattern>
     </servlet-mapping>
-    -->
 
     <!--配置DispatcherServlet控制器-->
     <servlet>

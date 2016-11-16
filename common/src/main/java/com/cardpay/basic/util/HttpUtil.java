@@ -1,5 +1,6 @@
 package com.cardpay.basic.util;
 
+import com.cardpay.basic.common.log.LogBase;
 import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HttpUtil {
 
-    private static Logger log = LogUtil.get();
+    private static Logger log = LogBase.get();
     /**
      * 获取客户端IP地址.<br>
      * 支持多级反向代理

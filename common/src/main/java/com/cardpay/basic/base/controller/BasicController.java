@@ -1,8 +1,7 @@
 package com.cardpay.basic.base.controller;
 
 import com.cardpay.basic.common.propertyeditor.StringEscapeEditor;
-import com.cardpay.basic.util.LogUtil;
-import org.dozer.Mapper;
+import com.cardpay.basic.common.log.LogBase;
 import org.slf4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -16,7 +15,8 @@ import java.util.Date;
  * Created by johnmyiqn on 2016/11/10.
  */
 public class BasicController {
-    protected static final Logger logger = LogUtil.get();
+    protected static final Logger logger = LogBase.get();
+
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) {
         /**

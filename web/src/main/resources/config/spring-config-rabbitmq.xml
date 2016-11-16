@@ -12,11 +12,6 @@
                                username="${rabbitmq.name}"
                                password="${rabbitmq.password}"
                                port="${rabbitmq.port}" />
-
-
-    <!--&lt;!&ndash; 当Spring容器启动完成后执行下面的这个Bean 链接rabbitMQ的消息提供者和发送者&ndash;&gt;-->
-    <bean class="com.cardpay.processor.BeanPostProcessor"/>
-
     <bean id="jackson2JsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
     <rabbit:template id="amqpTemplate" connection-factory="rabbitConnectionFactory" message-converter="jackson2JsonMessageConverter"/>
 
