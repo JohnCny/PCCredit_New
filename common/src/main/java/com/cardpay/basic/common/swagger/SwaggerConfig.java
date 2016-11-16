@@ -32,13 +32,6 @@ public class SwaggerConfig {
     @Bean
     public Docket customDocket(){
         return new Docket(DocumentationType.SWAGGER_2)
-                .useDefaultResponseMessages(false)
-                .globalResponseMessage(RequestMethod.GET,
-                        new ArrayList(new ResponseMessageBuilder()
-                                .code(500)
-                                .message("500 message")
-                                .responseModel(new ModelRef("Error"))
-                                .build())
                 .apiInfo(apiInfo())
                 .select() // 选择那些路径和api会生成document
                 .apis(RequestHandlerSelectors.basePackage("com.cardpay")) // 对所有api进行监控
