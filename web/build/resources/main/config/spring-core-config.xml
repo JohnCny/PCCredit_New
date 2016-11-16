@@ -102,4 +102,5 @@
     <!--<import resource="classpath:config/spring-config-rabbitmq.xml"/>-->
     <!--&lt;!&ndash;<import resource="classpath:spring-config-activiti.xml"/>&ndash;&gt;-->
     <import resource="classpath:config/spring-config-mysql.xml"/>
+    <import resource="classpath:config/spring-config-dozer.xml"/>
 </beans>

@@ -17,17 +17,18 @@
                   </converter>
               </custom-converters>-->
     </configuration>
-    <!-- 重写日期格式配置
-     <mapping date-format="yyyy-MM-dd">
-            <class-a>ce.dozer.User</class-a>
-            <class-b>ce.dozer.UserVO</class-b>
-            <field>
-                <a>info.createDate</a>
-                <b>info.date</b>
-            </field>
+
+<!-- 简单形式采用注解形式，复杂形式采用xml
+ <mapping date-format="yyyy-MM-dd">
+            <class-a>com.cardpay.mgt.model.TModel</class-a>
+            <class-b>com.cardpay.mgt.model.TestModel</class-b>
             <field>
                 <a>name</a>
-                <b>userName</b>
+                <b>modelName</b>
             </field>
+         <field>
+             <a>type</a>
+             <b>modelType</b>
+         </field>
         </mapping>-->
 </mappings>
