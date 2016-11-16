@@ -1,8 +1,12 @@
 package com.cardpay.mgt.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
+@ApiModel(value = "测试bean")
 @Table(name = "t_model")
 public class TModel {
     /**
@@ -10,37 +14,46 @@ public class TModel {
      */
     @Id
     @GeneratedValue(generator = "JDBC")
+    @ApiModelProperty(value = "测试Id", required = true)
     private Integer id;
 
     /**
      * 模型名称
      */
+    @ApiModelProperty(value = "模型名称", required = true)
     private String name;
 
     /**
      * 备注
      */
+    @ApiModelProperty(value = "备注", required = true)
     private String remark;
 
     /**
      * 模型利润表有无季节性  0无季节性 ,1有季节性 
      */
+    @ApiModelProperty(value = "模型利润表有无季节性  0无季节性 ,1有季节性", required = true)
     private String templete;
 
     /**
      * 类型
      */
+    @ApiModelProperty(value = "类型", required = true)
     private String type;
 
+    @ApiModelProperty(value = "创建时间", required = true)
     @Column(name = "created_by")
     private Integer createdBy;
 
+    @ApiModelProperty(value = "创建人", required = true)
     @Column(name = "created_at")
     private Date createdAt;
 
+    @ApiModelProperty(value = "修改时间", required = true)
     @Column(name = "modified_by")
     private Integer modifiedBy;
 
+    @ApiModelProperty(value = "修改人", required = true)
     @Column(name = "modified_at")
     private Date modifiedAt;
 
