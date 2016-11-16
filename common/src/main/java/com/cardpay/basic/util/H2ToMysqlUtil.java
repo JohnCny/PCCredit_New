@@ -36,9 +36,9 @@ import java.util.regex.Pattern;
  */
 public class H2ToMysqlUtil {
 
-    private static final String PATH = "D:/workspace/RCS/common/src/test/resources/create-db.sql";
+    private static final String PATH = "D:/workspace/RCS/common/src/mgt/resources/create-db.sql";
 
-    private static final String PATH_RES = "D:/workspace/RCS/common/src/test/resources/create-db-res.sql";
+    private static final String PATH_RES = "D:/workspace/RCS/common/src/mgt/resources/create-db-res.sql";
 
     public static void main(String[] args) throws Exception {
         System.out.println("生成开始");

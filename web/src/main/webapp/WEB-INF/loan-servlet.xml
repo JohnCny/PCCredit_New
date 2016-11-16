@@ -15,7 +15,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 
     <!--配置注解扫描-->
-    <context:component-scan base-package="com.cardpay.controller">
+    <context:component-scan base-package="com.cardpay">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
 
@@ -28,6 +28,19 @@
 
     <!-- 开启shiro spring AOP权限注解支持 -->
     <aop:config proxy-target-class="true"></aop:config>
+    <!-- Standard xml based mvc config-->
+    <mvc:annotation-driven/>
+
+
+    <!--  WebJar sping-fox配置-->
+    <mvc:default-servlet-handler />
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
+    <!--  spring-fox 配置-->
+    <bean name="applicationSwaggerConfig" class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
+    <!--<bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration" />
+    <bean class="springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration" />-->
 
     <!--&lt;!&ndash;配置支持freemarkewr标签支持&ndash;&gt;-->
     <!--<bean id="freemarkerConfig"-->

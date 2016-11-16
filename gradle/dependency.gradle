@@ -76,9 +76,19 @@ ext.libraries = [
         //分页插件
         "pagehelper":"com.github.pagehelper:pagehelper:4.1.6",
 
+        //dozer-spring
+        "dozer":"net.sf.dozer:dozer:5.5.1",
+        "dozer-spring":"net.sf.dozer:dozer-spring:5.5.1",
+
+        //spring-fox
+        "springfox-swagger2":"io.springfox:springfox-swagger2:2.6.0",
+        "springfox-swagger-ui":"io.springfox:springfox-swagger-ui:2.6.0",
+        "springfox-data-rest":"io.springfox:springfox-data-rest:2.6.0",
+        "springfox-bean-validators":"io.springfox:springfox-bean-validators:2.6.1",
+
         //单元测试
         "junit":"junit:junit:4.12",
-        "spring-test":"org.springframework:spring-test:$spring_version",
+        "spring-mgt":"org.springframework:spring-mgt:$spring_version",
         "mockito-core":"org.mockito:mockito-core:1.10.19",
         "spring-mock":"org.springframework:spring-mock:2.0.8",
         "powermock-module-junit4":"org.powermock:powermock-module-junit4:$powermock",
