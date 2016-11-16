@@ -1,7 +1,6 @@
 package com.cardpay.basic.base.model;
 
 import com.cardpay.basic.common.enums.ResultEnum;
-import com.cardpay.basic.util.DozerUtil;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -2,6 +2,7 @@ package com.cardpay.mgt.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.dozer.Mapping;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class TModel {
      * 模型名称
      */
     @ApiModelProperty(value = "模型名称", required = true)
+    @Mapping("modelName")
     private String name;
 
     /**
@@ -39,6 +41,7 @@ public class TModel {
      * 类型
      */
     @ApiModelProperty(value = "类型", required = true)
+    @Mapping("modelType")
     private String type;
 
     @ApiModelProperty(value = "创建时间", required = true)
@@ -202,4 +205,5 @@ public class TModel {
     public void setModifiedAt(Date modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
+
 }
