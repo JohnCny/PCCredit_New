@@ -41,14 +41,13 @@ allprojects {
         flatDir {
             dirs "$rootProject.projectDir/libs"
         }
-//        maven {
-//            name "nexus"
-//            url "http://192.168.1.116:8081/repository/qkjr/"
-//        }
-
         maven{
             url "http://maven.aliyun.com/nexus/content/groups/public/"
         }
+//      maven {
+//            name "nexus"
+//            url "http://192.168.1.116:8081/repository/qkjr/"
+//      }
         jcenter()
         mavenCentral()
     }
@@ -116,7 +115,6 @@ subprojects {
                 //shrio
                 libraries."shiro-core",
                 libraries."shiro-web",
-                libraries."shiro-core",
                 libraries."shiro-ehcache",
                 libraries."shiro-spring",
 
@@ -164,11 +162,25 @@ subprojects {
                 libraries."springfox-data-rest",
                 libraries."springfox-bean-validators",
 
+                //freemarker
+                libraries."freemarker",
+                libraries."shiro-freemarker-tags",
 
+                //验证码
+                libraries."kaptcha",
+
+                //httpclient
+                libraries."httpclient",
+                libraries."httpcore",
+
+                //rabbitmq
+                libraries."amqp-client",
+                libraries."spring-rabbit",
+                libraries."spring-integration-amqp",
         )
         testCompile (
                 libraries."junit",
-                libraries."spring-mgt",
+                libraries."spring-test",
                 libraries."mockito-core",
                 libraries."powermock-module-junit4",
                 libraries."powermock-api-mockito",

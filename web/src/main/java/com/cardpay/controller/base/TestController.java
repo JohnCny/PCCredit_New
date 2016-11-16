@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/test")
 public class TestController extends BaseController<TModel> {
+
     @ApiOperation(value = "测试接口", notes = "测试spring-fox",  httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
     @RequestMapping(value = "" ,method = RequestMethod.GET)
@@ -18,6 +19,9 @@ public class TestController extends BaseController<TModel> {
     public String test(@ApiParam(required = true, value ="对象" )@ModelAttribute TModel tModel,
                        @ApiParam(value ="Json" )@RequestBody TModel jsonModel,
                        @ApiParam(value = "测试数据") @RequestParam String str){
+        TModel tModel1 = new TModel();
+        tModel1.setId(1);
+        selectByPrimaryKey(tModel1);
         return "dist/index";
     }
 }
