@@ -108,6 +108,10 @@ subprojects {
                 libraries."spring-aop",
                 libraries."spring-jdbc",
 
+                //aop
+                libraries."aspectjweaver",
+                libraries."aspectjrt",
+
                 //spring  redis
                 libraries."spring-data-jpa",
                 libraries."spring-data-redis",
@@ -168,7 +172,7 @@ subprojects {
         )
         testCompile (
                 libraries."junit",
-                libraries."spring-mgt",
+                libraries."spring-test",
                 libraries."mockito-core",
                 libraries."powermock-module-junit4",
                 libraries."powermock-api-mockito",
@@ -176,6 +180,7 @@ subprojects {
                 libraries."unitils-core",
                 libraries."unitils-spring",
                 libraries."tomcat-embed-websocket",
+                libraries."h2",
         )
     }
 }
