@@ -1,4 +1,4 @@
-package com.cardpay.basic.util;
+package com.cardpay.basic.common.log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
  * 日志操作工具类
  * @author licho
  */
-public class LogUtil {
+public class LogBase{
+
     /**
      * 获得Logger
      * @param clazz 日志发出的类
@@ -42,7 +43,7 @@ public class LogUtil {
      * @param format 格式文本，{} 代表变量
      * @param arguments 变量对应的参数
      */
-    public static void trace(String format, Object... arguments) {
+    public static void traceTest(String format, Object... arguments) {
         trace(innerGet(), format, arguments);
     }
 
@@ -53,7 +54,9 @@ public class LogUtil {
      * @param arguments 变量对应的参数
      */
     public static void trace(Logger log, String format, Object... arguments) {
-        log.trace(format, arguments);
+        if(log.isTraceEnabled()){
+            log.trace(format, arguments);
+        }
     }
 
     //------------------------ debug
@@ -74,7 +77,9 @@ public class LogUtil {
      * @param arguments 变量对应的参数
      */
     public static void debug(Logger log, String format, Object... arguments) {
-        log.debug(format, arguments);
+        if(log.isDebugEnabled()){
+            log.debug(format, arguments);
+        }
     }
 
     /**
@@ -94,7 +99,9 @@ public class LogUtil {
      * @param arguments 变量对应的参数
      */
     public static void info(Logger log, String format, Object... arguments) {
-        log.info(format, arguments);
+        if(log.isInfoEnabled()){
+            log.info(format, arguments);
+        }
     }
 
     //------------------------ warn
@@ -115,7 +122,9 @@ public class LogUtil {
      * @param arguments 变量对应的参数
      */
     public static void warn(Logger log, String format, Object... arguments) {
-        log.warn(format, arguments);
+        if(log.isWarnEnabled()){
+            log.warn(format, arguments);
+        }
     }
 
     /**
@@ -137,7 +146,9 @@ public class LogUtil {
      * @param arguments 变量对应的参数
      */
     public static void warn(Logger log, Throwable e, String format, Object... arguments) {
-        log.warn(format(format, arguments), e);
+        if(log.isWarnEnabled()) {
+            log.warn(format(format, arguments), e);
+        }
     }
 
     //------------------------ error
@@ -158,7 +169,9 @@ public class LogUtil {
      * @param arguments 变量对应的参数
      */
     public static void error(Logger log, String format, Object... arguments) {
-        log.error(format, arguments);
+        if(log.isErrorEnabled()){
+            log.error(format, arguments);
+        }
     }
 
     /**
@@ -181,7 +194,9 @@ public class LogUtil {
      * @param arguments 变量对应的参数
      */
     public static void error(Logger log, Throwable e, String format, Object... arguments) {
-        log.error(format(format, arguments), e);
+        if(log.isErrorEnabled()){
+            log.error(format(format, arguments), e);
+        }
     }
     //----------------------------------------------------------- Logger method end
 

@@ -30,7 +30,6 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.cardpay")) // 对所有api进行监控
                 .paths(PathSelectors.any()) // 对所有路径进行监控
                 .build();
-
     }
 
     private ApiInfo apiInfo() {
