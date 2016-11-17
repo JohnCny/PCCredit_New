@@ -1,10 +1,12 @@
 package com.cardpay.controller.base;
+import com.cardpay.basic.common.webSocket.SystemWebSocketHandler;
 import com.cardpay.mgt.model.TModel;
 import com.cardpay.mgt.model.TestModel;
 import io.swagger.annotations.*;
-import org.dozer.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.socket.TextMessage;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -34,10 +36,9 @@ public class TestController extends BaseController<TModel> {
         TModel po = new TModel();
         po.setId(1);
         po.setName("测试");
-        
+
         TestModel vo = dozerMapper.map(po, TestModel.class);
         System.out.println(vo.getModelName());
     }
-
 
 }

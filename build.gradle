@@ -164,11 +164,14 @@ subprojects {
                 libraries."springfox-data-rest",
                 libraries."springfox-bean-validators",
 
+                //webSocket
+                libraries."spring-websocket",
+
 
         )
         testCompile (
                 libraries."junit",
-                libraries."spring-mgt",
+                libraries."spring-test",
                 libraries."mockito-core",
                 libraries."powermock-module-junit4",
                 libraries."powermock-api-mockito",

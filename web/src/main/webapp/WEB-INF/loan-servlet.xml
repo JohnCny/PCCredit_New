@@ -39,6 +39,10 @@
 
     <!--  spring-fox 配置-->
     <bean name="applicationSwaggerConfig" class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
+
+    <!--  WebSocket 配置-->
+<!--    <bean name="applicationWebSocketConfig" class="com.cardpay.basic.common.webSocket.WebSocketConfig"/>-->
+
     <!--<bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration" />
     <bean class="springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration" />-->
 

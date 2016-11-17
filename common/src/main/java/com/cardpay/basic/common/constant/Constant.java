@@ -73,4 +73,9 @@ public class Constant {
      * 表单重复提交，表单重复提交session key值，可以通过该值获取token来判断是否重复提交
      */
     public static final String TOKEN_REPEAT_SESSION_KEY = "token_repeat_session_key";
+
+    /**
+     * 定义websocket session数据名称
+     */
+    public static final String WEBSOCKET_USERID = "CardPayMessageWebsocketUserId";
 }
