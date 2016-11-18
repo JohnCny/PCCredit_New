@@ -1,12 +1,9 @@
 package com.cardpay.controller.base;
-import com.cardpay.basic.common.webSocket.SystemWebSocketHandler;
 import com.cardpay.mgt.model.TModel;
 import com.cardpay.mgt.model.TestModel;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.socket.TextMessage;
 
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
