@@ -12,6 +12,24 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <!--配置WebSocket engine,设置websocket的内容大小-->
+    <bean id="serverFactory" class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+        <property name="maxTextMessageBufferSize" value="8192"/>
+        <property name="maxBinaryMessageBufferSize" value="8192"/>
+    </bean>
+
+
+    <!--&lt;!&ndash;yml第三方propertities读取&ndash;&gt;-->
+    <!--<context:annotation-config/>-->
+    <!--<bean id="yamlProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">-->
+        <!--<property name="resources" value="classpath:conf/zzc.yml"/>-->
+    <!--</bean>-->
+    <!--<context:property-placeholder properties-ref="yamlProperties"/>-->
+    <!--<bean id="bankProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">-->
+        <!--<property name="resources" value="classpath:conf/bank.yml"/>-->
+    <!--</bean>-->
+    <!--<context:property-placeholder properties-ref="bankProperties"/>-->
+
     <!-- 支持上传文件 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="314572800"/><!-- 300M -->
@@ -71,7 +89,6 @@
 
     <!-- 当Spring容器启动完成后执行下面的这个Bean -->
     <bean class="com.cardpay.core.process.BeanPostProcessor"/>
-
 
     <!--引用其他xml配置文件-->
     <import resource="classpath:config/spring-config-shiro.xml"/>
