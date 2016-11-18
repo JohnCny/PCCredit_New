@@ -1,6 +1,6 @@
 package com.cardpay.basic.common.radis;
 
-import com.cardpay.basic.util.LogUtil;
+import com.cardpay.basic.common.log.LogBase;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -12,8 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
-
 /**
  * redis接口,操作redis的方法
  *
@@ -24,7 +22,7 @@ public class RedisClient {
     private static final Logger logger;
 
     static {
-        logger= LogUtil.get();
+        logger= LogBase.get();
     }
 
     @Autowired

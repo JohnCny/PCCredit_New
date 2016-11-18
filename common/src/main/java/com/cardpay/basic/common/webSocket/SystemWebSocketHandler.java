@@ -1,7 +1,7 @@
 package com.cardpay.basic.common.webSocket;
 
 import com.cardpay.basic.common.constant.Constant;
-import com.cardpay.basic.util.LogUtil;
+import com.cardpay.basic.common.log.LogBase;
 import org.slf4j.Logger;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -23,7 +23,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     private static final Map<Integer, WebSocketSession> webSocketSessions;
 
     static {
-        logger=LogUtil.get();
+        logger= LogBase.get();
         users = new ArrayList<>();
         webSocketSessions = new HashMap<>();
     }

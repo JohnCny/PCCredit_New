@@ -1,7 +1,7 @@
 package com.cardpay.basic.common.webSocket;
 
 import com.cardpay.basic.common.constant.Constant;
-import com.cardpay.basic.util.LogUtil;
+import com.cardpay.basic.common.log.LogBase;
 import org.slf4j.Logger;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -20,7 +20,7 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
     private static final Logger logger;
 
     static {
-        logger= LogUtil.get();
+        logger= LogBase.get();
     }
 
     /**
