@@ -100,6 +100,10 @@ ext.libraries = [
         "spring-rabbit":"org.springframework.amqp:spring-rabbit:1.6.0.RELEASE",
         "spring-integration-amqp":"org.springframework.integration:spring-integration-amqp:4.3.0.RELEASE",
 
+        //aspect
+        "aspectjweaver":"org.aspectj:aspectjweaver:1.8.8",
+        "aspectjrt":"org.aspectj:aspectjrt:1.8.9",
+
         //单元测试
         "junit":"junit:junit:4.12",
         "spring-test":"org.springframework:spring-test:$spring_version",

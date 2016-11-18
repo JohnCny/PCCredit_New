@@ -1,11 +1,11 @@
-package com.cardpay.basic.redis;
+package com.cardpay.basic.redis.enums;
 
 /**
  * redis前缀,用模块化存储
  * @author rankai
  */
 
-public enum RedisKeyPrefix {
+public enum RedisKeyPrefixEnum {
 	/**
 	 * 客户模块
 	 */
@@ -29,7 +29,7 @@ public enum RedisKeyPrefix {
 	
 	private final String prefix;
 	   
-	RedisKeyPrefix(String prefix) {
+	RedisKeyPrefixEnum(String prefix) {
 	     this.prefix = prefix;
 	}
 	

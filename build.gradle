@@ -177,6 +177,10 @@ subprojects {
                 libraries."amqp-client",
                 libraries."spring-rabbit",
                 libraries."spring-integration-amqp",
+
+                //aspect
+                libraries."aspectjweaver",
+                libraries."aspectjrt",
         )
         testCompile (
                 libraries."junit",
