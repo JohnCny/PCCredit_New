@@ -44,7 +44,7 @@ allprojects {
         maven{
             url "http://maven.aliyun.com/nexus/content/groups/public/"
         }
-//      maven {
+//        maven {
 //            name "nexus"
 //            url "http://192.168.1.116:8081/repository/qkjr/"
 //      }
@@ -185,6 +185,9 @@ subprojects {
                 //aspect
                 libraries."aspectjweaver",
                 libraries."aspectjrt",
+
+                //webSocket
+                libraries."spring-websocket",
         )
         testCompile (
                 libraries."junit",

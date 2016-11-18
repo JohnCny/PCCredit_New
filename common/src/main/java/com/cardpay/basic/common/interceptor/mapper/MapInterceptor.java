@@ -1,5 +1,6 @@
 package com.cardpay.basic.common.interceptor.mapper;
 
+import com.cardpay.basic.common.interceptor.enums.ReturnMapParam;
 import com.cardpay.basic.common.log.LogBase;
 import com.cardpay.basic.util.ReflectUtil;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
@@ -46,9 +47,9 @@ public class MapInterceptor implements Interceptor {
   
     /** 
      * 处理结果集 
-     * @param resultSet 
-     * @param mapParam 
-     * @return 
+     * @param resultSet
+     * @param mapParam
+     * @return
      */  
     private Object handleResultSet(ResultSet resultSet, ReturnMapParam mapParam) {
         if (resultSet != null) {
