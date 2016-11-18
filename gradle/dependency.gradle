@@ -25,6 +25,10 @@ ext.libraries = [
         "spring-aop":"org.springframework:spring-aop:$spring_version",
         "spring-jdbc":"org.springframework:spring-jdbc:$spring_version",
 
+        //aop
+        "aspectjweaver":"org.aspectj:aspectjweaver:1.8.9",
+        "aspectjrt":"org.aspectj:aspectjrt:1.8.9",
+
         //redis
         "spring-data-jpa":"org.springframework.data:spring-data-jpa:1.9.4.RELEASE",
         "spring-data-redis":"org.springframework.data:spring-data-redis:1.7.1.RELEASE",
@@ -116,4 +120,5 @@ ext.libraries = [
         "unitils-core":"org.unitils:unitils-core:3.4.2",
         "unitils-spring":"org.unitils:unitils-spring:3.4.2",
         "tomcat-embed-websocket":"org.apache.tomcat.embed:tomcat-embed-websocket:8.5.3",
+        "h2":"com.h2database:h2:1.4.191",
 ]
