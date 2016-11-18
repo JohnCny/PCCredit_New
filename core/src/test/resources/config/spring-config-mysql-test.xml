@@ -54,6 +54,8 @@
         <!--Map的拦截器配置-->
         <property name="plugins">
             <array>
+                <bean class="com.cardpay.basic.common.interceptor.mapper.MapInterceptor"/>
+                <bean class="com.cardpay.basic.common.interceptor.mapper.SqlTimeInterceptor"/>
                 <bean class="com.github.pagehelper.PageHelper">
                     <property name="properties">
                         <value>

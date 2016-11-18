@@ -12,20 +12,6 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!--编码方式获取propertity数据信息-->
-    <bean id="configBean" class="com.cardpay.basic.common.context.ContextProperty">
-        <property name="locations">
-            <list>
-                <value>classpath:properties/jdbc.properties</value>
-                <value>classpath:properties/email.properties</value>
-                <value>classpath:properties/redis.properties</value>
-                <value>classpath:properties/httpclient.properties</value>
-                <value>classpath:properties/rabbitmq.properties</value>
-            </list>
-        </property>
-    </bean>
-
-
     <!-- 支持上传文件 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="314572800"/><!-- 300M -->
@@ -86,6 +72,7 @@
     <!-- 当Spring容器启动完成后执行下面的这个Bean -->
     <bean class="com.cardpay.core.process.BeanPostProcessor"/>
 
+
     <!--引用其他xml配置文件-->
     <import resource="classpath:config/spring-config-shiro.xml"/>
     <import resource="classpath:config/spring-config-redis.xml"/>
@@ -93,4 +80,35 @@
     <import resource="classpath:config/spring-config-mysql.xml"/>
     <import resource="classpath:config/spring-config-httpclient.xml"/>
     <import resource="classpath:config/spring-config-dozer.xml"/>
+
+    <!--开发环境变量设置-->
+    <beans profile="dev">
+        <!--编码方式获取propertity数据信息-->
+        <bean class="com.cardpay.basic.common.context.ContextProperty">
+            <property name="locations">
+                <list>
+                    <value>classpath:properties/dev/jdbc.properties</value>
+                    <value>classpath:properties/dev/email.properties</value>
+                    <value>classpath:properties/dev/redis.properties</value>
+                    <value>classpath:properties/dev/httpclient.properties</value>
+                    <value>classpath:properties/dev/rabbitmq.properties</value>
+                </list>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="prod">
+        <!--编码方式获取propertity数据信息-->
+        <bean class="com.cardpay.basic.common.context.ContextProperty">
+            <property name="locations">
+                <list>
+                    <value>classpath:properties/prod/jdbc.properties</value>
+                    <value>classpath:properties/prod/email.properties</value>
+                    <value>classpath:properties/prod/redis.properties</value>
+                    <value>classpath:properties/prod/httpclient.properties</value>
+                    <value>classpath:properties/prod/rabbitmq.properties</value>
+                </list>
+            </property>
+        </bean>
+    </beans>
 </beans>

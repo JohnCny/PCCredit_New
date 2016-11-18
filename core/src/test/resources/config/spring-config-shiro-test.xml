@@ -49,7 +49,7 @@
                 /img/** = anon
                 /assets/** = anon
                 /kaptcha = anon
-                /** = authc
+                /** = anon
             </value>
         </property>
     </bean>
