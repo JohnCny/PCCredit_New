@@ -27,7 +27,7 @@ public class TestController extends BaseController<TModel> {
         return "dist/index";
     }
 
-    @ApiOperation(value = "测试Dozer")
+    @ApiOperation(value = "测试Dozer po转vo")
     @RequestMapping(value = "", method = RequestMethod.POST)
     public void testDozer(){
         TModel po = new TModel();
@@ -38,9 +38,15 @@ public class TestController extends BaseController<TModel> {
         System.out.println(vo.getModelName());
     }
 
-    @ApiOperation(value = "测试webSocket")
+    @ApiOperation(value = "测试给所有用户推送消息")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public void testWebSocket(){
         systemWebSocketHandler.sendMessageToUsers("测试信息");
+    }
+
+    @ApiOperation(value = "测试给指定用户推送消息")
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public void testSendWebSocket(){
+        systemWebSocketHandler.sendMessageToUser(1, "测试信息");
     }
 }

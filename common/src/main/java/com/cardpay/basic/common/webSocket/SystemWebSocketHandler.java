@@ -1,24 +1,32 @@
 package com.cardpay.basic.common.webSocket;
 
+import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.basic.redis.service.WebSocketRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 /**
  * WebSocket消息发送处理对象
  * Created by chenkai on 2016/11/17.
  */
 public class SystemWebSocketHandler extends TextWebSocketHandler {
     @Autowired
-    private WebSocketRedis socketRedis;
-    @Autowired
     private LogTemplate logger;
 
+    private static final List<WebSocketSession> users;
+
+    private static final Map<Integer, WebSocketSession> webSocketSessions;
+
+    static {
+        users = new ArrayList<>();
+        webSocketSessions = new HashMap<>();
+    }
 
     /**
      * 客户端建立连接
@@ -27,13 +35,19 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-            logger.debug(SystemWebSocketHandler.class, "客户端建立连接","connect to the websocket success......");
+        logger.debug(SystemWebSocketHandler.class, "客户端建立连接","connect to the websocket success......");
+        //将客户信息添加到session,用于在线发送信息
+        users.add(session);
+
+        Integer userId = null;
         try {
-            socketRedis.add(session);
+            // userId = ShiroKit.getUser().getId();
+            //userId = (Integer) session.getAttributes().get(Constant.WEBSOCKET_USERID);
         }catch (Exception e) {
             e.printStackTrace();
             logger.info(SystemWebSocketHandler.class, "异常原因", e.getMessage());
         }
+        webSocketSessions.put(1, session);//用户上线
     }
 
     /**
@@ -59,7 +73,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         logger.debug(SystemWebSocketHandler.class, "客户端连接异常","websocket connect closed.....");
         logger.info(SystemWebSocketHandler.class, "异常原因", exception.getMessage());
-        socketRedis.delete(session);
+        users.remove(session);
     }
 
     /**
@@ -72,7 +86,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.debug(SystemWebSocketHandler.class, "客户端连接关闭","websocket connect closed.....");
         logger.info(SystemWebSocketHandler.class, "关闭状态", closeStatus.toString());
-        socketRedis.delete(session);
+        users.remove(session);
     }
 
     /**
@@ -80,11 +94,10 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      * @param message 消息
      */
     public void sendMessageToUsers(String message) {
-        List<WebSocketSession> list = socketRedis.queryAll();
-        list.forEach(session ->{
-            if(session.isOpen()){
+        users.forEach(user->{
+            if(user.isOpen()){
                 try {
-                    session.sendMessage(new TextMessage(message));
+                    user.sendMessage(new TextMessage(message));
                     logger.debug(SystemWebSocketHandler.class, "给所有在线用户发消息","message send success......");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -101,11 +114,11 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      * @param message 消息
      */
     public void sendMessageToUser(Integer userId, String message) {
-        WebSocketSession session = (WebSocketSession) socketRedis.get(userId);
+        WebSocketSession session = webSocketSessions.get(userId);
         if (session.isOpen()){
             try {
                 session.sendMessage(new TextMessage(message));
-                logger.debug(SystemWebSocketHandler.class, "给指定的用户发消息","message send success......");
+                    logger.debug(SystemWebSocketHandler.class, "给指定的用户发消息","message send success......");
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.info(SystemWebSocketHandler.class, "失败原因", e.getMessage());
