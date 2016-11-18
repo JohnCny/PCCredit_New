@@ -12,19 +12,23 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!--编码方式获取propertity数据信息-->
-    <bean id="configBean" class="com.cardpay.basic.common.context.ContextProperty">
-        <property name="locations">
-            <list>
-                <value>classpath:properties/jdbc.properties</value>
-                <value>classpath:properties/email.properties</value>
-                <value>classpath:properties/redis.properties</value>
-                <value>classpath:properties/httpclient.properties</value>
-                <value>classpath:properties/rabbitmq.properties</value>
-            </list>
-        </property>
+    <!--配置WebSocket engine,设置websocket的内容大小-->
+    <bean id="serverFactory" class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+        <property name="maxTextMessageBufferSize" value="8192"/>
+        <property name="maxBinaryMessageBufferSize" value="8192"/>
     </bean>
 
+
+    <!--&lt;!&ndash;yml第三方propertities读取&ndash;&gt;-->
+    <!--<context:annotation-config/>-->
+    <!--<bean id="yamlProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">-->
+        <!--<property name="resources" value="classpath:conf/zzc.yml"/>-->
+    <!--</bean>-->
+    <!--<context:property-placeholder properties-ref="yamlProperties"/>-->
+    <!--<bean id="bankProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">-->
+        <!--<property name="resources" value="classpath:conf/bank.yml"/>-->
+    <!--</bean>-->
+    <!--<context:property-placeholder properties-ref="bankProperties"/>-->
 
     <!-- 支持上传文件 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -93,4 +97,35 @@
     <import resource="classpath:config/spring-config-mysql.xml"/>
     <import resource="classpath:config/spring-config-httpclient.xml"/>
     <import resource="classpath:config/spring-config-dozer.xml"/>
+
+    <!--开发环境变量设置-->
+    <beans profile="dev">
+        <!--编码方式获取propertity数据信息-->
+        <bean class="com.cardpay.basic.common.context.ContextProperty">
+            <property name="locations">
+                <list>
+                    <value>classpath:properties/dev/jdbc.properties</value>
+                    <value>classpath:properties/dev/email.properties</value>
+                    <value>classpath:properties/dev/redis.properties</value>
+                    <value>classpath:properties/dev/httpclient.properties</value>
+                    <value>classpath:properties/dev/rabbitmq.properties</value>
+                </list>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="prod">
+        <!--编码方式获取propertity数据信息-->
+        <bean class="com.cardpay.basic.common.context.ContextProperty">
+            <property name="locations">
+                <list>
+                    <value>classpath:properties/prod/jdbc.properties</value>
+                    <value>classpath:properties/prod/email.properties</value>
+                    <value>classpath:properties/prod/redis.properties</value>
+                    <value>classpath:properties/prod/httpclient.properties</value>
+                    <value>classpath:properties/prod/rabbitmq.properties</value>
+                </list>
+            </property>
+        </bean>
+    </beans>
 </beans>

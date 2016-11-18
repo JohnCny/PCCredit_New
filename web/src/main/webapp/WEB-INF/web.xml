@@ -106,6 +106,16 @@
         <url-pattern>/druid/*</url-pattern>
     </servlet-mapping>
 
+    <!--配置开发环境和测试环境-->
+    <!-- 配置spring的默认profile -->
+    <context-param>
+        <param-name>spring.profiles.default</param-name>
+        <!--开发环境-->
+        <param-value>dev</param-value>
+        <!--生产环境-->
+        <!--<param-value>prod</param-value>-->
+    </context-param>
+
     <!--配置DispatcherServlet控制器-->
     <servlet>
         <servlet-name>loan</servlet-name>

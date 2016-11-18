@@ -1,6 +1,7 @@
 package com.cardpay.basic.redis;
 
 import com.cardpay.basic.common.log.LogBase;
+import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -40,7 +41,7 @@ public class RedisClient {
      * @param value       值
      * @param validPeriod 过期时间(单位:秒)
      */
-    public void set(RedisKeyPrefix keyPrefix, String key, Object value, int validPeriod) {
+    public void set(RedisKeyPrefixEnum keyPrefix, String key, Object value, int validPeriod) {
         String redisKey = buildKey(keyPrefix, key);
         ValueOperations<String, Object> opt = redisTemplate.opsForValue();
         opt.set(redisKey, value, validPeriod, TimeUnit.SECONDS);
@@ -53,7 +54,7 @@ public class RedisClient {
      * @param key       键
      * @param value     值
      */
-    public void set(RedisKeyPrefix keyPrefix, String key, Object value) {
+    public void set(RedisKeyPrefixEnum keyPrefix, String key, Object value) {
         String redisKey = buildKey(keyPrefix, key);
         ValueOperations<String, Object> opt = redisTemplate.opsForValue();
         opt.set(redisKey, value);
@@ -66,7 +67,7 @@ public class RedisClient {
      * @param key       键
      * @return 值
      */
-    public Object get(RedisKeyPrefix keyPrefix, String key) {
+    public Object get(RedisKeyPrefixEnum keyPrefix, String key) {
         String redisKey = buildKey(keyPrefix, key);
         ValueOperations<String, Object> opt = redisTemplate.opsForValue();
         try {
@@ -83,7 +84,7 @@ public class RedisClient {
      * @param keyPrefix 模块名称
      * @param key       键
      */
-    public void delete(RedisKeyPrefix keyPrefix, String key) {
+    public void delete(RedisKeyPrefixEnum keyPrefix, String key) {
         String redisKey = buildKey(keyPrefix, key);
         redisTemplate.delete(redisKey);
     }
@@ -95,7 +96,7 @@ public class RedisClient {
      * @param key       键
      * @return 是否存在
      */
-    public boolean exists(RedisKeyPrefix keyPrefix, String key) {
+    public boolean exists(RedisKeyPrefixEnum keyPrefix, String key) {
         return (this.get(keyPrefix, key) != null);
     }
 
@@ -106,7 +107,7 @@ public class RedisClient {
      * @param key       键
      * @return 值
      */
-    public String buildKey(RedisKeyPrefix keyPrefix, String key) {
+    public String buildKey(RedisKeyPrefixEnum keyPrefix, String key) {
         return keyPrefix.getKeyPrefix() + ":" + key;
     }
 
@@ -117,7 +118,7 @@ public class RedisClient {
      * @param key         键
      * @param validPeriod expired time with second. 过期时间(秒)
      */
-    public void setExpiredTime(RedisKeyPrefix keyPrefix, String key, long validPeriod) {
+    public void setExpiredTime(RedisKeyPrefixEnum keyPrefix, String key, long validPeriod) {
         String redisKey = buildKey(keyPrefix, key);
         redisTemplate.expire(redisKey, validPeriod, TimeUnit.SECONDS);
     }
