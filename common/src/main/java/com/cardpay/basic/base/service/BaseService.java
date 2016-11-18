@@ -1,10 +1,9 @@
 package com.cardpay.basic.base.service;
 
-import com.cardpay.basic.util.LogUtil;
+import com.cardpay.basic.common.log.LogBase;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  * @author johnmyqin
  */
 public class BaseService<T>{
-    protected static final Logger logger = LogUtil.get();
+    protected static final Logger logger = LogBase.get();
 
     /**
      * mapper定义

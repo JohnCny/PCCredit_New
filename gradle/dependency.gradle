@@ -1,7 +1,7 @@
 //定义依赖版本和常量属性
 ext {
     spring_version = '4.2.4.RELEASE'
-    shiro_version = '1.2.4'
+    shiro_version = '1.3.0'
     jackson_version = '2.5.0'
     jstl_version = '1.2'
     javax_servlet_version='3.1.0'
@@ -25,6 +25,10 @@ ext.libraries = [
         "spring-aop":"org.springframework:spring-aop:$spring_version",
         "spring-jdbc":"org.springframework:spring-jdbc:$spring_version",
 
+        //aop
+        "aspectjweaver":"org.aspectj:aspectjweaver:1.8.9",
+        "aspectjrt":"org.aspectj:aspectjrt:1.8.9",
+
         //redis
         "spring-data-jpa":"org.springframework.data:spring-data-jpa:1.9.4.RELEASE",
         "spring-data-redis":"org.springframework.data:spring-data-redis:1.7.1.RELEASE",
@@ -33,7 +37,6 @@ ext.libraries = [
         //shrio
         "shiro-core":"org.apache.shiro:shiro-core:$shiro_version",
         "shiro-web":"org.apache.shiro:shiro-web:$shiro_version",
-        "shiro-core":"org.apache.shiro:shiro-core:$shiro_version",
         "shiro-ehcache":"org.apache.shiro:shiro-ehcache:$shiro_version",
         "shiro-spring":"org.apache.shiro:shiro-spring:$shiro_version",
 
@@ -69,7 +72,6 @@ ext.libraries = [
         "mysql-connector-java":"mysql:mysql-connector-java:5.1.38",
 
         //通用mapper
-
         "mysql-connector":"mysql:mysql-connector-java:5.1.30",
         "tk.mybatis":"tk.mybatis:mapper:3.3.9",
 
@@ -86,6 +88,26 @@ ext.libraries = [
         "springfox-data-rest":"io.springfox:springfox-data-rest:2.6.0",
         "springfox-bean-validators":"io.springfox:springfox-bean-validators:2.6.1",
 
+        //freemarker
+        "freemarker":"org.freemarker:freemarker:2.3.21",
+        "shiro-freemarker-tags":"net.mingsoft:shiro-freemarker-tags:0.1",
+
+        //验证码
+        "kaptcha":":kaptcha-2.3.2",
+
+        //httpclient
+        "httpclient":"org.apache.httpcomponents:httpclient:4.5.2",
+        "httpcore":"org.apache.httpcomponents:httpcore:4.4.5",
+
+        //rabbitmq
+        "amqp-client":"com.rabbitmq:amqp-client:3.6.3",
+        "spring-rabbit":"org.springframework.amqp:spring-rabbit:1.6.0.RELEASE",
+        "spring-integration-amqp":"org.springframework.integration:spring-integration-amqp:4.3.0.RELEASE",
+
+        //aspect
+        "aspectjweaver":"org.aspectj:aspectjweaver:1.8.8",
+        "aspectjrt":"org.aspectj:aspectjrt:1.8.9",
+
         //webSocket
         "spring-websocket":"org.springframework:spring-websocket:4.3.4.RELEASE",
 
@@ -101,4 +123,5 @@ ext.libraries = [
         "unitils-core":"org.unitils:unitils-core:3.4.2",
         "unitils-spring":"org.unitils:unitils-spring:3.4.2",
         "tomcat-embed-websocket":"org.apache.tomcat.embed:tomcat-embed-websocket:8.5.3",
+        "h2":"com.h2database:h2:1.4.191",
 ]

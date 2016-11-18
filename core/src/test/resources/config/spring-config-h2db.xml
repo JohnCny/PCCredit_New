@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <bean id="dataSource" class="org.h2.jdbcx.JdbcConnectionPool"
+             destroy-method="dispose">
+             <constructor-arg>
+                 <bean class="org.h2.jdbcx.JdbcDataSource">
+                     <!-- 内存模式 -->
+                    <property name="URL" value="jdbc:h2:mem:cardapy" />
+                     <!-- 文件模式 -->
+                    <!-- <property name="URL" value="jdbc:h2:testRestDB" /> -->
+                    <property name="user" value="sa" />
+                     <property name="password" value="sa" />
+                 </bean>
+             </constructor-arg>
+    </bean>
+
+    <!-- 初始化数据表结构 -->
+     <jdbc:initialize-database data-source="dataSource">
+         <jdbc:script location="classpath:h2/h2_type.sql"/>
+         <jdbc:script location="classpath:h2/create-db-res.sql" />
+         <jdbc:script location="classpath:h2/insert-data.sql" />
+     </jdbc:initialize-database>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--Map的拦截器配置-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            rowBoundsWithCount = true
+                            reasonable = true
+                            offsetAsPageNum = true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cardpay.mgt" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cardpay.mgt"/>
+        <property name="properties">
+            <value>
+                mappers=tk.mybatis.mapper.common.Mapper
+            </value>
+        </property>
+    </bean>
+
+    <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
