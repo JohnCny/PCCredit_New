@@ -1,6 +1,6 @@
-package com.cardpay.basic.common.radis.service;
+package com.cardpay.basic.redis.service;
 
-import com.cardpay.basic.common.radis.RedisClient;
+import com.cardpay.basic.redis.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.WebSocketSession;
 
