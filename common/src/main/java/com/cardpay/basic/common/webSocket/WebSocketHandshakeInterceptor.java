@@ -2,7 +2,9 @@ package com.cardpay.basic.common.webSocket;
 
 import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.common.log.LogBase;
+import com.cardpay.basic.common.log.LogTemplate;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -17,11 +19,8 @@ import java.util.Map;
  * Created by chenkai on 2016/11/17.
  */
 public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
-    private static final Logger logger;
-
-    static {
-        logger= LogBase.get();
-    }
+    @Autowired
+    private LogTemplate logger;
 
     /**
      * 握手协议之前调用函数
@@ -34,7 +33,7 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
      */
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-        logger.info("websocket before handshake");
+        logger.info(WebSocketHandshakeInterceptor.class, "", "websocket before handshake");
         //User user = (User) SecurityUtils.getSubject().getPrincipal();
         if (request instanceof ServerHttpRequest){
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
@@ -58,7 +57,7 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
      */
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
-        logger.info("websocket After handshake");
+        logger.info(WebSocketHandshakeInterceptor.class, "", "websocket After handshake");
         super.afterHandshake(request, response, wsHandler, exception);
     }
 }

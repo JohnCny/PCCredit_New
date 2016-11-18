@@ -1,10 +1,10 @@
-package com.cardpay.controller.base;
+package com.cardpay.controller.test;
+import com.cardpay.basic.common.webSocket.SystemWebSocketHandler;
+import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.model.TModel;
 import com.cardpay.mgt.model.TestModel;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
-
-
 
 /**
  * http://localhost/swagger-ui.html
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "/test", description = "测试类")
 @RestController
 @RequestMapping("/test")
-
 public class TestController extends BaseController<TModel> {
+    private SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
 
 
     @ApiOperation(value = "测试接口", notes = "测试spring-fox",  httpMethod = "GET", produces = "application/json")
@@ -38,4 +38,9 @@ public class TestController extends BaseController<TModel> {
         System.out.println(vo.getModelName());
     }
 
+    @ApiOperation(value = "测试webSocket")
+    @RequestMapping(value = "", method = RequestMethod.PUT)
+    public void testWebSocket(){
+        systemWebSocketHandler.sendMessageToUsers("测试信息");
+    }
 }

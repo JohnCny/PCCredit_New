@@ -22,7 +22,7 @@ public class BaseController<T> extends BasicController {
      * dozer mapper
      */
     @Autowired
-    Mapper dozerMapper;
+    protected Mapper dozerMapper;
 
     //定义moddelAndView返回数据名称
     /*
