@@ -4,6 +4,7 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.model.TModel;
 import com.cardpay.mgt.model.TestModel;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/test")
 public class TestController extends BaseController<TModel> {
-    private SystemWebSocketHandler systemWebSocketHandler = new SystemWebSocketHandler();
+
+    @Autowired
+    private SystemWebSocketHandler systemWebSocketHandler ;
 
 
     @ApiOperation(value = "测试接口", notes = "测试spring-fox",  httpMethod = "GET", produces = "application/json")

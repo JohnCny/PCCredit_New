@@ -1,8 +1,8 @@
 package com.cardpay.basic.common.webSocket;
 
-import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.common.log.LogTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
@@ -15,6 +15,7 @@ import java.util.Map;
  * WebSocket消息发送处理对象
  * Created by chenkai on 2016/11/17.
  */
+@Component
 public class SystemWebSocketHandler extends TextWebSocketHandler {
     @Autowired
     private LogTemplate logger;
