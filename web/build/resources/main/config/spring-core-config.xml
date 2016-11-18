@@ -12,15 +12,6 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!--编码方式获取propertity数据信息-->
-    <bean id="configBean" class="com.cardpay.basic.common.context.ContextProperty">
-        <property name="locations">
-            <list>
-                <value>classpath:properties/jdbc.properties</value>
-            </list>
-        </property>
-    </bean>
-
     <!--配置WebSocket engine,设置websocket的内容大小-->
     <bean id="serverFactory" class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
         <property name="maxTextMessageBufferSize" value="8192"/>
