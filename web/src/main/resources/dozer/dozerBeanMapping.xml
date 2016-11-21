@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <!-- dozer 全局配置-->
+    <configuration>
+        <stop-on-errors>true</stop-on-errors> <!-- dozer 异常配置-->
+        <date-format>yyyy-MM-dd</date-format> <!-- dozer 日期类型配置-->
+        <wildcard>true</wildcard>             <!-- dozer 显性/隐性模式配置-->
+        <trim-strings>true</trim-strings>     <!-- dozer 空字符串配置-->
+        <!--  Dozer 自定义转换
+           <custom-converters>
+                  <converter type="org.dozer.converters.TestCustomConverter">
+                      <class-a>org.dozer.vo.CustomDoubleObject</class-a>
+                      <class-b>java.lang.Double</class-b>
+                  </converter>
+              </custom-converters>-->
+    </configuration>
+
+<!-- 简单形式采用注解形式，复杂形式采用xml
+ <mapping date-format="yyyy-MM-dd">
+            <class-a>com.cardpay.mgt.model.TModel</class-a>
+            <class-b>com.cardpay.mgt.model.TestModel</class-b>
+            <field>
+                <a>name</a>
+                <b>modelName</b>
+            </field>
+         <field>
+             <a>type</a>
+             <b>modelType</b>
+         </field>
+        </mapping>-->
+</mappings>

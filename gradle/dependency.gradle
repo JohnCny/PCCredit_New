@@ -1,0 +1,127 @@
+//定义依赖版本和常量属性
+ext {
+    spring_version = '4.2.4.RELEASE'
+    shiro_version = '1.3.0'
+    jackson_version = '2.5.0'
+    jstl_version = '1.2'
+    javax_servlet_version='3.1.0'
+    slf4j_version = '1.7.21'
+    powermock = '1.6.5'
+}
+
+//定义依赖repositories地址
+ext.libraries = [
+        //spring
+        "spring-core":"org.springframework:spring-core:$spring_version",
+        "spring-context":"org.springframework:spring-context:$spring_version",
+        "spring-context-support":"org.springframework:spring-context-support:$spring_version",
+        "spring-expression":"org.springframework:spring-expression:$spring_version",
+        "spring-beans":"org.springframework:spring-beans:$spring_version",
+        "spring-context":"org.springframework:spring-context:$spring_version",
+        "spring-tx":"org.springframework:spring-tx:$spring_version",
+        "spring-web":"org.springframework:spring-web:$spring_version",
+        "spring-oxm":"org.springframework:spring-oxm:$spring_version",
+        "spring-webmvc":"org.springframework:spring-webmvc:$spring_version",
+        "spring-aop":"org.springframework:spring-aop:$spring_version",
+        "spring-jdbc":"org.springframework:spring-jdbc:$spring_version",
+
+        //aop
+        "aspectjweaver":"org.aspectj:aspectjweaver:1.8.9",
+        "aspectjrt":"org.aspectj:aspectjrt:1.8.9",
+
+        //redis
+        "spring-data-jpa":"org.springframework.data:spring-data-jpa:1.9.4.RELEASE",
+        "spring-data-redis":"org.springframework.data:spring-data-redis:1.7.1.RELEASE",
+        "jedis":"redis.clients:jedis:2.8.1",
+
+        //shrio
+        "shiro-core":"org.apache.shiro:shiro-core:$shiro_version",
+        "shiro-web":"org.apache.shiro:shiro-web:$shiro_version",
+        "shiro-ehcache":"org.apache.shiro:shiro-ehcache:$shiro_version",
+        "shiro-spring":"org.apache.shiro:shiro-spring:$shiro_version",
+
+        //servlet和jstl
+        "jstl":"javax.servlet:jstl:$jstl_version",
+        "javax-servlet":"javax.servlet:javax.servlet-api:$javax_servlet_version",
+
+        //logback和slf4j
+        "logback-core":"ch.qos.logback:logback-core:1.1.7",
+        "logback-classic":"ch.qos.logback:logback-classic:1.1.7",
+        "logback-ext-spring":"org.logback-extensions:logback-ext-spring:0.1.4",
+        "jcl-over-slf4j":"org.slf4j:jcl-over-slf4j:$slf4j_version",
+
+        //commonio
+        "commons-io":"commons-io:commons-io:2.5",
+        "commons-fileupload":"commons-fileupload:commons-fileupload:1.3.1",
+        "commons-lang3":"org.apache.commons:commons-lang3:3.4",
+        "guava":"com.google.guava:guava:20.0",
+
+        //gson
+        "gson":"com.google.code.gson:gson:2.6.2",
+        "json-path":"com.jayway.jsonpath:json-path:2.2.0",
+
+        //common-codec
+        "commons-codec":"commons-codec:commons-codec:1.10",
+
+        //druid
+        "druid":"com.alibaba:druid:1.0.26",
+
+        //mybatis
+        "mybatis":"org.mybatis:mybatis:3.2.6",
+        "mybatis-spring":"org.mybatis:mybatis-spring:1.2.4",
+        "mysql-connector-java":"mysql:mysql-connector-java:5.1.38",
+
+        //通用mapper
+        "mysql-connector":"mysql:mysql-connector-java:5.1.30",
+        "tk.mybatis":"tk.mybatis:mapper:3.3.9",
+
+        //分页插件
+        "pagehelper":"com.github.pagehelper:pagehelper:4.1.6",
+
+        //dozer-spring
+        "dozer":"net.sf.dozer:dozer:5.5.1",
+        "dozer-spring":"net.sf.dozer:dozer-spring:5.5.1",
+
+        //spring-fox
+        "springfox-swagger2":"io.springfox:springfox-swagger2:2.6.0",
+        "springfox-swagger-ui":"io.springfox:springfox-swagger-ui:2.6.0",
+        "springfox-data-rest":"io.springfox:springfox-data-rest:2.6.0",
+        "springfox-bean-validators":"io.springfox:springfox-bean-validators:2.6.1",
+
+        //freemarker
+        "freemarker":"org.freemarker:freemarker:2.3.21",
+        "shiro-freemarker-tags":"net.mingsoft:shiro-freemarker-tags:0.1",
+
+        //验证码
+        "kaptcha":":kaptcha-2.3.2",
+
+        //httpclient
+        "httpclient":"org.apache.httpcomponents:httpclient:4.5.2",
+        "httpcore":"org.apache.httpcomponents:httpcore:4.4.5",
+
+        //rabbitmq
+        "amqp-client":"com.rabbitmq:amqp-client:3.6.3",
+        "spring-rabbit":"org.springframework.amqp:spring-rabbit:1.6.0.RELEASE",
+        "spring-integration-amqp":"org.springframework.integration:spring-integration-amqp:4.3.0.RELEASE",
+
+        //aspect
+        "aspectjweaver":"org.aspectj:aspectjweaver:1.8.8",
+        "aspectjrt":"org.aspectj:aspectjrt:1.8.9",
+
+        //webSocket
+        "spring-websocket":"org.springframework:spring-websocket:4.3.4.RELEASE",
+
+        //单元测试
+        "junit":"junit:junit:4.12",
+        "spring-test":"org.springframework:spring-test:$spring_version",
+        "mockito-core":"org.mockito:mockito-core:1.10.19",
+        "spring-mock":"org.springframework:spring-mock:2.0.8",
+        "powermock-module-junit4":"org.powermock:powermock-module-junit4:$powermock",
+        "powermock-api-mockito":"org.powermock:powermock-api-mockito:$powermock",
+        "powermock-api-easymock":"org.powermock:powermock-api-easymock:$powermock",
+        "easymock":"org.easymock:easymock:3.4",
+        "unitils-core":"org.unitils:unitils-core:3.4.2",
+        "unitils-spring":"org.unitils:unitils-spring:3.4.2",
+        "tomcat-embed-websocket":"org.apache.tomcat.embed:tomcat-embed-websocket:8.5.3",
+        "h2":"com.h2database:h2:1.4.191",
+]
