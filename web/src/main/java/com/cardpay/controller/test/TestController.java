@@ -1,11 +1,12 @@
 package com.cardpay.controller.test;
-import com.cardpay.basic.common.webSocket.SystemWebSocketHandler;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.model.TModel;
 import com.cardpay.mgt.model.TestModel;
 import io.swagger.annotations.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static com.cardpay.basic.common.webSocket.SystemWebSocketHandler.sendMessageToUser;
+import static com.cardpay.basic.common.webSocket.SystemWebSocketHandler.sendMessageToUsers;
 
 /**
  * http://localhost/swagger-ui.html
@@ -16,16 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/test")
 public class TestController extends BaseController<TModel> {
 
-    @Autowired
-    private SystemWebSocketHandler systemWebSocketHandler ;
-
-
     @ApiOperation(value = "测试接口", notes = "测试spring-fox",  httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
     @RequestMapping(value = "" ,method = RequestMethod.GET)
     //@ApiImplicitParams({ @ApiImplicitParam(name = "tModel", value = "testBean", required = true, dataType = "TModel")})
-    public String test(@ApiParam(required = true, value ="对象" )@ModelAttribute TModel tModel,
-                       @ApiParam(value ="Json" )@RequestBody TModel jsonModel,
+    public String test(@ApiParam(required = true, value ="对象" ) @ModelAttribute TModel tModel,
+                       @ApiParam(value ="Json" ) @RequestBody TModel jsonModel,
                        @ApiParam(value = "测试数据") @RequestParam String str){
         return "dist/index";
     }
@@ -41,15 +38,18 @@ public class TestController extends BaseController<TModel> {
         System.out.println(vo.getModelName());
     }
 
+    /**
+     * http://localhost/testSocket.jsp
+     */
     @ApiOperation(value = "测试给所有用户推送消息")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public void testWebSocket(){
-        systemWebSocketHandler.sendMessageToUsers("测试信息");
+        sendMessageToUsers("测试信息");
     }
 
     @ApiOperation(value = "测试给指定用户推送消息")
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public void testSendWebSocket(){
-        systemWebSocketHandler.sendMessageToUser(1, "测试信息");
+        sendMessageToUser(1, "测试信息");
     }
 }

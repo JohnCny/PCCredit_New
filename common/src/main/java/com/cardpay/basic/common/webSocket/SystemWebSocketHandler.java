@@ -18,7 +18,7 @@ import java.util.Map;
 @Component
 public class SystemWebSocketHandler extends TextWebSocketHandler {
     @Autowired
-    private LogTemplate logger;
+    private static LogTemplate logger;
 
     private static final List<WebSocketSession> users;
 
@@ -91,10 +91,10 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     }
 
     /**
-     * 给所有在线用户发消息
-     * @param message 消息
+     * 给所有在线用户推送消息
+     * @param message 消息内容
      */
-    public void sendMessageToUsers(String message) {
+    public static void sendMessageToUsers(String message) {
         users.forEach(user->{
             if(user.isOpen()){
                 try {
@@ -110,11 +110,11 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     }
 
     /**
-     * 给指定的用户发消息
+     * 给指定的用户推送消息
      * @param userId 用户id
-     * @param message 消息
+     * @param message 消息内容
      */
-    public void sendMessageToUser(Integer userId, String message) {
+    public static void sendMessageToUser(Integer userId, String message) {
         WebSocketSession session = webSocketSessions.get(userId);
         if (session.isOpen()){
             try {
