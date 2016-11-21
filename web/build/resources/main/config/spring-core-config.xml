@@ -58,6 +58,7 @@
         <!-- <property name="text" value="邮件内容" /> -->
     </bean>
 
+
     <!-- captcha验证码配置 -->
     <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
         <property name="config">

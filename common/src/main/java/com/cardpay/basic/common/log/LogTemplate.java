@@ -1,11 +1,14 @@
 package com.cardpay.basic.common.log;
 
+import com.cardpay.basic.common.webSocket.SystemWebSocketHandler;
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 /**
  * 日志操作类
  * @author johnmyiqn.
  */
+@Component
 public class LogTemplate {
     /**
      * 日志对象
@@ -24,6 +27,8 @@ public class LogTemplate {
         if(debugData == null){
             debugData = "";
         }
+        String test = "%s,%s";
+        System.out.println(test.replace("{}", "%s"));
         //打印日志信息
         LogBase.debug(logger,"%s,%s",desc,debugData);
     }
