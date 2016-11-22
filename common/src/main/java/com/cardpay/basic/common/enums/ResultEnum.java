@@ -90,7 +90,8 @@ public enum ResultEnum {
      */
     OLD_PASSWORD_ERROR(5016);
 
-    private int value; // 自定义数据域，private为了封装。
+    private int value; // 自定义数据域，private为了封装
+    private
 
     ResultEnum(int val) {
         this.value = val;

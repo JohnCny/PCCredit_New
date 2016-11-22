@@ -1,5 +1,6 @@
 package com.cardpay.basic.util;
 
+import com.cardpay.basic.common.log.LogBase;
 import org.slf4j.Logger;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 public class ErrorMessageUtil {
 
-    private static final Logger logger = LogUtil.get();
+    private static final Logger logger = LogBase.get();
 
     /**
      * 组装错误数据 redirectAttributes

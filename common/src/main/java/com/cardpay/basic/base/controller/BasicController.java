@@ -1,10 +1,12 @@
 package com.cardpay.basic.base.controller;
 
 import com.cardpay.basic.common.propertyeditor.StringEscapeEditor;
-import com.cardpay.basic.util.DozerUtil;
-import com.cardpay.basic.util.LogUtil;
+import com.cardpay.basic.common.webSocket.SystemWebSocketHandler;
+import com.cardpay.basic.common.log.LogBase;
+import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -12,13 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static java.awt.SystemColor.info;
-
 /**
  * Created by johnmyiqn on 2016/11/10.
  */
 public class BasicController {
-    protected static final Logger logger = LogUtil.get();
+    protected static final Logger logger = LogBase.get();
 
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) {

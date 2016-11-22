@@ -4,6 +4,7 @@ import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import io.swagger.annotations.ApiOperation;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,8 +17,13 @@ import java.util.Map;
  * 基础controller 通用接口
  * @author johnmyiqn
  */
-public class BaseController<T> extends BasicController
-{
+public class BaseController<T> extends BasicController {
+    /**
+     * dozer mapper
+     */
+    @Autowired
+    protected Mapper dozerMapper;
+
     //定义moddelAndView返回数据名称
     /*
         选择查询名称
