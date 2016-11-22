@@ -148,6 +148,7 @@ subprojects {
                 libraries."mybatis",
                 libraries."mybatis-spring",
                 libraries."mysql-connector-java",
+                libraries."oracle-connector-java",
 
                 //通用mapper
                 libraries."mysql-connector",

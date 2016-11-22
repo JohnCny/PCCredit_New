@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <!-- 数据源MySQL -->
-    <bean id="mySQLDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="mysqlDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库驱动 -->
         <property name="driverClassName" value="${mysql.driverClass}"/>
         <!-- 基本属性 url、user、password -->
@@ -57,7 +57,7 @@
         <property name="timeBetweenEvictionRunsMillis" value="60000" />
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
         <property name="minEvictableIdleTimeMillis" value="300000" />
-        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="validationQuery" value="select 1 from dual" />
         <property name="testWhileIdle" value="true" />
         <property name="testOnBorrow" value="false" />
         <property name="testOnReturn" value="false" />
