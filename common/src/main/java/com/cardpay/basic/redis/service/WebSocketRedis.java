@@ -52,7 +52,7 @@ public class WebSocketRedis {
     /**
      * 查询redis中所有存储的WebSocketSession信息
      *
-     * @return
+     * @return WebSocketSession信息
      */
     public List<WebSocketSession> queryAll() {
         if (redisClient.exists(USER, flag)) {
