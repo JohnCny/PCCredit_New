@@ -1,17 +1,20 @@
 package com.cardpay.basic.task;
 
+import com.cardpay.basic.common.log.LogTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
+ * 定时任务(注解方式实现)
+ *
  * @author rankai .
  * @date 2016/11/22 .
  */
 @Component
-public class TaskClass {
+public class TaskAnnotation {
 
-    @Scheduled(fixedRate = 1000 * 2)
+    @Scheduled(fixedRate = 1000 * 10)
     public void test() {
-        System.out.println("测试定时任务");
+        LogTemplate.debug(this.getClass(), "定时任务和Log测试", "成功");
     }
 }
