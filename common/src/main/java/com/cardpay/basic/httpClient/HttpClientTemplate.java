@@ -30,11 +30,10 @@ public class HttpClientTemplate {
 
     /**
      * 执行GET请求
-     *
-     * @param url
-     * @return
-     * @throws IOException
-     * @throws ClientProtocolException
+     * @param url 请求地址
+     * @return 状态码
+     * @throws ClientProtocolException 异常信息
+     * @throws IOException 异常信息
      */
     public String doGet(String url) throws ClientProtocolException, IOException {
         // 创建http GET请求
@@ -60,12 +59,12 @@ public class HttpClientTemplate {
     /**
      * 带有参数的GET请求
      *
-     * @param url
-     * @param params
-     * @return
-     * @throws URISyntaxException
-     * @throws IOException
-     * @throws ClientProtocolException
+     * @param url 请求地址
+     * @param params 请求参数
+     * @return 状态码
+     * @throws URISyntaxException 异常信息
+     * @throws IOException 异常信息
+     * @throws ClientProtocolException 异常信息
      */
     public String doGet(String url, Map<String, String> params)
             throws ClientProtocolException, IOException, URISyntaxException {
@@ -79,10 +78,10 @@ public class HttpClientTemplate {
     /**
      * 执行POST请求
      *
-     * @param url
-     * @param params
-     * @return
-     * @throws IOException
+     * @param url 请求地址
+     * @param params 请求参数
+     * @return 状态码
+     * @throws IOException 异常信息
      */
     public HttpResult doPost(String url, Map<String, String> params) throws IOException {
         // 创建http POST请求
@@ -116,9 +115,9 @@ public class HttpClientTemplate {
     /**
      * 执行POST请求
      *
-     * @param url
-     * @return
-     * @throws IOException
+     * @param url 请求地址
+     * @return 状态码
+     * @throws IOException 异常信息
      */
     public HttpResult doPost(String url) throws IOException {
         return this.doPost(url, null);
@@ -127,11 +126,11 @@ public class HttpClientTemplate {
     /**
      * 提交json数据
      *
-     * @param url
-     * @param json
-     * @return
-     * @throws ClientProtocolException
-     * @throws IOException
+     * @param url 请求地址
+     * @param json json数据
+     * @return 状态码
+     * @throws ClientProtocolException 异常信息
+     * @throws IOException 异常信息
      */
     public HttpResult doPostJson(String url, String json) throws ClientProtocolException, IOException {
         // 创建http POST请求
