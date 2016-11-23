@@ -1,8 +1,8 @@
-package com.cardpay.mgt.service;
+package com.cardpay.mgt.test.service;
 
 
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.model.TModel;
+import com.cardpay.mgt.test.model.TModel;
 import org.springframework.stereotype.Service;
 
 /**

@@ -70,6 +70,7 @@ ext.libraries = [
         "mybatis":"org.mybatis:mybatis:3.2.6",
         "mybatis-spring":"org.mybatis:mybatis-spring:1.2.4",
         "mysql-connector-java":"mysql:mysql-connector-java:5.1.38",
+        "oracle-connector-java":"com.oracle:ojdbc6:11.2.0.3",
 
         //通用mapper
         "mysql-connector":"mysql:mysql-connector-java:5.1.30",
