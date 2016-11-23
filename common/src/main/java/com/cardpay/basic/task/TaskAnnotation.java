@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TaskAnnotation {
 
-    @Scheduled(fixedRate = 1000 * 10)
+//    @Scheduled(fixedRate = 1000 * 10)
     public void test() {
         LogTemplate.debug(this.getClass(), "定时任务和Log测试", "成功");
     }

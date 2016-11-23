@@ -33,43 +33,7 @@ public class UserCredentialsMatcher extends SimpleCredentialsMatcher {
      */
     @Override
     public boolean doCredentialsMatch(AuthenticationToken authcToken, AuthenticationInfo info) {
-        CaptchaAuthenticationToken token = (CaptchaAuthenticationToken) authcToken;
-        String userName = token.getUsername();
-        Object passwordRetry = redisClient.get(userName + "_login");
-        int intPasswordRetry = 0;
-        if (passwordRetry != null) {
-            try {
-                intPasswordRetry = Integer.parseInt(passwordRetry.toString());
-            } catch (Exception e) {
-                Date date = (Date) passwordRetry;
-                Date nowDate = new Date();
-                Long time = (Constant.LOGIN_TIMEOUT * 1000) - (nowDate.getTime() - date.getTime());
-                throw new LockedAccountException(FormatTimeUtil.formatTime(time));
-            }
-        }
 
-        String password = (String) getCredentials(info);
-        //对用户输入的密码进行加密
-        String tokenPassword = PasswordUtil.encryptPassword(String.copyValueOf(token.getPassword()));
-        log.info("用户输入加密后密码:" + tokenPassword + "<<<>>>" + password);
-        if (!equals(tokenPassword, password)) {
-            int max = intPasswordRetry + 1;
-            //判断密码错误次数是否达到锁定次数
-            if (max == Constant.LOCK_COUNT) {
-                redisClient.set(userName + "_login", new Date(), Constant.LOGIN_TIMEOUT);
-                throw new LockedAccountException((Constant.LOGIN_TIMEOUT / 60 / 60) + "小时0分钟0秒");
-            }
-            //判断密码错误次数是否达到出现验证码的次数
-            if (max >= Constant.CAPTCHA_COUNT) {
-                redisClient.set(userName + "_login", max, Constant.LOGIN_TIMEOUT);
-                throw new ExcessiveAttemptsException(String.valueOf(Constant.LOCK_COUNT - max));
-            }
-            redisClient.set(userName + "_login", max, Constant.LOGIN_TIMEOUT);
-            return Boolean.FALSE;
-        }
-        if (passwordRetry != null) {
-            redisClient.delete(userName + "_login");
-        }
         return Boolean.TRUE;
     }
 }
