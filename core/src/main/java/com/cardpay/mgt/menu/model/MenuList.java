@@ -1,9 +1,10 @@
 package com.cardpay.mgt.menu.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "MENU")
-public class Menu {
+public class MenuList {
 
     @Id
     @Column(name = "ID")
@@ -18,6 +19,20 @@ public class Menu {
 
     @Column(name = "MENU_LEVEL")
     private Short menuLevel;
+
+    /**
+     * 子菜单
+     */
+    @Transient
+    private List<MenuList> menuLists;
+
+    public List<MenuList> getMenuLists() {
+        return menuLists;
+    }
+
+    public void setMenuLists(List<MenuList> menuLists) {
+        this.menuLists = menuLists;
+    }
 
     /**
      * @return ID

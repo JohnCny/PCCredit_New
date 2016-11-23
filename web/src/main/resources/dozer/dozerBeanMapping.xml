@@ -20,8 +20,8 @@
 
 <!-- 简单形式采用注解形式，复杂形式采用xml
  <mapping date-format="yyyy-MM-dd">
-            <class-a>com.cardpay.mgt.model.TModel</class-a>
-            <class-b>com.cardpay.mgt.model.TestModel</class-b>
+            <class-a>com.cardpay.mgt.test.model.TModel</class-a>
+            <class-b>com.cardpay.mgt.test.model.TestModel</class-b>
             <field>
                 <a>name</a>
                 <b>modelName</b>

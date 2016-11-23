@@ -1,7 +1,7 @@
 package com.cardpay.controller.test;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.mgt.model.TModel;
-import com.cardpay.mgt.model.TestModel;
+import com.cardpay.mgt.test.model.TModel;
+import com.cardpay.mgt.test.model.TestModel;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
