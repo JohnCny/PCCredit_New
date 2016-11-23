@@ -95,7 +95,7 @@
     <import resource="classpath:config/spring-config-shiro.xml"/>
     <import resource="classpath:config/spring-config-redis.xml"/>
     <import resource="classpath:config/spring-config-rabbitmq.xml"/>
-    <import resource="classpath:config/spring-config-mysql.xml"/>
+    <import resource="classpath:config/spring-config-database.xml"/>
     <import resource="classpath:config/spring-config-httpclient.xml"/>
     <import resource="classpath:config/spring-config-dozer.xml"/>
 
@@ -129,4 +129,5 @@
             </property>
         </bean>
     </beans>
+
 </beans>
