@@ -16,9 +16,10 @@ public class LogTemplate {
     private static Logger logger = null;
 
     /**
-     * 打印日志debug级别，开发调试阶段打印，上线后不需要打印
+     * * 打印日志debug级别，开发调试阶段打印，上线后不需要打印
      * @param desc 日志描述信息
      * @param debugData 日志debug级别数据
+     * @param clazz 日志类
      */
     public static void debug(Class<?> clazz,String desc, String debugData){
         if(logger == null){
@@ -35,6 +36,7 @@ public class LogTemplate {
 
     /**
      * 打印日志info级别，开发和上线为了定位问题打印日志
+     * @param clazz 日志类
      * @param desc 日志描述信息
      * @param inforData 日志debug级别数据
      */
@@ -51,6 +53,8 @@ public class LogTemplate {
 
     /**
      * 打印日志warn级别，开发和上线为了定位出现错误或者异常，但是不至于导致程序报错或者程序崩溃日志
+     * @param clazz 日志类
+     * @param e 异常信息
      * @param desc 日志描述信息
      * @param warnData 日志debug级别数据
      */
@@ -67,6 +71,8 @@ public class LogTemplate {
 
     /**
      * 打印日志warn级别，开发和上线为了定位出现错误或者异常，但是不至于导致程序报错或者程序崩溃日志
+     * @param e 异常信息
+     * @param clazz 日志类
      * @param desc 日志描述信息
      * @param warnData 日志debug级别数据
      */
@@ -118,6 +124,7 @@ public class LogTemplate {
     /**
      * 打印日志warn级别，开发和上线为了定位出现错误或者异常，但是不至于导致程序报错或者程序崩溃日志
      * 由于动态获取Logger，效率较低，建议在非频繁调用的情况下使用！！
+     * @param e 异常信息
      * @param desc 日志描述信息
      * @param warnData 日志debug级别数据
      */
@@ -130,10 +137,11 @@ public class LogTemplate {
     }
 
     /**
-     * 打印日志warn级别，开发和上线为了定位出现错误或者异常，但是不至于导致程序报错或者程序崩溃日志
+     *   * 打印日志warn级别，开发和上线为了定位出现错误或者异常，但是不至于导致程序报错或者程序崩溃日志
      * 由于动态获取Logger，效率较低，建议在非频繁调用的情况下使用！！
      * @param desc 日志描述信息
      * @param errorData 日志debug级别数据
+     * @param e 异常信息
      */
     public static void error(Throwable e, String desc, String errorData){
         if(logger == null){
