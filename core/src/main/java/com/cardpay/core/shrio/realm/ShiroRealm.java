@@ -110,8 +110,12 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 清除缓存
+<<<<<<< HEAD
      *
      * @param principals
+=======
+     * @param principals principals
+>>>>>>> origin/develop
      */
     @Override
     public void clearCache(PrincipalCollection principals) {

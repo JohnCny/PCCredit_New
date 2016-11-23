@@ -1,4 +1,4 @@
-package com.cardpay.mgt.model;
+package com.cardpay.mgt.test.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -150,58 +150,34 @@ public class TModel {
         this.type = type;
     }
 
-    /**
-     * @return created_by
-     */
     public Integer getCreatedBy() {
         return createdBy;
     }
 
-    /**
-     * @param createdBy
-     */
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
     }
 
-    /**
-     * @return created_at
-     */
     public Date getCreatedAt() {
         return createdAt;
     }
 
-    /**
-     * @param createdAt
-     */
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    /**
-     * @return modified_by
-     */
     public Integer getModifiedBy() {
         return modifiedBy;
     }
 
-    /**
-     * @param modifiedBy
-     */
     public void setModifiedBy(Integer modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
 
-    /**
-     * @return modified_at
-     */
     public Date getModifiedAt() {
         return modifiedAt;
     }
 
-    /**
-     * @param modifiedAt
-     */
     public void setModifiedAt(Date modifiedAt) {
         this.modifiedAt = modifiedAt;
     }

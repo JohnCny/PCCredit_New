@@ -1,6 +1,5 @@
-package com.cardpay.mgt.model;
+package com.cardpay.mgt.test.model;
 
-import javax.persistence.Id;
 import java.util.Date;
 
 /**

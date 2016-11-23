@@ -1,10 +1,8 @@
-package com.cardpay.mgt.service;
+package com.cardpay.mgt.test.service;
 
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by yanwe on 2016/11/17.
