@@ -4,7 +4,7 @@ import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.basic.util.FormatTimeUtil;
 import com.cardpay.basic.common.log.LogBase;
-import com.cardpay.core.shrio.util.PasswordUtil;
+import com.cardpay.core.shrio.common.PasswordUtil;
 import com.cardpay.core.shrio.token.CaptchaAuthenticationToken;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -25,14 +25,6 @@ public class UserCredentialsMatcher extends SimpleCredentialsMatcher {
     private static final Logger log = LogBase.get(UserCredentialsMatcher.class);
 
     private RedisClient redisClient;
-
-    /**
-     * 构造方法
-     * @param redisClient redisClient对象
-     */
-    public UserCredentialsMatcher(RedisClient redisClient) {
-        this.redisClient = redisClient;
-    }
 
     /**
      * @param authcToken AuthenticationToken
