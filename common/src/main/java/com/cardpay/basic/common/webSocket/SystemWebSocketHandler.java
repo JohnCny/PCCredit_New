@@ -55,7 +55,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      * 接受客户端信息
      * @param session session
      * @param message 信息
-     * @throws Exception
+     * @throws Exception 异常信息
      */
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage message)
