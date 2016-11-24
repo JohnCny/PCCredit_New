@@ -18,6 +18,27 @@
         </listener-class>
     </listener>
 
+    <!-- 设置servlet编码开始 -->
+    <filter>
+        <filter-name>Set Character Encoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>Set Character Encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- 设置servlet 编码结束 -->
+
     <!-- shiroback filter-->
     <filter>
         <filter-name>shiroFilter</filter-name>
@@ -42,27 +63,6 @@
         <param-name>logbackConfigLocation</param-name>
         <param-value>classpath:logback/logback.xml</param-value>
     </context-param>
-
-    <!-- 设置servlet编码开始 -->
-    <filter>
-        <filter-name>Set Character Encoding</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter
-        </filter-class>
-        <async-supported>true</async-supported>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-        <init-param>
-            <param-name>forceEncoding</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>Set Character Encoding</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!-- 设置servlet 编码结束 -->
 
     <!-- REST涉及的过滤器 -->
    <filter>
