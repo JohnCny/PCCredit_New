@@ -23,4 +23,14 @@ public class TOrganizationServiceImpl extends BaseService<TOrganization> impleme
         tOrganizationDao.createOrganizationView(id, levels);
         return tOrganizationDao.queryOrganization(id);
     }
+
+    @Override
+    public int updateOrganization(int id, int parentId) {
+        return tOrganizationDao.updateOrganization(id, parentId);
+    }
+
+    @Override
+    public int deleteOrganization(int id) {
+        return tOrganizationDao.deleteOrganization(id);
+    }
 }
