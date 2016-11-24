@@ -2,7 +2,7 @@ package com.cardpay.controller.base;
 
 import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.ResultTo;
-import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class BaseController<T> extends BasicController {
     String PAGE_START_LIST = "PageStartList";
 
     @Autowired
-    BaseService<T> baseService;
+    BaseServiceImpl<T> baseService;
 
     /**
      * 根据实体中的属性值进行查询，查询条件使用等号

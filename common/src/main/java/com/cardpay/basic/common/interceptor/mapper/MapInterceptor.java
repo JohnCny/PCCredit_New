@@ -1,13 +1,13 @@
 package com.cardpay.basic.common.interceptor.mapper;
 
 import com.cardpay.basic.common.interceptor.enums.ReturnMapParam;
-import com.cardpay.basic.common.log.LogBase;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ReflectUtil;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.resultset.DefaultResultSetHandler;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.plugin.*;
-import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +21,8 @@ import java.util.*;
 @Intercepts(@Signature(method="handleResultSets", type=ResultSetHandler.class, args={Statement.class}))
 public class MapInterceptor implements Interceptor {
 
-    private static final Logger logger = LogBase.get();
+    @Autowired
+    private LogTemplate logger;
 
     public Object intercept(Invocation invocation) throws Throwable {
         //通过invocation获取代理的目标对象  
@@ -71,7 +72,7 @@ public class MapInterceptor implements Interceptor {
                 }  
             } catch (SQLException e) {
                 e.printStackTrace();
-                logger.error("SQL结果集转换Map异常");
+                logger.error(MapInterceptor.class, e, "SQL结果集转换Map异常", null);
             } finally {  
                 closeResultSet(resultSet);  
             }  
@@ -92,7 +93,7 @@ public class MapInterceptor implements Interceptor {
                 resultSet.close();  
             }  
         } catch (SQLException e) {
-            logger.error("关闭ResultSet异常");
+            logger.error(MapInterceptor.class, e, "关闭ResultSet异常", null);
         }  
     }  
   
