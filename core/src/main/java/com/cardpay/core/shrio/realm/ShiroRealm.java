@@ -1,7 +1,6 @@
 package com.cardpay.core.shrio.realm;
 
 import com.cardpay.basic.redis.RedisClient;
-import com.cardpay.core.business.user.model.po.User;
 import com.cardpay.core.shrio.token.CaptchaAuthenticationToken;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;

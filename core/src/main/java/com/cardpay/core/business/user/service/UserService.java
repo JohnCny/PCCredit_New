@@ -1,7 +1,5 @@
 package com.cardpay.core.business.user.service;
 
-import com.cardpay.core.business.user.model.po.User;
-
 import java.util.Set;
 
 /**
