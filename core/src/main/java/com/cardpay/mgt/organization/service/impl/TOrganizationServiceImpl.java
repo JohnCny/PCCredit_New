@@ -1,6 +1,6 @@
 package com.cardpay.mgt.organization.service.impl;
 
-import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.organization.dao.TOrganizationMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.TOrganizationVo;
@@ -14,7 +14,7 @@ import java.util.List;
  * Created by chenkai on 2016/11/24.
  */
 @Service
-public class TOrganizationServiceImpl extends BaseService<TOrganization> implements TOrganizationService {
+public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> implements TOrganizationService {
     @Autowired
     private TOrganizationMapper tOrganizationDao;
 

@@ -1,16 +1,17 @@
 package com.cardpay.basic.util;
 
+import com.cardpay.basic.common.log.LogTemplate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
+
 
 /*
  * Json工具类
@@ -18,7 +19,8 @@ import java.util.Iterator;
  */
 public class JsonUtil {
 
-    private static final Logger log = LoggerFactory.getLogger(JsonUtil.class);
+    @Autowired
+    private LogTemplate logger;
 
     /**
      * 空的 {@code JSON} 数据 - <code>"{}"</code>。
@@ -103,7 +105,7 @@ public class JsonUtil {
                 result = gson.toJson(target);
             }
         } catch (Exception ex) {
-            log.error("目标对象 " + target.getClass().getName() + " 转换 JSON 字符串时，发生异常!", ex);
+            LogTemplate.error(JsonUtil.class, ex, "目标对象 " + target.getClass().getName() + " 转换 JSON 字符串时，发生异常!",null);
             if (target instanceof Collection || target instanceof Iterator || target instanceof Enumeration || target.getClass().isArray()) {
                 result = EMPTY_JSON_ARRAY;
             } else {
@@ -294,7 +296,7 @@ public class JsonUtil {
         try {
             return gson.fromJson(json, token.getType());
         } catch (Exception ex) {
-            log.error(json + " 无法转换为 " + token.getRawType().getName() + " 对象!", ex);
+            LogTemplate.error(JsonUtil.class, ex, json + " 无法转换为 " + token.getRawType().getName() + " 对象!", null);
             return null;
         }
     }
@@ -338,7 +340,7 @@ public class JsonUtil {
         try {
             return gson.fromJson(json, clazz);
         } catch (Exception ex) {
-            log.error(json + " 无法转换为 " + clazz.getName() + " 对象!", ex);
+            LogTemplate.error(JsonUtil.class, ex, json + " 无法转换为 " + clazz.getName() + " 对象!", null);
             return null;
         }
     }

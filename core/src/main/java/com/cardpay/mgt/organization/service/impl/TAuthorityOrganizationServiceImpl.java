@@ -1,6 +1,6 @@
 package com.cardpay.mgt.organization.service.impl;
 
-import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.organization.model.TAuthorityOrganization;
 import com.cardpay.mgt.organization.service.TAuthorityOrganizationService;
 import org.springframework.stereotype.Service;
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
  * Created by chenkai on 2016/11/24.
  */
 @Service
-public class TAuthorityOrganizationServiceImpl extends BaseService<TAuthorityOrganization> implements TAuthorityOrganizationService {
+public class TAuthorityOrganizationServiceImpl extends BaseServiceImpl<TAuthorityOrganization> implements TAuthorityOrganizationService {
 }

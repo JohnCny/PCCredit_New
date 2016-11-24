@@ -1,9 +1,9 @@
 package com.cardpay.mgt.organization.dao;
 
+import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.TOrganizationVo;
 import org.apache.ibatis.annotations.Param;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * 机构mapper接口
  * @author chenkai
  */
-public interface TOrganizationMapper extends Mapper<TOrganization> {
+public interface TOrganizationMapper extends BasicMapper<TOrganization> {
     /**
      * 动态创建机构表临时视图
      * @param id 父级id

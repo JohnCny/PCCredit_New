@@ -106,6 +106,7 @@
         <property name="properties">
             <value>
                 mappers=tk.mybatis.mapper.common.Mapper
+                ORDER=BEFORE
             </value>
         </property>
     </bean>

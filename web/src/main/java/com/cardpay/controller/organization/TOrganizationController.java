@@ -24,7 +24,7 @@ import java.util.List;
 @Api(value = "/api/organization", description = "机构Controller类")
 @RestController
 @RequestMapping("/api/organization")
-public class TOrganizationController extends BaseController<TOrganization> {
+public class TOrganizationController extends BaseController<TOrganization, Integer> {
     @Autowired
     @Qualifier("TOrganizationServiceImpl")
     private TOrganizationService tOrganizationService;

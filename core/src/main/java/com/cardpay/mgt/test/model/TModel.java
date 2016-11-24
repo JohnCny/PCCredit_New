@@ -1,5 +1,6 @@
 package com.cardpay.mgt.test.model;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.dozer.Mapping;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 @ApiModel(value = "测试bean")
 @Table(name = "t_model")
-public class TModel {
+public class TModel extends GenericEntity<Integer>{
     /**
      * 模型id
      */
@@ -182,4 +183,8 @@ public class TModel {
         this.modifiedAt = modifiedAt;
     }
 
+    @Override
+    public Integer getPK() {
+        return id;
+    }
 }

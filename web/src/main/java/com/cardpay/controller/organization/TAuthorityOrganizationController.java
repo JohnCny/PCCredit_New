@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Api(value = "/api/tAuthorityOrganization", description = "权限机构关联表Controller类")
 @Controller
 @RequestMapping("/api/tAuthorityOrganization")
-public class TAuthorityOrganizationController extends BaseController<TAuthorityOrganization>{
+public class TAuthorityOrganizationController extends BaseController<TAuthorityOrganization, Integer>{
     @Autowired
     @Qualifier("TAuthorityOrganizationServiceImpl")
     private TAuthorityOrganizationService tAuthorityOrganizationService;
