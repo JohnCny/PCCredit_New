@@ -1,8 +1,8 @@
 package com.cardpay.core.webSocket;
 
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.core.business.user.model.po.TUser;
 import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.mgt.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
@@ -44,7 +44,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
 
         Integer userId = null;
         try {
-            TUser user= (TUser)ShiroKit.getPrincipal();
+            User user= (User)ShiroKit.getPrincipal();
             userId = user.getId();
         }catch (Exception e) {
             e.printStackTrace();

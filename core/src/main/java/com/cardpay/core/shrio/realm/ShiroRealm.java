@@ -1,9 +1,8 @@
 package com.cardpay.core.shrio.realm;
 
-import com.cardpay.basic.redis.RedisClient;
-import com.cardpay.core.business.user.model.po.TUser;
 import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.core.shrio.token.CaptchaAuthenticationToken;
+import com.cardpay.mgt.user.model.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -38,7 +37,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         super.getAuthenticationCache().clear();
-        TUser user = (TUser) ShiroKit.getPrincipal();
+        User user = (User) ShiroKit.getPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         //获取角色集合和权限列表集合
 //        authorizationInfo.setRoles(userService.getRoles(user));
@@ -110,6 +109,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 清除缓存
+     *
      * @param principals
      */
     @Override
