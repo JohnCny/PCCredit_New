@@ -28,7 +28,7 @@ public class TestController extends BaseController<TModel> {
     }
 
     @ApiOperation(value = "测试Dozer po转vo")
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public void testDozer(){
         TModel po = new TModel();
         po.setId(1);

@@ -3,6 +3,7 @@ package com.cardpay.controller.base;
 import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.basic.common.log.LogTemplate;
 import io.swagger.annotations.ApiOperation;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class BaseController<T> extends BasicController {
     @Autowired
     protected Mapper dozerMapper;
 
-    //定义moddelAndView返回数据名称
+    //定义modelAndView返回数据名称
     /*
         选择查询名称
      */
@@ -182,6 +183,7 @@ public class BaseController<T> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含插入后数据
      */
+//    @RequestMapping(method = RequestMethod.POST)
     public ModelAndView insert(T record,String viewName){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName( viewName);
@@ -194,7 +196,9 @@ public class BaseController<T> extends BasicController {
      * @param record 实体对象
      * @return resultTo 包含插入后数据
      */
+    @RequestMapping(value = "",method = RequestMethod.POST)
     public ResultTo insert(T record){
+        System.out.println("测试数据:"+record.toString());
         ResultTo result = new ResultTo();
         baseService.insert(record);
         return result;

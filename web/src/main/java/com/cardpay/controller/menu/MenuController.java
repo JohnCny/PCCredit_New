@@ -2,9 +2,9 @@ package com.cardpay.controller.menu;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.mgt.menu.model.Menu;
-import com.cardpay.mgt.menu.model.MenuList;
-import com.cardpay.mgt.menu.service.MenuService;
+import com.cardpay.mgt.menu.model.TMenu;
+import com.cardpay.mgt.menu.model.TMenuVo;
+import com.cardpay.mgt.menu.service.TMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,15 +16,15 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/menu")
-public class MenuController extends BaseController<Menu>{
+public class MenuController extends BaseController<TMenu>{
 
     @Autowired
-    private MenuService menuService;
+    private TMenuService tMenuService;
 
     @RequestMapping("/all")
     public ResultTo selectMenuList(int level){
         ResultTo resultTo = new ResultTo();
-        List<MenuList> menuLists = menuService.selectMenuList(0,level);
+        List<TMenuVo> menuLists = tMenuService.selectMenuList(0,level);
         resultTo.setData(menuLists);
         return resultTo;
     }
