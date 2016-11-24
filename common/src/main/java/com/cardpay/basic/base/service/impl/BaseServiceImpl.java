@@ -1,10 +1,9 @@
 package com.cardpay.basic.base.service.impl;
 
+import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.basic.common.log.LogTemplate;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
@@ -14,14 +13,11 @@ import java.util.List;
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
 
-    @Autowired
-    private LogTemplate logger;
-
     /**
      * mapper定义
      */
     @Autowired
-    private Mapper<T> mapper;
+    private BasicMapper<T> mapper;
 
     /**
      * 根据实体中的属性值进行查询，查询条件使用等号

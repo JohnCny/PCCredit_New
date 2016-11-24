@@ -1,12 +1,14 @@
 package com.cardpay.basic.common.log;
 
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 /**
  * 日志操作类
  *
  * @author johnmyiqn.
  */
+@Component
 public class LogTemplate {
 
     private static final String LOG_FORMAT = "参数名:{} >> 参数值:{}";

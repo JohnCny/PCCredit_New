@@ -1,7 +1,6 @@
 package com.cardpay.core.shrio.common;
 
-import com.cardpay.basic.util.MD5Util;
-import com.cardpay.core.shrio.enums.ShrioEnum;
+import com.cardpay.mgt.user.model.User;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -21,6 +20,10 @@ public class PasswordUtil {
      * 加密次数
      */
     private static final int HASH_ITERATIONS = 1024;
+    /**
+     * 默认盐值
+     */
+    private static final String SALT_SOURCE = "qkjr123";
 
     /**
      * 将传入的字符串的密码加密
@@ -28,8 +31,19 @@ public class PasswordUtil {
      * @param password 密码字符串
      * @return 加密后的字符串
      */
-    public static String encryptPassword(String password, String saltSource) {
-        ByteSource salt = new Md5Hash(saltSource);
+    public static String encryptPassword(String password) {
+        ByteSource salt = new Md5Hash(SALT_SOURCE);
         return new SimpleHash(HASHA_LGORITHM_NAME, password, salt, HASH_ITERATIONS).toString();
+    }
+
+    /**
+     * 将传入的User对象中的密码属性进行加密
+     *
+     * @param user User对象
+     * @return 加密后的字符串
+     */
+    public static String encryptPassword(User user) {
+        ByteSource salt = new Md5Hash(SALT_SOURCE);
+        return new SimpleHash(HASHA_LGORITHM_NAME, user.getPassword(), salt, HASH_ITERATIONS).toString();
     }
 }

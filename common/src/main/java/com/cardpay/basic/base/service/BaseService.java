@@ -1,7 +1,5 @@
 package com.cardpay.basic.base.service;
 
-import org.apache.ibatis.session.RowBounds;
-
 import java.util.List;
 
 /**
