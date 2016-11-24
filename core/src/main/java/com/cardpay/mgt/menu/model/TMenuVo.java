@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.GenericEntity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 菜单Vo类
@@ -73,6 +74,29 @@ public class TMenuVo extends GenericEntity<Integer>{
      */
     @Column(name = "CREATE_TIME")
     private Date createTime;
+
+    /**
+     * 子菜单
+     */
+    private List<TMenuVo> menuLists;
+
+    /**
+     * 获取子菜单
+     *
+     * @return 子菜单
+     */
+    public List<TMenuVo> getMenuLists() {
+        return menuLists;
+    }
+
+    /**
+     * 设置子菜单
+     *
+     * @param menuLists 子菜单
+     */
+    public void setMenuLists(List<TMenuVo> menuLists) {
+        this.menuLists = menuLists;
+    }
 
     /**
      * 获取菜单id

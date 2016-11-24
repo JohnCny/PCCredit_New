@@ -26,4 +26,9 @@ public class TMenuServiceImpl extends BaseService<TMenu> implements TMenuService
         tMenuMapper.createMenuView(topId,level);
         return tMenuMapper.selectMenuList(topId);
     }
+
+    @Override
+    public Integer recursionDelete(Integer id) {
+        return tMenuMapper.recursionDelete(id);
+    }
 }

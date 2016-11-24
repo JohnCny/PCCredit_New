@@ -14,7 +14,7 @@ public interface TMenuMapper extends Mapper<TMenu> {
      * @param id 顶级id
      * @return
      */
-    List<TMenuVo> selectMenuList(int id);
+    List<TMenuVo> selectMenuList(@Param("id") int id);
 
     /**
      * 创建临时视图
@@ -22,4 +22,11 @@ public interface TMenuMapper extends Mapper<TMenu> {
      * @param level 层级
      */
     void createMenuView(@Param("id") int id, @Param("level") int level);
+
+    /**
+     * 递归删除菜单
+     * @param id 起始id
+     * @return
+     */
+    Integer recursionDelete(@Param("id") Integer id);
 }

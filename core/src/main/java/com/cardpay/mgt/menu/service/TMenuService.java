@@ -18,4 +18,11 @@ public interface TMenuService {
      * @return 菜单列表
      */
     List<TMenuVo> selectMenuList(int topId, int level);
+
+    /**
+     * 递归删除菜单
+     * @param id 起始id
+     * @return
+     */
+    Integer recursionDelete(Integer id);
 }

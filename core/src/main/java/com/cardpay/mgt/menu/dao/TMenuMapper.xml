@@ -33,7 +33,7 @@
 
   <!--递归查询菜单列表-->
   <select id="selectMenuList" resultMap="MenuListResultMap">
-    SELECT * FROM menu_view WHERE parent_id = #{ID}
+    SELECT * FROM T_MENU_VIEW WHERE menu_parent_id = #{id}
   </select>
 
   <!--创建层级视图-->
@@ -42,4 +42,9 @@
       {call CREATE_T_MENU_VIEW (#{id,mode=IN,jdbcType=DECIMAL},#{level,mode=IN,jdbcType=DECIMAL})}
     ]]>
   </select>
+
+  <!--递归删除菜单-->
+  <delete id="recursionDelete">
+    DELETE FROM T_MENU WHERE id IN (SELECT id FROM T_MENU CONNECT BY PRIOR id = menu_parent_id START WITH id = #{id})
+  </delete>
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -68,6 +69,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param record 实体对象
      * @return resultTo，包含查找结果集合
      */
+    @ResponseBody
     @RequestMapping(value = "/api/select",method = RequestMethod.GET)
     @ApiOperation("根据实体中的属性值进行查询，查询条件使用等号")
     public ResultTo select(T record){
@@ -98,6 +100,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param pk 实体对象
      * @return resultTo，包含查找结果实体
      */
+    @ResponseBody
     @ApiOperation("根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号")
     @RequestMapping(value = "/api",method = RequestMethod.GET)
     public ResultTo selectByPrimaryKey(@RequestParam("pk") PK pk){
@@ -126,6 +129,7 @@ public class BaseController<T,PK> extends BasicController {
      * 查询全部结果，select(null)方法能达到同样的效果
      * @return resultTo，包含查找结果集合
      */
+    @ResponseBody
     @RequestMapping(value = "/api/list",method = RequestMethod.GET)
     @ApiOperation("查询全部结果，select(null)方法能达到同样的效果")
     public ResultTo selectAll(){
@@ -156,6 +160,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param record 实体对象
      * @return resultTo，包含查找结果实体
      */
+    @ResponseBody
     @RequestMapping(value = "/api/selectOne",method = RequestMethod.GET)
     @ApiOperation("根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号")
     public ResultTo selectOne(T record){
@@ -186,6 +191,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param record 实体对象
      * @return resultTo，包含查找结果个数
      */
+    @ResponseBody
     @RequestMapping(value = "/api/selectCount",method = RequestMethod.GET)
     @ApiOperation("根据实体中的属性查询总数，查询条件使用等号")
     public ResultTo selectCount(T record){
@@ -214,6 +220,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param record 实体对象
      * @return resultTo 包含插入后数据
      */
+    @ResponseBody
     @RequestMapping(value = "/api",method = RequestMethod.POST)
     @ApiOperation("根据主键更新实体全部字段，null值会被更新")
     public ResultTo insert(T record){
@@ -243,6 +250,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param record 实体对象
      * @return resultTo 包含插入后数据
      */
+    @ResponseBody
     @RequestMapping(value = "/api/insertSelective",method = RequestMethod.POST)
     @ApiOperation("保存一个实体，null的属性不会保存，会使用数据库默认值")
     public ResultTo insertSelective(T record){
@@ -271,6 +279,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param record 实体对象
      * @return resultTo 包含更新后数据
      */
+    @ResponseBody
     @RequestMapping(value = "/api",method = RequestMethod.PUT)
     @ApiOperation("根据主键更新实体全部字段，null值会被更新")
     public ResultTo updateByPrimaryKey(T record){
@@ -300,6 +309,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param record 实体对象
      * @return resultTo 包含更新后数据
      */
+    @ResponseBody
     @RequestMapping(value = "/api/updateSelective",method = RequestMethod.PUT)
     @ApiOperation("根据主键更新属性不为null的值")
     public ResultTo updateSelective(T record){
@@ -328,6 +338,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param record 实体对象
      * @return resultTo 包含删除后数据
      */
+    @ResponseBody
     @RequestMapping(value = "/api/deleteSelective",method = RequestMethod.DELETE)
     @ApiOperation("根据实体属性作为条件进行删除，查询条件使用等号")
     public ResultTo delete(T record){
@@ -357,6 +368,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param pk 实体对象
      * @return resultTo 包含更新后数据
      */
+    @ResponseBody
     @RequestMapping(value = "/api",method = RequestMethod.DELETE)
     @ApiOperation("根据主键字段进行删除，方法参数必须包含完整的主键属性")
     public ResultTo deleteByPrimaryKey(@RequestParam("pk") PK pk){
@@ -392,6 +404,7 @@ public class BaseController<T,PK> extends BasicController {
      * @param size   个数
      * @return resultTo，包含分页数据集合
      */
+    @ResponseBody
     @RequestMapping(value = "/api/pageList",method = RequestMethod.DELETE)
     @ApiOperation("根据实体属性和RowBounds进行分页查询")
     public ResultTo pageList(T record,@RequestParam("page") Integer page,@RequestParam("size") Integer size){
