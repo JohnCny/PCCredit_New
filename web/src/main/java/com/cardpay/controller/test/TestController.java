@@ -1,12 +1,16 @@
 package com.cardpay.controller.test;
+import com.cardpay.basic.base.model.EchatesTo;
+import com.cardpay.basic.base.model.EchatesModel;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.mgt.model.TModel;
-import com.cardpay.mgt.model.TestModel;
+import com.cardpay.mgt.test.model.TModel;
+import com.cardpay.mgt.test.model.TestModel;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.cardpay.basic.common.webSocket.SystemWebSocketHandler.sendMessageToUser;
-import static com.cardpay.basic.common.webSocket.SystemWebSocketHandler.sendMessageToUsers;
 
 /**
  * http://localhost/swagger-ui.html
@@ -43,8 +47,23 @@ public class TestController extends BaseController<TModel> {
      */
     @ApiOperation(value = "测试给所有用户推送消息")
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public void testWebSocket(){
-        sendMessageToUsers("测试信息");
+    public EchatesTo testWebSocket(){
+       // sendMessageToUsers("测试信息");
+        EchatesTo echates = new EchatesTo();
+        List<String> list = new ArrayList<String>(){
+            {
+                add("直接访问");
+                add("邮件营销");
+                add("联盟广告");
+                add("视频广告");
+            }
+        };
+        List<EchatesModel> list2 = new ArrayList<>();
+        list2.add(new EchatesModel("直接访问", 335));
+        list2.add(new EchatesModel("邮件营销", 310));
+        list2.add(new EchatesModel("联盟广告", 234));
+        echates.setData("某站点用户访问来源", "纯属虚构", list, list2);
+        return echates;
     }
 
     @ApiOperation(value = "测试给指定用户推送消息")

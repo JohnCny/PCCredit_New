@@ -48,7 +48,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
             e.printStackTrace();
             logger.info(SystemWebSocketHandler.class, "异常原因", e.getMessage());
         }
-        webSocketSessions.put(1, session);//用户上线
+        webSocketSessions.put(userId, session);//用户上线
     }
 
     /**
