@@ -242,9 +242,4 @@ public class TMessage extends GenericEntity<Integer>{
     public void setIsBroadcast(Integer isBroadcast) {
         this.isBroadcast = isBroadcast;
     }
-
-    @Override
-    public Integer getPK() {
-        return id;
-    }
 }
