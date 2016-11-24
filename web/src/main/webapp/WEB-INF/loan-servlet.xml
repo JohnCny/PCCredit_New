@@ -17,6 +17,7 @@
     <!--配置注解扫描-->
     <context:component-scan base-package="com.cardpay">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Component"/>
     </context:component-scan>
 
     <!--配置@aspectJ切面的bean创建代理，织入切面-->
@@ -31,34 +32,40 @@
     <!-- Standard xml based mvc config-->
     <mvc:annotation-driven/>
 
+    <!--  WebJar sping-fox配置-->
+    <mvc:default-servlet-handler />
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
     <!--配置默认进入页面-->
     <!--<mvc:view-controller path="/" view-name="/api/user/nologin"/>-->
 
     <!--配置支持freemarkewr标签支持-->
-    <bean id="freemarkerConfig"
-          class="com.cardpay.core.shrio.freemarker.ShiroTagFreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/views/"></property>
-        <property name="freemarkerSettings">
-            <props>
-                <prop key="classic_compatible">true</prop>
-                <prop key="template_update_delay">0</prop>
-                <prop key="tag_syntax">auto_detect</prop>
-                <prop key="default_encoding">UTF-8</prop>
-                <prop key="output_encoding">UTF-8</prop>
-                <prop key="locale">zh_CN</prop>
-                <prop key="date_format">yyyy-MM-dd</prop>
-                <prop key="time_format">HH:mm:ss</prop>
-                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-                <prop key="number_format">#</prop>
-                <prop key="classic_compatible">true</prop>
-            </props>
-        </property>
-        <property name="freemarkerVariables">
-            <map>
-                <entry key="shiroback" value-ref="shiroTags"/>
-            </map>
-        </property>
-    </bean>
+    <!--<bean id="freemarkerConfig"-->
+          <!--class="com.cardpay.core.shrio.freemarker.ShiroTagFreeMarkerConfigurer">-->
+        <!--<property name="templateLoaderPath" value="/WEB-INF/views/"></property>-->
+        <!--<property name="freemarkerSettings">-->
+            <!--<props>-->
+                <!--<prop key="classic_compatible">true</prop>-->
+                <!--<prop key="template_update_delay">0</prop>-->
+                <!--<prop key="tag_syntax">auto_detect</prop>-->
+                <!--<prop key="default_encoding">UTF-8</prop>-->
+                <!--<prop key="output_encoding">UTF-8</prop>-->
+                <!--<prop key="locale">zh_CN</prop>-->
+                <!--<prop key="date_format">yyyy-MM-dd</prop>-->
+                <!--<prop key="time_format">HH:mm:ss</prop>-->
+                <!--<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>-->
+                <!--<prop key="number_format">#</prop>-->
+                <!--<prop key="classic_compatible">true</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+        <!--<property name="freemarkerVariables">-->
+            <!--<map>-->
+                <!--<entry key="shiroback" value-ref="shiroTags"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
     <bean id="shiroTags" class="com.jagregory.shiro.freemarker.ShiroTags"/>
 
     <!--设置默认的视图解析器 采用JSP-->
@@ -140,6 +147,7 @@
           factory-method="forName">
         <constructor-arg value="UTF-8"/>
     </bean>
+
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
