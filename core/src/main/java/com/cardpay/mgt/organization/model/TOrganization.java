@@ -1,5 +1,6 @@
 package com.cardpay.mgt.organization.model;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -7,7 +8,7 @@ import java.util.Date;
 import javax.persistence.*;
 @ApiModel(value = "机构表")
 @Table(name = "T_ORGANIZATION")
-public class TOrganization {
+public class TOrganization extends GenericEntity<Integer>{
     /**
      * id
      */
@@ -258,5 +259,10 @@ public class TOrganization {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public Integer getPK() {
+        return id;
     }
 }

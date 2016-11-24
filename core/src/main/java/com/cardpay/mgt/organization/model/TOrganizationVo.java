@@ -12,16 +12,16 @@ import java.util.List;
 @ApiModel(value = "机构表VO类")
 public class TOrganizationVo extends TOrganization{
     /**
-     * 子机构
+     * 子机构列表
      */
-    @ApiModelProperty(value = "子机构", required = true)
-    private List<TOrganization> list;
+    @ApiModelProperty(value = "子机构列表", required = true)
+    private List<TOrganization> organizationList;
 
-    public List<TOrganization> getList() {
-        return list;
+    public List<TOrganization> getOrganizationList() {
+        return organizationList;
     }
 
-    public void setList(List<TOrganization> list) {
-        this.list = list;
+    public void setOrganizationList(List<TOrganization> organizationList) {
+        this.organizationList = organizationList;
     }
 }
