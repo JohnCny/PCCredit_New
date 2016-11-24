@@ -1,4 +1,4 @@
-package com.cardpay.basic.common.webSocket;
+package com.cardpay.core.webSocket;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
