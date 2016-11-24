@@ -71,7 +71,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         Set<String> set = new HashSet<>();
         for (Operation operation : operationes) {
             for (Resources resources : resourceses) {
-                
+
             }
         }
 

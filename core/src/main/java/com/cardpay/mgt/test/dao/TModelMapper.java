@@ -1,8 +1,8 @@
 package com.cardpay.mgt.test.dao;
 
 
+import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.test.model.TModel;
-import tk.mybatis.mapper.common.Mapper;
 
-public interface TModelMapper extends Mapper<TModel> {
+public interface TModelMapper extends BasicMapper<TModel> {
 }
