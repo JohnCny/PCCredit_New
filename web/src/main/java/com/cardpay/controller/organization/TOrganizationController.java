@@ -1,6 +1,7 @@
 package com.cardpay.controller.organization;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.TOrganizationVo;
@@ -21,13 +22,16 @@ import java.util.List;
  * 机构Controller类
  * Created by chenkai on 2016/11/24.
  */
-@Api(value = "/api/organization", description = "机构Controller类")
+@Api(value = "/organization", description = "机构Controller类")
 @RestController
-@RequestMapping("/api/organization")
+@RequestMapping("/organization")
 public class TOrganizationController extends BaseController<TOrganization, Integer> {
     @Autowired
     @Qualifier("TOrganizationServiceImpl")
     private TOrganizationService tOrganizationService;
+
+    @Autowired
+    private static LogTemplate logger;
 
     /**
      * 查询机构层级信息接口
@@ -55,6 +59,7 @@ public class TOrganizationController extends BaseController<TOrganization, Integ
     public ResultTo updateOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id
                 , @ApiParam(value = "父层级id", required = true) @RequestParam int parentId){
         int flag = tOrganizationService.updateOrganization(id, parentId);
+        logger.info(TOrganizationController.class, "变更层级位置接口", "层级id:"+id+"父层级id:"+parentId);
         return new ResultTo().setData(flag);
     }
 
@@ -67,6 +72,7 @@ public class TOrganizationController extends BaseController<TOrganization, Integ
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id){
         int flag = tOrganizationService.deleteOrganization(id);
+        logger.info(TOrganizationController.class, "递归删除层级信息", "层级id:"+id);
         return new ResultTo().setData(flag);
     }
 
