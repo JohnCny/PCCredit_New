@@ -1,5 +1,6 @@
 package com.cardpay.mgt.user.service;
 
+import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.User;
 
 import java.util.Set;
@@ -9,7 +10,7 @@ import java.util.Set;
  *
  * @author rankai
  */
-public interface UserService {
+public interface UserService extends BaseService<User> {
 
     Set<String> getUserAuthority(User user);
 }

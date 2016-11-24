@@ -1,7 +1,7 @@
-package com.cardpay.core.business.param.dao;
+package com.cardpay.mgt.param.dao;
 
 import com.cardpay.basic.base.mapper.BaseMapper;
-import com.cardpay.core.business.param.model.po.TBusinessParam;
+import com.cardpay.mgt.param.model.po.TBusinessParam;
 
 
 /**

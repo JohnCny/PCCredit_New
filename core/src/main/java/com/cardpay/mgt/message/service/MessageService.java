@@ -1,4 +1,4 @@
-package com.cardpay.core.business.message.service;
+package com.cardpay.mgt.message.service;
 
 /**
  * 消息服务类

@@ -1,4 +1,4 @@
-package com.cardpay.core.business.param.model.po;
+package com.cardpay.mgt.param.model.po;
 
 import io.swagger.annotations.ApiModelProperty;
 

@@ -1,8 +1,7 @@
-package com.cardpay.core.business.param.service;
+package com.cardpay.mgt.param.service;
 
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.core.business.param.model.po.TBusinessParam;
-import org.springframework.stereotype.Service;
+import com.cardpay.mgt.param.model.po.TBusinessParam;
 
 
 /**

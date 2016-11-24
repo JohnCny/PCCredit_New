@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.user.dao.RoleAuthorityMapper">
-  <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.RoleAuthority">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId" />
-    <result column="AUTHORITY_ID" jdbcType="DECIMAL" property="authorityId" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.RoleAuthority">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId"/>
+        <result column="AUTHORITY_ID" jdbcType="DECIMAL" property="authorityId"/>
+    </resultMap>
+
+    <select id="selectByRoleList" resultMap="BaseResultMap">
+        SELECT * FROM T_ROLE_AUTHORITY WHERE ROLE_ID IN
+        <foreach collection="list" item="userRoles" index="index"
+                 open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
 </mapper>

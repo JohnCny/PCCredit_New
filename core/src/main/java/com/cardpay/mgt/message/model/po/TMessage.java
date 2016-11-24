@@ -1,4 +1,4 @@
-package com.cardpay.core.business.message.model.po;
+package com.cardpay.mgt.message.model.po;
 
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModelProperty;

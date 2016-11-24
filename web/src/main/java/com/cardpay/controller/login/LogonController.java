@@ -6,10 +6,9 @@ import com.cardpay.mgt.user.model.User;
 /**
  * 用户登陆controller
  *
- * @author rankai .
- * @date 2016/11/24 .
+ * @author rankai
  */
-public class LogonController extends BaseController<User> {
+public class LogonController extends BaseController<User, Integer> {
 
     public void login() {
 
