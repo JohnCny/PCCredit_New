@@ -15,8 +15,8 @@ import java.util.List;
  * Created by yanwe on 2016/11/22.
  */
 @RestController
-@RequestMapping("/api/menu")
-public class MenuController extends BaseController<TMenu>{
+@RequestMapping("/menu")
+public class MenuController extends BaseController<TMenu,Integer>{
 
     @Autowired
     private TMenuService tMenuService;

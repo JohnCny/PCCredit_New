@@ -1,5 +1,6 @@
 package com.cardpay.mgt.menu.model;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -11,7 +12,7 @@ import javax.persistence.*;
  * @author yanwe 2016年11月23日17:11:56
  */
 @Table(name = "T_MENU")
-public class TMenu {
+public class TMenu extends GenericEntity<Integer>{
     /**
      * 菜单id
      */
@@ -268,5 +269,10 @@ public class TMenu {
                 ", createBy=" + createBy +
                 ", createTime=" + createTime +
                 '}';
+    }
+
+    @Override
+    public Integer getPK() {
+        return id;
     }
 }
