@@ -1,10 +1,13 @@
 package com.cardpay.core.business.param.service;
 
 import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.core.business.param.model.po.TBusinessParam;
+import org.springframework.stereotype.Service;
 
 
 /**
- * Created by Pzwxy on 2016/11/23.
+ * 业务参数服务类
+ * @author wangpeng
  */
-public class ParamService extends BaseService<BusinessParam> {
+public interface ParamService extends BaseService<TBusinessParam> {
 }

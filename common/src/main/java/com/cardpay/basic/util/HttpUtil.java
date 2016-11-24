@@ -1,8 +1,6 @@
 package com.cardpay.basic.util;
 
-import com.cardpay.basic.common.log.LogBase;
-import org.slf4j.Logger;
-
+import com.cardpay.basic.common.log.LogTemplate;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HttpUtil {
 
-    private static Logger log = LogBase.get();
     /**
      * 获取客户端IP地址.<br>
      * 支持多级反向代理
@@ -41,7 +38,7 @@ public class HttpUtil {
             }
             return remoteAddr;
         }catch(Exception e){
-            log.error("get romote ip error,error message:"+e.getMessage());
+            LogTemplate.error(HttpUtil.class, e, "get romote ip error,error message:{}", e.getMessage());
             return "";
         }
     }
@@ -59,14 +56,14 @@ public class HttpUtil {
                 try{
                     return Long.parseLong(port);
                 }catch(NumberFormatException ex){
-                    log.error("convert port to long error , port:	"+port);
+                    LogTemplate.error(HttpUtil.class, ex, "convert port to long error , port:{}", port);
                     return 0l;
                 }
             }else{
                 return 0l;
             }
         }catch(Exception e){
-            log.error("get romote port error,error message:"+e.getMessage());
+            LogTemplate.error(HttpUtil.class, e, "get romote port error,error message:{}", e.getMessage());
             return 0l;
         }
     }

@@ -1,6 +1,6 @@
 package com.cardpay.mgt.menu.service;
 
-import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.menu.dao.MenuMapper;
 import com.cardpay.mgt.menu.model.Menu;
 import com.cardpay.mgt.menu.model.MenuList;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by yanwe on 2016/11/22.
  */
 @Service
-public class MenuService extends BaseService<Menu>{
+public class MenuService extends BaseServiceImpl<Menu> {
 
     @Autowired
     private MenuMapper menuMapper;

@@ -1,8 +1,14 @@
 package com.cardpay.core.business.message.model.po;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 消息
+ * @author wangpeng
+ */
 @Table(name = "T_MESSAGE")
 public class TMessage {
     /**
@@ -16,48 +22,56 @@ public class TMessage {
     /**
      * 消息标题
      */
+    @ApiModelProperty(value = "消息标题", required = true)
     @Column(name = "MSG_TITLE")
     private String msgTitle;
 
     /**
      * 消息内容
      */
+    @ApiModelProperty(value = "消息内容", required = true)
     @Column(name = "MSG_CONTENT")
     private String msgContent;
 
     /**
      * 消息类型(0 业务消息，1 非业务消息)
      */
+    @ApiModelProperty(value = "消息类型", required = true)
     @Column(name = "MSG_TYPE")
     private Integer msgType;
 
     /**
      * 消息级别(0 正常消息，2 警告消息，3 错误消息)
      */
+    @ApiModelProperty(value = "消息级别", required = true)
     @Column(name = "MSG_LEVEL")
     private Integer msgLevel;
 
     /**
      * 消息状态(0 未读，1 已读)
      */
+    @ApiModelProperty(value = "消息状态", required = true)
     @Column(name = "MSG_STATE")
     private Integer msgState;
 
     /**
      * 消息所属用户id
      */
+    @ApiModelProperty(value = "消息所属用户id", required = true)
     @Column(name = "USER_ID")
     private Integer userId;
 
     /**
      * 消息发送时间
      */
+    @ApiModelProperty(value = "消息发送时间", required = true)
     @Column(name = "CREATE_TIME")
     private Date createTime;
 
     /**
      * 是否是广播消息(0 不是，1 是)
      */
+    @ApiModelProperty(value = "是否是广播消息", required = true)
     @Column(name = "IS_BROADCAST")
     private Integer isBroadcast;
 

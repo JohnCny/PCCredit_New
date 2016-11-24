@@ -1,8 +1,14 @@
 package com.cardpay.core.business.param.model.po;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 业务参数
+ * @author wangpeng
+ */
 @Table(name = "T_BUSINESS_PARAM")
 public class TBusinessParam {
     /**
@@ -16,36 +22,42 @@ public class TBusinessParam {
     /**
      * 业务参数名称
      */
+    @ApiModelProperty(value = "业务参数名称", required = true)
     @Column(name = "NAME")
     private String name;
 
     /**
      * 业务参数中文名称
      */
+    @ApiModelProperty(value = "业务参数中文名称", required = true)
     @Column(name = "NAME_ZH")
     private String nameZh;
 
     /**
      * 业务参数值
      */
+    @ApiModelProperty(value = "业务参数值", required = true)
     @Column(name = "VALUE")
     private String value;
 
     /**
      * 业务参数详细描述
      */
+    @ApiModelProperty(value = "业务参数详细描述", required = true)
     @Column(name = "DESCRIPTION")
     private String description;
 
     /**
      * 创建人id
      */
+    @ApiModelProperty(value = "创建人id", required = true)
     @Column(name = "CREATE_BY")
     private Integer createBy;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty(value = "创建时间", required = true)
     @Column(name = "CREATE_TIME")
     private Date createTime;
 

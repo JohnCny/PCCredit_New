@@ -1,51 +1,90 @@
 package com.cardpay.core.business.user.model.po;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 用户信息
+ * @author wangpeng
+ */
 @Table(name = "T_USER")
 public class TUser {
     /**
+     * 用户id
+     */
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    /**
      * 用户名
      */
+    @ApiModelProperty(value = "用户名", required = true)
     @Column(name = "USERNAME")
     private String username;
 
     /**
      * 密码
      */
+    @ApiModelProperty(value = "密码", required = true)
     @Column(name = "PASSWORD")
     private String password;
 
     /**
      * 最后登录时间
      */
+    @ApiModelProperty(value = "最后登录时间", required = true)
     @Column(name = "LAST_LOGIN_TIME")
     private Date lastLoginTime;
 
     /**
      * 电子邮件地址
      */
+    @ApiModelProperty(value = "电子邮件地址", required = true)
     @Column(name = "EMAIL")
     private String email;
 
     /**
      * 联系电话
      */
+    @ApiModelProperty(value = "联系电话", required = true)
     @Column(name = "TEL")
     private String tel;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty(value = "创建时间", required = true)
     @Column(name = "CREATE_TIME")
     private Date createTime;
 
     /**
      * 用户状态(0 正常，1 锁定，3 待激活) 
      */
+    @ApiModelProperty(value = "用户状态", required = true)
     @Column(name = "STATUS")
     private Integer status;
+
+    /**
+     * 获取用户id
+     *
+     * @return ID - 业务参数id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 设置用户id
+     *
+     * @param id 业务参数id
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      * 获取用户名

@@ -2,13 +2,8 @@ package com.cardpay.basic.base.controller;
 
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.common.propertyeditor.StringEscapeEditor;
-import com.cardpay.basic.common.webSocket.SystemWebSocketHandler;
-import com.cardpay.basic.common.log.LogBase;
-import org.dozer.Mapper;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -21,7 +16,7 @@ import java.util.Date;
  */
 public class BasicController {
     @Autowired
-    LogTemplate logTemplate;
+    LogTemplate logger;
 
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) {
@@ -43,7 +38,7 @@ public class BasicController {
      */
     public final String getAppbaseUrl(HttpServletRequest request, String url) {
         if (request == null) {
-            logTemplate.info(BasicController.class,"request获取url绝对路径出现错误,request is null",null);
+            logger.info(BasicController.class,"request获取url绝对路径出现错误,request is null",null);
             return null;
         }
         return request.getContextPath() + (url == null ? "" : url);
