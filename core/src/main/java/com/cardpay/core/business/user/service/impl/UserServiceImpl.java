@@ -9,6 +9,5 @@ import org.springframework.stereotype.Service;
  * 用户信息服务实现类
  * @author wangpeng
  */
-@Service
 public class UserServiceImpl extends BaseServiceImpl<TUser> implements UserService{
 }

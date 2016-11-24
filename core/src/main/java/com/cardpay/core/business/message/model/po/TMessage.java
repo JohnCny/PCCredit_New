@@ -1,5 +1,6 @@
 package com.cardpay.core.business.message.model.po;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import javax.persistence.*;
  * @author wangpeng
  */
 @Table(name = "T_MESSAGE")
-public class TMessage {
+public class TMessage extends GenericEntity<Integer>{
     /**
      * 消息id
      */
@@ -235,5 +236,10 @@ public class TMessage {
      */
     public void setIsBroadcast(Integer isBroadcast) {
         this.isBroadcast = isBroadcast;
+    }
+
+    @Override
+    public Integer getPK() {
+        return id;
     }
 }

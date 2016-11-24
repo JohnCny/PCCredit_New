@@ -14,9 +14,6 @@ import java.util.List;
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
 
-    @Autowired
-    private LogTemplate logger;
-
     /**
      * mapper定义
      */

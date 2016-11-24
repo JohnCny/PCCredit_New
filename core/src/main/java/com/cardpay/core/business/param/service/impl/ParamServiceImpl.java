@@ -10,6 +10,5 @@ import org.springframework.stereotype.Service;
  * 业务参数服务实现类
  * @author wangpeng
  */
-@Service
 public class ParamServiceImpl extends BaseServiceImpl<TBusinessParam> implements ParamService {
 }
