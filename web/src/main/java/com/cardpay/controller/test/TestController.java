@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cardpay.basic.common.webSocket.SystemWebSocketHandler.sendMessageToUser;
+import static com.cardpay.core.webSocket.SystemWebSocketHandler.sendMessageToUser;
 
 /**
  * http://localhost/swagger-ui.html
