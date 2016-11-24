@@ -3,9 +3,9 @@ package com.cardpay.basic.common.exception.global;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.exception.base.BusinessBaseException;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.JsonUtil;
-import com.cardpay.basic.common.log.LogBase;
-import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,17 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
+import static com.cardpay.basic.common.log.LogTemplate.error;
+
 /**
  * 全局异常处理
  * @author rankai .
  */
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
-    private static final Logger logger = LogBase.get(GlobalExceptionHandler.class);
+    @Autowired
+    private LogTemplate logger;
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
                                          Exception ex) {
-        logger.error("页面请求出现异常", ex);
+        logger.error(GlobalExceptionHandler.class, ex, "页面请求出现异常", null);
          /*判断是否ajax请求*/
         if (!(request.getHeader("accept").indexOf("application/json") > -1
                 || (request.getHeader("X-Requested-With") != null
@@ -58,7 +61,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
                 writer.flush();
                 writer.close();
             } catch (Exception e) {
-                logger.error("异常信息:{}", ex);
+                error(GlobalExceptionHandler.class, e, "异常信息:{}", null);
             }
         }
         return null;
