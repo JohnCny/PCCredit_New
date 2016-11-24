@@ -1,7 +1,7 @@
 package com.cardpay.controller.business.user;
 
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.core.business.user.model.po.TUser;
+import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "/user", description = "用户")
 @RestController
 @RequestMapping("/user")
-public class UserController extends BaseController<TUser> {
+public class UserController extends BaseController<User, Integer> {
 }

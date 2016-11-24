@@ -1,7 +1,7 @@
 package com.cardpay.controller.business.message;
 
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.core.business.message.model.po.TMessage;
+import com.cardpay.mgt.message.model.po.TMessage;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "/message", description = "消息")
 @RestController
 @RequestMapping("/message")
-public class MessageController  extends BaseController<TMessage> {
+public class MessageController  extends BaseController<TMessage, Integer> {
 }
