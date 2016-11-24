@@ -1,13 +1,13 @@
 package com.cardpay.mgt.menu.dao;
 
+import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuVo;
 import org.apache.ibatis.annotations.Param;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface TMenuMapper extends Mapper<TMenu> {
+public interface TMenuMapper extends BasicMapper<TMenu> {
 
     /**
      * 递归查询菜单
