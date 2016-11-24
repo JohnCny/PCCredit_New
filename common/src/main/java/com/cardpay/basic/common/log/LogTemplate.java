@@ -1,12 +1,14 @@
 package com.cardpay.basic.common.log;
 
 import org.slf4j.Logger;
+import org.springframework.stereotype.Component;
 
 /**
  * 日志操作类
  *
  * @author johnmyiqn.
  */
+@Component
 public class LogTemplate {
 
     private static final String LOG_FORMAT = "参数名:{} >> 参数值:{}";
@@ -16,14 +18,8 @@ public class LogTemplate {
     private static Logger logger;
 
     /**
-<<<<<<< HEAD
      * 打印日志debug级别，开发调试阶段打印，上线后不需要打印
-     *
-     * @param desc      日志描述信息
-=======
-     * * 打印日志debug级别，开发调试阶段打印，上线后不需要打印
      * @param desc 日志描述信息
->>>>>>> origin/develop
      * @param debugData 日志debug级别数据
      * @param clazz 日志类
      */
@@ -40,13 +36,8 @@ public class LogTemplate {
 
     /**
      * 打印日志info级别，开发和上线为了定位问题打印日志
-<<<<<<< HEAD
-     *
-     * @param desc      日志描述信息
-=======
      * @param clazz 日志类
      * @param desc 日志描述信息
->>>>>>> origin/develop
      * @param inforData 日志debug级别数据
      */
     public static void info(Class<?> clazz, String desc, String inforData) {
@@ -62,14 +53,10 @@ public class LogTemplate {
 
     /**
      * 打印日志warn级别，开发和上线为了定位出现错误或者异常，但是不至于导致程序报错或者程序崩溃日志
-<<<<<<< HEAD
      *
-     * @param desc     日志描述信息
-=======
      * @param clazz 日志类
      * @param e 异常信息
      * @param desc 日志描述信息
->>>>>>> origin/develop
      * @param warnData 日志debug级别数据
      */
     public static void warn(Class<?> clazz, Throwable e, String desc, String warnData) {
@@ -85,14 +72,10 @@ public class LogTemplate {
 
     /**
      * 打印日志warn级别，开发和上线为了定位出现错误或者异常，但是不至于导致程序报错或者程序崩溃日志
-<<<<<<< HEAD
      *
      * @param desc     日志描述信息
-=======
      * @param e 异常信息
      * @param clazz 日志类
-     * @param desc 日志描述信息
->>>>>>> origin/develop
      * @param warnData 日志debug级别数据
      */
     public static void error(Class<?> clazz, Throwable e, String desc, String warnData) {
@@ -145,13 +128,9 @@ public class LogTemplate {
     /**
      * 打印日志warn级别，开发和上线为了定位出现错误或者异常，但是不至于导致程序报错或者程序崩溃日志
      * 由于动态获取Logger，效率较低，建议在非频繁调用的情况下使用！！
-<<<<<<< HEAD
      *
-     * @param desc     日志描述信息
-=======
      * @param e 异常信息
      * @param desc 日志描述信息
->>>>>>> origin/develop
      * @param warnData 日志debug级别数据
      */
     public static void warn(Throwable e, String desc, String warnData) {

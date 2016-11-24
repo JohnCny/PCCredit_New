@@ -2,13 +2,13 @@ package com.cardpay.basic.common.aop;
 
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.annotation.SystemServiceLog;
-import com.cardpay.basic.common.log.LogBase;
+import com.cardpay.basic.common.log.LogTemplate;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.cardpay.basic.common.log.LogTemplate.error;
+
 
 /**
  * 日志切面,包括ControlService的处理
@@ -29,7 +32,8 @@ import java.util.Date;
 public class SystemLogAspect {
 
     //本地异常日志记录对象
-    private static final Logger logger = LogBase.get();
+    @Autowired
+    private LogTemplate logger;
 
     //Controller层切点
     @Pointcut("@annotation(com.cardpay.basic.common.annotation.SystemControllerLog)")
@@ -79,8 +83,7 @@ public class SystemLogAspect {
 //                    ip, user.getName(), dt, hsr, status, length, source, userAgent.toString());
         } catch (Exception e) {
             //记录本地异常日志
-            logger.error("==notify exception==");
-            logger.error("exception info:{}", e.getMessage());
+            error(SystemLogAspect.class, e, "exception info:", e.getMessage());
         }
     }
 
@@ -118,17 +121,17 @@ public class SystemLogAspect {
 //                    + "讲求人:" + user.getName()
                     + "请求IP:" + ip
                     + "请求参数:" + params;
-            logger.error(exceptionLog);
+            error(SystemLogAspect.class, e, "exception info:", exceptionLog);
         } catch (Exception ex) {
             //记录本地异常日志
-            logger.error("==异常通知异常==");
-            logger.error("异常信息:{}", ex.getMessage());
+            logger.error(SystemLogAspect.class, ex, "异常信息:", ex.getMessage());
         }
         /*==========记录本地异常日志==========*/
-        logger.error("异常方法:{}异常代码:{}异常信息:{}参数:{}",
+/*        logger.error("异常方法:{}异常代码:{}异常信息:{}参数:{}",
                 joinPoint.getTarget().getClass().getName()
                         + joinPoint.getSignature().getName(),
-                e.getClass().getName(), e.getMessage(), params);
+                e.getClass().getName(), e.getMessage(), params);*/
+
     }
 
     /**

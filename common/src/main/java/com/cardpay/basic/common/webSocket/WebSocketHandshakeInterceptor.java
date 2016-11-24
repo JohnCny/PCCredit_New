@@ -1,10 +1,7 @@
 package com.cardpay.basic.common.webSocket;
 
 import com.cardpay.basic.common.constant.Constant;
-import com.cardpay.basic.common.log.LogBase;
 import com.cardpay.basic.common.log.LogTemplate;
-import org.apache.shiro.SecurityUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
