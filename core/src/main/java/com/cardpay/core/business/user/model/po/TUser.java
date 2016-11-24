@@ -1,5 +1,6 @@
 package com.cardpay.core.business.user.model.po;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import javax.persistence.*;
  * @author wangpeng
  */
 @Table(name = "T_USER")
-public class TUser {
+public class TUser  extends GenericEntity<Integer> {
     /**
      * 用户id
      */
@@ -67,6 +68,11 @@ public class TUser {
     @ApiModelProperty(value = "用户状态", required = true)
     @Column(name = "STATUS")
     private Integer status;
+
+    @Override
+    public Integer getPK() {
+        return id;
+    }
 
     /**
      * 获取用户id

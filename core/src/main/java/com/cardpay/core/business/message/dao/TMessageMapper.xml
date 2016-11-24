@@ -15,4 +15,10 @@
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
         <result column="IS_BROADCAST" jdbcType="DECIMAL" property="isBroadcast" />
     </resultMap>
+
+    <select id="getMessageState" resultType="Integer">
+        select count(1)
+        from t_message
+        where user_id = #{userId} and msg_state = #{msgState}
+    </select>
 </mapper>
