@@ -18,6 +18,27 @@
         </listener-class>
     </listener>
 
+    <!-- 设置servlet编码开始 -->
+    <filter>
+        <filter-name>Set Character Encoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>Set Character Encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- 设置servlet 编码结束 -->
+
     <!-- shiroback filter-->
     <filter>
         <filter-name>shiroFilter</filter-name>
@@ -43,21 +64,6 @@
         <param-value>classpath:logback/logback.xml</param-value>
     </context-param>
 
-    <!-- 设置servlet编码开始 -->
-    <filter>
-        <filter-name>CharacterEncodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>utf-8</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>CharacterEncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!-- 设置servlet 编码结束 -->
-
     <!-- REST涉及的过滤器 -->
    <filter>
         <filter-name>HttpMethodFilter</filter-name>
@@ -65,6 +71,16 @@
     </filter>
     <filter-mapping>
         <filter-name>HttpMethodFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--获取put表单中的参数值-->
+    <filter>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

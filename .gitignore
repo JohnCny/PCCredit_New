@@ -4,6 +4,7 @@
 .gradle/
 .idea/
 .bpmn/
+.out/
 .metadata/
 classes/
 bin/
