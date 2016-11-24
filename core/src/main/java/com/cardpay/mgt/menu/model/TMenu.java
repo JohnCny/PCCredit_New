@@ -13,6 +13,7 @@ import javax.persistence.*;
  */
 @Table(name = "T_MENU")
 public class TMenu extends GenericEntity<Integer>{
+
     /**
      * 菜单id
      */

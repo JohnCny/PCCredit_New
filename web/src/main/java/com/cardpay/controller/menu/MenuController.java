@@ -4,7 +4,7 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuVo;
-import com.cardpay.mgt.menu.service.TMenuService;
+import com.cardpay.mgt.menu.service.impl.TMenuServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +19,7 @@ import java.util.List;
 public class MenuController extends BaseController<TMenu,Integer>{
 
     @Autowired
-    private TMenuService tMenuService;
+    private TMenuServiceImpl tMenuService;
 
     @RequestMapping("/all")
     public ResultTo selectMenuList(int level){

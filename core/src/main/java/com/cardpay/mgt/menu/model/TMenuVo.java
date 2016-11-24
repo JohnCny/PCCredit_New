@@ -1,5 +1,7 @@
 package com.cardpay.mgt.menu.model;
 
+import com.cardpay.basic.base.model.GenericEntity;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,8 @@ import java.util.Date;
  * @author yanwe 2016年11月23日17:11:56
  */
 @Table(name = "T_MENU")
-public class TMenuVo {
+public class TMenuVo extends GenericEntity<Integer>{
+
     /**
      * 菜单id
      */
@@ -249,5 +252,10 @@ public class TMenuVo {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public Integer getPK() {
+        return id;
     }
 }

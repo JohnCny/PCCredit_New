@@ -1,27 +1,21 @@
 package com.cardpay.mgt.menu.service;
 
-import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.menu.dao.TMenuMapper;
-import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * 菜单Service
- *
- * Created by yanwe on 2016/11/22.
+ * Created by yanwe on 2016/11/24.
  */
-@Service
-public class TMenuService extends BaseService<TMenu>{
+public interface TMenuService {
 
-    @Autowired
-    private TMenuMapper tMenuMapper;
-
-    public List<TMenuVo> selectMenuList(int topId, int level){
-        tMenuMapper.createMenuView(topId,level);
-        return tMenuMapper.selectMenuList(topId);
-    }
+    /**
+     * 根据节点位置层级信息查询菜单列表
+     *
+     * @param topId 开始节点
+     * @param level 查询深度
+     * @return 菜单列表
+     */
+    List<TMenuVo> selectMenuList(int topId, int level);
 }
