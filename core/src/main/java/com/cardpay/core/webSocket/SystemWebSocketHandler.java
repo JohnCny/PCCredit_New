@@ -1,6 +1,8 @@
-package com.cardpay.basic.common.webSocket;
+package com.cardpay.core.webSocket;
 
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.core.business.user.model.po.TUser;
+import com.cardpay.core.shrio.common.ShiroKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
@@ -42,8 +44,8 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
 
         Integer userId = null;
         try {
-            // userId = ShiroKit.getUser().getId();
-            //userId = (Integer) session.getAttributes().get(Constant.WEBSOCKET_USERID);
+            TUser user= (TUser)ShiroKit.getPrincipal();
+            userId = user.getId();
         }catch (Exception e) {
             e.printStackTrace();
             logger.info(SystemWebSocketHandler.class, "异常原因", e.getMessage());
@@ -72,7 +74,6 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        logger.debug(SystemWebSocketHandler.class, "客户端连接异常","websocket connect closed.....");
         logger.info(SystemWebSocketHandler.class, "异常原因", exception.getMessage());
         users.remove(session);
     }
@@ -85,7 +86,6 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        logger.debug(SystemWebSocketHandler.class, "客户端连接关闭","websocket connect closed.....");
         logger.info(SystemWebSocketHandler.class, "关闭状态", closeStatus.toString());
         users.remove(session);
     }
@@ -99,10 +99,10 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
             if(user.isOpen()){
                 try {
                     user.sendMessage(new TextMessage(message));
-                    logger.debug(SystemWebSocketHandler.class, "给所有在线用户发消息","message send success......");
+                    logger.info(SystemWebSocketHandler.class, "给所有的用户发消息","消息内容"+message);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    logger.info(SystemWebSocketHandler.class, "失败原因", e.getMessage());
+                    logger.debug(SystemWebSocketHandler.class, "失败原因", e.getMessage());
                 }
             }
         });
@@ -119,10 +119,10 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
         if (session.isOpen()){
             try {
                 session.sendMessage(new TextMessage(message));
-                    logger.debug(SystemWebSocketHandler.class, "给指定的用户发消息","message send success......");
+                    logger.info(SystemWebSocketHandler.class, "给指定的用户发消息","消息内容"+message);
             } catch (IOException e) {
                 e.printStackTrace();
-                logger.info(SystemWebSocketHandler.class, "失败原因", e.getMessage());
+                logger.debug(SystemWebSocketHandler.class, "失败原因", e.getMessage());
             }
         }
     }
