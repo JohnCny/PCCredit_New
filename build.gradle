@@ -189,6 +189,9 @@ subprojects {
 
                 //webSocket
                 libraries."spring-websocket",
+
+                //excel poi
+                libraries."poi",
         )
         testCompile (
                 libraries."junit",

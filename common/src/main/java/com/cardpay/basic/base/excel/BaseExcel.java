@@ -39,5 +39,5 @@ public interface BaseExcel {
      * @param column 列号
      * @param value 值
      */
-    void setCellValue(Integer row, Integer column, Objects value) throws Exception;
+    void setCellValue(Integer row, Integer column, Object value) throws Exception;
 }
