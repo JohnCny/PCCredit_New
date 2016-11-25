@@ -13,12 +13,12 @@ public interface MessageService extends BaseService<TMessage> {
      * @param userId 用户id
      * @return 已读消息个数
      */
-    public Integer getReadMessage(Integer userId);
+    Integer getReadMessage(Integer userId);
 
     /**
      * 查询未读消息数
      * @param userId 用户id
      * @return 未读消息个数
      */
-    public Integer getUnreadMessage(Integer userId);
+    Integer getUnreadMessage(Integer userId);
 }

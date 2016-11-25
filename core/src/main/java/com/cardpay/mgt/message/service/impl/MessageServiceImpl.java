@@ -1,7 +1,7 @@
 package com.cardpay.mgt.message.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
-import com.cardpay.basic.common.constant.ConstantMessage;
+import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.mgt.message.dao.TMessageMapper;
 import com.cardpay.mgt.message.model.po.TMessage;
 import com.cardpay.mgt.message.service.MessageService;
@@ -22,7 +22,7 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
      */
     @Override
     public Integer getReadMessage(Integer userId){
-        return tMessageDao.getMessageByState(userId, ConstantMessage.MSG_READ);
+        return tMessageDao.getMessageByState(userId, Constant.MSG_READ);
     }
 
     /**
@@ -32,6 +32,6 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
      */
     @Override
     public Integer getUnreadMessage(Integer userId){
-        return tMessageDao.getMessageByState(userId, ConstantMessage.MSG_UNREAD);
+        return tMessageDao.getMessageByState(userId, Constant.MSG_UNREAD);
     }
 }
