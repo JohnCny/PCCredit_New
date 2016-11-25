@@ -1,4 +1,4 @@
-package com.cardpay.mgt.organization.model;
+package com.cardpay.mgt.organization.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;

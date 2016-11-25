@@ -4,17 +4,15 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.organization.model.TOrganization;
-import com.cardpay.mgt.organization.model.TOrganizationVo;
+import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ import java.util.List;
  * Created by chenkai on 2016/11/24.
  */
 @Api(value = "/organization", description = "机构Controller类")
-@RestController
+@Controller
 @RequestMapping("/organization")
 public class TOrganizationController extends BaseController<TOrganization, Integer> {
     @Autowired
@@ -39,6 +37,7 @@ public class TOrganizationController extends BaseController<TOrganization, Integ
      * @param level 查询层级信息数量
      * @return 机构层级信息
      */
+    @ResponseBody
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ApiOperation(value = "查询机构层级信息接口", notes = "查询机构层级信息",  httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "要查询的顶级层级ID")
@@ -49,25 +48,11 @@ public class TOrganizationController extends BaseController<TOrganization, Integ
     }
 
     /**
-     * 变更层级位置接口
-     * @param id 层级id
-     * @param parentId 父层级id
-     * @return 1成功, 0失败
-     */
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    @ApiOperation(value = "变更层级位置接口", notes = "更新层级所在的层级位置",  httpMethod = "PUT")
-    public ResultTo updateOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id
-                , @ApiParam(value = "父层级id", required = true) @RequestParam int parentId){
-        int flag = tOrganizationService.updateOrganization(id, parentId);
-        logger.info(TOrganizationController.class, "变更层级位置接口", "层级id:"+id+"父层级id:"+parentId);
-        return new ResultTo().setData(flag);
-    }
-
-    /**
      * 递归删除层级信息
      * @param id 层级id
      * @return 1成功, 0失败
      */
+    @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id){

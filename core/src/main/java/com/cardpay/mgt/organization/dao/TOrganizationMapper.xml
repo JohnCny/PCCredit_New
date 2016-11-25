@@ -16,7 +16,7 @@
   </resultMap>
 
   <!--机构VO类-->
-  <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.organization.model.TOrganizationVo">
+  <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.organization.model.vo.TOrganizationVo">
     <id column="ID" jdbcType="DECIMAL" property="id" />
     <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
     <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
@@ -41,11 +41,6 @@
   <select id="queryOrganization" resultMap="BaseResultMapVo">
     SELECT * FROM T_ORGANIZATION_VIEW WHERE ORG_PARENT_ID = #{id}
   </select>
-
-  <!--更新此机构所属层级信息-->
-  <update id="updateOrganization" >
-    UPDATE T_ORGANIZATION SET ORG_PARENT_ID = #{parentId} WHERE ID = #{id}
-  </update>
 
   <!--递归删除机构信息-->
   <delete id="deleteOrganization" >

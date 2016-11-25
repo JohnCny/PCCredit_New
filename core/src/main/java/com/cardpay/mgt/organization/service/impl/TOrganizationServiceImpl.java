@@ -3,7 +3,7 @@ package com.cardpay.mgt.organization.service.impl;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.organization.dao.TOrganizationMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
-import com.cardpay.mgt.organization.model.TOrganizationVo;
+import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +22,6 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     public List<TOrganizationVo> queryOrganization(int id, int levels) {
         tOrganizationDao.createOrganizationView(id, levels);
         return tOrganizationDao.queryOrganization(id);
-    }
-
-    @Override
-    public int updateOrganization(int id, int parentId) {
-        return tOrganizationDao.updateOrganization(id, parentId);
     }
 
     @Override
