@@ -52,7 +52,7 @@ public class TOrganizationController extends BaseController<TOrganization, Integ
      * @param id 层级id
      * @return 1成功, 0失败
      */
-    @ResponseBody
+
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id){

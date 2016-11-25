@@ -4,11 +4,8 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.core.fastdfs.FastDFSFile;
 import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.fastdfs.FileManagerConfig;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.csource.common.NameValuePair;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -54,26 +51,30 @@ public class FilesController {
     @ResponseBody
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ApiOperation(value = "文件上传接口", notes = "上传文件到dfs服务器", httpMethod = "POST")
-    public ResultTo upLoad(@ApiParam(value = "文件", required = true, allowMultiple = true) @RequestPart MultipartFile[] files) {
+    @ApiModelProperty(dataType = "MultipartFile")
+    @ApiImplicitParam(name = "files", value = "文件", required = true, dataType = "MultipartFile")
+    public ResultTo upLoad(@RequestPart MultipartFile[] files) {
         List<String> list = new ArrayList<>();
-        final String[] ext = {""};
-        Arrays.stream(files).forEach((MultipartFile file) ->{
-            ext[0] = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);//获取后缀名
+        String ext = "";
+        for (int i = 0; i < files.length; i++) {
+            ext = files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf(".") + 1);
+            FastDFSFile file = null;
             try {
-                FastDFSFile fastDFSFile = new FastDFSFile(file.getBytes(), ext[0]);
-                NameValuePair[] metaList = new NameValuePair[4];
-                metaList[0] = new NameValuePair("fileName", file.getOriginalFilename());
-                metaList[1] = new NameValuePair("fileLength", String.valueOf(file.getSize()));
-                metaList[2] = new NameValuePair("fileExt", ext[0]);
-                metaList[3] = new NameValuePair("fileAuthor", FileManagerConfig.FILE_DEFAULT_AUTHOR);
-                String upload = FileManager.upload(fastDFSFile, metaList) + ",." + ext[0] + "," + file.getOriginalFilename();
-                list.add(upload);
-                logger.info("上传文件返回结果", upload);
+                file = new FastDFSFile(files[i].getBytes(), ext);
             } catch (IOException e) {
                 e.printStackTrace();
-                logger.debug(file.getOriginalFilename()+"文件上传失败", e.getMessage());
+                return new ResultTo(500, "走你");
             }
-        });
+            NameValuePair[] metaList = new NameValuePair[4];
+            metaList[0] = new NameValuePair("fileName", files[i].getOriginalFilename());
+            metaList[1] = new NameValuePair("fileLength", String.valueOf(files[i].getSize()));
+            metaList[2] = new NameValuePair("fileExt", ext);
+            metaList[3] = new NameValuePair("fileAuthor", FileManagerConfig.FILE_DEFAULT_AUTHOR);
+            //组名+fastdfs文件名+文件后缀+文件名
+            String upload = FileManager.upload(file, metaList) + ",." + ext + "," + files[i].getOriginalFilename();
+            logger.info("上传文件返回结果:" , upload);
+            list.add(upload);
+        }
         return new ResultTo().setData(list);
     }
 
