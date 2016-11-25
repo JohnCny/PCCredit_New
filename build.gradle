@@ -189,6 +189,9 @@ subprojects {
 
                 //webSocket
                 libraries."spring-websocket",
+
+                //fastdfs
+                libraries."fastdfs",
         )
         testCompile (
                 libraries."junit",
