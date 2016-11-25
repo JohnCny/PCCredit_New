@@ -22,42 +22,42 @@ public class User extends GenericEntity<Integer> {
      * 用户名
      */
     @Column(name = "USERNAME")
-    @ApiModelProperty(value = "用户id", allowableValues = "")
+    @ApiModelProperty(value = "用户名", allowableValues = "")
     private String username;
 
     /**
      * 密码
      */
     @Column(name = "PASSWORD")
-    @ApiModelProperty(value = "用户id", allowableValues = "")
+    @ApiModelProperty(value = "密码", allowableValues = "")
     private String password;
 
     /**
      * 最后登录时间
      */
     @Column(name = "LAST_LOGIN_TIME")
-    @ApiModelProperty(value = "用户id", allowableValues = "")
+    @ApiModelProperty(value = "最后登录时间", allowableValues = "")
     private Date lastLoginTime;
 
     /**
      * 电子邮件地址
      */
     @Column(name = "EMAIL")
-    @ApiModelProperty(value = "用户id", allowableValues = "")
+    @ApiModelProperty(value = "电子邮件地址", allowableValues = "")
     private String email;
 
     /**
      * 联系电话
      */
     @Column(name = "TEL")
-    @ApiModelProperty(value = "用户id", allowableValues = "")
+    @ApiModelProperty(value = "联系电话", allowableValues = "")
     private String tel;
 
     /**
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value = "用户id", allowableValues = "")
+    @ApiModelProperty(value = "创建时间", allowableValues = "")
     private Date createTime;
 
     /**
@@ -214,5 +214,77 @@ public class User extends GenericEntity<Integer> {
     @Override
     public Integer getPK() {
         return this.id;
+    }
+
+
+    public static final class UserBuilder {
+        private Integer id;
+        private String username;
+        private String password;
+        private Date lastLoginTime;
+        private String email;
+        private String tel;
+        private Date createTime;
+        private Integer status;
+
+        private UserBuilder() {
+        }
+
+        public static UserBuilder get() {
+            return new UserBuilder();
+        }
+
+        public UserBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder withUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder withLastLoginTime(Date lastLoginTime) {
+            this.lastLoginTime = lastLoginTime;
+            return this;
+        }
+
+        public UserBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder withTel(String tel) {
+            this.tel = tel;
+            return this;
+        }
+
+        public UserBuilder withCreateTime(Date createTime) {
+            this.createTime = createTime;
+            return this;
+        }
+
+        public UserBuilder withStatus(Integer status) {
+            this.status = status;
+            return this;
+        }
+
+        public User build() {
+            User user = new User();
+            user.setId(id);
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setLastLoginTime(lastLoginTime);
+            user.setEmail(email);
+            user.setTel(tel);
+            user.setCreateTime(createTime);
+            user.setStatus(status);
+            return user;
+        }
     }
 }

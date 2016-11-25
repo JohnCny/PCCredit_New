@@ -58,7 +58,7 @@ public class Role {
      */
     @Column(name = "CREATE_BY")
     @ApiModelProperty(value = "修改时间", allowableValues = "")
-    private Date createBy;
+    private Integer createBy;
 
     /**
      * 获取id
@@ -173,7 +173,7 @@ public class Role {
      *
      * @return CREATE_BY - 修改时间
      */
-    public Date getCreateBy() {
+    public Integer getCreateBy() {
         return createBy;
     }
 
@@ -182,7 +182,7 @@ public class Role {
      *
      * @param createBy 修改时间
      */
-    public void setCreateBy(Date createBy) {
+    public void setCreateBy(Integer createBy) {
         this.createBy = createBy;
     }
 }

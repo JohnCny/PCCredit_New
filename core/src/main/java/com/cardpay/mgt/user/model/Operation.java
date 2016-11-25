@@ -1,11 +1,14 @@
 package com.cardpay.mgt.user.model;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "T_OPERATION")
+@ApiModel(value = "资源的操作实体")
 public class Operation extends GenericEntity<Integer> {
     /**
      * 操作id
@@ -13,19 +16,22 @@ public class Operation extends GenericEntity<Integer> {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select OPERATION_SEQ.nextval from dual")
+    @ApiModelProperty(value = "id", required = true)
     private Integer id;
 
     /**
      * 操作名称
      */
     @Column(name = "OPERATION_NAME")
+    @ApiModelProperty(value = "操作名称")
     private String operationName;
 
     /**
      * 操作名称中文
      */
     @Column(name = "OPERATION_NAME_ZH")
-    private Date operationNameZh;
+    @ApiModelProperty(value = "操作名称中文")
+    private String operationNameZh;
 
     /**
      * 获取操作id
@@ -68,7 +74,7 @@ public class Operation extends GenericEntity<Integer> {
      *
      * @return OPERATION_NAME_ZH - 操作名称中文
      */
-    public Date getOperationNameZh() {
+    public String getOperationNameZh() {
         return operationNameZh;
     }
 
@@ -77,7 +83,7 @@ public class Operation extends GenericEntity<Integer> {
      *
      * @param operationNameZh 操作名称中文
      */
-    public void setOperationNameZh(Date operationNameZh) {
+    public void setOperationNameZh(String operationNameZh) {
         this.operationNameZh = operationNameZh;
     }
 

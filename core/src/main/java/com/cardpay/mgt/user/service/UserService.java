@@ -12,5 +12,19 @@ import java.util.Set;
  */
 public interface UserService extends BaseService<User> {
 
+    /**
+     * 获取用户的资源权限
+     *
+     * @param user User对象
+     * @return 用户的资源集合
+     */
     Set<String> getUserAuthority(User user);
+
+    /**
+     * 获取用户的角色权限
+     *
+     * @param user User对象
+     * @return 用户的角色资源集合
+     */
+    Set<String> getUserRole(User user);
 }

@@ -40,6 +40,7 @@ public class ResultTo extends HashMap<String, Object> implements Serializable {
             put(ResultEnum.BOUND_PHONE_ERROR.getValue(), "bound phone error");
             put(ResultEnum.NUMBER_ERROR.getValue(), "illegal mail or phone number");
             put(ResultEnum.OLD_PASSWORD_ERROR.getValue(), "old password error");
+            put(ResultEnum.DISABLED_ACCOUNT.getValue(),"account disabled");
         }
     };
 

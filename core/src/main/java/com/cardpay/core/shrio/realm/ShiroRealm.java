@@ -1,17 +1,21 @@
 package com.cardpay.core.shrio.realm;
 
+import com.cardpay.core.shrio.common.ShiroFactory;
 import com.cardpay.core.shrio.common.ShiroKit;
-import com.cardpay.core.shrio.token.CaptchaAuthenticationToken;
 import com.cardpay.mgt.user.model.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import javax.annotation.PostConstruct;
+import java.util.Set;
 
 /**
  * 自定义ShiroReale,用户授权,权限加载处理类
@@ -19,31 +23,6 @@ import javax.annotation.PostConstruct;
  * @author rankai .
  */
 public class ShiroRealm extends AuthorizingRealm {
-
-    /**
-     * 自定义密码校验器
-     */
-    @PostConstruct
-    public void initCredentialsMatcher() {
-        setCredentialsMatcher(new UserCredentialsMatcher());
-    }
-
-    /**
-     * 获取包含权限角色和权限集合数据的权限验证对象
-     *
-     * @param principals 身份集合
-     * @return 权限验证对象
-     */
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        super.getAuthenticationCache().clear();
-        User user = (User) ShiroKit.getPrincipal();
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        //获取角色集合和权限列表集合
-//        authorizationInfo.setRoles(userService.getRoles(user));
-//        authorizationInfo.setStringPermissions(userService.getPermissions(user));
-        return authorizationInfo;
-    }
 
     /**
      * 判断登录信息，如果正常创建登录验证对象，否则抛出权限验证异常
@@ -55,36 +34,40 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
             throws AuthenticationException {
-        CaptchaAuthenticationToken token = (CaptchaAuthenticationToken) authcToken;
-//        String kaptchaUUID = token.getKaptchaUUID();
-//        if (kaptchaUUID != null) {
-//            //redis中获取验证码
-//            Object object = redisClient.get(token.getUsername() + "_login");
-//            int count = 0;
-//            if (object != null) {
-//                try {
-//                    count = Integer.parseInt(object.toString());
-//                } catch (Exception e) {
-//                    count = Constant.LOCK_COUNT;
-//                }
-//            }
-//            if (count >= Constant.CAPTCHA_COUNT) {
-//                //验证验证码
-//                CaptchaVerification.captchaValidate(kaptchaUUID, token.getCaptcha(), redisClient);
-//            }
-//        }
-//        String userName = token.getUsername();
-//        User user = userService.findByName(userName);
-//        if (user != null) {
-//            //判断账号是否激活
-//            if (user.getActive() == 0) {
-//                throw new NoActivationException();
-//            }
-//            return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
-//        } else {
-//            throw new UnknownAccountException();// 没找到账号
-//        }
-        return null;
+        UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
+        String username = token.getUsername();
+        User selectUser = User.UserBuilder.get().withUsername(username).build();
+        User user = ShiroFactory.get().getUserService().selectOne(selectUser);
+        if (user == null) {
+            throw new UnknownAccountException();
+        }
+        return new SimpleAuthenticationInfo(user, user, getName());
+    }
+
+    /**
+     * 获取包含权限角色和权限集合数据的权限验证对象
+     *
+     * @param principals 身份集合
+     * @return 权限验证对象
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        User user = (User) ShiroKit.getPrincipal();
+        //获取角色集合和权限列表集合
+        Set<String> userRole = ShiroFactory.get().getUserService().getUserRole(user);
+        Set<String> userAuthority = ShiroFactory.get().getUserService().getUserAuthority(user);
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        authorizationInfo.setRoles(userRole);
+        authorizationInfo.setStringPermissions(userAuthority);
+        return authorizationInfo;
+    }
+
+    /**
+     * 自定义密码校验器
+     */
+    @PostConstruct
+    public void initCredentialsMatcher() {
+        setCredentialsMatcher(new UserCredentialsMatcher());
     }
 
     /**
