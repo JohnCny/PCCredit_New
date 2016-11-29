@@ -4,8 +4,9 @@ import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.Resources;
 
 /**
- * Created by rankai .
- * Date 2016/11/24 .
+ * 资源Service层接口
+ *
+ * @author rankai
  */
 public interface ResourcesService extends BaseService<Resources> {
 }

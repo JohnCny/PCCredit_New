@@ -32,10 +32,11 @@ public class LogonController extends BaseController<User, Integer> {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
-    public ResultTo login(@RequestParam("userName") String userName, @RequestParam("password") String password) {
+    public ResultTo login(@RequestParam(value = "userName", required = false) String userName, @RequestParam(value = "password", required = false) String password) {
         LogTemplate.debug(this.getClass(), "收到用户登陆请求,用户账号:", userName);
         if (StringUtils.isBlank(userName) || StringUtils.isBlank(password)) {
             LogTemplate.info(this.getClass(), "用户账号或密码为空,用户账号:", userName);
+            return new ResultTo(ResultEnum.ACCOUNT_OR_PASSWORD_NULL.getValue());
         }
         UsernamePasswordToken token = new UsernamePasswordToken(userName, password.toCharArray());
         try {

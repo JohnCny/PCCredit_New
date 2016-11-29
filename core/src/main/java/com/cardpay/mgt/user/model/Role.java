@@ -6,6 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 角色实体
+ *
+ * @author rankai
+ */
 @Table(name = "T_ROLE")
 @ApiModel(value = "角色实体")
 public class Role {

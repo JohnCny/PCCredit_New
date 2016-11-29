@@ -7,6 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 资源操作实体
+ *
+ * @author rankai
+ */
 @Table(name = "T_OPERATION")
 @ApiModel(value = "资源的操作实体")
 public class Operation extends GenericEntity<Integer> {

@@ -7,6 +7,9 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 用户实体
+ */
 @ApiModel(value = "用户实体")
 @Table(name = "T_USER")
 public class User extends GenericEntity<Integer> {

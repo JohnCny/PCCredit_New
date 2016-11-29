@@ -3,9 +3,15 @@ package com.cardpay.mgt.user.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 
 import javax.persistence.*;
 
+/**
+ * 权限资源操作关系实体
+ *
+ * @author rankai
+ */
 @Table(name = "T_AUTHORITY_OPERATION")
 @ApiModel(value = "权限于资源操作关系的实体")
 public class AuthorityOperation extends GenericEntity<Integer> {
@@ -15,21 +21,21 @@ public class AuthorityOperation extends GenericEntity<Integer> {
      */
     @Column(name = "AUTHORITY_ID")
     @ApiModelProperty(value = "权限id")
-    private Short authorityId;
+    private Integer authorityId;
 
     /**
      * 操作id
      */
     @Column(name = "OPERATION_ID")
     @ApiModelProperty(value = "操作id")
-    private Short operationId;
+    private Integer operationId;
 
     /**
      * 获取权限id
      *
      * @return AUTHORITY_ID - 权限id
      */
-    public Short getAuthorityId() {
+    public Integer getAuthorityId() {
         return authorityId;
     }
 
@@ -38,7 +44,7 @@ public class AuthorityOperation extends GenericEntity<Integer> {
      *
      * @param authorityId 权限id
      */
-    public void setAuthorityId(Short authorityId) {
+    public void setAuthorityId(Integer authorityId) {
         this.authorityId = authorityId;
     }
 
@@ -47,7 +53,7 @@ public class AuthorityOperation extends GenericEntity<Integer> {
      *
      * @return OPERATION_ID - 操作id
      */
-    public Short getOperationId() {
+    public Integer getOperationId() {
         return operationId;
     }
 
@@ -56,7 +62,7 @@ public class AuthorityOperation extends GenericEntity<Integer> {
      *
      * @param operationId 操作id
      */
-    public void setOperationId(Short operationId) {
+    public void setOperationId(Integer operationId) {
         this.operationId = operationId;
     }
 

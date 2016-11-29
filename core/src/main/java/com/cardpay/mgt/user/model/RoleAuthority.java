@@ -6,6 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
+/**
+ * 角色权限关系实体
+ *
+ * @author rankai
+ */
 @Table(name = "T_ROLE_AUTHORITY")
 @ApiModel(value = "角色于权限关系实体")
 public class RoleAuthority extends GenericEntity<Integer> {

@@ -29,9 +29,9 @@
 
     <!-- 开启shiro spring AOP权限注解支持 -->
     <aop:config proxy-target-class="true"></aop:config>
-    
+
     <!-- Standard xml based mvc config-->
-    <mvc:annotation-driven/>
+    <!--<mvc:annotation-driven/>-->
 
     <!--  WebJar sping-fox配置-->
     <mvc:default-servlet-handler/>
@@ -89,6 +89,7 @@
         <property name="order" value="0"/>
         <property name="requestContextAttribute" value="rc"/>
     </bean>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/static/"></property>
         <property name="suffix" value=".html"></property>
@@ -133,6 +134,7 @@
         </property>
     </bean>
 
+
     <!--拦截器异常处理配置-->
     <bean id="handlerExceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
@@ -149,6 +151,7 @@
         <constructor-arg value="UTF-8"/>
     </bean>
 
+
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -159,6 +162,14 @@
 
     <!--全局异常配置-->
     <bean id="globalExceptionHandler" class="com.cardpay.basic.common.exception.global.GlobalExceptionHandler"/>
+
+    <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.cardpay.basic.common.interceptor.captcha.CaptchaInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
     <!--&lt;!&ndash; API 接口跨域配置&ndash;&gt;-->

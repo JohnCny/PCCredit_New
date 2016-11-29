@@ -2,6 +2,7 @@ package com.cardpay.mgt.user.service.impl;
 
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.dao.AuthorityOperationMapper;
 import com.cardpay.mgt.user.dao.AuthorityResourcesMapper;
 import com.cardpay.mgt.user.dao.OperationMapper;
@@ -10,6 +11,7 @@ import com.cardpay.mgt.user.dao.RoleAuthorityMapper;
 import com.cardpay.mgt.user.dao.RoleMapper;
 import com.cardpay.mgt.user.dao.UserMapper;
 import com.cardpay.mgt.user.dao.UserRoleMapper;
+import com.cardpay.mgt.user.model.Authority;
 import com.cardpay.mgt.user.model.AuthorityOperation;
 import com.cardpay.mgt.user.model.AuthorityResources;
 import com.cardpay.mgt.user.model.Operation;
@@ -27,7 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * User的Service实现
+ * 用户Service层实现
  *
  * @author rankai
  */
@@ -58,6 +60,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Autowired
     private RoleMapper roleMapper;
 
+    @Autowired
+    private AuthorityMapper authorityMapper;
+
     @Override
     public Set<String> getUserAuthority(User user) {
 
@@ -67,20 +72,21 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         List<RoleAuthority> roleAuthorities = roleAuthorityMapper.selectByRoleList(userRoles);
 
         List<AuthorityOperation> authorityOperations = authorityOperationMapper.selectByAuthoritList(roleAuthorities);
-        List<AuthorityResources> authorityResourceses = authorityResourcesMapper.selectByAuthoritList(roleAuthorities);
+        List<AuthorityResources> authorityResources = authorityResourcesMapper.selectByAuthoritList(roleAuthorities);
 
+        List<Authority> authorities = authorityMapper.selectByList(roleAuthorities);
         List<Operation> operationes = operationMapper.selectByIdList(authorityOperations);
-        List<Resources> resourceses = resourcesMapper.selectByIdList(authorityResourceses);
-
-        System.out.println(resourceses.size());
+        List<Resources> resourceses = resourcesMapper.selectByIdList(authorityResources);
 
         Set<String> set = new HashSet<>();
         StringBuffer stringBuffer;
-        for (Operation operation : operationes) {
+        for (Authority authority : authorities) {
             for (Resources resources : resourceses) {
-                stringBuffer = new StringBuffer();
-                stringBuffer.append(resources.getResoucreName()).append(":").append(operation.getOperationName());
-                set.add(stringBuffer.toString());
+                for (Operation operation : operationes) {
+                    stringBuffer = new StringBuffer();
+                    stringBuffer.append(authority.getAuthorityName()).append(":").append(resources.getResoucreName()).append(":").append(operation.getOperationName());
+                    set.add(stringBuffer.toString());
+                }
             }
         }
         return set;

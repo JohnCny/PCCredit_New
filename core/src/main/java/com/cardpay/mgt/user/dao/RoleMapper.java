@@ -7,6 +7,11 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
+/**
+ * 角色Dao层接口
+ *
+ * @author rankai
+ */
 public interface RoleMapper extends BasicMapper<Role> {
     /**
      * 根据用户角色关系表获取用户的角色信息

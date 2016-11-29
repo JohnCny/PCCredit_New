@@ -6,7 +6,7 @@ import com.cardpay.mgt.user.model.User;
 import java.util.Set;
 
 /**
- * User的Service接口
+ * 用户Service层接口
  *
  * @author rankai
  */

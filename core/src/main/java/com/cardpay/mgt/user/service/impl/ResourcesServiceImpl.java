@@ -7,8 +7,9 @@ import com.cardpay.mgt.user.service.ResourcesService;
 import org.springframework.stereotype.Service;
 
 /**
+ * 资源Service层实现
+ *
  * @author rankai
  */
-@Service
 public class ResourcesServiceImpl extends BaseServiceImpl<Resources> implements ResourcesService {
 }
