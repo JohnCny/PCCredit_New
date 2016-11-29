@@ -133,6 +133,7 @@ subprojects {
                 libraries."commons-fileupload",
                 libraries."commons-lang3",
                 libraries."commons-codec",
+                libraries."bcprov",
 
                 //durid
                 libraries."druid",
@@ -192,6 +193,9 @@ subprojects {
 
                 //fastdfs
                 libraries."fastdfs",
+
+                //pdf
+                libraries."pdfbox",
         )
         testCompile (
                 libraries."junit",

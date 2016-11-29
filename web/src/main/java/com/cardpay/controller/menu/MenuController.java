@@ -5,6 +5,8 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,8 @@ public class MenuController extends BaseController<TMenu,Integer>{
 
     @ResponseBody
     @RequestMapping("/all")
-    public ResultTo selectMenuList(Integer level){
+    @ApiOperation(value = "查询菜单层级信息接口", notes = "查询菜单层级信息",  httpMethod = "GET")
+    public ResultTo selectMenuList(@ApiParam(value = "查询深度", required = true) Integer level){
         ResultTo resultTo = new ResultTo();
         List<TMenuVo> menuLists = tMenuService.selectMenuList(0,level);
         resultTo.setData(menuLists);
@@ -37,7 +40,8 @@ public class MenuController extends BaseController<TMenu,Integer>{
 
     @ResponseBody
     @RequestMapping("/recursionDelete")
-    public ResultTo recursionDelete(Integer id){
+    @ApiOperation(value = "删除指定菜单下所有子菜单接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
+    public ResultTo recursionDelete(@ApiParam(value = "菜单id", required = true) Integer id){
         ResultTo resultTo = new ResultTo();
         Integer deleteNum = tMenuService.recursionDelete(id);
         resultTo.setData(deleteNum);

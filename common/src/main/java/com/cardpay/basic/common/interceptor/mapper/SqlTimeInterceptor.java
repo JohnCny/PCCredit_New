@@ -55,7 +55,7 @@ public class SqlTimeInterceptor implements Interceptor {
         String sql = showSql(configuration, boundSql);
         LogTemplate.debug(SqlTimeInterceptor.class, "SQL执行位置:", sqlId);
         LogTemplate.debug(SqlTimeInterceptor.class, "SQL语句:", sql);
-        LogTemplate.debug(SqlTimeInterceptor.class, "SQL执行时间:", DateTimeUtil.format(new Date(time), DateTimeUtil.NORM_DATETIME_PATTERN));
+        LogTemplate.debug(SqlTimeInterceptor.class, "SQL执行时间:", time+"ms");
     }
 
     private static String getParameterValue(Object obj) {
