@@ -1,20 +1,14 @@
 package com.cardpay.controller.generalization;
 
 import com.cardpay.basic.base.model.ResultTo;
-import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.core.fastdfs.FastDFSFile;
 import com.cardpay.core.fastdfs.FileManager;
-import com.cardpay.core.fastdfs.FileManagerConfig;
 import io.swagger.annotations.*;
-import org.csource.common.NameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +21,8 @@ import java.util.List;
 @RequestMapping("/files")
 public class FilesController {
     @Autowired
-    private static LogTemplate logger;
+    private FileManager fileManager;
+
 
     /**
      * 文件下载接口
@@ -56,7 +51,7 @@ public class FilesController {
     @ApiModelProperty(dataType = "MultipartFile")
     @ApiImplicitParam(name = "files", value = "文件", required = true, dataType = "MultipartFile")
     public ResultTo upLoad(@RequestPart MultipartFile[] files) {
-        List<String> list = FileManager.upLoad(files);
+        List<String> list = fileManager.upLoad(files);
         return new ResultTo().setData(list);
     }
 

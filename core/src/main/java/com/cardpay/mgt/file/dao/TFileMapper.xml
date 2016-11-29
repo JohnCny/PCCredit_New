@@ -6,8 +6,6 @@
       WARNING - @mbg.generated
     -->
     <id column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId" />
-    <result column="SERVER_URL_PATH" jdbcType="VARCHAR" property="serverUrlPath" />
     <result column="IMAGE_TYPE" jdbcType="VARCHAR" property="imageType" />
     <result column="FILE_PATH" jdbcType="VARCHAR" property="filePath" />
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
@@ -18,4 +16,22 @@
     <result column="TYPE" jdbcType="DECIMAL" property="type" />
     <result column="SUBTYPE" jdbcType="DECIMAL" property="subtype" />
   </resultMap>
+
+  <!-- 批量插入-->
+  <insert id="batchInsert" parameterType="java.util.List">
+    INSERT INTO T_FILE(ID, IMAGE_TYPE, FILE_PATH, REMARK, CREATED_BY, CREATED_AT, MODIFIED_BY
+    , MODIFIED_AT, TYPE, SUBTYPE)
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator="union">
+      SELECT #{item.id,mode=IN,jdbcType=DECIMAL}
+      , #{item.imageType,mode=IN, jdbcType=VARCHAR}
+      , #{item.filePath,mode=IN, jdbcType=VARCHAR}
+      , #{item.remark, mode=IN,jdbcType=VARCHAR}
+      , #{item.createdBy, mode=IN,jdbcType=VARCHAR}
+      , #{item.createdAt,mode=IN, jdbcType=DECIMAL}
+      , #{item.modifiedBy,mode=IN, jdbcType=VARCHAR}
+      , #{item.modifiedAt, mode=IN,jdbcType=DECIMAL}
+      , #{item.type,mode=IN, jdbcType=DECIMAL}
+      , #{item.subtype, mode=IN,jdbcType=DECIMAL} FROM dual
+    </foreach>
+  </insert>
 </mapper>

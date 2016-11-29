@@ -13,23 +13,9 @@ public class TFile {
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select FILE_SEQ.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "文件id")
     private Integer id;
-
-    /**
-     * 客户id
-     */
-    @Column(name = "CUSTOMER_ID")
-    @ApiModelProperty(value = "客户id")
-    private Integer customerId;
-
-    /**
-     * 服务器路径
-     */
-    @Column(name = "SERVER_URL_PATH")
-    @ApiModelProperty(value = "服务器路径")
-    private String serverUrlPath;
 
     /**
      * 影像类型
@@ -110,42 +96,6 @@ public class TFile {
      */
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     * 获取客户id
-     *
-     * @return CUSTOMER_ID - 客户id
-     */
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    /**
-     * 设置客户id
-     *
-     * @param customerId 客户id
-     */
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
-
-    /**
-     * 获取服务器路径
-     *
-     * @return SERVER_URL_PATH - 服务器路径
-     */
-    public String getServerUrlPath() {
-        return serverUrlPath;
-    }
-
-    /**
-     * 设置服务器路径
-     *
-     * @param serverUrlPath 服务器路径
-     */
-    public void setServerUrlPath(String serverUrlPath) {
-        this.serverUrlPath = serverUrlPath;
     }
 
     /**
