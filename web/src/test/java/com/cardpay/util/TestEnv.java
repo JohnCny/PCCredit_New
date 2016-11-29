@@ -41,10 +41,10 @@ public abstract class TestEnv extends BaseTest {
 
     @Before
     public void setUp() throws Exception {
-        SecurityManager securityManger = PowerMockito.mock(SecurityManager.class, Mockito.RETURNS_DEEP_STUBS);
-        ThreadContext.bind(securityManger);
-        subject = new Subject.Builder(getSecurityManager()).buildSubject();
-        setSubject(subject);
+//        SecurityManager securityManger = PowerMockito.mock(SecurityManager.class, Mockito.RETURNS_DEEP_STUBS);
+//        ThreadContext.bind(securityManger);
+//        subject = new Subject.Builder(getSecurityManager()).buildSubject();
+//        setSubject(subject);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 //        setUser(baseUser);
     }
