@@ -8,7 +8,7 @@
     <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager">
     </bean>
     <!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录数据源-->
-    <bean id="shiroRealm" class="com.cardpay.shiro.realm.ShiroRealm"/>
+    <bean id="shiroRealm" class="com.cardpay.core.shrio.realm.ShiroRealm"/>
 
     <!-- Shiro默认会使用Servlet容器的Session,可通过sessionMode属性来指定使用Shiro原生Session -->
     <!-- 即<property name="sessionMode" value="native"/>,详细说明见官方文档 -->
@@ -36,23 +36,23 @@
         <property name="arguments" ref="securityManager"/>
     </bean>
 
-    <!-- 基于Form表单的身份验证过滤器 -->
-    <bean id="formAuthenticationFilter" class="com.cardpay.shiro.RoleAuthorizationFilter">
-        <!--优先获取此处配置,没写则用shrioFilter配置-->
-        <property name="loginUrl" value="/api/logon/nologin"/>
-    </bean>
+    <!--&lt;!&ndash; 基于Form表单的身份验证过滤器 &ndash;&gt;-->
+    <!--<bean id="formAuthenticationFilter" class="com.cardpay.shiro.RoleAuthorizationFilter">-->
+        <!--&lt;!&ndash;优先获取此处配置,没写则用shrioFilter配置&ndash;&gt;-->
+        <!--<property name="loginUrl" value="/api/logon/nologin"/>-->
+    <!--</bean>-->
 
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="unauthorizedUrl" value="/api/logon/unauthorized"/>
-        <!-- 自定义filter配置 -->
-        <property name="filters">
-            <map>
-                <!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中 -->
-                <entry key="authc" value-ref="formAuthenticationFilter" />
-            </map>
-        </property>
+        <!--&lt;!&ndash; 自定义filter配置 &ndash;&gt;-->
+        <!--<property name="filters">-->
+            <!--<map>-->
+                <!--&lt;!&ndash; 将自定义 的FormAuthenticationFilter注入shiroFilter中 &ndash;&gt;-->
+                <!--<entry key="authc" value-ref="formAuthenticationFilter" />-->
+            <!--</map>-->
+        <!--</property>-->
         <property name="filterChainDefinitions">
             <value>
                 /upload/file/** = anon
