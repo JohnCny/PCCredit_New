@@ -27,7 +27,9 @@ public class RedisClient {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    /** 创建redisTemplate对象
+    /**
+     * 创建redisTemplate对象
+     *
      * @return RedisTemplate对象
      */
     public RedisTemplate<String, Object> getRedisTemplate() {
@@ -187,5 +189,15 @@ public class RedisClient {
     public void set(String key, Object value) {
         ValueOperations<String, Object> opt = redisTemplate.opsForValue();
         opt.set(key, value);
+    }
+
+    /**
+     * 获取键剩余过期时间
+     *
+     * @param key
+     * @return
+     */
+    public Long getTime(String key) {
+        return redisTemplate.getExpire(key);
     }
 }

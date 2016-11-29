@@ -4,7 +4,9 @@ import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.RoleAuthority;
 
 /**
- * Created by rankai .
+ * 角色与权限关系Service层接口
+ *
+ * @author rankai
  */
 public interface RoleAuthorityService extends BaseService<RoleAuthority> {
 }
