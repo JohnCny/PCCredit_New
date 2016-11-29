@@ -1,10 +1,18 @@
 package com.cardpay.mgt.user.model;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
+/**
+ * 关系实体
+ *
+ * @author rankai
+ */
 @Table(name = "T_RESOURCES")
+@ApiModel(value = "资源实体")
 public class Resources extends GenericEntity<Integer> {
     /**
      * 资源id
@@ -12,30 +20,35 @@ public class Resources extends GenericEntity<Integer> {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select RESOURCES_SEQ.nextval from dual")
+    @ApiModelProperty(value = "id", required = true)
     private Integer id;
 
     /**
      * 资源名称(英文)
      */
     @Column(name = "RESOUCRE_NAME")
+    @ApiModelProperty(value = "资源名称(英文)")
     private String resoucreName;
 
     /**
      * 资源中文名称
      */
     @Column(name = "RESOUCRE_NAME_ZH")
+    @ApiModelProperty(value = "资源中文名称")
     private String resoucreNameZh;
 
     /**
      * 资源描述信息
      */
     @Column(name = "RESOUCRE_DESCRIPTION")
+    @ApiModelProperty(value = "资源描述信息")
     private String resoucreDescription;
 
     /**
-     * 资源类型(0 页面元素，文件)
+     * 资源类型(0 页面元素，1 文件)
      */
     @Column(name = "RESOUCRE_TYPE")
+    @ApiModelProperty(value = "资源类型(0 页面元素，文件)", allowableValues = "(0 页面元素，1 文件)")
     private Integer resoucreType;
 
     /**

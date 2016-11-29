@@ -1,21 +1,31 @@
 package com.cardpay.mgt.user.model;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
+/**
+ * 角色权限关系实体
+ *
+ * @author rankai
+ */
 @Table(name = "T_ROLE_AUTHORITY")
+@ApiModel(value = "角色于权限关系实体")
 public class RoleAuthority extends GenericEntity<Integer> {
     /**
      * 角色id
      */
     @Column(name = "ROLE_ID")
+    @ApiModelProperty(value = "角色id")
     private Integer roleId;
 
     /**
      * 权限id
      */
     @Column(name = "AUTHORITY_ID")
+    @ApiModelProperty(value = "权限id")
     private Integer authorityId;
 
     /**

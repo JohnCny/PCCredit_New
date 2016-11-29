@@ -6,6 +6,8 @@ import com.cardpay.mgt.user.service.AuthorityOperationService;
 import org.springframework.stereotype.Service;
 
 /**
+ * 权限与资源操作关系Service层实现
+ *
  * @author rankai
  */
 @Service
