@@ -17,7 +17,7 @@ public class TBusinessParam  extends GenericEntity<Integer> {
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select BUSINESS_PARAM_SEQ.nextval from dual")
     private Integer id;
 
     /**

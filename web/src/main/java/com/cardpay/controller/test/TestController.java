@@ -1,6 +1,7 @@
 package com.cardpay.controller.test;
 import com.cardpay.basic.base.model.EchatesTo;
 import com.cardpay.basic.base.model.EchatesModel;
+import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.test.model.TModel;
 import com.cardpay.mgt.test.model.TestModel;
@@ -71,4 +72,10 @@ public class TestController extends BaseController<TModel,Integer> {
     public void testSendWebSocket(){
         sendMessageToUser(1, "测试信息");
     }
+    @ApiOperation(value = "测试给指定用户推送消息")
+    @RequestMapping(value = "/api/list", method = RequestMethod.POST)
+    public ResultTo test(){
+        return new ResultTo();
+    }
+
 }

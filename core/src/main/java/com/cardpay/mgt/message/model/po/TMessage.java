@@ -17,7 +17,7 @@ public class TMessage extends GenericEntity<Integer>{
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MESSAGE_SEQ.nextval from dual")
     private Integer id;
 
     /**

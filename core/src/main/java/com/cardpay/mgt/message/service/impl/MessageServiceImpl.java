@@ -6,12 +6,15 @@ import com.cardpay.mgt.message.dao.TMessageMapper;
 import com.cardpay.mgt.message.model.po.TMessage;
 import com.cardpay.mgt.message.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 消息服务实现类
  * @author wangpeng
  */
+@Service
 public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements MessageService{
+
     @Autowired
     private TMessageMapper tMessageDao;
 
