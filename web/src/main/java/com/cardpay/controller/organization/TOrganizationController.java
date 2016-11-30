@@ -25,7 +25,6 @@ import java.util.List;
 @RequestMapping("/organization")
 public class TOrganizationController extends BaseController<TOrganization, Integer> {
     @Autowired
-    @Qualifier("TOrganizationServiceImpl")
     private TOrganizationService tOrganizationService;
 
     @Autowired
