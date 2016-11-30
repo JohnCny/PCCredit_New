@@ -27,9 +27,9 @@
       , #{item.fileName,mode=IN, jdbcType=VARCHAR}
       , #{item.remark, mode=IN,jdbcType=VARCHAR}
       , #{item.createdBy, mode=IN,jdbcType=VARCHAR}
-      , #{item.createdAt,mode=IN, jdbcType=DECIMAL}
+      , #{item.createdAt,mode=IN, jdbcType=TIMESTAMP}
       , #{item.modifiedBy,mode=IN, jdbcType=VARCHAR}
-      , #{item.modifiedAt, mode=IN,jdbcType=DECIMAL}
+      , #{item.modifiedAt, mode=IN,jdbcType=TIMESTAMP}
       , #{item.groupName,mode=IN, jdbcType=DECIMAL}
       , #{item.fastName, mode=IN,jdbcType=DECIMAL} FROM dual
     </foreach>

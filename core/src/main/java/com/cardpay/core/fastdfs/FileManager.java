@@ -14,22 +14,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-
 /**
- * FastDFSFile文件上传实现接口
+ * FastDFSFile文件上传下载通用类
  * Created by chenkai on 2016/11/25.
  */
 @Component
@@ -78,7 +75,6 @@ public class FileManager implements FileManagerConfig {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return groupName + "," + remoteFileName;
     }
 
@@ -142,49 +138,49 @@ public class FileManager implements FileManagerConfig {
     }
 
     /**
-     *  批量上传上传接口
-     * @param files 文件类型
+     *  文件批量上传接口
+     * @param files 文件
      * @return 文件名称
      */
     public List<String> upLoad(MultipartFile[] files) {
         List<String> list = new ArrayList<>();
-        String ext;
-        String upload;
-        TFile tFile = new TFile();
         List<TFile> tFiles = new ArrayList<>();
-        for (int i = 0; i < files.length; i++) {
-            ext = files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf(".") + 1);
+        final String[] ext = new String[1];
+        final String[] upload = new String[1];
+        Arrays.stream(files).forEach(file ->{
+            ext[0] = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
             try {
-                FastDFSFile file = new FastDFSFile(files[i].getBytes(), ext);
+                FastDFSFile fastDFSFile = new FastDFSFile(file.getBytes(), ext[0]);
                 NameValuePair[] metaList = new NameValuePair[4];
-                metaList[0] = new NameValuePair("fileName", files[i].getOriginalFilename());
-                metaList[1] = new NameValuePair("fileLength", String.valueOf(files[i].getSize()));
-                metaList[2] = new NameValuePair("fileExt", ext);
+                metaList[0] = new NameValuePair("fileName", file.getOriginalFilename());
+                metaList[1] = new NameValuePair("fileLength", String.valueOf(file.getSize()));
+                metaList[2] = new NameValuePair("fileExt", ext[0]);
                 metaList[3] = new NameValuePair("fileAuthor", FileManagerConfig.FILE_DEFAULT_AUTHOR);
-                //组名+fastdfs文件名+文件后缀+文件名
-                upload = upload(file, metaList) + "," + files[i].getOriginalFilename() + ",." + ext;
-                list.add(upload);
+                upload[0] = upload(fastDFSFile, metaList) + "," + file.getOriginalFilename() + ",." + ext[0];
 
+                list.add(upload[0]);
+                String[] str = upload[0].split(",");
                 User user = (User) ShiroKit.getPrincipal();
-                String[] str = upload.split(",");
-                tFile.setId(1);
-                tFile.setImageType(ext);
-                tFile.setFileName(files[i].getOriginalFilename());
-                tFile.setRemark("upLoad");
-                tFile.setCreatedBy("1");
-                tFile.setCreatedAt(new Date());
-                tFile.setModifiedAt(new Date());
-                tFile.setModifiedBy("1");
-                tFile.setGroupName(str[0]);
-                tFile.setFastName(str[1]);
+               // String id = String.valueOf(user.getId());
+                TFile tFile = TFile.TFileBuilder.get()
+                        .withId(1)
+                        .withImageType(ext[0])
+                        .withFileName(file.getOriginalFilename())
+                        .withRemark("upload")
+                        .withCreatedBy("1")
+                        .withCreatedAt(new Date())
+                        .withModifiedBy("1")
+                        .withModifiedAt(new Date())
+                        .withGroupName(str[0])
+                        .withFastName(str[1])
+                        .build();
 
                 tFiles.add(tFile);
                 tFileDao.batchInsert(tFiles);
-            } catch (IOException e) {
+            }catch (Exception e){
                 e.printStackTrace();
-                return new ArrayList<>();
             }
-        }
+        });
         return list;
     }
 

@@ -27,7 +27,7 @@ public class TFile {
     /**
      * 原文件名
      */
-    @Column(name = "FILE_PATH")
+    @Column(name = "FILE_NAME")
     @ApiModelProperty(value = "原文件名")
     private String fileName;
 
