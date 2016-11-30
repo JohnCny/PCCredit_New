@@ -39,7 +39,7 @@ public class CaptchaInterceptor implements HandlerInterceptor {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++");
 
         String captchaValue = request.getParameter(CAPTCHA_NAME);
-        if (StringUtils.isBlank(captchaValue)) {
+        if (StringUtils.isEmpty(captchaValue)) {
             outputMessage(response, new ResultTo(ResultEnum.CAPTCHA_NULL.getValue()));
             return Boolean.FALSE;
         }
@@ -51,8 +51,8 @@ public class CaptchaInterceptor implements HandlerInterceptor {
                 break;
             }
         }
-//        Object object = redisClient.get(key);
-        Object object = "1234";
+        Object object = redisClient.get(key);
+//        Object object = "1234";
 
         if (object == null) {
             outputMessage(response, new ResultTo(ResultEnum.CAPTCHA_TIMEOUT.getValue()));

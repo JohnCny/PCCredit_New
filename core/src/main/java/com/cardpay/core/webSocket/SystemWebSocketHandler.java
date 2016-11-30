@@ -38,17 +38,15 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        logger.debug(SystemWebSocketHandler.class, "客户端建立连接","connect to the websocket success......");
         //将客户信息添加到session,用于在线发送信息
         users.add(session);
-
         Integer userId = null;
         try {
             User user= (User)ShiroKit.getPrincipal();
             userId = user.getId();
         }catch (Exception e) {
             e.printStackTrace();
-            logger.info(SystemWebSocketHandler.class, "异常原因", e.getMessage());
+            logger.debug(SystemWebSocketHandler.class, "异常原因", e.getMessage());
         }
         webSocketSessions.put(userId, session);//用户上线
     }
