@@ -190,7 +190,10 @@ subprojects {
 
                 //webSocket
                 libraries."spring-websocket",
-
+                
+                //excel poi
+                libraries."poi",
+                
                 //fastdfs
                 libraries."fastdfs",
 

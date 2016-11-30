@@ -17,16 +17,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(name = "parent", locations = {"classpath:config/spring-core-config-test.xml"})
 public abstract class BaseTest {
 
     private static ThreadState subjectThreadState;
-
-    public BaseTest() {
-
-    }
 
     /**
      * Allows subclasses to set the currently executing {@link Subject} instance.

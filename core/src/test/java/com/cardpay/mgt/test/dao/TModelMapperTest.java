@@ -20,7 +20,7 @@ public class TModelMapperTest extends TestEnv {
     @Test
     public void test(){
         List<TModel> tModels = tModelMapper.selectAll();
-        assertEquals(tModels.size(),11);
+        assertEquals(tModels.size(),17);
     }
 
 }
