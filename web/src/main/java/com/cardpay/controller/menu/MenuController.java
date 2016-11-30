@@ -5,6 +5,7 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
+import com.cardpay.mgt.parse.service.ParseCreditReportService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,10 @@ public class MenuController extends BaseController<TMenu,Integer>{
     @Qualifier("TMenuServiceImpl")
     private TMenuService tMenuService;
 
+    @Autowired
+    @Qualifier("ParseCreditReportServiceImpl")
+    private ParseCreditReportService parseCreditReportService;
+
     @ResponseBody
     @RequestMapping("/all")
     @ApiOperation(value = "查询菜单层级信息接口", notes = "查询菜单层级信息",  httpMethod = "GET")
@@ -45,6 +50,14 @@ public class MenuController extends BaseController<TMenu,Integer>{
         ResultTo resultTo = new ResultTo();
         Integer deleteNum = tMenuService.recursionDelete(id);
         resultTo.setData(deleteNum);
+        return resultTo;
+    }
+
+    @ResponseBody
+    @RequestMapping("/creditReport")
+    public ResultTo creditReport(Integer id){
+        ResultTo resultTo = new ResultTo();
+        parseCreditReportService.parseCreditReport(id);
         return resultTo;
     }
 }
