@@ -15,7 +15,7 @@ public class PdfUtil {
     /**
      * 读取PDF为字符串
      * @param inputStream PDF文件流
-     * @return
+     * @return PDF字符串
      */
     public static String readPDF(InputStream inputStream){
         String result = null;

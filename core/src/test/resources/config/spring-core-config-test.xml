@@ -12,7 +12,6 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-<<<<<<< HEAD
     <!--配置WebSocket engine,设置websocket的内容大小-->
     <!--
     <bean id="serverFactory" class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
@@ -20,7 +19,6 @@
         <property name="maxBinaryMessageBufferSize" value="8192"/>
     </bean>
     -->
-=======
     <!--编码方式获取propertity数据信息-->
     <bean id="configBean" class="com.cardpay.basic.common.context.ContextProperty">
         <property name="locations">
@@ -41,7 +39,6 @@
         <!--<property name="resources" value="classpath:conf/bank.yml"/>-->
     <!--</bean>-->
     <!--<context:property-placeholder properties-ref="bankProperties"/>-->
->>>>>>> origin/develop
 
     <!-- 支持上传文件 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -93,7 +90,6 @@
     <!--</bean>-->
 
     <!-- 线程池 -->
-<<<<<<< HEAD
     <bean id="taskExecutor"
           class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="5"/>
@@ -123,7 +119,6 @@
     <import resource="classpath:config/spring-config-rabbitmq-test.xml"/>
     <!--<import resource="classpath:config/spring-config-dozer-test.xml"/>-->
     <import resource="classpath:config/spring-config-database.xml"/>
-=======
     <!--<bean id="taskExecutor"-->
           <!--class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">-->
         <!--<property name="corePoolSize" value="5"/>-->
@@ -145,5 +140,4 @@
     <!--&lt;!&ndash;<import resource="classpath:spring-config-activiti.xml"/>&ndash;&gt;-->
     <import resource="classpath:config/spring-config-database-test.xml"/>
     <!--<import resource="classpath:config/spring-config-h2db.xml"/>-->
->>>>>>> origin/develop
 </beans>
