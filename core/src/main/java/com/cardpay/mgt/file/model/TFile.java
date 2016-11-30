@@ -229,4 +229,94 @@ public class TFile {
     public void setFastName(String fastName) {
         this.fastName = fastName;
     }
+
+
+    public static final class TFileBuilder {
+        private Integer id;
+        private String imageType;
+        private String fileName;
+        private String remark;
+        private String createdBy;
+        private Date createdAt;
+        private String modifiedBy;
+        private Date modifiedAt;
+        private String groupName;
+        private String fastName;
+
+        private TFileBuilder() {
+        }
+
+        public static TFileBuilder get() {
+            return new TFileBuilder();
+        }
+
+        public TFileBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public TFileBuilder withImageType(String imageType) {
+            this.imageType = imageType;
+            return this;
+        }
+
+        public TFileBuilder withFileName(String fileName) {
+            this.fileName = fileName;
+            return this;
+        }
+
+        public TFileBuilder withRemark(String remark) {
+            this.remark = remark;
+            return this;
+        }
+
+        public TFileBuilder withCreatedBy(String createdBy) {
+            this.createdBy = createdBy;
+            return this;
+        }
+
+        public TFileBuilder withCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public TFileBuilder withModifiedBy(String modifiedBy) {
+            this.modifiedBy = modifiedBy;
+            return this;
+        }
+
+        public TFileBuilder withModifiedAt(Date modifiedAt) {
+            this.modifiedAt = modifiedAt;
+            return this;
+        }
+
+        public TFileBuilder withGroupName(String groupName) {
+            this.groupName = groupName;
+            return this;
+        }
+
+        public TFileBuilder withFastName(String fastName) {
+            this.fastName = fastName;
+            return this;
+        }
+
+        public TFileBuilder but() {
+            return get().withId(id).withImageType(imageType).withFileName(fileName).withRemark(remark).withCreatedBy(createdBy).withCreatedAt(createdAt).withModifiedBy(modifiedBy).withModifiedAt(modifiedAt).withGroupName(groupName).withFastName(fastName);
+        }
+
+        public TFile build() {
+            TFile tFile = new TFile();
+            tFile.setId(id);
+            tFile.setImageType(imageType);
+            tFile.setFileName(fileName);
+            tFile.setRemark(remark);
+            tFile.setCreatedBy(createdBy);
+            tFile.setCreatedAt(createdAt);
+            tFile.setModifiedBy(modifiedBy);
+            tFile.setModifiedAt(modifiedAt);
+            tFile.setGroupName(groupName);
+            tFile.setFastName(fastName);
+            return tFile;
+        }
+    }
 }
