@@ -19,7 +19,7 @@
 
   <!-- 批量插入-->
   <insert id="batchInsert" parameterType="java.util.List">
-    INSERT INTO T_FILE(ID, IMAGE_TYPE, FILE_NAME, REMARK, CREATED_BY, CREATED_AT, MODIFIED_BY
+    INSERT INTO T_FILE (ID, IMAGE_TYPE, FILE_NAME, REMARK, CREATED_BY, CREATED_AT, MODIFIED_BY
     , MODIFIED_AT, GROUP_NAME, FAST_NAME)
     <foreach collection="list" item="item" index="index" open="(" close=")" separator="union">
       SELECT #{item.id,mode=IN,jdbcType=DECIMAL}
@@ -31,7 +31,7 @@
       , #{item.modifiedBy,mode=IN, jdbcType=VARCHAR}
       , #{item.modifiedAt, mode=IN,jdbcType=TIMESTAMP}
       , #{item.groupName,mode=IN, jdbcType=DECIMAL}
-      , #{item.fastName, mode=IN,jdbcType=DECIMAL} FROM dual
+      , #{item.fastName, mode=IN,jdbcType=DECIMAL} FROM DUAL
     </foreach>
   </insert>
 </mapper>

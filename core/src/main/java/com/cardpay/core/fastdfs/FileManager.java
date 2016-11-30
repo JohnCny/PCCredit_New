@@ -70,6 +70,9 @@ public class FileManager implements FileManagerConfig {
         String remoteFileName = "";
         try {
             uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), valuePairs);
+            if (uploadResults == null){
+            return new String();
+            }
             groupName = uploadResults[0];
             remoteFileName = uploadResults[1];
         } catch (Exception e) {
@@ -156,27 +159,29 @@ public class FileManager implements FileManagerConfig {
                 metaList[1] = new NameValuePair("fileLength", String.valueOf(file.getSize()));
                 metaList[2] = new NameValuePair("fileExt", ext[0]);
                 metaList[3] = new NameValuePair("fileAuthor", FileManagerConfig.FILE_DEFAULT_AUTHOR);
-                upload[0] = upload(fastDFSFile, metaList) + "," + file.getOriginalFilename() + ",." + ext[0];
+                String fileName = upload(fastDFSFile, metaList);
 
-                list.add(upload[0]);
-                String[] str = upload[0].split(",");
-                User user = (User) ShiroKit.getPrincipal();
-               // String id = String.valueOf(user.getId());
-                TFile tFile = TFile.TFileBuilder.get()
-                        .withId(1)
-                        .withImageType(ext[0])
-                        .withFileName(file.getOriginalFilename())
-                        .withRemark("upload")
-                        .withCreatedBy("1")
-                        .withCreatedAt(new Date())
-                        .withModifiedBy("1")
-                        .withModifiedAt(new Date())
-                        .withGroupName(str[0])
-                        .withFastName(str[1])
-                        .build();
-
-                tFiles.add(tFile);
-                tFileDao.batchInsert(tFiles);
+                if(!fileName.isEmpty()) {
+                upload[0] = fileName + "," + file.getOriginalFilename() + "," + ext[0];
+                    list.add(upload[0]);
+                    String[] str = upload[0].split(",");
+                    User user = (User) ShiroKit.getPrincipal();
+                    // String id = String.valueOf(user.getId());
+                    TFile tFile = TFile.TFileBuilder.get()
+                            .withId(1)
+                            .withImageType(ext[0])
+                            .withFileName(file.getOriginalFilename())
+                            .withRemark("upload")
+                            .withCreatedBy("1")
+                            .withCreatedAt(new Date())
+                            .withModifiedBy("1")
+                            .withModifiedAt(new Date())
+                            .withGroupName(str[0])
+                            .withFastName(str[1])
+                            .build();
+                    tFiles.add(tFile);
+                    tFileDao.batchInsert(tFiles);
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
