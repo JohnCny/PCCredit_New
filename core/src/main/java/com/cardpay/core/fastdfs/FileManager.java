@@ -131,6 +131,7 @@ public class FileManager implements FileManagerConfig {
      */
     public static int deleteFile(String groupName, String remoteFileName) {
         try {
+            TFile tFile = new TFile();
             return storageClient.delete_file(groupName, remoteFileName);
         } catch (IOException e) {
             e.printStackTrace();
@@ -164,9 +165,8 @@ public class FileManager implements FileManagerConfig {
                 upload = upload(file, metaList) + "," + files[i].getOriginalFilename() + ",." + ext;
                 list.add(upload);
 
-                String[] str = upload.split(",");
-
                 User user = (User) ShiroKit.getPrincipal();
+                String[] str = upload.split(",");
                 tFile.setId(1);
                 tFile.setImageType(ext);
                 tFile.setFileName(files[i].getOriginalFilename());
@@ -177,13 +177,14 @@ public class FileManager implements FileManagerConfig {
                 tFile.setModifiedBy("1");
                 tFile.setGroupName(str[0]);
                 tFile.setFastName(str[1]);
+
+                tFiles.add(tFile);
+                tFileDao.batchInsert(tFiles);
             } catch (IOException e) {
                 e.printStackTrace();
                 return new ArrayList<>();
             }
         }
-        tFiles.add(tFile);
-        tFileDao.batchInsert(tFiles);
         return list;
     }
 
