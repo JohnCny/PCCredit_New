@@ -53,7 +53,8 @@ public class TOrganizationController extends BaseController<TOrganization, Integ
      * @return 1成功, 0失败
      */
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteOrganization", method = RequestMethod.DELETE)
+    @ResponseBody
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id){
         int flag = tOrganizationService.deleteOrganization(id);

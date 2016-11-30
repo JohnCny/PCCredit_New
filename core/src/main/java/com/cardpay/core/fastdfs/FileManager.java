@@ -131,6 +131,7 @@ public class FileManager implements FileManagerConfig {
      */
     public static int deleteFile(String groupName, String remoteFileName) {
         try {
+            TFile tFile = new TFile();
             return storageClient.delete_file(groupName, remoteFileName);
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,14 +168,15 @@ public class FileManager implements FileManagerConfig {
                 String[] str = upload.split(",");
 
                 User user = (User) ShiroKit.getPrincipal();
+
                 tFile.setId(1);
                 tFile.setImageType(ext);
                 tFile.setFileName(files[i].getOriginalFilename());
                 tFile.setRemark("upLoad");
-                tFile.setCreatedBy("1");
+                tFile.setCreatedBy(user.getId().toString());
                 tFile.setCreatedAt(new Date());
                 tFile.setModifiedAt(new Date());
-                tFile.setModifiedBy("1");
+                tFile.setModifiedBy(user.getId().toString());
                 tFile.setGroupName(str[0]);
                 tFile.setFastName(str[1]);
             } catch (IOException e) {
