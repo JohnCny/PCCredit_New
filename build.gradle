@@ -191,6 +191,9 @@ subprojects {
                 //webSocket
                 libraries."spring-websocket",
 
+                //fastdfs
+                libraries."fastdfs",
+
                 //pdf
                 libraries."pdfbox",
         )

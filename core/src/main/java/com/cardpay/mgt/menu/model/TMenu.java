@@ -19,7 +19,7 @@ public class TMenu extends GenericEntity<Integer>{
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MENU_SEQ.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select MENU_SEQ.nextval from dual")
     private Integer id;
 
     /**

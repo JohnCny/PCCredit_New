@@ -113,6 +113,9 @@ ext.libraries = [
         //webSocket
         "spring-websocket":"org.springframework:spring-websocket:4.3.4.RELEASE",
 
+        //fastdfs
+        "fastdfs":":fastdfs_client_v1.24",
+
         //pdf
         "pdfbox":"pdfbox:pdfbox:0.7.3",
 
