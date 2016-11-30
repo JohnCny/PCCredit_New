@@ -2,14 +2,12 @@ package com.cardpay.mgt.menu.service.impl;
 
 import com.cardpay.mgt.menu.dao.TMenuMapper;
 import com.cardpay.mgt.menu.model.TMenuVo;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 /**
  * Created by yanwe on 2016/11/29.
  */
-@RunWith(PowerMockRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({TMenuServiceImpl.class})
 public class TMenuServiceImplTest {
 
@@ -30,11 +28,6 @@ public class TMenuServiceImplTest {
 
     @InjectMocks
     private TMenuServiceImpl tMenuService;
-
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     public void selectMenuList() throws Exception {
