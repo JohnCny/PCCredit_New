@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+import javax.annotation.Resources;
 import java.util.List;
 
 /**
@@ -26,11 +28,9 @@ import java.util.List;
 public class MenuController extends BaseController<TMenu,Integer>{
 
     @Autowired
-    @Qualifier("TMenuServiceImpl")
     private TMenuService tMenuService;
 
     @Autowired
-    @Qualifier("ParseCreditReportServiceImpl")
     private ParseCreditReportService parseCreditReportService;
 
     @ResponseBody
