@@ -5,6 +5,7 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
+import com.cardpay.mgt.parse.service.ParseCreditReportService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+import javax.annotation.Resources;
 import java.util.List;
 
 /**
@@ -25,8 +28,10 @@ import java.util.List;
 public class MenuController extends BaseController<TMenu,Integer>{
 
     @Autowired
-    @Qualifier("TMenuServiceImpl")
     private TMenuService tMenuService;
+
+    @Autowired
+    private ParseCreditReportService parseCreditReportService;
 
     @ResponseBody
     @RequestMapping("/all")
@@ -45,6 +50,14 @@ public class MenuController extends BaseController<TMenu,Integer>{
         ResultTo resultTo = new ResultTo();
         Integer deleteNum = tMenuService.recursionDelete(id);
         resultTo.setData(deleteNum);
+        return resultTo;
+    }
+
+    @ResponseBody
+    @RequestMapping("/creditReport")
+    public ResultTo creditReport(Integer id){
+        ResultTo resultTo = new ResultTo();
+        parseCreditReportService.parseCreditReport(id);
         return resultTo;
     }
 }
