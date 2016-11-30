@@ -46,7 +46,6 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
             userId = user.getId();
         }catch (Exception e) {
             e.printStackTrace();
-            logger.debug(SystemWebSocketHandler.class, "异常原因", e.getMessage());
         }
         webSocketSessions.put(userId, session);//用户上线
     }
@@ -100,7 +99,6 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
                     logger.info(SystemWebSocketHandler.class, "给所有的用户发消息","消息内容"+message);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    logger.debug(SystemWebSocketHandler.class, "失败原因", e.getMessage());
                 }
             }
         });
@@ -120,7 +118,6 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
                     logger.info(SystemWebSocketHandler.class, "给指定的用户发消息","消息内容"+message);
             } catch (IOException e) {
                 e.printStackTrace();
-                logger.debug(SystemWebSocketHandler.class, "失败原因", e.getMessage());
             }
         }
     }
