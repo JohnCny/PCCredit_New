@@ -90,7 +90,6 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
      * 沟槽函数,设置状态码和
      * @param code 状态码
      * @param msg 描述信息
-     * @return  返回自身对象this
      */
     public EchatesTo(int code, String msg){
         setMsg(code, msg);
@@ -182,7 +181,7 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
     /**
      * 折线图信息
      * @param title 标题 '未来一周气温变化'
-     * @param subText 副标题 '纯属虚构'
+     * @param subText 副标题 '详细温度信息'
      * @param legendList 图例集合 ['最高气温','最低气温']
      * @param listX X轴集合  ['周一','周二','周三','周四','周五','周六','周日']
      * @param seriesListH 高-数据 [11, 11, 15, 13, 12, 13, 10]
@@ -191,7 +190,7 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
      * @param seriesListL 低-数据 [1, -2, 2, 5, 3, 2, 0]
      * @param markPointListL 低-markPoint {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
      * @param markLineListL 低-平均值 {type: 'average', name: '平均值'}
-     * @return
+     * @return 返回自身对象this
      */
     public EchatesTo setData(String title, String subText, List<String> legendList, List<String> listX,
                              List<String> seriesListH, List<?>markPointListH, List<?>markLineListH

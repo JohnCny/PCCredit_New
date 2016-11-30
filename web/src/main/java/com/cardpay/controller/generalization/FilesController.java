@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
- * 文件上传下载
+ * 文件上传下载Controller
  * Created by chekai .
  * Date 2016/11/25 .
  */
@@ -22,7 +22,6 @@ import java.util.List;
 public class FilesController {
     @Autowired
     private FileManager fileManager;
-
 
     /**
      * 文件下载接口

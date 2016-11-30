@@ -5,8 +5,8 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- shrio缓存管理器,提供了AuthorizationInfo信息的缓存。-->
-    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager">
-    </bean>
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
     <!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录数据源-->
     <bean id="shiroRealm" class="com.cardpay.core.shrio.realm.ShiroRealm"/>
 
@@ -38,34 +38,32 @@
 
     <!--&lt;!&ndash; 基于Form表单的身份验证过滤器 &ndash;&gt;-->
     <!--<bean id="formAuthenticationFilter" class="com.cardpay.shiro.RoleAuthorizationFilter">-->
-        <!--&lt;!&ndash;优先获取此处配置,没写则用shrioFilter配置&ndash;&gt;-->
-        <!--<property name="loginUrl" value="/api/logon/nologin"/>-->
+    <!--&lt;!&ndash;优先获取此处配置,没写则用shrioFilter配置&ndash;&gt;-->
+    <!--<property name="loginUrl" value="/api/logon/nologin"/>-->
     <!--</bean>-->
 
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="unauthorizedUrl" value="/api/logon/unauthorized"/>
+
         <!--&lt;!&ndash; 自定义filter配置 &ndash;&gt;-->
         <!--<property name="filters">-->
-            <!--<map>-->
-                <!--&lt;!&ndash; 将自定义 的FormAuthenticationFilter注入shiroFilter中 &ndash;&gt;-->
-                <!--<entry key="authc" value-ref="formAuthenticationFilter" />-->
-            <!--</map>-->
+        <!--<map>-->
+        <!--&lt;!&ndash; 将自定义 的FormAuthenticationFilter注入shiroFilter中 &ndash;&gt;-->
+        <!--<entry key="authc" value-ref="formAuthenticationFilter" />-->
+        <!--</map>-->
         <!--</property>-->
         <property name="filterChainDefinitions">
             <value>
-                /upload/file/** = anon
+                /upload/** = anon
                 /static/** = anon
                 /js/** = anon
                 /css/** = anon
                 /img/** = anon
                 /assets/** = anon
-                /api/logon/** = anon
-                /forgetPwd/** = anon
-                /user/** = anon
                 /kaptcha = anon
-                /** = authc
+                /** = anon
             </value>
         </property>
     </bean>
