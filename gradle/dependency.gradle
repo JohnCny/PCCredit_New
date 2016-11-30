@@ -62,6 +62,7 @@ ext.libraries = [
 
         //common-codec
         "commons-codec":"commons-codec:commons-codec:1.10",
+        "bcprov":"org.bouncycastle:bcprov-jdk16:1.46",
 
         //druid
         "druid":"com.alibaba:druid:1.0.26",
@@ -114,6 +115,12 @@ ext.libraries = [
 
         //webSocket
         "spring-websocket":"org.springframework:spring-websocket:4.3.4.RELEASE",
+
+        //fastdfs
+        "fastdfs":":fastdfs_client_v1.24",
+
+        //pdf
+        "pdfbox":"pdfbox:pdfbox:0.7.3",
 
         //单元测试
         "junit":"junit:junit:4.12",

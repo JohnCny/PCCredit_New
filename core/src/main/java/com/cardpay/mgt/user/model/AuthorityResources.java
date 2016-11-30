@@ -6,6 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
+/**
+ * 权限资源关系实体
+ *
+ * @author rankai
+ */
 @Table(name = "T_AUTHORITY_RESOURCES")
 @ApiModel(value = "权限资源关系实体")
 public class AuthorityResources extends GenericEntity<Integer> {

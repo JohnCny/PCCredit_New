@@ -1,6 +1,6 @@
 package com.cardpay.mgt.organization.service;
 
-import com.cardpay.mgt.organization.model.TOrganizationVo;
+import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,14 +17,6 @@ public interface TOrganizationService {
      * @return 机构层级信息
      */
     List<TOrganizationVo> queryOrganization(int id, int levels);
-
-    /**
-     * 更新此机构所属层级信息
-     * @param id 机构id
-     * @param parentId 父机构id
-     * @return 1成功, 0失败
-     */
-    int updateOrganization(int id, int parentId);
 
     /**
      *  递归删除机构信息

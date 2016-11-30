@@ -3,7 +3,6 @@ package com.cardpay.mgt.message.service;
 import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.mgt.message.dao.TMessageMapper;
 import com.cardpay.mgt.message.service.impl.MessageServiceImpl;
-import com.cardpay.util.TestEnv;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

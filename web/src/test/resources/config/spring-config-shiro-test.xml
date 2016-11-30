@@ -36,10 +36,29 @@
         <property name="arguments" ref="securityManager"/>
     </bean>
 
+<<<<<<< HEAD
+=======
+    <!--&lt;!&ndash; 基于Form表单的身份验证过滤器 &ndash;&gt;-->
+    <!--<bean id="formAuthenticationFilter" class="com.cardpay.shiro.RoleAuthorizationFilter">-->
+        <!--&lt;!&ndash;优先获取此处配置,没写则用shrioFilter配置&ndash;&gt;-->
+        <!--<property name="loginUrl" value="/api/logon/nologin"/>-->
+    <!--</bean>-->
+
+>>>>>>> origin/develop
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="unauthorizedUrl" value="/api/logon/unauthorized"/>
+<<<<<<< HEAD
+=======
+        <!--&lt;!&ndash; 自定义filter配置 &ndash;&gt;-->
+        <!--<property name="filters">-->
+            <!--<map>-->
+                <!--&lt;!&ndash; 将自定义 的FormAuthenticationFilter注入shiroFilter中 &ndash;&gt;-->
+                <!--<entry key="authc" value-ref="formAuthenticationFilter" />-->
+            <!--</map>-->
+        <!--</property>-->
+>>>>>>> origin/develop
         <property name="filterChainDefinitions">
             <value>
                 /upload/** = anon

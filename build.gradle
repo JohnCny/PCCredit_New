@@ -133,6 +133,7 @@ subprojects {
                 libraries."commons-fileupload",
                 libraries."commons-lang3",
                 libraries."commons-codec",
+                libraries."bcprov",
 
                 //durid
                 libraries."druid",
@@ -189,9 +190,15 @@ subprojects {
 
                 //webSocket
                 libraries."spring-websocket",
-
+                
                 //excel poi
                 libraries."poi",
+                
+                //fastdfs
+                libraries."fastdfs",
+
+                //pdf
+                libraries."pdfbox",
         )
         testCompile (
                 libraries."junit",
