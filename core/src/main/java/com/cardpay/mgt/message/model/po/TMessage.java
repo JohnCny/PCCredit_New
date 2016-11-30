@@ -17,7 +17,7 @@ public class TMessage extends GenericEntity<Integer>{
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MESSAGE_SEQ.nextval from dual")
     private Integer id;
 
     /**
@@ -75,6 +75,11 @@ public class TMessage extends GenericEntity<Integer>{
     @ApiModelProperty(value = "是否是广播消息", required = true)
     @Column(name = "IS_BROADCAST")
     private Integer isBroadcast;
+
+    @Override
+    public Integer getPK() {
+        return id;
+    }
 
     /**
      * 获取消息id
@@ -236,10 +241,5 @@ public class TMessage extends GenericEntity<Integer>{
      */
     public void setIsBroadcast(Integer isBroadcast) {
         this.isBroadcast = isBroadcast;
-    }
-
-    @Override
-    public Integer getPK() {
-        return id;
     }
 }

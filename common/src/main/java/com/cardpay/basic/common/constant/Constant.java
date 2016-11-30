@@ -78,4 +78,16 @@ public class Constant {
      * 定义websocket session数据名称
      */
     public static final String WEBSOCKET_USERID = "CardPayMessageWebsocketUserId";
+
+    //消息定义
+    /**
+     * 消息状态：已读
+     */
+    public static final Integer MSG_READ = 1;
+
+    /**
+     * 消息状态：未读
+     */
+    public static final Integer MSG_UNREAD = 0;
+
 }

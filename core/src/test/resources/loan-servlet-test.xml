@@ -17,6 +17,7 @@
     <!--配置注解扫描-->
     <context:component-scan base-package="com.cardpay">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Component"/>
     </context:component-scan>
 
     <!--配置@aspectJ切面的bean创建代理，织入切面-->
@@ -31,20 +32,17 @@
     <!-- Standard xml based mvc config-->
     <mvc:annotation-driven/>
 
-
     <!--  WebJar sping-fox配置-->
     <mvc:default-servlet-handler />
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 
-    <!--  spring-fox 配置-->
-    <bean name="applicationSwaggerConfig" class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
-    <!--<bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration" />
-    <bean class="springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration" />-->
+    <!--配置默认进入页面-->
+    <!--<mvc:view-controller path="/" view-name="/api/user/nologin"/>-->
 
-    <!--&lt;!&ndash;配置支持freemarkewr标签支持&ndash;&gt;-->
+    <!--配置支持freemarkewr标签支持-->
     <!--<bean id="freemarkerConfig"-->
-          <!--class="com.cardpay.shiro.freemarker.ShiroTagFreeMarkerConfigurer">-->
+          <!--class="com.cardpay.core.shrio.freemarker.ShiroTagFreeMarkerConfigurer">-->
         <!--<property name="templateLoaderPath" value="/WEB-INF/views/"></property>-->
         <!--<property name="freemarkerSettings">-->
             <!--<props>-->
@@ -63,11 +61,12 @@
         <!--</property>-->
         <!--<property name="freemarkerVariables">-->
             <!--<map>-->
-                <!--<entry key="shiro" value-ref="shiroTags"/>-->
+                <!--<entry key="shiroback" value-ref="shiroTags"/>-->
             <!--</map>-->
         <!--</property>-->
     <!--</bean>-->
-    <!--<bean id="shiroTags" class="com.jagregory.shiro.freemarker.ShiroTags"/>-->
+
+    <bean id="shiroTags" class="com.jagregory.shiro.freemarker.ShiroTags"/>
 
     <!--设置默认的视图解析器 采用JSP-->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -79,8 +78,6 @@
         <property name="order" value="1"/>
         <property name="contentType" value="text/html; charset=UTF-8"/>
     </bean>
-
-    <!--<mvc:view-BasicController path="/" view-name="/api/user/nologin"/>-->
 
     <!--设置视图解析器 采用freemarker-->
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
@@ -97,37 +94,19 @@
         <property name="order" value="100"></property>
     </bean>
 
-    <!--&lt;!&ndash;设置视图解析器 采用内容协商&ndash;&gt;-->
-    <!--<mvc:annotation-driven content-negotiation-manager="contentManager">-->
-        <!--<mvc:argument-resolvers>-->
-            <!--<bean class="com.cardpay.shiro.bind.method.SubjectMethodArgumentResolver"/>-->
-        <!--</mvc:argument-resolvers>-->
-    <!--</mvc:annotation-driven>-->
-    <!--<bean id="contentManager"-->
-          <!--class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"-->
-          <!--p:favorPathExtension="false" p:ignoreAcceptHeader="true"-->
-          <!--p:favorParameter="true" p:parameterName="content">-->
-        <!--<property name="mediaTypes">-->
-            <!--<map>-->
-                <!--<entry key="html" value="text/html"/>-->
-                <!--<entry key="xml" value="application/xml"/>-->
-                <!--<entry key="json" value="application/xml"/>-->
-            <!--</map>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <!--国际化资源配置 开始-->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>i18n/message</value>
+                <value>i18n/content</value>
+            </list>
+        </property>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+        <property name="cacheSeconds" value="3600"/>
+    </bean>
 
-    <!--&lt;!&ndash;国际化资源配置 开始&ndash;&gt;-->
-    <!--<bean id="messageSource"-->
-          <!--class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
-        <!--<property name="basenames">-->
-            <!--<list>-->
-                <!--<value>conf/i18n/message</value>-->
-                <!--<value>conf/i18n/content</value>-->
-            <!--</list>-->
-        <!--</property>-->
-        <!--<property name="useCodeAsDefaultMessage" value="true"/>-->
-        <!--<property name="cacheSeconds" value="3600"/>-->
-    <!--</bean>-->
     <!--览器自适应语言方式（cookie方式）-->
     <bean id="cookieLocaleResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
     <!--如果是需要在界面上进行切换（session方式）；则需要配置：-->
@@ -145,7 +124,7 @@
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <property name="messageConverters">
             <list>
-                <bean id="stringHttpMessageConverter"
+                 <bean id="stringHttpMessageConverter"
                       class="org.springframework.http.converter.StringHttpMessageConverter"/>
                 <bean id="formHttpMessageConverter"
                       class="org.springframework.http.converter.FormHttpMessageConverter"/>
@@ -153,60 +132,32 @@
         </property>
     </bean>
 
-    <!--&lt;!&ndash;配置拦截cookie中token拦截器&ndash;&gt;-->
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>-->
-            <!--<mvc:exclude-mapping path="/login"/>-->
-            <!--<mvc:exclude-mapping path="/assets/**"/>-->
-            <!--<mvc:exclude-mapping path="/api/**"/>-->
-            <!--<mvc:exclude-mapping path="/static/**"/>-->
-            <!--<mvc:exclude-mapping path="/resources/**"/>-->
-            <!--<mvc:exclude-mapping path="/upload/**"/>-->
-            <!--<mvc:exclude-mapping path="/login/user"/>-->
-            <!--<mvc:exclude-mapping path="/logout"/>-->
-            <!--<bean class="com.cardpay.common.intercepts.TokenApiInterceptor">-->
-            <!--</bean>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <!--拦截器异常处理配置-->
+    <bean id="handlerExceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="com.cardpay.common.exception.AuthorizationException">redirect:/login</prop>
+            </props>
+        </property>
+    </bean>
 
-    <!--&lt;!&ndash;拦截器异常处理配置&ndash;&gt;-->
-    <!--<bean id="handlerExceptionResolver"-->
-          <!--class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
-        <!--<property name="exceptionMappings">-->
-            <!--<props>-->
-                <!--<prop key="com.cardpay.common.exception.AuthorizationException">redirect:/login</prop>-->
-            <!--</props>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <!--解决spring json conversion bug-->
+    <bean id="utf8Charset" class="java.nio.charset.Charset"
+          factory-method="forName">
+        <constructor-arg value="UTF-8"/>
+    </bean>
 
-    <!--&lt;!&ndash; 配置表单重复提交拦截器 &ndash;&gt;-->
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>-->
-            <!--<mvc:exclude-mapping path="/api/**"/>-->
-            <!--<mvc:exclude-mapping path="/static/**"/>-->
-            <!--<mvc:exclude-mapping path="/resources/**"/>-->
-            <!--<mvc:exclude-mapping path="/upload/**"/>-->
-            <!--<bean class="com.cardpay.common.token.inteceptor.TokenRepeatInterceptor"/>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg ref="utf8Charset"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
-    <!--&lt;!&ndash;解决spring json conversion bug&ndash;&gt;-->
-    <!--<bean id="utf8Charset" class="java.nio.charset.Charset"-->
-          <!--factory-method="forName">-->
-        <!--<constructor-arg value="UTF-8"/>-->
-    <!--</bean>-->
-    <!--<mvc:annotation-driven>-->
-        <!--<mvc:message-converters>-->
-            <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
-                <!--<constructor-arg ref="utf8Charset"/>-->
-            <!--</bean>-->
-        <!--</mvc:message-converters>-->
-    <!--</mvc:annotation-driven>-->
-
-    <!--&lt;!&ndash;全局异常配置&ndash;&gt;-->
-    <!--<bean id="globalExceptionHandler" class="com.cardpay.common.exception.GlobalExceptionHandler"/>-->
+    <!--全局异常配置-->
+    <bean id="globalExceptionHandler" class="com.cardpay.basic.common.exception.global.GlobalExceptionHandler"/>
 
     <!--&lt;!&ndash; API 接口跨域配置&ndash;&gt;-->
      <!--<mvc:cors>-->
