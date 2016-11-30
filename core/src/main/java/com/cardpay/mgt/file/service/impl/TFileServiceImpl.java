@@ -15,9 +15,9 @@ import java.util.List;
  */
 @Service
 public class TFileServiceImpl extends BaseServiceImpl<TFile> implements TFileService{
+
     @Autowired
     private TFileMapper tFileDao;
-
 
     @Override
     public int batchInsert(List<TFile> list) {
