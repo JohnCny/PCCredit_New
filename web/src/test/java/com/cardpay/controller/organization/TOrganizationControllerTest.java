@@ -1,4 +1,4 @@
-package com.cardpay.controller.menu;
+package com.cardpay.controller.organization;
 
 import com.cardpay.util.TestEnv;
 import org.junit.Test;
@@ -9,20 +9,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Created by yanwe on 2016/11/29.
+ * Created by chenkai on 2016/11/30.
  */
-public class MenuControllerTest extends TestEnv{
-
+public class TOrganizationControllerTest extends TestEnv{
     @Test
-    public void selectMenuList() throws Exception {
-        mockMvc.perform(get("/menu/all").param("level","3"))
+    public void queryOrganization() throws Exception {
+        mockMvc.perform(get("/organization/all").param("level","3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
 
     @Test
-    public void recursionDelete() throws Exception {
-        mockMvc.perform(delete("/menu/recursionDelete").param("id","73"))
+    public void deleteOrganization() throws Exception {
+        mockMvc.perform(delete("/organization/deleteOrganization").param("id","1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
