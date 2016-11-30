@@ -164,17 +164,19 @@ public class FileManager implements FileManagerConfig {
                 upload = upload(file, metaList) + "," + files[i].getOriginalFilename() + ",." + ext;
                 list.add(upload);
 
+                String[] str = upload.split(",");
+
                 User user = (User) ShiroKit.getPrincipal();
                 tFile.setId(1);
                 tFile.setImageType(ext);
-                tFile.setFilePath(files[i].getOriginalFilename());
+                tFile.setFileName(files[i].getOriginalFilename());
                 tFile.setRemark("upLoad");
                 tFile.setCreatedBy("1");
                 tFile.setCreatedAt(new Date());
                 tFile.setModifiedAt(new Date());
                 tFile.setModifiedBy("1");
-                tFile.setType(1);
-                tFile.setSubtype(1);
+                tFile.setGroupName(str[0]);
+                tFile.setFastName(str[1]);
             } catch (IOException e) {
                 e.printStackTrace();
                 return new ArrayList<>();
