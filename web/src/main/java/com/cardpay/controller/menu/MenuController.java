@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.annotation.Resources;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class MenuController extends BaseController<TMenu,Integer>{
 
     @ResponseBody
     @RequestMapping("/creditReport")
-    public ResultTo creditReport(Integer id){
+    public ResultTo creditReport(Integer id) {
         ResultTo resultTo = new ResultTo();
         parseCreditReportService.parseCreditReport(id);
         return resultTo;
