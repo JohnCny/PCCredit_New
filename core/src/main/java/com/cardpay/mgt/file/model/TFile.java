@@ -25,11 +25,11 @@ public class TFile {
     private String imageType;
 
     /**
-     * 文件路径
+     * 原文件名
      */
     @Column(name = "FILE_PATH")
-    @ApiModelProperty(value = "文件路径")
-    private String filePath;
+    @ApiModelProperty(value = "原文件名")
+    private String fileName;
 
     /**
      * 备注说明
@@ -67,18 +67,18 @@ public class TFile {
     private Date modifiedAt;
 
     /**
-     * 图片主类型
+     * 组名称
      */
-    @Column(name = "TYPE")
-    @ApiModelProperty(value = "图片主类型")
-    private Integer type;
+    @Column(name = "GROUP_NAME")
+    @ApiModelProperty(value = "组名称")
+    private String groupName;
 
     /**
-     * 图片子类型
+     * fast文件名称
      */
-    @Column(name = "SUBTYPE")
-    @ApiModelProperty(value = "图片子类型")
-    private Integer subtype;
+    @Column(name = "FAST_NAME")
+    @ApiModelProperty(value = "fast文件名称")
+    private String fastName;
 
     /**
      * 获取文件id
@@ -116,22 +116,12 @@ public class TFile {
         this.imageType = imageType;
     }
 
-    /**
-     * 获取文件路径
-     *
-     * @return FILE_PATH - 文件路径
-     */
-    public String getFilePath() {
-        return filePath;
+    public String getFileName() {
+        return fileName;
     }
 
-    /**
-     * 设置文件路径
-     *
-     * @param filePath 文件路径
-     */
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     /**
@@ -224,39 +214,19 @@ public class TFile {
         this.modifiedAt = modifiedAt;
     }
 
-    /**
-     * 获取图片主类型
-     *
-     * @return TYPE - 图片主类型
-     */
-    public Integer getType() {
-        return type;
+    public String getGroupName() {
+        return groupName;
     }
 
-    /**
-     * 设置图片主类型
-     *
-     * @param type 图片主类型
-     */
-    public void setType(Integer type) {
-        this.type = type;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
-    /**
-     * 获取图片子类型
-     *
-     * @return SUBTYPE - 图片子类型
-     */
-    public Integer getSubtype() {
-        return subtype;
+    public String getFastName() {
+        return fastName;
     }
 
-    /**
-     * 设置图片子类型
-     *
-     * @param subtype 图片子类型
-     */
-    public void setSubtype(Integer subtype) {
-        this.subtype = subtype;
+    public void setFastName(String fastName) {
+        this.fastName = fastName;
     }
 }

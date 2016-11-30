@@ -1,5 +1,6 @@
 package com.cardpay.mgt.param.model.po;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
@@ -10,13 +11,13 @@ import javax.persistence.*;
  * @author wangpeng
  */
 @Table(name = "T_BUSINESS_PARAM")
-public class TBusinessParam {
+public class TBusinessParam  extends GenericEntity<Integer> {
     /**
      * 业务参数id
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select BUSINESS_PARAM_SEQ.nextval from dual")
     private Integer id;
 
     /**
@@ -60,6 +61,11 @@ public class TBusinessParam {
     @ApiModelProperty(value = "创建时间", required = true)
     @Column(name = "CREATE_TIME")
     private Date createTime;
+
+    @Override
+    public Integer getPK() {
+        return id;
+    }
 
     /**
      * 获取业务参数id
