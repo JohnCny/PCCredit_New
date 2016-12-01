@@ -31,7 +31,7 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
      */
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-        logger.info(WebSocketHandshakeInterceptor.class, "握手协议之前调用函数", "websocket before handshake");
+        logger.info(WebSocketHandshakeInterceptor.class, "", "websocket before handshake");
         //User user = (User) SecurityUtils.getSubject().getPrincipal();
         if (request instanceof ServerHttpRequest){
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
@@ -55,7 +55,7 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
      */
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
-        logger.info(WebSocketHandshakeInterceptor.class, "握手协议后调用函数", "websocket After handshake");
+        logger.info(WebSocketHandshakeInterceptor.class, "", "websocket After handshake");
         super.afterHandshake(request, response, wsHandler, exception);
     }
 }

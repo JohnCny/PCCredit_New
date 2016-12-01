@@ -1,6 +1,5 @@
 package com.cardpay.basic.redis.service;
 
-import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.redis.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,6 +30,7 @@ public class WebSocketRedis {
      */
     public void add(WebSocketSession session) {
         //Integer userId = (Integer) session.getAttributes().get(Constant.WEBSOCKET_USERID);
+       // User user = (User)SecurityUtils.getSubject().getPrincipal();
         webSocketSessions.put(1, session);
         redisClient.set(USER, "1", new ArrayList<>());
       //  redisClient.set(USER, flag, webSocketSessions);

@@ -166,7 +166,7 @@ public class FileManager implements FileManagerConfig {
                     list.add(upload[0]);
                     String[] str = upload[0].split(",");
                     User user = (User) ShiroKit.getPrincipal();
-                    // String id = String.valueOf(user.getId());
+                    // String userId = String.valueOf(user.getId());
                     TFile tFile = TFile.TFileBuilder.get()
                             .withId(1)
                             .withImageType(ext[0])
@@ -184,8 +184,7 @@ public class FileManager implements FileManagerConfig {
                 }
             }catch (Exception e){
                 e.printStackTrace();
-            }
-        });
+            }});
         return list;
     }
 

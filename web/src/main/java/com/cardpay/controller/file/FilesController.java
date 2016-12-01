@@ -1,4 +1,4 @@
-package com.cardpay.controller.generalization;
+package com.cardpay.controller.file;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.core.fastdfs.FileManager;
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by chekai .
  * Date 2016/11/25 .
  */
-@Api(value = "/files", description = "文件上传类")
+@Api(value = "/file", description = "文件上传类")
 @Controller
 @RequestMapping("/files")
 public class FilesController {
@@ -40,7 +40,7 @@ public class FilesController {
     /**
      * 文件上传接口
      *
-     * @param files 文件
+     * @param file 文件
      * @return 文件路径
      * @throws Exception IO异常
      */
@@ -48,9 +48,8 @@ public class FilesController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ApiOperation(value = "文件上传接口", notes = "上传文件到dfs服务器", httpMethod = "POST")
     @ApiModelProperty(dataType = "MultipartFile")
-    @ApiImplicitParam(name = "files", value = "文件", required = true, dataType = "MultipartFile")
-    public ResultTo upLoad(@RequestPart MultipartFile[] files) {
-        List<String> list = fileManager.upLoad(files);
+    public ResultTo upLoad(@ApiParam(name="文件", required=true) @RequestPart MultipartFile[] file) {
+        List<String> list = fileManager.upLoad(file);
         return new ResultTo().setData(list);
     }
 
