@@ -23,7 +23,7 @@ public final class ShiroFactory {
         return SHIRO_FACTORY;
     }
 
-    private UserService userService = context.getBean(UserServiceImpl.class);
+    private UserService userService = context.getBean(UserService.class);
 
     public UserService getUserService() {
         return userService;

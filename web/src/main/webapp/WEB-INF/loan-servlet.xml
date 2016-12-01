@@ -15,9 +15,8 @@
        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 
     <!--配置注解扫描-->
-    <context:component-scan base-package="com.cardpay">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+    <context:component-scan base-package="com.cardpay" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
     <!--配置@aspectJ切面的bean创建代理，织入切面-->
@@ -166,7 +165,7 @@
     <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/logon/unauthorized"/>
+            <mvc:mapping path="/logon/login"/>
             <bean class="com.cardpay.basic.common.interceptor.captcha.CaptchaInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
