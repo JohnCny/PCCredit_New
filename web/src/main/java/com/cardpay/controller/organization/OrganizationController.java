@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ import java.util.List;
 @Api(value = "/organization", description = "机构Controller类")
 @Controller
 @RequestMapping("/organization")
-public class TOrganizationController extends BaseController<TOrganization, Integer> {
+public class OrganizationController extends BaseController<TOrganization, Integer> {
     @Autowired
     private TOrganizationService tOrganizationService;
 
@@ -57,7 +56,7 @@ public class TOrganizationController extends BaseController<TOrganization, Integ
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id){
         int flag = tOrganizationService.deleteOrganization(id);
-        logger.info(TOrganizationController.class, "递归删除层级信息", "层级id:"+id);
+        logger.info(OrganizationController.class, "递归删除层级信息", "层级id:"+id);
         return new ResultTo().setData(flag);
     }
 

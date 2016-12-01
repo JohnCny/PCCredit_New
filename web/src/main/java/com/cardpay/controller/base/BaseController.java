@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -396,8 +397,8 @@ public class BaseController<T,PK> extends BasicController {
      * @param viewName  view名称
      * @return modelview对象，包含分页数据集合
      */
-    @RequestMapping(value = "/pageList",method = RequestMethod.DELETE)
-    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "DELETE")
+    @RequestMapping(value = "/pageList",method = RequestMethod.GET)
+    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "GET")
     public ModelAndView pageList(@ApiParam(value = "实体对象") T record
             , @ApiParam(value = "页数") @RequestParam("page") Integer page
             , @ApiParam(value = "个数") @RequestParam("size") Integer size
@@ -418,14 +419,14 @@ public class BaseController<T,PK> extends BasicController {
      * @return resultTo，包含分页数据集合
      */
     @ResponseBody
-    @RequestMapping(value = "/api/pageList",method = RequestMethod.DELETE)
-    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "DELETE")
+    @RequestMapping(value = "/api/pageList",method = RequestMethod.GET)
+    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "GET")
     public ResultTo pageList(@ApiParam(value = "实体对象") T record
             , @ApiParam(value = "页数") @RequestParam("page") Integer page
             , @ApiParam(value = "个数") @RequestParam("size") Integer size){
         ResultTo result = new ResultTo();
-        baseService.pageList(record,page,size);
-        result.setData(record);
+        List<T> list = baseService.pageList(record, page, size);
+        result.setData(list);
         return result;
     }
 //-----------------根据实际情况选择需要的接口------------------------
@@ -437,8 +438,8 @@ public class BaseController<T,PK> extends BasicController {
 //     * @param viewName view名称
 //     * @return modelview对象，包含分页数据集合
 //     */
-//    @RequestMapping(value = "/pageList",method = RequestMethod.DELETE)
-//    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询，以开始行数start为参数", httpMethod = "DELETE")
+//    @RequestMapping(value = "/pageList",method = RequestMethod.GET)
+//    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询，以开始行数start为参数", httpMethod = "GET")
 //    public ModelAndView pageStartList(T record,@RequestParam("start") Integer start,@RequestParam("size") Integer size
 //            ,@RequestParam("viewName") String viewName){
 //        ModelAndView modelAndView = new ModelAndView();
@@ -457,8 +458,8 @@ public class BaseController<T,PK> extends BasicController {
 //     * @param size   个数
 //     * @return  resultTo，包含分页数据集合
 //     */
-//    @RequestMapping(value = "/api/pageList",method = RequestMethod.DELETE)
-//    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询，以开始行数start为参数", httpMethod = "DELETE")
+//    @RequestMapping(value = "/api/pageList",method = RequestMethod.GET)
+//    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询，以开始行数start为参数", httpMethod = "GET")
 //    public ResultTo pageStartList(T record,@RequestParam("start") Integer start,@RequestParam("size") Integer size){
 //        ResultTo result = new ResultTo();
 //        result.setData(baseService.pageStartList(record,start,size));
