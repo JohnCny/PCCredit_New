@@ -16,7 +16,7 @@
 
     <!--配置注解扫描-->
     <context:component-scan base-package="com.cardpay" use-default-filters="false">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
     <!--配置@aspectJ切面的bean创建代理，织入切面-->
