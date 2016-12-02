@@ -46,7 +46,7 @@ public class TFileMapperTest extends TestEnv{
         list.add(tFile1);
         list.add(tFile2);
         int flag = tFileDao.batchInsert(list);
-        assertEquals(flag, 1);
+        assertEquals(flag, 2);
     }
 
 }

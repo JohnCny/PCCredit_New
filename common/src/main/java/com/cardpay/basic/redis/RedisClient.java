@@ -194,8 +194,8 @@ public class RedisClient {
     /**
      * 获取键剩余过期时间
      *
-     * @param key
-     * @return
+     * @param key 键
+     * @return 值
      */
     public Long getTime(String key) {
         return redisTemplate.getExpire(key);
