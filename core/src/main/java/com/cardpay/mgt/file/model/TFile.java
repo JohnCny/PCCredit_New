@@ -43,28 +43,28 @@ public class TFile {
      */
     @Column(name = "CREATED_BY")
     @ApiModelProperty(value = "创建人")
-    private String createdBy;
+    private String createBy;
 
     /**
      * 创建时间
      */
     @Column(name = "CREATED_AT")
     @ApiModelProperty(value = "创建时间")
-    private Date createdAt;
+    private Date createAt;
 
     /**
      * 修改人
      */
     @Column(name = "MODIFIED_BY")
     @ApiModelProperty(value = "修改人")
-    private String modifiedBy;
+    private String modifyBy;
 
     /**
      * 修改时间
      */
     @Column(name = "MODIFIED_AT")
     @ApiModelProperty(value = "修改时间")
-    private Date modifiedAt;
+    private Date modifyAt;
 
     /**
      * 组名称
@@ -147,17 +147,17 @@ public class TFile {
      *
      * @return CREATED_BY - 创建人
      */
-    public String getCreatedBy() {
-        return createdBy;
+    public String getCreateBy() {
+        return createBy;
     }
 
     /**
      * 设置创建人
      *
-     * @param createdBy 创建人
+     * @param createBy 创建人
      */
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
     /**
@@ -165,17 +165,17 @@ public class TFile {
      *
      * @return CREATED_AT - 创建时间
      */
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getCreateAt() {
+        return createAt;
     }
 
     /**
      * 设置创建时间
      *
-     * @param createdAt 创建时间
+     * @param createAt 创建时间
      */
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
     /**
@@ -183,17 +183,17 @@ public class TFile {
      *
      * @return MODIFIED_BY - 修改人
      */
-    public String getModifiedBy() {
-        return modifiedBy;
+    public String getModifyBy() {
+        return modifyBy;
     }
 
     /**
      * 设置修改人
      *
-     * @param modifiedBy 修改人
+     * @param modifyBy 修改人
      */
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
+    public void setModifyBy(String modifyBy) {
+        this.modifyBy = modifyBy;
     }
 
     /**
@@ -201,17 +201,17 @@ public class TFile {
      *
      * @return MODIFIED_AT - 修改时间
      */
-    public Date getModifiedAt() {
-        return modifiedAt;
+    public Date getModifyAt() {
+        return modifyAt;
     }
 
     /**
      * 设置修改时间
      *
-     * @param modifiedAt 修改时间
+     * @param modifyAt 修改时间
      */
-    public void setModifiedAt(Date modifiedAt) {
-        this.modifiedAt = modifiedAt;
+    public void setModifyAt(Date modifyAt) {
+        this.modifyAt = modifyAt;
     }
 
     public String getGroupName() {
@@ -310,10 +310,10 @@ public class TFile {
             tFile.setImageType(imageType);
             tFile.setFileName(fileName);
             tFile.setRemark(remark);
-            tFile.setCreatedBy(createdBy);
-            tFile.setCreatedAt(createdAt);
-            tFile.setModifiedBy(modifiedBy);
-            tFile.setModifiedAt(modifiedAt);
+            tFile.setCreateBy(createdBy);
+            tFile.setCreateAt(createdAt);
+            tFile.setModifyBy(modifiedBy);
+            tFile.setModifyAt(modifiedAt);
             tFile.setGroupName(groupName);
             tFile.setFastName(fastName);
             return tFile;

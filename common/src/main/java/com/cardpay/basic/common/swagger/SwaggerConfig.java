@@ -17,6 +17,7 @@ import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -80,7 +81,7 @@ public class SwaggerConfig {
 
 
     private ApiKey apiKey() {
-        return new ApiKey("mykey", "api_key", "header");
+        return new ApiKey("qkjr", "api_key", "header");
     }
 
     private SecurityContext securityContext() {
@@ -96,7 +97,7 @@ public class SwaggerConfig {
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         return newArrayList(
-                new SecurityReference("mykey", authorizationScopes));
+                new SecurityReference("qkjr", authorizationScopes));
     }
 
 /*    @Bean
@@ -105,7 +106,11 @@ public class SwaggerConfig {
                 "test-app-client-id",
                 "test-app-realm",
                 "test-app",
-                "apiKey");
+                "apiKey"
+        ,"",
+        ,""
+        ,""
+                     ,"");
     }*/
 
     @Bean
