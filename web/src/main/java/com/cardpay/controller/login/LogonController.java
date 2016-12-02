@@ -7,6 +7,11 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -30,8 +35,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(value = "用认证(登陆)")
 public class LogonController extends BaseController<User, Integer> {
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    /**
+     * 系统登陆入口
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
+    @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
+    @ApiImplicitParams(value = {@ApiImplicitParam(name = "userName", value = "登陆名", dataType = "String"),
+            @ApiImplicitParam(name = "password", value = "登陆密码", dataType = "String"),
+            @ApiImplicitParam(name = "captcha", value = "验证码", dataType = "String")})
     public ResultTo login(@RequestParam(value = "userName", required = false) String userName, @RequestParam(value = "password", required = false) String password) {
         LogTemplate.debug(this.getClass(), "收到用户登陆请求,用户账号:", userName);
         if (StringUtils.isBlank(userName) || StringUtils.isBlank(password)) {
@@ -59,10 +76,15 @@ public class LogonController extends BaseController<User, Integer> {
         return new ResultTo();
     }
 
-    @RequestMapping("/test")
-    public void test() {
-        boolean aSuper = ShiroKit.getSubject().hasRole("super");
-        System.out.println("测试++++++++++++++++++++++++++++++++++++++++++++++++++++" + aSuper);
+    /**
+     * 无权限跳转
+     *
+     * @return 无权限提示消息
+     */
+    @RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultTo unauthorized() {
+        return new ResultTo(ResultEnum.NO_PERMITTION.getValue());
     }
 
 }
