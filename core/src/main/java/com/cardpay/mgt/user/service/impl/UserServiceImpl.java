@@ -68,14 +68,21 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getId());
+        //获取当前用户都有哪些角色
         List<UserRole> userRoles = userRoleMapper.select(userRole);
+        //获取当前用户所拥有的角色对应的权限id集合
         List<RoleAuthority> roleAuthorities = roleAuthorityMapper.selectByRoleList(userRoles);
 
+        //获取当前用户对应角色对应权限对应的操作
         List<AuthorityOperation> authorityOperations = authorityOperationMapper.selectByAuthoritList(roleAuthorities);
+        //获取当前用户对应角色对应权限对应的资源
         List<AuthorityResources> authorityResources = authorityResourcesMapper.selectByAuthoritList(roleAuthorities);
 
+        //根据当前用户获得所对应的所有权限
         List<Authority> authorities = authorityMapper.selectByList(roleAuthorities);
+        //根据当前用户获得所对应的所有操作
         List<Operation> operationes = operationMapper.selectByIdList(authorityOperations);
+        //根据当前用户获得所对应的所有资源
         List<Resources> resourceses = resourcesMapper.selectByIdList(authorityResources);
 
         Set<String> set = new HashSet<>();

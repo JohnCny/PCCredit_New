@@ -1,6 +1,8 @@
 package com.cardpay.controller.menu;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.mgt.modeifyhistory.service.TModifyHistoryService;
+import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuVo;
@@ -8,15 +10,13 @@ import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.parse.service.ParseCreditReportService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import javax.annotation.Resources;
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -30,9 +30,6 @@ public class MenuController extends BaseController<TMenu,Integer>{
 
     @Autowired
     private TMenuService tMenuService;
-
-    @Autowired
-    private ParseCreditReportService parseCreditReportService;
 
     @ResponseBody
     @RequestMapping("/all")
@@ -58,7 +55,12 @@ public class MenuController extends BaseController<TMenu,Integer>{
     @RequestMapping("/creditReport")
     public ResultTo creditReport(Integer id) {
         ResultTo resultTo = new ResultTo();
-        parseCreditReportService.parseCreditReport(id);
+        //需要记录并且是从数据库取的值 必须使用Clone方法 或者自己Clone再传
+        TMenu tMenu = tMenuService.selectByPrimaryKeyClone(73);
+        tMenu.setMenuName("修改测试菜单");
+        tMenu.setMenuNameZh("修改了中文名字");
+        //记录修改过程
+        compareBean(tMenu,"test","测测测");
         return resultTo;
     }
 }
