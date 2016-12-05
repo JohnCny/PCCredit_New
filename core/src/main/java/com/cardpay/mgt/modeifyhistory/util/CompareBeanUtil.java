@@ -4,8 +4,10 @@ import com.cardpay.basic.base.model.GenericEntity;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.BeanFactoryUtil;
+import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
 import com.cardpay.mgt.modeifyhistory.service.impl.TModifyHistoryServiceImpl;
+import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.beanutils.*;
 import org.apache.commons.beanutils.converters.DateConverter;
@@ -36,20 +38,20 @@ public class CompareBeanUtil {
                                                                 String moduleNameZh) {
         T oldBean = baseService.selectByPrimaryKey(bean.getPK());
         TModifyHistoryServiceImpl tModifyHistoryService = BeanFactoryUtil.getBean(TModifyHistoryServiceImpl.class);
-        tModifyHistoryService.batchInsert(getCompareResult(bean ,oldBean , moduleName, moduleNameZh));
+        tModifyHistoryService.batchInsert(getCompareResult(oldBean, bean , moduleName, moduleNameZh));
     }
 
     /**
      * 获取对比结果
      *
-     * @param newBean 修改后的bean
      * @param oldBean 修改前的bean
+     * @param newBean 修改后的bean
      * @param moduleName 模块英文名
      * @param moduleNameZh 模块中文
      * @param <T> 类型
      * @return 该Bean的对比结果列表
      */
-    public static <T extends GenericEntity<?>> List<TModifyHistory> getCompareResult(T newBean,T oldBean,
+    public static <T extends GenericEntity<?>> List<TModifyHistory> getCompareResult(T oldBean,T newBean,
                                                                             String moduleName, String moduleNameZh) {
         Field[] newBeanFields = newBean.getClass().getDeclaredFields();
         Field[] oldBeanFields = oldBean.getClass().getDeclaredFields();
@@ -69,7 +71,7 @@ public class CompareBeanUtil {
                     TModifyHistory tModifyHistory = new TModifyHistory();
                     tModifyHistory.setId(1);
                     tModifyHistory.setModifyBy(1);
-//                    tModifyHistory.setModifyBy(((User)ShiroKit.getPrincipal()).getId());
+//                    tModifyHistory.setModifyBy(((User) ShiroKit.getPrincipal()).getId());
                     tModifyHistory.setModifyAt(new Date());
                     tModifyHistory.setBeforeValue(oldBeanProperty);
                     tModifyHistory.setAfterValue(newBeanProperty);
