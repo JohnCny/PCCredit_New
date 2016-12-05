@@ -130,7 +130,6 @@ public class FileManager implements FileManagerConfig {
      */
     public static int deleteFile(String groupName, String remoteFileName) {
         try {
-            TFile tFile = new TFile();
             return storageClient.delete_file(groupName, remoteFileName);
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,6 +137,24 @@ public class FileManager implements FileManagerConfig {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * 查询文件
+     * @param groupName 分组名称
+     * @param remoteFileName 文件名称
+     * @return FileInfo
+     */
+    public static FileInfo queryFile(String groupName, String remoteFileName){
+        FileInfo fileInfo = null;
+        try {
+            fileInfo = storageClient.query_file_info(groupName, remoteFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (MyException e) {
+            e.printStackTrace();
+        }
+        return fileInfo;
     }
 
     /**
