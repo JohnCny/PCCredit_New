@@ -14,6 +14,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +33,7 @@ public class MenuController extends BaseController<TMenu,Integer>{
     private TMenuService tMenuService;
 
     @ResponseBody
-    @RequestMapping("/all")
+    @RequestMapping(value = "/all",method = RequestMethod.GET)
     @ApiOperation(value = "查询菜单层级信息接口", notes = "查询菜单层级信息",  httpMethod = "GET")
     public ResultTo selectMenuList(@ApiParam(value = "查询深度", required = true) Integer level){
         ResultTo resultTo = new ResultTo();
@@ -42,7 +43,7 @@ public class MenuController extends BaseController<TMenu,Integer>{
     }
 
     @ResponseBody
-    @RequestMapping("/recursionDelete")
+    @RequestMapping(value = "/recursionDelete",method = RequestMethod.DELETE)
     @ApiOperation(value = "删除指定菜单下所有子菜单接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
     public ResultTo recursionDelete(@ApiParam(value = "菜单id", required = true) Integer id){
         ResultTo resultTo = new ResultTo();
@@ -53,7 +54,7 @@ public class MenuController extends BaseController<TMenu,Integer>{
 
     @ResponseBody
     @RequestMapping("/creditReport")
-    public ResultTo creditReport(Integer id) {
+    public ResultTo creditReport() {
         ResultTo resultTo = new ResultTo();
         //需要记录并且是从数据库取的值 必须使用Clone方法 或者自己Clone再传
         TMenu tMenu = tMenuService.selectByPrimaryKeyClone(73);
