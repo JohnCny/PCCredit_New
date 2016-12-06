@@ -10,12 +10,4 @@
         <result column="OPERATION_NAME_ZH" jdbcType="TIMESTAMP" property="operationNameZh"/>
     </resultMap>
 
-    <select id="selectByIdList" resultMap="BaseResultMap">
-        SELECT * FROM T_OPERATION WHERE ID IN
-        <foreach collection="list" item="authorityOperation" index="index"
-                 open="(" close=")" separator=",">
-            #{authorityOperation.operationId}
-        </foreach>
-    </select>
-
 </mapper>

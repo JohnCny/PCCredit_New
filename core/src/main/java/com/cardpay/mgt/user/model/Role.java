@@ -190,4 +190,69 @@ public class Role {
     public void setCreateBy(Integer createBy) {
         this.createBy = createBy;
     }
+
+
+    public static final class RoleBuilder {
+        private Integer id;
+        private String roleName;
+        private String roleDescription;
+        private Integer roleStatus;
+        private String roleNameZh;
+        private Date createTime;
+        private Integer createBy;
+
+        private RoleBuilder() {
+        }
+
+        public static RoleBuilder get() {
+            return new RoleBuilder();
+        }
+
+        public RoleBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public RoleBuilder withRoleName(String roleName) {
+            this.roleName = roleName;
+            return this;
+        }
+
+        public RoleBuilder withRoleDescription(String roleDescription) {
+            this.roleDescription = roleDescription;
+            return this;
+        }
+
+        public RoleBuilder withRoleStatus(Integer roleStatus) {
+            this.roleStatus = roleStatus;
+            return this;
+        }
+
+        public RoleBuilder withRoleNameZh(String roleNameZh) {
+            this.roleNameZh = roleNameZh;
+            return this;
+        }
+
+        public RoleBuilder withCreateTime(Date createTime) {
+            this.createTime = createTime;
+            return this;
+        }
+
+        public RoleBuilder withCreateBy(Integer createBy) {
+            this.createBy = createBy;
+            return this;
+        }
+
+        public Role build() {
+            Role role = new Role();
+            role.setId(id);
+            role.setRoleName(roleName);
+            role.setRoleDescription(roleDescription);
+            role.setRoleStatus(roleStatus);
+            role.setRoleNameZh(roleNameZh);
+            role.setCreateTime(createTime);
+            role.setCreateBy(createBy);
+            return role;
+        }
+    }
 }

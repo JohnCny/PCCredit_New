@@ -14,12 +14,21 @@
         <result column="CREATE_BY" jdbcType="TIMESTAMP" property="createBy"/>
     </resultMap>
 
-    <select id="selectByUserRoleList" resultMap="BaseResultMap">
-        SELECT * FROM T_ROLE WHERE ID IN
-        <foreach collection="list" item="userRole" index="index"
-                 open="(" close=")" separator=",">
-            #{userRole.roleId,jdbcType=DECIMAL}
-        </foreach>
+    <select id="selectByUser" resultMap="BaseResultMap">
+        SELECT
+            TR.ROLE_NAME AS ROLE_NAME
+        FROM
+            T_USER TU,
+            T_USER_ROLE TUR,
+            T_ROLE TR
+        WHERE
+            TU.ID=#{id}
+        AND
+            TU.ID=TUR.USER_ID
+        AND
+            TUR.ROLE_ID=TR.ID
+        AND
+            TR.ROLE_STATUS=1
     </select>
 
 </mapper>
