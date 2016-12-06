@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * 文件上传下载Controller
- * Created by chekai .
+ * Created by chenkai .
  * Date 2016/11/25 .
  */
 @Api(value = "/file", description = "文件上传类")
