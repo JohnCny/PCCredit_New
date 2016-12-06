@@ -163,12 +163,12 @@
     <bean id="globalExceptionHandler" class="com.cardpay.basic.common.exception.global.GlobalExceptionHandler"/>
 
     <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/logon/login"/>
-            <bean class="com.cardpay.basic.common.interceptor.captcha.CaptchaInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/logon/login"/>-->
+            <!--<bean class="com.cardpay.basic.common.interceptor.captcha.CaptchaInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
 
     <!--&lt;!&ndash; API 接口跨域配置&ndash;&gt;-->

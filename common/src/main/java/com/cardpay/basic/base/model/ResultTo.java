@@ -43,6 +43,8 @@ public class ResultTo extends HashMap<String, Object> implements Serializable {
             put(ResultEnum.OLD_PASSWORD_ERROR.getValue(), "old password error");
             put(ResultEnum.DISABLED_ACCOUNT.getValue(), "account disabled");
             put(ResultEnum.ACCOUNT_OR_PASSWORD_NULL.getValue(), "account or password is null");
+            put(ResultEnum.REQUIRED_PARAMETER_EMPTY.getValue(), "the required parameters cannot be empty");
+            put(ResultEnum.OPERATION_FAILED.getValue(),"operation failed");
         }
     };
 

@@ -1,7 +1,12 @@
 package com.cardpay.mgt.user.service.impl;
 
 
+import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.core.shrio.common.PasswordUtil;
+import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.dao.AuthorityOperationMapper;
 import com.cardpay.mgt.user.dao.AuthorityResourcesMapper;
@@ -19,6 +24,7 @@ import com.cardpay.mgt.user.model.Resources;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserAuthority;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,75 +46,52 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     private UserMapper userMapper;
 
     @Autowired
-    private UserRoleMapper userRoleMapper;
-
-    @Autowired
-    private RoleAuthorityMapper roleAuthorityMapper;
-
-    @Autowired
-    private AuthorityOperationMapper authorityOperationMapper;
-
-    @Autowired
-    private AuthorityResourcesMapper authorityResourcesMapper;
-
-    @Autowired
-    private ResourcesMapper resourcesMapper;
-
-    @Autowired
-    private OperationMapper operationMapper;
-
-    @Autowired
     private RoleMapper roleMapper;
-
-    @Autowired
-    private AuthorityMapper authorityMapper;
 
     @Override
     public Set<String> getUserAuthority(User user) {
-
-        UserRole userRole = new UserRole();
-        userRole.setUserId(user.getId());
-        //获取当前用户都有哪些角色
-        List<UserRole> userRoles = userRoleMapper.select(userRole);
-        //获取当前用户所拥有的角色对应的权限id集合
-        List<RoleAuthority> roleAuthorities = roleAuthorityMapper.selectByRoleList(userRoles);
-
-        //获取当前用户对应角色对应权限对应的操作
-        List<AuthorityOperation> authorityOperations = authorityOperationMapper.selectByAuthoritList(roleAuthorities);
-        //获取当前用户对应角色对应权限对应的资源
-        List<AuthorityResources> authorityResources = authorityResourcesMapper.selectByAuthoritList(roleAuthorities);
-
-        //根据当前用户获得所对应的所有权限
-        List<Authority> authorities = authorityMapper.selectByList(roleAuthorities);
-        //根据当前用户获得所对应的所有操作
-        List<Operation> operationes = operationMapper.selectByIdList(authorityOperations);
-        //根据当前用户获得所对应的所有资源
-        List<Resources> resourceses = resourcesMapper.selectByIdList(authorityResources);
-
         Set<String> set = new HashSet<>();
+        List<UserAuthority> list = userMapper.selectByAuthority(user);
         StringBuffer stringBuffer;
-        for (Authority authority : authorities) {
-            for (Resources resources : resourceses) {
-                for (Operation operation : operationes) {
-                    stringBuffer = new StringBuffer();
-                    stringBuffer.append(authority.getAuthorityName()).append(":").append(resources.getResoucreName()).append(":").append(operation.getOperationName());
-                    set.add(stringBuffer.toString());
-                }
-            }
+        for (UserAuthority userAuthority : list) {
+            stringBuffer = new StringBuffer();
+            stringBuffer.append(userAuthority.getAuthorityName()).append(":").append(userAuthority.getResoucreName())
+                    .append(":").append(userAuthority.getOperationName());
+            set.add(stringBuffer.toString());
+        }
+        for (String str : set) {
+            LogTemplate.debug(this.getClass(), "拥有的资源", str);
         }
         return set;
     }
 
     @Override
     public Set<String> getUserRole(User user) {
-        UserRole userRole = new UserRole();
-        userRole.setUserId(user.getId());
-        List<UserRole> userRoles = userRoleMapper.select(userRole);
-        List<Role> roles = roleMapper.selectByUserRoleList(userRoles);
+        List<Role> roles = roleMapper.selectByUser(user);
         Set<String> set = new HashSet<>();
         for (Role role : roles) {
             set.add(role.getRoleName());
         }
+        for (String str : set) {
+            LogTemplate.debug(this.getClass(), "拥有的角色", str);
+        }
         return set;
+    }
+
+    @Override
+    public ResultTo updatePassword(String oldPassword, String newPassword) {
+        User user = (User) ShiroKit.getPrincipal();
+        if (!user.getPassword().equals(PasswordUtil.encryptPassword(oldPassword))) {
+            LogTemplate.debug(this.getClass(), "oldPassword(数据库)", user.getPassword());
+            LogTemplate.debug(this.getClass(), "oldPassword(传入)", PasswordUtil.encryptPassword(oldPassword));
+            return new ResultTo(ResultEnum.OLD_PASSWORD_ERROR.getValue());
+        }
+        user = new User();
+        user.setPassword(PasswordUtil.encryptPassword(newPassword));
+        if (userMapper.updateByPrimaryKeySelective(user) == 0) {
+            LogTemplate.info(this.getClass(), "message", "修改密码失败");
+            return new ResultTo(ResultEnum.OPERATION_FAILED.getValue());
+        }
+        return new ResultTo();
     }
 }

@@ -9,4 +9,5 @@ import com.cardpay.mgt.user.model.AuthorityOperation;
  * @author rankai
  */
 public interface AuthorityOperationService extends BaseService<AuthorityOperation> {
+
 }
