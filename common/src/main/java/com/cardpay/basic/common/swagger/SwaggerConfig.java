@@ -5,10 +5,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.*;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -44,8 +43,8 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("快贷 API")
                 .description("快贷接口文档")
-                .contact(new Contact("乾康西安研发中心", "http:/baidu.com", "123@qq.com"))
-                /*.license("Apache 2.0")
+                /*.contact(new Contact("乾康西安研发中心", "http:/baidu.com", "123@qq.com"))
+                .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")*/
                 .version("1.0.0")
                 .build();
@@ -62,7 +61,7 @@ public class SwaggerConfig {
                                         new AuthorizationScope("read_pets", "read your pets")),
                                 Arrays.asList(new ImplicitGrant(new LoginEndpoint("http://petstore.swagger.io/api/oauth/dialog"), "tokenName"))
                         ),
-                        new ApiKey("api_key", "api_key", "header")
+                        new ApiKey("mykey", "api_key", "header")
                 ))
                 .select() // 选择那些路径和api会生成document
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))//对api进行监控 RequestHandlerSelectors.basePackage("com.cardpay")
@@ -81,8 +80,8 @@ public class SwaggerConfig {
                                 .code(500)
                                 .message("500 message")
                                 .responseModel(new ModelRef("Error"))
-                                .build()))*/
-                /*.enableUrlTemplating(true)
+                                .build()))*//*
+                *//*.enableUrlTemplating(true)
                 .globalOperationParameters( //给所有方法添加自定义参数
                         newArrayList(new ParameterBuilder()
                                 .name("someGlobalParameter")
@@ -91,17 +90,17 @@ public class SwaggerConfig {
                                 .parameterType("query")
                                 .required(true)
                                 .build()))*/
-              //  .securitySchemes(newArrayList(apiKey())) //定义API支持的SecurityScheme，指的是认证方式，支持OAuth、APIkey。P.S. 要让swagger-ui的oauth正常工作，需要定义个SecurityConfiguration的Bean
+               // .securitySchemes(newArrayList(apiKey())) //定义API支持的SecurityScheme，指的是认证方式，支持OAuth、APIkey。P.S. 要让swagger-ui的oauth正常工作，需要定义个SecurityConfiguration的Bean
                 .securityContexts(newArrayList(securityContext())) //定义具体上下文路径对应的认证方式
                 ;
     }
 
   /*  @Autowired
-    private TypeResolver typeResolver;*/
+    private TypeResolver typeResolver;
 
     private ApiKey apiKey() {
         return new ApiKey("mykey", "api_key", "header");
-    }
+    }*/
 
     private SecurityContext securityContext() {
         return SecurityContext.builder()
@@ -128,23 +127,26 @@ public class SwaggerConfig {
                 "test-app",
                 "apiKey",
                 ApiKeyVehicle.HEADER,
-                "mykey123",
-                "," /*scope separator*/);
+                "mykey",
+                "," );
     }
 
 
     @Bean
     UiConfiguration uiConfig() {
         return new UiConfiguration(
-                "validatorUrl",// url
+                "http://localhost/swagger-ui.html",// url
                 "none",       // docExpansion          => none | list
                 "alpha",      // apiSorter             => alpha
                 "schema",     // defaultModelRendering => schema
                 UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS,
-                true,        // enableJsonEditor      => true | false
+                false,        // enableJsonEditor      => true | false
                 true);     // showRequestHeaders    => true | fals);
     }
 
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver commonsMultipartResolver()
+    { return new CommonsMultipartResolver(); }
 }
 
 

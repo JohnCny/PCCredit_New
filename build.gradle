@@ -168,6 +168,7 @@ subprojects {
                 libraries."springfox-data-rest",
                 libraries."springfox-bean-validators",
                 libraries."springfox-staticdocs",
+                libraries."springfox-petstore",
 
                 //freemarker
                 libraries."freemarker",

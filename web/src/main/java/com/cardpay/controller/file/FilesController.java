@@ -49,7 +49,7 @@ public class FilesController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ApiOperation(value = "文件上传接口", notes = "上传文件到dfs服务器", httpMethod = "POST")
     @ApiModelProperty(dataType = "MultipartFile")
-    public ResultTo upLoad(@ApiParam(name="文件", required=true) @RequestPart MultipartFile[] file) {
+    public ResultTo upLoad(@ApiParam(name="文件", required=true) @RequestParam("file") MultipartFile[] file) {
         List<String> list = fileManager.upLoad(file);
         return new ResultTo().setData(list);
     }
@@ -62,7 +62,7 @@ public class FilesController {
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ApiOperation(value = "文件删除接口", notes = "删除dfs服务器中指定文件", httpMethod = "DELETE")
-    public ResultTo delete(@ApiParam(value = "组名,文件名", required = true) @RequestParam("file") String file) {
+    public ResultTo delete(@ApiParam(value = "组名,文件名", required = true) @RequestPart("file") String file) {
         String[] str = file.split(",");
         int flag = FileManager.deleteFile(str[0], str[1]);
         return new ResultTo().setData(flag);

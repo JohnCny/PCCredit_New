@@ -50,7 +50,7 @@
                 /assets/** = anon
                 /kaptcha = anon
                 /logon/** = anon
-                /** = authc
+                /** = anon
             </value>
         </property>
     </bean>
