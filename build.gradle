@@ -14,7 +14,7 @@ allprojects {
     //定义repositories
     buildscript {
         repositories {
-            maven{
+            maven {
                 url "http://maven.aliyun.com/nexus/content/groups/public/"
             }
 
@@ -41,7 +41,7 @@ allprojects {
         flatDir {
             dirs "$rootProject.projectDir/libs"
         }
-        maven{
+        maven {
             url "http://maven.aliyun.com/nexus/content/groups/public/"
         }
 //        maven {
@@ -79,7 +79,7 @@ subprojects {
             }
             //用于收录java目录中的资源文件
             resources {
-                srcDirs = ['src/main/resources','src/main/java']
+                srcDirs = ['src/main/resources', 'src/main/java']
             }
         }
     }
@@ -190,17 +190,19 @@ subprojects {
 
                 //webSocket
                 libraries."spring-websocket",
-                
+
                 //excel poi
                 libraries."poi",
-                
+
                 //fastdfs
                 libraries."fastdfs",
 
                 //pdf
                 libraries."pdfbox",
+
+                libraries."hibernate-validator",
         )
-        testCompile (
+        testCompile(
                 libraries."junit",
                 libraries."spring-test",
                 libraries."mockito-core",

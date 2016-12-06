@@ -97,7 +97,17 @@ public enum ResultEnum {
     /**
      * 账号或密码为空
      */
-    ACCOUNT_OR_PASSWORD_NULL(5018);
+    ACCOUNT_OR_PASSWORD_NULL(5018),
+
+    /**
+     * 必填参数不能为空
+     */
+    REQUIRED_PARAMETER_EMPTY(5019),
+
+    /**
+     * 操作失败
+     */
+    OPERATION_FAILED(5020);
 
     private int value; // 自定义数据域，private为了封装
 
