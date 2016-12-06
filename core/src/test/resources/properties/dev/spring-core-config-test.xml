@@ -19,6 +19,16 @@
         <property name="maxBinaryMessageBufferSize" value="8192"/>
     </bean>
     -->
+    <!--编码方式获取propertity数据信息-->
+    <bean id="configBean" class="com.cardpay.basic.common.context.ContextProperty">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+
     <!--&lt;!&ndash;yml第三方propertities读取&ndash;&gt;-->
     <!--<context:annotation-config/>-->
     <!--<bean id="yamlProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">-->
@@ -103,7 +113,7 @@
     <!-- 当Spring容器启动完成后执行下面的这个Bean -->
     <bean class="com.cardpay.core.process.BeanPostProcessor"/>
     <!--引用其他xml配置文件-->
-   <!-- <import resource="classpath:config/spring-config-shiro-test.xml"/>-->
+    <import resource="classpath:config/spring-config-shiro-test.xml"/>
     <import resource="classpath:config/spring-config-redis-test.xml"/>
     <import resource="classpath:config/spring-config-rabbitmq-test.xml"/>
     <!--<import resource="classpath:config/spring-config-dozer-test.xml"/>-->

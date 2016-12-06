@@ -21,7 +21,7 @@ public class TOrganizationControllerTest extends TestEnv{
 
     @Test
     public void deleteOrganization() throws Exception {
-        mockMvc.perform(delete("/organization/deleteOrganization").param("id","1"))
+        mockMvc.perform(delete("/organization/deleteOrganization").param("id","2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
