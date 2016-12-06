@@ -1,25 +1,35 @@
 package com.cardpay.controller.base;
 
 import com.cardpay.basic.base.controller.BasicController;
+import com.cardpay.basic.base.model.GenericEntity;
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.util.BeanFactoryUtil;
+import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
+import com.cardpay.mgt.modeifyhistory.service.impl.TModifyHistoryServiceImpl;
+import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ContextLoader;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * 基础controller 通用接口
  * @author johnmyiqn
  */
+@Transactional
 public class BaseController<T,PK> extends BasicController {
     /**
      * dozer mapper
@@ -46,7 +56,20 @@ public class BaseController<T,PK> extends BasicController {
     String PAGE_START_LIST = "PageStartList";
 
     @Autowired
-    BaseServiceImpl<T> baseService;
+    BaseService<T> baseService;
+
+    /**
+     * 对比实体修改并记录
+     *
+     * @param bean 需要记录的bean
+     * @param moduleName 模块英文名
+     * @param moduleNameZh 模块中文名
+     * @param <T> 类型
+     */
+    public <T extends GenericEntity<?>> void compareBean(T bean,String moduleName,
+                                                                String moduleNameZh){
+        CompareBeanUtil.compareBean(bean, (BaseService<T>) baseService,moduleName,moduleNameZh);
+    }
 
     /**
      * 根据实体中的属性值进行查询，查询条件使用等号

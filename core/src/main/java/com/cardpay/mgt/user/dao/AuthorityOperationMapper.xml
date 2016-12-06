@@ -11,12 +11,4 @@
         <result column="OPERATION_ID" jdbcType="DECIMAL" property="operationId"/>
     </resultMap>
 
-    <select id="selectByAuthoritList" resultMap="BaseResultMap">
-        SELECT * FROM T_AUTHORITY_OPERATION WHERE AUTHORITY_ID IN
-        <foreach collection="list" item="roleAuthoritie" index="index"
-                 open="(" close=")" separator=",">
-            #{roleAuthoritie.authorityId}
-        </foreach>
-    </select>
-
 </mapper>

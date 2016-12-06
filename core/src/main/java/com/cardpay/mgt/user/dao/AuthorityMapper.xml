@@ -12,12 +12,27 @@
         <result column="AUTHORITY_NAME_ZH" jdbcType="VARCHAR" property="authorityNameZh"/>
     </resultMap>
 
-    <select id="selectByList" resultMap="BaseResultMap">
-        SELECT * FROM T_AUTHORITY WHERE ID IN
-        <foreach collection="list" item="roleAuthority" index="index"
-                 open="(" close=")" separator=",">
-            #{roleAuthority.authorityId}
-        </foreach>
+    <select id="selectAuthorityGroup" resultType="String">
+        SELECT
+            AUTHORITY_DESCRIPTION
+        FROM
+            T_AUTHORITY
+        WHERE
+            AUTHORITY_DESCRIPTION IS NOT NULL
+        GROUP BY
+            AUTHORITY_DESCRIPTION
+    </select>
+
+    <select id="selectByRoleId" resultMap="BaseResultMap">
+        SELECT
+            TA.*
+        FROM
+            T_ROLE_AUTHORITY TRA,
+            T_AUTHORITY TA
+        WHERE
+            TRA.ROLE_ID=#{roleId}
+        AND
+            TRA.AUTHORITY_ID=TA.ID
     </select>
 
 </mapper>

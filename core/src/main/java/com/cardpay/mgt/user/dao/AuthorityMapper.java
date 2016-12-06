@@ -14,10 +14,16 @@ import java.util.List;
  */
 public interface AuthorityMapper extends BasicMapper<Authority> {
     /**
-     * 根据角色权限关系表获取权限集合
+     * 获取权限的分组信息
      *
-     * @param roleAuthorities 角色权限关系集合
+     * @return 权限分组信息
+     */
+    List<String> selectAuthorityGroup();
+
+    /**
+     * 根据角色ID获得权限信息
+     * @param roleId 角色ID
      * @return 权限集合
      */
-    List<Authority> selectByList(List<RoleAuthority> roleAuthorities);
+    List<Authority> selectByRoleId(Integer roleId);
 }

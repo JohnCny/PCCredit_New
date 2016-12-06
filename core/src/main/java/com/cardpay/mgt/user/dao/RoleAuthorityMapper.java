@@ -3,6 +3,7 @@ package com.cardpay.mgt.user.dao;
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.UserRole;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -13,10 +14,10 @@ import java.util.List;
  */
 public interface RoleAuthorityMapper extends BasicMapper<RoleAuthority> {
     /**
-     * 根据用户的角色集合获取演角色权限集合
+     * 批量增加角色和权限的关系
      *
-     * @param userRoles 角色集合
-     * @return 觉得权限集合
+     * @param roleId      角色ID
+     * @param authorityIds 权限ID数组
      */
-    List<RoleAuthority> selectByRoleList(List<UserRole> userRoles);
+    void insertArray(int roleId, Integer[] authorityIds);
 }
