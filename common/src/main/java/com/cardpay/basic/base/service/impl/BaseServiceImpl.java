@@ -2,9 +2,11 @@ package com.cardpay.basic.base.service.impl;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.basic.base.service.BaseService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -35,8 +37,30 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return  实体
      */
     @Override
-    public T selectByPrimaryKey(Object key){
+    public T selectByPrimaryKey(Object key) {
         return mapper.selectByPrimaryKey(key);
+    }
+
+    /**
+     * 返回克隆对象,在需要二次查询时使用
+     * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
+     * @param key 主键
+     * @return  实体
+     */
+    @Override
+    public T selectByPrimaryKeyClone(Object key) {
+        try {
+            return  (T) BeanUtils.cloneBean(mapper.selectByPrimaryKey(key));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

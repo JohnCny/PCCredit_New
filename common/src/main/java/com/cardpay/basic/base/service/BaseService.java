@@ -1,5 +1,6 @@
 package com.cardpay.basic.base.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -19,6 +20,14 @@ public interface BaseService<T>{
      * @return  实体
      */
     T selectByPrimaryKey(Object key);
+
+    /**
+     * 返回克隆对象,在需要二次查询时使用
+     * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
+     * @param key 主键
+     * @return  实体
+     */
+    T selectByPrimaryKeyClone(Object key);
 
     /**
      * 查询全部结果，select(null)方法能达到同样的效果
