@@ -71,23 +71,23 @@ public class BaseController<T,PK> extends BasicController {
         CompareBeanUtil.compareBean(bean, (BaseService<T>) baseService,moduleName,moduleNameZh);
     }
 
-    /**
-     * 根据实体中的属性值进行查询，查询条件使用等号
-     * @param record 实体对象
-     * @param viewName view名称
-     * @return modelview对象，包含查找结果集合
-     */
-    @RequestMapping(value = "/select",method = RequestMethod.GET)
-    @ApiOperation(value = "根据实体中的属性值进行查询，查询条件使用等号", httpMethod = "GET")
-    public ModelAndView select(@ApiParam(value = "实体对象") T record
-            ,@ApiParam(value = "view名称") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        Map<String,Object> map = new HashMap<>();
-        map.put(SELECT,baseService.select(record));
-        modelAndView.addObject(map);
-        return modelAndView;
-    }
+//    /**
+//     * 根据实体中的属性值进行查询，查询条件使用等号
+//     * @param record 实体对象
+//     * @param viewName view名称
+//     * @return modelview对象，包含查找结果集合
+//     */
+//    @RequestMapping(value = "/select",method = RequestMethod.GET)
+//    @ApiOperation(value = "根据实体中的属性值进行查询，查询条件使用等号", httpMethod = "GET")
+//    public ModelAndView select(@ApiParam(value = "实体对象") T record
+//            ,@ApiParam(value = "view名称") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put(SELECT,baseService.select(record));
+//        modelAndView.addObject(map);
+//        return modelAndView;
+//    }
 
     /**
      * 根据实体中的属性值进行查询，查询条件使用等号
@@ -103,23 +103,23 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
-     * @param pk 实体对象
-     * @param viewName view名称
-     * @return modelview对象，包含查找结果实体
-     */
-    @RequestMapping(value = "",method = RequestMethod.GET)
-    @ApiOperation(value = "根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号", httpMethod = "GET")
-    public ModelAndView selectByPrimaryKey(@ApiParam(value = "主键") @RequestParam("pk") PK pk
-            ,@ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName( viewName);
-        Map<String,Object> map = new HashMap<>();
-        map.put(SELECT_BY_PRIMARY_KEY,baseService.selectByPrimaryKey(pk));
-        modelAndView.addObject(map);
-        return modelAndView;
-    }
+//    /**
+//     * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
+//     * @param pk 实体对象
+//     * @param viewName view名称
+//     * @return modelview对象，包含查找结果实体
+//     */
+//    @RequestMapping(value = "",method = RequestMethod.GET)
+//    @ApiOperation(value = "根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号", httpMethod = "GET")
+//    public ModelAndView selectByPrimaryKey(@ApiParam(value = "主键") @RequestParam("pk") PK pk
+//            ,@ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName( viewName);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put(SELECT_BY_PRIMARY_KEY,baseService.selectByPrimaryKey(pk));
+//        modelAndView.addObject(map);
+//        return modelAndView;
+//    }
 
     /**
      * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
@@ -135,21 +135,21 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
-     * @param viewName view名称
-     * @return modelview对象，包含查找结果集合
-     */
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @ApiOperation(value = "根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号", httpMethod = "GET")
-    public ModelAndView selectAll(@ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName( viewName);
-        Map<String,Object> map = new HashMap<>();
-        map.put(SELECT_ALL,baseService.selectAll());
-        modelAndView.addObject(map);
-        return modelAndView;
-    }
+//    /**
+//     * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
+//     * @param viewName view名称
+//     * @return modelview对象，包含查找结果集合
+//     */
+//    @RequestMapping(value = "/list",method = RequestMethod.GET)
+//    @ApiOperation(value = "根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号", httpMethod = "GET")
+//    public ModelAndView selectAll(@ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName( viewName);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put(SELECT_ALL,baseService.selectAll());
+//        modelAndView.addObject(map);
+//        return modelAndView;
+//    }
 
     /**
      * 查询全部结果，select(null)方法能达到同样的效果
@@ -164,23 +164,23 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号
-     * @param viewName view名称
-     * @param record 实体对象
-     * @return modelview对象，包含查找结果实体
-     */
-    @RequestMapping(value = "/selectOne",method = RequestMethod.GET)
-    @ApiOperation(value = "根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号", httpMethod = "GET")
-    public ModelAndView selectOne(@ApiParam(value = "实体对象") T record
-            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        Map<String,Object> map = new HashMap<>();
-        map.put(SELECT_ONE,baseService.selectOne(record));
-        modelAndView.addObject(map);
-        return modelAndView;
-    }
+//    /**
+//     * 根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号
+//     * @param viewName view名称
+//     * @param record 实体对象
+//     * @return modelview对象，包含查找结果实体
+//     */
+//    @RequestMapping(value = "/selectOne",method = RequestMethod.GET)
+//    @ApiOperation(value = "根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号", httpMethod = "GET")
+//    public ModelAndView selectOne(@ApiParam(value = "实体对象") T record
+//            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put(SELECT_ONE,baseService.selectOne(record));
+//        modelAndView.addObject(map);
+//        return modelAndView;
+//    }
 
     /**
      * 根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号
@@ -196,23 +196,23 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 根据实体中的属性查询总数，查询条件使用等号
-     * @param record 实体对象
-     * @param viewName view名称
-     * @return modelview对象，包含查找结果个数
-     */
-    @RequestMapping(value = "/selectCount",method = RequestMethod.GET)
-    @ApiOperation(value = "根据实体中的属性查询总数，查询条件使用等号", httpMethod = "GET")
-    public ModelAndView selectCount(@ApiParam(value = "实体对象") T record,
-                                    @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        Map<String,Object> map = new HashMap<>();
-        map.put(SELECT_COUNT,baseService.selectCount(record));
-        modelAndView.addObject(map);
-        return modelAndView;
-    }
+//    /**
+//     * 根据实体中的属性查询总数，查询条件使用等号
+//     * @param record 实体对象
+//     * @param viewName view名称
+//     * @return modelview对象，包含查找结果个数
+//     */
+//    @RequestMapping(value = "/selectCount",method = RequestMethod.GET)
+//    @ApiOperation(value = "根据实体中的属性查询总数，查询条件使用等号", httpMethod = "GET")
+//    public ModelAndView selectCount(@ApiParam(value = "实体对象") T record,
+//                                    @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put(SELECT_COUNT,baseService.selectCount(record));
+//        modelAndView.addObject(map);
+//        return modelAndView;
+//    }
 
     /**
      * 根据实体中的属性查询总数，查询条件使用等号
@@ -228,21 +228,21 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 根据主键更新实体全部字段，null值会被更新
-     * @param record 实体对象
-     * @param viewName view名称
-     * @return modelview对象，包含插入后数据
-     */
-    @RequestMapping(value = "",method = RequestMethod.POST)
-    @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "POST")
-    public ModelAndView insert(@ApiParam(value = "实体对象") T record
-            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        baseService.insert(record);
-        return modelAndView;
-    }
+//    /**
+//     * 根据主键更新实体全部字段，null值会被更新
+//     * @param record 实体对象
+//     * @param viewName view名称
+//     * @return modelview对象，包含插入后数据
+//     */
+//    @RequestMapping(value = "",method = RequestMethod.POST)
+//    @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "POST")
+//    public ModelAndView insert(@ApiParam(value = "实体对象") T record
+//            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        baseService.insert(record);
+//        return modelAndView;
+//    }
 
     /**
      * 根据主键更新实体全部字段，null值会被更新
@@ -259,21 +259,21 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 保存一个实体，null的属性不会保存，会使用数据库默认值
-     * @param record 实体对象
-     * @param viewName view名称
-     * @return modelview对象，包含插入后数据
-     */
-    @RequestMapping(value = "/insertSelective",method = RequestMethod.POST)
-    @ApiOperation(value = "保存一个实体，null的属性不会保存，会使用数据库默认值", httpMethod = "POST")
-    public ModelAndView insertSelective(@ApiParam(value = "实体对象") T record
-            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        baseService.insertSelective(record);
-        return modelAndView;
-    }
+//    /**
+//     * 保存一个实体，null的属性不会保存，会使用数据库默认值
+//     * @param record 实体对象
+//     * @param viewName view名称
+//     * @return modelview对象，包含插入后数据
+//     */
+//    @RequestMapping(value = "/insertSelective",method = RequestMethod.POST)
+//    @ApiOperation(value = "保存一个实体，null的属性不会保存，会使用数据库默认值", httpMethod = "POST")
+//    public ModelAndView insertSelective(@ApiParam(value = "实体对象") T record
+//            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        baseService.insertSelective(record);
+//        return modelAndView;
+//    }
 
     /**
      * 保存一个实体，null的属性不会保存，会使用数据库默认值
@@ -289,21 +289,21 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 根据主键更新实体全部字段，null值会被更新
-     * @param record 实体对象
-     * @param viewName view名称
-     * @return modelview对象，包含更新后数据
-     */
-    @RequestMapping(value = "",method = RequestMethod.PUT)
-    @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "PUT")
-    public ModelAndView updateByPrimaryKey(@ApiParam(value = "实体对象") T record
-            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        baseService.updateByPrimaryKey(record);
-        return modelAndView;
-    }
+//    /**
+//     * 根据主键更新实体全部字段，null值会被更新
+//     * @param record 实体对象
+//     * @param viewName view名称
+//     * @return modelview对象，包含更新后数据
+//     */
+//    @RequestMapping(value = "",method = RequestMethod.PUT)
+//    @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "PUT")
+//    public ModelAndView updateByPrimaryKey(@ApiParam(value = "实体对象") T record
+//            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        baseService.updateByPrimaryKey(record);
+//        return modelAndView;
+//    }
 
     /**
      * 根据主键更新实体全部字段，null值会被更新
@@ -320,21 +320,21 @@ public class BaseController<T,PK> extends BasicController {
     }
 
 
-    /**
-     * 根据主键更新属性不为null的值
-     * @param record 实体对象
-     * @param viewName view名称
-     * @return modelview对象，包含更新后数据
-     */
-    @RequestMapping(value = "/updateSelective",method = RequestMethod.PUT)
-    @ApiOperation(value = "根据主键更新属性不为null的值", httpMethod = "PUT")
-    public ModelAndView updateSelective(@ApiParam(value = "实体对象") T record
-            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        baseService.updateSelectiveByPrimaryKey(record);
-        return modelAndView;
-    }
+//    /**
+//     * 根据主键更新属性不为null的值
+//     * @param record 实体对象
+//     * @param viewName view名称
+//     * @return modelview对象，包含更新后数据
+//     */
+//    @RequestMapping(value = "/updateSelective",method = RequestMethod.PUT)
+//    @ApiOperation(value = "根据主键更新属性不为null的值", httpMethod = "PUT")
+//    public ModelAndView updateSelective(@ApiParam(value = "实体对象") T record
+//            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        baseService.updateSelectiveByPrimaryKey(record);
+//        return modelAndView;
+//    }
 
     /**
      * 根据主键更新属性不为null的值
@@ -350,21 +350,21 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 根据实体属性作为条件进行删除，查询条件使用等号
-     * @param record 实体对象
-     * @param viewName view名称
-     * @return modelview对象，包含删除后数据
-     */
-    @RequestMapping(value = "/deleteSelective",method = RequestMethod.DELETE)
-    @ApiOperation(value = "根据实体属性作为条件进行删除，查询条件使用等号", httpMethod = "DELETE")
-    public ModelAndView delete(@ApiParam(value = "实体对象") T record
-            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        baseService.delete(record);
-        return modelAndView;
-    }
+//    /**
+//     * 根据实体属性作为条件进行删除，查询条件使用等号
+//     * @param record 实体对象
+//     * @param viewName view名称
+//     * @return modelview对象，包含删除后数据
+//     */
+//    @RequestMapping(value = "/deleteSelective",method = RequestMethod.DELETE)
+//    @ApiOperation(value = "根据实体属性作为条件进行删除，查询条件使用等号", httpMethod = "DELETE")
+//    public ModelAndView delete(@ApiParam(value = "实体对象") T record
+//            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        baseService.delete(record);
+//        return modelAndView;
+//    }
 
     /**
      * 根据实体属性作为条件进行删除，查询条件使用等号
@@ -381,21 +381,21 @@ public class BaseController<T,PK> extends BasicController {
     }
 
 
-    /**
-     * 根据主键字段进行删除，方法参数必须包含完整的主键属性
-     * @param pk 主键
-     * @param viewName view名称
-     * @return modelview对象，包含更新后数据
-     */
-    @RequestMapping(value = "",method = RequestMethod.DELETE)
-    @ApiOperation(value = "根据主键字段进行删除，方法参数必须包含完整的主键属性", httpMethod = "DELETE")
-    public ModelAndView deleteByPrimaryKey(@ApiParam(value = "主键") @RequestParam("pk") PK pk
-            ,@ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(viewName);
-        baseService.deleteByPrimaryKey(pk);
-        return modelAndView;
-    }
+//    /**
+//     * 根据主键字段进行删除，方法参数必须包含完整的主键属性
+//     * @param pk 主键
+//     * @param viewName view名称
+//     * @return modelview对象，包含更新后数据
+//     */
+//    @RequestMapping(value = "",method = RequestMethod.DELETE)
+//    @ApiOperation(value = "根据主键字段进行删除，方法参数必须包含完整的主键属性", httpMethod = "DELETE")
+//    public ModelAndView deleteByPrimaryKey(@ApiParam(value = "主键") @RequestParam("pk") PK pk
+//            ,@ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName(viewName);
+//        baseService.deleteByPrimaryKey(pk);
+//        return modelAndView;
+//    }
 
     /**
      * 根据主键字段进行删除，方法参数必须包含完整的主键属性
@@ -411,27 +411,27 @@ public class BaseController<T,PK> extends BasicController {
         return result;
     }
 
-    /**
-     * 根据实体属性和RowBounds进行分页查询
-     * @param record 实体
-     * @param page   页数
-     * @param size   个数
-     * @param viewName  view名称
-     * @return modelview对象，包含分页数据集合
-     */
-    @RequestMapping(value = "/pageList",method = RequestMethod.DELETE)
-    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "DELETE")
-    public ModelAndView pageList(@ApiParam(value = "实体对象") T record
-            , @ApiParam(value = "页数") @RequestParam("page") Integer page
-            , @ApiParam(value = "个数") @RequestParam("size") Integer size
-            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName( viewName);
-        Map<String,Object> map = new HashMap<>();
-        map.put(PAGE_LIST,baseService.pageList(record,page,size));
-        modelAndView.addObject(map);
-        return modelAndView;
-    }
+//    /**
+//     * 根据实体属性和RowBounds进行分页查询
+//     * @param record 实体
+//     * @param page   页数
+//     * @param size   个数
+//     * @param viewName  view名称
+//     * @return modelview对象，包含分页数据集合
+//     */
+//    @RequestMapping(value = "/pageList",method = RequestMethod.DELETE)
+//    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "DELETE")
+//    public ModelAndView pageList(@ApiParam(value = "实体对象") T record
+//            , @ApiParam(value = "页数") @RequestParam("page") Integer page
+//            , @ApiParam(value = "个数") @RequestParam("size") Integer size
+//            , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName( viewName);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put(PAGE_LIST,baseService.pageList(record,page,size));
+//        modelAndView.addObject(map);
+//        return modelAndView;
+//    }
 
     /**
      * 根据实体属性和RowBounds进行分页查询

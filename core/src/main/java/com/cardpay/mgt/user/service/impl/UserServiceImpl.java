@@ -81,12 +81,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Override
     public ResultTo updatePassword(String oldPassword, String newPassword) {
         User user = (User) ShiroKit.getPrincipal();
+        Integer userId = user.getId();
         if (!user.getPassword().equals(PasswordUtil.encryptPassword(oldPassword))) {
             LogTemplate.debug(this.getClass(), "oldPassword(数据库)", user.getPassword());
             LogTemplate.debug(this.getClass(), "oldPassword(传入)", PasswordUtil.encryptPassword(oldPassword));
             return new ResultTo(ResultEnum.OLD_PASSWORD_ERROR.getValue());
         }
         user = new User();
+        user.setId(userId);
         user.setPassword(PasswordUtil.encryptPassword(newPassword));
         if (userMapper.updateByPrimaryKeySelective(user) == 0) {
             LogTemplate.info(this.getClass(), "message", "修改密码失败");

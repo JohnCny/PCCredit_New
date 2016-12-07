@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/logon")
-@Api(value = "用认证(登陆)")
+@Api(value = "/logon", description = "用认证(登陆)")
 public class LogonController extends BaseController<User, Integer> {
 
     /**
@@ -40,7 +40,7 @@ public class LogonController extends BaseController<User, Integer> {
      * @param password
      * @return 成功或失败
      */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
     public ResultTo login(@ApiParam(value = "登陆名") @RequestParam(value = "userName", required = false) String userName,
@@ -78,7 +78,6 @@ public class LogonController extends BaseController<User, Integer> {
      * @return 无权限提示消息
      */
     @RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
-    @ResponseBody
     public ResultTo unauthorized() {
         return new ResultTo(ResultEnum.NO_PERMITTION.getValue());
     }
