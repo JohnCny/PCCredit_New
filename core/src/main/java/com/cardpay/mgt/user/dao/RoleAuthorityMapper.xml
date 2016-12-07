@@ -9,11 +9,11 @@
         <result column="AUTHORITY_ID" jdbcType="DECIMAL" property="authorityId"/>
     </resultMap>
 
-    <select id="selectByRoleList" resultMap="BaseResultMap">
-        SELECT * FROM T_ROLE_AUTHORITY WHERE ROLE_ID IN
-        <foreach collection="list" item="userRole" index="index"
-                 open="(" close=")" separator=",">
-            #{userRole.roleId}
+    <insert id="insertArray">
+        insert into T_USER_ROLE (ROLE_ID,USER_ID) values
+        <foreach collection="array" item="temp" index="index" separator=",">
+            (#{roleId},#{temp})
         </foreach>
-    </select>
+    </insert>
+
 </mapper>

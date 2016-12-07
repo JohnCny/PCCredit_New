@@ -34,16 +34,16 @@ public class OrganizationController extends BaseController<TOrganization, Intege
 
     /**
      * 查询机构层级信息接口
-     * @param id 要查询的顶级层级ID
+     * @param parentId 要查询的顶级层级ID
      * @param level 查询层级信息数量
      * @return 机构层级信息
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ApiOperation(value = "查询机构层级信息接口", notes = "查询机构层级信息",  httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "要查询的顶级层级ID(默认最高级)")
-                                          @RequestParam(value = "id", defaultValue = "0") int id
+                                          @RequestParam(value = "parentId", defaultValue = "0") int parentId
             , @ApiParam(value = "查询层级信息数量(默认1层)") @RequestParam(value = "level", defaultValue = "1") int level){
-        List<TOrganizationVo> organization = tOrganizationService.queryOrganization(id, level);
+        List<TOrganizationVo> organization = tOrganizationService.queryOrganization(parentId, level);
         return new ResultTo().setData(organization);
     }
 

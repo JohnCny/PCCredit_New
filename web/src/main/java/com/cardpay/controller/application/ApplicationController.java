@@ -24,10 +24,21 @@ public class ApplicationController extends BaseController<TApplication, Integer>
     @Autowired //进件
     private TApplicationService tApplicationService;
 
+    /*  @Autowired //产品
+      private TProductService tProductService;
+
+    @Autowired//客户经理
+    private TManagerService tManagerService;
+  */
     @RequestMapping
-    public ResultTo productNext(@ApiParam(value = "产品ID", required = true) @RequestParam("id") int productId){
+    public ResultTo productNext(@ApiParam(value = "产品ID", required = true) @RequestParam("id") int productId) {
         User user = (User) ShiroKit.getPrincipal();
-        
+     /*   TManager tManager = tManagerService.get(user.getId());
+        TProduct tProduct =tProductService.get(id);
+        if(tManager.getsmallnt()){
+
+        }*/
+
         return new ResultTo();
     }
 }

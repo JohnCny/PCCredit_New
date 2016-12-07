@@ -12,12 +12,4 @@
         <result column="RESOUCRE_TYPE" jdbcType="DECIMAL" property="resoucreType"/>
     </resultMap>
 
-    <select id="selectByIdList" resultMap="BaseResultMap">
-        SELECT * FROM T_RESOURCES WHERE ID IN
-        <foreach collection="list" item="authorityResource" index="index"
-                 open="(" close=")" separator=",">
-            #{authorityResource.resourceId}
-        </foreach>
-    </select>
-
 </mapper>
