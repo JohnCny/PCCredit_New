@@ -1,8 +1,7 @@
 package com.cardpay.basic.redis;
 
-import com.cardpay.basic.common.log.LogBase;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -13,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
 /**
  * redis接口,操作redis的方法
  *
@@ -21,12 +21,15 @@ import java.util.concurrent.TimeUnit;
 @Component()
 public class RedisClient {
 
-    private static final Logger log = LogBase.get();
+    @Autowired
+    private LogTemplate logger;
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    /** 创建redisTemplate对象
+    /**
+     * 创建redisTemplate对象
+     *
      * @return RedisTemplate对象
      */
     public RedisTemplate<String, Object> getRedisTemplate() {
@@ -73,7 +76,7 @@ public class RedisClient {
         try {
             return opt.get(redisKey);
         } catch (SerializationException se) {
-            log.warn("Error happened when getting data from Redis!", se);
+            logger.warn(se, "Error happened when getting RedisKeyPrefixEnum:key from Redis!", null);
             return null;
         }
     }
@@ -135,7 +138,7 @@ public class RedisClient {
         try {
             return opt.multiGet(redisKeys);
         } catch (SerializationException se) {
-            log.warn("Error happened when getting data from Redis!", se);
+            logger.warn(se, "Error happened when getting redisKeys from Redis!", null);
             return null;
         }
     }
@@ -160,7 +163,7 @@ public class RedisClient {
         try {
             return opt.get(key);
         } catch (SerializationException se) {
-            log.warn("Error happened when getting data from Redis!", se);
+            logger.warn(se, "Error happened when getting key from Redis!", null);
             return null;
         }
     }
@@ -186,5 +189,15 @@ public class RedisClient {
     public void set(String key, Object value) {
         ValueOperations<String, Object> opt = redisTemplate.opsForValue();
         opt.set(key, value);
+    }
+
+    /**
+     * 获取键剩余过期时间
+     *
+     * @param key 键
+     * @return 值
+     */
+    public Long getTime(String key) {
+        return redisTemplate.getExpire(key);
     }
 }

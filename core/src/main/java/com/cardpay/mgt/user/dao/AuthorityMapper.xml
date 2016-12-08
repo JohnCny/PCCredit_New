@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.user.dao.AuthorityMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.Authority">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="AUTHORITY_NAME" jdbcType="VARCHAR" property="authorityName"/>
+        <result column="AUTHORITY_DESCRIPTION" jdbcType="VARCHAR" property="authorityDescription"/>
+        <result column="AUTHORITY_STATUS" jdbcType="DECIMAL" property="authorityStatus"/>
+        <result column="AUTHORITY_NAME_ZH" jdbcType="VARCHAR" property="authorityNameZh"/>
+    </resultMap>
+
+    <select id="selectAuthorityGroup" resultType="String">
+        SELECT
+            AUTHORITY_DESCRIPTION
+        FROM
+            T_AUTHORITY
+        WHERE
+            AUTHORITY_DESCRIPTION IS NOT NULL
+        GROUP BY
+            AUTHORITY_DESCRIPTION
+    </select>
+
+    <select id="selectByRoleId" resultMap="BaseResultMap">
+        SELECT
+            TA.*
+        FROM
+            T_ROLE_AUTHORITY TRA,
+            T_AUTHORITY TA
+        WHERE
+            TRA.ROLE_ID=#{roleId}
+        AND
+            TRA.AUTHORITY_ID=TA.ID
+    </select>
+
+</mapper>

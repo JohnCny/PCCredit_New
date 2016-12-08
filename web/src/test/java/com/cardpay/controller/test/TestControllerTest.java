@@ -14,11 +14,8 @@ public class TestControllerTest extends TestEnv {
 
     @Test
     public void test1() throws Exception {
-        mockMvc.perform(get("/api/test/list"))
+        mockMvc.perform(post("/test/api/list"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
-
-
-
 }

@@ -1,12 +1,11 @@
 package com.cardpay.basic.verify.service.impl;
 import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.mail.MailSendClient;
 import com.cardpay.basic.verify.emun.VertifyResult;
 import com.cardpay.basic.redis.RedisClient;
-import com.cardpay.basic.common.log.LogBase;
 import com.cardpay.basic.util.VerifyCodeUtil;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +18,8 @@ import java.util.regex.Pattern;
 @Component
 public class SenderCode implements com.cardpay.basic.verify.service.SenderCode {
 
-    private static final Logger logger = LogBase.get();
+    @Autowired
+    private LogTemplate logger;
 
     @Autowired
     private RedisClient redisClient;
@@ -50,7 +50,7 @@ public class SenderCode implements com.cardpay.basic.verify.service.SenderCode {
         //验证邮箱并发送验证码
         if (Pattern.compile(Constant.REGEX_EMAIL).matcher(number).matches()) {
             if (!flag) {
-                logger.info(VertifyResult.EMAIL_BINDING_ERROR.getValue());
+                logger.info(SenderCode.class, "验证邮箱并发送验证码",VertifyResult.EMAIL_BINDING_ERROR.getValue());
                 return ResultEnum.BOUND_MAILBOX_ERROR;
             }
             Object object = redisClient.get(number);
@@ -63,7 +63,7 @@ public class SenderCode implements com.cardpay.basic.verify.service.SenderCode {
             baseMail.send(null, number, "验证码(乾康金融):" + code);
         } else if (Pattern.compile(Constant.REGEX_PHONE).matcher(number).matches()) {
             if (!flag) {
-                logger.info(VertifyResult.EMAIL_BINDING_ERROR.getValue());
+                logger.info(SenderCode.class, "验证邮箱并发送验证码",VertifyResult.EMAIL_BINDING_ERROR.getValue());
                 return ResultEnum.BOUND_PHONE_ERROR;
             }
             Object object = redisClient.get(number);
@@ -76,10 +76,10 @@ public class SenderCode implements com.cardpay.basic.verify.service.SenderCode {
             //预留手机发送验证码接口,目前未实现
             //basePhone.mail(null, number, "验证码(乾康金融):" + code);
         } else {
-            logger.error(VertifyResult.NUMBER_ERROR.getValue());
+            logger.info(SenderCode.class, "验证邮箱并发送验证码",VertifyResult.NUMBER_ERROR.getValue());
             return ResultEnum.NUMBER_ERROR;
         }
-        logger.info("本次产生的验证码是:" + code + "[" + number + "]");
+        logger.info(SenderCode.class, "本次产生的验证码是:" + code + "[" + number + "]",null);
         return ResultEnum.SUCCESS;
     }
 }

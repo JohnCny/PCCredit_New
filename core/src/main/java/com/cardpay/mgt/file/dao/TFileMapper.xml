@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.file.dao.TFileMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.file.model.TFile">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="IMAGE_TYPE" jdbcType="VARCHAR" property="imageType" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="CREATED_AT" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="MODIFIED_BY" jdbcType="VARCHAR" property="modifiedBy" />
+    <result column="MODIFIED_AT" jdbcType="TIMESTAMP" property="modifiedAt" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="FAST_NAME" jdbcType="VARCHAR" property="fastName" />
+  </resultMap>
+
+  <!-- 批量插入-->
+  <insert id="batchInsert" parameterType="java.util.List">
+    INSERT INTO T_FILE(ID, IMAGE_TYPE, FILE_NAME, REMARK, CREATED_BY, CREATED_AT, MODIFIED_BY
+    , MODIFIED_AT, GROUP_NAME, FAST_NAME)
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator="union">
+      SELECT #{item.id,mode=IN,jdbcType=DECIMAL}
+      , #{item.imageType,mode=IN, jdbcType=VARCHAR}
+      , #{item.fileName,mode=IN, jdbcType=VARCHAR}
+      , #{item.remark, mode=IN,jdbcType=VARCHAR}
+      , #{item.createdBy, mode=IN,jdbcType=VARCHAR}
+      , #{item.createdAt,mode=IN, jdbcType=TIMESTAMP}
+      , #{item.modifiedBy,mode=IN, jdbcType=VARCHAR}
+      , #{item.modifiedAt, mode=IN,jdbcType=TIMESTAMP}
+      , #{item.groupName,mode=IN, jdbcType=DECIMAL}
+      , #{item.fastName, mode=IN,jdbcType=DECIMAL} FROM dual
+    </foreach>
+  </insert>
+</mapper>

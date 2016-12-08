@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.menu.dao.TMenuMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.menu.model.TMenu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="MENU_NAME_ZH" jdbcType="VARCHAR" property="menuNameZh" />
+    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="MENU_PARENT_ID" jdbcType="DECIMAL" property="menuParentId" />
+    <result column="MENU_PICTURE" jdbcType="VARCHAR" property="menuPicture" />
+    <result column="MENU_URL" jdbcType="VARCHAR" property="menuUrl" />
+    <result column="MENU_DESCRIPTION" jdbcType="VARCHAR" property="menuDescription" />
+    <result column="MENU_ORDER" jdbcType="DECIMAL" property="menuOrder" />
+    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <resultMap id="MenuListResultMap" type="com.cardpay.mgt.menu.model.TMenuVo">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="MENU_NAME_ZH" jdbcType="VARCHAR" property="menuNameZh" />
+    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="MENU_PARENT_ID" jdbcType="DECIMAL" property="menuParentId" />
+    <result column="MENU_PICTURE" jdbcType="VARCHAR" property="menuPicture" />
+    <result column="MENU_URL" jdbcType="VARCHAR" property="menuUrl" />
+    <result column="MENU_DESCRIPTION" jdbcType="VARCHAR" property="menuDescription" />
+    <result column="MENU_ORDER" jdbcType="DECIMAL" property="menuOrder" />
+    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <collection property="menuLists" column="ID" select="selectMenuList"/>
+  </resultMap>
+
+  <!--递归查询菜单列表-->
+  <select id="selectMenuList" resultMap="MenuListResultMap">
+    SELECT * FROM T_MENU_VIEW WHERE menu_parent_id = #{parentId}
+  </select>
+
+  <!--创建层级视图-->
+  <select id="createMenuView" statementType ="CALLABLE">
+    <![CDATA[
+      {call CREATE_T_MENU_VIEW (#{parentId,mode=IN,jdbcType=DECIMAL},#{level,mode=IN,jdbcType=DECIMAL})}
+    ]]>
+  </select>
+
+  <!--递归删除菜单-->
+  <delete id="recursionDelete">
+    DELETE FROM T_MENU WHERE id IN (SELECT id FROM T_MENU CONNECT BY PRIOR id = menu_parent_id START WITH id = #{id})
+  </delete>
+</mapper>

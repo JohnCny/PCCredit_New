@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.organization.dao.TOrganizationMapper">
+  <!--机构类-->
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.organization.model.TOrganization">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="ORG_LEVEL" jdbcType="DECIMAL" property="orgLevel" />
+    <result column="ORG_PARENT_ID" jdbcType="DECIMAL" property="orgParentId" />
+    <result column="ORG_DIRECTOR_ID" jdbcType="DECIMAL" property="orgDirectorId" />
+    <result column="ORG_DIRECTOR_NAME" jdbcType="VARCHAR" property="orgDirectorName" />
+    <result column="ORG_LOGISTICS_ID" jdbcType="DECIMAL" property="orgLogisticsId" />
+    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <!--机构VO类-->
+  <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.organization.model.vo.TOrganizationVo">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="ORG_LEVEL" jdbcType="DECIMAL" property="orgLevel" />
+    <result column="ORG_PARENT_ID" jdbcType="DECIMAL" property="orgParentId" />
+    <result column="ORG_DIRECTOR_ID" jdbcType="DECIMAL" property="orgDirectorId" />
+    <result column="ORG_DIRECTOR_NAME" jdbcType="VARCHAR" property="orgDirectorName" />
+    <result column="ORG_LOGISTICS_ID" jdbcType="DECIMAL" property="orgLogisticsId" />
+    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <collection property="organizationList" column="ID" select="queryOrganization"/>
+  </resultMap>
+
+  <!--调用存储过程创建T_ORGANIZATION_VIEW试图-->
+    <select id="createOrganizationView" statementType="CALLABLE">
+      <![CDATA[
+      {call CREATE_T_ORGANIZATION_VIEW (#{id,mode=IN,jdbcType=DECIMAL},#{levels,mode=IN,jdbcType=DECIMAL})}
+      ]]>
+    </select>
+
+  <!--递归查询机构层级列表信息-->
+  <select id="queryOrganization" resultMap="BaseResultMapVo">
+    SELECT * FROM T_ORGANIZATION_VIEW WHERE ORG_PARENT_ID = #{id}
+  </select>
+
+  <!--递归删除机构信息-->
+  <delete id="deleteOrganization" >
+    DELETE FROM T_ORGANIZATION WHERE ID in (
+    SELECT ID FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{id} )
+  </delete>
+</mapper>

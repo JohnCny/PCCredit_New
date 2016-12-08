@@ -1,5 +1,7 @@
 package com.cardpay.core.shrio.common;
 
+import com.cardpay.mgt.user.service.UserService;
+import com.cardpay.mgt.user.service.impl.UserServiceImpl;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -8,7 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * @author rankai .
  */
-public class ShiroFactory {
+public final class ShiroFactory {
 
     private static WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 
@@ -21,4 +23,9 @@ public class ShiroFactory {
         return SHIRO_FACTORY;
     }
 
+    private UserService userService = context.getBean(UserService.class);
+
+    public UserService getUserService() {
+        return userService;
+    }
 }

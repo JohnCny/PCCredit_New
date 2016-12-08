@@ -1,6 +1,7 @@
 package com.cardpay.controller.test;
 import com.cardpay.basic.base.model.EchatesTo;
 import com.cardpay.basic.base.model.EchatesModel;
+import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.test.model.TModel;
 import com.cardpay.mgt.test.model.TestModel;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cardpay.basic.common.webSocket.SystemWebSocketHandler.sendMessageToUser;
+import static com.cardpay.core.webSocket.SystemWebSocketHandler.sendMessageToUser;
 
 /**
  * http://localhost/swagger-ui.html
@@ -19,11 +20,11 @@ import static com.cardpay.basic.common.webSocket.SystemWebSocketHandler.sendMess
 @Api(value = "/test", description = "测试类")
 @RestController
 @RequestMapping("/test")
-public class TestController extends BaseController<TModel> {
+public class TestController extends BaseController<TModel,Integer> {
 
     @ApiOperation(value = "测试接口", notes = "测试spring-fox",  httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
-    @RequestMapping(value = "" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/test" ,method = RequestMethod.GET)
     //@ApiImplicitParams({ @ApiImplicitParam(name = "tModel", value = "testBean", required = true, dataType = "TModel")})
     public String test(@ApiParam(required = true, value ="对象" ) @ModelAttribute TModel tModel,
                        @ApiParam(value ="Json" ) @RequestBody TModel jsonModel,
@@ -32,7 +33,7 @@ public class TestController extends BaseController<TModel> {
     }
 
     @ApiOperation(value = "测试Dozer po转vo")
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/dozer", method = RequestMethod.POST)
     public void testDozer(){
         TModel po = new TModel();
         po.setId(1);
@@ -46,7 +47,7 @@ public class TestController extends BaseController<TModel> {
      * http://localhost/testSocket.jsp
      */
     @ApiOperation(value = "测试给所有用户推送消息")
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @RequestMapping(value = "/push", method = RequestMethod.PUT)
     public EchatesTo testWebSocket(){
        // sendMessageToUsers("测试信息");
         EchatesTo echates = new EchatesTo();
@@ -71,4 +72,10 @@ public class TestController extends BaseController<TModel> {
     public void testSendWebSocket(){
         sendMessageToUser(1, "测试信息");
     }
+    @ApiOperation(value = "测试给指定用户推送消息")
+    @RequestMapping(value = "/api/list", method = RequestMethod.POST)
+    public ResultTo test(){
+        return new ResultTo();
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.cardpay.basic.common.interceptor.mapper;
 
 import com.cardpay.basic.common.log.LogBase;
+import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.basic.util.DateTimeUtil;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -11,7 +13,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -28,8 +30,6 @@ import java.util.Properties;
         @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class,
                 RowBounds.class, ResultHandler.class})})
 public class SqlTimeInterceptor implements Interceptor {
-
-    private static final Logger logger = LogBase.get();
 
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
@@ -53,9 +53,9 @@ public class SqlTimeInterceptor implements Interceptor {
 
     public static void logSql(Configuration configuration, BoundSql boundSql, String sqlId, long time) {
         String sql = showSql(configuration, boundSql);
-        logger.debug("SQL执行位置:" + sqlId + "\n");
-        logger.debug("SQL语句:" + sql + "\n");
-        logger.debug("SQL执行时间:" + time + "ms\n");
+        LogTemplate.debug(SqlTimeInterceptor.class, "SQL执行位置:", sqlId);
+        LogTemplate.debug(SqlTimeInterceptor.class, "SQL语句:", sql);
+        LogTemplate.debug(SqlTimeInterceptor.class, "SQL执行时间:", time+"ms");
     }
 
     private static String getParameterValue(Object obj) {

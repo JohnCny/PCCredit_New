@@ -2,6 +2,7 @@ package com.cardpay.basic.common.enums;
 
 /**
  * APi返回状态定义
+ *
  * @author rankai .
  */
 public enum ResultEnum {
@@ -88,12 +89,29 @@ public enum ResultEnum {
     /**
      * 修改密码:原密码错误
      */
-    OLD_PASSWORD_ERROR(5016);
+    OLD_PASSWORD_ERROR(5016),
+    /**
+     * 账号未激活
+     */
+    DISABLED_ACCOUNT(5017),
+    /**
+     * 账号或密码为空
+     */
+    ACCOUNT_OR_PASSWORD_NULL(5018),
+
+    /**
+     * 必填参数不能为空
+     */
+    REQUIRED_PARAMETER_EMPTY(5019),
+
+    /**
+     * 操作失败
+     */
+    OPERATION_FAILED(5020);
 
     private int value; // 自定义数据域，private为了封装
-    private
 
-    ResultEnum(int val) {
+    private ResultEnum(int val) {
         this.value = val;
     }
 

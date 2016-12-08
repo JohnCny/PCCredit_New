@@ -29,15 +29,15 @@ import java.lang.reflect.Method;
 @ContextConfiguration(locations={ "classpath:config/spring-core-config-test.xml","classpath:loan-servlet-test.xml"})
 //配置事务的回滚,对数据库的增删改都会回滚,便于测试用例的循环利用
 @Transactional   //标明此方法需使用事务
-@Rollback(true)  //标明使用完此方法后事务不回滚,true时为回滚
+@Rollback()  //标明使用完此方法后事务不回滚,true时为回滚
 public abstract class TestEnv{
     private static SubjectThreadState threadState;
     protected static Subject mockSubject;
 
     @Before
     public void setUp() throws Exception {
-        mockSubject = Mockito.mock(Subject.class);
-        threadState = new SubjectThreadState(mockSubject);
-        threadState.bind();
+//        mockSubject = Mockito.mock(Subject.class);
+//        threadState = new SubjectThreadState(mockSubject);
+//        threadState.bind();
     }
 }
