@@ -4,7 +4,6 @@ package com.cardpay.core.fastdfs;
 import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.file.dao.TFileMapper;
 import com.cardpay.mgt.file.model.TFile;
-import com.cardpay.mgt.user.model.User;
 import org.csource.common.MyException;
 import org.csource.fastdfs.*;
 import org.csource.common.NameValuePair;
@@ -182,8 +181,7 @@ public class FileManager implements FileManagerConfig {
                 upload[0] = fileName + "," + file.getOriginalFilename() + "," + ext[0];
                     list.add(upload[0]);
                     String[] str = upload[0].split(",");
-                    User user = (User) ShiroKit.getPrincipal();
-                    String userId = String.valueOf(user.getId());
+                    String userId = String.valueOf(ShiroKit.getUserId());
                     TFile tFile = TFile.TFileBuilder.get()
                             .withId(1)
                             .withImageType(ext[0])

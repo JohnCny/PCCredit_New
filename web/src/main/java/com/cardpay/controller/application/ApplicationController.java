@@ -2,6 +2,7 @@ package com.cardpay.controller.application;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.application.model.TApplication;
 import com.cardpay.mgt.application.service.TApplicationService;
@@ -24,6 +25,9 @@ public class ApplicationController extends BaseController<TApplication, Integer>
     @Autowired //进件
     private TApplicationService tApplicationService;
 
+    @Autowired
+    private FileManager fileManager;
+
     /*  @Autowired //产品
       private TProductService tProductService;
 
@@ -38,7 +42,8 @@ public class ApplicationController extends BaseController<TApplication, Integer>
         if(tManager.getsmallnt()){
 
         }*/
-
         return new ResultTo();
     }
+
+
 }
