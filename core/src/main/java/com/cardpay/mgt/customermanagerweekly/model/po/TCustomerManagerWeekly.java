@@ -1,5 +1,6 @@
 package com.cardpay.mgt.customermanagerweekly.model.po;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Table(name = "T_CUSTOMER_MANAGER_WEEKLY")
 @ApiModel(value="客户经理周报数据管理")
-public class TCustomerManagerWeekly {
+public class TCustomerManagerWeekly extends GenericEntity<Integer> {
     /**
      * 客户经理id(需要生成规则生成)
      */
@@ -21,7 +22,7 @@ public class TCustomerManagerWeekly {
      */
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MANAGER_WEEKLY_SEQ.nextval from dual")
-    @ApiModelProperty(value="客户经理日报id",required = true)
+    @ApiModelProperty(value="客户经理周报id",required = true)
     private Integer id;
 
     /**
@@ -283,5 +284,10 @@ public class TCustomerManagerWeekly {
      */
     public void setWeeklyOrder(Integer weeklyOrder) {
         this.weeklyOrder = weeklyOrder;
+    }
+
+    @Override
+    public Integer getPK() {
+        return id;
     }
 }

@@ -1,5 +1,6 @@
 package com.cardpay.mgt.customermanagerday.model.po;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Table(name = "T_CUSTOMER_MANAGER_DAY")
 @ApiModel(value="客户经理日报数据管理")
-public class TCustomerManagerDay {
+public class TCustomerManagerDay extends GenericEntity<Integer> {
     /**
      * 客户经理id(需要生成规则生成)
      */
@@ -226,5 +227,10 @@ public class TCustomerManagerDay {
      */
     public void setPreloanNumber(Integer preloanNumber) {
         this.preloanNumber = preloanNumber;
+    }
+
+    @Override
+    public Integer getPK() {
+        return id;
     }
 }
