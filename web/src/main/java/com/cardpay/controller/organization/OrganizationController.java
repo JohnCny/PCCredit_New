@@ -2,23 +2,15 @@ package com.cardpay.controller.organization;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.basic.util.ListSortUtil;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
-import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

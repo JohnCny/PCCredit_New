@@ -1,5 +1,6 @@
 package com.cardpay.mgt.application.model;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -12,7 +13,7 @@ import javax.persistence.*;
  */
 @Table(name = "T_APPLICATION")
 @ApiModel(value="进件信息管理表")
-public class TApplication {
+public class TApplication extends GenericEntity<Integer> {
     /**
      * 进件id
      */
@@ -162,5 +163,10 @@ public class TApplication {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public Integer getPK() {
+        return null;
     }
 }

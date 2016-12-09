@@ -1,5 +1,6 @@
 package com.cardpay.mgt.application.model;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Table(name = "T_APPLICATION_BASE_TEMPLATE")
 @ApiModel(value="进件调查表模板表")
-public class TApplicationBaseTemplate {
+public class TApplicationBaseTemplate extends GenericEntity<Integer> {
     /**
      * 资产负债基表id
      */
@@ -162,5 +163,10 @@ public class TApplicationBaseTemplate {
      */
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
+    }
+
+    @Override
+    public Integer getPK() {
+        return null;
     }
 }

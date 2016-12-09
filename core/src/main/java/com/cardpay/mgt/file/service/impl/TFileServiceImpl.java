@@ -21,6 +21,6 @@ public class TFileServiceImpl extends BaseServiceImpl<TFile> implements TFileSer
 
     @Override
     public int batchInsert(List<TFile> list) {
-        return tFileDao.batchInsert(list);
+        return tFileDao.batchInsertFile(list);
     }
 }

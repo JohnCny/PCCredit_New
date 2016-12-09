@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -31,14 +30,14 @@ import java.util.List;
 @Component
 public class FileManager implements FileManagerConfig {
     @Autowired
-    private  TFileMapper tFileDao;
+    private TFileMapper tFileDao;
 
     private static TrackerClient trackerClient;
     private static StorageClient storageClient;
     private static TrackerServer trackerServer;
     private static StorageServer storageServer;
 
-     static{
+    static {
         try {
             // TODO: 2016/11/29 此处config路径加载临时解决方案
             /*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
@@ -46,20 +45,21 @@ public class FileManager implements FileManagerConfig {
             String classPath = request.getServletContext().getRealPath("/WEB-INF/config");
             String dfsClientConfigFilePath = classPath + File.separator + CLIENT_CONFIG_FILE;*/
             String classPath = new File(FileManager.class.getResource("/").getFile()).getCanonicalPath();
-            String fdfsClientConfigFilePath = classPath +"../../../\\resources\\main"+ File.separator + CLIENT_CONFIG_FILE;
+            String fdfsClientConfigFilePath = classPath + "../../../\\resources\\main" + File.separator + CLIENT_CONFIG_FILE;
             ClientGlobal.init(fdfsClientConfigFilePath);
 
             trackerClient = new TrackerClient();
             trackerServer = trackerClient.getConnection();
             storageClient = new StorageClient(trackerServer, storageServer);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * 上传文件
-     * @param file FastDFSFile文件
+     *
+     * @param file       FastDFSFile文件
      * @param valuePairs 文件分卷信息
      * @return 文件路径
      */
@@ -69,8 +69,8 @@ public class FileManager implements FileManagerConfig {
         String remoteFileName = "";
         try {
             uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), valuePairs);
-            if (uploadResults == null){
-            return new String();
+            if (uploadResults == null) {
+                return new String();
             }
             groupName = uploadResults[0];
             remoteFileName = uploadResults[1];
@@ -82,9 +82,10 @@ public class FileManager implements FileManagerConfig {
 
     /**
      * 下载文件
-     * @param groupName 文件所在组名称
+     *
+     * @param groupName      文件所在组名称
      * @param remoteFileName 文件名称
-     * @param specFileName 文件类型
+     * @param specFileName   文件类型
      * @return ResponseEntity对象
      */
     public static ResponseEntity<byte[]> download(String groupName, String remoteFileName, String specFileName) {
@@ -140,11 +141,12 @@ public class FileManager implements FileManagerConfig {
 
     /**
      * 查询文件
-     * @param groupName 分组名称
+     *
+     * @param groupName      分组名称
      * @param remoteFileName 文件名称
      * @return FileInfo
      */
-    public static FileInfo queryFile(String groupName, String remoteFileName){
+    public static FileInfo queryFile(String groupName, String remoteFileName) {
         FileInfo fileInfo = null;
         try {
             fileInfo = storageClient.query_file_info(groupName, remoteFileName);
@@ -157,50 +159,72 @@ public class FileManager implements FileManagerConfig {
     }
 
     /**
-     *  文件批量上传接口
+     * 单文件上传
+     *
+     * @param file 上传文件
+     * @return 文件信息
+     */
+    public String upLoad(MultipartFile file) {
+        return upLoadCore(file);
+    }
+
+    /**
+     * 文件批量上传接口
+     *
      * @param files 文件
      * @return 文件名称
      */
     public List<String> upLoad(MultipartFile[] files) {
         List<String> list = new ArrayList<>();
-        List<TFile> tFiles = new ArrayList<>();
-        final String[] ext = new String[1];
-        final String[] upload = new String[1];
-        Arrays.stream(files).forEach(file ->{
-            ext[0] = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-            try {
-                FastDFSFile fastDFSFile = new FastDFSFile(file.getBytes(), ext[0]);
-                NameValuePair[] metaList = new NameValuePair[4];
-                metaList[0] = new NameValuePair("fileName", file.getOriginalFilename());
-                metaList[1] = new NameValuePair("fileLength", String.valueOf(file.getSize()));
-                metaList[2] = new NameValuePair("fileExt", ext[0]);
-                metaList[3] = new NameValuePair("fileAuthor", FileManagerConfig.FILE_DEFAULT_AUTHOR);
-                String fileName = upload(fastDFSFile, metaList);
-
-                if(!fileName.isEmpty()) {
-                upload[0] = fileName + "," + file.getOriginalFilename() + "," + ext[0];
-                    list.add(upload[0]);
-                    String[] str = upload[0].split(",");
-                    String userId = String.valueOf(ShiroKit.getUserId());
-                    TFile tFile = TFile.TFileBuilder.get()
-                            .withId(1)
-                            .withImageType(ext[0])
-                            .withFileName(file.getOriginalFilename())
-                            .withRemark("upload")
-                            .withCreatedBy(userId)
-                            .withCreatedAt(new Date())
-                            .withModifiedBy(userId)
-                            .withModifiedAt(new Date())
-                            .withGroupName(str[0])
-                            .withFastName(str[1])
-                            .build();
-                    tFiles.add(tFile);
-                    tFileDao.batchInsert(tFiles);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }});
+        for (MultipartFile file : files) {
+            String upLoadCore = upLoadCore(file);
+            list.add(upLoadCore);
+        }
         return list;
+    }
+
+    /**
+     * 文件上传核心方法
+     *
+     * @param file 文件
+     * @return fastDfs返回值
+     */
+    private String upLoadCore(MultipartFile file) {
+        String upload = null;
+        List<TFile> tFiles = new ArrayList<>();
+        String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+        try {
+            FastDFSFile fastDFSFile = new FastDFSFile(file.getBytes(), ext);
+            NameValuePair[] metaList = new NameValuePair[4];
+            metaList[0] = new NameValuePair("fileName", file.getOriginalFilename());
+            metaList[1] = new NameValuePair("fileLength", String.valueOf(file.getSize()));
+            metaList[2] = new NameValuePair("fileExt", ext);
+            metaList[3] = new NameValuePair("fileAuthor", FileManagerConfig.FILE_DEFAULT_AUTHOR);
+            String fileName = upload(fastDFSFile, metaList);
+            //插入数据库t_file表
+            if (!fileName.isEmpty()) {
+                upload = fileName + "," + file.getOriginalFilename() + "," + ext;
+                String[] str = upload.split(",");
+                String userId = String.valueOf(ShiroKit.getUserId());
+                TFile tFile = TFile.TFileBuilder.get()
+                        .withId(1)
+                        .withImageType(ext)
+                        .withFileName(file.getOriginalFilename())
+                        .withRemark("upload")
+                        .withCreatedBy(userId)
+                        .withCreatedAt(new Date())
+                        .withModifiedBy(userId)
+                        .withModifiedAt(new Date())
+                        .withGroupName(str[0])
+                        .withFastName(str[1])
+                        .build();
+                tFiles.add(tFile);
+                tFileDao.batchInsertFile(tFiles);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return upload;
     }
 
 }
