@@ -167,6 +167,8 @@ subprojects {
                 libraries."springfox-swagger-ui",
                 libraries."springfox-data-rest",
                 libraries."springfox-bean-validators",
+                libraries."springfox-staticdocs",
+                libraries."springfox-petstore",
 
                 //freemarker
                 libraries."freemarker",

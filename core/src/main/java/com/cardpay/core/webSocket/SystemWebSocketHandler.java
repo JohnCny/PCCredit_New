@@ -60,7 +60,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     public void handleMessage(WebSocketSession session, WebSocketMessage message)
             throws Exception {
         session.sendMessage(new TextMessage(message.getPayload().toString()));
-        logger.info(SystemWebSocketHandler.class, "消息内容", message.getPayload().toString());
+        logger.info(SystemWebSocketHandler.class, "", message.getPayload().toString());
     }
 
     /**
@@ -71,7 +71,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        logger.info(SystemWebSocketHandler.class, "异常原因", exception.getMessage());
+        logger.info(SystemWebSocketHandler.class, "", exception.getMessage());
         users.remove(session);
     }
 
@@ -83,7 +83,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        logger.info(SystemWebSocketHandler.class, "关闭状态", closeStatus.toString());
+        logger.info(SystemWebSocketHandler.class, "", closeStatus.toString());
         users.remove(session);
     }
 

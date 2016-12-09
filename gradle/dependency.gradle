@@ -89,6 +89,8 @@ ext.libraries = [
         "springfox-swagger-ui":"io.springfox:springfox-swagger-ui:2.6.0",
         "springfox-data-rest":"io.springfox:springfox-data-rest:2.6.0",
         "springfox-bean-validators":"io.springfox:springfox-bean-validators:2.6.1",
+        "springfox-staticdocs":"io.springfox:springfox-staticdocs:2.6.1",
+        "springfox-petstore":"io.springfox:springfox-petstore:2.6.0",
 
         //freemarker
         "freemarker":"org.freemarker:freemarker:2.3.21",
