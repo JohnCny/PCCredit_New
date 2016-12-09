@@ -60,16 +60,21 @@ public class BaseController<T,PK> extends BasicController {
     BaseService<T> baseService;
 
     /**
-     * 对比实体修改并记录
+     * 更新实体并记录修改
      *
-     * @param bean 需要记录的bean
+     * @param bean 需要修改并记录的bean
      * @param moduleName 模块英文名
      * @param moduleNameZh 模块中文名
      * @param <T> 类型
+     * @return updateResult 更新结果
      */
-    public <T extends GenericEntity<?>> void compareBean(T bean,String moduleName,
-                                                                String moduleNameZh){
-        CompareBeanUtil.compareBean(bean, (BaseService<T>) baseService,moduleName,moduleNameZh);
+    @Transactional
+    protected  <T extends GenericEntity<?>> int updateAndCompareBean(T bean, String moduleName,
+                                                                  String moduleNameZh){
+        BaseService<T> baseService = (BaseService<T>) this.baseService;
+        CompareBeanUtil.compareBean(bean,baseService,moduleName,moduleNameZh);
+        Integer updateResult = baseService.updateByPrimaryKey(bean);
+        return updateResult;
     }
 
     /**
