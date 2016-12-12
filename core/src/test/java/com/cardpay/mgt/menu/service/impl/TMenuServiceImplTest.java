@@ -41,8 +41,11 @@ public class TMenuServiceImplTest {
 
     private List<Authority> authorities;
 
+    private List<TMenuVo> tMenuVos;
+
     @Before
     public void setUp(){
+        //权限数据
         authorities = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Authority authority = new Authority();
@@ -59,30 +62,58 @@ public class TMenuServiceImplTest {
             }
             authorities.add(authority);
         }
+        //菜单数据
+        //构造基本数据
+        tMenuVos = new ArrayList<>(3);
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 0; j < 4; j++) {
+                TMenuVo tMenuVo = new TMenuVo();
+                tMenuVo.setId(i);
+                tMenuVo.setMenuName("testMenu"+i);
+                tMenuVo.setMenuNameZh("测试菜单"+i);
+                tMenuVos.add(tMenuVo);
+            }
+        }
+        //构造菜单层级关系
+        for (TMenuVo menuVo : tMenuVos) {
+            if(menuVo.getId() == 1 || menuVo.getId() == 2 || menuVo.getId() == 3){
+                menuVo.setMenuParentId(0);
+            }
+            if(menuVo.getId() == 4 || menuVo.getId() == 5){
+                menuVo.setMenuParentId(1);
+            }
+            if(menuVo.getId() == 6){
+                menuVo.setMenuParentId(2);
+            }
+            if(menuVo.getId() == 7){
+                menuVo.setMenuParentId(6);
+            }
+            if(menuVo.getId() == 8){
+                menuVo.setMenuParentId(1);
+            }
+            if(menuVo.getId() == 9){
+                menuVo.setMenuParentId(5);
+            }
+            if(menuVo.getId() == 10){
+                menuVo.setMenuParentId(3);
+            }
+        }
     }
 
     @Test
     public void selectMenuListByLevel() throws Exception {
-        List<TMenuVo> tMenuVos = new ArrayList<>(3);
-        TMenuVo tMenuVo = new TMenuVo();
-        tMenuVos.add(tMenuVo);
-
-        when(tMenuMapper.selectMenuListByLevel(0)).thenReturn(tMenuVos);
-        List<TMenuVo> tMenuVoList = tMenuService.selectMenuListByLevel(0, 0,1);
+        when(tMenuMapper.selectMenuListByLevel(0,3,2)).thenReturn(tMenuVos);
+        List<TMenuVo> tMenuVoList = tMenuService.selectMenuListByLevel(0, 3,2);
         assertTrue(tMenuVoList.size() > 0);
-        verify(tMenuMapper).selectMenuListByLevel(0);
+        verify(tMenuMapper).selectMenuListByLevel(0,3,2);
     }
 
     @Test
     public void selectMenuListByAll() throws Exception {
-        List<TMenuVo> tMenuVos = new ArrayList<>(3);
-        TMenuVo tMenuVo = new TMenuVo();
-        tMenuVos.add(tMenuVo);
-
-        when(tMenuMapper.selectMenuListByAll(0,1)).thenReturn(tMenuVos);
-        List<TMenuVo> tMenuVoList = tMenuService.selectMenuListByAll(0, 1);
+        when(tMenuMapper.selectMenuListByAll(0,2)).thenReturn(tMenuVos);
+        List<TMenuVo> tMenuVoList = tMenuService.selectMenuListByAll(0, 2);
         assertTrue(tMenuVoList.size() > 0);
-        verify(tMenuMapper).selectMenuListByAll(0,1);
+        verify(tMenuMapper).selectMenuListByAll(0,2);
     }
 
     @Test

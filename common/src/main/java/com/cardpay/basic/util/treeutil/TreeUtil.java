@@ -1,5 +1,7 @@
 package com.cardpay.basic.util.treeutil;
 
+import com.cardpay.basic.util.ListSortUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,31 @@ import java.util.List;
 public class TreeUtil<T extends Tree,PK>{
 
     private List<T> returnList = new ArrayList<>();
+
+    private boolean order;
+
+    /**
+     * 需要排序的属性名
+     */
+    private String orderKey;
+
+    /**
+     * 正序还是倒序 0正序 1倒序
+     */
+    private int sortMode;
+
+    public final static int ASC = 0;//正序
+
+    public final static int DESC = 1;//倒序
+
+    public TreeUtil() {
+    }
+
+    public TreeUtil(String orderKey, int sortMode) {
+        this.order = true;
+        this.orderKey = orderKey;
+        this.sortMode = sortMode;
+    }
 
     /**
      * 根据父节点的ID获取所有子节点
@@ -59,6 +86,9 @@ public class TreeUtil<T extends Tree,PK>{
 
     private void recursion(List<T> sourceList, T node) {
         List<T> childList = getChildList(sourceList, node);//得到子节点列表
+        if(order && childList!=null && !childList.isEmpty()){
+            ListSortUtil.sortMap(childList,orderKey,sortMode);
+        }
         if (hasChild(sourceList, node)) {//判断是否有子节点
             node.setChild(childList);
             for (T childNode : childList) {

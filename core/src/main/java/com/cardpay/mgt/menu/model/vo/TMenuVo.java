@@ -1,6 +1,8 @@
 package com.cardpay.mgt.menu.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import com.cardpay.basic.util.treeutil.Tree;
+import com.cardpay.mgt.menu.model.TMenu;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -14,7 +16,7 @@ import java.util.List;
  */
 @Table(name = "T_MENU")
 @ApiModel(value = "菜单")
-public class TMenuVo extends GenericEntity<Integer>{
+public class TMenuVo extends GenericEntity<Integer> implements Tree<Integer,TMenuVo>{
 
     /**
      * 菜单id
@@ -119,6 +121,16 @@ public class TMenuVo extends GenericEntity<Integer>{
      */
     public Integer getId() {
         return id;
+    }
+
+    @Override
+    public Integer getParentId() {
+        return menuParentId;
+    }
+
+    @Override
+    public void setChild(List<TMenuVo> child) {
+        setMenuLists(child);
     }
 
     /**
