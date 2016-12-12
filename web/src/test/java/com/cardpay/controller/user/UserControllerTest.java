@@ -42,6 +42,18 @@ public class UserControllerTest extends TestEnv {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
                 .andDo(MockMvcResultHandlers.print());
+
+        mockMvc.perform(post("/user/anon/sendCode?resetPassword=1")
+                .param("userId", "1").param("address", "mayuan@qkjr.com.cn"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(5014))
+                .andDo(MockMvcResultHandlers.print());
+
+        mockMvc.perform(post("/user/anon/sendCode?resetPassword=1")
+                .param("userId", "1").param("address", "rankai"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(5013))
+                .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
@@ -68,10 +80,17 @@ public class UserControllerTest extends TestEnv {
 
     @Test
     public void resetPassword() throws Exception {
-        mockMvc.perform(post("/user/anon/1?resetPassword=1")
-                .param("password", "654321"))
+        redisClient.set(RedisKeyPrefixEnum.USER, "aaaaaaaaaaaaaaaa", "checkedCode", 5);
+        mockMvc.perform(post("/user/anon/aaaaaaaaaaaaaaaa?resetPassword=1")
+                .param("password", "654321").param("userId", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
+                .andDo(MockMvcResultHandlers.print());
+
+        mockMvc.perform(post("/user/anon/bbbbbbbbbbbbbbbb?resetPassword=1")
+                .param("password", "654321").param("userId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(5021))
                 .andDo(MockMvcResultHandlers.print());
     }
 

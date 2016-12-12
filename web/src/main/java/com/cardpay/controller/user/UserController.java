@@ -109,23 +109,18 @@ public class UserController extends BaseController<User, Integer> {
     /**
      * 重置密码
      *
-     * @param userId   用户ID
-     * @param password 密码
+     * @param userId      用户ID
+     * @param checkedCode Api接口验证
+     * @param password    密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/anon/{userId}", method = RequestMethod.POST, params = "resetPassword")
-    public ResultTo resetPassword(@ApiParam("用户Id") @PathVariable("userId") Integer userId,
+    @RequestMapping(value = "/anon/{checkedCode}", method = RequestMethod.POST, params = "resetPassword")
+    public ResultTo resetPassword(@ApiParam("用户Id") @RequestParam("userId") Integer userId,
+                                  @ApiParam("Api接口验证") @PathVariable("checkedCode") String checkedCode,
                                   @ApiParam("要重置的密码") @RequestParam("password") String password) {
         LogTemplate.debug(this.getClass(), "userId", userId);
+        LogTemplate.debug(this.getClass(), "checkedCode", checkedCode);
         LogTemplate.debug(this.getClass(), "password", password);
-        User user = new User();
-        user.setId(userId);
-        user.setPassword(password);
-        PasswordUtil.encryptPassword(user);
-        Integer count = userService.updateSelectiveByPrimaryKey(user);
-        if (count == 0 || count == null) {
-            return new ResultTo(ResultEnum.OPERATION_FAILED);
-        }
-        return new ResultTo();
+        return userService.resetPassword(userId, checkedCode, password);
     }
 }

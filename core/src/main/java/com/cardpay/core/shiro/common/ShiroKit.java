@@ -24,7 +24,7 @@ public class ShiroKit {
     /**
      * 获取
      *
-     * @return
+     * @return Object
      */
     public static Object getPrincipal() {
         return SecurityUtils.getSubject().getPrincipal();
