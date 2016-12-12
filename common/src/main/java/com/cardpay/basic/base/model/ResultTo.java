@@ -44,7 +44,7 @@ public class ResultTo extends HashMap<String, Object> implements Serializable {
             put(ResultEnum.DISABLED_ACCOUNT.getValue(), "account disabled");
             put(ResultEnum.ACCOUNT_OR_PASSWORD_NULL.getValue(), "account or password is null");
             put(ResultEnum.REQUIRED_PARAMETER_EMPTY.getValue(), "the required parameters cannot be empty");
-            put(ResultEnum.OPERATION_FAILED.getValue(),"operation failed");
+            put(ResultEnum.OPERATION_FAILED.getValue(), "operation failed");
         }
     };
 
@@ -72,6 +72,15 @@ public class ResultTo extends HashMap<String, Object> implements Serializable {
      */
     public ResultTo(int code) {
         setCode(code);
+    }
+
+    /**
+     * 构造函数，设置错误码，会主动从错误码映射表中查询对应的描述
+     *
+     * @param resultEnum 状态码
+     */
+    public ResultTo(ResultEnum resultEnum) {
+        setCode(resultEnum.getValue());
     }
 
     /**

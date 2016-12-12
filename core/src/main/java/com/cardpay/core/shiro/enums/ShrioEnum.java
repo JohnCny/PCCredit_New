@@ -1,4 +1,4 @@
-package com.cardpay.core.shrio.enums;
+package com.cardpay.core.shiro.enums;
 
 /**
  * shrio相关的宏定义

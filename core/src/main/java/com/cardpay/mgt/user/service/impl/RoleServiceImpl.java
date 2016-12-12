@@ -1,30 +1,24 @@
 package com.cardpay.mgt.user.service.impl;
 
-import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
-import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
-import com.cardpay.mgt.user.dao.AuthorityOperationMapper;
 import com.cardpay.mgt.user.dao.RoleAuthorityMapper;
 import com.cardpay.mgt.user.dao.RoleMapper;
 import com.cardpay.mgt.user.model.Authority;
-import com.cardpay.mgt.user.model.AuthorityOperation;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.AuthorityGroup;
 import com.cardpay.mgt.user.service.RoleService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,7 +98,10 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
             LogTemplate.info(this.getClass(), "roleId", roleId);
             return Boolean.FALSE;
         }
-        roleAuthorityMapper.insertArray(roleId, authorityIds);
+        Map<String, Object> map = new HashedMap();
+        map.put("roleId", roleId);
+        map.put("authorityIds", authorityIds);
+        roleAuthorityMapper.insertArray(map);
         return Boolean.TRUE;
     }
 

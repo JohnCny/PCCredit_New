@@ -10,9 +10,14 @@
     </resultMap>
 
     <insert id="insertArray">
-        insert into T_USER_ROLE (ROLE_ID,USER_ID) values
-        <foreach collection="array" item="temp" index="index" separator=",">
-            (#{roleId},#{temp})
+        INSERT INTO T_USER_ROLE (ROLE_ID,USER_ID)
+        <foreach collection="authorityIds" item="temp" index="index" open="(" close=")" separator="union">
+            SELECT
+            <if test="temp != -1">
+                #{roleId,jdbcType=DECIMAL},
+                #{temp,jdbcType=DECIMAL}
+            </if>
+            FROM dual
         </foreach>
     </insert>
 

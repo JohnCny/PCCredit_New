@@ -1,4 +1,4 @@
-package com.cardpay.core.shrio.common;
+package com.cardpay.core.shiro.common;
 
 import com.cardpay.mgt.user.model.User;
 import org.apache.shiro.crypto.hash.Md5Hash;

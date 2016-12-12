@@ -42,7 +42,7 @@
 
     <!--配置支持freemarkewr标签支持-->
     <!--<bean id="freemarkerConfig"-->
-          <!--class="com.cardpay.core.shrio.freemarker.ShiroTagFreeMarkerConfigurer">-->
+          <!--class="com.cardpay.core.shiro.freemarker.ShiroTagFreeMarkerConfigurer">-->
         <!--<property name="templateLoaderPath" value="/WEB-INF/views/"></property>-->
         <!--<property name="freemarkerSettings">-->
             <!--<props>-->

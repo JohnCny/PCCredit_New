@@ -3,7 +3,7 @@ package com.cardpay.controller.organization;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
