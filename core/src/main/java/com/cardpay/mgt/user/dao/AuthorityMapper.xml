@@ -35,4 +35,25 @@
             TRA.AUTHORITY_ID=TA.ID
     </select>
 
+    <!--根据菜单ID和用户查询权限-->
+    <select id="selectMenuAuthorityByUser" resultMap="BaseResultMap">
+        SELECT
+        T_AUTHORITY.*
+        FROM
+        T_USER,
+        T_USER_ROLE,
+        T_ROLE_AUTHORITY,
+        T_MENU,
+        T_AUTHORITY_MENU,
+        T_AUTHORITY
+        WHERE
+        T_USER. ID = T_USER_ROLE.USER_ID
+        AND T_USER_ROLE.ROLE_ID = T_ROLE_AUTHORITY.ROLE_ID
+        AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY. ID
+        AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+        AND T_MENU. ID = T_AUTHORITY_MENU.MENU_ID
+        AND T_USER. ID = #{userId}
+        AND T_MENU. ID = #{menuId}
+    </select>
+
 </mapper>

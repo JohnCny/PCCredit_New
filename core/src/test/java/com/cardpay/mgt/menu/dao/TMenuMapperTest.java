@@ -1,6 +1,6 @@
 package com.cardpay.mgt.menu.dao;
 
-import com.cardpay.mgt.menu.model.TMenuVo;
+import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.util.TestEnv;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

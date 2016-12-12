@@ -1,7 +1,7 @@
 package com.cardpay.mgt.menu.service.impl;
 
 import com.cardpay.mgt.menu.dao.TMenuMapper;
-import com.cardpay.mgt.menu.model.TMenuVo;
+import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

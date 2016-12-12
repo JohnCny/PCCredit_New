@@ -12,7 +12,6 @@ public interface BaseExcel {
      * 上传模板
      * @param path 模板路径
      * @param modelType 模板对应的模型号
-     * @return 下载时所需参数
      * @throws Exception 错误
      */
     void uploadExcelTemp(String path, Integer modelType) throws Exception;
@@ -38,6 +37,7 @@ public interface BaseExcel {
      * @param row 行号
      * @param column 列号
      * @param value 值
+     * @throws Exception 错误
      */
     void setCellValue(Integer row, Integer column, Object value) throws Exception;
 }
