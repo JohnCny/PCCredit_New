@@ -2,7 +2,9 @@ package com.cardpay.mgt.product.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.product.model.TProductOrganization;
+import com.cardpay.mgt.product.model.po.ProductOrganzationPo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,5 +25,7 @@ public interface TProductOrganizationMapper extends BasicMapper<TProductOrganiza
      * @return 插入个数
      */
     int bathDeleteOrg(Map<String, Object> map);
+
+    List<ProductOrganzationPo>queryProductOrg();
 
 }

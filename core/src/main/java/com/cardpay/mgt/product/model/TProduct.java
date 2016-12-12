@@ -2,6 +2,7 @@ package com.cardpay.mgt.product.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.dozer.Mapping;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class TProduct {
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCSEQ.nextval from dual")
     @ApiModelProperty(value="产品id",required = true)
+    @Mapping("productId")
     private Integer id;
 
     /**
