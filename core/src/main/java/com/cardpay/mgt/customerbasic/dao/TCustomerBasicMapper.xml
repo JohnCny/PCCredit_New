@@ -32,7 +32,7 @@
                     from t_customer_industry i
                     GROUP BY i.industry_id
                     ORDER BY c DESC ) a
-                where rownum <= 5
+                where rownum BETWEEN 1 AND 5
             )
     </select>
 

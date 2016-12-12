@@ -32,7 +32,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 维护类型列表
      */
     @RequestMapping("/maintenanceTypelist")
-    public ResultTo getCertList(){
+    public ResultTo getMaintenanceTypeList(){
         Map<String,Object> map = new HashMap<String,Object>();
         ResultTo resultTo = new ResultTo();
         map.put("maintenanceTypeList",customerMaintenanceService.getMaintenanceType());
@@ -51,7 +51,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
         Map<String,Object> map = new HashMap<String,Object>();
         ResultTo resultTo = new ResultTo();
         TCustomerMaintenance record = new TCustomerMaintenance();
-        record.setOperationId(((User) ShiroKit.getPrincipal()).getId());
+        record.setOperationId(ShiroKit.getUserId());
         map.put("maintenanceList",customerMaintenanceService.select(record));
         resultTo.setData(map);
         return resultTo;

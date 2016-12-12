@@ -5,9 +5,6 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.customerbasic.model.po.TCustomerBasic;
 import com.cardpay.mgt.customerbasic.service.CustomerBasicService;
-import com.cardpay.mgt.menu.model.TMenuVo;
-import com.cardpay.mgt.user.model.User;
-import com.rabbitmq.client.AMQP;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +92,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Long
     @ApiOperation(value = "查询潜在客户列表", notes = "潜在客户列表",  httpMethod = "GET")
     public ResultTo getProspectiveCustomers(){
         if(ShiroKit.getSubject().isAuthenticated()) {
-            Integer customerManagerId = ((User)ShiroKit.getPrincipal()).getId();
+            int customerManagerId = ShiroKit.getUserId();
             ResultTo resultTo = new ResultTo();
             List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(customerManagerId);
             resultTo.setData(customerBasics);
