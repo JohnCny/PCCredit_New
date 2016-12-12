@@ -6,9 +6,10 @@ import java.util.List;
 /**
  * 组装树型数据工具,需要继承Tree接口
  *
- * Created by yanwe on 2016/12/9.
  * @param <T> 需要组装的Bean类型
  * @param <PK> 主键类型
+ *
+ * Created by yanwe on 2016/12/9.
  */
 public class TreeUtil<T extends Tree,PK>{
 

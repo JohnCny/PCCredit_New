@@ -4,10 +4,7 @@ import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.GenericEntity;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.basic.base.service.impl.BaseServiceImpl;
-import com.cardpay.basic.util.BeanFactoryUtil;
-import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
-import com.cardpay.mgt.modeifyhistory.service.impl.TModifyHistoryServiceImpl;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.ContextLoader;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -72,7 +68,7 @@ public class BaseController<T,PK> extends BasicController {
     protected  <T extends GenericEntity<?>> int updateAndCompareBean(T bean, String moduleName,
                                                                   String moduleNameZh){
         BaseService<T> baseService = (BaseService<T>) this.baseService;
-        CompareBeanUtil.compareBean(bean,baseService,moduleName,moduleNameZh);
+        CompareBeanUtil.compareBean(bean,baseService,moduleName,moduleNameZh, ShiroKit.getUser());
         Integer updateResult = baseService.updateByPrimaryKey(bean);
         return updateResult;
     }
