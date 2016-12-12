@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/menu")
-public class MenuController{
+public class MenuController {
 
     @Autowired
     private TMenuService tMenuService;
@@ -35,11 +35,11 @@ public class MenuController{
     private static final int TOP_ID = 0;
 
     @RequestMapping(value = "/all",method = RequestMethod.GET)
-    @ApiOperation(value = "查询菜单层级信息接口", notes = "查询菜单层级信息",  httpMethod = "GET")
-    public ResultTo selectMenuList(@ApiParam(value = "查询深度", required = true) Integer level){
+    @ApiOperation(value = "根据角色查询菜单层级信息接口", notes = "查询菜单层级信息",  httpMethod = "GET")
+    public ResultTo selectMenuList(){
         ResultTo resultTo = new ResultTo();
         User user = (User) ShiroKit.getPrincipal();
-        List<TMenuVo> menuLists = tMenuService.selectMenuListByLevel(TOP_ID,level,user.getId());
+        List<TMenuVo> menuLists = tMenuService.selectMenuListByAll(TOP_ID,user.getId());
         resultTo.setData(menuLists);
         return resultTo;
     }
@@ -77,15 +77,4 @@ public class MenuController{
         return tMenuService.recursionDelete(id,user.getId());
     }
 
-//    @RequestMapping("/creditReport")
-//    public ResultTo creditReport() {
-//        ResultTo resultTo = new ResultTo();
-//        //需要记录并且是从数据库取的值 必须使用Clone方法 或者自己Clone再传
-//        TMenu tMenu = tMenuService.selectByPrimaryKeyClone(73);
-//        tMenu.setMenuName("修改测试菜单");
-//        tMenu.setMenuNameZh("修改了中文名字");
-//        //记录修改过程
-//        updateAndCompareBean(tMenu,"test","测测测");
-//        return resultTo;
-//    }
 }

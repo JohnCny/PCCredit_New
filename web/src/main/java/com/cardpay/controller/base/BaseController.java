@@ -6,6 +6,7 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.util.BeanFactoryUtil;
+import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
 import com.cardpay.mgt.modeifyhistory.service.impl.TModifyHistoryServiceImpl;
 import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
@@ -72,7 +73,7 @@ public class BaseController<T,PK> extends BasicController {
     protected  <T extends GenericEntity<?>> int updateAndCompareBean(T bean, String moduleName,
                                                                   String moduleNameZh){
         BaseService<T> baseService = (BaseService<T>) this.baseService;
-        CompareBeanUtil.compareBean(bean,baseService,moduleName,moduleNameZh);
+        CompareBeanUtil.compareBean(bean,baseService,moduleName,moduleNameZh,ShiroKit.getUser());
         Integer updateResult = baseService.updateByPrimaryKey(bean);
         return updateResult;
     }

@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
+ * 菜单测试类
+ *
  * Created by yanwe on 2016/11/29.
  */
 public class MenuControllerTest extends TestEnv{

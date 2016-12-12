@@ -149,10 +149,20 @@ public class TMenuAuth extends GenericEntity<Integer>{
         this.authId = authId;
     }
 
+    /**
+     * 设置权限
+     *
+     * @return 权限
+     */
     public String getAuth() {
         return auth;
     }
 
+    /**
+     * 设置权限
+     *
+     * @param auth 权限
+     */
     public void setAuth(String auth) {
         this.auth = auth;
     }

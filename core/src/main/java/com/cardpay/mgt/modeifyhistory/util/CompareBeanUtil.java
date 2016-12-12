@@ -35,10 +35,10 @@ public class CompareBeanUtil {
      * @param <T> 类型
      */
     public static <T extends GenericEntity<?>> void compareBean(T bean, BaseService<T> baseService, String moduleName,
-                                                                String moduleNameZh) {
+                                                                String moduleNameZh,User user) {
         T oldBean = baseService.selectByPrimaryKey(bean.getPK());
         TModifyHistoryServiceImpl tModifyHistoryService = BeanFactoryUtil.getBean(TModifyHistoryServiceImpl.class);
-        tModifyHistoryService.batchInsert(getCompareResult(oldBean, bean , moduleName, moduleNameZh));
+        tModifyHistoryService.batchInsert(getCompareResult(oldBean, bean , moduleName, moduleNameZh,user));
     }
 
     /**
@@ -52,7 +52,7 @@ public class CompareBeanUtil {
      * @return 该Bean的对比结果列表
      */
     public static <T extends GenericEntity<?>> List<TModifyHistory> getCompareResult(T oldBean,T newBean,
-                                                                            String moduleName, String moduleNameZh) {
+                                                                            String moduleName, String moduleNameZh,User user) {
         Field[] newBeanFields = newBean.getClass().getDeclaredFields();
         Field[] oldBeanFields = oldBean.getClass().getDeclaredFields();
         List<TModifyHistory> tModifyHistoryList = new ArrayList<>();
@@ -70,8 +70,7 @@ public class CompareBeanUtil {
                     ApiModelProperty newBeanFieldAnnotation = newBeanField.getAnnotation(ApiModelProperty.class);
                     TModifyHistory tModifyHistory = new TModifyHistory();
                     tModifyHistory.setId(1);
-                    tModifyHistory.setModifyBy(1);
-//                    tModifyHistory.setModifyBy(((User) ShiroKit.getPrincipal()).getId());
+                    tModifyHistory.setModifyBy(user.getId());
                     tModifyHistory.setModifyAt(new Date());
                     tModifyHistory.setBeforeValue(oldBeanProperty);
                     tModifyHistory.setAfterValue(newBeanProperty);
