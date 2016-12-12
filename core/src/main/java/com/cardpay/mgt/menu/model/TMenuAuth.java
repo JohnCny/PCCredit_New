@@ -1,6 +1,9 @@
 package com.cardpay.mgt.menu.model;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import com.cardpay.mgt.menu.model.vo.TMenuVo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,7 +14,8 @@ import java.util.List;
  * @author yanwe 2016年11月23日17:11:56
  */
 @Table(name = "T_MENU")
-public class TMenuVo extends GenericEntity<Integer>{
+@ApiModel(value = "菜单")
+public class TMenuAuth extends GenericEntity<Integer>{
 
     /**
      * 菜单id
@@ -19,66 +23,139 @@ public class TMenuVo extends GenericEntity<Integer>{
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MENU_SEQ.nextval from dual")
+    @ApiModelProperty(value = "菜单id", required = true)
     private Integer id;
-
-    /**
-     * 菜单名称
-     */
-    @Column(name = "MENU_NAME_ZH")
-    private String menuNameZh;
 
     /**
      * 菜单中文名称
      */
+    @Column(name = "MENU_NAME_ZH")
+    @ApiModelProperty(value = "菜单名称", required = true)
+    private String menuNameZh;
+
+    /**
+     * 菜单名称
+     */
     @Column(name = "MENU_NAME")
+    @ApiModelProperty(value = "菜单中文名称", required = true)
     private String menuName;
 
     /**
      * 父菜单id
      */
     @Column(name = "MENU_PARENT_ID")
+    @ApiModelProperty(value = "父菜单id", required = true)
     private Integer menuParentId;
 
     /**
      * 菜单图片url
      */
     @Column(name = "MENU_PICTURE")
+    @ApiModelProperty(value = "菜单图片url", required = true)
     private String menuPicture;
 
     /**
      * 菜单链接url
      */
     @Column(name = "MENU_URL")
+    @ApiModelProperty(value = "菜单链接url", required = true)
     private String menuUrl;
 
     /**
      * 菜单功能描述
      */
     @Column(name = "MENU_DESCRIPTION")
+    @ApiModelProperty(value = "菜单功能描述", required = true)
     private String menuDescription;
 
     /**
      * 统一父菜单下的菜单排列次序
      */
     @Column(name = "MENU_ORDER")
+    @ApiModelProperty(value = "统一父菜单下的菜单排列次序", required = true)
     private Integer menuOrder;
 
     /**
      * 创建用户id
      */
     @Column(name = "CREATE_BY")
+    @ApiModelProperty(value = "创建用户id", required = true)
     private Integer createBy;
 
     /**
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 子菜单
      */
+    @ApiModelProperty(value = "子菜单", required = true)
     private List<TMenuVo> menuLists;
+
+    /**
+     * 权限
+     */
+    @ApiModelProperty(value = "权限", required = true)
+    private String auth;
+
+    /**
+     * 权限id
+     */
+    @ApiModelProperty(value = "权限id", required = true)
+    private Integer authId;
+
+    /**
+     * 是否拥有这个权限
+     */
+    @ApiModelProperty(value = "是否拥有这个权限", required = true)
+    private Integer isHaveAuth;
+
+    /**
+     * 获取是否拥有这个权限
+     *
+     * @return 是否拥有这个权限
+     */
+    public Integer getIsHaveAuth() {
+        return isHaveAuth;
+    }
+
+    /**
+     * 设置是否拥有这个权限
+     *
+     * @param isHaveAuth 是否拥有这个权限
+     */
+    public void setIsHaveAuth(Integer isHaveAuth) {
+        this.isHaveAuth = isHaveAuth;
+    }
+
+    /**
+     * 获取权限id
+     *
+     * @return 权限id
+     */
+    public Integer getAuthId() {
+        return authId;
+    }
+
+    /**
+     * 设置权限id
+     *
+     * @param authId 权限id
+     */
+    public void setAuthId(Integer authId) {
+        this.authId = authId;
+    }
+
+    public String getAuth() {
+        return auth;
+    }
+
+    public void setAuth(String auth) {
+        this.auth = auth;
+    }
 
     /**
      * 获取子菜单
@@ -117,27 +194,27 @@ public class TMenuVo extends GenericEntity<Integer>{
     }
 
     /**
-     * 获取菜单名称
+     * 菜单中文名称
      *
-     * @return MENU_NAME_ZH - 菜单名称
+     * @return MENU_NAME_ZH - 菜单中文名称
      */
     public String getMenuNameZh() {
         return menuNameZh;
     }
 
     /**
-     * 设置菜单名称
+     * 设置菜单中文名称
      *
-     * @param menuNameZh 菜单名称
+     * @param menuNameZh 菜单中文名称
      */
     public void setMenuNameZh(String menuNameZh) {
         this.menuNameZh = menuNameZh;
     }
 
     /**
-     * 获取菜单中文名称
+     * 获取菜单名称
      *
-     * @return MENU_NAME - 菜单中文名称
+     * @return MENU_NAME - 菜单名称
      */
     public String getMenuName() {
         return menuName;
@@ -146,7 +223,7 @@ public class TMenuVo extends GenericEntity<Integer>{
     /**
      * 设置菜单中文名称
      *
-     * @param menuName 菜单中文名称
+     * @param menuName 菜单名称
      */
     public void setMenuName(String menuName) {
         this.menuName = menuName;

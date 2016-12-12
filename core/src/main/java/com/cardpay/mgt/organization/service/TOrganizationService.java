@@ -1,5 +1,7 @@
 package com.cardpay.mgt.organization.service;
 
+import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,7 +11,7 @@ import java.util.List;
  * 机构service层
  * Created by chenkai on 2016/11/24.
  */
-public interface TOrganizationService {
+public interface TOrganizationService extends BaseService<TOrganization> {
     /**
      *  递归查询机构层级信息
      * @param id 父级id

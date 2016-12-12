@@ -37,6 +37,8 @@
     <mvc:default-servlet-handler/>
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration" />
+    <bean class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
 
     <!--配置默认进入页面-->
     <!--<mvc:view-controller path="/" view-name="/api/user/nologin"/>-->
@@ -95,7 +97,6 @@
         <property name="suffix" value=".html"></property>
         <property name="order" value="100"></property>
     </bean>
-
     <!--国际化资源配置 开始-->
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
