@@ -1,5 +1,6 @@
 package com.cardpay.basic.mail;
 
+import com.cardpay.basic.redis.RedisClient;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,11 @@ import java.util.Map;
 
 /**
  * 邮件发送基础类
+ *
  * @author rankai
  */
 @Component
-public class MailSendClient {
+public class MailSend {
     /**
      * mail发送类
      */
@@ -41,6 +43,17 @@ public class MailSendClient {
      */
     @Autowired
     private TaskExecutor taskExecutor;
+
+    /**
+     * 发送邮件
+     *
+     * @param email   email地址
+     * @param content 发送类容
+     */
+    public void send(String email, String content) {
+        this.taskExecutor.execute(new SendMailThread(null, email, null, content));
+    }
+
     /**
      * 发送邮件
      *
@@ -51,6 +64,7 @@ public class MailSendClient {
     public void send(List<String> path, String email, String content) {
         this.taskExecutor.execute(new SendMailThread(path, email, null, content));
     }
+
     /**
      * 发送邮件
      *

@@ -1,7 +1,7 @@
 package com.cardpay.core.fastdfs;
 
 
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.file.dao.TFileMapper;
 import com.cardpay.mgt.file.model.TFile;
 import org.csource.common.MyException;

@@ -4,10 +4,7 @@ import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.GenericEntity;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.basic.base.service.impl.BaseServiceImpl;
-import com.cardpay.basic.util.BeanFactoryUtil;
-import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
-import com.cardpay.mgt.modeifyhistory.service.impl.TModifyHistoryServiceImpl;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.ContextLoader;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -60,16 +56,21 @@ public class BaseController<T,PK> extends BasicController {
     BaseService<T> baseService;
 
     /**
-     * 对比实体修改并记录
+     * 更新实体并记录修改
      *
-     * @param bean 需要记录的bean
+     * @param bean 需要修改并记录的bean
      * @param moduleName 模块英文名
      * @param moduleNameZh 模块中文名
      * @param <T> 类型
+     * @return updateResult 更新结果
      */
-    public <T extends GenericEntity<?>> void compareBean(T bean,String moduleName,
-                                                                String moduleNameZh){
-        CompareBeanUtil.compareBean(bean, (BaseService<T>) baseService,moduleName,moduleNameZh);
+    @Transactional
+    protected  <T extends GenericEntity<?>> int updateAndCompareBean(T bean, String moduleName,
+                                                                  String moduleNameZh){
+        BaseService<T> baseService = (BaseService<T>) this.baseService;
+        CompareBeanUtil.compareBean(bean,baseService,moduleName,moduleNameZh, ShiroKit.getUser());
+        Integer updateResult = baseService.updateByPrimaryKey(bean);
+        return updateResult;
     }
 
     /**

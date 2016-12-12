@@ -3,7 +3,7 @@ package com.cardpay.controller.application;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.fastdfs.FileManager;
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.model.TApplication;
 import com.cardpay.mgt.application.service.TApplicationService;
 import com.cardpay.mgt.user.model.User;
