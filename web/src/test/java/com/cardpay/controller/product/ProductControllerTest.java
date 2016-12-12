@@ -21,6 +21,25 @@ public class ProductControllerTest extends TestEnv {
     private TProductInvestPictureDesc tProductInvestPictureDesc = new TProductInvestPictureDesc();
 
     @Test
+    public void insertProductImgCaption() throws Exception {
+        mockMvc.perform(post("/product/insertProductImgCaption")
+                .param("id", "1")
+                .param("productId", "1")
+                .param("pritureDescription", "1")
+                .param("isNeed", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
+
+    @Test
+    public void deleteProductImgCaption() throws Exception {
+        mockMvc.perform(delete("/product/deleteProductImgCaption")
+                .param("productImgCaptionId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
+
+    @Test
     @Ignore
     public void insertProduct() throws Exception {
         MockMultipartFile mockFile = new MockMultipartFile("data", "filename.txt"

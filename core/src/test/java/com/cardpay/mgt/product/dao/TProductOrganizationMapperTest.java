@@ -35,4 +35,20 @@ public class TProductOrganizationMapperTest extends TestEnv {
         assertEquals(flag, 3);
     }
 
+    @Test
+    public void bathDeleteOrg() throws Exception {
+        Map<String, Object> map = new HashedMap();
+        List<Integer> list = new ArrayList<Integer>(){
+            {
+                add(2);
+                add(3);
+                add(4);
+            }
+        };
+        map.put("productId", 1);
+        map.put("orgIds", list);
+        int flag = tProductOrganizationDao.bathDeleteOrg(map);
+        assertTrue(flag > 0);
+    }
+
 }

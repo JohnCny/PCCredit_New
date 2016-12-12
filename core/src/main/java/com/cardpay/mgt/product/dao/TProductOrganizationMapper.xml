@@ -12,9 +12,19 @@
     <!--批量插入产品机构信息-->
     <insert id="batchInsertOrg" parameterType="Map">
         INSERT INTO T_PRODUCT_ORGANIZATION (PRODUCT_ID, ORAGANIZATION_ID)
-        <foreach item="item" index="index" collection="orgIds" open="("  close=")" separator="union">
-           SELECT #{productId}, #{item} FROM DUAL
+        <foreach item="item" index="index" collection="orgIds" open="(" close=")" separator="union">
+            SELECT #{productId}, #{item} FROM DUAL
         </foreach>
     </insert>
+
+    <!--批量删除产品机构信息-->
+    <delete id="bathDeleteOrg" parameterType="Map">
+        DELETE FROM T_PRODUCT_ORGANIZATION
+        <where>
+            <foreach item="item" index="index" collection="orgIds" open="(" separator="or" close=")" >
+                PRODUCT_ID = #{productId} AND ORAGANIZATION_ID = #{item}
+            </foreach>
+        </where>
+    </delete>
 
 </mapper>

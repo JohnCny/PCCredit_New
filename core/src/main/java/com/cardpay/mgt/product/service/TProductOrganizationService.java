@@ -15,5 +15,12 @@ public interface TProductOrganizationService extends BaseService<TProductOrganiz
      * @param map
      * @return 插入个数
      */
-    int batchInsert(Map<String, Object> map);
+    int batchInsertOrg(Map<String, Object> map);
+
+    /**
+     *  批量删除
+     * @param map
+     * @return 插入个数
+     */
+    int bathDeleteOrg(Map<String, Object> map);
 }

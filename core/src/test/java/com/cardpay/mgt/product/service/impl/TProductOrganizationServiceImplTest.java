@@ -32,7 +32,7 @@ public class TProductOrganizationServiceImplTest {
         Map<String, Object> map = new HashedMap();
         map.put("test", 1);
         when(tProductOrganizationDao.batchInsertOrg(map)).thenReturn(1);
-        int flag = tProductOrganizationService.batchInsert(map);
+        int flag = tProductOrganizationService.batchInsertOrg(map);
         assertEquals(1, flag);
     }
 

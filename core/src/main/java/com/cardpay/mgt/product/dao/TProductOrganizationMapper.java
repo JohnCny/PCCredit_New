@@ -10,12 +10,18 @@ import java.util.Map;
  * @author chenkai
  */
 public interface TProductOrganizationMapper extends BasicMapper<TProductOrganization> {
-
     /**
      *  批量插入
      * @param map
      * @return 插入个数
      */
     int batchInsertOrg(Map<String, Object> map);
+
+    /**
+     *  批量删除
+     * @param map
+     * @return 插入个数
+     */
+    int bathDeleteOrg(Map<String, Object> map);
 
 }
