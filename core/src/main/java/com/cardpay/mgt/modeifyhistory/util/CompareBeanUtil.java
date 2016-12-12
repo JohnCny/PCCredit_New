@@ -6,6 +6,7 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.BeanFactoryUtil;
 import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
 import com.cardpay.mgt.modeifyhistory.service.impl.TModifyHistoryServiceImpl;
+import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.beanutils.*;
 import org.apache.commons.beanutils.converters.DateConverter;
