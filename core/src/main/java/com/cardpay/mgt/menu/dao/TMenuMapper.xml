@@ -16,8 +16,8 @@
         <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
       </resultMap>
-
-      <resultMap id="MenuListResultMapByLevel" type="com.cardpay.mgt.menu.model.vo.TMenuVo">
+      <!--控制深度查询-->
+      <resultMap id="MenuListResultMapVo" type="com.cardpay.mgt.menu.model.vo.TMenuVo">
         <id column="ID" jdbcType="DECIMAL" property="id" />
         <result column="MENU_NAME_ZH" jdbcType="VARCHAR" property="menuNameZh" />
         <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
@@ -28,23 +28,8 @@
         <result column="MENU_ORDER" jdbcType="DECIMAL" property="menuOrder" />
         <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-        <collection property="menuLists" column="ID" select="selectMenuListByLevel"/>
       </resultMap>
-
-    <resultMap id="MenuListResultMapByAll" type="com.cardpay.mgt.menu.model.vo.TMenuVo">
-        <id column="ID" jdbcType="DECIMAL" property="id" />
-        <result column="MENU_NAME_ZH" jdbcType="VARCHAR" property="menuNameZh" />
-        <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
-        <result column="MENU_PARENT_ID" jdbcType="DECIMAL" property="menuParentId" />
-        <result column="MENU_PICTURE" jdbcType="VARCHAR" property="menuPicture" />
-        <result column="MENU_URL" jdbcType="VARCHAR" property="menuUrl" />
-        <result column="MENU_DESCRIPTION" jdbcType="VARCHAR" property="menuDescription" />
-        <result column="MENU_ORDER" jdbcType="DECIMAL" property="menuOrder" />
-        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
-        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-        <collection property="menuLists" column="ID" select="selectMenuListByAll"/>
-    </resultMap>
-
+    <!--查询全部包含权限-->
     <resultMap id="MenuListAndAuthResultMap" type="com.cardpay.mgt.menu.model.TMenuAuth">
         <id column="ID" jdbcType="DECIMAL" property="id" />
         <result column="MENU_NAME_ZH" jdbcType="VARCHAR" property="menuNameZh" />
@@ -62,13 +47,11 @@
     </resultMap>
 
     <!--根据用户递归查询菜单列表(有限层级)-->
-    <select id="selectMenuListByLevel" resultMap="MenuListResultMapByLevel">
-    SELECT * FROM T_MENU_VIEW WHERE menu_parent_id = #{parentId}
-    </select>
-
-    <!--根据用户递归查询菜单列表(无限层级)-->
-    <select id="selectMenuListByAll" resultMap="MenuListResultMapByAll">
-        SELECT * FROM (SELECT DISTINCT
+    <select id="selectMenuListByLevel" resultMap="MenuListResultMapVo">
+        SELECT LEVEL AS M_LEVEL, T .*
+            FROM
+            (
+                SELECT DISTINCT
                 T_MENU.MENU_NAME,
                 T_MENU. ID,
                 T_MENU.MENU_NAME_ZH,
@@ -79,26 +62,52 @@
                 T_MENU.MENU_ORDER,
                 T_MENU.CREATE_BY,
                 T_MENU.CREATE_TIME
-            FROM
+                FROM
                 T_MENU,
                 T_USER,
                 T_USER_ROLE,
                 T_ROLE_AUTHORITY,
                 T_AUTHORITY,
                 T_AUTHORITY_MENU
-            WHERE
+                WHERE
                 T_USER. ID = T_USER_ROLE.USER_ID
-            AND T_ROLE_AUTHORITY.ROLE_ID = T_USER_ROLE.ROLE_ID
-            AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
-            AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
-            AND T_USER. ID = #{userId}) WHERE menu_parent_id = #{parentId}
+                AND T_ROLE_AUTHORITY.ROLE_ID = T_USER_ROLE.ROLE_ID
+                AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+                AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
+                AND T_USER. ID = #{userId}
+            ) T
+            WHERE
+            LEVEL <![CDATA[<=]]> #{level,jdbcType=DECIMAL}
+            CONNECT BY PRIOR ID = menu_parent_id
+            START WITH menu_parent_id = #{parentId,jdbcType=DECIMAL}
     </select>
 
-    <!--创建层级视图-->
-    <select id="createMenuView" statementType ="CALLABLE">
-       <![CDATA[
-         {call CREATE_T_MENU_VIEW (#{parentId,mode=IN,jdbcType=DECIMAL},#{level,mode=IN,jdbcType=DECIMAL},#{userId,mode=IN,jdbcType=DECIMAL})}
-       ]]>
+    <!--根据用户递归查询菜单列表(无限层级)-->
+    <select id="selectMenuListByAll" resultMap="MenuListResultMapVo">
+        SELECT DISTINCT
+            T_MENU.MENU_NAME,
+            T_MENU. ID,
+            T_MENU.MENU_NAME_ZH,
+            T_MENU.MENU_PARENT_ID,
+            T_MENU.MENU_PICTURE,
+            T_MENU.MENU_URL,
+            T_MENU.MENU_DESCRIPTION,
+            T_MENU.MENU_ORDER,
+            T_MENU.CREATE_BY,
+            T_MENU.CREATE_TIME
+        FROM
+            T_MENU,
+            T_USER,
+            T_USER_ROLE,
+            T_ROLE_AUTHORITY,
+            T_AUTHORITY,
+            T_AUTHORITY_MENU
+        WHERE
+            T_USER. ID = T_USER_ROLE.USER_ID
+        AND T_ROLE_AUTHORITY.ROLE_ID = T_USER_ROLE.ROLE_ID
+        AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+        AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
+        AND T_USER. ID = #{userId}
     </select>
 
     <!--递归删除菜单-->

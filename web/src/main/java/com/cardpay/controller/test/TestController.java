@@ -89,7 +89,7 @@ public class TestController extends BaseController<TModel,Integer> {
     public ResultTo creditReport() {
         ResultTo resultTo = new ResultTo();
         //需要记录并且是从数据库取的值 必须使用Clone方法 或者自己Clone再传
-        TMenu tMenu = tMenuService.selectByPrimaryKeyClone(73);
+        TMenu tMenu = tMenuService.selectByPrimaryKeyClone(75);
         tMenu.setMenuName("修改测试菜单");
         tMenu.setMenuNameZh("修改了中文名字");
         //记录修改过程
