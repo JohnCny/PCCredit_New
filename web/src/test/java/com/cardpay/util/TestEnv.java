@@ -1,6 +1,6 @@
 package com.cardpay.util;
 
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.model.User;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;

@@ -1,7 +1,7 @@
-package com.cardpay.core.shrio.realm;
+package com.cardpay.core.shiro.realm;
 
-import com.cardpay.core.shrio.common.ShiroFactory;
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroFactory;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.model.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

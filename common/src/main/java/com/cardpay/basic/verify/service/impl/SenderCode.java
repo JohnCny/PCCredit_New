@@ -2,7 +2,7 @@ package com.cardpay.basic.verify.service.impl;
 import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.basic.mail.MailSendClient;
+import com.cardpay.basic.mail.MailSend;
 import com.cardpay.basic.verify.emun.VertifyResult;
 import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.basic.util.VerifyCodeUtil;
@@ -25,7 +25,7 @@ public class SenderCode implements com.cardpay.basic.verify.service.SenderCode {
     private RedisClient redisClient;
 
     @Autowired
-    private MailSendClient baseMail;
+    private MailSend baseMail;
 
     /**
      * 验证邮箱或者手机号匹配，或者发送验证码，

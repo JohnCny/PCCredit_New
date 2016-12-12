@@ -1,7 +1,7 @@
 package com.cardpay.controller.menu;
 
 import com.cardpay.basic.base.model.ResultTo;
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.model.vo.TMenuVo;
