@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.product.dao.TProductRiskRulesMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.product.model.TProductRiskRules">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="OVER_PERIOD_LIMIT" jdbcType="DECIMAL" property="overPeriodLimit" />
+    <result column="IS_LOAN_BAD_TO_BLACK" jdbcType="DECIMAL" property="isLoanBadToBlack" />
+    <result column="OVERDUE_WARNING_LIMIT" jdbcType="DECIMAL" property="overdueWarningLimit" />
+    <result column="BADLOAN_WARNING_LIMIT" jdbcType="DECIMAL" property="badloanWarningLimit" />
+    <result column="INDUSTRY_OVERDUE_WARNING_LIMIT" jdbcType="DECIMAL" property="industryOverdueWarningLimit" />
+    <result column="INDUSTRY_BADLOAN_WARNING_LIMIT" jdbcType="DECIMAL" property="industryBadloanWarningLimit" />
+  </resultMap>
+</mapper>

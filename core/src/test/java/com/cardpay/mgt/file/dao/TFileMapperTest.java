@@ -25,27 +25,27 @@ public class TFileMapperTest extends TestEnv{
         tFile1.setFileName("1");
         tFile1.setFastName("1");
         tFile1.setGroupName("1");
-        tFile1.setModifiedBy("1");
-        tFile1.setCreatedAt(new Date());
-        tFile1.setCreatedAt(new Date());
+        tFile1.setModifyBy("1");
+        tFile1.setCreateAt(new Date());
+        tFile1.setCreateAt(new Date());
         tFile1.setId(1);
         tFile1.setImageType("1");
         tFile1.setRemark("1");
-        tFile1.setCreatedBy("1");
+        tFile1.setCreateBy("1");
         TFile tFile2 = new TFile();
         tFile2.setFileName("2");
         tFile2.setFastName("2");
         tFile2.setGroupName("2");
-        tFile2.setModifiedBy("2");
-        tFile2.setCreatedAt(new Date());
-        tFile2.setCreatedAt(new Date());
+        tFile2.setModifyBy("2");
+        tFile2.setCreateAt(new Date());
+        tFile2.setCreateAt(new Date());
         tFile2.setId(2);
         tFile2.setImageType("2");
         tFile2.setRemark("2");
-        tFile2.setCreatedBy("2");
+        tFile2.setCreateBy("2");
         list.add(tFile1);
         list.add(tFile2);
-        int flag = tFileDao.batchInsert(list);
+        int flag = tFileDao.batchInsertFile(list);
         assertEquals(flag, 2);
     }
 

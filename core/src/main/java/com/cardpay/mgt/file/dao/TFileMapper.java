@@ -12,9 +12,9 @@ import java.util.List;
 public interface TFileMapper extends BasicMapper<TFile> {
 
     /**
-     * 批量插入
+     * 批量插入文件信息
      * @param list
-     * @return
+     * @return 插入数量
      */
-    int batchInsert(List<TFile> list);
+    int batchInsertFile(List<TFile> list);
 }

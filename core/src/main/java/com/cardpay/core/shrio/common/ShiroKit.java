@@ -1,5 +1,7 @@
 package com.cardpay.core.shrio.common;
 
+import com.cardpay.mgt.user.model.User;
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -66,6 +68,23 @@ public class ShiroKit {
         if (SecurityUtils.getSubject().isAuthenticated()) {
             clearAuthorizationInfo();
         }
+    }
+
+    /**
+     * 获取当前登录用户信息
+     * @return 当前登录用户信息
+     */
+    public static User getUser (){
+        return (User)SecurityUtils.getSubject().getPrincipal();
+    }
+
+    /**
+     * 获取当前登录用户id
+     * @return 用户id
+     */
+    public static int getUserId (){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        return user.getId();
     }
 
 }
