@@ -2,6 +2,7 @@ package com.cardpay.mgt.modeifyhistory.util;
 
 import com.cardpay.basic.util.DateTimeUtil;
 import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
+import com.cardpay.mgt.user.model.User;
 import com.cardpay.util.TestEnv;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Assert;
@@ -32,8 +33,10 @@ public class CompareBeanUtilTest extends TestEnv{
         newTestBean.setTestStr("ModifyTest");
         newTestBean.setTestDate(DateTimeUtil.format("2016-12-05 16:25:15",DateTimeUtil.NORM_DATETIME_PATTERN));
         newTestBean.setTestNum(2);
+        User user = new User();
+        user.setId(1);
         List<TModifyHistory> compareResult =
-                CompareBeanUtil.getCompareResult(testBean, newTestBean, "TestModule", "测试模块");
+                CompareBeanUtil.getCompareResult(testBean, newTestBean, "TestModule", "测试模块",user);
         boolean result = compareResult.stream()
                 .anyMatch(bean -> bean.getBeforeValue().equals("2016-12-05 14:25:15") &&
                                   bean.getAfterValue().equals("2016-12-05 16:25:15"));
