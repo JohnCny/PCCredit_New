@@ -40,6 +40,7 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="unauthorizedUrl" value="/logon/unauthorized"/>
+        <property name="loginUrl" value="/logon/login"/>
         <property name="filterChainDefinitions">
             <value>
                 /upload/** = anon
@@ -50,7 +51,7 @@
                 /assets/** = anon
                 /kaptcha = anon
                 /logon/** = anon
-                /anon/** = anon
+                /**/anon/** = anon
                 /** = authc
             </value>
         </property>

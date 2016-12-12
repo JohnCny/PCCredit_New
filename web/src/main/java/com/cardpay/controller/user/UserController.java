@@ -61,7 +61,7 @@ public class UserController extends BaseController<User, Integer> {
      * @param userName 用户名
      * @return 不存在返回null, 存在返回用户Id
      */
-    @RequestMapping(value = "/anon/{userName}", method = RequestMethod.GET, params = "isHaveUserName")
+    @RequestMapping(value = "/anon/{userName}", method = RequestMethod.GET)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据登录名查询用户", httpMethod = "GET", notes = "不存在返回null, 存在返回用户Id")
     public ResultTo isHaveLoginName(@ApiParam("用户名") @PathVariable("userName") String userName) {
@@ -89,6 +89,13 @@ public class UserController extends BaseController<User, Integer> {
         return userService.sendCode(userId, address);
     }
 
+    /**
+     * 验证验证码
+     *
+     * @param address 用户邮箱或手机号
+     * @param code    验证码
+     * @return 成功或失败
+     */
     @RequestMapping(value = "/anon/checkedCode", method = RequestMethod.POST, params = "resetPassword")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "验证验证码", httpMethod = "POST")

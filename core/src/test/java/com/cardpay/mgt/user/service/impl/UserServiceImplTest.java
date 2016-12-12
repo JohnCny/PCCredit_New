@@ -1,6 +1,9 @@
 package com.cardpay.mgt.user.service.impl;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.mail.MailSend;
+import com.cardpay.basic.redis.RedisClient;
+import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.dao.RoleMapper;
 import com.cardpay.mgt.user.dao.UserMapper;
@@ -35,12 +38,16 @@ public class UserServiceImplTest {
     @Mock
     private UserMapper userMapper;
 
+    @Mock
+    private RedisClient redisClient;
+
     private User user;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        user = User.UserBuilder.get().withId(1).withPassword("123").withUsername("test").build();
+        user = User.UserBuilder.get().withId(1).withPassword("123").withUsername("test")
+                .withEmail("rankai@qkjr.com.cn").build();
     }
 
     @Test
@@ -90,6 +97,36 @@ public class UserServiceImplTest {
         PowerMockito.when(userMapper.updateByPrimaryKeySelective(mockUser)).thenReturn(0);
         resultTo = userService.updatePassword("123", "321");
         Assert.assertEquals(resultTo.getCode(), 5020);
+    }
+
+    @Test
+    public void sendCode() {
+        PowerMockito.when(userMapper.selectByPrimaryKey(1)).thenReturn(user);
+        ResultTo resultTo;
+        resultTo = userService.sendCode(1, "rankai@qkjr.com.cn");
+        Assert.assertEquals(resultTo.getCode(), 200);
+
+        resultTo = userService.sendCode(1, "mayuan@qkjr.com.cn");
+        Assert.assertEquals(resultTo.getCode(), 5014);
+
+        resultTo = userService.sendCode(1, "mayuan");
+        Assert.assertEquals(resultTo.getCode(), 5013);
+    }
+
+    @Test
+    public void checkedCode() {
+        PowerMockito.when(redisClient.get(RedisKeyPrefixEnum.USER, "rankai@qkjr.com.cn")).thenReturn("123456");
+        ResultTo resultTo;
+        resultTo = userService.checkedCode("rankai@qkjr.com.cn", "123456");
+        Assert.assertEquals(resultTo.getCode(), 200);
+
+        resultTo = userService.checkedCode("rankai@qkjr.com.cn", "654321");
+        Assert.assertEquals(resultTo.getCode(), 5009);
+
+        PowerMockito.when(redisClient.get(RedisKeyPrefixEnum.USER, "rankai@qkjr.com.cn")).thenReturn(null);
+        resultTo = userService.checkedCode("rankai@qkjr.com.cn", "123456");
+        Assert.assertEquals(resultTo.getCode(), 5010);
+
     }
 
 }
