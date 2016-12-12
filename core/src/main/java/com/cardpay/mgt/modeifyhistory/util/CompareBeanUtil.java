@@ -4,14 +4,11 @@ import com.cardpay.basic.base.model.GenericEntity;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.BeanFactoryUtil;
-import com.cardpay.core.shrio.common.ShiroKit;
 import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
 import com.cardpay.mgt.modeifyhistory.service.impl.TModifyHistoryServiceImpl;
-import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.beanutils.*;
 import org.apache.commons.beanutils.converters.DateConverter;
-import org.apache.commons.beanutils.converters.DateTimeConverter;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

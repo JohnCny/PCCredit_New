@@ -1,7 +1,6 @@
-package com.cardpay.core.shrio.common;
+package com.cardpay.core.shiro.common;
 
 import com.cardpay.mgt.user.model.User;
-import org.apache.poi.ss.formula.functions.T;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -12,6 +11,15 @@ import org.apache.shiro.subject.Subject;
  * @author rankai .
  */
 public class ShiroKit {
+
+    /**
+     * 账号锁定
+     */
+    public static final int LOCKED_ACCOUNT = 1;
+    /**
+     * 账号禁用
+     */
+    public static final int DISABLED_ACCOUNT = 1;
 
     /**
      * 获取
@@ -72,19 +80,21 @@ public class ShiroKit {
 
     /**
      * 获取当前登录用户信息
+     *
      * @return 当前登录用户信息
      */
-    public static User getUser (){
-        return (User)SecurityUtils.getSubject().getPrincipal();
+    public static User getUser() {
+        return (User) getPrincipal();
     }
 
     /**
      * 获取当前登录用户id
+     *
      * @return 用户id
      */
-    public static int getUserId (){
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-        return user.getId();
+    public static Integer getUserId() {
+        User user = (User) getPrincipal();
+        return user == null ? null : user.getId();
     }
 
 }

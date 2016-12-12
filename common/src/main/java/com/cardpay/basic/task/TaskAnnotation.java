@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
  * 定时任务(注解方式实现)
  *
  * @author rankai .
- * @date 2016/11/22 .
  */
 @Component
 public class TaskAnnotation {

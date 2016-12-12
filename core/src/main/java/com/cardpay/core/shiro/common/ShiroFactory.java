@@ -1,7 +1,6 @@
-package com.cardpay.core.shrio.common;
+package com.cardpay.core.shiro.common;
 
 import com.cardpay.mgt.user.service.UserService;
-import com.cardpay.mgt.user.service.impl.UserServiceImpl;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
