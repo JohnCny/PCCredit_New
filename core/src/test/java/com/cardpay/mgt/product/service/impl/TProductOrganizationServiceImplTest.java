@@ -31,7 +31,7 @@ public class TProductOrganizationServiceImplTest {
     public void batchInsert() throws Exception {
         Map<String, Object> map = new HashedMap();
         map.put("test", 1);
-        when(tProductOrganizationDao.batchInsert(map)).thenReturn(1);
+        when(tProductOrganizationDao.batchInsertOrg(map)).thenReturn(1);
         int flag = tProductOrganizationService.batchInsert(map);
         assertEquals(1, flag);
     }

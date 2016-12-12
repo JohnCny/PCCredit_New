@@ -10,7 +10,7 @@
     </resultMap>
 
     <!--批量插入产品机构信息-->
-    <insert id="batchInsert" parameterType="Map">
+    <insert id="batchInsertOrg" parameterType="Map">
         INSERT INTO T_PRODUCT_ORGANIZATION (PRODUCT_ID, ORAGANIZATION_ID)
         <foreach item="item" index="index" collection="orgIds" open="("  close=")" separator="union">
            SELECT #{productId}, #{item} FROM DUAL

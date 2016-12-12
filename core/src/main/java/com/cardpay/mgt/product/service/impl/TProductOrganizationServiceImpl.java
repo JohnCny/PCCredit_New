@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +22,6 @@ public class TProductOrganizationServiceImpl extends BaseServiceImpl<TProductOrg
     @Transactional
     @Override
     public int batchInsert(Map<String, Object> map) {
-        return tProductOrganizationDao.batchInsert(map);
+        return tProductOrganizationDao.batchInsertOrg(map);
     }
 }

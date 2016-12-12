@@ -6,6 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
+/**
+ * 产品审批管理
+ * @author chenkai
+ */
 @Table(name = "T_PRODUCT_APPROVE")
 @ApiModel(value="产品审批管理")
 public class TProductApprove extends GenericEntity<Integer> {
@@ -13,7 +17,7 @@ public class TProductApprove extends GenericEntity<Integer> {
      * 审批节点id
      */
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select 你的序列名.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCAPPROVE_SEQ.nextval from dual")
     @ApiModelProperty(value="审批节点id",required = true)
     private Integer id;
 

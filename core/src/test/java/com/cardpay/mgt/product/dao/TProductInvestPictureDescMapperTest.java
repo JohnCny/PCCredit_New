@@ -35,7 +35,7 @@ public class TProductInvestPictureDescMapperTest extends TestEnv{
                 add(tProductInvestPictureDesc2);
             }
         };
-        int flag = tProductInvestPictureDescDao.batchInsert(list);
+        int flag = tProductInvestPictureDescDao.batchInsertImg(list);
         assertEquals(flag, 2);
     }
 

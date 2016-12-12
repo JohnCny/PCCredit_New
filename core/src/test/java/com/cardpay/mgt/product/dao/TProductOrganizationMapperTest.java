@@ -31,7 +31,7 @@ public class TProductOrganizationMapperTest extends TestEnv {
         };
         map.put("productId", 1);
         map.put("orgIds", list);
-        int flag = tProductOrganizationDao.batchInsert(map);
+        int flag = tProductOrganizationDao.batchInsertOrg(map);
         assertEquals(flag, 3);
     }
 

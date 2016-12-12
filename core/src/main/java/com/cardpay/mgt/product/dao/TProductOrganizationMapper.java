@@ -16,6 +16,6 @@ public interface TProductOrganizationMapper extends BasicMapper<TProductOrganiza
      * @param map
      * @return 插入个数
      */
-    int batchInsert(Map<String, Object> map);
+    int batchInsertOrg(Map<String, Object> map);
 
 }

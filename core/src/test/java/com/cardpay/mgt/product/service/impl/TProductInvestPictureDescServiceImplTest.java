@@ -37,7 +37,7 @@ public class TProductInvestPictureDescServiceImplTest {
                 add(new TProductInvestPictureDesc());
             }
         };
-        when(tProductInvestPictureDescDao.batchInsert(list)).thenReturn(3);
+        when(tProductInvestPictureDescDao.batchInsertImg(list)).thenReturn(3);
         int flag = tProductInvestPictureDescService.batchInsertImg(list);
         assertEquals(3, flag);
     }

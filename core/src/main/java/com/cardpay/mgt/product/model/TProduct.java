@@ -166,6 +166,7 @@ public class TProduct extends GenericEntity<Integer>{
     /**
      * 创建时间
      */
+    @OrderBy(value = "DESC")
     @Column(name = "CREATE_TIME")
     @ApiModelProperty(value="创建时间",required = true)
     private Date createTime;
