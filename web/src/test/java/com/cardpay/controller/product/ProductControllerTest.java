@@ -6,56 +6,50 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.HashMap;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 /**
  * 产品信息测试类
  * Created by chenkai on 2016/12/8.
  */
 public class ProductControllerTest extends TestEnv {
-    private TProductInvestPictureDesc tProductInvestPictureDesc = new TProductInvestPictureDesc();
-
-    @Test
-    public void insertProductImgCaption() throws Exception {
-        mockMvc.perform(post("/product/insertProductImgCaption")
-                .param("id", "1")
-                .param("productId", "1")
-                .param("pritureDescription", "1")
-                .param("isNeed", "1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
-
-    @Test
-    public void deleteProductImgCaption() throws Exception {
-        mockMvc.perform(delete("/product/deleteProductImgCaption")
-                .param("productImgCaptionId", "1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
 
     @Test
     @Ignore
     public void insertProduct() throws Exception {
-        MockMultipartFile mockFile = new MockMultipartFile("data", "filename.txt"
+       MockMultipartFile mockFile = new MockMultipartFile("data", "filename.txt"
                 , "text/plain", "some xml".getBytes());
         HashMap<String, String> contentTypeParams = new HashMap<>();
         contentTypeParams.put("boundary", "265001916915724");
         MediaType mediaType = new MediaType("multipart", "orm-data", contentTypeParams);
-        mockMvc.perform(post("/product/insertProduct")
-                .param("id", "1")
-                .param("productName", "测试产品")
-                .param("orgIds", "1,2,3,4")
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/product/insertProduct")
+                .file(mockFile)
                 .content(mockFile.getBytes())
                 .contentType(mediaType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
 
+    @Test
+    public void updateProduct() throws Exception {
+        MockMultipartFile mockFile = new MockMultipartFile("data", "filename.txt"
+                , "text/plain", "some xml".getBytes());
+        HashMap<String, String> contentTypeParams = new HashMap<>();
+        contentTypeParams.put("boundary", "265001916915724");
+        MediaType mediaType = new MediaType("multipart", "orm-data", contentTypeParams);
+        mockMvc.perform(MockMvcRequestBuilders.fileUpload("/product/updateProduct")
+                .file(mockFile)
+                .param("id", "1")
+                .param("productName", "test")
+                .content(mockFile.getBytes())
+                .contentType(mediaType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
 
 }

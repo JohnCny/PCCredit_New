@@ -36,4 +36,12 @@ public class TProductOrganizationServiceImplTest {
         assertEquals(1, flag);
     }
 
+    @Test
+    public void bathDeleteOrg() throws Exception {
+        Map<String, Object> map = new HashedMap();
+        map.put("productId", 1);
+        when(tProductOrganizationDao.bathDeleteOrg(map)).thenReturn(1);
+        int flag = tProductOrganizationService.bathDeleteOrg(map);
+        assertEquals(1, flag);
+    }
 }

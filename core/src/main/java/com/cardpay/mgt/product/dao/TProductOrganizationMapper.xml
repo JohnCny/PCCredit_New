@@ -19,12 +19,10 @@
 
     <!--批量删除产品机构信息-->
     <delete id="bathDeleteOrg" parameterType="Map">
-        DELETE FROM T_PRODUCT_ORGANIZATION
-        <where>
-            <foreach item="item" index="index" collection="orgIds" open="(" separator="or" close=")" >
-                PRODUCT_ID = #{productId} AND ORAGANIZATION_ID = #{item}
-            </foreach>
-        </where>
+        DELETE FROM T_PRODUCT_ORGANIZATION WHERE PRODUCT_ID = #{productId} AND ORAGANIZATION_ID IN
+        <foreach item="orgId" collection="orgIds" open="(" separator="," close=")">
+            #{orgId}
+        </foreach>
     </delete>
 
 </mapper>

@@ -64,7 +64,7 @@ public class FilesController {
     @ApiOperation(value = "文件删除接口", notes = "删除dfs服务器中指定文件", httpMethod = "DELETE")
     public ResultTo delete(@ApiParam(value = "组名,文件名", required = true) @RequestParam("file") String file) {
         String[] str = file.split(",");
-        int flag = FileManager.deleteFile(str[0], str[1]);
+        int flag = fileManager.deleteFile(str[0], str[1]);
         return new ResultTo().setData(flag);
     }
 

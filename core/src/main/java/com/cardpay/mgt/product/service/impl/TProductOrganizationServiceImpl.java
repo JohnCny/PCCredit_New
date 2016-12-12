@@ -25,6 +25,7 @@ public class TProductOrganizationServiceImpl extends BaseServiceImpl<TProductOrg
         return tProductOrganizationDao.batchInsertOrg(map);
     }
 
+    @Transactional
     @Override
     public int bathDeleteOrg(Map<String, Object> map) {
         return tProductOrganizationDao.bathDeleteOrg(map);

@@ -30,7 +30,7 @@ public class TProductOrganizationController extends BaseController<TProductOrgan
     private TProductOrganizationService tProductOrganizationService;
 
     /**
-     * 产品机构信息封装map
+     * 产品机构信息封装Map
      *
      * @param productId 产品id
      * @param orgIds    机构id集合
@@ -71,8 +71,9 @@ public class TProductOrganizationController extends BaseController<TProductOrgan
 
     /**
      * 批量删除产品机构信息接口
+     *
      * @param productId 产品id
-     * @param orgIds 机构id
+     * @param orgIds    机构id
      * @return 数据库变动条数
      */
     @ApiOperation(value = "批量删除产品机构信息接口", notes = "删除产品机构信息", httpMethod = "DELETE")

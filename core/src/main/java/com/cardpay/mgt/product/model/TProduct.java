@@ -1,6 +1,5 @@
 package com.cardpay.mgt.product.model;
 
-import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -9,15 +8,16 @@ import java.util.Date;
 import javax.persistence.*;
 
 /**
- * 产品管理
+ * 产品信息
  * @author chenkai
  */
 @Table(name = "T_PRODUCT")
 @ApiModel(value="产品管理")
-public class TProduct extends GenericEntity<Integer>{
+public class TProduct {
     /**
      * 产品id
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCSEQ.nextval from dual")
     @ApiModelProperty(value="产品id",required = true)
@@ -166,7 +166,6 @@ public class TProduct extends GenericEntity<Integer>{
     /**
      * 创建时间
      */
-    @OrderBy(value = "DESC")
     @Column(name = "CREATE_TIME")
     @ApiModelProperty(value="创建时间",required = true)
     private Date createTime;
@@ -640,10 +639,5 @@ public class TProduct extends GenericEntity<Integer>{
      */
     public void setModifyBy(Integer modifyBy) {
         this.modifyBy = modifyBy;
-    }
-
-    @Override
-    public Integer getPK() {
-        return null;
     }
 }

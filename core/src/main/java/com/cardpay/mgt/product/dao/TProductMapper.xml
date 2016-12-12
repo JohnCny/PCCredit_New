@@ -5,7 +5,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <id column="ID" jdbcType="DECIMAL" property="id" />
     <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
     <result column="PRODUCT_LIMIT_MAX" jdbcType="DECIMAL" property="productLimitMax" />
     <result column="PRODUCT_LIMIT_MIN" jdbcType="DECIMAL" property="productLimitMin" />

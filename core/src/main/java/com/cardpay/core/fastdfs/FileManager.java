@@ -2,8 +2,8 @@ package com.cardpay.core.fastdfs;
 
 
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.file.dao.TFileMapper;
 import com.cardpay.mgt.file.model.TFile;
+import com.cardpay.mgt.file.service.TFileService;
 import org.csource.common.MyException;
 import org.csource.fastdfs.*;
 import org.csource.common.NameValuePair;
@@ -30,7 +30,7 @@ import java.util.List;
 @Component
 public class FileManager implements FileManagerConfig {
     @Autowired
-    private TFileMapper tFileDao;
+    private TFileService tFileService;
 
     private static TrackerClient trackerClient;
     private static StorageClient storageClient;
@@ -128,9 +128,12 @@ public class FileManager implements FileManagerConfig {
      * @param remoteFileName 文件名称
      * @return 1成功, 0失败
      */
-    public static int deleteFile(String groupName, String remoteFileName) {
+    public int deleteFile(String groupName, String remoteFileName) {
         try {
-            return storageClient.delete_file(groupName, remoteFileName);
+            TFile tFile = new TFile();
+            tFile.setFastName(remoteFileName);
+            Integer flag = tFileService.delete(tFile);
+            return null != flag ? storageClient.delete_file(groupName, remoteFileName) : 0;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (MyException e) {
@@ -219,7 +222,7 @@ public class FileManager implements FileManagerConfig {
                         .withFastName(str[1])
                         .build();
                 tFiles.add(tFile);
-                tFileDao.batchInsertFile(tFiles);
+                tFileService.batchInsertFile(tFiles);
             }
         } catch (IOException e) {
             e.printStackTrace();
