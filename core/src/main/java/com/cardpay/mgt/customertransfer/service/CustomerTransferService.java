@@ -8,4 +8,9 @@ import com.cardpay.mgt.customertransfer.model.po.TCustomerTransfer;
  * @author wangpeng
  */
 public interface CustomerTransferService extends BaseService<TCustomerTransfer>{
+    /**
+     * 获取移交接收意见状态
+     * @return 移交接收意见状态列表
+     */
+    Object getTransferStatus();
 }

@@ -20,4 +20,20 @@
         <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
         <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus" />
     </resultMap>
+
+    <select id="getProspectiveCustomers" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT c.*
+        FROM t_customer_basic c, t_customer_industry t
+        where c.id = t.customer_id AND
+            t.industry_id IN (
+                SELECT a.industry_id
+                FROM
+                    (SELECT i.industry_id, COUNT(i.industry_id) c
+                    from t_customer_industry i
+                    GROUP BY i.industry_id
+                    ORDER BY c DESC ) a
+                where rownum <= 5
+            )
+    </select>
+
 </mapper>

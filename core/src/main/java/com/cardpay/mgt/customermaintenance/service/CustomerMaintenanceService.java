@@ -8,4 +8,9 @@ import com.cardpay.mgt.customermaintenance.model.po.TCustomerMaintenance;
  * @author wangpeng
  */
 public interface CustomerMaintenanceService extends BaseService<TCustomerMaintenance>{
+    /**
+     * 获取维护类型
+     * @return 维护类型列表
+     */
+    Object getMaintenanceType();
 }
