@@ -14,9 +14,11 @@ public interface TMenuMapper extends BasicMapper<TMenu> {
      * 递归查询菜单列表(有限层级)
      *
      * @param parentId 顶级id
+     * @param level 深度
+     * @param userId 用户id
      * @return 菜单列表
      */
-    List<TMenuVo> selectMenuListByLevel(@Param("parentId") int parentId);
+    List<TMenuVo> selectMenuListByLevel(@Param("parentId") int parentId, @Param("level") Integer level,@Param("userId") Integer userId);
 
     /**
      * 递归查询菜单列表(无限层级)
@@ -34,14 +36,6 @@ public interface TMenuMapper extends BasicMapper<TMenu> {
      * @return 菜单列表包括权限
      */
     List<TMenuAuth> selectMenuListAndAuthByUser(@Param("userId") Integer userId);
-
-    /**
-     * 创建临时视图
-     *
-     * @param parentId 顶级id
-     * @param level 层级
-     */
-    void createMenuView(@Param("parentId") int parentId, @Param("level") Integer level,@Param("userId") Integer userId);
 
     /**
      * 递归删除菜单
