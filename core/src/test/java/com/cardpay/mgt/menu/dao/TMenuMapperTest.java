@@ -26,8 +26,7 @@ public class TMenuMapperTest extends TestEnv{
 
     @Test
     public void createMenuView() throws Exception {
-        tMenuMapper.createMenuView(0,5,2);
-        List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByLevel(0);
+        List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByLevel(0,3,2);
         assertTrue(tMenuVos.size() > 0);
     }
 

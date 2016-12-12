@@ -18,6 +18,9 @@ public class MenuControllerTest extends TestEnv{
 
     @Test
     public void selectMenuList() throws Exception {
+        User user = new User();
+        user.setId(2);
+        setUser(user);
         mockMvc.perform(get("/menu/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
@@ -25,12 +28,20 @@ public class MenuControllerTest extends TestEnv{
 
     @Test
     public void recursionDelete() throws Exception {
+        //有权限删除
         User user = new User();
         user.setId(2);
         setUser(user);
         mockMvc.perform(delete("/menu/recursionDelete").param("id","75"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
+    }
+    @Test
+    public void recursionDeleteNo() throws Exception {
+        //无权限删除
+        mockMvc.perform(delete("/menu/recursionDelete").param("id","75"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(5012));
     }
 
     @Test
