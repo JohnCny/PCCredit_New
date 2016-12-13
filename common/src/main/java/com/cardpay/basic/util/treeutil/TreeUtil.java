@@ -52,6 +52,9 @@ public class TreeUtil<T extends Tree,PK>{
         if(sourceList == null || sourceList.isEmpty() || parentId == null) {
             throw new IllegalArgumentException("sourceList is Null or Empty or parentId is Null");
         }
+        if(order && sourceList!=null && !sourceList.isEmpty()){
+            ListSortUtil.sortMap(sourceList,orderKey,sortMode);
+        }
         for (T node : sourceList) {
             //遍历所有的父节点下的所有子节点
             if (node.getParentId().equals(parentId)) {
@@ -72,6 +75,9 @@ public class TreeUtil<T extends Tree,PK>{
     public List<T> getChildNodesByTopId(List<T> sourceList, PK topId) {
         if(sourceList == null || sourceList.isEmpty() || topId == null){
             throw new IllegalArgumentException("sourceList is Null or Empty or topId is Null");
+        }
+        if(order && sourceList!=null && !sourceList.isEmpty()){
+            ListSortUtil.sortMap(sourceList,orderKey,sortMode);
         }
         for (T node : sourceList) {
             //遍历所有的父节点下的所有子节点
