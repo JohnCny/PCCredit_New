@@ -90,4 +90,8 @@ public class Constant {
      */
     public static final Integer MSG_UNREAD = 0;
 
+    /**
+     * API请求前个时间(单位:秒)
+     */
+    public static final Integer API_TIMEOUT = 90;
 }

@@ -11,11 +11,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.PowerMockUtils;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import static com.sun.javaws.JnlpxArgs.verify;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  *业务参数服务测试类

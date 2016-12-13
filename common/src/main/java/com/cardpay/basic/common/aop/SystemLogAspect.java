@@ -70,14 +70,14 @@ public class SystemLogAspect {
         hsr.append(requestProtocol);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        String dt = sdf.format(new Date());
-        int status = response.getStatus();
-        int length = response.getBufferSize();
-        String source = request.getHeader("referer");
+//        String dt = sdf.format(new Date());
+//        int status = response.getStatus();
+//        int length = response.getBufferSize();
+//        String source = request.getHeader("referer");
 //        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
 
         try {
-            String methodName = joinPoint.getTarget().getClass().getName();
+//            String methodName = joinPoint.getTarget().getClass().getName();
 
 //            logger.info("{} {}- - [{}] \"{} {}\" {} \"{}\" \"{}\"",
 //                    ip, user.getName(), dt, hsr, status, length, source, userAgent.toString());

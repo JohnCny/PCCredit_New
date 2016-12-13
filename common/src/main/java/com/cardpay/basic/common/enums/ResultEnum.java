@@ -107,7 +107,11 @@ public enum ResultEnum {
     /**
      * 操作失败
      */
-    OPERATION_FAILED(5020);
+    OPERATION_FAILED(5020),
+    /**
+     * 请求超时
+     */
+    API_TIMEOUT(5021);
 
     private int value; // 自定义数据域，private为了封装
 
