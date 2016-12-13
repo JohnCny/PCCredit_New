@@ -61,7 +61,7 @@ public class UserController extends BaseController<User, Integer> {
      * @param userName 用户名
      * @return 不存在返回null, 存在返回用户Id
      */
-    @RequestMapping(value = "/anon/{userName}", method = RequestMethod.GET, params = "isHaveUserName")
+    @RequestMapping(value = "/anon/{userName}", method = RequestMethod.GET)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据登录名查询用户", httpMethod = "GET", notes = "不存在返回null, 存在返回用户Id")
     public ResultTo isHaveLoginName(@ApiParam("用户名") @PathVariable("userName") String userName) {
@@ -89,6 +89,13 @@ public class UserController extends BaseController<User, Integer> {
         return userService.sendCode(userId, address);
     }
 
+    /**
+     * 验证验证码
+     *
+     * @param address 用户邮箱或手机号
+     * @param code    验证码
+     * @return 成功或失败
+     */
     @RequestMapping(value = "/anon/checkedCode", method = RequestMethod.POST, params = "resetPassword")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "验证验证码", httpMethod = "POST")
@@ -102,23 +109,18 @@ public class UserController extends BaseController<User, Integer> {
     /**
      * 重置密码
      *
-     * @param userId   用户ID
-     * @param password 密码
+     * @param userId      用户ID
+     * @param checkedCode Api接口验证
+     * @param password    密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/anon/{userId}", method = RequestMethod.POST, params = "resetPassword")
-    public ResultTo resetPassword(@ApiParam("用户Id") @PathVariable("userId") Integer userId,
+    @RequestMapping(value = "/anon/{checkedCode}", method = RequestMethod.POST, params = "resetPassword")
+    public ResultTo resetPassword(@ApiParam("用户Id") @RequestParam("userId") Integer userId,
+                                  @ApiParam("Api接口验证") @PathVariable("checkedCode") String checkedCode,
                                   @ApiParam("要重置的密码") @RequestParam("password") String password) {
         LogTemplate.debug(this.getClass(), "userId", userId);
+        LogTemplate.debug(this.getClass(), "checkedCode", checkedCode);
         LogTemplate.debug(this.getClass(), "password", password);
-        User user = new User();
-        user.setId(userId);
-        user.setPassword(password);
-        PasswordUtil.encryptPassword(user);
-        Integer count = userService.updateSelectiveByPrimaryKey(user);
-        if (count == 0 || count == null) {
-            return new ResultTo(ResultEnum.OPERATION_FAILED);
-        }
-        return new ResultTo();
+        return userService.resetPassword(userId, checkedCode, password);
     }
 }

@@ -25,11 +25,11 @@ import java.util.Map;
 
 /**
  * 菜单Service实现类
- *
+ * <p>
  * Created by yanwe on 2016/11/22.
  */
 @Service
-public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuService{
+public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuService {
 
     @Autowired
     private TMenuMapper tMenuMapper;
@@ -44,7 +44,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     @Override
     @Transactional
     public synchronized List<TMenuVo> selectMenuListByLevel(int topId, int level, int userId) {
-        List<TMenuVo> menuVoList = tMenuMapper.selectMenuListByLevel(topId,level,userId);
+        List<TMenuVo> menuVoList = tMenuMapper.selectMenuListByLevel(topId, level, userId);
         return convertMenu2Tree(menuVoList);
     }
 
@@ -68,7 +68,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
      */
     private <T extends Tree> List<T> convertMenu2Tree(List<T> sourceList) {
         //遍历组装树
-        TreeUtil<T,Integer> treeUtil = new TreeUtil("menuOrder",TreeUtil.ASC);
+        TreeUtil<T, Integer> treeUtil = new TreeUtil("menuOrder", TreeUtil.ASC);
         return treeUtil.getChildNodesByParentId(sourceList, 0);
     }
 
@@ -81,8 +81,8 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     private List<TMenuAuthVo> assemblyAuth(Map<String, List<TMenuAuth>> menuAuthMap) {
         //添加权限信息
         List<TMenuAuthVo> tMenuAuthVoList = new ArrayList<>();
-        for (String menuName : menuAuthMap.keySet()) {
-            List<TMenuAuth> singleTMenuAuthList = menuAuthMap.get(menuName);
+        for (Map.Entry<String, List<TMenuAuth>> entry : menuAuthMap.entrySet()) {
+            List<TMenuAuth> singleTMenuAuthList = entry.getValue();
 
             TMenuAuthVo tMenuAuthVo = DozerUtil.map(singleTMenuAuthList.get(0), TMenuAuthVo.class);
             List<MenuAuth> authList = new ArrayList<>();
@@ -113,22 +113,22 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
         //菜单按名称分组
         Map<String, List<TMenuAuth>> menuAuthMap = new HashMap<>();
         for (TMenuAuth tMenuAuth : tMenuAuthList) {
-            if(menuAuthMap.containsKey(tMenuAuth.getMenuName())){
+            if (menuAuthMap.containsKey(tMenuAuth.getMenuName())) {
                 menuAuthMap.get(tMenuAuth.getMenuName()).add(tMenuAuth);
             } else {
-                menuAuthMap.put(tMenuAuth.getMenuName(),new ArrayList<>());
+                menuAuthMap.put(tMenuAuth.getMenuName(), new ArrayList<>());
             }
         }
         return menuAuthMap;
     }
 
     @Override
-    public ResultTo recursionDelete(Integer menuId,Integer userId) {
+    public ResultTo recursionDelete(Integer menuId, Integer userId) {
         List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menuId);
         //是否有权限
-        boolean canDelete = isHaveAuth(authorities,DELETE);
+        boolean canDelete = isHaveAuth(authorities, DELETE);
         ResultTo resultTo = new ResultTo();
-        if (canDelete){
+        if (canDelete) {
             tMenuMapper.recursionDelete(menuId);
             return resultTo;
         } else {
@@ -140,9 +140,9 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     @Override
     public ResultTo addMenu(TMenu menu, Integer userId) {
         List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menu.getMenuParentId());
-        boolean canDelete = isHaveAuth(authorities,ADD);
+        boolean canDelete = isHaveAuth(authorities, ADD);
         ResultTo resultTo = new ResultTo();
-        if (canDelete){
+        if (canDelete) {
             tMenuMapper.insert(menu);
             return resultTo;
         } else {
@@ -154,9 +154,9 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     @Override
     public ResultTo updateMenu(TMenu menu, Integer userId) {
         List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menu.getMenuParentId());
-        boolean canDelete = isHaveAuth(authorities,UPDATE);
+        boolean canDelete = isHaveAuth(authorities, UPDATE);
         ResultTo resultTo = new ResultTo();
-        if (canDelete){
+        if (canDelete) {
             tMenuMapper.updateByPrimaryKey(menu);
             return resultTo;
         } else {
@@ -169,17 +169,19 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
      * 是否有权限
      *
      * @param authorities 权限集合
-     * @param auth 权限
+     * @param auth        权限
      * @return 是否有权限
      */
-    private boolean isHaveAuth(List<Authority> authorities,String auth){
+    private boolean isHaveAuth(List<Authority> authorities, String auth) {
         //java8
 //        boolean canDelete = authorities.stream().anyMatch(authority -> authority.getAuthorityName().split(":")[1].equals(auth));
         //java7
         boolean canDelete = false;
         for (Authority authority : authorities) {
-            canDelete =authority.getAuthorityName().split(":")[1].equals(auth);
-            if (canDelete){break;}
+            canDelete = authority.getAuthorityName().split(":")[1].equals(auth);
+            if (canDelete) {
+                break;
+            }
         }
         return canDelete;
     }

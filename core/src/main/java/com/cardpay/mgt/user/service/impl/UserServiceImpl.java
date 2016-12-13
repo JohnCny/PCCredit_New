@@ -131,8 +131,26 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             return new ResultTo(ResultEnum.CAPTCHA_TIMEOUT);
         }
         if (object.toString().equals(code)) {
-            return new ResultTo();
+            String checkedCode = VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_LOWER, 16, null);
+            redisClient.set(RedisKeyPrefixEnum.USER, checkedCode, "checkedCode", Constant.API_TIMEOUT);
+            LogTemplate.debug(this.getClass(), "checkedCode", checkedCode);
+            return new ResultTo().setData(checkedCode);
         }
         return new ResultTo(ResultEnum.CAPTCHA_ERROR);
+    }
+
+    @Override
+    public ResultTo resetPassword(Integer userId, String checkedCode, String password) {
+        Object object = redisClient.get(RedisKeyPrefixEnum.USER, checkedCode);
+        if (object == null) {
+            return new ResultTo(ResultEnum.API_TIMEOUT);
+        }
+        User user = new User();
+        user.setId(userId);
+        user.setPassword(PasswordUtil.encryptPassword(password));
+        if (userMapper.updateByPrimaryKeySelective(user) == 0) {
+            return new ResultTo(ResultEnum.OPERATION_FAILED);
+        }
+        return new ResultTo();
     }
 }

@@ -55,4 +55,14 @@ public interface UserService extends BaseService<User> {
      * @return 成功或失败
      */
     ResultTo checkedCode(String address, String code);
+
+    /**
+     * 重置密码
+     *
+     * @param userId      用户ID
+     * @param checkedCode Api接口验证
+     * @param password    密码
+     * @return 成功或失败
+     */
+    ResultTo resetPassword(Integer userId, String checkedCode, String password);
 }
