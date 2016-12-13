@@ -3,6 +3,7 @@ package com.cardpay.controller.product;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.product.model.TProductOrganization;
+import com.cardpay.mgt.product.model.po.TProductOrganizationPo;
 import com.cardpay.mgt.product.service.TProductOrganizationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,7 +57,7 @@ public class TProductOrganizationController extends BaseController<TProductOrgan
      * @return 新增产品信息id集合
      */
     @ApiOperation(value = "批量添加产品机构信息接口", notes = "添加产品机构信息", httpMethod = "POST")
-    @RequestMapping(value = "/insertProductOrganization", method = RequestMethod.POST)
+    @RequestMapping(value = "/productOrganization", method = RequestMethod.POST)
     public ResultTo insertProductOrganization(@ApiParam(value = "产品id", required = true) @RequestParam int productId
             , @ApiParam(value = "机构id(','分割)", required = true) @RequestParam String orgIds) {
         List<TProductOrganization> tProductOrganizationList = new ArrayList<>();
@@ -77,11 +78,26 @@ public class TProductOrganizationController extends BaseController<TProductOrgan
      * @return 数据库变动条数
      */
     @ApiOperation(value = "批量删除产品机构信息接口", notes = "删除产品机构信息", httpMethod = "DELETE")
-    @RequestMapping(value = "/deleteProductOrganization", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/productOrganization", method = RequestMethod.DELETE)
     public ResultTo deleteProductOrganization(@ApiParam(value = "产品id", required = true) @RequestParam int productId
             , @ApiParam(value = "机构id(','分割)", required = true) @RequestParam String orgIds) {
-        int sum = tProductOrganizationService.bathDeleteOrg(productOrgMap(productId, orgIds));
-        return new ResultTo().setData(sum);
+        int count = tProductOrganizationService.bathDeleteOrg(productOrgMap(productId, orgIds));
+        return new ResultTo().setData(count);
+    }
+
+    /**
+     * 查询产品关联机构信息
+     *
+     * @param productId 产品id
+     * @param topId     顶级id
+     * @return 产品关联机构信息
+     */
+    @ApiOperation(value = "查询产品关联机构信息", notes = "删除产品机构信息", httpMethod = "GET")
+    @RequestMapping(value = "/productOrganization", method = RequestMethod.GET)
+    public ResultTo queryProductOrganization(@ApiParam(value = "产品id", required = true) @RequestParam int productId
+            , @ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
+        List<TProductOrganizationPo> productOrganizationPoList = tProductOrganizationService.queryProductOrg(productId, topId);
+        return new ResultTo().setData(productOrganizationPoList);
     }
 
 }

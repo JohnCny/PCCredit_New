@@ -1,13 +1,16 @@
 package com.cardpay.mgt.product.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.product.dao.TProductOrganizationMapper;
 import com.cardpay.mgt.product.model.TProductOrganization;
+import com.cardpay.mgt.product.model.po.TProductOrganizationPo;
 import com.cardpay.mgt.product.service.TProductOrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,5 +32,11 @@ public class TProductOrganizationServiceImpl extends BaseServiceImpl<TProductOrg
     @Override
     public int bathDeleteOrg(Map<String, Object> map) {
         return tProductOrganizationDao.bathDeleteOrg(map);
+    }
+
+    @Override
+    public List<TProductOrganizationPo> queryProductOrg(int productId, int topId) {
+        TreeUtil<TProductOrganizationPo, Integer> treeUtil = new TreeUtil();
+        return treeUtil.getChildNodesByParentId(tProductOrganizationDao.queryProductOrg(productId), topId);
     }
 }

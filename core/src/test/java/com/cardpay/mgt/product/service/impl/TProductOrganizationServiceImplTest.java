@@ -1,6 +1,7 @@
 package com.cardpay.mgt.product.service.impl;
 
 import com.cardpay.mgt.product.dao.TProductOrganizationMapper;
+import com.cardpay.mgt.product.model.po.TProductOrganizationPo;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -43,5 +46,27 @@ public class TProductOrganizationServiceImplTest {
         when(tProductOrganizationDao.bathDeleteOrg(map)).thenReturn(1);
         int flag = tProductOrganizationService.bathDeleteOrg(map);
         assertEquals(1, flag);
+    }
+
+    @Test
+    public void queryProductOrg() throws Exception {
+        List<TProductOrganizationPo> list = new ArrayList<>();
+        TProductOrganizationPo tProductOrganizationPo1 = new TProductOrganizationPo();
+        tProductOrganizationPo1.setOrganizationId(2);
+        tProductOrganizationPo1.setOrgParentId(1);
+        list.add(tProductOrganizationPo1);
+
+        TProductOrganizationPo tProductOrganizationPo = new TProductOrganizationPo();
+        tProductOrganizationPo.setOrganizationId(1);
+        tProductOrganizationPo.setOrgParentId(0);
+        tProductOrganizationPo.setChild(list);
+        List<TProductOrganizationPo> productOrganizationPoList = new ArrayList<TProductOrganizationPo>() {
+            {
+                add(tProductOrganizationPo);
+            }
+        };
+        when(tProductOrganizationDao.queryProductOrg(1)).thenReturn(productOrganizationPoList);
+        List<TProductOrganizationPo> tProductOrganizationPos = tProductOrganizationService.queryProductOrg(1, 0);
+        assertTrue(tProductOrganizationPos.size() > 0);
     }
 }

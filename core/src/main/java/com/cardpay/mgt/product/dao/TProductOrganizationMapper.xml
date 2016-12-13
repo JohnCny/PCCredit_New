@@ -3,12 +3,12 @@
 <mapper namespace="com.cardpay.mgt.product.dao.TProductOrganizationMapper">
     <resultMap id="BaseResultMap" type="com.cardpay.mgt.product.model.TProductOrganization">
         <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
-        <result column="ORAGANIZATION_ID" jdbcType="DECIMAL" property="oraganizationId"/>
+        <result column="ORAGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
     </resultMap>
 
-    <resultMap id="BaseResultMapPo" type="com.cardpay.mgt.product.model.po.ProductOrganzationPo">
+    <resultMap id="BaseResultMapPo" type="com.cardpay.mgt.product.model.po.TProductOrganizationPo">
         <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
-        <result column="ORAGANIZATION_ID" jdbcType="DECIMAL" property="oraganizationId"/>
+        <result column="ORAGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
         <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
         <result column="ORG_PARENT_ID" jdbcType="DECIMAL" property="orgParentId" />
     </resultMap>
@@ -32,8 +32,8 @@
     <!--查询产品关联机构信息-->
     <select id="queryProductOrg" resultMap="BaseResultMapPo">
         SELECT org.ORG_NAME, org.ORG_PARENT_ID, productOrg.PRODUCT_ID, productOrg.ORAGANIZATION_ID
-        FROM T_ORGANIZATION AS org, T_PRODUCT_ORGANIZATION AS productOrg
-        WHERE org.id = productOrg.oraganizationId AND productOrg.id = #{productId}
+        FROM T_ORGANIZATION org, T_PRODUCT_ORGANIZATION productOrg
+        WHERE org.id = productOrg.ORAGANIZATION_ID AND productOrg.PRODUCT_ID = #{productId}
     </select>
 
 </mapper>
