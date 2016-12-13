@@ -5,7 +5,6 @@ import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.DozerUtil;
-import com.cardpay.basic.util.treeutil.Tree;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
 import com.cardpay.mgt.menu.model.*;
@@ -14,10 +13,8 @@ import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.model.Authority;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,8 +40,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     private static final String ADD = "Add";
 
     @Override
-    @Transactional
-    public synchronized List<TMenuVo> selectMenuListByLevel(int topId, int level, int userId) {
+    public List<TMenuVo> selectMenuListByLevel(int topId, int level, int userId) {
         List<TMenuVo> menuVoList = tMenuMapper.selectMenuListByLevel(topId, level, userId);
         return convertMenu2Tree(menuVoList);
     }
@@ -67,9 +63,9 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
      * @param sourceList 需要层级组装排序的列表
      * @return 层级排序后的菜单
      */
-    private <T extends Tree> List<T> convertMenu2Tree(List<T> sourceList) {
+    private <T> List<T> convertMenu2Tree(List<T> sourceList) {
         //遍历组装树
-        TreeUtil<T, Integer> treeUtil = new TreeUtil("menuOrder", TreeUtil.ASC);
+        TreeUtil<T> treeUtil = new TreeUtil("menuOrder", TreeUtil.ASC);
         long start = System.currentTimeMillis();
         List<T> childNodesByParentId = treeUtil.getChildNodesByParentId(sourceList, 0);
         long end = System.currentTimeMillis();
@@ -122,6 +118,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
                 menuAuthMap.get(tMenuAuth.getMenuName()).add(tMenuAuth);
             } else {
                 menuAuthMap.put(tMenuAuth.getMenuName(), new ArrayList<>());
+                menuAuthMap.get(tMenuAuth.getMenuName()).add(tMenuAuth);
             }
         }
         return menuAuthMap;

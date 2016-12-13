@@ -1,8 +1,9 @@
 package com.cardpay.mgt.menu.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
-import com.cardpay.basic.util.treeutil.Tree;
-import com.cardpay.mgt.menu.model.TMenu;
+import com.cardpay.basic.util.treeutil.annotation.TreeChild;
+import com.cardpay.basic.util.treeutil.annotation.TreeId;
+import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @Table(name = "T_MENU")
 @ApiModel(value = "菜单")
-public class TMenuVo extends GenericEntity<Integer> implements Tree<Integer,TMenuVo>{
+public class TMenuVo extends GenericEntity<Integer>{
 
     /**
      * 菜单id
@@ -25,6 +26,7 @@ public class TMenuVo extends GenericEntity<Integer> implements Tree<Integer,TMen
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MENU_SEQ.nextval from dual")
     @ApiModelProperty(value = "菜单id", required = true)
+    @TreeId
     private Integer id;
 
     /**
@@ -46,6 +48,7 @@ public class TMenuVo extends GenericEntity<Integer> implements Tree<Integer,TMen
      */
     @Column(name = "MENU_PARENT_ID")
     @ApiModelProperty(value = "父菜单id", required = true)
+    @TreeParentId
     private Integer menuParentId;
 
     /**
@@ -94,6 +97,7 @@ public class TMenuVo extends GenericEntity<Integer> implements Tree<Integer,TMen
      * 子菜单
      */
     @ApiModelProperty(value = "子菜单", required = true)
+    @TreeChild
     private List<TMenuVo> menuLists;
 
     /**
@@ -121,16 +125,6 @@ public class TMenuVo extends GenericEntity<Integer> implements Tree<Integer,TMen
      */
     public Integer getId() {
         return id;
-    }
-
-    @Override
-    public Integer getParentId() {
-        return menuParentId;
-    }
-
-    @Override
-    public void setChild(List<TMenuVo> child) {
-        setMenuLists(child);
     }
 
     /**
