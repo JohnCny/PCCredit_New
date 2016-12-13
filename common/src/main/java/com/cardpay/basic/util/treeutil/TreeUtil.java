@@ -1,19 +1,29 @@
 package com.cardpay.basic.util.treeutil;
 
 import com.cardpay.basic.util.ListSortUtil;
+import com.cardpay.basic.util.ReflectUtil;
+import com.cardpay.basic.util.treeutil.annotation.TreeChild;
+import com.cardpay.basic.util.treeutil.annotation.TreeId;
+import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 组装树型数据工具,需要继承Tree接口
+ * 组装树型数据工具
+ *
+ * 使用方法：在Bean的Id,父Id,子节点属性上分别添加@TreeId,@TreeParentId,@TreeChild
  *
  * @param <T>  需要组装的Bean类型
- * @param <PK> 主键类型
- *             <p>
- *             Created by yanwe on 2016/12/9.
+ * Created by yanwe on 2016/12/9.
  */
-public class TreeUtil<T extends Tree, PK> {
+public class TreeUtil<T> {
 
     private List<T> returnList = new ArrayList<>();
 
@@ -33,8 +43,7 @@ public class TreeUtil<T extends Tree, PK> {
 
     public final static int DESC = 1;//倒序
 
-    public TreeUtil() {
-    }
+    public TreeUtil() {}
 
     public TreeUtil(String orderKey, int sortMode) {
         this.order = true;
@@ -46,16 +55,19 @@ public class TreeUtil<T extends Tree, PK> {
      * 根据父节点的ID获取所有子节点
      *
      * @param sourceList 数据源
-     * @param sourceList 父id
+     * @param parentId 父id
      * @return 层级结果
      */
-    public List<T> getChildNodesByParentId(List<T> sourceList, PK parentId) {
+    public List<T> getChildNodesByParentId(List<T> sourceList, Object parentId) {
         if (sourceList == null || sourceList.isEmpty() || parentId == null) {
             throw new IllegalArgumentException("sourceList is Null or Empty or parentId is Null");
         }
+        if(order && sourceList!=null && !sourceList.isEmpty()){
+            ListSortUtil.sortMap(sourceList,orderKey,sortMode);
+        }
         for (T node : sourceList) {
             //遍历所有的父节点下的所有子节点
-            if (node.getParentId().equals(parentId)) {
+            if (getParentId(node).equals(parentId.toString())) {
                 recursion(sourceList, node);
                 returnList.add(node);
             }
@@ -70,14 +82,16 @@ public class TreeUtil<T extends Tree, PK> {
      * @param topId      根Id
      * @return 层级结果
      */
-    public List<T> getChildNodesByTopId(List<T> sourceList, PK topId) {
+    public List<T> getChildNodesByTopId(List<T> sourceList, Object topId) {
         if (sourceList == null || sourceList.isEmpty() || topId == null) {
             throw new IllegalArgumentException("sourceList is Null or Empty or topId is Null");
         }
+        if(order && sourceList!=null && !sourceList.isEmpty()){
+            ListSortUtil.sortMap(sourceList,orderKey,sortMode);
+        }
         for (T node : sourceList) {
             //遍历所有的父节点下的所有子节点
-            node.getParentId();
-            if (node.getId() == topId) {
+            if (getId(node).equals(topId.toString())) {
                 recursion(sourceList, node);
                 returnList.add(node);
             }
@@ -91,12 +105,12 @@ public class TreeUtil<T extends Tree, PK> {
             ListSortUtil.sortMap(childList, orderKey, sortMode);
         }
         if (hasChild(sourceList, node)) {//判断是否有子节点
-            node.setChild(childList);
+            setChild(node,childList);
             for (T childNode : childList) {
                 recursion(sourceList, childNode);
             }
         } else {
-            node.setChild(childList);
+            setChild(node,childList);
         }
     }
 
@@ -104,7 +118,7 @@ public class TreeUtil<T extends Tree, PK> {
     private List<T> getChildList(List<T> list, T node) {
         List<T> nodeList = new ArrayList<>();
         for (T childNode : list) {
-            if (childNode.getParentId() == node.getId()) {
+            if (getParentId(childNode).equals(getId(node))) {
                 nodeList.add(childNode);
             }
         }
@@ -116,4 +130,15 @@ public class TreeUtil<T extends Tree, PK> {
         return getChildList(list, node).size() > 0 ? true : false;
     }
 
+    private String getParentId(T node) {
+        return ReflectUtil.getFiledValueByAnnotation(node,TreeParentId.class);
+    }
+
+    private String getId(T node){
+        return ReflectUtil.getFiledValueByAnnotation(node,TreeId.class);
+    }
+
+    private void setChild(T node,List<T> nodeList) {
+        ReflectUtil.setFiledValueByAnnotation(node,TreeChild.class,nodeList);
+    }
 }

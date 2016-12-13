@@ -4,6 +4,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,7 +18,7 @@ import java.lang.reflect.Method;
 public class ReflectUtil {
 	/**
 	 * 利用反射获取指定对象的指定属性
-	 * 
+	 *
 	 * @param obj 目标对象
 	 * @param fieldName 目标属性
 	 * @return 目标属性的值
@@ -38,7 +41,7 @@ public class ReflectUtil {
 
 	/**
 	 * 利用反射获取指定对象里面的指定属性
-	 * 
+	 *
 	 * @param obj 目标对象
 	 * @param fieldName 目标属性
 	 * @return 目标字段
@@ -77,7 +80,7 @@ public class ReflectUtil {
 			}
 		}
 	}
-	
+
 	/**
 	 * 两者属性名一致时，拷贝source里的属性到dest里
 	 * @param dest   目标对象
@@ -90,7 +93,7 @@ public class ReflectUtil {
 			IllegalArgumentException, InvocationTargetException{
         Class srcCla = source.getClass();
         Field[] fsF = srcCla.getDeclaredFields();
- 
+
         for (Field s : fsF)
         {
             String name = s.getName();
@@ -102,10 +105,10 @@ public class ReflectUtil {
             catch (Exception e){
                 e.printStackTrace();
             }
-            
+
         }
     }
-    
+
 	/**
 	 *  调用Getter方法.
 	 * @param target  目标对象
@@ -116,8 +119,7 @@ public class ReflectUtil {
 	 * @throws InvocationTargetException 非法调用异常
 	 */
     public static Object invokeGetterMethod(Object target, String propertyName) throws IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException
-    {
+			IllegalArgumentException, InvocationTargetException {
         String getterMethodName = "get" + StringUtils.capitalize(propertyName);
         return invokeMethod(target, getterMethodName, new Class[] {},
                 new Object[] {});
@@ -136,7 +138,7 @@ public class ReflectUtil {
 	 */
     public static Object invokeMethod(final Object object,
             final String methodName, final Class<?>[] parameterTypes,
-            final Object[] parameters) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+            final Object[] parameters) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Method method = getDeclaredMethod(object, methodName, parameterTypes);
         if (method == null)
         {
@@ -144,11 +146,11 @@ public class ReflectUtil {
                     + methodName + "] parameterType " + parameterTypes
                     + " on target [" + object + "]");
         }
- 
+
         method.setAccessible(true);
        return method.invoke(object, parameters);
     }
-    
+
 	/**
 	 * 循环向上转型, 获取对象的DeclaredMethod.
 	 * 如向上转型到Object仍无法找到, 返回null.
@@ -158,10 +160,9 @@ public class ReflectUtil {
 	 * @return  目标对象的DeclaredMethod
 	 */
     protected static Method getDeclaredMethod(Object object, String methodName,
-            Class<?>[] parameterTypes)
-    {
+            Class<?>[] parameterTypes) {
         Assert.notNull(object, "object不能为空");
- 
+
         for (Class<?> superClass = object.getClass(); superClass != Object.class; superClass = superClass
                 .getSuperclass())
         {
@@ -175,5 +176,54 @@ public class ReflectUtil {
         }
         return null;
     }
+
+	/**
+	 * 根据指定注解获得属性值
+	 *
+	 * @param bean 目标bean
+	 * @param annotationClass 注解Class
+	 * @return
+	 */
+	public static String getFiledValueByAnnotation(Object bean,Class<? extends Annotation> annotationClass) {
+		Class<?> beanClass = bean.getClass();
+		Field[] fields = beanClass.getDeclaredFields();
+		for (Field field : fields) {
+			if(field.isAnnotationPresent(annotationClass)){
+				try {
+					return BeanUtils.getProperty(bean,field.getName());
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 根据指定注解设置属性值
+	 *
+	 * @param bean 目标bean
+	 * @param annotationClass 注解Class
+	 * @param value 值
+	 */
+	public static void setFiledValueByAnnotation(Object bean,Class<? extends Annotation> annotationClass,Object value) {
+		Class<?> beanClass = bean.getClass();
+		Field[] fields = beanClass.getDeclaredFields();
+		for (Field field : fields) {
+			if(field.isAnnotationPresent(annotationClass)){
+				try {
+					BeanUtils.setProperty(bean,field.getName(),value);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }
 
