@@ -12,18 +12,19 @@ import java.util.List;
 
 /**
  * 菜单Vo类
+ *
  * @author yanwe 2016年11月23日17:11:56
  */
 @Table(name = "T_MENU")
 @ApiModel(value = "菜单")
-public class TMenuAuthVo extends GenericEntity<Integer> implements Tree<Integer,TMenuAuthVo>{
+public class TMenuAuthVo extends GenericEntity<Integer> implements Tree<Integer, TMenuAuthVo> {
 
     /**
      * 菜单id
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MENU_SEQ.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select MENU_SEQ.nextval from dual")
     @ApiModelProperty(value = "菜单id", required = true)
     private Integer id;
 

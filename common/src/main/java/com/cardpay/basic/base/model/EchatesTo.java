@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class EchatesTo extends HashMap<String, Object> implements Serializable {
 
-    private static final long serialVersionUID = -6125210369527938613L;
+    private static final long serialVersionUID = -6125210366527958613L;
 
     private static Map<Integer, String> RS_MAP = new HashMap<Integer, String>() {
         {
