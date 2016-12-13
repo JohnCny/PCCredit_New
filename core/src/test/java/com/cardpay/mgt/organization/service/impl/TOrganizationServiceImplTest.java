@@ -62,7 +62,7 @@ public class TOrganizationServiceImplTest {
         TOrganizationVo tOrganizationVo = new TOrganizationVo();
         tOrganizationVo.setId(1);
         tOrganizationVo.setOrgParentId(0);
-        tOrganizationVo.setChild(list);
+        tOrganizationVo.setOrganizationList(list);
 
         List<TOrganizationVo> list1 = new ArrayList<>();
         list1.add(tOrganizationVo);

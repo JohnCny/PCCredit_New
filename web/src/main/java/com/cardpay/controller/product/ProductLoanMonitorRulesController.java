@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/productLoanMonitor")
-@Api(value = "/productLoanMonitor", description = "产品贷后监控规则Controller类")
+@Api(value = "/productLoanMonitor", description = "产品贷后监控规则")
 public class ProductLoanMonitorRulesController extends BaseController<TProductLoanMonitorRules, Integer> {
     @Autowired //产品贷后监控规则Service
     private TProductLoanMonitorRulesService tProductLoanMonitorRulesService;

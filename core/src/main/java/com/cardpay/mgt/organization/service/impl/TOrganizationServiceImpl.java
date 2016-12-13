@@ -38,7 +38,7 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
 
     @Override
     public List<TOrganizationVo> queryAll(int parentId) {
-        TreeUtil<TOrganizationVo, Integer> tree = new TreeUtil<>();
+        TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
         return tree.getChildNodesByParentId(tOrganizationDao.queryAll(), parentId);
     }
 }

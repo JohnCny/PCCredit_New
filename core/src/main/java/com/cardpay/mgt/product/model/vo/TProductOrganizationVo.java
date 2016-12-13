@@ -1,9 +1,12 @@
 package com.cardpay.mgt.product.model.vo;
 
-import com.cardpay.basic.util.treeutil.Tree;
+import com.cardpay.basic.util.treeutil.annotation.TreeChild;
+import com.cardpay.basic.util.treeutil.annotation.TreeId;
+import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.Transient;
 import java.util.List;
 
 /**
@@ -11,20 +14,24 @@ import java.util.List;
  * Created by chenkai on 2016/12/12.
  */
 @ApiModel(value = "产品机构Po类")
-public class TProductOrganizationVo implements Tree<Integer, TProductOrganizationVo>{
+public class TProductOrganizationVo {
+
+    @TreeId
+    @ApiModelProperty(value = "机构Id", required = true)
+    private Integer organizationId;
 
     @ApiModelProperty(value = "产品Id", required = true)
     private Integer productId;
-
-    @ApiModelProperty(value = "机构Id", required = true)
-    private Integer organizationId;
 
     @ApiModelProperty(value = "机构名称", required = true)
     private String orgName;
 
     @ApiModelProperty(value = "父机构id", required = true)
+    @TreeParentId
     private Integer orgParentId;
 
+    @TreeChild
+    @Transient
     @ApiModelProperty(value = "子机构信息", required = true)
     private List<TProductOrganizationVo> organizationList;
 
@@ -66,21 +73,5 @@ public class TProductOrganizationVo implements Tree<Integer, TProductOrganizatio
 
     public void setOrganizationList(List<TProductOrganizationVo> organizationList) {
         this.organizationList = organizationList;
-    }
-
-    @Override
-    public Integer getId() {
-        return organizationId;
-    }
-
-    @Override
-    public Integer getParentId() {
-        return orgParentId;
-    }
-
-    @Override
-    public void setChild(List<TProductOrganizationVo> child) {
-        setOrganizationList(child);
-
     }
 }

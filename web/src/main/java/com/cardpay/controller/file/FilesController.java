@@ -33,25 +33,39 @@ public class FilesController {
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     @ApiOperation(value = "文件下载接口", notes = "下载dfs服务器文件", httpMethod = "GET")
     public ResultTo download(@ApiParam(value = "组名,文件名,另存为名称", required = true)
-                                           @RequestParam("file") String file) {
+                             @RequestParam("file") String file) {
         String[] str = file.split(",");
         ResponseEntity<byte[]> download = FileManager.download(str[0], str[1], str[2]);
         return new ResultTo().setData(download);
     }
 
     /**
-     * 文件上传接口
+     * 多件上传接口
+     *
+     * @param files 文件
+     * @return 文件路径集合
+     * @throws Exception IO异常
+     */
+    @RequestMapping(value = "/uploads", method = RequestMethod.POST)
+    @ApiOperation(value = "多文件上传接口", notes = "上传多文件到dfs服务器", httpMethod = "POST")
+    @ApiModelProperty(dataType = "MultipartFile")
+    public ResultTo upLoads(@ApiParam(value = "文件", required = true) @RequestPart MultipartFile[] files) {
+        List<String> list = fileManager.upLoad(files);
+        return new ResultTo().setData(list);
+    }
+
+    /**
+     * 单文件上传接口
      *
      * @param files 文件
      * @return 文件路径
-     * @throws Exception IO异常
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ApiOperation(value = "文件上传接口", notes = "上传文件到dfs服务器", httpMethod = "POST")
+    @ApiOperation(value = "单文件上传接口", notes = "上传文件到dfs服务器", httpMethod = "POST")
     @ApiModelProperty(dataType = "MultipartFile")
-    public ResultTo upLoad(@ApiParam(value = "文件", required = true) @RequestPart MultipartFile[] files) {
-        List<String> list = fileManager.upLoad(files);
-        return new ResultTo().setData(list);
+    public ResultTo upLoad(@ApiParam(value = "文件", required = true) @RequestPart MultipartFile files) {
+        String path = fileManager.upLoad(files);
+        return new ResultTo().setData(path);
     }
 
     /**
@@ -70,14 +84,15 @@ public class FilesController {
 
     /**
      * 文件查询接口
+     *
      * @param groupName 组名称
-     * @param fileName fastdfs中文件名称
+     * @param fileName  fastDfs中文件名称
      * @return fileInfo对象
      */
     @RequestMapping(value = "/queryFile", method = RequestMethod.GET)
     @ApiOperation(value = "文件查询接口", notes = "查询dfs服务器中指定文件", httpMethod = "GET")
     public ResultTo queryFile(@ApiParam(value = "组名", required = true) String groupName
-            ,@ApiParam(value = "fastdfs中文件名称", required = true) String fileName){
+            , @ApiParam(value = "fastdfs中文件名称", required = true) String fileName) {
         FileInfo fileInfo = FileManager.queryFile(groupName, fileName);
         return new ResultTo().setData(fileInfo);
     }

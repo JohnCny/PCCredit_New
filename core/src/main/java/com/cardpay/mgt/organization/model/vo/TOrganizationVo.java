@@ -1,8 +1,9 @@
 package com.cardpay.mgt.organization.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
-import com.cardpay.basic.util.treeutil.Tree;
-import com.cardpay.mgt.product.model.vo.TProductOrganizationVo;
+import com.cardpay.basic.util.treeutil.annotation.TreeChild;
+import com.cardpay.basic.util.treeutil.annotation.TreeId;
+import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -15,11 +16,12 @@ import java.util.List;
  * Created by chenkai on 2016/11/23.
  */
 @ApiModel(value = "机构表VO类")
-public class TOrganizationVo extends GenericEntity<Integer> implements Tree<Integer, TOrganizationVo> {
+public class TOrganizationVo extends GenericEntity<Integer> {
     /**
      * id
      */
     @Id
+    @TreeId
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select ORGANIZATION_SEQ.nextval from dual")
     @ApiModelProperty(value = "机构Id", required = true)
@@ -51,6 +53,7 @@ public class TOrganizationVo extends GenericEntity<Integer> implements Tree<Inte
      */
     @Column(name = "ORG_PARENT_ID")
     @ApiModelProperty(value = "父机构id", required = true)
+    @TreeParentId
     private Integer orgParentId;
 
     /**
@@ -93,6 +96,7 @@ public class TOrganizationVo extends GenericEntity<Integer> implements Tree<Inte
      */
     @ApiModelProperty(value = "子机构列表", required = true)
     @Transient
+    @TreeChild
     private List<TOrganizationVo> organizationList;
 
     /**
@@ -102,16 +106,6 @@ public class TOrganizationVo extends GenericEntity<Integer> implements Tree<Inte
      */
     public Integer getId() {
         return id;
-    }
-
-    @Override
-    public Integer getParentId() {
-        return orgParentId;
-    }
-
-    @Override
-    public void setChild(List<TOrganizationVo> child) {
-        setOrganizationList(child);
     }
 
     /**

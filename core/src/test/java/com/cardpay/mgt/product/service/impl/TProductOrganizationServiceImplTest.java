@@ -59,7 +59,7 @@ public class TProductOrganizationServiceImplTest {
         TProductOrganizationVo tProductOrganizationPo = new TProductOrganizationVo();
         tProductOrganizationPo.setOrganizationId(1);
         tProductOrganizationPo.setOrgParentId(0);
-        tProductOrganizationPo.setChild(list);
+        tProductOrganizationPo.setOrganizationList(list);
         List<TProductOrganizationVo> productOrganizationPoList = new ArrayList<TProductOrganizationVo>() {
             {
                 add(tProductOrganizationPo);

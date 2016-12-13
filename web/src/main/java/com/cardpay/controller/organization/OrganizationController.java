@@ -50,7 +50,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param topId 顶级id
      * @return 所有机构层级信息
      */
-    @RequestMapping(value = "/organization", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
         List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
@@ -63,7 +63,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param id 层级id
      * @return 1成功, 0失败
      */
-    @RequestMapping(value = "/organization", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息", httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id) {
         int flag = tOrganizationService.deleteOrganization(id);
@@ -74,30 +74,17 @@ public class OrganizationController extends BaseController<TOrganization, Intege
     /**
      * 新增机构
      *
-     * @param orgName      机构名称
-     * @param directorId   负责id
-     * @param directorName 负责名称
-     * @param logisticsId  后勤id
+     * @param tOrganization  机构信息
      * @return 机构id
      */
-    @RequestMapping(value = "/organization", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
-    public ResultTo insertOrganization(@ApiParam(value = "机构名称", required = true) String orgName
-            , @ApiParam(value = "负责id", required = true) int directorId
-            , @ApiParam(value = "负责名称", required = true) String directorName
-            , @ApiParam(value = "后勤id", required = true) int logisticsId
-            , @ApiParam(value = "机构类型(0 法人机构 1 分支机构)", required = true) int orgType) {
-        TOrganization tOrganization = new TOrganization();
+    public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {
         tOrganization.setOrgId("1234");
-        tOrganization.setOrgName(orgName);
-        tOrganization.setOrgDirectorId(directorId);
-        tOrganization.setOrgDirectorName(directorName);
-        tOrganization.setOrgLogisticsId(logisticsId);
-        tOrganization.setOrgLevel(orgType);
         tOrganization.setOrgParentId(0);
         tOrganization.setCreateBy(ShiroKit.getUserId());
         tOrganization.setCreateTime(new Date());
-        tOrganizationService.insert(tOrganization);
+        tOrganizationService.insertSelective(tOrganization);
         logger.info(OrganizationController.class, "新增机构", "机构id:" + tOrganization.getId());
         return new ResultTo().setData(tOrganization.getId());
     }

@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TProductOrganizationControllerTest extends TestEnv {
     @Test
     public void queryProductOrganization() throws Exception {
-        mockMvc.perform(get("/productOrganization/productOrganization").param("productId", "1")
+        mockMvc.perform(get("/productOrganization/").param("productId", "1")
                 .param("orgIds", "2,3,4"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
@@ -23,7 +23,7 @@ public class TProductOrganizationControllerTest extends TestEnv {
 
     @Test
     public void insertProductOrganization() throws Exception {
-        mockMvc.perform(post("/productOrganization/productOrganization").param("productId", "2")
+        mockMvc.perform(post("/productOrganization/").param("productId", "2")
                 .param("orgIds", "2,3,4"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
@@ -31,7 +31,7 @@ public class TProductOrganizationControllerTest extends TestEnv {
 
     @Test
     public void deleteProductOrganization() throws Exception {
-        mockMvc.perform(delete("/productOrganization/productOrganization").param("productId", "2")
+        mockMvc.perform(delete("/productOrganization/").param("productId", "2")
                 .param("orgIds", "2,3,4"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));

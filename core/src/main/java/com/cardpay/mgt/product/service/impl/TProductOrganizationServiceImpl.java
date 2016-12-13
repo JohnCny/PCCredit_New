@@ -36,7 +36,7 @@ public class TProductOrganizationServiceImpl extends BaseServiceImpl<TProductOrg
 
     @Override
     public List<TProductOrganizationVo> queryProductOrg(int productId, int topId) {
-        TreeUtil<TProductOrganizationVo, Integer> treeUtil = new TreeUtil();
+        TreeUtil<TProductOrganizationVo> treeUtil = new TreeUtil();
         return treeUtil.getChildNodesByParentId(tProductOrganizationDao.queryProductOrg(productId), topId);
     }
 }

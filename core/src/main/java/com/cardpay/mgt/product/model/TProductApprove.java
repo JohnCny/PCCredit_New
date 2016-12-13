@@ -341,6 +341,6 @@ public class TProductApprove extends GenericEntity<Integer> {
 
     @Override
     public Integer getPK() {
-        return null;
+        return id;
     }
 }

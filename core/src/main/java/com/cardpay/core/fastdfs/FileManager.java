@@ -206,7 +206,6 @@ public class FileManager implements FileManagerConfig {
             String fileName = upload(fastDFSFile, metaList);
             //插入数据库t_file表
             if (!fileName.isEmpty()) {
-                upload = fileName + "," + file.getOriginalFilename() + "," + ext;
                 String[] str = upload.split(",");
                 String userId = String.valueOf(ShiroKit.getUserId());
                 TFile tFile = TFile.TFileBuilder.get()
