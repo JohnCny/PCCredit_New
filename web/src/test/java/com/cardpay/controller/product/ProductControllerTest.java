@@ -1,6 +1,5 @@
 package com.cardpay.controller.product;
 
-import com.cardpay.mgt.product.model.TProductInvestPictureDesc;
 import com.cardpay.util.TestEnv;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,7 +21,7 @@ public class ProductControllerTest extends TestEnv {
     @Test
     @Ignore
     public void insertProduct() throws Exception {
-       MockMultipartFile mockFile = new MockMultipartFile("data", "filename.txt"
+        MockMultipartFile mockFile = new MockMultipartFile("data", "filename.txt"
                 , "text/plain", "some xml".getBytes());
         HashMap<String, String> contentTypeParams = new HashMap<>();
         contentTypeParams.put("boundary", "265001916915724");

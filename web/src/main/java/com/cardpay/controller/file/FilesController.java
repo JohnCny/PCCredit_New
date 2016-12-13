@@ -35,7 +35,7 @@ public class FilesController {
     public ResultTo download(@ApiParam(value = "组名,文件名,另存为名称", required = true)
                              @RequestParam("file") String file) {
         String[] str = file.split(",");
-        ResponseEntity<byte[]> download = FileManager.download(str[0], str[1], str[2]);
+        ResponseEntity<byte[]> download = fileManager.download(str[0], str[1], str[2]);
         return new ResultTo().setData(download);
     }
 
@@ -78,8 +78,8 @@ public class FilesController {
     @ApiOperation(value = "文件删除接口", notes = "删除dfs服务器中指定文件", httpMethod = "DELETE")
     public ResultTo delete(@ApiParam(value = "组名,文件名", required = true) @RequestParam("file") String file) {
         String[] str = file.split(",");
-        int flag = fileManager.deleteFile(str[0], str[1]);
-        return new ResultTo().setData(flag);
+        int count = fileManager.deleteFile(str[0], str[1]);
+        return new ResultTo().setData(count);
     }
 
     /**
@@ -92,7 +92,7 @@ public class FilesController {
     @RequestMapping(value = "/queryFile", method = RequestMethod.GET)
     @ApiOperation(value = "文件查询接口", notes = "查询dfs服务器中指定文件", httpMethod = "GET")
     public ResultTo queryFile(@ApiParam(value = "组名", required = true) String groupName
-            , @ApiParam(value = "fastdfs中文件名称", required = true) String fileName) {
+            , @ApiParam(value = "fastDfs中文件名称", required = true) String fileName) {
         FileInfo fileInfo = FileManager.queryFile(groupName, fileName);
         return new ResultTo().setData(fileInfo);
     }
