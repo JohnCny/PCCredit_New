@@ -81,4 +81,14 @@ public class LogonController extends BaseController<User, Integer> {
         return new ResultTo(ResultEnum.NO_PERMITTION);
     }
 
+    /**
+     * 没有登陆跳转
+     *
+     * @return 没有登陆消息
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ResultTo noLogin() {
+        return new ResultTo(ResultEnum.NO_LOGIN);
+    }
+
 }

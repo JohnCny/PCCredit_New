@@ -16,6 +16,7 @@ public class User extends GenericEntity<Integer> {
     /**
      * 用户id
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select USER_SEQ.nextval from dual")
     @ApiModelProperty(value = "用户id", required = true)
