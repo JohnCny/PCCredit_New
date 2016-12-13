@@ -1,5 +1,7 @@
 package com.cardpay.util;
 
+import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.user.model.User;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ThreadContext;
@@ -29,28 +31,28 @@ public abstract class TestEnv extends BaseTest {
 
     protected Subject subject;
 
-//    protected static User baseUser;
-//
-//    static {
-//        baseUser = User.UserBuilder.get().withId(1).withName("manager").withEmail("rankawin@163.com")
-//                .withPassword("7d9ca79d6ead7127c3a17fd00c1e6090").build();
-//    }
+    protected static User baseUser;
+
+    static {
+        baseUser = User.UserBuilder.get().withId(1).withUsername("test").withEmail("rankawin@163.com")
+                .withPassword("e576017f5da64e43703b420dac217cb4").build();
+    }
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Before
     public void setUp() throws Exception {
-//        SecurityManager securityManger = PowerMockito.mock(SecurityManager.class, Mockito.RETURNS_DEEP_STUBS);
-//        ThreadContext.bind(securityManger);
-//        subject = new Subject.Builder(getSecurityManager()).buildSubject();
-//        setSubject(subject);
+        SecurityManager securityManger = PowerMockito.mock(SecurityManager.class, Mockito.RETURNS_DEEP_STUBS);
+        ThreadContext.bind(securityManger);
+        subject = new Subject.Builder(getSecurityManager()).buildSubject();
+        setSubject(subject);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-//        setUser(baseUser);
+        setUser(baseUser);
     }
 
-//    protected void setUser(User user, String role) {
-//        PowerMockito.when(subject.getPrincipal()).thenReturn(user);
+    protected void setUser(User user, String role) {
+        PowerMockito.when(ShiroKit.getPrincipal()).thenReturn(user);
 //        if (StringUtils.isNotEmpty(role)) {
 //            PowerMockito.when(subject.hasRole(role)).thenReturn(true);
 //        } else {
@@ -72,9 +74,9 @@ public abstract class TestEnv extends BaseTest {
 //                    PowerMockito.when(subject.hasRole(role)).thenReturn(false);
 //            }
 //        }
-//    }
-//
-//    protected void setUser(User user) {
-//        setUser(user, null);
-//    }
+    }
+
+    protected void setUser(User user) {
+        setUser(user, null);
+    }
 }

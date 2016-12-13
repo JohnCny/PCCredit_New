@@ -1,8 +1,7 @@
 package com.cardpay.mgt.user.service.impl;
 
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
-import com.cardpay.mgt.user.dao.AuthorityOperationMapper;
 import com.cardpay.mgt.user.dao.RoleAuthorityMapper;
 import com.cardpay.mgt.user.dao.RoleMapper;
 import com.cardpay.mgt.user.model.Authority;
@@ -16,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;

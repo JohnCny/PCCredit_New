@@ -3,9 +3,12 @@ import com.cardpay.basic.base.model.EchatesTo;
 import com.cardpay.basic.base.model.EchatesModel;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.mgt.menu.model.TMenu;
+import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.test.model.TModel;
 import com.cardpay.mgt.test.model.TestModel;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ import static com.cardpay.core.webSocket.SystemWebSocketHandler.sendMessageToUse
 @RestController
 @RequestMapping("/test")
 public class TestController extends BaseController<TModel,Integer> {
+
+    @Autowired
+    private TMenuService tMenuService;
 
     @ApiOperation(value = "测试接口", notes = "测试spring-fox",  httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
@@ -78,4 +84,16 @@ public class TestController extends BaseController<TModel,Integer> {
         return new ResultTo();
     }
 
+
+    @RequestMapping("/remarkBean")
+    public ResultTo creditReport() {
+        ResultTo resultTo = new ResultTo();
+        //需要记录并且是从数据库取的值 必须使用Clone方法 或者自己Clone再传
+        TMenu tMenu = tMenuService.selectByPrimaryKeyClone(75);
+        tMenu.setMenuName("修改测试菜单");
+        tMenu.setMenuNameZh("修改了中文名字");
+        //记录修改过程
+        updateAndCompareBean(tMenu,"test","测测测");
+        return resultTo;
+    }
 }

@@ -1,4 +1,4 @@
-package com.cardpay.core.shrio.token;
+package com.cardpay.core.shiro.token;
 
 import org.apache.shiro.authc.UsernamePasswordToken;
 

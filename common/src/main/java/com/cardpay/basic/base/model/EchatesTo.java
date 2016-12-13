@@ -9,9 +9,11 @@ import java.util.*;
  * Echarts 接口请求返回结果,定义全局code值
  * Created by chenkai on 2016/11/23.
  */
-public class EchatesTo extends HashMap<String, Object> implements Serializable{
+public class EchatesTo extends HashMap<String, Object> implements Serializable {
 
-    private static Map<Integer, String> RS_MAP = new HashMap<Integer, String>(){
+    private static final long serialVersionUID = -6125210366527958613L;
+
+    private static Map<Integer, String> RS_MAP = new HashMap<Integer, String>() {
         {
             put(ResultEnum.SUCCESS.getValue(), "success");
             put(ResultEnum.SERVICE_ERROR.getValue(), "server error");
@@ -80,23 +82,26 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
 
     /**
      * 构造函数,设置状态码
+     *
      * @param code 状态码
      */
-    public EchatesTo(int code){
+    public EchatesTo(int code) {
         setCode(code);
     }
 
     /**
      * 沟槽函数,设置状态码和
+     *
      * @param code 状态码
-     * @param msg 描述信息
+     * @param msg  描述信息
      */
-    public EchatesTo(int code, String msg){
+    public EchatesTo(int code, String msg) {
         setMsg(code, msg);
     }
 
     /**
      * 设置状态码,若不是已定义消息则返回自定义状态码
+     *
      * @param code 状态码
      * @return 返回自身对象this
      */
@@ -109,20 +114,21 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
      * 设置错误消息，此时会以设置的错误消息为准
      *
      * @param msg 状态码描述
-     * @return  返回自身对象this
+     * @return 返回自身对象this
      */
-    public EchatesTo setMsg(String msg){
+    public EchatesTo setMsg(String msg) {
         this.put(RS_MSG, msg);
         return this;
     }
 
     /**
-     *设置错误消息和错误码，此时会以设置的错误消息为准
+     * 设置错误消息和错误码，此时会以设置的错误消息为准
+     *
      * @param code 状态码
-     * @param msg 状态码描述
-     * @return  返回自身对象this
+     * @param msg  状态码描述
+     * @return 返回自身对象this
      */
-    public EchatesTo setMsg(int code, String msg){
+    public EchatesTo setMsg(int code, String msg) {
         this.put(RS_CODE, code);
         this.put(RS_MSG, msg);
         return this;
@@ -131,7 +137,7 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
     /**
      * 获取当前的错误码
      *
-     * @return  状态码
+     * @return 状态码
      */
     public int getCode() {
         return null == this.get(RS_CODE) ? 0 : (Integer) this.get(RS_CODE);
@@ -140,7 +146,7 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
     /**
      * 获取当前的错误消息，如果为空，则返回null
      *
-     * @return  code状态描述
+     * @return code状态描述
      */
     public String getMsg() {
         return null == this.get(RS_MSG) ? null : String.valueOf(this.get(RS_MSG));
@@ -148,13 +154,14 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
 
     /**
      * 返回柱状图信息
-     * @param title 标题
+     *
+     * @param title   标题
      * @param subText 副标题
-     * @param list x轴信息
+     * @param list    x轴信息
      * @param objList 对象集合
      * @return 返回自身对象this
      */
-    public EchatesTo setData(String title, String subText, List<String> list, List<?>objList){
+    public EchatesTo setData(String title, String subText, List<String> list, List<?> objList) {
         dataMap.put(RS_TITLE, title);
         dataMap.put(RS_SUBTEXT, subText);
         dataMap.put(RS_LEGEND, list);
@@ -164,13 +171,14 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
     }
 
     /**
-     *  返回柱状图信息
-     * @param title 标题
-     * @param listX 图例集合
+     * 返回柱状图信息
+     *
+     * @param title   标题
+     * @param listX   图例集合
      * @param objList 对象集合
      * @return 返回自身对象this
      */
-    public EchatesTo setData(String title, List<String> listX, List<?>objList){
+    public EchatesTo setData(String title, List<String> listX, List<?> objList) {
         dataMap.put(RS_TITLE, title);
         dataMap.put(RS_X_DATA, listX);
         dataMap.put(RS_SERIES_DATA, objList);
@@ -180,21 +188,22 @@ public class EchatesTo extends HashMap<String, Object> implements Serializable{
 
     /**
      * 折线图信息
-     * @param title 标题 '未来一周气温变化'
-     * @param subText 副标题 '详细温度信息'
-     * @param legendList 图例集合 ['最高气温','最低气温']
-     * @param listX X轴集合  ['周一','周二','周三','周四','周五','周六','周日']
-     * @param seriesListH 高-数据 [11, 11, 15, 13, 12, 13, 10]
+     *
+     * @param title          标题 '未来一周气温变化'
+     * @param subText        副标题 '详细温度信息'
+     * @param legendList     图例集合 ['最高气温','最低气温']
+     * @param listX          X轴集合  ['周一','周二','周三','周四','周五','周六','周日']
+     * @param seriesListH    高-数据 [11, 11, 15, 13, 12, 13, 10]
      * @param markPointListH 高-markPoint {type: 'max', name: '最大值'}
-     * @param markLineListH 高-平均值 {type: 'average', name: '平均值'}
-     * @param seriesListL 低-数据 [1, -2, 2, 5, 3, 2, 0]
+     * @param markLineListH  高-平均值 {type: 'average', name: '平均值'}
+     * @param seriesListL    低-数据 [1, -2, 2, 5, 3, 2, 0]
      * @param markPointListL 低-markPoint {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-     * @param markLineListL 低-平均值 {type: 'average', name: '平均值'}
+     * @param markLineListL  低-平均值 {type: 'average', name: '平均值'}
      * @return 返回自身对象this
      */
     public EchatesTo setData(String title, String subText, List<String> legendList, List<String> listX,
-                             List<String> seriesListH, List<?>markPointListH, List<?>markLineListH
-                                , List<String> seriesListL, List<?>markPointListL, List<?>markLineListL){
+                             List<String> seriesListH, List<?> markPointListH, List<?> markLineListH
+            , List<String> seriesListL, List<?> markPointListL, List<?> markLineListL) {
         dataMap.put(RS_TITLE, title);
         dataMap.put(RS_SUBTEXT, subText);
         dataMap.put(RS_LEGEND, legendList);

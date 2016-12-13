@@ -1,6 +1,9 @@
 package com.cardpay.mgt.menu.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import com.cardpay.basic.util.treeutil.annotation.TreeChild;
+import com.cardpay.basic.util.treeutil.annotation.TreeId;
+import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,6 +26,7 @@ public class TMenuVo extends GenericEntity<Integer>{
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MENU_SEQ.nextval from dual")
     @ApiModelProperty(value = "菜单id", required = true)
+    @TreeId
     private Integer id;
 
     /**
@@ -44,6 +48,7 @@ public class TMenuVo extends GenericEntity<Integer>{
      */
     @Column(name = "MENU_PARENT_ID")
     @ApiModelProperty(value = "父菜单id", required = true)
+    @TreeParentId
     private Integer menuParentId;
 
     /**
@@ -92,6 +97,7 @@ public class TMenuVo extends GenericEntity<Integer>{
      * 子菜单
      */
     @ApiModelProperty(value = "子菜单", required = true)
+    @TreeChild
     private List<TMenuVo> menuLists;
 
     /**

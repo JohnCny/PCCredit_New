@@ -40,9 +40,9 @@ public class Constant {
     public static final String UUID = "5188290547340000";
 
     /**
-     * 短信或邮箱验证码超时时间
+     * 短信或邮箱验证码超时时间(单位:秒)
      */
-    public static final int TIME_OUT = 300;
+    public static final int TIME_OUT = 500;
 
     /**
      * email正则表达式
@@ -90,4 +90,8 @@ public class Constant {
      */
     public static final Integer MSG_UNREAD = 0;
 
+    /**
+     * API请求前个时间(单位:秒)
+     */
+    public static final Integer API_TIMEOUT = 90;
 }

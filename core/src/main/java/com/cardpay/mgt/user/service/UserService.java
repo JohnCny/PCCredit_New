@@ -37,4 +37,32 @@ public interface UserService extends BaseService<User> {
      * @return 成功或失败
      */
     ResultTo updatePassword(String oldPassword, String newPassword);
+
+    /**
+     * 发送验证码
+     *
+     * @param userId  用户Id
+     * @param address email或phone
+     * @return 成功或失败
+     */
+    ResultTo sendCode(Integer userId, String address);
+
+    /**
+     * 验证用户输入的验证码是否正确
+     *
+     * @param address email或phone
+     * @param code    验证码
+     * @return 成功或失败
+     */
+    ResultTo checkedCode(String address, String code);
+
+    /**
+     * 重置密码
+     *
+     * @param userId      用户ID
+     * @param checkedCode Api接口验证
+     * @param password    密码
+     * @return 成功或失败
+     */
+    ResultTo resetPassword(Integer userId, String checkedCode, String password);
 }
