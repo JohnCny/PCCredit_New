@@ -1,18 +1,14 @@
 package com.cardpay.mgt.customermaintenance.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.basic.common.constant.Constant;
-import com.cardpay.basic.common.constant.ConstantEnum;
-import com.cardpay.mgt.customermaintenance.dao.TCustomerMaintenanceMapper;
-import com.cardpay.mgt.customermaintenance.service.impl.CustomerMaintenanceServiceImpl;
-import com.cardpay.mgt.message.service.MessageService;
+import com.cardpay.mgt.customer.customermaintenance.dao.TCustomerMaintenanceMapper;
+import com.cardpay.mgt.customer.customermaintenance.service.CustomerMaintenanceService;
+import com.cardpay.mgt.customer.customermaintenance.service.impl.CustomerMaintenanceServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.util.List;

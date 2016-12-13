@@ -1,9 +1,10 @@
 package com.cardpay.mgt.customerbasic.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.mgt.customerbasic.dao.TCustomerBasicMapper;
-import com.cardpay.mgt.customerbasic.model.po.TCustomerBasic;
-import com.cardpay.mgt.customerbasic.service.impl.CustomerBasicServiceImpl;
+import com.cardpay.mgt.customer.customerbasic.dao.TCustomerBasicMapper;
+import com.cardpay.mgt.customer.customerbasic.model.po.TCustomerBasic;
+import com.cardpay.mgt.customer.customerbasic.service.CustomerBasicService;
+import com.cardpay.mgt.customer.customerbasic.service.impl.CustomerBasicServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -65,7 +66,7 @@ public class CustomerBasicServiceTest {
         PowerMockito.when(customerBasicService.getProspectiveCustomers(1000)).thenReturn(lists);
         List<TCustomerBasic> selects = customerBasicService.getProspectiveCustomers(1000);
         assertEquals(selects.size(), 1);
-        Mockito.verify(customerBasicMapper.getProspectiveCustomers(1000));
+        Mockito.verify(customerBasicMapper).getProspectiveCustomers(1000);
     }
 
 }

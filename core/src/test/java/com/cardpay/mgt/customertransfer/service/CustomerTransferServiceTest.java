@@ -1,9 +1,9 @@
 package com.cardpay.mgt.customertransfer.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.mgt.customermanagerlevel.service.CustomerManagerLevelService;
-import com.cardpay.mgt.customertransfer.dao.TCustomerTransferMapper;
-import com.cardpay.mgt.customertransfer.service.impl.CustomerTransferServiceImpl;
+import com.cardpay.mgt.customer.customertransfer.dao.TCustomerTransferMapper;
+import com.cardpay.mgt.customer.customertransfer.service.CustomerTransferService;
+import com.cardpay.mgt.customer.customertransfer.service.impl.CustomerTransferServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -1,9 +1,10 @@
 package com.cardpay.mgt.customermanagerlevel.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.mgt.customermanagerlevel.dao.TCustomerManagerLevelMapper;
-import com.cardpay.mgt.customermanagerlevel.service.impl.CustomerManagerLevelServiceImpl;
-import com.cardpay.mgt.message.service.MessageService;
+import com.cardpay.mgt.customer.customermanagerlevel.dao.TCustomerManagerLevelMapper;
+import com.cardpay.mgt.customer.customermanagerlevel.model.po.TCustomerManagerLevel;
+import com.cardpay.mgt.customer.customermanagerlevel.service.CustomerManagerLevelService;
+import com.cardpay.mgt.customer.customermanagerlevel.service.impl.CustomerManagerLevelServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,15 +34,18 @@ public class CustomerManagerLevelServiceTest {
 
     @Test
     public void getCustomerManagerLevel() throws Exception {
-        List<SelectModel> lists = new ArrayList<SelectModel>(){
+        TCustomerManagerLevel sm = new TCustomerManagerLevel();
+        sm.setId(1);
+        sm.setLevelName("测试客户经理级别");
+        List<TCustomerManagerLevel> lists = new ArrayList<TCustomerManagerLevel>(){
             {
-                add(new SelectModel());
+                add(sm);
             }
         };
-        PowerMockito.when(customerManagerLevelService.getCustomerManagerLevel()).thenReturn(lists);
+        PowerMockito.when(customerManagerLevelMapper.selectAll()).thenReturn(lists);
         List<SelectModel> selects = (List<SelectModel>)customerManagerLevelService.getCustomerManagerLevel();
         assertEquals(selects.size(), 1);
-        Mockito.verify(customerManagerLevelMapper.selectAll());
+        Mockito.verify(customerManagerLevelMapper).selectAll();
     }
 
 }
