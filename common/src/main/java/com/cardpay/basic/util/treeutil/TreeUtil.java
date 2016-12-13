@@ -10,8 +10,7 @@ import java.util.List;
  *
  * @param <T>  需要组装的Bean类型
  * @param <PK> 主键类型
- *             <p>
- *             Created by yanwe on 2016/12/9.
+ * Created by yanwe on 2016/12/9.
  */
 public class TreeUtil<T extends Tree, PK> {
 
@@ -33,8 +32,7 @@ public class TreeUtil<T extends Tree, PK> {
 
     public final static int DESC = 1;//倒序
 
-    public TreeUtil() {
-    }
+    public TreeUtil() {}
 
     public TreeUtil(String orderKey, int sortMode) {
         this.order = true;
@@ -46,7 +44,7 @@ public class TreeUtil<T extends Tree, PK> {
      * 根据父节点的ID获取所有子节点
      *
      * @param sourceList 数据源
-     * @param sourceList 父id
+     * @param parentId 父id
      * @return 层级结果
      */
     public List<T> getChildNodesByParentId(List<T> sourceList, PK parentId) {

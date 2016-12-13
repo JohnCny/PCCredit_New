@@ -3,6 +3,7 @@ package com.cardpay.mgt.menu.service.impl;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.treeutil.Tree;
 import com.cardpay.basic.util.treeutil.TreeUtil;
@@ -69,7 +70,11 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     private <T extends Tree> List<T> convertMenu2Tree(List<T> sourceList) {
         //遍历组装树
         TreeUtil<T, Integer> treeUtil = new TreeUtil("menuOrder", TreeUtil.ASC);
-        return treeUtil.getChildNodesByParentId(sourceList, 0);
+        long start = System.currentTimeMillis();
+        List<T> childNodesByParentId = treeUtil.getChildNodesByParentId(sourceList, 0);
+        long end = System.currentTimeMillis();
+        LogTemplate.debug("TreeUtil耗时",""+(end-start));
+        return childNodesByParentId;
     }
 
     /**
