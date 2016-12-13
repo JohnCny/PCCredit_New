@@ -2,7 +2,7 @@ package com.cardpay.mgt.product.service;
 
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.product.model.TProductOrganization;
-import com.cardpay.mgt.product.model.po.TProductOrganizationPo;
+import com.cardpay.mgt.product.model.vo.TProductOrganizationVo;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,7 @@ public interface TProductOrganizationService extends BaseService<TProductOrganiz
      * 查询产品相关机构信息
      * @param productId 产品id
      * @param topId 顶级id
-     * @return ProductOrganzationPo
+     * @return ProductOrganizationPo
      */
-    List<TProductOrganizationPo> queryProductOrg(int productId, int topId);
+    List<TProductOrganizationVo> queryProductOrg(int productId, int topId);
 }

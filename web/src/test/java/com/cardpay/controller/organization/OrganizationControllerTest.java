@@ -11,17 +11,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by chenkai on 2016/11/30.
  */
-public class TOrganizationControllerTest extends TestEnv{
+public class OrganizationControllerTest extends TestEnv{
     @Test
-    public void queryOrganization() throws Exception {
-        mockMvc.perform(get("/organization/all").param("level","3"))
+    public void changeQueryOrganization() throws Exception {
+        mockMvc.perform(get("/organization/movementOrganization").param("level","3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
 
     @Test
     public void deleteOrganization() throws Exception {
-        mockMvc.perform(delete("/organization/deleteOrganization").param("id","2"))
+        mockMvc.perform(delete("/organization/organization").param("id","2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
+
+    @Test
+    public void queryOrganization() throws Exception {
+        mockMvc.perform(get("/organization/organization"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }

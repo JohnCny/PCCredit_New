@@ -36,7 +36,7 @@ public class ProductController extends BaseController<TProduct, Integer> {
      * @return 产品id
      */
     @ApiOperation(value = "添加产品信息接口", notes = "添加产品基本信息", httpMethod = "POST")
-    @RequestMapping(value = "/insertProduct", method = RequestMethod.POST)
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResultTo insertProduct(@ApiParam(value = "产品信息", required = true) @ModelAttribute TProduct tProduct
             , @ApiParam(value = "图片信息(需要上传)", required = true)  @RequestPart MultipartFile file) {
         //上传产品图片
@@ -59,8 +59,8 @@ public class ProductController extends BaseController<TProduct, Integer> {
      * @param file 图片信息(需要上传)
      * @return 数据库变更个数
      */
-    @ApiOperation(value = "更新产品信息接口", notes = "更新产品基本信息", httpMethod = "POST")
-    @RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
+    @ApiOperation(value = "更新产品信息接口", notes = "更新产品基本信息", httpMethod = "PUT")
+    @RequestMapping(value = "/product", method = RequestMethod.PUT)
     public ResultTo updateProduct(@ApiParam(value = "产品信息", required = true) @ModelAttribute TProduct tProduct
             , @ApiParam(value = "图片信息(需要上传)")  @RequestPart(value = "file", required = false) MultipartFile file) {
         //若重新上传图片则删除以前上传的图片信息

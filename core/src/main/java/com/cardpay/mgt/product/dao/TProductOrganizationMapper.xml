@@ -6,7 +6,7 @@
         <result column="ORAGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
     </resultMap>
 
-    <resultMap id="BaseResultMapPo" type="com.cardpay.mgt.product.model.po.TProductOrganizationPo">
+    <resultMap id="BaseResultMapPo" type="com.cardpay.mgt.product.model.vo.TProductOrganizationVo">
         <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
         <result column="ORAGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
         <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />

@@ -1,6 +1,6 @@
 package com.cardpay.mgt.product.dao;
 
-import com.cardpay.mgt.product.model.po.TProductOrganizationPo;
+import com.cardpay.mgt.product.model.vo.TProductOrganizationVo;
 import com.cardpay.util.TestEnv;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public class TProductOrganizationMapperTest extends TestEnv {
 
     @Test
     public void queryProductOrg() throws Exception {
-        List<TProductOrganizationPo> productOrganizationPos = tProductOrganizationDao.queryProductOrg(1);
+        List<TProductOrganizationVo> productOrganizationPos = tProductOrganizationDao.queryProductOrg(1);
         assertTrue(productOrganizationPos.size() > 0);
     }
 

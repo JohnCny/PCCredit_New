@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/productApprove")
 @Api(value = "/productApprove", description = "产品审批流程Controller类")
-public class TProductApproveController extends BaseController<TProductApprove, Integer> {
+public class ProductApproveController extends BaseController<TProductApprove, Integer> {
     @Autowired //产品审批流程Service
     private TProductApproveService tProductApproveService;
 }

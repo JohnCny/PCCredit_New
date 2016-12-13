@@ -1,7 +1,7 @@
 package com.cardpay.mgt.product.service.impl;
 
 import com.cardpay.mgt.product.dao.TProductOrganizationMapper;
-import com.cardpay.mgt.product.model.po.TProductOrganizationPo;
+import com.cardpay.mgt.product.model.vo.TProductOrganizationVo;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,23 +50,23 @@ public class TProductOrganizationServiceImplTest {
 
     @Test
     public void queryProductOrg() throws Exception {
-        List<TProductOrganizationPo> list = new ArrayList<>();
-        TProductOrganizationPo tProductOrganizationPo1 = new TProductOrganizationPo();
+        List<TProductOrganizationVo> list = new ArrayList<>();
+        TProductOrganizationVo tProductOrganizationPo1 = new TProductOrganizationVo();
         tProductOrganizationPo1.setOrganizationId(2);
         tProductOrganizationPo1.setOrgParentId(1);
         list.add(tProductOrganizationPo1);
 
-        TProductOrganizationPo tProductOrganizationPo = new TProductOrganizationPo();
+        TProductOrganizationVo tProductOrganizationPo = new TProductOrganizationVo();
         tProductOrganizationPo.setOrganizationId(1);
         tProductOrganizationPo.setOrgParentId(0);
         tProductOrganizationPo.setChild(list);
-        List<TProductOrganizationPo> productOrganizationPoList = new ArrayList<TProductOrganizationPo>() {
+        List<TProductOrganizationVo> productOrganizationPoList = new ArrayList<TProductOrganizationVo>() {
             {
                 add(tProductOrganizationPo);
             }
         };
         when(tProductOrganizationDao.queryProductOrg(1)).thenReturn(productOrganizationPoList);
-        List<TProductOrganizationPo> tProductOrganizationPos = tProductOrganizationService.queryProductOrg(1, 0);
+        List<TProductOrganizationVo> tProductOrganizationPos = tProductOrganizationService.queryProductOrg(1, 0);
         assertTrue(tProductOrganizationPos.size() > 0);
     }
 }

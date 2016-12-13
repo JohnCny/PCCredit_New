@@ -1,6 +1,8 @@
 package com.cardpay.mgt.organization.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import com.cardpay.basic.util.treeutil.Tree;
+import com.cardpay.mgt.product.model.vo.TProductOrganizationVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -13,7 +15,7 @@ import java.util.List;
  * Created by chenkai on 2016/11/23.
  */
 @ApiModel(value = "机构表VO类")
-public class TOrganizationVo extends GenericEntity<Integer> {
+public class TOrganizationVo extends GenericEntity<Integer> implements Tree<Integer, TOrganizationVo> {
     /**
      * id
      */
@@ -100,6 +102,16 @@ public class TOrganizationVo extends GenericEntity<Integer> {
      */
     public Integer getId() {
         return id;
+    }
+
+    @Override
+    public Integer getParentId() {
+        return orgParentId;
+    }
+
+    @Override
+    public void setChild(List<TOrganizationVo> child) {
+        setOrganizationList(child);
     }
 
     /**

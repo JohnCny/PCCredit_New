@@ -20,12 +20,12 @@ public class TProductInvestPictureDescMapperTest extends TestEnv{
     @Test
     public void batchInsert() throws Exception {
         TProductInvestPictureDesc tProductInvestPictureDesc = new TProductInvestPictureDesc();
-        tProductInvestPictureDesc.setId(1);
+        tProductInvestPictureDesc.setId(100000);
         tProductInvestPictureDesc.setIsNeed(1);
         tProductInvestPictureDesc.setPritureDescription("1");
         tProductInvestPictureDesc.setProductId(1);
         TProductInvestPictureDesc tProductInvestPictureDesc2 = new TProductInvestPictureDesc();
-        tProductInvestPictureDesc2.setId(2);
+        tProductInvestPictureDesc2.setId(200000);
         tProductInvestPictureDesc2.setIsNeed(2);
         tProductInvestPictureDesc2.setPritureDescription("2");
         tProductInvestPictureDesc2.setProductId(2);

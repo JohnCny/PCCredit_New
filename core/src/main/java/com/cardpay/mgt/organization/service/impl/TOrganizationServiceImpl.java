@@ -1,6 +1,7 @@
 package com.cardpay.mgt.organization.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.organization.dao.TOrganizationMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
@@ -13,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.beans.Transient;
 import java.util.List;
 
-/** 机构service实现类
+/**
+ * 机构service实现类
  * Created by chenkai on 2016/11/24.
  */
 @Service
@@ -32,5 +34,11 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     @Override
     public int deleteOrganization(int id) {
         return tOrganizationDao.deleteOrganization(id);
+    }
+
+    @Override
+    public List<TOrganizationVo> queryAll(int parentId) {
+        TreeUtil<TOrganizationVo, Integer> tree = new TreeUtil<>();
+        return tree.getChildNodesByParentId(tOrganizationDao.queryAll(), parentId);
     }
 }

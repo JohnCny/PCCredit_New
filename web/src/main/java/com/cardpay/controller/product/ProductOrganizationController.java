@@ -3,7 +3,7 @@ package com.cardpay.controller.product;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.product.model.TProductOrganization;
-import com.cardpay.mgt.product.model.po.TProductOrganizationPo;
+import com.cardpay.mgt.product.model.vo.TProductOrganizationVo;
 import com.cardpay.mgt.product.service.TProductOrganizationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/productOrganization")
 @Api(value = "/productOrganization", description = "产品机构关联Controller类")
-public class TProductOrganizationController extends BaseController<TProductOrganization, Integer> {
+public class ProductOrganizationController extends BaseController<TProductOrganization, Integer> {
     @Autowired //产品机构关联Service
     private TProductOrganizationService tProductOrganizationService;
 
@@ -96,7 +96,7 @@ public class TProductOrganizationController extends BaseController<TProductOrgan
     @RequestMapping(value = "/productOrganization", method = RequestMethod.GET)
     public ResultTo queryProductOrganization(@ApiParam(value = "产品id", required = true) @RequestParam int productId
             , @ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
-        List<TProductOrganizationPo> productOrganizationPoList = tProductOrganizationService.queryProductOrg(productId, topId);
+        List<TProductOrganizationVo> productOrganizationPoList = tProductOrganizationService.queryProductOrg(productId, topId);
         return new ResultTo().setData(productOrganizationPoList);
     }
 

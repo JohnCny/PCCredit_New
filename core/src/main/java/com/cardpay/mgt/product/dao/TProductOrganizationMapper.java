@@ -2,7 +2,7 @@ package com.cardpay.mgt.product.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.product.model.TProductOrganization;
-import com.cardpay.mgt.product.model.po.TProductOrganizationPo;
+import com.cardpay.mgt.product.model.vo.TProductOrganizationVo;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +35,6 @@ public interface TProductOrganizationMapper extends BasicMapper<TProductOrganiza
      * @param productId
      * @return 查询产品相关机构信息Po类
      */
-    List<TProductOrganizationPo> queryProductOrg(int productId);
+    List<TProductOrganizationVo> queryProductOrg(int productId);
 
 }

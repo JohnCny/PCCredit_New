@@ -51,4 +51,24 @@ public class TOrganizationServiceImplTest {
         assertEquals(1, flag);
     }
 
+    @Test
+    public void queryAll() throws Exception {
+        TOrganizationVo tOrganizationVo1 = new TOrganizationVo();
+        List<TOrganizationVo> list = new ArrayList<>();
+        tOrganizationVo1.setId(2);
+        tOrganizationVo1.setOrgParentId(1);
+        list.add(tOrganizationVo1);
+
+        TOrganizationVo tOrganizationVo = new TOrganizationVo();
+        tOrganizationVo.setId(1);
+        tOrganizationVo.setOrgParentId(0);
+        tOrganizationVo.setChild(list);
+
+        List<TOrganizationVo> list1 = new ArrayList<>();
+        list1.add(tOrganizationVo);
+        when(tOrganizationDao.queryAll()).thenReturn(list1);
+        List<TOrganizationVo> tOrganizationVos = tOrganizationService.queryAll(0);
+        assertTrue(tOrganizationVos.size() > 0);
+    }
+
 }
