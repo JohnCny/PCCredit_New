@@ -6,6 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
+/**
+ * 产品贷后监控规则管理
+ * @author chenkai
+ */
 @Table(name = "T_PRODUCT_LOAN_MONITOR_RULES")
 @ApiModel(value="产品贷后监控规则管理")
 public class TProductLoanMonitorRules extends GenericEntity<Integer> {
@@ -13,7 +17,7 @@ public class TProductLoanMonitorRules extends GenericEntity<Integer> {
      * 贷后监控id
      */
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select 你的序列名.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select T_PRODUCT_LOAN_MONITOR_RULES.nextval from dual")
     @ApiModelProperty(value="贷后监控id",required = true)
     private Integer id;
 

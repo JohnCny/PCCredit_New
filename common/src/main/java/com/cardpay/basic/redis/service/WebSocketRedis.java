@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.cardpay.basic.redis.enums.RedisKeyPrefixEnum.USER;
 
@@ -58,9 +57,9 @@ public class WebSocketRedis {
         if (redisClient.exists(USER, flag)) {
             Map<Integer, WebSocketSession> map = (Map<Integer, WebSocketSession>) redisClient.get(USER, "userAll");
             Collection<String> redisKeys = null;
-            map.keySet().forEach(id ->redisKeys.add(id.toString()));
+            /*map.keySet().forEach(id ->redisKeys.add(id.toString()));
             return redisClient.getObjects(redisKeys).stream()
-                    .map(obj -> (WebSocketSession)obj).collect(Collectors.toList());
+                    .map(obj -> (WebSocketSession)obj).collect(Collectors.toList());*/
         }
         return new ArrayList<>();
     }

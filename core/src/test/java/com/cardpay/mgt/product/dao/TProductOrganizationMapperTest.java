@@ -1,5 +1,6 @@
 package com.cardpay.mgt.product.dao;
 
+import com.cardpay.mgt.product.model.vo.TProductOrganizationVo;
 import com.cardpay.util.TestEnv;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class TProductOrganizationMapperTest extends TestEnv {
     @Test
     public void batchInsert() throws Exception {
         Map<String, Object> map = new HashedMap();
-        List<Integer> list = new ArrayList<Integer>(){
+        List<Integer> list = new ArrayList<Integer>() {
             {
                 add(1);
                 add(2);
@@ -31,8 +32,30 @@ public class TProductOrganizationMapperTest extends TestEnv {
         };
         map.put("productId", 1);
         map.put("orgIds", list);
-        int flag = tProductOrganizationDao.batchInsert(map);
+        int flag = tProductOrganizationDao.batchInsertOrg(map);
         assertEquals(flag, 3);
+    }
+
+    @Test
+    public void bathDeleteOrg() throws Exception {
+        Map<String, Object> map = new HashedMap();
+        List<Integer> list = new ArrayList<Integer>() {
+            {
+                add(2);
+                add(3);
+                add(4);
+            }
+        };
+        map.put("productId", 1);
+        map.put("orgIds", list);
+        int flag = tProductOrganizationDao.bathDeleteOrg(map);
+        assertTrue(flag > 0);
+    }
+
+    @Test
+    public void queryProductOrg() throws Exception {
+        List<TProductOrganizationVo> productOrganizationPos = tProductOrganizationDao.queryProductOrg(1);
+        assertTrue(productOrganizationPos.size() > 0);
     }
 
 }

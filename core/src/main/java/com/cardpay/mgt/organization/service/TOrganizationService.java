@@ -26,4 +26,11 @@ public interface TOrganizationService extends BaseService<TOrganization> {
      * @return 1成功, 0失败
      */
     int deleteOrganization(@Param("id") int id);
+
+    /**
+     * 查询所有机构信息
+     * @param parentId 父id
+     * @return 机构信息
+     */
+    List<TOrganizationVo> queryAll(int parentId);
 }
