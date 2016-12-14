@@ -3,192 +3,196 @@ package com.cardpay.mgt.product.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.dozer.Mapping;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
 /**
- * 产品管理
+ * 产品信息
+ *
  * @author chenkai
  */
 @Table(name = "T_PRODUCT")
-@ApiModel(value="产品管理")
-public class TProduct extends GenericEntity<Integer>{
+@ApiModel(value = "产品管理")
+public class TProduct extends GenericEntity<Integer> {
     /**
      * 产品id
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCSEQ.nextval from dual")
-    @ApiModelProperty(value="产品id",required = true)
+    @ApiModelProperty(value = "产品id", required = true)
+    @Mapping("productId")
     private Integer id;
 
     /**
      * 产品名称
      */
     @Column(name = "PRODUCT_NAME")
-    @ApiModelProperty(value="产品名称",required = true)
+    @ApiModelProperty(value = "产品名称", required = true)
     private String productName;
 
     /**
      * 产品额度上限单位为元
      */
     @Column(name = "PRODUCT_LIMIT_MAX")
-    @ApiModelProperty(value="产品额度上限单位为元",required = true)
+    @ApiModelProperty(value = "产品额度上限单位为元", required = true)
     private BigDecimal productLimitMax;
 
     /**
      * 产品额度下限
      */
     @Column(name = "PRODUCT_LIMIT_MIN")
-    @ApiModelProperty(value="产品额度下限",required = true)
+    @ApiModelProperty(value = "产品额度下限", required = true)
     private BigDecimal productLimitMin;
 
     /**
      * 利率区间上限
      */
     @Column(name = "PRODUCT_INTEREST_MAX")
-    @ApiModelProperty(value="利率区间上限",required = true)
+    @ApiModelProperty(value = "利率区间上限", required = true)
     private BigDecimal productInterestMax;
 
     /**
      * 利率区间下限
      */
     @Column(name = "PRODUCT_INTEREST_MIN")
-    @ApiModelProperty(value="利率区间下限",required = true)
+    @ApiModelProperty(value = "利率区间下限", required = true)
     private BigDecimal productInterestMin;
 
     /**
      * 产品状态(0 正常, 1 关闭，2 创建中)
      */
     @Column(name = "PRODUCT_STATE")
-    @ApiModelProperty(value="产品状态(0 正常, 1 关闭，2 创建中)",required = true)
+    @ApiModelProperty(value = "产品状态(0 正常, 1 关闭，2 创建中)", required = true)
     private Short productState;
 
     /**
      * 产品类型(0 传统小微，1 循环贷)
      */
     @Column(name = "PRODUCT_TYPE")
-    @ApiModelProperty(value="产品类型(0 传统小微，1 循环贷)",required = true)
+    @ApiModelProperty(value = "产品类型(0 传统小微，1 循环贷)", required = true)
     private Short productType;
 
     /**
      * 产品介绍
      */
     @Column(name = "PRODUCT_DESCRIPTION")
-    @ApiModelProperty(value="产品介绍",required = true)
+    @ApiModelProperty(value = "产品介绍", required = true)
     private String productDescription;
 
     /**
      * 产品图片地址
      */
     @Column(name = "PRODUCT_PICTURE_URL")
-    @ApiModelProperty(value="产品图片地址",required = true)
+    @ApiModelProperty(value = "产品图片地址", required = true)
     private String productPictureUrl;
 
     /**
      * 还款周期(天)
      */
     @Column(name = "PRODUCT_LOAN_PERIOD")
-    @ApiModelProperty(value="还款周期(天)",required = true)
+    @ApiModelProperty(value = "还款周期(天)", required = true)
     private Integer productLoanPeriod;
 
     /**
      * 还款方式（0 等额本金、1 等额本息、2  到期还本）
      */
     @Column(name = "PRODUCT_REPAYMENT_MODE")
-    @ApiModelProperty(value="还款方式（0 等额本金、1 等额本息、2  到期还本）",required = true)
+    @ApiModelProperty(value = "还款方式（0 等额本金、1 等额本息、2  到期还本）", required = true)
     private Short productRepaymentMode;
 
     /**
      * 申请表模板（选择系统中已有的申请表模板，选填，默认有个产品申请模板用于进件申请）
      */
     @Column(name = "PRODUCT_APPLY_TEMPLATE_ID")
-    @ApiModelProperty(value="申请表模板（选择系统中已有的申请表模板，选填，默认有个产品申请模板用于进件申请）",required = true)
+    @ApiModelProperty(value = "申请表模板（选择系统中已有的申请表模板，选填，默认有个产品申请模板用于进件申请）", required = true)
     private Integer productApplyTemplateId;
 
     /**
      * 对应下发数据产品编号
      */
     @Column(name = "PRODUCT_SEND_PRODUCT_NUMBER")
-    @ApiModelProperty(value="对应下发数据产品编号",required = true)
+    @ApiModelProperty(value = "对应下发数据产品编号", required = true)
     private String productSendProductNumber;
 
     /**
      * 户籍门槛（0 本地、1  外地、2  无限制）
      */
     @Column(name = "PRODUCT_HOUSEHOLD_LEVEL_LIMIT")
-    @ApiModelProperty(value="户籍门槛（0 本地、1  外地、2  无限制）",required = true)
+    @ApiModelProperty(value = "户籍门槛（0 本地、1  外地、2  无限制）", required = true)
     private Short productHouseholdLevelLimit;
 
     /**
      * 征信门槛（1 无信用记录、2 信用良好、有少量逾期、当前有逾期，可多选）
      */
     @Column(name = "PRODUCT_CREDIT_LEVEL_LIMIT")
-    @ApiModelProperty(value="征信门槛（1 无信用记录、2 信用良好、有少量逾期、当前有逾期，可多选）",required = true)
+    @ApiModelProperty(value = "征信门槛（1 无信用记录、2 信用良好、有少量逾期、当前有逾期，可多选）", required = true)
     private String productCreditLevelLimit;
 
     /**
      * 产品年龄上限
      */
     @Column(name = "PRODUCT_AGE_MAX_LIMIT")
-    @ApiModelProperty(value="产品年龄上限",required = true)
+    @ApiModelProperty(value = "产品年龄上限", required = true)
     private Short productAgeMaxLimit;
 
     /**
      * 产品年龄下限
      */
     @Column(name = "PRODUCT_AGE_MIN_LIMIT")
-    @ApiModelProperty(value="产品年龄下限",required = true)
+    @ApiModelProperty(value = "产品年龄下限", required = true)
     private Short productAgeMinLimit;
 
     /**
      * 产品准入行业限制(下拉选择，可多选）
      */
     @Column(name = "PRODUCT_INDUSTRY_LIMIT")
-    @ApiModelProperty(value="产品准入行业限制(下拉选择，可多选）",required = true)
+    @ApiModelProperty(value = "产品准入行业限制(下拉选择，可多选）", required = true)
     private String productIndustryLimit;
 
     /**
      * 产品准入是否已婚(0 未婚，1 已婚)
      */
     @Column(name = "PRODUCT_MARRIAGE_LIMIT")
-    @ApiModelProperty(value="产品准入是否已婚(0 未婚，1 已婚)",required = true)
+    @ApiModelProperty(value = "产品准入是否已婚(0 未婚，1 已婚)", required = true)
     private Short productMarriageLimit;
 
     /**
      * 准入最低客户经理级别id
      */
     @Column(name = "CUSTOMER_MANAGER_LEVEL_ID")
-    @ApiModelProperty(value="准入最低客户经理级别id",required = true)
+    @ApiModelProperty(value = "准入最低客户经理级别id", required = true)
     private Integer customerManagerLevelId;
 
     /**
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value="创建时间",required = true)
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 创建人id
      */
     @Column(name = "CREATE_BY")
-    @ApiModelProperty(value="创建人id",required = true)
+    @ApiModelProperty(value = "创建人id", required = true)
     private Integer createBy;
 
     /**
      * 修改时间
      */
     @Column(name = "MODIFY_TIME")
-    @ApiModelProperty(value="修改时间",required = true)
+    @ApiModelProperty(value = "修改时间", required = true)
     private Date modifyTime;
 
     /**
      * 修改人id
      */
     @Column(name = "MODIFY_BY")
-    @ApiModelProperty(value="修改人id",required = true)
+    @ApiModelProperty(value = "修改人id", required = true)
     private Integer modifyBy;
 
     /**
@@ -359,7 +363,8 @@ public class TProduct extends GenericEntity<Integer>{
      * @return PRODUCT_PICTURE_URL - 产品图片地址
      */
     public String getProductPictureUrl() {
-        return productPictureUrl;
+        String[] split = productPictureUrl.split(",");
+        return split[0] + "/" + split[1];
     }
 
     /**
@@ -643,6 +648,6 @@ public class TProduct extends GenericEntity<Integer>{
 
     @Override
     public Integer getPK() {
-        return null;
+        return id;
     }
 }

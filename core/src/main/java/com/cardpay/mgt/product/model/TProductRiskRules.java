@@ -7,6 +7,10 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import javax.persistence.*;
 
+/**
+ * 产品风险规则
+ * @author chenkai
+ */
 @Table(name = "T_PRODUCT_RISK_RULES")
 @ApiModel(value="产品风险规则")
 public class TProductRiskRules extends GenericEntity<Integer> {
@@ -14,7 +18,7 @@ public class TProductRiskRules extends GenericEntity<Integer> {
      * 产品风险规则id
      */
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select 你的序列名.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCRISK_RULES_SEQ.nextval from dual")
     @ApiModelProperty(value="产品风险规则id",required = true)
     private Integer id;
 

@@ -3,6 +3,7 @@ package com.cardpay.mgt.organization.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.dozer.Mapping;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class TOrganization extends GenericEntity<Integer>{
      */
     @Column(name = "ORG_NAME")
     @ApiModelProperty(value = "机构名称", required = true)
+    @Mapping("oraganizationId")
     private String orgName;
 
     /**

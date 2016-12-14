@@ -1,6 +1,9 @@
 package com.cardpay.mgt.organization.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import com.cardpay.basic.util.treeutil.annotation.TreeChild;
+import com.cardpay.basic.util.treeutil.annotation.TreeId;
+import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -18,6 +21,7 @@ public class TOrganizationVo extends GenericEntity<Integer> {
      * id
      */
     @Id
+    @TreeId
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select ORGANIZATION_SEQ.nextval from dual")
     @ApiModelProperty(value = "机构Id", required = true)
@@ -49,6 +53,7 @@ public class TOrganizationVo extends GenericEntity<Integer> {
      */
     @Column(name = "ORG_PARENT_ID")
     @ApiModelProperty(value = "父机构id", required = true)
+    @TreeParentId
     private Integer orgParentId;
 
     /**
@@ -91,6 +96,7 @@ public class TOrganizationVo extends GenericEntity<Integer> {
      */
     @ApiModelProperty(value = "子机构列表", required = true)
     @Transient
+    @TreeChild
     private List<TOrganizationVo> organizationList;
 
     /**
