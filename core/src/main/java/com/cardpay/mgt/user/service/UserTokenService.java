@@ -1,8 +1,13 @@
 package com.cardpay.mgt.user.service;
 
+import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.mgt.user.model.UserToken;
+
 /**
+ * 用户登陆token服务层接口
+ *
  * @author rankai .
- * @date 2016/12/13 .
  */
-public class UserTokenService {
+public interface UserTokenService extends BaseService<UserToken> {
+
 }

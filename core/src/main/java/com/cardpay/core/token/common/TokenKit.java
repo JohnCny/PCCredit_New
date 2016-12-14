@@ -1,4 +1,4 @@
-package com.cardpay.basic.token.common;
+package com.cardpay.core.token.common;
 
 import com.alibaba.fastjson.JSON;
 import com.cardpay.basic.base.model.ResultTo;

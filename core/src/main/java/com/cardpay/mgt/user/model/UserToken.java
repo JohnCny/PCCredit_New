@@ -1,45 +1,53 @@
 package com.cardpay.mgt.user.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 用户token实体类
+ *
+ * @author rankai
+ */
 @Table(name = "T_USER_TOKEN")
-@ApiModel(value="用户token表")
-public class TUserToken {
+@ApiModel(value = "用户token表")
+public class UserToken {
     /**
      * id
      */
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select 你的序列名.nextval from dual")
-    @ApiModelProperty(value="id",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select USERTOKEN_SEQ.nextval from dual")
+    @ApiModelProperty(value = "id", required = true)
     private Integer id;
 
     /**
      * 用户id
      */
     @Column(name = "USER_ID")
-    @ApiModelProperty(value="用户id",required = true)
+    @ApiModelProperty(value = "用户id", required = true)
     private String userId;
 
     /**
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value="创建时间",required = true)
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 过期时间
      */
     @Column(name = "EXPIRATION_TIME")
-    @ApiModelProperty(value="过期时间",required = true)
+    @ApiModelProperty(value = "过期时间", required = true)
     private Date expirationTime;
 
     /**
      * token值
      */
     @Column(name = "TOKEN")
-    @ApiModelProperty(value="token值",required = true)
+    @ApiModelProperty(value = "token值", required = true)
     private String token;
 
     /**

@@ -1,8 +1,8 @@
-package com.cardpay.basic.token.interceptor;
+package com.cardpay.core.token.interceptor;
 
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.basic.token.common.TokenKit;
+import com.cardpay.core.token.common.TokenKit;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cardpay.mgt.user.dao.TUserTokenMapper">
-  <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.TUserToken">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <result column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="EXPIRATION_TIME" jdbcType="TIMESTAMP" property="expirationTime" />
-    <result column="TOKEN" jdbcType="VARCHAR" property="token" />
-  </resultMap>
+<mapper namespace="com.cardpay.mgt.user.dao.UserTokenMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.UserToken">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="USER_ID" jdbcType="VARCHAR" property="userId"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="EXPIRATION_TIME" jdbcType="TIMESTAMP" property="expirationTime"/>
+        <result column="TOKEN" jdbcType="VARCHAR" property="token"/>
+    </resultMap>
 </mapper>

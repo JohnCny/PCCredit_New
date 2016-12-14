@@ -1,4 +1,4 @@
-package com.cardpay.basic.token.common;
+package com.cardpay.core.token.common;
 
 import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.mgt.user.service.UserService;

@@ -1,8 +1,9 @@
-package com.cardpay.basic.token.interceptor;
+package com.cardpay.core.token.interceptor;
 
 import com.cardpay.basic.common.enums.ResultEnum;
-import com.cardpay.basic.token.common.TokenFactory;
-import com.cardpay.basic.token.common.TokenKit;
+import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.core.token.common.TokenFactory;
+import com.cardpay.core.token.common.TokenKit;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserToken;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -31,12 +32,14 @@ public class TokenInterceptor implements HandlerInterceptor {
             userToken.setToken(token);
             selectOne = tokenFactory.getUserTokenService().selectOne(userToken);
             if (selectOne == null) {
+                LogTemplate.info(this.getClass(), "message", "没有登陆");
                 TokenKit.outputMessage(response, ResultEnum.NO_LOGIN);
                 return Boolean.FALSE;
             }
             long expirationTime = selectOne.getExpirationTime().getTime();
             long nowTime = new Date().getTime();
             if (expirationTime - nowTime < 0) {
+                LogTemplate.info(this.getClass(), "message", "登陆超时");
                 TokenKit.outputMessage(response, ResultEnum.LOGIN_TIMEOUT);
                 return Boolean.FALSE;
             }
