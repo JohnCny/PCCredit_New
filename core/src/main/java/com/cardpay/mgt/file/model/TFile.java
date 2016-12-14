@@ -42,28 +42,28 @@ public class TFile extends GenericEntity<Integer>{
     /**
      * 创建人
      */
-    @Column(name = "CREATED_BY")
+    @Column(name = "CREATE_BY")
     @ApiModelProperty(value = "创建人")
     private String createBy;
 
     /**
      * 创建时间
      */
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATE_AT")
     @ApiModelProperty(value = "创建时间")
     private Date createAt;
 
     /**
      * 修改人
      */
-    @Column(name = "MODIFIED_BY")
+    @Column(name = "MODIFY_BY")
     @ApiModelProperty(value = "修改人")
     private String modifyBy;
 
     /**
      * 修改时间
      */
-    @Column(name = "MODIFIED_AT")
+    @Column(name = "MODIFY_AT")
     @ApiModelProperty(value = "修改时间")
     private Date modifyAt;
 

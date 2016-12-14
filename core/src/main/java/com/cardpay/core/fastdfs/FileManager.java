@@ -69,12 +69,16 @@ public class FileManager implements FileManagerConfig {
         String remoteFileName = null;
         try {
             uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), valuePairs);
-            groupName = uploadResults[0];
-            remoteFileName = uploadResults[1];
+            if (uploadResults.length > 0) {
+                groupName = uploadResults[0];
+                remoteFileName = uploadResults[1];
+                return groupName + "," + remoteFileName;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return groupName + "," + remoteFileName;
+        return null;
     }
 
     /**
@@ -90,7 +94,7 @@ public class FileManager implements FileManagerConfig {
         byte[] content = null;
         try {
             content = storageClient.download_file(groupName, remoteFileName);
-            if (content.length > 0){
+            if (content.length > 0) {
                 updateFile(remoteFileName);
             }
             headers.setContentDispositionFormData("attachment",
@@ -113,7 +117,7 @@ public class FileManager implements FileManagerConfig {
         byte[] content = null;
         try {
             content = storageClient.download_file(groupName, remoteFileName);
-            if (content.length > 0){
+            if (content.length > 0) {
                 updateFile(remoteFileName);
             }
         } catch (IOException e) {
@@ -134,6 +138,7 @@ public class FileManager implements FileManagerConfig {
         TFile tFile = new TFile();
         tFile.setFastName(remoteFileName);
         TFile fileEntity = tFileService.selectOne(tFile);
+        fileEntity.setModifyBy(ShiroKit.getUserId().toString());
         fileEntity.setRemark("downLoad");
         return tFileService.updateByPrimaryKey(fileEntity);
     }
