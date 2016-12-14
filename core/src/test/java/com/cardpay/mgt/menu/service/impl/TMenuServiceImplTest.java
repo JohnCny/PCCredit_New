@@ -102,18 +102,18 @@ public class TMenuServiceImplTest {
 
     @Test
     public void selectMenuListByLevel() throws Exception {
-        when(tMenuMapper.selectMenuListByLevel(0,3,2)).thenReturn(tMenuVos);
+        when(tMenuMapper.selectMenuListByUserLevel(0,3,2)).thenReturn(tMenuVos);
         List<TMenuVo> tMenuVoList = tMenuService.selectMenuListByLevel(0, 3,2);
         assertTrue(tMenuVoList.size() > 0);
-        verify(tMenuMapper).selectMenuListByLevel(0,3,2);
+        verify(tMenuMapper).selectMenuListByUserLevel(0,3,2);
     }
 
     @Test
     public void selectMenuListByAll() throws Exception {
-        when(tMenuMapper.selectMenuListByAll(0,2)).thenReturn(tMenuVos);
+        when(tMenuMapper.selectMenuListByUserAll(0,2)).thenReturn(tMenuVos);
         List<TMenuVo> tMenuVoList = tMenuService.selectMenuListByAll(0, 2);
         assertTrue(tMenuVoList.size() > 0);
-        verify(tMenuMapper).selectMenuListByAll(0,2);
+        verify(tMenuMapper).selectMenuListByUserAll(0,2);
     }
 
     @Test
