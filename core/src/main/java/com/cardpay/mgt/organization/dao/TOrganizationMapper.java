@@ -32,4 +32,10 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
      * @return 1成功, 0失败
      */
     int deleteOrganization(@Param("id") int id);
+
+    /**
+     * 查询所有机构信息
+     * @return TOrganizationVo类
+     */
+    List<TOrganizationVo> queryAll();
 }

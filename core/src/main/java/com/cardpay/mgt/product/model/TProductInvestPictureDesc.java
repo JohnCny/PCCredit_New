@@ -3,6 +3,7 @@ package com.cardpay.mgt.product.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 
 import javax.persistence.*;
 
@@ -13,6 +14,14 @@ import javax.persistence.*;
 @Table(name = "T_PRODUCT_INVEST_PICTURE_DESC")
 @ApiModel(value="产品对应调查图片图片说明")
 public class TProductInvestPictureDesc extends GenericEntity<Integer> {
+
+    public TProductInvestPictureDesc(){
+    }
+
+    public TProductInvestPictureDesc(Integer id){
+        this.id = id;
+    }
+
     /**
      * 产品调查图片说明id
      */
@@ -118,4 +127,6 @@ public class TProductInvestPictureDesc extends GenericEntity<Integer> {
     public Integer getPK() {
         return null;
     }
+
+
 }

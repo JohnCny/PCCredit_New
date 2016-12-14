@@ -20,13 +20,13 @@ public class TMenuMapperTest extends TestEnv{
 
     @Test
     public void selectMenuList() throws Exception {
-        List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByAll(0,2);
+        List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByUserAll(0,2);
         assertTrue(tMenuVos.size() > 0);
     }
 
     @Test
     public void createMenuView() throws Exception {
-        List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByLevel(0,3,2);
+        List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByUserLevel(0,3,2);
         assertTrue(tMenuVos.size() > 0);
     }
 

@@ -1,5 +1,6 @@
 package com.cardpay.mgt.menu.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.menu.model.TMenu;
@@ -27,11 +28,10 @@ public interface TMenuService extends BaseService<TMenu> {
     /**
      * 查询菜单列表(无限层级)
      *
-     * @param topId  顶级id
      * @param userId 用户id
-     * @return 菜单列表
+     * @return 菜单列表json
      */
-    List<TMenuVo> selectMenuListByAll(int topId, int userId);
+    JSONArray selectMenuListByAll(int userId);
 
     /**
      * 查询层级菜单包含的权限
@@ -67,5 +67,12 @@ public interface TMenuService extends BaseService<TMenu> {
      * @return 更新结果
      */
     ResultTo updateMenu(TMenu menu, Integer userId);
+
+    /**
+     * 更新菜单缓存
+     *
+     * @return 成功或失败
+     */
+    void updateMenuCache();
 
 }
