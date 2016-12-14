@@ -11,6 +11,7 @@ import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
+import com.cardpay.mgt.menu.enums.RoleEnum;
 import com.cardpay.mgt.menu.model.*;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.model.vo.TMenuVo;
@@ -53,13 +54,6 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
     private static final int TOP_ID = 0;
 
-    private static final int ADMIN_ID = 2;
-    private static final int MANAGER_ID = 3;
-
-    private static final String ADMIN = "admin";
-    private static final String MANAGER = "manager";
-
-
     @Override
     public List<TMenuVo> selectMenuListByLevel(int topId, int level, int userId) {
         List<TMenuVo> menuVoList = tMenuMapper.selectMenuListByUserLevel(topId, level, userId);
@@ -68,10 +62,10 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
     @Override
     public JSONArray selectMenuListByAll(int userId) {
-        UserRole userRole = new UserRole();
-        userRole.setUserId(userId);
-        userRoleService.selectOne(userRole);
-        Object menuJson = redisClient.get(RedisKeyPrefixEnum.ROLE_MENU, ADMIN);
+        UserRole criteria = new UserRole();
+        criteria.setUserId(userId);
+        UserRole userRole = userRoleService.selectOne(criteria);
+        Object menuJson = redisClient.get(RedisKeyPrefixEnum.ROLE_MENU, RoleEnum.getValueById(userRole.getRoleId()).getRoleName());
         return JSON.parseArray(menuJson.toString());
     }
 
@@ -214,8 +208,10 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
     @Override
     public void updateMenuCache() {
-        redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,ADMIN,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(MANAGER_ID))));
-        redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,MANAGER,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(ADMIN_ID))));
+        redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,RoleEnum.MANAGER.getRoleName()
+                ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(RoleEnum.MANAGER.getRoleId()))));
+        redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,RoleEnum.ADMIN.getRoleName()
+                ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(RoleEnum.ADMIN.getRoleId()))));
         LogTemplate.info("菜单","初始化了菜单");
     }
 }
