@@ -1,4 +1,4 @@
-<#include "layout/base.ftl"/>
+<#include "layout/base.html"/>
 
 <#macro style>
 
