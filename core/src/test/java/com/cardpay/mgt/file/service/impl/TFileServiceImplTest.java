@@ -37,7 +37,7 @@ public class TFileServiceImplTest {
         tFiles.add(tFile);
         tFiles.add(tFile2);
         when(tFileDao.batchInsertFile(tFiles)).thenReturn(1);
-        int flag = tFileService.batchInsert(tFiles);
+        int flag = tFileService.batchInsertFile(tFiles);
         assertEquals(flag, 1);
     }
 

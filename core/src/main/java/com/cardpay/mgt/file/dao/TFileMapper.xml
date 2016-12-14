@@ -18,7 +18,7 @@
   </resultMap>
 
   <!-- 批量插入-->
-  <insert id="batchInsert" parameterType="java.util.List">
+  <insert id="batchInsertFile" parameterType="java.util.List">
     INSERT INTO T_FILE (ID, IMAGE_TYPE, FILE_NAME, REMARK, CREATE_BY, CREATE_AT, MODIFY_BY
     , MODIFY_AT, GROUP_NAME, FAST_NAME)
     <foreach collection="list" item="item" index="index" open="(" close=")" separator="union">

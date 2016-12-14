@@ -13,7 +13,7 @@
 
 
     <!--批量插入产品调查图片信息-->
-    <insert id="batchInsert" parameterType="List">
+    <insert id="batchInsertImg" parameterType="List">
         INSERT INTO T_PRODUCT_INVEST_PICTURE_DESC (ID, PRODUCT_ID, PRITURE_DESCRIPTION, IS_NEED)
         <foreach collection="list" item="item" index="index" open="(" close=")"
                  separator="union">

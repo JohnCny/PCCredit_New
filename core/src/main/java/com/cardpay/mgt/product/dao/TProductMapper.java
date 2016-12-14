@@ -4,7 +4,7 @@ import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.product.model.TProduct;
 
 /**
- * 产品管理Mapper
+ * 产品信息Mapper
  * @author chenkai
  */
 public interface TProductMapper extends BasicMapper<TProduct> {

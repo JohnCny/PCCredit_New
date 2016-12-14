@@ -14,7 +14,7 @@ public interface TFileService extends BaseService<TFile>{
     /**
      * 批量插入
      * @param list
-     * @return
+     * @return 数据库变更数量
      */
-    int batchInsert(List<TFile> list);
+    int batchInsertFile(List<TFile> list);
 }
