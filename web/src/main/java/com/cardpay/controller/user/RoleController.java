@@ -67,11 +67,11 @@ public class RoleController extends BaseController<Role, Integer> {
         Map<String, String> map = new HashMap<>();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             LogTemplate.info(this.getClass(), "message", "增加角色参数有误");
-            return new ResultTo(ResultEnum.PARAM_ERROR.getValue()).setData(map);
+            return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
-        if (roleService.insertRole(role, authorityId)) {
+        if (!roleService.insertRole(role, authorityId)) {
             LogTemplate.info(this.getClass(), "message", "增加角色失败");
-            return new ResultTo(ResultEnum.OPERATION_FAILED.getValue());
+            return new ResultTo(ResultEnum.OPERATION_FAILED);
         }
         return new ResultTo();
     }
@@ -85,7 +85,7 @@ public class RoleController extends BaseController<Role, Integer> {
         Map<String, Object> map = new HashedMap();
         map.put("role", role);
         map.put("authority", list);
-        return new ResultTo().setData(role);
+        return new ResultTo().setData(map);
     }
 
     /**

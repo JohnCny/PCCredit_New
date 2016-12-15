@@ -11,21 +11,31 @@ import java.util.List;
 public interface TMenuMapper extends BasicMapper<TMenu> {
 
     /**
-     * 递归查询菜单列表(有限层级)
+     * 根据用户Id查询菜单列表(有限层级)
      *
      * @param parentId 顶级id
-     * @return 菜单列表
-     */
-    List<TMenuVo> selectMenuListByLevel(@Param("parentId") int parentId);
-
-    /**
-     * 递归查询菜单列表(无限层级)
-     *
-     * @param parentId 顶级id
+     * @param level 深度
      * @param userId 用户id
      * @return 菜单列表
      */
-    List<TMenuVo> selectMenuListByAll(@Param("parentId") Integer parentId,@Param("userId") Integer userId);
+    List<TMenuVo> selectMenuListByUserLevel(@Param("parentId") int parentId, @Param("level") Integer level, @Param("userId") Integer userId);
+
+    /**
+     * 根据用户Id查询菜单列表(无限层级)
+     *
+     * @param userId 用户id
+     * @return 菜单列表
+     */
+    List<TMenuVo> selectMenuListByUserAll(@Param("userId") Integer userId);
+
+
+    /**
+     * 根据角色Id查询菜单列表
+     *
+     * @param roleId 角色id
+     * @return 菜单列表
+     */
+    List<TMenuVo> selectMenuListByRoleAll(@Param("roleId") Integer roleId);
 
     /**
      * 根据用户查询所有菜单包含权限
@@ -34,14 +44,6 @@ public interface TMenuMapper extends BasicMapper<TMenu> {
      * @return 菜单列表包括权限
      */
     List<TMenuAuth> selectMenuListAndAuthByUser(@Param("userId") Integer userId);
-
-    /**
-     * 创建临时视图
-     *
-     * @param parentId 顶级id
-     * @param level 层级
-     */
-    void createMenuView(@Param("parentId") int parentId, @Param("level") Integer level,@Param("userId") Integer userId);
 
     /**
      * 递归删除菜单

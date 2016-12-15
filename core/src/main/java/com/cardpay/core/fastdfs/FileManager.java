@@ -1,9 +1,9 @@
 package com.cardpay.core.fastdfs;
 
 
-import com.cardpay.core.shrio.common.ShiroKit;
-import com.cardpay.mgt.file.dao.TFileMapper;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.file.model.TFile;
+import com.cardpay.mgt.file.service.TFileService;
 import org.csource.common.MyException;
 import org.csource.fastdfs.*;
 import org.csource.common.NameValuePair;
@@ -30,7 +30,7 @@ import java.util.List;
 @Component
 public class FileManager implements FileManagerConfig {
     @Autowired
-    private TFileMapper tFileDao;
+    private TFileService tFileService;
 
     private static TrackerClient trackerClient;
     private static StorageClient storageClient;
@@ -45,8 +45,8 @@ public class FileManager implements FileManagerConfig {
             String classPath = request.getServletContext().getRealPath("/WEB-INF/config");
             String dfsClientConfigFilePath = classPath + File.separator + CLIENT_CONFIG_FILE;*/
             String classPath = new File(FileManager.class.getResource("/").getFile()).getCanonicalPath();
-            String fdfsClientConfigFilePath = classPath + "../../../\\resources\\main" + File.separator + CLIENT_CONFIG_FILE;
-            ClientGlobal.init(fdfsClientConfigFilePath);
+            String fastDfsClientConfigFilePath = classPath + "../../../\\resources\\main" + File.separator + CLIENT_CONFIG_FILE;
+            ClientGlobal.init(fastDfsClientConfigFilePath);
 
             trackerClient = new TrackerClient();
             trackerServer = trackerClient.getConnection();
@@ -65,13 +65,10 @@ public class FileManager implements FileManagerConfig {
      */
     private static String upload(FastDFSFile file, NameValuePair[] valuePairs) {
         String[] uploadResults;
-        String groupName = "";
-        String remoteFileName = "";
+        String groupName = null;
+        String remoteFileName = null;
         try {
             uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), valuePairs);
-            if (uploadResults == null) {
-                return new String();
-            }
             groupName = uploadResults[0];
             remoteFileName = uploadResults[1];
         } catch (Exception e) {
@@ -88,11 +85,14 @@ public class FileManager implements FileManagerConfig {
      * @param specFileName   文件类型
      * @return ResponseEntity对象
      */
-    public static ResponseEntity<byte[]> download(String groupName, String remoteFileName, String specFileName) {
-        byte[] content = null;
+    public ResponseEntity<byte[]> download(String groupName, String remoteFileName, String specFileName) {
         HttpHeaders headers = new HttpHeaders();
+        byte[] content = null;
         try {
             content = storageClient.download_file(groupName, remoteFileName);
+            if (content.length > 0){
+                updateFile(remoteFileName);
+            }
             headers.setContentDispositionFormData("attachment",
                     new String(specFileName.getBytes("UTF-8"), "iso-8859-1"));
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -109,10 +109,13 @@ public class FileManager implements FileManagerConfig {
      * @param remoteFileName 文件名
      * @return InputStream对象
      */
-    public static InputStream downLoadToFile(String groupName, String remoteFileName) {
+    public InputStream downLoadToFile(String groupName, String remoteFileName) {
         byte[] content = null;
         try {
             content = storageClient.download_file(groupName, remoteFileName);
+            if (content.length > 0){
+                updateFile(remoteFileName);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (MyException e) {
@@ -122,15 +125,32 @@ public class FileManager implements FileManagerConfig {
     }
 
     /**
+     * 更新TFile信息
+     *
+     * @param remoteFileName 文件名
+     * @return 变动数量
+     */
+    private int updateFile(String remoteFileName) {
+        TFile tFile = new TFile();
+        tFile.setFastName(remoteFileName);
+        TFile fileEntity = tFileService.selectOne(tFile);
+        fileEntity.setRemark("downLoad");
+        return tFileService.updateByPrimaryKey(fileEntity);
+    }
+
+    /**
      * 删除文件
      *
      * @param groupName      分组名称
      * @param remoteFileName 文件名称
      * @return 1成功, 0失败
      */
-    public static int deleteFile(String groupName, String remoteFileName) {
+    public int deleteFile(String groupName, String remoteFileName) {
         try {
-            return storageClient.delete_file(groupName, remoteFileName);
+            TFile tFile = new TFile();
+            tFile.setFastName(remoteFileName);
+            Integer flag = tFileService.delete(tFile);
+            return null != flag ? storageClient.delete_file(groupName, remoteFileName) : 0;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (MyException e) {
@@ -190,7 +210,7 @@ public class FileManager implements FileManagerConfig {
      * @return fastDfs返回值
      */
     private String upLoadCore(MultipartFile file) {
-        String upload = null;
+        String fileName = null;
         List<TFile> tFiles = new ArrayList<>();
         String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
         try {
@@ -200,11 +220,10 @@ public class FileManager implements FileManagerConfig {
             metaList[1] = new NameValuePair("fileLength", String.valueOf(file.getSize()));
             metaList[2] = new NameValuePair("fileExt", ext);
             metaList[3] = new NameValuePair("fileAuthor", FileManagerConfig.FILE_DEFAULT_AUTHOR);
-            String fileName = upload(fastDFSFile, metaList);
+            fileName = upload(fastDFSFile, metaList);
             //插入数据库t_file表
             if (!fileName.isEmpty()) {
-                upload = fileName + "," + file.getOriginalFilename() + "," + ext;
-                String[] str = upload.split(",");
+                String[] str = fileName.split(",");
                 String userId = String.valueOf(ShiroKit.getUserId());
                 TFile tFile = TFile.TFileBuilder.get()
                         .withId(1)
@@ -219,12 +238,12 @@ public class FileManager implements FileManagerConfig {
                         .withFastName(str[1])
                         .build();
                 tFiles.add(tFile);
-                tFileDao.batchInsertFile(tFiles);
+                tFileService.batchInsertFile(tFiles);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return upload;
+        return fileName;
     }
 
 }

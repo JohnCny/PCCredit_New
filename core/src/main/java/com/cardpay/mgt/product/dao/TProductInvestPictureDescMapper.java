@@ -16,5 +16,5 @@ public interface TProductInvestPictureDescMapper extends BasicMapper<TProductInv
      * @param list 产品调查图片信息集合
      * @return 插入数量
      */
-    int batchInsert(List<TProductInvestPictureDesc> list);
+    int batchInsertImg(List<TProductInvestPictureDesc> list);
 }
