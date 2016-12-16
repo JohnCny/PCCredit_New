@@ -9,10 +9,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
- * Created by johnmyiqn on 2016/9/26.
- */
-
-/**
  * 转换navicat导出的mysql的建表语句为h2的语法
  * <p>
  * 主要的要注意的点是:
@@ -32,7 +28,6 @@ import java.util.regex.Pattern;
  * 7.H2的索引名必须要全局唯一, 所以需要替换所有的索引名为全局唯一
  *
  * @author tudesheng
- * @since 2016年6月20日 下午8:37:52
  */
 public class H2ToMysqlUtil {
 

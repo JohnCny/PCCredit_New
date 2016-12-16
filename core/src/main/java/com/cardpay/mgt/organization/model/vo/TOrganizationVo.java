@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * 机构表VO类
- * Created by chenkai on 2016/11/23.
+ * @author chenkai on 2016/11/23.
  */
 @ApiModel(value = "机构表VO类")
 public class TOrganizationVo extends GenericEntity<Integer> {

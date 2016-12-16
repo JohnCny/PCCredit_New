@@ -23,7 +23,6 @@ import java.util.Map;
 
 /**
  * 邮件发送基础类
- *
  * @author rankai
  */
 @Component

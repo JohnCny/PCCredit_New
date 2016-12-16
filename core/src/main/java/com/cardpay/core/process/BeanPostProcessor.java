@@ -7,7 +7,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 /**
- * 容器启动之后执行初始化程序(例如刷新缓存等需要初始化功能)
+ * 容器启动之后执行初始化程序(例如刷新缓存等需要初始化功能）
+ * @author johnmyiqn
  */
 public class BeanPostProcessor implements ApplicationListener<ContextRefreshedEvent> {
 

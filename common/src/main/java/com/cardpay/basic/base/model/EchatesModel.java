@@ -1,16 +1,14 @@
 package com.cardpay.basic.base.model;
 
 /**
- * Created by chenkai on 2016/11/23.
+ * echart mode对象
+ * @author chenkai
  */
 public class EchatesModel {
-
-
     public EchatesModel(String name, Integer value){
         this.name = name;
         this.value = value;
     }
-
 
     private String name;
 

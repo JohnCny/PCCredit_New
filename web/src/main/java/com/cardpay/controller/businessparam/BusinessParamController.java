@@ -1,4 +1,4 @@
-package com.cardpay.controller.business.param;
+package com.cardpay.controller.businessparam;
 
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.param.model.po.TBusinessParam;

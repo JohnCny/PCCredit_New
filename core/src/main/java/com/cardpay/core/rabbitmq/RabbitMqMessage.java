@@ -2,7 +2,6 @@ package com.cardpay.core.rabbitmq;
 
 /**
  * rabbit消息实体
- *
  * @author johnmyiqn
  */
 

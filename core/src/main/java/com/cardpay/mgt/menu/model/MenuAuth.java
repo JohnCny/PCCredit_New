@@ -5,8 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 菜单权限
- *
- * Created by yanwe on 2016/12/9.
+ * @author yanwe
  */
 @ApiModel(value = "菜单权限")
 public class MenuAuth {

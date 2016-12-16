@@ -6,7 +6,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Shiro工厂类
- *
  * @author rankai .
  */
 public final class ShiroFactory {

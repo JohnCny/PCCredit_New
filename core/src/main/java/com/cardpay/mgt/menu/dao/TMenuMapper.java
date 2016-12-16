@@ -8,6 +8,10 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * 菜单管理mapper
+ * @auth yanweicheng
+ */
 public interface TMenuMapper extends BasicMapper<TMenu> {
 
     /**
