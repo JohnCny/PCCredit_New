@@ -5,6 +5,7 @@ apply plugin: 'java'
 //全局project属性
 allprojects {
     apply plugin: 'java'
+//    apply plugin: 'com.google.protobuf'
     apply plugin: 'idea'
 
     //定义JVM版本
@@ -14,6 +15,7 @@ allprojects {
     //定义repositories
     buildscript {
         repositories {
+
             maven {
                 url "http://maven.aliyun.com/nexus/content/groups/public/"
             }
@@ -34,6 +36,7 @@ allprojects {
         dependencies {
             classpath "org.akhikhl.gretty:gretty:1.2.4"
             classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1-rc1"
+            classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
         }
     }
 
@@ -51,6 +54,37 @@ allprojects {
         jcenter()
         mavenCentral()
     }
+//
+//    protobuf {
+//        protoc {
+//            // The version of protoc must match protobuf-java. If you don't depend on
+//            // protobuf-java directly, you will be transitively depending on the
+//            // protobuf-java version that grpc depends on.
+//            artifact = 'com.google.protobuf:protoc:3.0.0'
+//        }
+//        plugins {
+//            grpc {
+//                artifact = "io.grpc:protoc-gen-grpc-java:1.0.2"
+//            }
+//        }
+//        generateProtoTasks {
+//            all()*.plugins {
+//                grpc {
+//                    // To generate deprecated interfaces and static bindService method,
+//                    // turn the enable_deprecated option to true below:
+//                    option 'enable_deprecated=false'
+//                }
+//            }
+//        }
+//    }
+//    idea {
+//        module {
+//            // Not using generatedSourceDirs because of
+//            // https://discuss.gradle.org/t/support-for-intellij-2016/15294/8
+//            sourceDirs += file("${projectDir}/build/generated/source/proto/main/java")
+//            sourceDirs += file("${projectDir}/build/generated/source/proto/main/grpc")
+//        }
+//    }
 }
 
 //子project属性
@@ -208,6 +242,10 @@ subprojects {
                 libraries."jstl",
                 libraries."javax-servlet",
 
+                //grpc
+                libraries."grpc-netty",
+                libraries."grpc-protobuf",
+                libraries."grpc-stub",
 
         )
         testCompile(
