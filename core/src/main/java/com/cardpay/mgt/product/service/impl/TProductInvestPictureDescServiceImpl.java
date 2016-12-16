@@ -22,6 +22,6 @@ public class TProductInvestPictureDescServiceImpl extends BaseServiceImpl<TProdu
   @Transactional
   @Override
   public int batchInsertImg(List<TProductInvestPictureDesc> list) {
-    return tProductInvestPictureDescDao.batchInsert(list);
+    return tProductInvestPictureDescDao.batchInsertImg(list);
   }
 }

@@ -203,6 +203,12 @@ subprojects {
                 libraries."pdfbox",
 
                 libraries."hibernate-validator",
+
+                //servlet和jstl
+                libraries."jstl",
+                libraries."javax-servlet",
+
+
         )
         testCompile(
                 libraries."junit",

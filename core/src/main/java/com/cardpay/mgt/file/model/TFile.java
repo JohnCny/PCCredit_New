@@ -1,5 +1,6 @@
 package com.cardpay.mgt.file.model;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -7,7 +8,7 @@ import java.util.Date;
 import javax.persistence.*;
 @Api("文件上传类")
 @Table(name = "T_FILE")
-public class TFile {
+public class TFile extends GenericEntity<Integer>{
     /**
      * 文件id
      */
@@ -80,38 +81,18 @@ public class TFile {
     @ApiModelProperty(value = "fast文件名称")
     private String fastName;
 
-    /**
-     * 获取文件id
-     *
-     * @return ID - 文件id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * 设置文件id
-     *
-     * @param id 文件id
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * 获取影像类型
-     *
-     * @return IMAGE_TYPE - 影像类型
-     */
     public String getImageType() {
         return imageType;
     }
 
-    /**
-     * 设置影像类型
-     *
-     * @param imageType 影像类型
-     */
     public void setImageType(String imageType) {
         this.imageType = imageType;
     }
@@ -124,92 +105,42 @@ public class TFile {
         this.fileName = fileName;
     }
 
-    /**
-     * 获取备注说明
-     *
-     * @return REMARK - 备注说明
-     */
     public String getRemark() {
         return remark;
     }
 
-    /**
-     * 设置备注说明
-     *
-     * @param remark 备注说明
-     */
     public void setRemark(String remark) {
         this.remark = remark;
     }
 
-    /**
-     * 获取创建人
-     *
-     * @return CREATED_BY - 创建人
-     */
     public String getCreateBy() {
         return createBy;
     }
 
-    /**
-     * 设置创建人
-     *
-     * @param createBy 创建人
-     */
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
     }
 
-    /**
-     * 获取创建时间
-     *
-     * @return CREATED_AT - 创建时间
-     */
     public Date getCreateAt() {
         return createAt;
     }
 
-    /**
-     * 设置创建时间
-     *
-     * @param createAt 创建时间
-     */
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
 
-    /**
-     * 获取修改人
-     *
-     * @return MODIFIED_BY - 修改人
-     */
     public String getModifyBy() {
         return modifyBy;
     }
 
-    /**
-     * 设置修改人
-     *
-     * @param modifyBy 修改人
-     */
     public void setModifyBy(String modifyBy) {
         this.modifyBy = modifyBy;
     }
 
-    /**
-     * 获取修改时间
-     *
-     * @return MODIFIED_AT - 修改时间
-     */
     public Date getModifyAt() {
         return modifyAt;
     }
 
-    /**
-     * 设置修改时间
-     *
-     * @param modifyAt 修改时间
-     */
     public void setModifyAt(Date modifyAt) {
         this.modifyAt = modifyAt;
     }
@@ -228,6 +159,11 @@ public class TFile {
 
     public void setFastName(String fastName) {
         this.fastName = fastName;
+    }
+
+    @Override
+    public Integer getPK() {
+        return id;
     }
 
 

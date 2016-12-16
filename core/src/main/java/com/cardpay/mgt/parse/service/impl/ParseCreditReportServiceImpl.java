@@ -22,6 +22,9 @@ public class ParseCreditReportServiceImpl implements ParseCreditReportService{
     @Autowired
     private TFileService tFileService;
 
+    @Autowired
+    private FileManager fileManager;
+
     @Override
     public void parseCreditReport(Integer applicationId) {
         //TODO:待需求确定后根据进件id获取对应文件信息
@@ -31,7 +34,7 @@ public class ParseCreditReportServiceImpl implements ParseCreditReportService{
             LogTemplate.error(runtimeException,"文件不存在","id:" + applicationId + "对应文件不存在！");
             throw runtimeException;
         }
-        InputStream inputStream = FileManager.downLoadToFile(tFile.getGroupName(), tFile.getFastName());
+        InputStream inputStream = fileManager.downLoadToFile(tFile.getGroupName(), tFile.getFastName());
         if(inputStream == null){
             RuntimeException runtimeException = new RuntimeException("group:" + tFile.getGroupName()
                     +"fastName:"+tFile.getFastName() + "下载失败！");

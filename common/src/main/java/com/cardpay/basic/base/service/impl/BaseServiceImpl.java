@@ -139,7 +139,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      */
     @Override
     public Integer delete(T record){
-        return mapper.updateByPrimaryKeySelective(record);
+        return mapper.delete(record);
     }
 
     /**
