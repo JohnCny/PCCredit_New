@@ -2,7 +2,7 @@ package com.cardpay.controller.customer.customerbasic;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.core.shrio.common.ShiroKit;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.customerbasic.model.po.TCustomerBasic;
 import com.cardpay.mgt.customer.customerbasic.service.CustomerBasicService;
 import io.swagger.annotations.Api;

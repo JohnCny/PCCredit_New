@@ -7,6 +7,10 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 客户维护实体类
+ * @author wangpeng
+ */
 @Table(name = "T_CUSTOMER_MAINTENANCE")
 @ApiModel(value="客户维护记录")
 public class TCustomerMaintenance extends GenericEntity<Long> {

@@ -5,6 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
+/**
+ * 客户所属行业实体类
+ * @author wangpeng
+ */
 @Table(name = "T_CUSTOMER_INDUSTRY")
 @ApiModel(value="客户行业信息表")
 public class TCustomerIndustry {

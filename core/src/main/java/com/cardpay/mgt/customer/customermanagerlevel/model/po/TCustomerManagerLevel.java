@@ -8,6 +8,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 客户经理级别信息实体类
+ * @author wangpeng
+ */
 @Table(name = "T_CUSTOMER_MANAGER_LEVEL")
 @ApiModel(value="客户经理级别信息管理")
 public class TCustomerManagerLevel extends GenericEntity<Integer> {

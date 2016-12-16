@@ -6,6 +6,10 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * 客户基本信息Mapper
+ * @author wangpeng
+ */
 public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
 
     /**
@@ -18,7 +22,7 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
     /**
      * 判断身份证号码是否已经存在
      * @param idCard 身份证号码
-     * @return 是否存在(>0:存在, =0:不存在)
+     * @return 是否存在(大于0 存在, 等于0 不存在)
      */
     Integer isIdCardExist(@Param("idCard")String idCard);
 }

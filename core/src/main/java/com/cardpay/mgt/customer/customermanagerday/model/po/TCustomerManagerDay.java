@@ -7,6 +7,10 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * 客户经理日报信息实体类
+ * @author wangpeng
+ */
 @Table(name = "T_CUSTOMER_MANAGER_DAY")
 @ApiModel(value="客户经理日报数据管理")
 public class TCustomerManagerDay extends GenericEntity<Integer> {
@@ -223,7 +227,7 @@ public class TCustomerManagerDay extends GenericEntity<Integer> {
     }
 
     /**
-     * @param preloanNumber
+     * @param preloanNumber 贷前调查
      */
     public void setPreloanNumber(Integer preloanNumber) {
         this.preloanNumber = preloanNumber;

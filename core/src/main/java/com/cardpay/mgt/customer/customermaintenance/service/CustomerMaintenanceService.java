@@ -4,7 +4,7 @@ import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customer.customermaintenance.model.po.TCustomerMaintenance;
 
 /**
- * 客户维护类
+ * 客户维护服务类
  * @author wangpeng
  */
 public interface CustomerMaintenanceService extends BaseService<TCustomerMaintenance>{
