@@ -30,7 +30,7 @@ import java.util.Map;
 
 /**
  * 菜单Service实现类
- * <p>
+ *
  * Created by yanwe on 2016/11/22.
  */
 @Service
@@ -208,10 +208,10 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
     @Override
     public void updateMenuCache() {
-        redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,RoleEnum.MANAGER.getRoleName()
-                ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(RoleEnum.MANAGER.getRoleId()))));
-        redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,RoleEnum.ADMIN.getRoleName()
-                ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(RoleEnum.ADMIN.getRoleId()))));
+        for (RoleEnum roleEnum : RoleEnum.values()) {
+            redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,roleEnum.getRoleName()
+                    ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(roleEnum.getRoleId()))));
+        }
         LogTemplate.info("菜单","初始化了菜单");
     }
 }
