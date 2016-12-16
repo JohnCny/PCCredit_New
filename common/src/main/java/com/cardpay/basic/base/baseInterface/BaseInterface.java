@@ -1,17 +1,13 @@
 package com.cardpay.basic.base.baseInterface;
 
-import com.cardpay.basic.base.model.ResultTo;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * Created by johnmyiqn on 2016/11/10.
+ *  controller jsp或者模板渲染实现通用接口
+ * @author johnmyiqn
  */
 public interface BaseInterface<T> {
-    //定义controller jsp或者模板渲染必须实现定义
+
     /**
      * 根据实体中的属性值进行查询，查询条件使用等号
      * @param record 实体对象

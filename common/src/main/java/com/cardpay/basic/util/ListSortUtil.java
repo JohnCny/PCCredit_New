@@ -13,7 +13,6 @@ import java.util.Map;
 
 /**
  * List按照指定字段排序工具类
- *
  * @author johnmyiqn
  **/
 public class ListSortUtil {

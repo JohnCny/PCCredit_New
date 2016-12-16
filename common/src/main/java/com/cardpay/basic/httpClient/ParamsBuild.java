@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by rankai . 参数生成工具类
- * Date 2016/9/1 .
+ * 参数生成工具类
+ * @author rankai
  */
 public class ParamsBuild {
 

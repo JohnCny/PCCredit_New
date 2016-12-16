@@ -2,6 +2,7 @@ package com.cardpay.controller.menu;
 
 import com.alibaba.fastjson.JSONArray;
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
@@ -31,6 +32,7 @@ public class MenuController {
     @ResponseBody
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     @ApiOperation(value = "根据角色查询菜单层级信息接口", notes = "查询菜单层级信息",  httpMethod = "GET")
+    @SystemControllerLog(description = "查询全部菜单数据")
     public ResultTo selectMenuList(HttpSession session){
         ResultTo resultTo = new ResultTo();
         User user = (User) ShiroKit.getPrincipal();
@@ -86,7 +88,9 @@ public class MenuController {
         return user.getId();
     }
     @RequestMapping("/test")
-    public String test(){
-        return "/demo";
+    @ResponseBody
+    @SystemControllerLog
+    public ResultTo test(String name){
+        return  new ResultTo().setMsg(0,"name:"+name);
     }
 }

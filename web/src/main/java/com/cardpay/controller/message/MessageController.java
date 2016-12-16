@@ -1,4 +1,4 @@
-package com.cardpay.controller.business.message;
+package com.cardpay.controller.message;
 
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.message.model.po.TMessage;

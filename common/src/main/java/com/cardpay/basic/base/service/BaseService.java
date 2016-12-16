@@ -1,10 +1,10 @@
 package com.cardpay.basic.base.service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * Created by Pzwxy on 2016/11/24.
+ * 通用service接口定义
+ * @author johnmyiqn
  */
 public interface BaseService<T>{
     /**

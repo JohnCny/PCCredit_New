@@ -7,7 +7,6 @@ import org.apache.shiro.util.ByteSource;
 
 /**
  * 密码工具类,对密码进行加密
- *
  * @author rankai
  */
 public class PasswordUtil {

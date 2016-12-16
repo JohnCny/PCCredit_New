@@ -7,7 +7,6 @@ import java.util.Random;
 
 /**
  * 产生随机数或者验证码
- *
  * @author rankai .
  */
 public class VerifyCodeUtil {

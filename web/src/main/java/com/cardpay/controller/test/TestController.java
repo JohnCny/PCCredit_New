@@ -32,6 +32,7 @@ public class TestController extends BaseController<TModel,Integer> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
     @RequestMapping(value = "/test" ,method = RequestMethod.GET)
     //@ApiImplicitParams({ @ApiImplicitParam(name = "tModel", value = "testBean", required = true, dataType = "TModel")})
+
     public String test(@ApiParam(required = true, value ="对象" ) @ModelAttribute TModel tModel,
                        @ApiParam(value ="Json" ) @RequestBody TModel jsonModel,
                        @ApiParam(value = "测试数据") @RequestParam String str){

@@ -1,7 +1,8 @@
 package com.cardpay.basic.util;
 
 /**
- * Created by rankai on 2016/7/26.
+ * 时间格式化工具
+ * @author rankai
  */
 public class FormatTimeUtil {
 

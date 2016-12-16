@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 /**
  * FastDfs pei配置类
- * Created by chenkai on 2016/11/25.
+ * @author chenkai
  */
 public interface FileManagerConfig extends Serializable {
     /**

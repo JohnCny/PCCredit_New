@@ -7,7 +7,6 @@ import org.apache.shiro.subject.Subject;
 
 /**
  * Shiro综合工具类
- *
  * @author rankai .
  */
 public class ShiroKit {
