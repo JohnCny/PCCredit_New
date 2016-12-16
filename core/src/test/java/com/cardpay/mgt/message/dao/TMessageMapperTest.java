@@ -2,6 +2,7 @@ package com.cardpay.mgt.message.dao;
 
 import com.cardpay.mgt.message.model.po.TMessage;
 import com.cardpay.util.TestEnv;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +19,7 @@ public class TMessageMapperTest extends TestEnv {
     private TMessageMapper tMessageMapper;
 
     @Test
+    @Ignore
     public void getMessageByState() throws Exception {
         TMessage msg = new TMessage();
         msg.setIsBroadcast(0);

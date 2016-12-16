@@ -71,8 +71,6 @@ public interface TMenuService extends BaseService<TMenu> {
 
     /**
      * 更新菜单缓存
-     *
-     * @return 成功或失败
      */
     void updateMenuCache();
 
