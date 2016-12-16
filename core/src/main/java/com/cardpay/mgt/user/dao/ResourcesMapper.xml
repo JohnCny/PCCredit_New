@@ -11,5 +11,4 @@
         <result column="RESOUCRE_DESCRIPTION" jdbcType="VARCHAR" property="resoucreDescription"/>
         <result column="RESOUCRE_TYPE" jdbcType="DECIMAL" property="resoucreType"/>
     </resultMap>
-
 </mapper>

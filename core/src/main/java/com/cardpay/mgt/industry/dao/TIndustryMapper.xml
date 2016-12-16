@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.industry.dao.TIndustryMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.industry.model.po.TIndustry">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="INDUSTRY_NAME" jdbcType="VARCHAR" property="industryName" />
+    <result column="INDUSTRY_DESCRIPTION" jdbcType="VARCHAR" property="industryDescription" />
+  </resultMap>
+</mapper>

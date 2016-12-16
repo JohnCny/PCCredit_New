@@ -3,7 +3,8 @@ package com.cardpay.basic.base.baseInterface;
 import com.cardpay.basic.base.model.ResultTo;
 
 /**
- * Created by johnmyiqn on 2016/11/10.
+ * App接口或前后端分离实现通用接口
+ * @author johnmyiqn
  */
 public interface BaseApiInterface<T> {
     //定义controller api接口必须实现定义

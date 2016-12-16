@@ -13,8 +13,7 @@ import java.io.InputStream;
 
 /**
  * 解析征信报告PDF Service
- *
- * Created by yanwe on 2016/11/30.
+ * @author yanwe on 2016/11/30.
  */
 @Service
 public class ParseCreditReportServiceImpl implements ParseCreditReportService{

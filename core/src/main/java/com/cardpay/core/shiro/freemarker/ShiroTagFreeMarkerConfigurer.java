@@ -8,8 +8,7 @@ import java.io.IOException;
 
 /**
  * 导入shiro标签，以便在freemarker中使用
- *
- * @author wangpeng
+ * @author johnmyiqn
  */
 public class ShiroTagFreeMarkerConfigurer extends FreeMarkerConfigurer {
     @Override

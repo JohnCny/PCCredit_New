@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * redis接口,操作redis的方法
- *
  * @author rankai
  */
 @Component()

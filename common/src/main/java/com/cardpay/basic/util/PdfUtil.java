@@ -2,13 +2,14 @@ package com.cardpay.basic.util;
 
 import com.cardpay.basic.common.log.LogTemplate;
 import org.pdfbox.pdfparser.PDFParser;
-import org.pdfbox.pdmodel.PDDocument;
 import org.pdfbox.util.PDFTextStripper;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * Created by yanwe on 2016/11/25.
+ * pdf解析工具类
+ * @author yanwe
  */
 public class PdfUtil {
 

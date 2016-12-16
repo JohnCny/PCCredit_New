@@ -6,22 +6,15 @@ import com.cardpay.basic.util.treeutil.annotation.TreeChild;
 import com.cardpay.basic.util.treeutil.annotation.TreeId;
 import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 组装树型数据工具
- *
  * 使用方法：在Bean的Id,父Id,子节点属性上分别添加@TreeId,@TreeParentId,@TreeChild
  *
  * @param <T>  需要组装的Bean类型
- * Created by yanwe on 2016/12/9.
+ * @author yanwe
  */
 public class TreeUtil<T> {
 

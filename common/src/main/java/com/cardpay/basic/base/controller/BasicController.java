@@ -12,7 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by johnmyiqn on 2016/11/10.
+ * 基础controller接口，防止xxs攻击
+ * @author johnmyiqn
  */
 public class BasicController {
     @Autowired

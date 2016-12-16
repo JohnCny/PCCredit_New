@@ -18,8 +18,7 @@ import java.util.List;
 
 /**
  * 对象属性对比
- *
- * Created by yanwe on 2016/12/1.
+ * @author yanwe on 2016/12/1.
  */
 public class CompareBeanUtil {
 

@@ -1,7 +1,6 @@
 package com.cardpay.core.rabbitmq;
 /**
  * rabbit消息相关常量定义
- *
  * @author johnmyiqn
  */
 public interface RabbitMqConst {

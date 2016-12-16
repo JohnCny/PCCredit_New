@@ -3,7 +3,7 @@ import java.lang.annotation.*;
 
 /**
  * 该注解用于controller日志
- * @author licho.
+ * @author licho
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

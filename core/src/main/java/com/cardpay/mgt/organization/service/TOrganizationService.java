@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 机构service层
- * Created by chenkai on 2016/11/24.
+ * @author chenkai on 2016/11/24.
  */
 public interface TOrganizationService extends BaseService<TOrganization> {
     /**

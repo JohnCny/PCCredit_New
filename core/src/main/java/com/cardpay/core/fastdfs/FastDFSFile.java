@@ -2,7 +2,7 @@ package com.cardpay.core.fastdfs;
 
 /**
  * FastDFSFile文件信息实体类
- * Created by chenkai on 2016/11/25.
+ * @author chenkai
  */
 public class FastDFSFile implements FileManagerConfig {
     private byte[] content;
