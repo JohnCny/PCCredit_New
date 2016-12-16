@@ -1,44 +1,35 @@
 group 'com.cardpay'
 version '1.0-SNAPSHOT'
 apply plugin: 'java'
+apply plugin: "com.google.protobuf"
+
+//build
+buildscript {
+    repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.akhikhl.gretty:gretty:1.2.4"
+        classpath "gradle.plugin.com.google.protobuf:protobuf-gradle-plugin:0.8.0"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1-rc1"
+    }
+}
 
 //全局project属性
 allprojects {
     apply plugin: 'java'
-//    apply plugin: 'com.google.protobuf'
     apply plugin: 'idea'
 
     //定义JVM版本
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
-    //定义repositories
-    buildscript {
-        repositories {
-
-            maven {
-                url "http://maven.aliyun.com/nexus/content/groups/public/"
-            }
-
-            maven {
-                url "https://plugins.gradle.org/m2/"
-            }
-
-//            maven {
-//                name "nexus"
-//                url "http://192.168.1.116:8081/repository/qkjr/"
-//            }
-
-            mavenCentral()
-            jcenter()
-        }
-
-        dependencies {
-            classpath "org.akhikhl.gretty:gretty:1.2.4"
-            classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1-rc1"
-            classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
-        }
-    }
 
     repositories {
         flatDir {
@@ -54,37 +45,7 @@ allprojects {
         jcenter()
         mavenCentral()
     }
-//
-//    protobuf {
-//        protoc {
-//            // The version of protoc must match protobuf-java. If you don't depend on
-//            // protobuf-java directly, you will be transitively depending on the
-//            // protobuf-java version that grpc depends on.
-//            artifact = 'com.google.protobuf:protoc:3.0.0'
-//        }
-//        plugins {
-//            grpc {
-//                artifact = "io.grpc:protoc-gen-grpc-java:1.0.2"
-//            }
-//        }
-//        generateProtoTasks {
-//            all()*.plugins {
-//                grpc {
-//                    // To generate deprecated interfaces and static bindService method,
-//                    // turn the enable_deprecated option to true below:
-//                    option 'enable_deprecated=false'
-//                }
-//            }
-//        }
-//    }
-//    idea {
-//        module {
-//            // Not using generatedSourceDirs because of
-//            // https://discuss.gradle.org/t/support-for-intellij-2016/15294/8
-//            sourceDirs += file("${projectDir}/build/generated/source/proto/main/java")
-//            sourceDirs += file("${projectDir}/build/generated/source/proto/main/grpc")
-//        }
-//    }
+
 }
 
 //子project属性
@@ -268,6 +229,62 @@ dependencies {
     compile project(':common')
     compile project(':core')
     compile project(':web')
+}
+
+//protobuf配置
+protobuf {
+    protoc {
+        // The version of protoc must match protobuf-java. If you don't depend on
+        // protobuf-java directly, you will be transitively depending on the
+        // protobuf-java version that grpc depends on.
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.0.2"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {
+                // To generate deprecated interfaces and static bindService method,
+                // turn the enable_deprecated option to true below:
+                option 'enable_deprecated=false'
+            }
+        }
+    }
+}
+idea {
+    module {
+        // Not using generatedSourceDirs because of
+        // https://discuss.gradle.org/t/support-for-intellij-2016/15294/8
+        sourceDirs += file("${projectDir}/build/generated/source/proto/main/java")
+        sourceDirs += file("${projectDir}/build/generated/source/proto/main/grpc")
+    }
+}
+// Provide convenience executables for trying out the examples.
+apply plugin: 'application'
+
+startScripts.enabled = false
+
+task JRServiceClient(type : CreateStartScripts) {
+    mainClassName = 'com.jr.JRService.JRServiceClient'
+    applicationName = 'JRService-client'
+    outputDir = new File(project.buildDir, 'tmp')
+    classpath = jar.outputs.files + project.configurations.runtime
+}
+
+task JRServiceServer(type : CreateStartScripts) {
+    mainClassName = 'com.jr.JRService.JRServiceServer'
+    applicationName = 'JRService-server'
+    outputDir = new File(project.buildDir, 'tmp')
+    classpath = jar.outputs.files + project.configurations.runtime
+}
+
+applicationDistribution.into('bin') {
+    from(JRServiceServer)
+    from(JRServiceClient)
+    fileMode = 0755
 }
 
 //默认任务为gradle run

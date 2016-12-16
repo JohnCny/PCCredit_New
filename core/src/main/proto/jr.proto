@@ -1,16 +1,20 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.jr.JRService";
-option java_outer_classname = "JRProto";
+option java_package = "com.cardpay.service";
+option java_outer_classname = "SongServiceOut";
 
-package JRService;
+package SongServicePaakage;
 
 //service definition
-service JRService {
+service SongService {
   rpc ListSongs (SingerId) returns (SongList) {}
-
   rpc GetSongs (SingerId) returns (stream Song) {}
+}
+
+service SongService2 {
+  rpc ListSongs2 (SingerId) returns (SongList) {}
+  rpc GetSongs2 (SingerId) returns (stream Song) {}
 }
 
 message SingerId {
