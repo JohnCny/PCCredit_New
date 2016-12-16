@@ -87,6 +87,6 @@ public class MenuController {
     }
     @RequestMapping("/test")
     public String test(){
-        return "demo";
+        return "/demo";
     }
 }
