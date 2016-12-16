@@ -40,7 +40,7 @@ public class JsonUtil {
     /**
      * 默认的 {@code JSON} 是否排除有  {@literal @Expose} 注解的字段。
      */
-    public static boolean EXCLUDE_FIELDS_WITHOUT_EXPOSE = false;
+    public static final boolean EXCLUDE_FIELDS_WITHOUT_EXPOSE = false;
 
     /**
      * {@code Google Gson} 的 {@literal @Since} 注解常用的版本号常量 - {@code 1.0}。
