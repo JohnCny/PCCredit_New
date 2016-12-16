@@ -52,7 +52,7 @@ public class BaseController<T, PK> extends BasicController {
      */
     String PAGE_LIST = "pageList";
 
-    String PAGE_START_LIST = "PageStartList";
+    String PAGE_START_LIST = "pageStartList";
 
     @Autowired
     BaseService<T> baseService;

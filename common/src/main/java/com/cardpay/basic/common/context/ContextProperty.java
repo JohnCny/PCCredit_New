@@ -11,7 +11,6 @@ import java.util.Properties;
 /**
  * 获取配置文件properties文件数据
  * @author rankai .
- * Date 2016/9/1 .
  */
 public class ContextProperty extends PropertyPlaceholderConfigurer {
 
@@ -19,9 +18,7 @@ public class ContextProperty extends PropertyPlaceholderConfigurer {
 
     @Override
     protected void processProperties(ConfigurableListableBeanFactory beanFactory, Properties props) throws BeansException {
-
         super.processProperties(beanFactory, props);
-
         for (Object key : props.keySet()) {
             String keyStr = key.toString();
             String value = props.getProperty(keyStr);

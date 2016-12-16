@@ -12,7 +12,6 @@ import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
 /**
  * shiro自定义密码校验器,判断用户输入的密码是否正确
- *
  * @author rankai .
  */
 public class UserCredentialsMatcher extends SimpleCredentialsMatcher {

@@ -3,7 +3,8 @@ package com.cardpay.basic.util;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by johnmyiqn on 2016/10/19.
+ * ajax工具类
+ * @author johnmyiqn
  */
 public class AjaxUtil {
 
