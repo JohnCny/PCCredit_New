@@ -14,7 +14,6 @@ import java.util.List;
  * @author johnmyqin
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
-
     /**
      * mapper定义
      */

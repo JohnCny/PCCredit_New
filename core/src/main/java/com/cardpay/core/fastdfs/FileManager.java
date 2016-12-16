@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * FastDFSFile文件上传下载通用类
- * Created by chenkai on 2016/11/25.
+ * @author chenkai
  */
 @Component
 public class FileManager implements FileManagerConfig {

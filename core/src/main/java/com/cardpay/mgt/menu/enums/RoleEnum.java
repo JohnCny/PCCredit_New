@@ -2,6 +2,7 @@ package com.cardpay.mgt.menu.enums;
 
 /**
  * 角色ID枚举
+ * @author  yanweichen
  */
 public enum RoleEnum {
 

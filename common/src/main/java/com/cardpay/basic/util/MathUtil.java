@@ -5,6 +5,10 @@ package com.cardpay.basic.util;
 
 import java.math.BigDecimal;
 
+/**
+ * 数学运算工具类
+ * @author johnmyiqn
+ */
 public class MathUtil {
 
     //每页的记录数
