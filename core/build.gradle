@@ -1,3 +1,6 @@
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+
 //添加依赖文件
 dependencies {
     compile(
@@ -9,12 +12,6 @@ dependencies {
             group: 'junit', name: 'junit', version: '4.11'
     )
 }
-
-group 'com.jr'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-apply plugin: 'com.google.protobuf'
 
 buildscript {
     repositories {
