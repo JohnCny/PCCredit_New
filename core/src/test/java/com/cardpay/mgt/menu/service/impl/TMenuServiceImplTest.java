@@ -10,6 +10,7 @@ import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.model.Authority;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -110,6 +111,7 @@ public class TMenuServiceImplTest {
     }
 
     @Test
+    @Ignore
     public void selectMenuListByAll() throws Exception {
         when(tMenuMapper.selectMenuListByUserAll(2)).thenReturn(tMenuVos);
         JSONArray tMenuVoList = tMenuService.selectMenuListByAll(2);
