@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 权限机构关联表Service实现类
- * Created by chenkai on 2016/11/24.
+ * @author chenkai on 2016/11/24.
  */
 @Service
 public class TAuthorityOrganizationServiceImpl extends BaseServiceImpl<TAuthorityOrganization> implements TAuthorityOrganizationService {

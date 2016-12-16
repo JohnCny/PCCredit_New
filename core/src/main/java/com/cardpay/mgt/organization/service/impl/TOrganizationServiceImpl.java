@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
 import java.util.List;
 
 /**
  * 机构service实现类
- * Created by chenkai on 2016/11/24.
+ * @author chenkai on 2016/11/24.
  */
 @Service
 public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> implements TOrganizationService {
