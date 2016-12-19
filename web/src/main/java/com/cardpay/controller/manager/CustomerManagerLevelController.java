@@ -1,4 +1,4 @@
-package com.cardpay.controller.customer.CustomerManagerLevel;
+package com.cardpay.controller.manager;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
@@ -14,25 +14,25 @@ import java.util.Map;
 
 /**
  * 客户经理级别controller
+ *
  * @author wangpeng
  */
-@Api(value = "/customermanagerlevel", description = "客户经理级别")
+@Api(value = "/customerManagerLevel", description = "客户经理级别")
 @RestController
-@RequestMapping("/customermanagerlevel")
+@RequestMapping("/customerManagerLevel")
 public class CustomerManagerLevelController extends BaseController<TCustomerManagerLevel, Integer> {
     @Autowired
     private CustomerManagerLevelService customerManagerLevelService;
 
     /**
      * 获取客户经理级别
+     *
      * @return 客户经理级别列表
      */
     @RequestMapping("/customerManagerLevelList")
-    public ResultTo getCustomerManagerLevel(){
-        Map<String,Object> map = new HashMap<String,Object>();
-        ResultTo resultTo = new ResultTo();
-        map.put("customerManagerLevelList",customerManagerLevelService.getCustomerManagerLevel());
-        resultTo.setData(map);
-        return resultTo;
+    public ResultTo getCustomerManagerLevel() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerManagerLevelList", customerManagerLevelService.getCustomerManagerLevel());
+        return new ResultTo().setData(map);
     }
 }
