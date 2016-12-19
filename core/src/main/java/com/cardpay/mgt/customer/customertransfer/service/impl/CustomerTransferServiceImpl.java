@@ -3,7 +3,7 @@ package com.cardpay.mgt.customer.customertransfer.service.impl;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
-import com.cardpay.mgt.customer.customertransfer.model.po.TCustomerTransfer;
+import com.cardpay.mgt.customer.customertransfer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.customertransfer.service.CustomerTransferService;
 import org.springframework.stereotype.Service;
 

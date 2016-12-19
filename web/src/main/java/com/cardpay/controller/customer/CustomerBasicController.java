@@ -22,10 +22,10 @@ import java.util.Map;
  *
  * @author wangpeng
  */
-@Api(value = "/customerBasic", description = "客户")
+@Api(value = "/customerBasic", description = "客户基本信息")
 @Controller
 @RequestMapping("/customerBasic")
-public class CustomerBasicController extends BaseController<TCustomerBasic, Long> {
+public class CustomerBasicController extends BaseController<TCustomerBasic, Integer> {
     @Autowired
     private CustomerBasicService customerBasicService;
 
@@ -105,6 +105,19 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Long
     public ResultTo validate(@ApiParam(value = "证件号码", required = true) int identityCard){
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
         return new ResultTo().setData(idCardExist);
+    }
+
+    /**
+     * 更新客户基本信息
+     * @param tCustomerBasic 客户基本信息
+     * @return 数据库变更数量
+     */
+    @ResponseBody
+    @PutMapping("/update")
+    @ApiOperation(value = "客户经理基本信息更新", notes = "客户经理基本信息更新", httpMethod = "PUT")
+    public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic){
+        int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
+        return new ResultTo().setData(count);
     }
 
 }

@@ -13,14 +13,14 @@ import javax.persistence.*;
  */
 @Table(name = "T_CUSTOMER_BASIC")
 @ApiModel(value="客户基本信息管理")
-public class TCustomerBasic extends GenericEntity<Long> {
+public class TCustomerBasic extends GenericEntity<Integer> {
     /**
      * 客户id(需要生成规则生成)
      */
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_BASIC_SEQ.nextval from dual")
     @ApiModelProperty(value="客户id(需要生成规则生成)",required = true)
-    private Long id;
+    private Integer id;
 
     /**
      * 用户id
@@ -111,6 +111,7 @@ public class TCustomerBasic extends GenericEntity<Long> {
      */
     @Column(name = "CREATE_TIME")
     @ApiModelProperty(value="创建时间",required = true)
+    @OrderBy("DESC")
     private Date createTime;
 
     /**
@@ -139,7 +140,7 @@ public class TCustomerBasic extends GenericEntity<Long> {
      *
      * @return ID - 客户id(需要生成规则生成)
      */
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -148,7 +149,7 @@ public class TCustomerBasic extends GenericEntity<Long> {
      *
      * @param id 客户id(需要生成规则生成)
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -441,7 +442,7 @@ public class TCustomerBasic extends GenericEntity<Long> {
     }
 
     @Override
-    public Long getPK() {
+    public Integer getPK() {
         return id;
     }
 }

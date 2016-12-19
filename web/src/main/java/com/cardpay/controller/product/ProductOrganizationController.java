@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.Map;
  *
  * @author chenkai on 2016/12/12.
  */
-@RestController
+@Controller
 @RequestMapping("/productOrganization")
 @Api(value = "/productOrganization", description = "产品机构关联")
 public class ProductOrganizationController extends BaseController<TProductOrganization, Integer> {
@@ -54,7 +55,8 @@ public class ProductOrganizationController extends BaseController<TProductOrgani
      * @param orgIds    机构id
      * @return 新增产品信息id集合
      */
-    @PutMapping("/")
+    @ResponseBody
+    @PostMapping("/")
     @ApiOperation(value = "批量添加产品机构信息接口", notes = "添加产品机构信息", httpMethod = "POST")
     public ResultTo insertProductOrganization(@ApiParam(value = "产品id", required = true) @RequestParam int productId
             , @ApiParam(value = "机构id(','分割)", required = true) @RequestParam String orgIds) {
@@ -75,6 +77,7 @@ public class ProductOrganizationController extends BaseController<TProductOrgani
      * @param orgIds    机构id
      * @return 数据库变动条数
      */
+    @ResponseBody
     @DeleteMapping("/")
     @ApiOperation(value = "批量删除产品机构信息接口", notes = "删除产品机构信息", httpMethod = "DELETE")
     public ResultTo deleteProductOrganization(@ApiParam(value = "产品id", required = true) @RequestParam int productId
@@ -90,6 +93,7 @@ public class ProductOrganizationController extends BaseController<TProductOrgani
      * @param topId     顶级id
      * @return 产品关联机构信息
      */
+    @ResponseBody
     @GetMapping("/")
     @ApiOperation(value = "查询产品关联机构信息", notes = "删除产品机构信息", httpMethod = "GET")
     public ResultTo queryProductOrganization(@ApiParam(value = "产品id", required = true) @RequestParam int productId

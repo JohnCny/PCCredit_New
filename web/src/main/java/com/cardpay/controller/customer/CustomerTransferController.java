@@ -3,7 +3,7 @@ package com.cardpay.controller.customer;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.mgt.customer.customertransfer.model.po.TCustomerTransfer;
+import com.cardpay.mgt.customer.customertransfer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.customertransfer.service.CustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +22,7 @@ import java.util.List;
 @Api(value = "/customerTransfer", description = "客户移交")
 @RestController
 @RequestMapping("/customerTransfer")
-public class CustomerTransferController extends BaseController<TCustomerTransfer, Long> {
+public class CustomerTransferController extends BaseController<TCustomerTransfer, Integer> {
 
     @Autowired
     private CustomerTransferService customerTransferService;
