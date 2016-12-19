@@ -83,7 +83,7 @@ public class LogonController extends BaseController<User, Integer> {
      *
      * @return 登陆页面
      */
-    @GetMapping("/out")
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
     public String logout() {

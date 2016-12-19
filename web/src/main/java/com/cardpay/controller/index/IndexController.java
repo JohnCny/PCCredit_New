@@ -9,6 +9,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author rankai
@@ -23,7 +24,7 @@ public class IndexController {
 
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "首页跳转", httpMethod = "GET")
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public String index() {
         Subject subject = ShiroKit.getSubject();
         if (subject.hasRole("admin")) {

@@ -27,7 +27,7 @@ public class BaseLoginController {
      */
     @ApiOperation(value = "登陆页面跳转", notes = "登陆页面跳转GET请求", httpMethod = "GET")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public String login() {
         return RETURN_LOGIN;
     }
