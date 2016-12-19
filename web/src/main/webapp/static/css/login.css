@@ -68,7 +68,7 @@ input[type=password] {
     display: none;
     width: 100%;
     text-align: left;
-    color: orangered;
+    color: #e4393c;
     line-height: 30px;
     font-size: 15px;
 }
