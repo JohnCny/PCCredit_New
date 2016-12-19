@@ -4,7 +4,7 @@
          version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
 
     <welcome-file-list>
-        <welcome-file>/WEB-INF/views/home/login.html</welcome-file>
+        <welcome-file>/login.html</welcome-file>
     </welcome-file-list>
 
     <!--配置spring 上下文配置文件-->
