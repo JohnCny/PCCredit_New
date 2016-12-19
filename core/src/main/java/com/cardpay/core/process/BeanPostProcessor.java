@@ -21,6 +21,9 @@ public class BeanPostProcessor implements ApplicationListener<ContextRefreshedEv
         try {
             //初始化菜单缓存
             tMenuService.updateMenuCache();
+//            final JRServiceServer server = new JRServiceServer();
+//            server.start();
+//            server.blockUntilShutdown();
         } catch (Exception e) {
             LogTemplate.error(BeanPostProcessor.class,e,"容器启动后指定代码异常",e.toString());
             e.printStackTrace();
