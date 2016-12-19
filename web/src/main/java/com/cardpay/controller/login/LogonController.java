@@ -33,20 +33,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(value = "/logon", description = "用认证(登陆)")
 public class LogonController extends BaseController<User, Integer> {
 
-    private static final String RETURN_LOGIN = "/home/login";
-
-    /**
-     * 登陆页面跳转
-     *
-     * @return 登陆页面
-     */
-    @ApiOperation(value = "登陆页面跳转", notes = "登陆页面跳转GET请求", httpMethod = "GET")
-    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String login() {
-        return RETURN_LOGIN;
-    }
-
     /**
      * 系统登陆入口
      *

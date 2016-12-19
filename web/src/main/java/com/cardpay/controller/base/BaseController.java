@@ -527,4 +527,5 @@ public class BaseController<T, PK> extends BasicController {
 //        result.setData(baseService.pageStartList(record,start,size));
 //        return result;
 //    }
+
 }
