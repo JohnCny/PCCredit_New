@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * 生产者类,发送rabbirtMq消息
- *
  * @author johnmyiqn
  */
 @Service

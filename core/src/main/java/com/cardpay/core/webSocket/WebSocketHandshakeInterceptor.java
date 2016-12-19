@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * websocket 握手协议实现类
- * Created by chenkai on 2016/11/17.
+ * @author johnmyiqn
  */
 public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
     @Autowired

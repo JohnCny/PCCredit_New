@@ -5,6 +5,10 @@ import com.cardpay.mgt.modeifyhistory.model.TModifyHistory;
 
 import java.util.List;
 
+/**
+ * bean修改历史
+ * @author yanweicheng
+ */
 public interface TModifyHistoryMapper extends BasicMapper<TModifyHistory> {
 
     /**

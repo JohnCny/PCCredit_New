@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * cookie操作工具类
- * Created by johnmyiqn on 2016/9/26.
+ * @author johnmyiqn
  */
 public class CookieUtil {
 

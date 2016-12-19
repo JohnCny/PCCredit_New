@@ -11,7 +11,7 @@ import static com.cardpay.basic.redis.enums.RedisKeyPrefixEnum.USER;
 
 /**
  * webSocket封装Redis 类
- * Created by chenkai on 2016/11/18.
+ * @author johnmyiqn
  */
 @Component
 public class WebSocketRedis {

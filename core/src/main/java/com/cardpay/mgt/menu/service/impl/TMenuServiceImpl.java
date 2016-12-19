@@ -1,18 +1,28 @@
 package com.cardpay.mgt.menu.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.common.annotation.SystemServiceLog;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.basic.redis.RedisClient;
+import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
-import com.cardpay.mgt.menu.model.*;
+import com.cardpay.mgt.menu.enums.RoleEnum;
+import com.cardpay.mgt.menu.model.MenuAuth;
+import com.cardpay.mgt.menu.model.TMenu;
+import com.cardpay.mgt.menu.model.TMenuAuth;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.model.Authority;
+import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +33,7 @@ import java.util.Map;
 
 /**
  * 菜单Service实现类
- * <p>
+ *
  * Created by yanwe on 2016/11/22.
  */
 @Service
@@ -35,20 +45,32 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     @Autowired
     private AuthorityMapper authorityMapper;
 
+    @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
+    private RedisClient redisClient;
+
     private static final String DELETE = "Delete";
     private static final String UPDATE = "Update";
     private static final String ADD = "Add";
 
+    private static final int TOP_ID = 0;
+
     @Override
     public List<TMenuVo> selectMenuListByLevel(int topId, int level, int userId) {
-        List<TMenuVo> menuVoList = tMenuMapper.selectMenuListByLevel(topId, level, userId);
+        List<TMenuVo> menuVoList = tMenuMapper.selectMenuListByUserLevel(topId, level, userId);
         return convertMenu2Tree(menuVoList);
     }
 
     @Override
-    public List<TMenuVo> selectMenuListByAll(int topId, int userId) {
-        List<TMenuVo> menuVoList = tMenuMapper.selectMenuListByAll(topId, userId);
-        return convertMenu2Tree(menuVoList);
+    @SystemServiceLog(description = "查询全部菜单数据")
+    public JSONArray selectMenuListByAll(int userId) {
+        UserRole criteria = new UserRole();
+        criteria.setUserId(userId);
+        UserRole userRole = userRoleService.selectOne(criteria);
+        Object menuJson = redisClient.get(RedisKeyPrefixEnum.ROLE_MENU, RoleEnum.getValueById(userRole.getRoleId()).getRoleName());
+        return JSON.parseArray(menuJson.toString());
     }
 
     @Override
@@ -67,7 +89,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
         //遍历组装树
         TreeUtil<T> treeUtil = new TreeUtil("menuOrder", TreeUtil.ASC);
         long start = System.currentTimeMillis();
-        List<T> childNodesByParentId = treeUtil.getChildNodesByParentId(sourceList, 0);
+        List<T> childNodesByParentId = treeUtil.getChildNodesByParentId(sourceList, TOP_ID);
         long end = System.currentTimeMillis();
         LogTemplate.debug("TreeUtil耗时",""+(end-start));
         return childNodesByParentId;
@@ -186,5 +208,14 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
             }
         }
         return canDelete;
+    }
+
+    @Override
+    public void updateMenuCache() {
+        for (RoleEnum roleEnum : RoleEnum.values()) {
+            redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,roleEnum.getRoleName()
+                    ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(roleEnum.getRoleId()))));
+        }
+        LogTemplate.info("菜单","初始化了菜单");
     }
 }

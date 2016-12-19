@@ -7,8 +7,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
 /**
  * bean 信息获取和修改
- *
- * @author johnmyiqn on create 2016-10-10
+ * @author johnmyiqn
  */
 public class BeanFactoryUtil implements BeanFactoryPostProcessor {
 

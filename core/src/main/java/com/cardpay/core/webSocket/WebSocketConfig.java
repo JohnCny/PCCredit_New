@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 /**
  * WebSocket配置类
- * Created by chenkai on 2016/11/17.
+ * @author johnmyiqn
  */
 @Configuration
 @EnableWebMvc

@@ -86,7 +86,7 @@ public class LogonController extends BaseController<User, Integer> {
      *
      * @return 没有登陆消息
      */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/noLogin", method = RequestMethod.GET)
     public ResultTo noLogin() {
         return new ResultTo(ResultEnum.NO_LOGIN);
     }

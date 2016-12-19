@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * Echarts 接口请求返回结果,定义全局code值
- * Created by chenkai on 2016/11/23.
+ * @author chenkai
  */
 public class EchatesTo extends HashMap<String, Object> implements Serializable {
 
