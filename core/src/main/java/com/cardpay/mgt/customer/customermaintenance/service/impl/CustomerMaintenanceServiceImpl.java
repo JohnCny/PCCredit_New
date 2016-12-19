@@ -3,7 +3,7 @@ package com.cardpay.mgt.customer.customermaintenance.service.impl;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
-import com.cardpay.mgt.customer.customermaintenance.model.po.TCustomerMaintenance;
+import com.cardpay.mgt.customer.customermaintenance.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.customermaintenance.service.CustomerMaintenanceService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class CustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMaintenance> implements CustomerMaintenanceService {
     @Override
-    public Object getMaintenanceType(){
+    public List<SelectModel> getMaintenanceType(){
         List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.MaintenanceType value : ConstantEnum.MaintenanceType.values()){
             SelectModel selectModel=new SelectModel();

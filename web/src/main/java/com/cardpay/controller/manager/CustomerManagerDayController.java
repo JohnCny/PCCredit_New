@@ -1,4 +1,4 @@
-package com.cardpay.controller.customer.customermanagerday;
+package com.cardpay.controller.manager;
 
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.customer.customermanagerday.model.po.TCustomerManagerDay;
@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 客户经理日报controller
+ *
  * @author wangpeng
  */
-@Api(value = "/customermanagerday", description = "客户经理日报")
+@Api(value = "/customerManagerDay", description = "客户经理日报")
 @RestController
-@RequestMapping("/customermanagerday")
-public class CustomerManagerDayController extends BaseController<TCustomerManagerDay, Integer>  {
+@RequestMapping("/customerManagerDay")
+public class CustomerManagerDayController extends BaseController<TCustomerManagerDay, Integer> {
 }
