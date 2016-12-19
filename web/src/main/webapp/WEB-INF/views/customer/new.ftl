@@ -54,8 +54,7 @@
                 <label for="cname">姓名</label>
                 <div class="input-icon right">
                     <i class="fa"></i>
-                    <input data-error="${cnameError}" id="cname" type="text" class="form-control" name="cname" value="${customerBasicInfo.cname}" placeholder="请输入至少2-10位汉字">
-                    <div class="message">${cnameError}</div>
+                    <input  id="cname" type="text" class="form-control" name="cname" value="" placeholder="请输入至少2-10位汉字">
                 </div>
             </div>
             <div class="widclas">
@@ -90,10 +89,10 @@
                 </div>
             </div>
             <div class="widclas">
-                <label for="idNumber">证件号码</label>
+                <label for="certificateNumber">证件号码</label>
                 <div class="input-icon right">
                     <i class="fa checkId"></i>
-                    <input data-error="${idNumberError}" id="idNumber" type="text" class="form-control idNumber" name="idNumber" value="${customerBasicInfo.idNumber}" placeholder="请输入有效证件号码">
+                    <input data-error="${idNumberError}" id="certificateNumber" type="text" class="form-control idNumber" name="idNumber" value="${customerBasicInfo.idNumber}" placeholder="请输入有效证件号码">
                     <div class="message" id="idMessage"></div>
                 </div>
             </div>
@@ -122,7 +121,7 @@
                 </div>
             </div>
             <div class="widclas">
-                label for="tel">手机号码</label>
+                <label for="tel">手机号码</label>
                 <div class="input-icon right">
                     <i class="fa"></i>
                     <input data-error="${telError}" id="tel" type="text" class="form-control" name="tel" value="${customerBasicInfo.tel}" placeholder="请输入正确的手机号码">
@@ -144,10 +143,10 @@
                 </div>
             </div>
             <div class="widclas">
-                <label for="eduction">教育情况</label>
+                <label for="educationDegree">教育情况</label>
                 <div class="input-icon right">
                     <i class="fa"></i>
-                    <select id="eduction" type="text" class="form-control" name="eduction" >
+                    <select id="educationDegree" type="text" class="form-control" name="eduction" >
                         <option value="">--请选择--</option>
                         <option value="1">本科以上</option>
                         <option value="2">本科</option>
@@ -190,27 +189,28 @@
     <script>
         $(document).ready(function(){
             var url = "/customerBasic/insertSelective";
+            var Obj = {};
+            var arr = ["cname","sex","certificateType","certificateNumber","tel","homeAddress","educationDegree"];
 
-//            var data={
-//                var arr=['id','name']
-//                for（var i=0;I）{
-//                obj[arr[i]]=$("#"+arr[i]).val();
-//            }
-//                "3425":'',
-//                '2345':''
-//            }
-            var arr = ["certificateNumber"]
+
             $("#btn_submit").click(function () {
+                for(var i = 0; i < arr.length; i++){
+                    Obj[arr[i]]=$("#"+arr[i]).val();
+                }
+
                 $.ajax({
                     type:"post",
                     url:url,
-                    data:data,
+                    data:Obj,
                     success: function(){
-
+                        location.href="";
+                    },
+                    error:function () {
+                        alert("配置错误！")
                     }
-                })
-            })
-        })
+                });
+            });
+        });
     </script>
 
 </#macro>
