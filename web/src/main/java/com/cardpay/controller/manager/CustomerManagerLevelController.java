@@ -5,7 +5,9 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.customer.customermanagerlevel.model.po.TCustomerManagerLevel;
 import com.cardpay.mgt.customer.customermanagerlevel.service.CustomerManagerLevelService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +31,8 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
      *
      * @return 客户经理级别列表
      */
-    @RequestMapping("/customerManagerLevelList")
+    @GetMapping("/customerManagerLevelList")
+    @ApiOperation(value = "获取客户经理级别", notes = "客户经理级别", httpMethod = "GET")
     public ResultTo getCustomerManagerLevel() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerManagerLevelList", customerManagerLevelService.getCustomerManagerLevel());
