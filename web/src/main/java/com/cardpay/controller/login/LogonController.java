@@ -93,20 +93,8 @@ public class LogonController extends BaseController<User, Integer> {
      * @return 无权限提示消息
      */
     @RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
-    @ResponseBody
     public ResultTo unauthorized() {
         return new ResultTo(ResultEnum.NO_PERMITTION);
-    }
-
-    /**
-     * 没有登陆跳转
-     *
-     * @return 没有登陆消息
-     */
-    @RequestMapping(value = "/noLogin", method = RequestMethod.GET)
-    @ResponseBody
-    public ResultTo noLogin() {
-        return new ResultTo(ResultEnum.NO_LOGIN);
     }
 
 }
