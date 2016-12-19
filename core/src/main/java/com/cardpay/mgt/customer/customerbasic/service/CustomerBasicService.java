@@ -1,7 +1,8 @@
 package com.cardpay.mgt.customer.customerbasic.service;
 
+import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.customer.customerbasic.model.po.TCustomerBasic;
+import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface CustomerBasicService extends BaseService<TCustomerBasic> {
      * 获取证件类型
      * @return 证件类型列表
      */
-    Object getCert();
+    List<SelectModel> getCert();
 
     /**
      * 获取文化程度

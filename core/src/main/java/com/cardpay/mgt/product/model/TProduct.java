@@ -24,7 +24,6 @@ public class TProduct extends GenericEntity<Integer> {
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCSEQ.nextval from dual")
     @ApiModelProperty(value = "产品id", required = true)
-    @Mapping("productId")
     private Integer id;
 
     /**
