@@ -47,7 +47,7 @@ public class UserController extends BaseController<User, Integer> {
      *
      * @return 修改密码页面
      */
-    @GetMapping("/updatePasswordPage")
+    @RequestMapping("/updatePasswordPage")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "修改密码页面跳转", httpMethod = "GET")
     public String updatePassword() {

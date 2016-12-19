@@ -20,6 +20,12 @@
         <input id="password" name="password" type="password" class="login-input" placeholder="密码">
 
         <input type="button" class="login-button" value="登&nbsp;&nbsp;录">
+        <div class="codeImg">
+
+        </div>
+        <div class="forgetPwd">
+            <a href="user/">忘记密码？</a>
+        </div>
     </form>
 </div>
 <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
