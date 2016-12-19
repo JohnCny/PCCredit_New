@@ -69,8 +69,13 @@ public class ProductController extends BaseController<TProduct, Integer> {
         //若重新上传图片则删除以前上传的图片信息
         if (null != file) {
             TProduct queryProduct = tProductService.selectByPrimaryKey(tProduct.getId());
+            //拆分文件路径用于删除文件
             String[] split = queryProduct.getProductPictureUrl().split("/");
-            Integer flag = fileManager.deleteFile(split[0], split[1]);
+            String path = null;
+            for (int i = 1; i < split.length; i++) {
+                path += split[i];
+            }
+            Integer flag = fileManager.deleteFile(split[0], path);
             if (null != flag) {
                 String upLoadParam = fileManager.upLoad(file);
                 tProduct.setProductPictureUrl(upLoadParam);
