@@ -7,35 +7,27 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
 
-    //定义JVM版本
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-    //定义repositories
+    //build
     buildscript {
         repositories {
             maven {
                 url "http://maven.aliyun.com/nexus/content/groups/public/"
             }
-
             maven {
                 url "https://plugins.gradle.org/m2/"
             }
-
-//            maven {
-//                name "nexus"
-//                url "http://192.168.1.116:8081/repository/qkjr/"
-//            }
-
             mavenCentral()
             jcenter()
         }
-
         dependencies {
             classpath "org.akhikhl.gretty:gretty:1.2.4"
             classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1-rc1"
         }
     }
+
+    //定义JVM版本
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     repositories {
         flatDir {
@@ -51,6 +43,7 @@ allprojects {
         jcenter()
         mavenCentral()
     }
+
 }
 
 //子project属性
@@ -208,6 +201,10 @@ subprojects {
                 libraries."jstl",
                 libraries."javax-servlet",
 
+                //grpc
+                libraries."grpc-netty",
+                libraries."grpc-protobuf",
+                libraries."grpc-stub",
 
         )
         testCompile(

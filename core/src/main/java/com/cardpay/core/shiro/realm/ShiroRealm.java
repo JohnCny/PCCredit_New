@@ -19,7 +19,6 @@ import java.util.Set;
 
 /**
  * 自定义ShiroReale,用户授权,权限加载处理类
- *
  * @author rankai .
  */
 public class ShiroRealm extends AuthorizingRealm {

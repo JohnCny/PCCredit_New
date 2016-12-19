@@ -7,8 +7,7 @@ import java.util.List;
 
 /**
  * 修改实体类记录Service
- *
- * Created by yanwe on 2016/12/1.
+ * @author yanwe
  */
 public interface TModifyHistoryService extends BaseService<TModifyHistory> {
 

@@ -3,7 +3,8 @@ package com.cardpay.basic.util;
 import org.dozer.DozerBeanMapper;
 
 /**
- * Created by yanwe on 2016/12/12.
+ * Dozer 工具类
+ * @author yanwe
  */
 public class DozerUtil {
 

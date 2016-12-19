@@ -98,12 +98,10 @@ public enum ResultEnum {
      * 账号或密码为空
      */
     ACCOUNT_OR_PASSWORD_NULL(5018),
-
     /**
      * 必填参数不能为空
      */
     REQUIRED_PARAMETER_EMPTY(5019),
-
     /**
      * 操作失败
      */
@@ -111,7 +109,15 @@ public enum ResultEnum {
     /**
      * 请求超时
      */
-    API_TIMEOUT(5021);
+    API_TIMEOUT(5021),
+    /**
+     * 登陆超时
+     */
+    LOGIN_TIMEOUT(5022),
+    /**
+     * 接口签名不匹配
+     */
+    APPSIN_INCOMPATIBLE(5023);
 
     private int value; // 自定义数据域，private为了封装
 

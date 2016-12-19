@@ -46,7 +46,7 @@ public class RoleController extends BaseController<Role, Integer> {
      *
      * @return 权限组信息
      */
-    @RequestMapping(method = RequestMethod.GET, params = "add")
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "获取权限组", httpMethod = "GET")
     public ResultTo authorityGroup() {
@@ -60,7 +60,7 @@ public class RoleController extends BaseController<Role, Integer> {
      * @param role 角色信息实体对象
      * @return 成功或失败
      */
-    @RequestMapping(method = RequestMethod.POST, params = "add")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "增加角色信息", httpMethod = "POST")
     public ResultTo add(@ApiParam("角色实体对象") @Valid Role role, BindingResult result, @ApiParam("权限ID数组") Integer authorityId[]) {
@@ -76,7 +76,13 @@ public class RoleController extends BaseController<Role, Integer> {
         return new ResultTo();
     }
 
-    @RequestMapping(value = "/{roleId}", method = RequestMethod.GET, params = "page")
+    /**
+     * 根据角色ID获取角色信息
+     *
+     * @param roleId 角色ID
+     * @return 角色信息
+     */
+    @RequestMapping(value = "/{roleId}/page", method = RequestMethod.GET)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据角色ID获取角色的权限信息", httpMethod = "GET")
     public ResultTo updatePage(@ApiParam("角色ID") @PathVariable("roleId") Integer roleId) {
@@ -94,7 +100,7 @@ public class RoleController extends BaseController<Role, Integer> {
      * @param groupName
      * @return 权限操作集合
      */
-    @RequestMapping(value = "/{groupName}", method = RequestMethod.GET, params = "update")
+    @RequestMapping(value = "/{groupName}/update", method = RequestMethod.GET)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "获取权限组", httpMethod = "POST")
     public ResultTo operationList(@ApiParam("权限组名") @PathVariable("groupName") String groupName) {
@@ -110,7 +116,7 @@ public class RoleController extends BaseController<Role, Integer> {
      * @param newAuthorityId 新权限ID
      * @return 成功或失败
      */
-    @RequestMapping(method = RequestMethod.GET, params = "update")
+    @RequestMapping(method = RequestMethod.GET, params = {"roleId", "oldAuthorityId", "newAuthorityId"})
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "获取权限组", httpMethod = "GET")
     public ResultTo update(@ApiParam("角色ID") @RequestParam(value = "roleId") Integer roleId,

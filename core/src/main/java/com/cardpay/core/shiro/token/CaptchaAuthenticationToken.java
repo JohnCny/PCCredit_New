@@ -4,7 +4,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 
 /**
  * 自定义Token,用于封装用户登陆信息
- *
  * @author rankai
  */
 public class CaptchaAuthenticationToken extends UsernamePasswordToken {

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.common.annotation.SystemServiceLog;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.redis.RedisClient;
@@ -12,7 +13,9 @@ import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
 import com.cardpay.mgt.menu.enums.RoleEnum;
-import com.cardpay.mgt.menu.model.*;
+import com.cardpay.mgt.menu.model.MenuAuth;
+import com.cardpay.mgt.menu.model.TMenu;
+import com.cardpay.mgt.menu.model.TMenuAuth;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
@@ -30,7 +33,7 @@ import java.util.Map;
 
 /**
  * 菜单Service实现类
- * <p>
+ *
  * Created by yanwe on 2016/11/22.
  */
 @Service
@@ -61,6 +64,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     }
 
     @Override
+    @SystemServiceLog(description = "查询全部菜单数据")
     public JSONArray selectMenuListByAll(int userId) {
         UserRole criteria = new UserRole();
         criteria.setUserId(userId);
@@ -208,10 +212,10 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
     @Override
     public void updateMenuCache() {
-        redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,RoleEnum.MANAGER.getRoleName()
-                ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(RoleEnum.MANAGER.getRoleId()))));
-        redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,RoleEnum.ADMIN.getRoleName()
-                ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(RoleEnum.ADMIN.getRoleId()))));
+        for (RoleEnum roleEnum : RoleEnum.values()) {
+            redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,roleEnum.getRoleName()
+                    ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(roleEnum.getRoleId()))));
+        }
         LogTemplate.info("菜单","初始化了菜单");
     }
 }

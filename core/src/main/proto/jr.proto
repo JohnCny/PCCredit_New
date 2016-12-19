@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.cardpay.service";
+option java_outer_classname = "SongServiceOut";
+
+package SongServicePaakage;
+
+//service definition
+service SongService {
+  rpc ListSongs (SingerId) returns (SongList) {}
+  rpc GetSongs (SingerId) returns (stream Song) {}
+}
+
+service SongService2 {
+  rpc ListSongs2 (SingerId) returns (SongList) {}
+  rpc GetSongs2 (SingerId) returns (stream Song) {}
+}
+
+message SingerId {
+  int32 id = 1;
+}
+
+message Singer {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Song {
+  int32 id = 1;
+  string name = 2;
+  Singer singer = 3;
+}
+
+message SongList {
+  repeated Song songs= 1;
+}

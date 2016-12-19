@@ -3,15 +3,13 @@ package com.cardpay.mgt.menu.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * 菜单PO类
- *
- * @author yanwe 2016年11月23日17:11:56
+ * @author yanwe
  */
 @Table(name = "T_MENU")
 @ApiModel(value = "菜单")

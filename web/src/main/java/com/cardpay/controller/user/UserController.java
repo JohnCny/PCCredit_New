@@ -42,7 +42,7 @@ public class UserController extends BaseController<User, Integer> {
      * @param newPassword 新密码
      * @return 成功或失败
      */
-    @RequestMapping(method = RequestMethod.POST, params = "updatePassword")
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "修改密码", httpMethod = "POST")
     public ResultTo updatePassword(@ApiParam("原始密码") @RequestParam("oldPassword") String oldPassword,
@@ -61,7 +61,7 @@ public class UserController extends BaseController<User, Integer> {
      * @param userName 用户名
      * @return 不存在返回null, 存在返回用户Id
      */
-    @RequestMapping(value = "/anon/{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/resetPassword/{userName}", method = RequestMethod.GET)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据登录名查询用户", httpMethod = "GET", notes = "不存在返回null, 存在返回用户Id")
     public ResultTo isHaveLoginName(@ApiParam("用户名") @PathVariable("userName") String userName) {
@@ -79,7 +79,7 @@ public class UserController extends BaseController<User, Integer> {
      * @param address 用户Email或Phone
      * @return 成功或失败
      */
-    @RequestMapping(value = "/anon/sendCode", method = RequestMethod.POST, params = "resetPassword")
+    @RequestMapping(value = "/resetPassword/sendCode", method = RequestMethod.POST)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "发送验证码", httpMethod = "POST")
     public ResultTo sendCode(@ApiParam("用户Id") @RequestParam("userId") Integer userId,
@@ -96,7 +96,7 @@ public class UserController extends BaseController<User, Integer> {
      * @param code    验证码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/anon/checkedCode", method = RequestMethod.POST, params = "resetPassword")
+    @RequestMapping(value = "/resetPassword/checkedCode", method = RequestMethod.POST)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "验证验证码", httpMethod = "POST")
     public ResultTo checkedCode(@ApiParam("用户的邮箱或手机号") @RequestParam("address") String address,
@@ -114,7 +114,7 @@ public class UserController extends BaseController<User, Integer> {
      * @param password    密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/anon/{checkedCode}", method = RequestMethod.POST, params = "resetPassword")
+    @RequestMapping(value = "/resetPassword/{checkedCode}", method = RequestMethod.POST)
     public ResultTo resetPassword(@ApiParam("用户Id") @RequestParam("userId") Integer userId,
                                   @ApiParam("Api接口验证") @PathVariable("checkedCode") String checkedCode,
                                   @ApiParam("要重置的密码") @RequestParam("password") String password) {

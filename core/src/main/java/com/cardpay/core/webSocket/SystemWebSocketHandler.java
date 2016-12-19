@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 /**
  * WebSocket消息发送处理对象
- * Created by chenkai on 2016/11/17.
+ * @author johnmyiqn
  */
 @Component
 public class SystemWebSocketHandler extends TextWebSocketHandler {

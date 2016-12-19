@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * 菜单Service
- * Created by yanwe on 2016/11/24.
+ * @author yanweicheng
  */
 public interface TMenuService extends BaseService<TMenu> {
 
@@ -31,6 +31,7 @@ public interface TMenuService extends BaseService<TMenu> {
      * @param userId 用户id
      * @return 菜单列表json
      */
+
     JSONArray selectMenuListByAll(int userId);
 
     /**
@@ -70,8 +71,6 @@ public interface TMenuService extends BaseService<TMenu> {
 
     /**
      * 更新菜单缓存
-     *
-     * @return 成功或失败
      */
     void updateMenuCache();
 
