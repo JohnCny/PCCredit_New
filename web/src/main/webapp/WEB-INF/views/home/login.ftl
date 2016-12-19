@@ -6,46 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
-    <link href="/static/css/login.css" rel="stylesheet">
+    <link href="../static/css/login.css" rel="stylesheet">
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+
+    </script>
 </head>
 <body>
 <div class="login-box">
     <img src="../static/img/login-logo1.png"/>
-    <form id="loginForm">
+    <form>
         <!--错误信息提示-->
-			<div class="errorMessage">
-				<img src="../static/img/error.png"/>&nbsp;<span></span>
-			</div>
-        <input  id="user" name="userName" type="text" class="login-input" placeholder="用户名">
-        <input id="password" name="password" type="password" class="login-input" placeholder="密码">
+			<span class="errorMessage">
+				<img src="../static/img/error.png"/>&nbsp;用户名或密码错误！
+			</span>
+        <input type="text" class="login-input" placeholder="用户名" id="user">
+        <input type="password" class="login-input" placeholder="密码" >
 
-        <input type="button" class="login-button" value="登&nbsp;&nbsp;录">
+        <input type="button" class="login-button" value="登&nbsp;&nbsp;录" onclick="login()">
     </form>
 </div>
-<script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="/static/js/QK.js"></script>
+<script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
 
 <script type="text/javascript">
-    $(function () {
-        $(".login-button").click(function(){
-            var userName = $("#user").val();
-            var password = $("#password").val();
-            var data = {"userName" : userName,"password" : password};
-            if(userName.length >= 3){
-                $.ajax({
-                    type : "POST",
-                    url : "/logon/login",
-                    data : data,
-                    success : function(result){
-                        if(result.code != 200){
-                            $(".errorMessage").show().find("span").text(message(result['code']));
-                        }
-                        window.location.href = 'returnWebPage?viewName=/dashboard/index2';
-                    }
-                })
-            }
-        })
-    }());
+    function login(){
+        if($('#user').val()=="主管")
+            window.location.href='index_zg.html'
+        else
+            window.location.href='index_khjl.html'
+    }
+
 </script>
 </body>
 </html>
