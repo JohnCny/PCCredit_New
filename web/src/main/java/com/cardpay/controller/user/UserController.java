@@ -113,7 +113,7 @@ public class UserController extends BaseController<User, Integer> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/anon/resetPasswordPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/anon/sendCodePage", method = RequestMethod.GET)
     public String sendCodePage() {
         return RESET_PASSWORD_SEND;
     }
