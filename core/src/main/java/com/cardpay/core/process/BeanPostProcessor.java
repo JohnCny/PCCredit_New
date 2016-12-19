@@ -24,6 +24,7 @@ public class BeanPostProcessor implements ApplicationListener<ContextRefreshedEv
         try {
             //初始化菜单缓存
             tMenuService.updateMenuCache();
+            //启动grpc服务监听
             new Thread(){
                 @Override
                 public void run() {
