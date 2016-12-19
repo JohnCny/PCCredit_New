@@ -1,6 +1,7 @@
 package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.customermaintenance.model.TCustomerMaintenance;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * 客户维护controller
@@ -35,10 +35,10 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @GetMapping("/maintenanceTypeList")
     @ApiOperation(value = "维护类型类型", notes = "维护类型", httpMethod = "GET")
     public ResultTo getMaintenanceTypeList() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("maintenanceTypeList", customerMaintenanceService.getMaintenanceType());
-        return new ResultTo().setData(map);
+        List<SelectModel> maintenanceType = customerMaintenanceService.getMaintenanceType();
+        return new ResultTo().setData(maintenanceType);
     }
+
 
     /**
      * 获取客户维护记录列表
@@ -48,10 +48,9 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @RequestMapping("/maintenanceList")
     @ApiOperation(value = "获取客户维护记录列表", notes = "户维护记录", httpMethod = "GET")
     public ResultTo getMaintenanceList() {
-        Map<String, Object> map = new HashMap<>();
         TCustomerMaintenance tCustomerMaintenance = new TCustomerMaintenance();
         tCustomerMaintenance.setOperationId(ShiroKit.getUserId());
-        map.put("maintenanceList", customerMaintenanceService.select(tCustomerMaintenance));
-        return new ResultTo().setData(map);
+        List<TCustomerMaintenance> list = customerMaintenanceService.select(tCustomerMaintenance);
+        return new ResultTo().setData(list);
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class CustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTransfer> implements CustomerTransferService{
     @Override
-    public Object getTransferStatus(){
+    public List<SelectModel> getTransferStatus(){
         List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.TransferStatus value : ConstantEnum.TransferStatus.values()){
             SelectModel selectModel=new SelectModel();

@@ -1,4 +1,4 @@
-package com.cardpay.controller.customerbasic;
+package com.cardpay.controller.customer;
 
 import com.cardpay.util.TestEnv;
 import org.junit.Test;
@@ -42,6 +42,13 @@ public class CustomerBasicControllerTest extends TestEnv {
     @Test
     public void getProspectiveCustomers() throws Exception {
         mockMvc.perform(get("/customerbasic/prospectiveCustomers"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
+
+    @Test
+    public void validate() throws Exception {
+        mockMvc.perform(get("/customerbasic/idCardExist"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
