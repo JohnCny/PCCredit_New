@@ -1,10 +1,13 @@
 package com.cardpay.core.process;
 
+import com.cardpay.JRService.JRServiceServer;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.mgt.menu.service.TMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+
+import java.io.IOException;
 
 /**
  * 容器启动之后执行初始化程序(例如刷新缓存等需要初始化功能）
@@ -21,9 +24,20 @@ public class BeanPostProcessor implements ApplicationListener<ContextRefreshedEv
         try {
             //初始化菜单缓存
             tMenuService.updateMenuCache();
-//            final JRServiceServer server = new JRServiceServer();
-//            server.start();
-//            server.blockUntilShutdown();
+            new Thread(){
+                @Override
+                public void run() {
+                    final JRServiceServer server = new JRServiceServer();
+                    try {
+                        server.start();
+                        server.blockUntilShutdown();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
         } catch (Exception e) {
             LogTemplate.error(BeanPostProcessor.class,e,"容器启动后指定代码异常",e.toString());
             e.printStackTrace();
