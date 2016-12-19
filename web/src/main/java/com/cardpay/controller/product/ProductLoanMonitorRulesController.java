@@ -5,6 +5,7 @@ import com.cardpay.mgt.product.model.TProductLoanMonitorRules;
 import com.cardpay.mgt.product.service.TProductLoanMonitorRulesService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author chenkai on 2016/12/12.
  */
-@RestController
+@Controller
 @RequestMapping("/productLoanMonitor")
 @Api(value = "/productLoanMonitor", description = "产品贷后监控规则")
 public class ProductLoanMonitorRulesController extends BaseController<TProductLoanMonitorRules, Integer> {
