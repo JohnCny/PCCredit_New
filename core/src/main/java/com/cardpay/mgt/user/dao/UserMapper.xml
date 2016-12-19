@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.user.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.User">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+    </resultMap>
+
+    <resultMap id="UserAuthorityMap" type="com.cardpay.mgt.user.model.UserAuthority">
+        <result column="AUTHORITY_NAME" jdbcType="VARCHAR" property="authorityName"/>
+        <result column="RESOUCRE_NAME" jdbcType="VARCHAR" property="resoucreName"/>
+        <result column="OPERATION_NAME" jdbcType="VARCHAR" property="operationName"/>
+    </resultMap>
+
+    <select id="selectByAuthority" resultMap="UserAuthorityMap">
+      SELECT
+          TA.AUTHORITY_NAME AS AUTHORITY_NAME,
+          TRS.RESOUCRE_NAME AS RESOUCRE_NAME,
+          TON.OPERATION_NAME AS OPERATION_NAME
+      FROM
+          T_USER TU,
+          T_ROLE TR,
+          T_ROLE_AUTHORITY TRA,
+          T_AUTHORITY TA,
+          T_AUTHORITY_OPERATION TAO,
+          T_AUTHORITY_RESOURCES TAR,
+          T_OPERATION TON,
+          T_RESOURCES TRS,
+          T_USER_ROLE TUR
+      WHERE
+        TU.ID=#{id}
+      AND
+        TU.ID=TUR.USER_ID
+      AND
+        TUR.ROLE_ID=TR.ID
+      AND
+        TR.ROLE_STATUS=1
+      AND
+        TUR.ROLE_ID=TRA.ROLE_ID
+      AND
+        TRA.AUTHORITY_ID=TA.ID
+      AND
+        TRA.AUTHORITY_ID=TAO.AUTHORITY_ID
+      AND
+        TAO.OPERATION_ID=TON.ID
+      AND
+        TRA.AUTHORITY_ID=TAR.AUTHORITY_ID
+      AND
+        TAR.RESOURCE_ID=TRS.ID
+  </select>
+
+</mapper>
