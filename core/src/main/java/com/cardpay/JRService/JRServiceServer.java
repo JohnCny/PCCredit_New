@@ -1,4 +1,4 @@
-package JRService;
+package com.cardpay.JRService;
 
 import com.cardpay.service.*;
 import io.grpc.Server;
@@ -20,7 +20,7 @@ public class JRServiceServer {
   private int port = 50051;
   private Server server;
 
-  private void start() throws IOException {
+  public void start() throws IOException {
     server = ServerBuilder.forPort(port).addService(new SongServiceImpl()).addService(new SongServiceImpl2()).build();
     server.start();
     logger.info("server started, listening on " + port);
@@ -45,7 +45,7 @@ public class JRServiceServer {
   /**
    * Await termination on the main thread since the grpc library uses daemon threads.
    */
-  private void blockUntilShutdown() throws InterruptedException {
+  public void blockUntilShutdown() throws InterruptedException {
     if (server != null) {
       server.awaitTermination();
     }
@@ -54,11 +54,11 @@ public class JRServiceServer {
   /**
    * Main launches the server from the command line.
    */
-  public static void main(String[] args) throws IOException, InterruptedException {
-    final JRServiceServer server = new JRServiceServer();
-    server.start();
-    server.blockUntilShutdown();
-  }
+//  public static void main(String[] args) throws IOException, InterruptedException {
+//    final JRServiceServer server = new JRServiceServer();
+//    server.start();
+//    server.blockUntilShutdown();
+//  }
 
 
   private static class SongServiceImpl extends SongServiceGrpc.SongServiceImplBase {

@@ -88,9 +88,8 @@ public class MenuController {
         return user.getId();
     }
     @RequestMapping("/test")
-    @ResponseBody
     @SystemControllerLog
-    public ResultTo test(String name){
-        return  new ResultTo().setMsg(0,"name:"+name);
+    public String test(){
+        return "demo";
     }
 }

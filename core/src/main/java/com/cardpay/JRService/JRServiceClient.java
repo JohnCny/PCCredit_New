@@ -1,6 +1,9 @@
-package JRService;
+package com.cardpay.JRService;
 
-import com.cardpay.service.*;
+import com.cardpay.service.SingerId;
+import com.cardpay.service.Song;
+import com.cardpay.service.SongList;
+import com.cardpay.service.SongService2Grpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Status;
@@ -84,14 +87,14 @@ public class JRServiceClient {
     latch.await();
   }
 
-  public static void main(String[] args) throws InterruptedException{
-    JRServiceClient client = new JRServiceClient("localhost", 50051);
-    try {
-      client.getSongList();
-      client.getSongsUsingStream();
-      client.getSongsUsingAsyncStub();
-    } finally {
-      client.shutdown();
-    }
-  }
+//  public static void main(String[] args) throws InterruptedException{
+//    JRServiceClient client = new JRServiceClient("localhost", 50051);
+//    try {
+//      client.getSongList();
+//      client.getSongsUsingStream();
+//      client.getSongsUsingAsyncStub();
+//    } finally {
+//      client.shutdown();
+//    }
+//  }
 }
