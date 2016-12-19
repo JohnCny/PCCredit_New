@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.product.dao.TProductLoanMonitorRulesMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.product.model.TProductLoanMonitorRules">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="MONITOR_TIME_FIRST" jdbcType="DECIMAL" property="monitorTimeFirst" />
+    <result column="MONITOR_TIME_RATE" jdbcType="DECIMAL" property="monitorTimeRate" />
+    <result column="SITE_VISITSRATE" jdbcType="DECIMAL" property="siteVisitsrate" />
+    <result column="PHONE_COLLECTION_RATE" jdbcType="DECIMAL" property="phoneCollectionRate" />
+    <result column="HOME_COLLECTION_RATE" jdbcType="DECIMAL" property="homeCollectionRate" />
+  </resultMap>
+</mapper>
