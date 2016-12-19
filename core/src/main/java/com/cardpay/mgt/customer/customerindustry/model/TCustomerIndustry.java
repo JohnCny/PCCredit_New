@@ -1,4 +1,4 @@
-package com.cardpay.mgt.customer.customerindustry.model.po;
+package com.cardpay.mgt.customer.customerindustry.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

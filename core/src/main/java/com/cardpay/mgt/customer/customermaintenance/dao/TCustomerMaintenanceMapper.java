@@ -1,7 +1,7 @@
 package com.cardpay.mgt.customer.customermaintenance.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.mgt.customer.customermaintenance.model.po.TCustomerMaintenance;
+import com.cardpay.mgt.customer.customermaintenance.model.TCustomerMaintenance;
 
 /**
  * 客户维护Mapper

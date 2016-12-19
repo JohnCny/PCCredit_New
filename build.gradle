@@ -229,5 +229,5 @@ dependencies {
     compile project(':web')
 }
 
-//默认任务为gradle run
-defaultTasks 'run'
+//默认任务为gradle tomcatRun
+defaultTasks 'tomcatRun'

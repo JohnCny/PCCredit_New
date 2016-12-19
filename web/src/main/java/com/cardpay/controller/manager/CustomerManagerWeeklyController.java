@@ -1,4 +1,4 @@
-package com.cardpay.controller.customer.customermanagerweekly;
+package com.cardpay.controller.manager;
 
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.customer.customermanagerweekly.model.po.TCustomerManagerWeekly;
@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 客户经理周报controller
+ *
  * @author wangpeng
  */
-@Api(value = "/customermanagerweekly", description = "客户经理周报")
+@Api(value = "/customerManagerWeekly", description = "客户经理周报")
 @RestController
-@RequestMapping("/customermanagerweekly")
+@RequestMapping("/customerManagerWeekly")
 public class CustomerManagerWeeklyController extends BaseController<TCustomerManagerWeekly, Integer> {
 }

@@ -4,7 +4,7 @@ import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.mgt.customer.customerbasic.dao.TCustomerBasicMapper;
-import com.cardpay.mgt.customer.customerbasic.model.po.TCustomerBasic;
+import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
 import com.cardpay.mgt.customer.customerbasic.service.CustomerBasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> im
     private TCustomerBasicMapper customerBasicMapper;
 
     @Override
-    public Object getCert() {
+    public List<SelectModel> getCert() {
         List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.CertificateType value : ConstantEnum.CertificateType.values()){
             SelectModel selectModel=new SelectModel();

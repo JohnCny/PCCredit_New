@@ -1,7 +1,7 @@
 package com.cardpay.mgt.customer.customerbasic.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.mgt.customer.customerbasic.model.po.TCustomerBasic;
+import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

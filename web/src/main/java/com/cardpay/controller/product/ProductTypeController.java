@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 产品类型Controller
- * Created by chenkai on 2016/12/13.
+ *
+ * @author chenkai on 2016/12/13.
  */
 @RestController
 @RequestMapping("/productType")

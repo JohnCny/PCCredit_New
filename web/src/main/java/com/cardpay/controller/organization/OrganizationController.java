@@ -16,7 +16,8 @@ import java.util.List;
 
 /**
  * 机构Controller类
- * Created by chenkai on 2016/11/24.
+ *
+ * @author chenkai on 2016/11/24.
  */
 @Api(value = "/organization", description = "机构Controller类")
 @RestController
@@ -35,7 +36,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param level    查询层级信息数量
      * @return 机构层级信息
      */
-    @RequestMapping(value = "/movementOrganization", method = RequestMethod.GET)
+    @GetMapping("/movementOrganization")
     @ApiOperation(value = "动态查询机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo changeQueryOrganization(@ApiParam(value = "要查询的顶级层级ID(默认最高级)")
                                             @RequestParam(value = "parentId", defaultValue = "0") int parentId
@@ -50,7 +51,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param topId 顶级id
      * @return 所有机构层级信息
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
         List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
@@ -63,7 +64,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param id 层级id
      * @return 1成功, 0失败
      */
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @DeleteMapping("/")
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息", httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id) {
         int flag = tOrganizationService.deleteOrganization(id);
@@ -74,10 +75,10 @@ public class OrganizationController extends BaseController<TOrganization, Intege
     /**
      * 新增机构
      *
-     * @param tOrganization  机构信息
+     * @param tOrganization 机构信息
      * @return 机构id
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @PostMapping("/")
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
     public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {
         tOrganization.setOrgId("1234");
