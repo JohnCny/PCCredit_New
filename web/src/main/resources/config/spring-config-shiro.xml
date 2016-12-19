@@ -52,6 +52,10 @@
                 /kaptcha = anon
                 /logon/** = anon
                 /**/anon/** = anon
+                /swagger-ui.html = anon
+                /webjars/** = anon
+                /swagger-resources/** = anon
+                /v2/** = anon
                 /** = authc
             </value>
         </property>
