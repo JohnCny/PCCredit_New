@@ -1,13 +1,16 @@
 package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
 import com.cardpay.mgt.customer.customerbasic.service.CustomerBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,7 +23,7 @@ import java.util.Map;
  * @author wangpeng
  */
 @Api(value = "/customerBasic", description = "客户")
-@RestController
+@Controller
 @RequestMapping("/customerBasic")
 public class CustomerBasicController extends BaseController<TCustomerBasic, Long> {
     @Autowired
@@ -31,12 +34,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Long
      *
      * @return 证件类型列表
      */
+    @ResponseBody
     @GetMapping("/certList")
     @ApiOperation(value = "获取证件类型列表", notes = "证件类型列表", httpMethod = "GET")
     public ResultTo getCertList() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("certList", customerBasicService.getCert());
-        return new ResultTo().setData(map);
+        List<SelectModel> customerBasicServiceCert = customerBasicService.getCert();
+        return new ResultTo().setData(customerBasicServiceCert);
     }
 
     /**
@@ -44,12 +47,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Long
      *
      * @return 文化程度列表
      */
+    @ResponseBody
     @GetMapping("/educationDegreeList")
     @ApiOperation(value = "获取文化程度", notes = "文化程度", httpMethod = "GET")
     public ResultTo getEducationDegreeList() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("educationDegreeList", customerBasicService.getEducationDegree());
-        return new ResultTo().setData(map);
+        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
+        return new ResultTo().setData(educationDegree);
     }
 
     /**
@@ -57,12 +60,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Long
      *
      * @return 婚姻状况列表
      */
+    @ResponseBody
     @GetMapping("/marriageStatusList")
     @ApiOperation(value = "获取婚姻状况", notes = "婚姻状况", httpMethod = "GET")
     public ResultTo getMarriageStatusList() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("marriageStatusList", customerBasicService.getMarriageStatus());
-        return new ResultTo().setData(map);
+        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
+        return new ResultTo().setData(marriageStatus);
     }
 
     /**
@@ -70,12 +73,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Long
      *
      * @return 客户状态列表
      */
+    @ResponseBody
     @GetMapping("/customerStatusList")
     @ApiOperation(value = "客户状态列表", notes = "客户状态", httpMethod = "GET")
     public ResultTo getCustomerStatusList() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("customerStatusList", customerBasicService.getCustomerStatus());
-        return new ResultTo().setData(map);
+        List<SelectModel> customerStatus = customerBasicService.getCustomerStatus();
+        return new ResultTo().setData(customerStatus);
     }
 
     /**
@@ -83,13 +86,25 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Long
      *
      * @return 潜在客户列表
      */
+    @ResponseBody
     @GetMapping("/prospectiveCustomers")
     @ApiOperation(value = "查询潜在客户列表", notes = "潜在客户列表", httpMethod = "GET")
     public ResultTo getProspectiveCustomers() {
-        if (ShiroKit.getSubject().isAuthenticated()) {
-            List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(ShiroKit.getUserId());
-            return new ResultTo().setData(customerBasics);
-        }
-        return new ResultTo();
+        List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(ShiroKit.getUserId());
+        return new ResultTo().setData(customerBasics);
     }
+
+    /**
+     *  验证证件号码是否已经存在
+     * @param identityCard 证件号码
+     * @return true/false
+     */
+    @ResponseBody
+    @GetMapping("/idCardExist")
+    @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
+    public ResultTo validate(@ApiParam(value = "证件号码", required = true) int identityCard){
+        boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
+        return new ResultTo().setData(idCardExist);
+    }
+
 }

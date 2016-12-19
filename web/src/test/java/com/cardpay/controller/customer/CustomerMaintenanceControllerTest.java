@@ -1,4 +1,4 @@
-package com.cardpay.controller.customermaintenance;
+package com.cardpay.controller.customer;
 
 import com.cardpay.util.TestEnv;
 import org.junit.Test;
