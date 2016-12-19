@@ -18,6 +18,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +33,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/logon")
 @Api(value = "/logon", description = "用认证(登陆)")
 public class LogonController extends BaseController<User, Integer> {
+
+    private static final String SESSION_KEY = "user";
+
+    private static final String RETURN_LOGIN = "/home/login";
 
     /**
      * 系统登陆入口
@@ -69,9 +74,24 @@ public class LogonController extends BaseController<User, Integer> {
             return new ResultTo(ResultEnum.DISABLED_ACCOUNT);
         }
         LogTemplate.info(this.getClass(), "登陆成功,账号:", userName);
-        ShiroKit.getSession().setAttribute("user", ShiroKit.getUser());
+        ShiroKit.getSession().setAttribute(SESSION_KEY, ShiroKit.getUser());
         return new ResultTo();
     }
+
+    /**
+     * 退出登陆
+     *
+     * @return 登陆页面
+     */
+    @GetMapping("/out")
+    @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
+    public String logout() {
+        ShiroKit.getSession().removeAttribute(SESSION_KEY);
+        ShiroKit.getSubject().logout();
+        return RETURN_LOGIN;
+    }
+
 
     /**
      * 无权限跳转
@@ -80,7 +100,9 @@ public class LogonController extends BaseController<User, Integer> {
      */
     @RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
     public ResultTo unauthorized() {
+
         return new ResultTo(ResultEnum.NO_PERMITTION);
     }
+
 
 }

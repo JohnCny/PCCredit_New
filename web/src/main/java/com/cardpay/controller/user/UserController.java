@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,8 +33,22 @@ import java.util.List;
 @Api(value = "/user", description = "用户控制层")
 public class UserController extends BaseController<User, Integer> {
 
+    private static final String UPDATE_PASSWORD_PAGE = "/home/change_password";
+
     @Autowired
     private UserService userService;
+
+    /**
+     * 修改密码页面跳转
+     *
+     * @return 修改密码页面
+     */
+    @GetMapping("/updatePasswordPage")
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "修改密码页面跳转", httpMethod = "GET")
+    public String updatePassword() {
+        return UPDATE_PASSWORD_PAGE;
+    }
 
     /**
      * 用户修改密码
