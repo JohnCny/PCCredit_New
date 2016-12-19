@@ -64,7 +64,7 @@ public class SwaggerConfig {
                         new ApiKey("mykey", "api_key", "header")
                 ))
                 .select() // 选择那些路径和api会生成document
-                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))//对api进行监控 RequestHandlerSelectors.basePackage("com.cardpay")
+                .apis(RequestHandlerSelectors.basePackage("com.cardpay"))//对api进行监控 RequestHandlerSelectors.withClassAnnotation(RestController.class)
                 .paths(regex(DEFAULT_INCLUDE_PATTERN))
                 .build()
                 .pathMapping("/")
