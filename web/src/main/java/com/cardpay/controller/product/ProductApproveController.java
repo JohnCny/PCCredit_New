@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 产品审批流程Controller
- * Created by chenkai on 2016/12/12.
+ *
+ * @author chenkai on 2016/12/12.
  */
 @RestController
 @RequestMapping("/productApprove")

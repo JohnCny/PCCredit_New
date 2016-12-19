@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 产品贷后监控规则Controller类
- * Created by chenkai on 2016/12/12.
+ *
+ * @author chenkai on 2016/12/12.
  */
 @RestController
 @RequestMapping("/productRisk")
