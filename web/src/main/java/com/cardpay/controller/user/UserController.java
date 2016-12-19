@@ -35,6 +35,10 @@ public class UserController extends BaseController<User, Integer> {
 
     private static final String RESET_PASSWORD_PAGE = "/user/forget";
 
+    private static final String RESET_PASSWORD_SEND = "/user/forget";
+
+    private static final String RESET_PASSWORD_CHECKED = "/user/forget";
+
     @Autowired
     private UserService userService;
 
@@ -78,7 +82,7 @@ public class UserController extends BaseController<User, Integer> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/resetPasswordPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/anon/resetPasswordPage", method = RequestMethod.GET)
     public String resetPasswordPage() {
         return RESET_PASSWORD_PAGE;
     }
@@ -98,7 +102,20 @@ public class UserController extends BaseController<User, Integer> {
         User user = new User();
         user.setUsername(userName);
         User userOne = userService.selectOne(user);
-        return new ResultTo().setData(userOne == null ? null : user.getId());
+        return new ResultTo().setData(userOne == null ? null : userOne.getId());
+    }
+
+
+    /**
+     * 发送验证码页面
+     *
+     * @return 发送验证码页面
+     */
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
+    @RequestMapping(value = "/anon/resetPasswordPage", method = RequestMethod.GET)
+    public String sendCodePage() {
+        return RESET_PASSWORD_SEND;
     }
 
     /**
@@ -136,6 +153,19 @@ public class UserController extends BaseController<User, Integer> {
         LogTemplate.debug(this.getClass(), "code", code);
         return userService.checkedCode(address, code);
     }
+
+    /**
+     * 重置密码界面
+     *
+     * @return 重置密码界面
+     */
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
+    @RequestMapping(value = "/anon/resetPasswordPage", method = RequestMethod.GET)
+    public String resetPassword() {
+        return RESET_PASSWORD_CHECKED;
+    }
+
 
     /**
      * 重置密码
