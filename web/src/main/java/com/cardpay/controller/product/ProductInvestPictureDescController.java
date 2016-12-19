@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 产品对应调查图片图片说明
- * Created by chenkai on 2016/12/12.
+ *
+ * @author chenkai on 2016/12/12.
  */
 @RestController
 @RequestMapping("/productPicture")

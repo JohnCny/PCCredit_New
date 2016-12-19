@@ -2,7 +2,7 @@ package com.cardpay.mgt.customerbasic.service;
 
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.mgt.customer.customerbasic.dao.TCustomerBasicMapper;
-import com.cardpay.mgt.customer.customerbasic.model.po.TCustomerBasic;
+import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
 import com.cardpay.mgt.customer.customerbasic.service.CustomerBasicService;
 import com.cardpay.mgt.customer.customerbasic.service.impl.CustomerBasicServiceImpl;
 import org.junit.Test;
