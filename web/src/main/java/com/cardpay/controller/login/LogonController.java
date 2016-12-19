@@ -69,7 +69,7 @@ public class LogonController extends BaseController<User, Integer> {
             return new ResultTo(ResultEnum.DISABLED_ACCOUNT);
         }
         LogTemplate.info(this.getClass(), "登陆成功,账号:", userName);
-        ShiroKit.getSubject().hasRole("");
+        ShiroKit.getSession().setAttribute("user", ShiroKit.getUser());
         return new ResultTo();
     }
 
