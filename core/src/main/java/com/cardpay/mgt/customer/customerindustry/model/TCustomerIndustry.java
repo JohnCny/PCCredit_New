@@ -1,5 +1,6 @@
 package com.cardpay.mgt.customer.customerindustry.model;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Table(name = "T_CUSTOMER_INDUSTRY")
 @ApiModel(value="客户行业信息表")
-public class TCustomerIndustry {
+public class TCustomerIndustry extends GenericEntity<Integer> {
     /**
      * 行业id
      */
@@ -60,5 +61,10 @@ public class TCustomerIndustry {
      */
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    @Override
+    public Integer getPK() {
+        return null;
     }
 }

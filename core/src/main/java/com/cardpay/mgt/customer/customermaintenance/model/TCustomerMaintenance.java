@@ -16,14 +16,14 @@ import java.util.Date;
  */
 @Table(name = "T_CUSTOMER_MAINTENANCE")
 @ApiModel(value="客户维护记录")
-public class TCustomerMaintenance extends GenericEntity<Long> {
+public class TCustomerMaintenance extends GenericEntity<Integer> {
     /**
      * 客户id(需要生成规则生成)
      */
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MAINTENANCE_SEQ.nextval from dual")
     @ApiModelProperty(value="客户id(需要生成规则生成)",required = true)
-    private Long id;
+    private Integer id;
 
     /**
      * 维护名称
@@ -72,7 +72,7 @@ public class TCustomerMaintenance extends GenericEntity<Long> {
      *
      * @return ID - 客户id(需要生成规则生成)
      */
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -81,7 +81,7 @@ public class TCustomerMaintenance extends GenericEntity<Long> {
      *
      * @param id 客户id(需要生成规则生成)
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -194,7 +194,7 @@ public class TCustomerMaintenance extends GenericEntity<Long> {
     }
 
     @Override
-    public Long getPK() {
+    public Integer getPK() {
         return id;
     }
 }
