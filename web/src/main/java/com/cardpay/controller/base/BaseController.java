@@ -11,12 +11,8 @@ import io.swagger.annotations.ApiParam;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +78,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含查找结果集合
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性值进行查询，查询条件使用等号", httpMethod = "GET")
     public ModelAndView select(@ApiParam(value = "实体对象") T record
@@ -117,7 +113,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含查找结果实体
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ApiOperation(value = "根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号", httpMethod = "GET")
     public ModelAndView selectByPrimaryKey(@ApiParam(value = "主键") @RequestParam("pk") PK pk
@@ -151,7 +147,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含查找结果集合
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ApiOperation(value = "根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号", httpMethod = "GET")
     public ModelAndView selectAll(@ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
@@ -184,7 +180,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param record   实体对象
      * @return modelview对象，包含查找结果实体
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "/selectOne", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号", httpMethod = "GET")
     public ModelAndView selectOne(@ApiParam(value = "实体对象") T record
@@ -219,7 +215,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含查找结果个数
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性查询总数，查询条件使用等号", httpMethod = "GET")
     public ModelAndView selectCount(@ApiParam(value = "实体对象") T record,
@@ -254,7 +250,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含插入后数据
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "POST")
     public ModelAndView insert(@ApiParam(value = "实体对象") T record
@@ -288,7 +284,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含插入后数据
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "/insertSelective", method = RequestMethod.POST)
     @ApiOperation(value = "保存一个实体，null的属性不会保存，会使用数据库默认值", httpMethod = "POST")
     public ModelAndView insertSelective(@ApiParam(value = "实体对象") T record
@@ -321,7 +317,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含更新后数据
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "PUT")
     public ModelAndView updateByPrimaryKey(@ApiParam(value = "实体对象") T record
@@ -355,7 +351,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含更新后数据
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "/updateSelective", method = RequestMethod.PUT)
     @ApiOperation(value = "根据主键更新属性不为null的值", httpMethod = "PUT")
     public ModelAndView updateSelective(@ApiParam(value = "实体对象") T record
@@ -388,7 +384,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含删除后数据
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "/deleteSelective", method = RequestMethod.DELETE)
     @ApiOperation(value = "根据实体属性作为条件进行删除，查询条件使用等号", httpMethod = "DELETE")
     public ModelAndView delete(@ApiParam(value = "实体对象") T record
@@ -422,7 +418,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含更新后数据
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "", method = RequestMethod.DELETE)
     @ApiOperation(value = "根据主键字段进行删除，方法参数必须包含完整的主键属性", httpMethod = "DELETE")
     public ModelAndView deleteByPrimaryKey(@ApiParam(value = "主键") @RequestParam("pk") PK pk
@@ -457,7 +453,7 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName view名称
      * @return modelview对象，包含分页数据集合
      */
-    @ApiIgnore
+    
     @RequestMapping(value = "/pageList", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "GET")
     public ModelAndView pageList(@ApiParam(value = "实体对象") T record
@@ -491,6 +487,20 @@ public class BaseController<T, PK> extends BasicController {
         result.setData(list);
         return result;
     }
+
+    /**
+     * 页面跳转
+     * @param viewName 页面路径
+     * @return 要跳转的页面
+     */
+    @GetMapping("/returnWebPage")
+    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "GET")
+    public ModelAndView returnWebPage(@ApiParam(value = "页面路径", required = true)@RequestParam("viewName") String viewName) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName(viewName);
+        return modelAndView;
+    }
+
 //-----------------根据实际情况选择需要的接口------------------------
 //    /**
 //     * 根据实体属性和RowBounds进行分页查询，以开始行数start为参数
@@ -527,4 +537,5 @@ public class BaseController<T, PK> extends BasicController {
 //        result.setData(baseService.pageStartList(record,start,size));
 //        return result;
 //    }
+
 }

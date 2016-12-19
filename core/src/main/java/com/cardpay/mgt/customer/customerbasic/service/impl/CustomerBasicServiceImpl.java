@@ -34,7 +34,7 @@ public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> im
     }
 
     @Override
-    public Object getEducationDegree(){
+    public List<SelectModel> getEducationDegree(){
         List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.EducationDegree value : ConstantEnum.EducationDegree.values()){
             SelectModel selectModel=new SelectModel();
@@ -46,7 +46,7 @@ public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> im
     }
 
     @Override
-    public Object getMarriageStatus(){
+    public List<SelectModel> getMarriageStatus(){
         List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.MarriageStatus value : ConstantEnum.MarriageStatus.values()){
             SelectModel selectModel=new SelectModel();
@@ -58,7 +58,7 @@ public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> im
     }
 
     @Override
-    public Object getCustomerStatus(){
+    public List<SelectModel> getCustomerStatus(){
         List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.CustomerStatus value : ConstantEnum.CustomerStatus.values()){
             SelectModel selectModel=new SelectModel();
@@ -75,7 +75,7 @@ public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> im
     }
 
     @Override
-    public boolean isIdCardExist(String idCard){
+    public boolean isIdCardExist(int idCard){
         return customerBasicMapper.isIdCardExist(idCard) > 0 ? true : false;
     }
 }
