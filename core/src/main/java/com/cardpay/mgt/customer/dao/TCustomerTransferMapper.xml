@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.customer.transfer.dao.TCustomerTransferMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.model.TCustomerTransfer">
+        <result column="ID" jdbcType="DECIMAL" property="id" />
+        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname" />
+        <result column="CUSTOMER_CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="customerCertificateNumber" />
+        <result column="ORIGIN_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="originCustomerManager" />
+        <result column="NOW_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="nowCustomerManager" />
+        <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason" />
+        <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus" />
+        <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime" />
+    </resultMap>
+</mapper>

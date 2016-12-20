@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.manager.customermanagerday.dao.TCustomerManagerDayMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.manager.customermanagerday.model.TCustomerManagerDay">
+        <result column="CUS_ID" jdbcType="DECIMAL" property="cusId" />
+        <result column="ID" jdbcType="DECIMAL" property="id" />
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId" />
+        <result column="DAILY_TIME" jdbcType="TIMESTAMP" property="dailyTime" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="VISIT_NEW_NUMBER" jdbcType="DECIMAL" property="visitNewNumber" />
+        <result column="MAINTENANCE_NUMBER" jdbcType="DECIMAL" property="maintenanceNumber" />
+        <result column="LOAN_NEW_NUMBER" jdbcType="DECIMAL" property="loanNewNumber" />
+        <result column="PRELOAN_NUMBER" jdbcType="DECIMAL" property="preloanNumber" />
+    </resultMap>
+</mapper>
