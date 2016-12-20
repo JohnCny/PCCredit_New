@@ -1,7 +1,7 @@
-package com.cardpay.mgt.customer.customertransfer.dao;
+package com.cardpay.mgt.customer.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.mgt.customer.customertransfer.model.TCustomerTransfer;
+import com.cardpay.mgt.customer.model.TCustomerTransfer;
 
 /**
  * 客户移交信息Mapper

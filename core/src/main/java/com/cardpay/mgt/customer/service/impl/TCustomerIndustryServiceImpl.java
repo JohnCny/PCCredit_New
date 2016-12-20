@@ -1,8 +1,8 @@
-package com.cardpay.mgt.customer.customerindustry.service.impl;
+package com.cardpay.mgt.customer.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
-import com.cardpay.mgt.customer.customerindustry.model.TCustomerIndustry;
-import com.cardpay.mgt.customer.customerindustry.service.TCustomerIndustryService;
+import com.cardpay.mgt.customer.model.TCustomerIndustry;
+import com.cardpay.mgt.customer.service.TCustomerIndustryService;
 
 /**
  * 客户所属行业Service实现类

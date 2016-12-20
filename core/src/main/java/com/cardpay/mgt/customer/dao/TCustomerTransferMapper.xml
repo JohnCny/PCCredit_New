@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cardpay.mgt.customer.customertransfer.dao.TCustomerTransferMapper">
-    <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.customertransfer.model.TCustomerTransfer">
+<mapper namespace="com.cardpay.mgt.customer.transfer.dao.TCustomerTransferMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.model.TCustomerTransfer">
         <result column="ID" jdbcType="DECIMAL" property="id" />
         <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname" />
         <result column="CUSTOMER_CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="customerCertificateNumber" />

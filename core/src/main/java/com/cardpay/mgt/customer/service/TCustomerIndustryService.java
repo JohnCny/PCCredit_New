@@ -1,7 +1,7 @@
-package com.cardpay.mgt.customer.customerindustry.service;
+package com.cardpay.mgt.customer.service;
 
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.customer.customerindustry.model.TCustomerIndustry;
+import com.cardpay.mgt.customer.model.TCustomerIndustry;
 
 /**
  * 客户所属行业Service类

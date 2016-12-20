@@ -1,8 +1,9 @@
-package com.cardpay.mgt.customer.customerbasic.model;
+package com.cardpay.mgt.customer.model;
 
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -111,7 +112,6 @@ public class TCustomerBasic extends GenericEntity<Integer> {
      */
     @Column(name = "CREATE_TIME")
     @ApiModelProperty(value="创建时间",required = true)
-    @OrderBy("DESC")
     private Date createTime;
 
     /**

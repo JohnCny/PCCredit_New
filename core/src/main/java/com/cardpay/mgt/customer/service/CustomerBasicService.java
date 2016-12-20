@@ -1,10 +1,12 @@
-package com.cardpay.mgt.customer.customerbasic.service;
+package com.cardpay.mgt.customer.service;
 
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
+import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户基本信息服务类
@@ -49,5 +51,11 @@ public interface CustomerBasicService extends BaseService<TCustomerBasic> {
      */
     boolean isIdCardExist(int idCard);
 
+    /**
+     * 查询客户经理所属客户
+     * @param mapParam managerId
+     * @return 客户id, 客户名称
+     */
+    Map queryCustomer(ReturnMapParam mapParam);
 
 }

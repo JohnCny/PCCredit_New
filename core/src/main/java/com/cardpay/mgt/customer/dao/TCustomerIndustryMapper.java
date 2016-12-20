@@ -1,7 +1,7 @@
-package com.cardpay.mgt.customer.customerindustry.dao;
+package com.cardpay.mgt.customer.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.mgt.customer.customerindustry.model.TCustomerIndustry;
+import com.cardpay.mgt.customer.model.TCustomerIndustry;
 
 /**
  * 客户所属行业Mapper

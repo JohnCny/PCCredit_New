@@ -1,25 +1,25 @@
-package com.cardpay.mgt.customer.customermaintenance.service.impl;
+package com.cardpay.mgt.customer.service.impl;
 
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
-import com.cardpay.mgt.customer.customermaintenance.model.TCustomerMaintenance;
-import com.cardpay.mgt.customer.customermaintenance.service.CustomerMaintenanceService;
+import com.cardpay.mgt.customer.model.TCustomerTransfer;
+import com.cardpay.mgt.customer.service.CustomerTransferService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 客户维护服务实现类
+ * 客户移交实现类
  * @author wangpeng
  */
 @Service
-public class CustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMaintenance> implements CustomerMaintenanceService {
+public class CustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTransfer> implements CustomerTransferService{
     @Override
-    public List<SelectModel> getMaintenanceType(){
+    public List<SelectModel> getTransferStatus(){
         List<SelectModel> selects = new ArrayList<>();
-        for (ConstantEnum.MaintenanceType value : ConstantEnum.MaintenanceType.values()){
+        for (ConstantEnum.TransferStatus value : ConstantEnum.TransferStatus.values()){
             SelectModel selectModel=new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
@@ -27,5 +27,4 @@ public class CustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMai
         }
         return selects;
     }
-
 }

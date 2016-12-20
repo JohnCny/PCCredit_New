@@ -493,9 +493,10 @@ public class BaseController<T, PK> extends BasicController {
      * @param viewName 页面路径
      * @return 要跳转的页面
      */
-    @GetMapping("/returnWebPage")
-    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "GET")
-    public ModelAndView returnWebPage(@ApiParam(value = "页面路径", required = true)@RequestParam("viewName") String viewName) {
+    @PostMapping("/webPage")
+    @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "POST")
+    public ModelAndView returnWebPage(@ApiParam(value = "页面路径", required = true)
+                                          @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
         return modelAndView;

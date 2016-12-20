@@ -1,10 +1,12 @@
-package com.cardpay.mgt.customer.customerbasic.dao;
+package com.cardpay.mgt.customer.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
+import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户基本信息Mapper
@@ -25,4 +27,11 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @return 是否存在(大于0 存在, 等于0 不存在)
      */
     Integer isIdCardExist(@Param("idCard")int idCard);
+
+    /**
+     * 查询客户经理所属客户
+     * @param mapParam managerId
+     * @return 客户id, 客户名称
+     */
+    Map queryCustomer(ReturnMapParam mapParam);
 }

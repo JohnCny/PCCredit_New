@@ -1,16 +1,18 @@
-package com.cardpay.mgt.customer.customerbasic.service.impl;
+package com.cardpay.mgt.customer.service.impl;
 
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
-import com.cardpay.mgt.customer.customerbasic.dao.TCustomerBasicMapper;
-import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
-import com.cardpay.mgt.customer.customerbasic.service.CustomerBasicService;
+import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
+import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.service.CustomerBasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户基本信息服务实现类
@@ -19,7 +21,7 @@ import java.util.List;
 @Service
 public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements CustomerBasicService {
     @Autowired
-    private TCustomerBasicMapper customerBasicMapper;
+    private TCustomerBasicMapper customerBasicDao;
 
     @Override
     public List<SelectModel> getCert() {
@@ -71,11 +73,16 @@ public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> im
 
     @Override
     public List<TCustomerBasic> getProspectiveCustomers(Integer customerManagerId){
-        return customerBasicMapper.getProspectiveCustomers(customerManagerId);
+        return customerBasicDao.getProspectiveCustomers(customerManagerId);
     }
 
     @Override
     public boolean isIdCardExist(int idCard){
-        return customerBasicMapper.isIdCardExist(idCard) > 0 ? true : false;
+        return customerBasicDao.isIdCardExist(idCard) > 0 ? true : false;
+    }
+
+    @Override
+    public Map queryCustomer(ReturnMapParam mapParam) {
+        return customerBasicDao.queryCustomer(mapParam);
     }
 }

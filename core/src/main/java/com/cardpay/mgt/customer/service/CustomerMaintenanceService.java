@@ -1,8 +1,8 @@
-package com.cardpay.mgt.customer.customermaintenance.service;
+package com.cardpay.mgt.customer.service;
 
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.customer.customermaintenance.model.TCustomerMaintenance;
+import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.cardpay.mgt.customer.customertransfer.service;
+package com.cardpay.mgt.customer.service;
 
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.customer.customertransfer.model.TCustomerTransfer;
+import com.cardpay.mgt.customer.model.TCustomerTransfer;
 
 import java.util.List;
 
