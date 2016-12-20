@@ -46,7 +46,8 @@ public class ResultTo extends HashMap<String, Object> implements Serializable {
             put(ResultEnum.REQUIRED_PARAMETER_EMPTY.getValue(), "the required parameters cannot be empty");
             put(ResultEnum.OPERATION_FAILED.getValue(), "operation failed");
             put(ResultEnum.API_TIMEOUT.getValue(), "api timeout");
-
+            put(ResultEnum.LOGIN_TIMEOUT.getValue(), "login timeout");
+            put(ResultEnum.APPSIN_INCOMPATIBLE.getValue(), "appsin incompatible");
         }
     };
 
