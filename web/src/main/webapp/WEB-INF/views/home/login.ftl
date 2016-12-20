@@ -24,7 +24,7 @@
 
         </div>
         <div class="forgetPwd">
-            <a href="user/">忘记密码？</a>
+            <a href="/user/anon/resetPasswordPage">忘记密码？</a>
         </div>
     </form>
 </div>

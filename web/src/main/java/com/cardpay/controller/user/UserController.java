@@ -78,7 +78,7 @@ public class UserController extends BaseController<User, Integer> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/resetPasswordPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/anon/resetPasswordPage", method = RequestMethod.GET)
     public String resetPasswordPage() {
         return RESET_PASSWORD_PAGE;
     }
@@ -98,7 +98,7 @@ public class UserController extends BaseController<User, Integer> {
         User user = new User();
         user.setUsername(userName);
         User userOne = userService.selectOne(user);
-        return new ResultTo().setData(userOne == null ? null : user.getId());
+        return new ResultTo().setData(userOne == null ? null : userOne.getId());
     }
 
     /**
