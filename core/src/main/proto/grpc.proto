@@ -1,18 +1,18 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.cardpay.service";
-option java_outer_classname = "SongServiceOut";
+option java_package = "com.cardpay.core.grpc";
+option java_outer_classname = "GRPC";
 
-package SongServicePaakage;
+package GRPC;
 
 //service definition
-service SongService {
+service SongServiceOne {
   rpc ListSongs (SingerId) returns (SongList) {}
   rpc GetSongs (SingerId) returns (stream Song) {}
 }
 
-service SongService2 {
+service SongServiceTwo {
   rpc ListSongs2 (SingerId) returns (SongList) {}
   rpc GetSongs2 (SingerId) returns (stream Song) {}
 }
