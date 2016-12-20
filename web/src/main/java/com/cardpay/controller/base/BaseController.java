@@ -244,7 +244,7 @@ public class BaseController<T, PK> extends BasicController {
     }
 
     /**
-     * 根据主键更新实体全部字段，null值会被更新
+     * 保存一个实体
      *
      * @param record   实体对象
      * @param viewName view名称
@@ -252,7 +252,7 @@ public class BaseController<T, PK> extends BasicController {
      */
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "POST")
+    @ApiOperation(value = "保存一个实体", httpMethod = "POST")
     public ModelAndView insert(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();

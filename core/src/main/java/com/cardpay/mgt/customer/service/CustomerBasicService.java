@@ -58,4 +58,11 @@ public interface CustomerBasicService extends BaseService<TCustomerBasic> {
      */
     Map queryCustomer(ReturnMapParam mapParam);
 
+    /**
+     * 更新客户状态
+     * @param map 状态信息,客户id
+     * @return 数据库变记录
+     */
+    int updateStatus(Map map);
+
 }

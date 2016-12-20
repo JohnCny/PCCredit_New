@@ -26,7 +26,7 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @param idCard 身份证号码
      * @return 是否存在(大于0 存在, 等于0 不存在)
      */
-    Integer isIdCardExist(@Param("idCard")int idCard);
+    Integer isIdCardExist(@Param("idCard") int idCard);
 
     /**
      * 查询客户经理所属客户
@@ -34,4 +34,11 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @return 客户id, 客户名称
      */
     Map queryCustomer(ReturnMapParam mapParam);
+
+    /**
+     * 更新客户状态
+     * @param map 状态信息,客户id
+     * @return 数据库变记录
+     */
+    int updateStatus(Map map);
 }

@@ -1,7 +1,7 @@
 package com.cardpay.mgt.customermaintenance.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.mgt.customer.maintenance.dao.TCustomerMaintenanceMapper;
+import com.cardpay.mgt.customer.dao.TCustomerMaintenanceMapper;
 import com.cardpay.mgt.customer.service.CustomerMaintenanceService;
 import com.cardpay.mgt.customer.service.impl.CustomerMaintenanceServiceImpl;
 import org.junit.Test;

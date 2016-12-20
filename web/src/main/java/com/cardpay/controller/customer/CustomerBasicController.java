@@ -6,23 +6,27 @@ import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.service.CustomerBasicService;
+import com.cardpay.mgt.customer.service.CustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 客户controller
  *
- * @author wangpeng
+ * @author chenkai
  */
 @Api(value = "/customerBasic", description = "客户基本信息")
 @Controller
@@ -117,7 +121,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
      * @return 数据库变更数量
      */
     @ResponseBody
-    @PutMapping("/update")
+    @PutMapping("/")
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
@@ -130,7 +134,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
      * @param viewName 跳转地址
      * @return 客户id:客户名称
      */
-    @GetMapping("/queryCustomer")
+    @GetMapping("/customer")
     @ApiOperation(value = "查询客户经理所属客户", notes = "客户经理基本信息更新", httpMethod = "GET")
     public ModelAndView queryCustomer(@ApiParam(value = "跳转试图地址", required = true) String viewName) {
         ModelAndView modelAndView = new ModelAndView();
@@ -138,19 +142,6 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
         returnMapParam.put("managerId", ShiroKit.getUserId());
         Map queryCustomer = customerBasicService.queryCustomer(returnMapParam);
         modelAndView.addObject(queryCustomer);
-        modelAndView.setViewName(viewName);
-        return modelAndView;
-    }
-
-    @PutMapping("/changeCustomer")
-    @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
-    public ModelAndView changeCustomer(String customerIds, String viewName){
-        ModelAndView modelAndView = new ModelAndView();
-        String[] split = customerIds.split(",");
-        List<String> customerIdList = new ArrayList<>();
-        for (String customerId : split) {
-            customerIdList.add(customerId);
-        }
         modelAndView.setViewName(viewName);
         return modelAndView;
     }

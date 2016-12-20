@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * 客户基本信息服务实现类
- * @author wangpeng
+ * @author chenkai
  */
 @Service
 public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements CustomerBasicService {
@@ -84,5 +84,10 @@ public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> im
     @Override
     public Map queryCustomer(ReturnMapParam mapParam) {
         return customerBasicDao.queryCustomer(mapParam);
+    }
+
+    @Override
+    public int updateStatus(Map map) {
+        return customerBasicDao.updateStatus(map);
     }
 }
