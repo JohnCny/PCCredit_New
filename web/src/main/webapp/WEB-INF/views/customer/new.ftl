@@ -10,8 +10,9 @@
         }
 
         .cus_content{
-            border: 1px solid #2bb8c4;
+            border: 1px solid #6F7691;
             padding-bottom: 30px;
+            float: left;
         }
 
         .widclas{
@@ -26,14 +27,14 @@
             padding: 50px;
         }
         .create{
-            width: 102%;
+            width: 100%;
             height: 30px;
-            background-color: #2bb8c4;
-            margin-left: -15px;
-            font-size: 18px;
+            background-color: #6F7691;
+            font-size: 16px;
             line-height: 30px;
             font-weight: bold;
             padding-left: 8px;
+            color: #ffffff;
         }
         .contain{
             margin: 50px 0 0 140px;
@@ -45,7 +46,7 @@
 </#macro>
 <#macro content>
     <div class="row new_customer">
-        <div class="col-md-12 col-sm-12 cus_content">
+        <div class=" cus_content">
             <div class="create">
                 新建
             </div>
@@ -179,7 +180,7 @@
             </div>
 
             <div class="col-xs-12 contain">
-                <button id="btn_submit" class="btn btn-success" style="background-color: #2bb8c4;border-radius: 0px;border: 1px solid #2bb8c4；">确定</button>
+                <button id="btn_submit" class="btn btn-success" style="background-color: #6F7691;border-radius: 0px;border: 1px solid #6F7691；">确定</button>
                 <a href="/customers/originalInformation/list" type="reset" class="btn btn-default"style="border-radius: 0px;border: 1px solid #2bb8c4；">取消</a>
             </div>
         </div>
@@ -188,25 +189,36 @@
 <#macro script>
     <script>
         $(document).ready(function(){
-            var url = "/customerBasic/insertSelective";
+            var url = "/customerBasic";
             var Obj = {};
             var arr = ["cname","sex","certificateType","certificateNumber","tel","homeAddress","educationDegree"];
-
+            var createTime = "createTime",modifyTime = "modifyTime", viewName = "viewName";
 
             $("#btn_submit").click(function () {
                 for(var i = 0; i < arr.length; i++){
                     Obj[arr[i]]=$("#"+arr[i]).val();
                 }
-
+                var d = new Date();
+                var vYear = d.getFullYear();
+                var vMon = d.getMonth() + 1;
+                var vDay = d.getDate();
+                var h = d.getHours();
+                var m = d.getMinutes();
+                var se = d.getSeconds();
+                var currentTime = vYear + "-" + vMon + "-" + vDay+" "+ h + ":" + m + ":" + se;
+                Obj[createTime] = currentTime;
+                    Obj[modifyTime] = currentTime;
+                    Obj[viewName] = "/customer/customer";
+                console.log(currentTime);
                 $.ajax({
                     type:"post",
                     url:url,
                     data:Obj,
                     success: function(){
-                        location.href="";
+
                     },
                     error:function () {
-                        alert("配置错误！")
+
                     }
                 });
             });
