@@ -4,6 +4,7 @@ import com.cardpay.util.TestEnv;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -14,6 +15,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author wangpeng
  */
 public class CustomerBasicControllerTest extends TestEnv {
+    @Test
+    public void update() throws Exception {
+        mockMvc.perform(put("/customerBasic/")
+                .param("id", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
+
+    @Test
+    public void queryCustomer() throws Exception {
+        mockMvc.perform(put("/customerBasic/customer")
+                .param("id", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
+
+    @Test
+    public void changeCustomer() throws Exception {
+        mockMvc.perform(put("/customerBasic/customerStatus")
+                .param("id", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
+
     @Test
     public void getCertList() throws Exception {
         mockMvc.perform(get("/customerBasic/certList"))

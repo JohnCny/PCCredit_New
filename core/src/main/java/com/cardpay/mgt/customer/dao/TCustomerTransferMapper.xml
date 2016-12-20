@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.customer.dao.TCustomerTransferMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.model.TCustomerTransfer">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
+        <result column="CUSTOMER_CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="customerCertificateNumber"/>
+        <result column="ORIGIN_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="originCustomerManager"/>
+        <result column="NOW_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="nowCustomerManager"/>
+        <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
+        <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
+        <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
+    </resultMap>
+
+
+    <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
+        <result column="ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
+        <result column="CUSTOMER_CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="customerCertificateNumber"/>
+        <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
+        <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
+    </resultMap>
+
+    <!--查询客户接受列表-->
+    <select id="queryTransfer" resultMap="BaseResultMapVo">
+        SELECT basic.ID, basic.CERTIFICATE_NUMBER, transfer.TRANSFER_REASON, transfer.TRANSFER_STATUS
+        FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_TRANSFER transfer
+        WHERE basic.id = transfer.id AND transfer.TRANSFER_STATUS = #{status}
+        AND basic.CUSTOMER_MANAGER_ID = #{managerId}
+    </select>
+</mapper>

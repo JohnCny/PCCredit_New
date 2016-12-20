@@ -4,10 +4,10 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
-import com.cardpay.mgt.customer.customerbasic.service.CustomerBasicService;
-import com.cardpay.mgt.customer.customermaintenance.model.TCustomerMaintenance;
-import com.cardpay.mgt.customer.customermaintenance.service.CustomerMaintenanceService;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
+import com.cardpay.mgt.customer.model.TCustomerMaintenance;
+import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
 import com.cardpay.mgt.manager.customermanager.model.TCustomerManager;
 import com.cardpay.mgt.manager.customermanager.service.CustomerManagerService;
 import io.swagger.annotations.Api;
@@ -29,10 +29,10 @@ import java.util.List;
 @RequestMapping("/customerMaintenance")
 public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance, Integer> {
     @Autowired
-    private CustomerMaintenanceService customerMaintenanceService;
+    private TCustomerMaintenanceService customerMaintenanceService;
 
     @Autowired //客户Service
-    private CustomerBasicService customerBasicService;
+    private TCustomerBasicService customerBasicService;
 
     @Autowired//客户经理Service
     private CustomerManagerService customerManagerService;

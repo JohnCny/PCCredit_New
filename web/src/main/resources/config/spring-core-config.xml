@@ -103,6 +103,7 @@
                     <value>classpath:properties/dev/redis.properties</value>
                     <value>classpath:properties/dev/httpclient.properties</value>
                     <value>classpath:properties/dev/rabbitmq.properties</value>
+                    <value>classpath:properties/dev/grpc.properties</value>
                 </list>
             </property>
         </bean>
@@ -119,6 +120,7 @@
                     <value>classpath:properties/prod/redis.properties</value>
                     <value>classpath:properties/prod/httpclient.properties</value>
                     <value>classpath:properties/prod/rabbitmq.properties</value>
+                    <value>classpath:properties/prod/grpc.properties</value>
                 </list>
             </property>
         </bean>

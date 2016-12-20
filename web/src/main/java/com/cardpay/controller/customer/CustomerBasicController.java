@@ -2,32 +2,33 @@ package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
+import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.customer.customerbasic.model.TCustomerBasic;
-import com.cardpay.mgt.customer.customerbasic.service.CustomerBasicService;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 客户controller
  *
- * @author wangpeng
+ * @author chenkai
  */
 @Api(value = "/customerBasic", description = "客户基本信息")
 @Controller
 @RequestMapping("/customerBasic")
 public class CustomerBasicController extends BaseController<TCustomerBasic, Integer> {
     @Autowired
-    private CustomerBasicService customerBasicService;
+    private TCustomerBasicService customerBasicService;
 
     /**
      * 获取证件类型列表
@@ -95,29 +96,49 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     }
 
     /**
-     *  验证证件号码是否已经存在
+     * 验证证件号码是否已经存在
+     *
      * @param identityCard 证件号码
      * @return true/false
      */
     @ResponseBody
     @GetMapping("/idCardExist")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
-    public ResultTo validate(@ApiParam(value = "证件号码", required = true) int identityCard){
+    public ResultTo validate(@ApiParam(value = "证件号码", required = true) int identityCard) {
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
         return new ResultTo().setData(idCardExist);
     }
 
     /**
      * 更新客户基本信息
+     *
      * @param tCustomerBasic 客户基本信息
      * @return 数据库变更数量
      */
     @ResponseBody
-    @PutMapping("/update")
-    @ApiOperation(value = "客户经理基本信息更新", notes = "客户经理基本信息更新", httpMethod = "PUT")
-    public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic){
+    @PutMapping("/")
+    @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
+    public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
         return new ResultTo().setData(count);
+    }
+
+    /**
+     * 查询客户经理所属客户
+     *
+     * @param viewName 跳转地址
+     * @return 客户id:客户名称
+     */
+    @GetMapping("/customer")
+    @ApiOperation(value = "查询客户经理所属客户", notes = "客户经理基本信息更新", httpMethod = "GET")
+    public ModelAndView queryCustomer(@ApiParam(value = "跳转试图地址", required = true) String viewName) {
+        ModelAndView modelAndView = new ModelAndView();
+        ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
+        returnMapParam.put("managerId", ShiroKit.getUserId());
+        Map queryCustomer = customerBasicService.queryCustomer(returnMapParam);
+        modelAndView.addObject(queryCustomer);
+        modelAndView.setViewName(viewName);
+        return modelAndView;
     }
 
 }
