@@ -1,1 +1,0 @@
-// 金额验证   jQuery.validator.addMethod("je", function(value, element) {       var tel = /^(([1-9]\d{0,9})|0)(\.\d{1,2})?$/;    return this.optional(element) || (tel.test(value));}, "请输入正确金额！");
