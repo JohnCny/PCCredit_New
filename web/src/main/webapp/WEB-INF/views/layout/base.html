@@ -1,29 +1,252 @@
 <!DOCTYPE html>
 <html>
 <head lang="zh">
-    <meta charset="utf-8" />
-    <title>乾康远程授信评估中心  </title>
+    <meta charset="utf-8">
+    <title>乾康微贷管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="aa.png">
+    <link href="/static/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.7/vue.min.js"></script>
+    <script type="text/javascript" src="/static/js/index.js"></script>
+    <script type="text/javascript" src="/static/js/QK.js"></script>
+
+    
     <@style/>
 
     <@css/>
 </head>
 
 <body>
-<div>
-
+<!--**********************************************左侧*********************************************************-->
+<div class="left">
+    <div class="logo">
+        <a href="javascript:void(0);"><img src="/static/img/logo.png" alt=""></a>
+    </div>
+    <ul class="nav">
+        <li class="menu-list" onclick="showMenu(this)" id="jjgl">
+            <a href="javascript:void(0);"><i class="icon jjgl"></i>进件管理<i class="pull-right"></i></a>
+            <ul class="second-nav">
+                <li id="jjsq"><a href="javascript:void(0);">进件申请</a></li>
+                <li id="jjcx"><a href="javascript:void(0);">进件查询</a></li>
+                <li id="jjsp"><a href="javascript:void(0);">进件审批</a></li>
+                <li id="khqy"><a href="javascript:void(0);">客户签约</a></li>
+                <li id="sdhps"><a href="javascript:void(0);">审贷会排审</a></li>
+            </ul>
+        </li>
+        <li class="menu-list" onclick="showMenu(this)" id="khgl">
+            <a href="javascript:void(0);"><i class="icon khgl"></i>客户管理<i class="pull-right"></i></a>
+            <ul class="second-nav">
+                <li id="xjkhxx"><a href="javascript:void(0);">新建客户信息</a></li>
+                <li id="khxxcx"><a href="javascript:void(0);">客户信息查询</a></li>
+                <li id="khwh"><a href="javascript:void(0);">客户维护</a></li>
+                <li id="qzkhwj"><a href="javascript:void(0);">潜在客户挖掘</a></li>
+                <li id="khyj"><a href="javascript:void(0);">客户移交</a></li>
+                <li id="khjs"><a href="javascript:void(0);">客户接收</a></li>
+            </ul>
+        </li>
+        <li class="menu-list"  onclick="showMenu(this)">
+            <a href="javascript:void(0);"><i class="icon khjlgl"></i>客户经理管理<i class="pull-right"></i></a>
+            <ul class="second-nav">
+                <li id="khjljbdy"><a href="javascript:void(0);">客户经理级别定义</a></li>
+                <li id="khjlgl"><a href="javascript:void(0);">客户经理管理</a></li>
+                <li id="khjlrb"><a href="javascript:void(0);">客户经理日报</a></li>
+                <li id="khjlzb"><a href="javascript:void(0);">客户经理周报</a></li>
+            </ul>
+        </li>
+        <li class="menu-list"  onclick="showMenu(this)">
+            <a href="javascript:void(0);"><i class="icon dhgl"></i>贷后管理<i class="pull-right"></i></a>
+            <ul class="second-nav">
+                <li id="xzdhjk"><a href="javascript:void(0);">新增贷后监控</a></li>
+                <li id="dhjkss"><a href="javascript:void(0);">贷后监控实施</a></li>
+                <li id="khcs"><a href="javascript:void(0);">逾期/不良客户催收</a></li>
+            </ul>
+        </li>
+        <li class="menu-list"  onclick="showMenu(this)">
+            <a href="javascript:void(0);"><i class="icon fxkz"></i>风险管理<i class="pull-right"></i></a>
+            <ul class="second-nav">
+                <li id="fxmd"><a href="javascript:void(0);">风险名单</a></li>
+                <li id="fxkhczsp"><a href="javascript:void(0);">风险客户操作审批</a></li>
+                <li id="hmd"><a href="javascript:void(0);">黑名单</a></li>
+                <li id="xjlfx"><a href="javascript:void(0);">现金流分析</a></li>
+                <li id="zxfx"><a href="javascript:void(0);">征信分析</a></li>
+                <li id="fkgzfx"><a href="javascript:void(0);">风控规则分析</a></li>
+            </ul>
+        </li>
+        <li class="menu-list"  onclick="showMenu(this)" id="cpgl">
+            <a href="javascript:void(0);"><i class="icon cpgl"></i>产品管理<i class="pull-right"></i></a>
+            <ul class="second-nav">
+                <li id="cpxx" onclick="Iframe('cpgl/cp_list.html');checkSecond(this,event)"><a href="javascript:void(0);">产品信息</a></li>
+            </ul>
+        </li>
+        <li class="menu-list"  onclick="showMenu(this)" id="tjBb">
+            <a href="javascript:void(0);"><i class="icon tjBb"></i>统计报表<i class="pull-right"></i></a>
+            <ul class="second-nav">
+                <li id="dkywl"><a href="javascript:void(0);">贷款业务类</a></li>
+                <li id="yql"><a href="javascript:void(0);">逾期类</a></li>
+                <li id="sbzytjb"><a href="javascript:void(0);">上报专用统计表</a></li>
+                <li id="khjlgzjzqk"><a href="javascript:void(0);">客户经理工作进展情况</a></li>
+            </ul>
+        </li>
+        <li class="menu-list" onclick="showMenu(this)">
+            <a href="javascript:void(0);"><i class="icon xtgl"></i>系统管理<i class="pull-right"></i></a>
+            <ul class="second-nav"><!--
+					<li id="sygl" onclick="Iframe('system/reason/reason.html');checkSecond(this,event)"><a href="javascript:void(0);">事由管理</a></li>
+					<li id="zwgl" onclick="Iframe('system/job/job.html');checkSecond(this,event)"><a href="javascript:void(0);">职位管理</a></li>
+					<li id="khgl" onclick="Iframe('system/customer/customer.html');checkSecond(this,event)"><a href="javascript:void(0);">客户管理</a></li>
+					<li id="mkgl" onclick="Iframe('system/menu/menu.html');checkSecond(this,event)"><a href="javascript:void(0);">模块管理</a></li> -->
+                <li id="jggl"><a href="javascript:void(0);">机构管理</a></li><!--
+					<li id="xmgl" onclick="Iframe('system/project/project.html');checkSecond(this,event)"><a href="javascript:void(0);">项目管理</a></li>
+					<li id="xmzgl" onclick="Iframe('system/project/group.html');checkSecond(this,event)"><a href="javascript:void(0);">项目组管理</a></li>
+					<li id="yhgl" onclick="Iframe('system/user/user.html');checkSecond(this,event)"><a href="javascript:void(0);">用户管理</a></li>-->
+                <li id="jsqxgl"><a href="javascript:void(0);">角色权限管理</a></li>
+            </ul>
+        </li>
+    </ul>
 </div>
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <#include "layout/menu.html"/>
-</nav>
-<@content/>
-<@script/>
-<script>
+<div class="small-left">
+    <div class="logo">
+        <a href="javascript:void(0);" onclick="Iframe('welcome.html');setNav()"><img src="/static/img/small-logo.png" alt=""></a>
+    </div>
+    <ul class="nav">
+        <li class="menu-list">
+            <a href="javascript:void(0);"><i class="icon jjgl"></i></a>
+            <div class="small-list">
+                <div><img src="/static/img/small-list.png" alt=""><span>进件管理</span></div>
+                <ul>
+                    <li id="jjsq1"><a href="javascript:void(0);">进件申请</a></li>
+                    <li id="jjcx1"><a href="javascript:void(0);">进件查询</a></li>
+                    <li id="jjsp1"><a href="javascript:void(0);">进件审批</a></li>
+                    <li id="khqy1"><a href="javascript:void(0);">客户签约</a></li>
+                    <li id="sdhps1"><a href="javascript:void(0);">审贷会排审</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="menu-list">
+            <a href="javascript:void(0);"><i class="icon khgl"></i></a>
+            <div class="small-list">
+                <div><img src="/static/img/small-list.png" alt=""><span>客户管理</span></div>
+                <ul>
+                    <li id="xjkhxx1"><a href="javascript:void(0);">新建客户信息</a></li>
+                    <li id="khxxcx1"><a href="javascript:void(0);">客户信息查询</a></li>
+                    <li id="khwh1"<a href="javascript:void(0);">客户维护</a></li>
+                    <li id="qzkhwj1"><a href="javascript:void(0);">潜在客户挖掘</a></li>
+                    <li id="khyj1"><a href="javascript:void(0);">客户移交</a></li>
+                    <li id="khjs1"><a href="javascript:void(0);">客户接收</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="menu-list">
+            <a href="javascript:void(0);"><i class="icon khjlgl"></i></a>
+            <div class="small-list">
+                <div><img src="/static/img/small-list.png" alt=""><span>客户经理管理</span></div>
+                <ul>
+                    <li id="khjljbdy1" onclick="setSmallList(this,'khjljbdy')"><a href="javascript:void(0);">客户经理级别定义</a></li>
+                    <li id="khjlgl1" onclick="setSmallList(this,'khjlgl')"><a href="javascript:void(0);">客户经理管理</a></li>
+                    <li id="khjlrb1" onclick="setSmallList(this,'khjlrb')"><a href="javascript:void(0);">客户经理日报</a></li>
+                    <li id="khjlzb1" onclick="setSmallList(this,'khjlzb')"><a href="javascript:void(0);">客户经理周报</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="menu-list">
+            <a href="javascript:void(0);"><i class="icon dhgl"></i></a>
+            <div class="small-list">
+                <div><img src="/static/img/small-list.png" alt=""><span>贷后管理</span></div>
+                <ul>
+                    <li id="xzdhjk1" onclick="setSmallList(this,'xzdhjk')"><a href="javascript:void(0);">新增贷后监控</a></li>
+                    <li id="dhjkss1" onclick="setSmallList(this,'dhjkss')"><a href="javascript:void(0);">贷后监控实施</a></li>
+                    <li id="khcs1" onclick="setSmallList(this,'khcs')"><a href="javascript:void(0);">逾期/不良客户催收</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="menu-list">
+            <a href="javascript:void(0);"><i class="icon fxkz"></i></a>
+            <div class="small-list">
+                <div><img src="/static/img/small-list.png" alt=""><span>风险控制</span></div>
+                <ul>
+                    <li id="fxmd1" onclick="setSmallList(this,'fxmd')"><a href="javascript:void(0);">风险名单</a></li>
+                    <li id="fxkhczsp1" onclick="setSmallList(this,'fxkhczsp')"><a href="javascript:void(0);">风险客户操作审批</a></li>
+                    <li id="hmd1" onclick="setSmallList(this,'hmd')"><a href="javascript:void(0);">黑名单</a></li>
+                    <li id="xjlfx1" onclick="setSmallList(this,'xjlfx')"><a href="javascript:void(0);">现金流分析</a></li>
+                    <li id="zxfx1" onclick="setSmallList(this,'zxfx')"><a href="javascript:void(0);">征信分析</a></li>
+                    <li id="fkgzfx1" onclick="setSmallList(this,'fkgzfx')"><a href="javascript:void(0);">风控规则分析</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="menu-list">
+            <a href="javascript:void(0);"><i class="icon cpgl"></i></a>
+            <div class="small-list">
+                <div><img src="/static/img/small-list.png" alt=""><span>产品管理</span></div>
+                <ul>
+                    <li id="cpxx1" onclick="setSmallList(this,'cpxx')"><a href="javascript:void(0);">产品信息</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="menu-list">
+            <a href="javascript:void(0);"><i class="icon tjBb"></i></a>
+            <div class="small-list">
+                <div><img src="/static/img/small-list.png" alt=""><span>统计报表</span></div>
+                <ul>
+                    <li id="dkywl1"><a href="javascript:void(0);">贷款业务类</a></li>
+                    <li id="yql1"><a href="javascript:void(0);">逾期类</a></li>
+                    <li id="sbzytjb1"><a href="javascript:void(0);">上报专用统计表</a></li>
+                    <li id="khjlgzjzqk1"><a href="javascript:void(0);">客户经理工作进展情况</a></li><!--
+						<li id="bt1" onclick="setSmallList(this,'bt')"><a href="javascript:void(0);">饼图</a></li>
+						<li id="zzt1" onclick="setSmallList(this,'zzt')"><a href="javascript:void(0);">柱状图</a></li> -->
+                </ul>
+            </div>
+        </li>
+        <li class="menu-list">
+            <a href="javascript:void(0);"><i class="icon xtgl"></i></a>
+            <div class="small-list">
+                <div><img src="/static/img/small-list.png" alt=""><span>系统管理</span></div>
+                <ul><!--
+						<li id="sygl1" onclick="setSmallList(this,'sygl')"><a href="javascript:void(0);">事由管理</a></li>
+						<li id="zwgl1" onclick="setSmallList(this,'zwgl')"><a href="javascript:void(0);">职位管理</a></li>
+						<li id="khgl1" onclick="setSmallList(this,'khgl')"><a href="javascript:void(0);">客户管理</a></li>
+						<li id="mkgl1" onclick="setSmallList(this,'mkgl')"><a href="javascript:void(0);">模块管理</a></li> -->
+                    <li id="jggl1"><a href="javascript:void(0);">机构管理</a></li><!--
+						<li id="xmgl1" onclick="setSmallList(this,'xmgl')"><a href="javascript:void(0);">项目管理</a></li>
+						<li id="xmzgl1" onclick="setSmallList(this,'xmzgl')"><a href="javascript:void(0);">项目组管理</a></li>
+						<li id="yhgl1" onclick="setSmallList(this,'yhgl')"><a href="javascript:void(0);">用户管理</a></li>	 -->
+                    <li id="jsqxgl1"><a href="javascript:void(0);">角色权限管理</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
+<!--**********************************************顶部*********************************************************-->
+<div class="top">
+    <div class="hideNav" onclick="changeNav()"></div>
+    <div class="userMenu">
+        <img src="/static/img/user/01.png"/>
+        <span>客户经理</span>
+        <div class="slowDown">
+            <img src="/static/img/slowDown.png" class="boxJ"/>
+            <ul><!--
+					<li><i class="gr"></i><a>个人资料</a></li> -->
+                <li><i class="gm"></i><a href="/user/updatePasswordPage">修改密码</a></li>
+                <li><i class="dc"></i><a href="/login">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--**********************************************底部*********************************************************-->
+<div class="bottom">
+    <@content/>
+</div>
 
-</script>
+
+<@script/>
+
 
 <@js/>
 </body>

@@ -63,10 +63,6 @@ public enum ResultEnum {
      */
     CAPTCHA_TIMEOUT(5010),
     /**
-     * 客户输入验证码为空
-     */
-    CAPTCHA_NULL(5010),
-    /**
      * 没有登陆
      */
     NO_LOGIN(5011),
@@ -117,7 +113,11 @@ public enum ResultEnum {
     /**
      * 接口签名不匹配
      */
-    APPSIN_INCOMPATIBLE(5023);
+    APPSIN_INCOMPATIBLE(5023),
+    /**
+     * 客户输入验证码为空
+     */
+    CAPTCHA_NULL(5024);
 
     private int value; // 自定义数据域，private为了封装
 
