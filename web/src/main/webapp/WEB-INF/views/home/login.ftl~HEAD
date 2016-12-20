@@ -14,18 +14,12 @@
     <form id="loginForm">
         <!--错误信息提示-->
 			<div class="errorMessage">
-				<img src="/static/img/icon-warning.png"/>&nbsp;<span></span>
+				<img src="../static/img/error.png"/>&nbsp;<span></span>
 			</div>
         <input  id="user" name="userName" type="text" class="login-input" placeholder="用户名">
         <input id="password" name="password" type="password" class="login-input" placeholder="密码">
 
         <input type="button" class="login-button" value="登&nbsp;&nbsp;录">
-        <div class="codeImg">
-
-        </div>
-        <div class="forgetPwd">
-            <a href="/user/anon/resetPasswordPage">忘记密码？</a>
-        </div>
     </form>
 </div>
 <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
@@ -45,9 +39,8 @@
                     success : function(result){
                         if(result.code != 200){
                             $(".errorMessage").show().find("span").text(message(result['code']));
-                        }else{
-                            window.location.href = '/index';
                         }
+                        window.location.href = 'returnWebPage?viewName=/dashboard/index2';
                     }
                 })
             }
