@@ -6,20 +6,15 @@ import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.customer.model.TCustomerTransfer;
-import com.cardpay.mgt.customer.service.CustomerBasicService;
-import com.cardpay.mgt.customer.service.CustomerTransferService;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +28,7 @@ import java.util.Map;
 @RequestMapping("/customerBasic")
 public class CustomerBasicController extends BaseController<TCustomerBasic, Integer> {
     @Autowired
-    private CustomerBasicService customerBasicService;
+    private TCustomerBasicService customerBasicService;
 
     /**
      * 获取证件类型列表

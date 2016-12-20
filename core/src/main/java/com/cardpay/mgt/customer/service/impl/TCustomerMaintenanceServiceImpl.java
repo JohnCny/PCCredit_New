@@ -4,7 +4,7 @@ import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
-import com.cardpay.mgt.customer.service.CustomerMaintenanceService;
+import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author wangpeng
  */
 @Service
-public class CustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMaintenance> implements CustomerMaintenanceService {
+public class TCustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMaintenance> implements TCustomerMaintenanceService {
     @Override
     public List<SelectModel> getMaintenanceType(){
         List<SelectModel> selects = new ArrayList<>();

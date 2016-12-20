@@ -2,20 +2,20 @@ package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
-import com.cardpay.mgt.customer.service.CustomerBasicService;
-import com.cardpay.mgt.customer.service.CustomerTransferService;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
+import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -30,12 +30,15 @@ import java.util.Map;
 @Api(value = "/customerTransfer", description = "客户移交")
 @RestController
 @RequestMapping("/customerTransfer")
-public class CustomerTransferController extends BaseController<TCustomerTransfer, Integer> {
+public class CustomerTransferController  {
     @Autowired
-    private CustomerTransferService customerTransferService;
+    private TCustomerTransferService customerTransferService;
 
     @Autowired //客户基本信息
-    private CustomerBasicService customerBasicService;
+    private TCustomerBasicService customerBasicService;
+
+    @Autowired
+    private static LogTemplate logger;
 
     /**
      * 获取移交接收意见状态
@@ -58,7 +61,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param viewName    试图名称
      * @return 数据库变记录
      */
-    @PutMapping("/customerStatus")
+    @PutMapping("/customerTransfer")
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ModelAndView changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) String customerIds
             , @ApiParam(value = "状态", required = true) int status
@@ -85,9 +88,28 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         Map<String, Object> map = new HashedMap();
         map.put("status", status);
         map.put("customerIds", customerIds);
+        map.put("managerId", ShiroKit.getUserId()); //自己转移给自己
         int count = customerBasicService.updateStatus(map);
+        logger.info("客户移交", "客户"+customerIds+"移交给了"+ShiroKit.getUserId());
         modelAndView.addObject(count);
         modelAndView.setViewName(viewName);
         return modelAndView;
     }
+
+    /**
+     * 查询客户接收列表
+     *
+     * @param status 查询客户接收列表
+     * @return 客户接收列表
+     */
+    @ResponseBody
+    @GetMapping("/queryTransfer")
+    @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
+    public ResultTo queryTransfer(@ApiParam("客户移交状态(默认为未接受)") @RequestParam(defaultValue = "0") int status) {
+        List<TCustomerTransferVo> tCustomerTransferVos = customerTransferService.queryTransfer(status, ShiroKit.getUserId());
+        return new ResultTo().setData(tCustomerTransferVos);
+    }
+
+
+
 }

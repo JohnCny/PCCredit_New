@@ -10,7 +10,7 @@ import java.util.List;
  * 客户维护服务类
  * @author wangpeng
  */
-public interface CustomerMaintenanceService extends BaseService<TCustomerMaintenance>{
+public interface TCustomerMaintenanceService extends BaseService<TCustomerMaintenance>{
     /**
      * 获取维护类型
      * @return 维护类型列表

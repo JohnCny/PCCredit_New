@@ -1,6 +1,7 @@
-package com.cardpay.mgt.customer.dao;
+package com.cardpay.mgt.customer.service;
 
-import com.cardpay.basic.base.mapper.BasicMapper;
+import com.cardpay.basic.base.model.SelectModel;
+import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import org.apache.ibatis.annotations.Param;
@@ -8,11 +9,16 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 客户移交信息Mapper
- *
- * @author chenkai
+ * 客户移交类
+ * @author wangpeng
  */
-public interface TCustomerTransferMapper extends BasicMapper<TCustomerTransfer> {
+public interface TCustomerTransferService extends BaseService<TCustomerTransfer>{
+    /**
+     * 获取移交接收意见状态
+     * @return 移交接收意见状态列表
+     */
+    List<SelectModel> getTransferStatus();
+
 
     /**
      * 查询客户接受列表
@@ -22,5 +28,4 @@ public interface TCustomerTransferMapper extends BasicMapper<TCustomerTransfer> 
      * @return 客户接受列表
      */
     List<TCustomerTransferVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId);
-
 }

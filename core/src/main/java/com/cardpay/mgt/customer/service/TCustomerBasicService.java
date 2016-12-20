@@ -12,7 +12,7 @@ import java.util.Map;
  * 客户基本信息服务类
  * @author wangpeng
  */
-public interface CustomerBasicService extends BaseService<TCustomerBasic> {
+public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     /**
      * 获取证件类型
      * @return 证件类型列表

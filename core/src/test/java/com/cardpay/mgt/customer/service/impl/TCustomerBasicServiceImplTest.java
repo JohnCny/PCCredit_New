@@ -4,7 +4,7 @@ import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.customer.service.CustomerBasicService;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,13 +26,13 @@ import static org.powermock.api.mockito.PowerMockito.when;
  * @author chenkai
  */
 @RunWith(MockitoJUnitRunner.class)
-@PrepareForTest({CustomerBasicService.class})
-public class CustomerBasicServiceImplTest {
+@PrepareForTest({TCustomerBasicService.class})
+public class TCustomerBasicServiceImplTest {
     @Mock
     private TCustomerBasicMapper customerBasicMapper;
 
     @InjectMocks
-    private CustomerBasicServiceImpl customerBasicService;
+    private TCustomerBasicServiceImpl customerBasicService;
 
     @Test
     public void getCert() throws Exception {

@@ -6,7 +6,7 @@ import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.customer.service.CustomerBasicService;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.Map;
  * @author chenkai
  */
 @Service
-public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements CustomerBasicService {
+public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements TCustomerBasicService {
     @Autowired
     private TCustomerBasicMapper customerBasicDao;
 
