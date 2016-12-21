@@ -8,6 +8,7 @@ import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.user.model.User;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/menu")
+@Api(value = "/menu", description = "菜单")
 public class MenuController {
 
     @Autowired
