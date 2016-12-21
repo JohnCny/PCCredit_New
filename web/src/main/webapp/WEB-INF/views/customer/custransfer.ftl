@@ -5,6 +5,8 @@
         [v-cloak] {
             display: none
         }
+        .common .center tr td{border:none;line-height:40px;background:none;}
+        .common input{width:200px;}
     </style>
 </#macro>
 <#macro css>
@@ -25,15 +27,9 @@
                 <tr>
                     <td>
                         <select name="" multiple="multiple" size="10" style="width:90%" id="xykh">
-                            <option value="">客户1</option>
-                            <option value="">客户2</option>
-                            <option value="">客户3</option>
-                            <option value="">客户4</option>
-                            <option value="">客户5</option>
-                            <option value="">客户6</option>
-                            <option value="">客户7</option>
-                            <option value="">客户8</option>
-                            <option value="">客户9</option>
+                            <#list queryCustomer?values as value>
+                                <option value="" id="xykh" data-id="${vaule.id}">${value}</option>
+                            </#list>
                         </select>
                     </td>
                     <td>
@@ -56,7 +52,7 @@
             </table>
         </div>
         <p class="button">
-            <input type="submit" value="移交"/>
+            <input type="submit" value="移交" id="btn_submit"/>
         </p>
     </div>
 </#macro>
@@ -73,6 +69,24 @@
             else
                 alert("请先选择职能，然后再添加！！");
         }
+        var obj={}
+
+        $("#btn_submit").click(function () {
+            var id = $("#yjkh option");
+            var arrAjax = "";
+            $.each(id,function (i,item) {
+                if (!i) {
+                    arrAjax += item.value;
+                } else {
+                    arrAjax += "," + item.value;
+                }
+
+                console.log("arrAjax:"+arrAjax);
+        });
+            obj.customerId=arrAjax
+
+
+        });
 
 
     </script>
