@@ -32,58 +32,6 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     private TCustomerBasicService customerBasicService;
 
     /**
-     * 获取证件类型列表
-     *
-     * @return 证件类型列表
-     */
-    @ResponseBody
-    @GetMapping("/certList")
-    @ApiOperation(value = "获取证件类型列表", notes = "证件类型列表", httpMethod = "GET")
-    public ResultTo getCertList() {
-        List<SelectModel> customerBasicServiceCert = customerBasicService.getCert();
-        return new ResultTo().setData(customerBasicServiceCert);
-    }
-
-    /**
-     * 获取文化程度
-     *
-     * @return 文化程度列表
-     */
-    @ResponseBody
-    @GetMapping("/educationDegreeList")
-    @ApiOperation(value = "获取文化程度", notes = "文化程度", httpMethod = "GET")
-    public ResultTo getEducationDegreeList() {
-        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
-        return new ResultTo().setData(educationDegree);
-    }
-
-    /**
-     * 获取婚姻状况
-     *
-     * @return 婚姻状况列表
-     */
-    @ResponseBody
-    @GetMapping("/marriageStatusList")
-    @ApiOperation(value = "获取婚姻状况", notes = "婚姻状况", httpMethod = "GET")
-    public ResultTo getMarriageStatusList() {
-        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
-        return new ResultTo().setData(marriageStatus);
-    }
-
-    /**
-     * 获取客户状态
-     *
-     * @return 客户状态列表
-     */
-    @ResponseBody
-    @GetMapping("/customerStatusList")
-    @ApiOperation(value = "客户状态列表", notes = "客户状态", httpMethod = "GET")
-    public ResultTo getCustomerStatusList() {
-        List<SelectModel> customerStatus = customerBasicService.getCustomerStatus();
-        return new ResultTo().setData(customerStatus);
-    }
-
-    /**
      * 获取潜在客户列表
      *
      * @return 潜在客户列表
@@ -162,7 +110,10 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     @GetMapping("/new")
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
     public ModelAndView returnNewCustomer(){
-        return new ModelAndView("/customer/new");
+        ModelAndView modelAndView = new ModelAndView("/customer/new");
+        Map<String, SelectModel> dropDownList = customerBasicService.getDropDownList();
+        modelAndView.addObject(dropDownList);
+        return modelAndView;
     }
 
 }

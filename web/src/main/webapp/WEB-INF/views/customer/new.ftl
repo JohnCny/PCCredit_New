@@ -148,9 +148,6 @@
                             <option value="2">已婚</option>
                             <option value="3">离婚</option>
                             <option value="4">丧偶</option>
-                            <#list >
-
-                            </#list>
                         </select>
                         <div class="message">${marriageError}</div>
                     </div>

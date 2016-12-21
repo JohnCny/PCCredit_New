@@ -12,7 +12,6 @@
         <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
     </resultMap>
 
-
     <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
         <result column="ID" jdbcType="DECIMAL" property="customerId"/>
         <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
@@ -28,4 +27,8 @@
         WHERE basic.id = transfer.id AND transfer.TRANSFER_STATUS = #{status}
         AND basic.CUSTOMER_MANAGER_ID = #{managerId}
     </select>
+
+    <update id="accept" parameterType="Map">
+      UPDATE
+    </update>
 </mapper>

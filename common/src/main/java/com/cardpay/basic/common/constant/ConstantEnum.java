@@ -28,19 +28,19 @@ public class ConstantEnum {
         }
     }
 
-    /**
-     * 文化程度(8 博士 7  硕士 6 本科  5  大专  4 高中 3  中专 2 初中 1 小学 0 文盲)
-     */
-    public enum EducationDegree{
-        DEGREE0(0, "文盲"),
-        DEGREE1(1, "小学"),
-        DEGREE2(2, "初中"),
-        DEGREE3(3, "中专"),
-        DEGREE4(4, "高中"),
-        DEGREE5(5, "大专"),
-        DEGREE6(6, "本科"),
-        DEGREE7(7, "硕士"),
-        DEGREE8(8, "博士");
+        /**
+         * 文化程度(8 博士 7  硕士 6 本科  5  大专  4 高中 3  中专 2 初中 1 小学 0 文盲)
+         */
+        public enum EducationDegree{
+            DEGREE0(0, "文盲"),
+            DEGREE1(1, "小学"),
+            DEGREE2(2, "初中"),
+            DEGREE3(3, "中专"),
+            DEGREE4(4, "高中"),
+            DEGREE5(5, "大专"),
+            DEGREE6(6, "本科"),
+            DEGREE7(7, "硕士"),
+            DEGREE8(8, "博士");
 
         private Integer _val;
         private  String _name;
