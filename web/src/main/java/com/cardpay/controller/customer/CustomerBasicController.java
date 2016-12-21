@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * 客户controller
  *
- * @author wangpeng
+ * @author yanweichen
  */
 @Api(value = "/customerBasic", description = "客户基本信息")
 @Controller

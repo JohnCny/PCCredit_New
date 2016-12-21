@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * 客户基本信息服务实现类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements CustomerBasicService {

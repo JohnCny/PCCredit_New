@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *客户移交测试类
- * @author wangpeng
+ * @author yanweichen
  */
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({CustomerTransferService.class})

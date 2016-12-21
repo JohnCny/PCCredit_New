@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 菜单Controller
  *
- * Created by yanwe on 2016/11/22.
+ * @author yanwe 2016年12月21日09:11:29
  */
 @Controller
 @RequestMapping("/menu")
@@ -37,7 +37,7 @@ public class MenuController {
         ResultTo resultTo = new ResultTo();
         User user = (User) ShiroKit.getPrincipal();
         JSONArray menuLists = tMenuService.selectMenuListByAll(user.getId());
-        resultTo.setDataMap("menus",menuLists).setDataMap("checkedMenu",session.getAttribute(getUserId().toString()));
+        resultTo.setDataMap("menus",menuLists).setDataMap("checkedMenu",session.getAttribute(ShiroKit.getUserId().toString()));
         return resultTo;
     }
 
@@ -45,7 +45,7 @@ public class MenuController {
     @RequestMapping(value = "/allAuth",method = RequestMethod.GET)
     @ApiOperation(value = "查询菜单层级和权限信息接口", notes = "查询菜单层级和权限信息",  httpMethod = "GET")
     public ResultTo selectMenuAndAuthList(){
-        List<TMenuAuthVo> tMenuAuthVos = tMenuService.selectMenuListAndAuth(getUserId());
+        List<TMenuAuthVo> tMenuAuthVos = tMenuService.selectMenuListAndAuth(ShiroKit.getUserId());
         ResultTo resultTo = new ResultTo();
         resultTo.setData(tMenuAuthVos);
         return resultTo;
@@ -55,7 +55,7 @@ public class MenuController {
     @RequestMapping(value = "",method = RequestMethod.POST)
     @ApiOperation(value = "添加菜单", notes = "添加菜单",  httpMethod = "POST")
     public ResultTo addMenu(@ApiParam(value = "菜单", required = true) @ModelAttribute TMenu menu){
-        ResultTo resultTo = tMenuService.addMenu(menu, getUserId());
+        ResultTo resultTo = tMenuService.addMenu(menu, ShiroKit.getUserId());
         return resultTo;
     }
 
@@ -63,7 +63,7 @@ public class MenuController {
     @RequestMapping(value = "",method = RequestMethod.PUT)
     @ApiOperation(value = "更新菜单", notes = "更新菜单",  httpMethod = "PUT")
     public ResultTo updateMenu(@ApiParam(value = "菜单", required = true) @ModelAttribute TMenu menu){
-        ResultTo resultTo = tMenuService.updateMenu(menu, getUserId());
+        ResultTo resultTo = tMenuService.updateMenu(menu, ShiroKit.getUserId());
         return resultTo;
     }
 
@@ -71,7 +71,7 @@ public class MenuController {
     @RequestMapping(value = "/recursionDelete",method = RequestMethod.DELETE)
     @ApiOperation(value = "删除指定菜单下所有子菜单接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
     public ResultTo recursionDelete(@ApiParam(value = "菜单id", required = true) @RequestParam("menuId") Integer menuId){
-        return tMenuService.recursionDelete(menuId,getUserId());
+        return tMenuService.recursionDelete(menuId,ShiroKit.getUserId());
     }
 
     @ResponseBody
@@ -79,14 +79,10 @@ public class MenuController {
     @ApiOperation(value = "记录选中菜单", notes = "记录选中菜单",  httpMethod = "GET")
     public ResultTo setCheckedMenu(HttpSession session,@ApiParam(value = "菜单id", required = true)
                                             @RequestParam("menuId") Integer menuId){
-        session.setAttribute(getUserId().toString(),menuId);
+        session.setAttribute(ShiroKit.getUserId().toString(),menuId);
         return new ResultTo();
     }
 
-    private Integer getUserId(){
-        User user = (User) ShiroKit.getPrincipal();
-        return user.getId();
-    }
     @RequestMapping("/test")
     @SystemControllerLog
     public String test(){

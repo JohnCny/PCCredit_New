@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * 客户基本信息controller单元测试
  *
- * @author wangpeng
+ * @author yanweichen
  */
 public class CustomerBasicControllerTest extends TestEnv {
     @Test

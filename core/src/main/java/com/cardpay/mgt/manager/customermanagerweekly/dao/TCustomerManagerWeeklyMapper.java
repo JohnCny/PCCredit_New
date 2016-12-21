@@ -5,7 +5,7 @@ import com.cardpay.mgt.manager.customermanagerweekly.model.TCustomerManagerWeekl
 
 /**
  * 客户经理周报信息Mapper
- * @author wangpeng
+ * @author yanweichen
  */
 public interface TCustomerManagerWeeklyMapper extends BasicMapper<TCustomerManagerWeekly> {
 }

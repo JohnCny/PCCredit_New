@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * 客户经理级别实现类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class CustomerManagerLevelServiceImpl extends BaseServiceImpl<TCustomerManagerLevel> implements CustomerManagerLevelService {

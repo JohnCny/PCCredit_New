@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * 客户移交实现类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class CustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTransfer> implements CustomerTransferService{

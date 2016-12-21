@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * 客户基本信息服务类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface CustomerBasicService extends BaseService<TCustomerBasic> {
     /**

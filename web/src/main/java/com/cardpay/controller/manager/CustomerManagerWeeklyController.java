@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 客户经理周报controller
  *
- * @author wangpeng
+ * @author yanweichen
  */
 @Api(value = "/customerManagerWeekly", description = "客户经理周报")
 @RestController

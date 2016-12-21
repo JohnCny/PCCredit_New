@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *客户维护服务测试类
- * @author wangpeng
+ * @author yanweichen
  */
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({CustomerMaintenanceService.class})

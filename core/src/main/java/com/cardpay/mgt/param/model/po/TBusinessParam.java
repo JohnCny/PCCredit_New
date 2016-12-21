@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 /**
  * 业务参数
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_BUSINESS_PARAM")
 public class TBusinessParam  extends GenericEntity<Integer> {

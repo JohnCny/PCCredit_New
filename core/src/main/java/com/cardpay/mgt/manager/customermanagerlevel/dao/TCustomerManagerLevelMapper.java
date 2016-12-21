@@ -5,7 +5,7 @@ import com.cardpay.mgt.manager.customermanagerlevel.model.TCustomerManagerLevel;
 
 /**
  * 客户经理级别信息Mapper
- * @author wangpeng
+ * @author yanweichen
  */
 public interface TCustomerManagerLevelMapper extends BasicMapper<TCustomerManagerLevel> {
 }

@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  * 客户维护实体类
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_MAINTENANCE")
 @ApiModel(value="客户维护记录")

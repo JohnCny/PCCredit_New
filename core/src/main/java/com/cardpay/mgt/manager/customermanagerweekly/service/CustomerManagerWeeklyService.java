@@ -5,7 +5,7 @@ import com.cardpay.mgt.manager.customermanagerweekly.model.TCustomerManagerWeekl
 
 /**
  * 客户经理周报类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface CustomerManagerWeeklyService extends BaseService<TCustomerManagerWeekly> {
 }
