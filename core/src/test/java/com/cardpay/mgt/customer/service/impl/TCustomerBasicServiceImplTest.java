@@ -35,30 +35,6 @@ public class TCustomerBasicServiceImplTest {
     private TCustomerBasicServiceImpl customerBasicService;
 
     @Test
-    public void getCert() throws Exception {
-        List<SelectModel> selects = (List<SelectModel>)customerBasicService.getCert();
-        assertEquals(selects.size(), 3);
-    }
-
-    @Test
-    public void getEducationDegree() throws Exception {
-        List<SelectModel> selects = (List<SelectModel>)customerBasicService.getEducationDegree();
-        assertEquals(selects.size(), 9);
-    }
-
-    @Test
-    public void getMarriageStatus() throws Exception {
-        List<SelectModel> selects = (List<SelectModel>)customerBasicService.getMarriageStatus();
-        assertEquals(selects.size(), 4);
-    }
-
-    @Test
-    public void getCustomerStatus() throws Exception {
-        List<SelectModel> selects = (List<SelectModel>)customerBasicService.getCustomerStatus();
-        assertEquals(selects.size(), 4);
-    }
-
-    @Test
     public void getProspectiveCustomers() throws Exception {
         List<TCustomerBasic> lists = new ArrayList<TCustomerBasic>(){
             {
