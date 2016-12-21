@@ -6,9 +6,10 @@ import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.customer.service.CustomerBasicService;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,10 @@ import java.util.Map;
 
 /**
  * 客户基本信息服务实现类
- * @author yanweichen
+ * @author chenkai
  */
 @Service
-public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements CustomerBasicService {
+public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements TCustomerBasicService {
     @Autowired
     private TCustomerBasicMapper customerBasicDao;
 
@@ -82,7 +83,18 @@ public class CustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> im
     }
 
     @Override
-    public Map queryCustomer(ReturnMapParam mapParam) {
+    public Map<Integer, String> queryCustomer(ReturnMapParam mapParam) {
         return customerBasicDao.queryCustomer(mapParam);
+    }
+
+    @Override
+    @Transactional
+    public int updateStatus(Map map) {
+        return customerBasicDao.updateStatus(map);
+    }
+
+    @Override
+    public List<TCustomerBasic> queryCustomerList(int managerId) {
+        return customerBasicDao.queryCustomerList(managerId);
     }
 }

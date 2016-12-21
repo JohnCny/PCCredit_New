@@ -2,8 +2,8 @@ package com.cardpay.mgt.customertransfer.service;
 
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
-import com.cardpay.mgt.customer.service.CustomerTransferService;
-import com.cardpay.mgt.customer.service.impl.CustomerTransferServiceImpl;
+import com.cardpay.mgt.customer.service.TCustomerTransferService;
+import com.cardpay.mgt.customer.service.impl.TCustomerTransferServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,16 +17,16 @@ import static org.junit.Assert.*;
 
 /**
  *客户移交测试类
- * @author yanweichen
+ * @author wangpeng
  */
 @RunWith(MockitoJUnitRunner.class)
-@PrepareForTest({CustomerTransferService.class})
+@PrepareForTest({TCustomerTransferService.class})
 public class CustomerTransferServiceTest {
     @Mock
     private TCustomerTransferMapper customerTransferMapper;
 
     @InjectMocks
-    private CustomerTransferServiceImpl customerTransferService;
+    private TCustomerTransferServiceImpl customerTransferService;
 
     @Test
     public void getTransferStatus() throws Exception {
