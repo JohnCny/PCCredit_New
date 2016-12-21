@@ -65,7 +65,7 @@
                     <label for="nationality">客户状态</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <select id="sex" type="text"  name="sex" class="form-control">
+                        <select id="customerStatus" type="text"  name="sex" class="form-control">
                             <option value="">--请选择--</option>
                             <option value="1">正常</option>
                             <option value="0">高风险用户</option>
@@ -219,9 +219,8 @@
                 var se = d.getSeconds();
                 var currentTime = vYear + "-" + vMon + "-" + vDay+" "+ h + ":" + m + ":" + se;
                 Obj[createTime] = currentTime;
-                    Obj[modifyTime] = currentTime;
-                conso
-                console.log(Obj);le.log(currentTime);
+                Obj[modifyTime] = currentTime;
+                console.log(Obj);
                 $.ajax({
                     type:"post",
                     url:url,
