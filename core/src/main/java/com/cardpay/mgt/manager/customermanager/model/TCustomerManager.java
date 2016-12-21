@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 /**
  * 客户经理信息实体类
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_MANAGER")
 @ApiModel(value="客户经理信息管理")
@@ -20,6 +20,7 @@ public class TCustomerManager extends GenericEntity<Integer> {
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MANAGER_SEQ.nextval from dual")
     @ApiModelProperty(value="客户经理id(需要生成规则生成)",required = true)
+    @OrderBy("DESC")
     private Integer id;
 
     /**

@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 /**
  * 客户移交信息实体类
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_TRANSFER")
 @ApiModel(value="客户移交记录")

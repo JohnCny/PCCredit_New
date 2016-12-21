@@ -86,13 +86,6 @@
 
 </#macro>
 <#macro script>
-    <script>
-        $(function () {
-            $.ajax({
-                type:"get",
-                url:"/customerBasic/success"
-            });
-        })
 //        $(function () {
 //            var url = "/customerBasic/api/list";
 //            $.ajax({

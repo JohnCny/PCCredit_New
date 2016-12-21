@@ -180,7 +180,10 @@
                     data:Obj,
                     success: function(res){
                         if(res.code == 200){
-                           location.href="/customerBasic/customer";
+                            $.ajax({
+                                type:"get",
+                                url:"/customerBasic/success"
+                            });
                         }
                     },
                     error:function () {

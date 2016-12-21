@@ -2,7 +2,7 @@ package com.cardpay.basic.common.constant;
 
 /**
  * 枚举类型
- * @author wangpeng
+ * @author yanweichen
  */
 public class ConstantEnum {
     /**

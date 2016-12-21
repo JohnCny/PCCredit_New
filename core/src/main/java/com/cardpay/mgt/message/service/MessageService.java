@@ -5,7 +5,7 @@ import com.cardpay.mgt.message.model.po.TMessage;
 
 /**
  * 消息服务类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface MessageService extends BaseService<TMessage> {
     /**

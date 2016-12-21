@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 /**
  * 消息
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_MESSAGE")
 public class TMessage extends GenericEntity<Integer>{

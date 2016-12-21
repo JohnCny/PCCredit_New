@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 客户维护服务类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface TCustomerMaintenanceService extends BaseService<TCustomerMaintenance>{
     /**

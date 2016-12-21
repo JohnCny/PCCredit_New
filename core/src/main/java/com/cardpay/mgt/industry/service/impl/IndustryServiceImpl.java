@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * 行业信息实现类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class IndustryServiceImpl extends BaseServiceImpl<TIndustry> implements IndustryService {
