@@ -45,6 +45,7 @@ public class TCustomerBasicMapperTest extends TestEnv{
         Map<String, Object> map = new HashedMap();
         map.put("status", 1);
         map.put("customerIds", 1);
+        map.put("managerId", "1");
         int i = tCustomerBasicMapper.updateStatus(map);
         assertTrue(i > 0);
     }
