@@ -94,13 +94,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
      * @param tCustomerBasic 客户基本信息
      * @return 数据库变更记录
      */
+    @ResponseBody
     @PostMapping("")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
-    public String newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
-        ModelAndView modelAndView = new ModelAndView("/customer/customer");
+    public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         Integer insert = customerBasicService.insert(tCustomerBasic);
-        modelAndView.addObject(insert);
-        return "redirect:/customerBasic/customer";
+        return new ResultTo().setData(insert);
     }
 
     /**
