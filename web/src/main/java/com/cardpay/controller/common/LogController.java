@@ -1,5 +1,8 @@
 package com.cardpay.controller.common;
 
+import com.cardpay.basic.util.datatable.DataTablePage;
+import com.cardpay.controller.base.BaseController;
+import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 @RequestMapping("/log")
 @Api(value = "/log", description = "日志操作")
-public class LogController {
+public class LogController extends BaseController<User, Integer> {
 
 
     /**
@@ -30,7 +33,7 @@ public class LogController {
     }
 
     public void loginLog(WebRequest request) {
-
+//        return new DataTablePage<User, Integer>(request, null);
     }
 
 }
