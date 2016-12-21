@@ -100,7 +100,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
         ModelAndView modelAndView = new ModelAndView("/customer/customer");
         Integer insert = customerBasicService.insert(tCustomerBasic);
         modelAndView.addObject(insert);
-        return "redirect:/customer";
+        return "redirect:/customerBasic/customer";
     }
 
     /**
