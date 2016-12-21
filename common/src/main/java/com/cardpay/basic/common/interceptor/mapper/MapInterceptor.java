@@ -1,6 +1,5 @@
 package com.cardpay.basic.common.interceptor.mapper;
 
-import com.cardpay.basic.common.interceptor.enums.ReturnMapParam;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ReflectUtil;
 import org.apache.ibatis.executor.parameter.ParameterHandler;

@@ -58,8 +58,8 @@ public class TCustomerBasicServiceImplTest {
     public void queryCustomer() throws Exception {
         ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
         returnMapParam.put("managerId", 1);
-        Map<Object, Object> map = new HashedMap();
-        map.put("test", "1");
+        Map<Integer, String> map = new HashedMap();
+        map.put(1, "1");
         when(customerBasicMapper.queryCustomer(returnMapParam)).thenReturn(map);
         Map map1 = customerBasicService.queryCustomer(returnMapParam);
         assertEquals(map, map1);
