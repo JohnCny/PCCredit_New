@@ -236,3 +236,60 @@ label.checked { background:url("../img/icon-ok.png") no-repeat 0px 0px;}
 .red{color:#a94442}
 h3.success{color:#a0d468;margin:40px 0 80px 0;text-align:center;}
 h3.success img{margin-top:-5px;}
+[v-cloak] {
+	display: none
+}
+.selected {
+	background-color: #DFF0D8;
+}
+
+#example_length {
+	float: left;
+}
+
+.odd td strong {
+	color: red;
+}
+
+#topPlugin{
+	display: inline-block;
+}
+.dataTables_info{
+	float: left;
+	margin-top: 5px;
+}
+
+#topPlugin a,#topPlugin button {
+	margin-left: 10px;
+}
+
+div.dataTables_paginate {
+	float: right;
+	padding-top: 8px;
+	margin: 0;
+	white-space: nowrap;
+	text-align: right;
+	margin-top: 5px;
+}
+
+.table th, .table td {
+	text-align: center;
+	height:25px;
+}
+/*div.breadcrumbDiv{
+    margin: 10px 50px;
+}*/
+div.breadcrumbs{
+	overflow: hidden;
+}
+div.breadcrumbs h2{
+	float: left;
+}
+div.breadcrumbs ul{
+	float: right;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+table.tableCommon{
+	border-radius: 4px;
+}
