@@ -129,7 +129,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
      *
      * @return 客户id:客户名称
      */
-    @GetMapping("/")
+    @GetMapping("/customer")
     @ApiOperation(value = "查询客户经理所属客户", notes = "客户经理基本信息更新", httpMethod = "GET")
     public ModelAndView queryCustomer() {
         ModelAndView modelAndView = new ModelAndView("/customer/customer");
