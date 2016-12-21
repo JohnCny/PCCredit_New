@@ -178,7 +178,7 @@
                     url:url,
                     data:Obj,
                     success: function(){
-
+                        location.href("http://localhost/customerBasic/customer");
                     },
                     error:function () {
 
