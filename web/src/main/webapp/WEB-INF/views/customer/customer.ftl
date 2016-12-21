@@ -12,11 +12,11 @@
         }
         .caption{
             width: 100%;
-            height: 40px;
+            height: 30px;
             background-color: #6F7691;
             font-size: 16px;
             font-weight: bold;
-            line-height: 40px;
+            line-height: 30px;
             color: #ffffff;
             padding-left: 10px;
         }
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <a href="http://localhost/customerBasic/returnWebPage?viewName=customer/new" class="btn btn-success" style="background-color: #6F7691"><i class="icon-add position-left"></i> 添加</a>
+                    <a href="http://localhost/customerBasic/new" class="btn btn-success" style="background-color: #6F7691"><i class="icon-add position-left"></i> 添加</a>
                     <table class="table table-striped table-bordered table-hover  order-column" id="dtCustomers">
                         <thead>
                         <tr>

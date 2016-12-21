@@ -3,12 +3,12 @@
 <#macro style>
     <style>
         input,select{
-            width:80%
+            margin-top: 10px;
+            width:70%
         }
         [v-cloak] {
             display: none
         }
-
         .cus_content{
             border: 1px solid #6F7691;
             padding-bottom: 30px;
@@ -19,15 +19,24 @@
             width: 20%;
             float: left;
             height:80px;
-
             margin-left: 10%;
             margin-top: 50px;
+        }
+        @media screen and (max-width: 1200px){
+            .widclas{
+                width: 30%;
+                float: left;
+                height:80px;
+                margin-left: 10%;
+                margin-top: 50px;
+            }
         }
         .new_customer{
             padding: 50px;
         }
         .create{
             width: 100%;
+            min-width: 700px;
             height: 30px;
             background-color: #6F7691;
             font-size: 16px;
@@ -37,7 +46,7 @@
             color: #ffffff;
         }
         .contain{
-            margin: 50px 0 0 140px;
+            margin: 50px 0 0 8.7%;
         }
     </style>
 </#macro>
@@ -172,16 +181,16 @@
                 Obj[createTime] = currentTime;
                 Obj[modifyTime] = currentTime;
                 console.log(Obj);
-                Obj = {"tUId":4156,"cname":"李明明",sex:41,certificateType:153,certificateNumber:123,tel:1535,homeAddress:15131,marriageStatus:12121,
-                    educationDegree:12313,userId:4135,customerManagerId:135132,createBy:110,createTime:'2016-12-16 10:25:36',modifyBy:1321,modifyTime:'2016-12-16 10:25:36',
-                    customerStatus:1231}
+//                Obj = {"tUId":4156,"cname":"李明明",sex:41,certificateType:153,certificateNumber:123,tel:1535,homeAddress:15131,marriageStatus:12121,
+//                    educationDegree:12313,userId:4135,customerManagerId:135132,createBy:110,createTime:'2016-12-16 10:25:36',modifyBy:1321,modifyTime:'2016-12-16 10:25:36',
+//                    customerStatus:1231}
                 $.ajax({
                     type:"post",
                     url:url,
                     data:Obj,
                     success: function(res){
                         if(res.code == 200){
-//                            location.href="/customerBasic/customer";
+                            location.href="/customerBasic/customer";
                         }
                     },
                     error:function () {
@@ -189,16 +198,7 @@
                     }
                 });
             });
-//            $("#certificateNumber").onblur(function () {
-//                var url = "/customerBasic/idCardExist";
-//                $.ajax({
-//                    url:url,
-//                    type:"get",
-//                    success:function () {
-//
-//                    }
-//                });
-//            });
+
         });
     </script>
 
