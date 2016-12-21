@@ -83,7 +83,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
         ModelAndView modelAndView = new ModelAndView("/customer/customer");
         ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
         returnMapParam.put("managerId", ShiroKit.getUserId());
-        Map queryCustomer = customerBasicService.queryCustomer(returnMapParam);
+        Map<Integer, String> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
         modelAndView.addObject(queryCustomer);
         return modelAndView;
     }

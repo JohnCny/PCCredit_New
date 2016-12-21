@@ -33,7 +33,7 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @param mapParam managerId
      * @return 客户id, 客户名称
      */
-    Map queryCustomer(ReturnMapParam mapParam);
+    Map<Integer, String> queryCustomer(ReturnMapParam mapParam);
 
     /**
      * 更新客户状态

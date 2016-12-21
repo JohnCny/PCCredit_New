@@ -29,6 +29,6 @@
     </select>
 
     <update id="accept" parameterType="Map">
-      UPDATE
+      UPDATE T_CUSTOMER_TRANSFER SET
     </update>
 </mapper>
