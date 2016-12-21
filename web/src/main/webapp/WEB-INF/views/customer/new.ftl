@@ -62,10 +62,16 @@
                     </div>
                 </div>
                 <div class="widclas">
-                    <label for="nationality">国籍</label>
+                    <label for="nationality">客户状态</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input id="nationality" type="text" class="form-control" name="nationality" value="中国" readonly>
+                        <select id="sex" type="text"  name="sex" class="form-control">
+                            <option value="">--请选择--</option>
+                            <option value="1">正常</option>
+                            <option value="0">高风险用户</option>
+                            <option value="0">黑白单用户</option>
+                            <option value="0">禁用客户</option>
+                        </select>
                         <div class="message">${nationalityError}</div>
                     </div>
                 </div>
@@ -142,6 +148,9 @@
                             <option value="2">已婚</option>
                             <option value="3">离婚</option>
                             <option value="4">丧偶</option>
+                            <#list >
+
+                            </#list>
                         </select>
                         <div class="message">${marriageError}</div>
                     </div>
@@ -214,9 +223,8 @@
                 var currentTime = vYear + "-" + vMon + "-" + vDay+" "+ h + ":" + m + ":" + se;
                 Obj[createTime] = currentTime;
                     Obj[modifyTime] = currentTime;
-                    Obj[viewName] = "/customer/customer";
-                console.log(currentTime);
-                console.log(Obj);
+                conso
+                console.log(Obj);le.log(currentTime);
                 $.ajax({
                     type:"post",
                     url:url,
