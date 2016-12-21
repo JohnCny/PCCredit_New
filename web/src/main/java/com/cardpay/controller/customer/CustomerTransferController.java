@@ -2,6 +2,7 @@ package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
+import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -53,7 +54,7 @@ public class CustomerTransferController  {
     }
 
     /**
-     * 更新客户状态
+     * 客户移交确定按钮
      *
      * @param customerIds 客户id(,分割)
      * @param status      需要变更的状态
@@ -110,6 +111,21 @@ public class CustomerTransferController  {
         return new ResultTo().setData(tCustomerTransferVos);
     }
 
+    /**
+     * 查询客户经理所属客户(客户移交)
+     *
+     * @return 客户id:客户名称
+     */
+    @GetMapping("")
+    @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转", httpMethod = "GET")
+    public ModelAndView queryCustomer() {
+        ModelAndView modelAndView = new ModelAndView("customer/custransfer");
+        ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
+        returnMapParam.put("managerId", ShiroKit.getUserId());
+        Map<Integer, String> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
+        modelAndView.addObject("queryCustomer", queryCustomer);
+        return modelAndView;
+    }
 
 
 }
