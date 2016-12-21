@@ -18,4 +18,12 @@ public class SelectModel {
     public void setValue(String value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "SelectModel{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

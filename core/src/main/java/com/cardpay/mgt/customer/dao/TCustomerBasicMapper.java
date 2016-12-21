@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * 客户基本信息Mapper
- * @author yanweichen
+ * @author chenkai
  */
 public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
 
@@ -26,12 +26,26 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @param idCard 身份证号码
      * @return 是否存在(大于0 存在, 等于0 不存在)
      */
-    Integer isIdCardExist(@Param("idCard")int idCard);
+    Integer isIdCardExist(@Param("idCard") int idCard);
 
     /**
      * 查询客户经理所属客户
      * @param mapParam managerId
      * @return 客户id, 客户名称
      */
-    Map queryCustomer(ReturnMapParam mapParam);
+    Map<Integer, String> queryCustomer(ReturnMapParam mapParam);
+
+    /**
+     * 更新客户状态
+     * @param map 状态信息,客户id
+     * @return 数据库变记录
+     */
+    int updateStatus(Map<String, Object> map);
+
+    /**
+     * 查询客户
+     * @param managerId 客户经理Id
+     * @return 客户列表
+     */
+    List<TCustomerBasic> queryCustomerList(@Param("managerId") int managerId);
 }
