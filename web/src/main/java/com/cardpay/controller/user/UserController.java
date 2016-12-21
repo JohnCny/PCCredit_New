@@ -24,7 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * 用户控制层
  *
- * @author rankai .
+ * @author rankai
+ * @create 2016-12-2016/12/21 10:22
  */
 @Controller
 @RequestMapping("/user")

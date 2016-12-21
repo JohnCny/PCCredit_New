@@ -1,11 +1,13 @@
-package com.cardpay.controller.login;
+package com.cardpay.controller.user;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.basic.mail.MailSend;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,6 +19,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +27,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
+
 /**
  * 用户登陆controller
  *
  * @author rankai
+ * @create 2016-12-2016/12/21 10:22
  */
 @Controller
 @RequestMapping("/logon")
@@ -37,6 +43,12 @@ public class LogonController extends BaseController<User, Integer> {
     private static final String SESSION_KEY = "user";
 
     private static final String RETURN_LOGIN = "/home/login";
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private MailSend mailSend;
 
     /**
      * 系统登陆入口
@@ -74,7 +86,13 @@ public class LogonController extends BaseController<User, Integer> {
             return new ResultTo(ResultEnum.DISABLED_ACCOUNT);
         }
         LogTemplate.info(this.getClass(), "登陆成功,账号:", userName);
-        ShiroKit.getSession().setAttribute(SESSION_KEY, ShiroKit.getUser());
+        User user = ShiroKit.getUser();
+        user.setPassword(null);
+        ShiroKit.getSession().setAttribute(SESSION_KEY, user);
+        Date date = new Date();
+        user.setLastLoginTime(date);
+        userService.updateSelectiveByPrimaryKey(user);
+        mailSend.send(user.getEmail(), "您的账号[" + user.getUsername() + "]在[" + date + "]登陆,若非本人操做,请立即修改密码[乾康快贷]");
         return new ResultTo();
     }
 
@@ -100,9 +118,6 @@ public class LogonController extends BaseController<User, Integer> {
      */
     @RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
     public ResultTo unauthorized() {
-
         return new ResultTo(ResultEnum.NO_PERMITTION);
     }
-
-
 }
