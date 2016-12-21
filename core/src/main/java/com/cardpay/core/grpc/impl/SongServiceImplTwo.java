@@ -1,6 +1,11 @@
 package com.cardpay.core.grpc.impl;
 
-import com.cardpay.core.grpc.*;
+import com.cardpay.core.grpc.GRPCService;
+import com.cardpay.core.grpc.Singer;
+import com.cardpay.core.grpc.SingerId;
+import com.cardpay.core.grpc.Song;
+import com.cardpay.core.grpc.SongList;
+import com.cardpay.core.grpc.SongServiceTwoGrpc;
 import io.grpc.stub.StreamObserver;
 import org.springframework.stereotype.Service;
 
