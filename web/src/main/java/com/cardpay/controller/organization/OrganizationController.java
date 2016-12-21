@@ -23,7 +23,7 @@ import java.util.List;
 @Api(value = "/organization", description = "机构Controller类")
 @Controller
 @RequestMapping("/organization")
-public class OrganizationController extends BaseController<TOrganization, Integer> {
+public class OrganizationController  {
     @Autowired
     private TOrganizationService tOrganizationService;
 

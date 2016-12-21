@@ -12,7 +12,7 @@ import java.util.Map;
  * 客户基本信息服务类
  * @author yanweichen
  */
-public interface CustomerBasicService extends BaseService<TCustomerBasic> {
+public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     /**
      * 获取证件类型
      * @return 证件类型列表
@@ -56,6 +56,19 @@ public interface CustomerBasicService extends BaseService<TCustomerBasic> {
      * @param mapParam managerId
      * @return 客户id, 客户名称
      */
-    Map queryCustomer(ReturnMapParam mapParam);
+    Map<Integer, String> queryCustomer(ReturnMapParam mapParam);
 
+    /**
+     * 更新客户状态
+     * @param map 状态信息,客户id
+     * @return 数据库变记录
+     */
+    int updateStatus(Map map);
+
+    /**
+     * 查询客户
+     * @param managerId 客户经理Id
+     * @return 客户列表
+     */
+    List<TCustomerBasic> queryCustomerList(int managerId);
 }

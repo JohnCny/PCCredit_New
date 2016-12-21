@@ -1,7 +1,9 @@
 package com.cardpay.controller.product;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.controller.organization.OrganizationController;
 import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.product.model.*;
@@ -32,6 +34,9 @@ public class ProductController extends BaseController<TProduct, Integer> {
     @Autowired //fastDfs Service
     private FileManager fileManager;
 
+    @Autowired
+    private static LogTemplate logger;
+
     /**
      * 添加产品信息接口
      *
@@ -50,6 +55,7 @@ public class ProductController extends BaseController<TProduct, Integer> {
         tProduct.setCreateTime(new Date());
         tProduct.setModifyTime(new Date());
         tProductService.insertSelective(tProduct);
+        logger.info("新建产品", "产品id:" + tProduct.getId());
         //若添加失败则删除fastDfs上的文件
         if (tProduct.getId() == null) {
             String[] split = upLoadParam.split(",");
@@ -76,15 +82,15 @@ public class ProductController extends BaseController<TProduct, Integer> {
             //拆分文件路径用于删除文件
             String[] split = queryProduct.getProductPictureUrl().split("/");
             String path = null;
-
             for (int i = 1; i < split.length; i++) {
                 path += split[i];
             }
-
             Integer flag = fileManager.deleteFile(split[0], path);
+            //更新图片信息
             if (null != flag) {
                 String upLoadParam = fileManager.upLoad(file);
                 tProduct.setProductPictureUrl(upLoadParam);
+                logger.info("更新产品图片", "产品id:" + tProduct.getId());
             }
         }
         Integer count = tProductService.updateSelectiveByPrimaryKey(tProduct);
