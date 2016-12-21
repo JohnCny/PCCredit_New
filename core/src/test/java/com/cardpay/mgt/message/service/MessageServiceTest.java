@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *消息服务测试类
- * @author wangpeng
+ * @author yanweichen
  */
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({MessageService.class})

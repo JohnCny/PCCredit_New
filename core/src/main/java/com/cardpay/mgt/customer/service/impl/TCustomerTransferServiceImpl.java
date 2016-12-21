@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 客户移交实现类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTransfer> implements TCustomerTransferService {

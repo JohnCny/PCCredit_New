@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 /**
  * 客户所属行业实体类
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_INDUSTRY")
 @ApiModel(value="客户行业信息表")

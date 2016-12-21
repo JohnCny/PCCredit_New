@@ -10,14 +10,32 @@ import java.util.Map;
 
 /**
  * 客户基本信息服务类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     /**
-     * 获取下拉框
-     * @return 下拉框
+     * 获取证件类型
+     * @return 证件类型列表
      */
-    Map<String, SelectModel> getDropDownList();
+    List<SelectModel> getCert();
+
+    /**
+     * 获取文化程度
+     * @return 文化程度列表
+     */
+    List<SelectModel> getEducationDegree();
+
+    /**
+     * 获取婚姻状况
+     * @return 婚姻状况列表
+     */
+    List<SelectModel> getMarriageStatus();
+
+    /**
+     * 获取客户状态
+     * @return 客户状态列表
+     */
+    List<SelectModel> getCustomerStatus();
 
     /**
      * 获取潜在客户列表
@@ -47,4 +65,10 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      */
     int updateStatus(Map map);
 
+    /**
+     * 查询客户
+     * @param managerId 客户经理Id
+     * @return 客户列表
+     */
+    List<TCustomerBasic> queryCustomerList(int managerId);
 }

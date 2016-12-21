@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * 客户移交controller
  *
- * @author wangpeng
+ * @author yanweichen
  */
 @Api(value = "/customerTransfer", description = "客户移交")
 @RestController

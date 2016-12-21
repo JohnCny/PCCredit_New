@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 客户维护controller
  *
- * @author wangpeng
+ * @author yanweichen
  */
 @Api(value = "/customerMaintenance", description = "客户维护")
 @Controller

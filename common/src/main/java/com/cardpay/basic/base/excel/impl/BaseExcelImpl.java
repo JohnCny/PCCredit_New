@@ -16,7 +16,7 @@ import java.util.Date;
 
 /**
  * 导出excel基类实现类
- * @author wangpeng
+ * @author yanweichen
  */
 public class BaseExcelImpl implements BaseExcel{
 

@@ -5,7 +5,7 @@ import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 
 /**
  * 客户维护Mapper
- * @author wangpeng
+ * @author yanweichen
  */
 public interface TCustomerMaintenanceMapper extends BasicMapper<TCustomerMaintenance> {
 }

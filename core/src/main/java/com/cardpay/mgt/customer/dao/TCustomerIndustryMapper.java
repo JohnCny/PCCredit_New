@@ -5,7 +5,7 @@ import com.cardpay.mgt.customer.model.TCustomerIndustry;
 
 /**
  * 客户所属行业Mapper
- * @author wangpeng
+ * @author yanweichen
  */
 public interface TCustomerIndustryMapper extends BasicMapper<TCustomerIndustry> {
 }

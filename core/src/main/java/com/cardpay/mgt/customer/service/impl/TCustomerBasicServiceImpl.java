@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,33 +25,51 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     private TCustomerBasicMapper customerBasicDao;
 
     @Override
-    public Map<String, SelectModel> getDropDownList() {
-        Map<String, SelectModel> map = new HashMap<>();
+    public List<SelectModel> getCert() {
+        List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.CertificateType value : ConstantEnum.CertificateType.values()){
             SelectModel selectModel=new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
-            map.put("certificateType", selectModel);
+            selects.add(selectModel);
         }
+        return selects;
+    }
+
+    @Override
+    public List<SelectModel> getEducationDegree(){
+        List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.EducationDegree value : ConstantEnum.EducationDegree.values()){
             SelectModel selectModel=new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
-            map.put("educationDegree", selectModel);
+            selects.add(selectModel);
         }
+        return selects;
+    }
+
+    @Override
+    public List<SelectModel> getMarriageStatus(){
+        List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.MarriageStatus value : ConstantEnum.MarriageStatus.values()){
             SelectModel selectModel=new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
-            map.put("marriageStatus", selectModel);
+            selects.add(selectModel);
         }
+        return selects;
+    }
+
+    @Override
+    public List<SelectModel> getCustomerStatus(){
+        List<SelectModel> selects = new ArrayList<>();
         for (ConstantEnum.CustomerStatus value : ConstantEnum.CustomerStatus.values()){
             SelectModel selectModel=new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
-            map.put("customerStatus", selectModel);
+            selects.add(selectModel);
         }
-        return map;
+        return selects;
     }
 
     @Override
@@ -74,5 +91,10 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     @Transactional
     public int updateStatus(Map map) {
         return customerBasicDao.updateStatus(map);
+    }
+
+    @Override
+    public List<TCustomerBasic> queryCustomerList(int managerId) {
+        return customerBasicDao.queryCustomerList(managerId);
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,11 +81,11 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     @GetMapping("/customer")
     @ApiOperation(value = "查询客户经理所属客户", notes = "客户经理基本信息更新", httpMethod = "GET")
     public ModelAndView queryCustomer() {
-        ModelAndView modelAndView = new ModelAndView("/customer/customer");
+        ModelAndView modelAndView = new ModelAndView();
         ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
         returnMapParam.put("managerId", ShiroKit.getUserId());
         Map<Integer, String> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
-        modelAndView.addObject(queryCustomer);
+        modelAndView.addObject("queryCustomer", queryCustomer);
         return modelAndView;
     }
 
@@ -110,9 +111,27 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
     public ModelAndView returnNewCustomer(){
         ModelAndView modelAndView = new ModelAndView("/customer/new");
-        Map<String, SelectModel> dropDownList = customerBasicService.getDropDownList();
-        modelAndView.addObject(dropDownList);
+        Map<String,  List<SelectModel>> dropDownList = new HashMap<>();
+        List<SelectModel> cert = customerBasicService.getCert();
+        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
+        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
+        dropDownList.put("cert", cert);
+        dropDownList.put("educationDegree", educationDegree);
+        dropDownList.put("marriageStatus", marriageStatus);
+        modelAndView.addObject("dropDownList", dropDownList);
         return modelAndView;
     }
 
+    /**
+     * 跳转查询客户页面
+     * @return 客户列表
+     */
+    @GetMapping("/success")
+    @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
+    public ModelAndView returnCustomerList(){
+        ModelAndView modelAndView = new ModelAndView("/customer/customer");
+        List<TCustomerBasic> tCustomerBasicList = customerBasicService.queryCustomerList(ShiroKit.getUserId());
+        modelAndView.addObject("tCustomerBasicList", tCustomerBasicList);
+        return modelAndView;
+    }
 }

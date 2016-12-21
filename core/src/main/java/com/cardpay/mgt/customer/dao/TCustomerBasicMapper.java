@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * 客户基本信息Mapper
- * @author wangpeng
+ * @author chenkai
  */
 public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
 
@@ -41,4 +41,11 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @return 数据库变记录
      */
     int updateStatus(Map<String, Object> map);
+
+    /**
+     * 查询客户
+     * @param managerId 客户经理Id
+     * @return 客户列表
+     */
+    List<TCustomerBasic> queryCustomerList(@Param("managerId") int managerId);
 }

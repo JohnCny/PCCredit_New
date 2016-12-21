@@ -6,7 +6,7 @@ import com.cardpay.mgt.param.model.po.TBusinessParam;
 
 /**
  * 业务参数服务类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface ParamService extends BaseService<TBusinessParam> {
     /**

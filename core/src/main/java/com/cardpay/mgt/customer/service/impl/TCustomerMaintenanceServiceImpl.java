@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * 客户维护服务实现类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class TCustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMaintenance> implements TCustomerMaintenanceService {
