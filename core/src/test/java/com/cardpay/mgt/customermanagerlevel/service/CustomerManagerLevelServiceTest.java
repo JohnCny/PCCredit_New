@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 
 /**
  *客户经理级别测试类
- * @author wangpeng
+ * @author yanweichen
  */
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({CustomerManagerLevelService.class})

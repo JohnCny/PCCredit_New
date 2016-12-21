@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 参数controller
- * @author wangpeng
+ * @author yanweichen
  */
 @Api(value = "/businessparam", description = "参数")
 @RestController

@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * 客户基本信息Mapper
- * @author wangpeng
+ * @author yanweichen
  */
 public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
 

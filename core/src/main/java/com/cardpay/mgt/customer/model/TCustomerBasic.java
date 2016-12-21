@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 /**
  * 客户基本信息实体类
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_BASIC")
 @ApiModel(value="客户基本信息管理")

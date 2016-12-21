@@ -1,7 +1,7 @@
 package com.cardpay.mgt.customermaintenance.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.mgt.customer.maintenance.dao.TCustomerMaintenanceMapper;
+import com.cardpay.mgt.customer.dao.TCustomerMaintenanceMapper;
 import com.cardpay.mgt.customer.service.CustomerMaintenanceService;
 import com.cardpay.mgt.customer.service.impl.CustomerMaintenanceServiceImpl;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *客户维护服务测试类
- * @author wangpeng
+ * @author yanweichen
  */
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({CustomerMaintenanceService.class})

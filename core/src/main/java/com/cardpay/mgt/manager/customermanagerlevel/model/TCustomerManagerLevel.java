@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 /**
  * 客户经理级别信息实体类
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_MANAGER_LEVEL")
 @ApiModel(value="客户经理级别信息管理")

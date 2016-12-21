@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 /**
  * 业务参数dao测试
- * @author wangpeng
+ * @author yanweichen
  */
 public class TBusinessParamMapperTest extends TestEnv {
 

@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * 客户维护controller单元测试
- *@author wangpeng
+ *@author yanweichen
  */
 public class CustomerMaintenanceControllerTest extends TestEnv {
     @Test

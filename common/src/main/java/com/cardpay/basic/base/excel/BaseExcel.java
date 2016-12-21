@@ -2,7 +2,7 @@ package com.cardpay.basic.base.excel;
 
 /**
  * 导出excel基类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface BaseExcel {
 

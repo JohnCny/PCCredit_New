@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 /**
  * 客户经理日报信息实体类
- * @author wangpeng
+ * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_MANAGER_DAY")
 @ApiModel(value="客户经理日报数据管理")

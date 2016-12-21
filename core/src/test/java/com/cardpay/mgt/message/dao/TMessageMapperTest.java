@@ -11,7 +11,7 @@ import java.util.Date;
 import static org.junit.Assert.*;
 
 /**
- * @author wangpeng
+ * @author yanweichen
  */
 public class TMessageMapperTest extends TestEnv {
 
