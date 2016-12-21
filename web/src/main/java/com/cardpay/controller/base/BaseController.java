@@ -27,11 +27,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 基础controller 通用接口
+ * 用户控制层
  *
- * @author johnmyiqn
+ * @author rankai
+ * @create 2016-12-2016/12/21 10:22
  */
-@Transactional
 public class BaseController<T, PK> extends BasicController {
 
     /**
@@ -513,6 +513,11 @@ public class BaseController<T, PK> extends BasicController {
 //        return modelAndView;
 //    }
 
+    /**
+     * 分页封装
+     *
+     * @return 分页数据
+     */
     protected DataTablePage<T> dataTablePage() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Class<T> entityClass = null;
@@ -521,8 +526,7 @@ public class BaseController<T, PK> extends BasicController {
             Type[] types = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
             entityClass = (Class<T>) types[0];
         }
-        return new DataTablePage<T>(baseService, request, entityClass);
-
+        return new DataTablePage(baseService, request, entityClass);
     }
 
 //-----------------根据实际情况选择需要的接口------------------------
