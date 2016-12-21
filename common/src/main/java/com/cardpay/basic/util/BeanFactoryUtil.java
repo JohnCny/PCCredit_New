@@ -45,7 +45,7 @@ public class BeanFactoryUtil implements BeanFactoryPostProcessor {
      * @throws BeansException 获取bean失败异常
      */
     public static <T> T getBean(Class<T> classZ) throws BeansException {
-        T result = (T) beanFactory.getBean(classZ);
+        T result = beanFactory.getBean(classZ);
         return result;
     }
 

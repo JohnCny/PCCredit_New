@@ -1,10 +1,10 @@
 package com.cardpay.mgt.customermanagerlevel.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.mgt.customer.customermanagerlevel.dao.TCustomerManagerLevelMapper;
-import com.cardpay.mgt.customer.customermanagerlevel.model.po.TCustomerManagerLevel;
-import com.cardpay.mgt.customer.customermanagerlevel.service.CustomerManagerLevelService;
-import com.cardpay.mgt.customer.customermanagerlevel.service.impl.CustomerManagerLevelServiceImpl;
+import com.cardpay.mgt.manager.customermanagerlevel.dao.TCustomerManagerLevelMapper;
+import com.cardpay.mgt.manager.customermanagerlevel.model.TCustomerManagerLevel;
+import com.cardpay.mgt.manager.customermanagerlevel.service.CustomerManagerLevelService;
+import com.cardpay.mgt.manager.customermanagerlevel.service.impl.CustomerManagerLevelServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

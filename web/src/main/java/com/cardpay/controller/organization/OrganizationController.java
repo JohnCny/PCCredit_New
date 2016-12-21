@@ -9,6 +9,7 @@ import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author chenkai on 2016/11/24.
  */
 @Api(value = "/organization", description = "机构Controller类")
-@RestController
+@Controller
 @RequestMapping("/organization")
 public class OrganizationController extends BaseController<TOrganization, Integer> {
     @Autowired
@@ -36,6 +37,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param level    查询层级信息数量
      * @return 机构层级信息
      */
+    @ResponseBody
     @GetMapping("/movementOrganization")
     @ApiOperation(value = "动态查询机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo changeQueryOrganization(@ApiParam(value = "要查询的顶级层级ID(默认最高级)")
@@ -51,6 +53,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param topId 顶级id
      * @return 所有机构层级信息
      */
+    @ResponseBody
     @GetMapping("/")
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
@@ -64,6 +67,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param id 层级id
      * @return 1成功, 0失败
      */
+    @ResponseBody
     @DeleteMapping("/")
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息", httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id) {
@@ -78,6 +82,7 @@ public class OrganizationController extends BaseController<TOrganization, Intege
      * @param tOrganization 机构信息
      * @return 机构id
      */
+    @ResponseBody
     @PostMapping("/")
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
     public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {

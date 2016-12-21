@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CustomerTransferControllerTest extends TestEnv {
     @Test
     public void getTransferStatus() throws Exception {
-        mockMvc.perform(get("/customertransfer/transferStatusList"))
+        mockMvc.perform(get("/customerTransfer/customerTransfer"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }

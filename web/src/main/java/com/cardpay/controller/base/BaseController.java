@@ -81,7 +81,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性值进行查询，查询条件使用等号", httpMethod = "GET")
-    public ModelAndView select(@ApiParam(value = "实体对象") T record
+    public ModelAndView select(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "view名称") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
@@ -100,7 +100,7 @@ public class BaseController<T, PK> extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/api/select", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性值进行查询，查询条件使用等号", httpMethod = "GET")
-    public ResultTo select(@ApiParam(value = "实体对象") T record) {
+    public ResultTo select(@ApiParam(value = "实体对象") @ModelAttribute T record) {
         ResultTo result = new ResultTo();
         result.setData(baseService.select(record));
         return result;
@@ -183,7 +183,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "/selectOne", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号", httpMethod = "GET")
-    public ModelAndView selectOne(@ApiParam(value = "实体对象") T record
+    public ModelAndView selectOne(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
@@ -202,7 +202,7 @@ public class BaseController<T, PK> extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/api/selectOne", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号", httpMethod = "GET")
-    public ResultTo selectOne(@ApiParam(value = "实体对象") T record) {
+    public ResultTo selectOne(@ApiParam(value = "实体对象") @ModelAttribute T record) {
         ResultTo result = new ResultTo();
         result.setData(baseService.selectOne(record));
         return result;
@@ -218,7 +218,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "/selectCount", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性查询总数，查询条件使用等号", httpMethod = "GET")
-    public ModelAndView selectCount(@ApiParam(value = "实体对象") T record,
+    public ModelAndView selectCount(@ApiParam(value = "实体对象") @ModelAttribute T record,
                                     @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
@@ -237,7 +237,7 @@ public class BaseController<T, PK> extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/api/selectCount", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体中的属性查询总数，查询条件使用等号", httpMethod = "GET")
-    public ResultTo selectCount(@ApiParam(value = "实体对象") T record) {
+    public ResultTo selectCount(@ApiParam(value = "实体对象") @ModelAttribute T record) {
         ResultTo result = new ResultTo();
         result.setData(baseService.selectCount(record));
         return result;
@@ -253,7 +253,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "POST")
-    public ModelAndView insert(@ApiParam(value = "实体对象") T record
+    public ModelAndView insert(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
@@ -262,15 +262,15 @@ public class BaseController<T, PK> extends BasicController {
     }
 
     /**
-     * 根据主键更新实体全部字段，null值会被更新
+     * 保存一个实体
      *
      * @param record 实体对象
      * @return resultTo 包含插入后数据
      */
     @ResponseBody
     @RequestMapping(value = "/api", method = RequestMethod.POST)
-    @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "POST")
-    public ResultTo insert(@ApiParam(value = "实体对象") T record) {
+    @ApiOperation(value = "保存一个实体", httpMethod = "POST")
+    public ResultTo insert(@ApiParam(value = "实体对象") @ModelAttribute T record) {
         System.out.println("测试数据:" + record.toString());
         ResultTo result = new ResultTo();
         baseService.insert(record);
@@ -287,7 +287,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "/insertSelective", method = RequestMethod.POST)
     @ApiOperation(value = "保存一个实体，null的属性不会保存，会使用数据库默认值", httpMethod = "POST")
-    public ModelAndView insertSelective(@ApiParam(value = "实体对象") T record
+    public ModelAndView insertSelective(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
@@ -304,7 +304,7 @@ public class BaseController<T, PK> extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/api/insertSelective", method = RequestMethod.POST)
     @ApiOperation(value = "保存一个实体，null的属性不会保存，会使用数据库默认值", httpMethod = "POST")
-    public ResultTo insertSelective(@ApiParam(value = "实体对象") T record) {
+    public ResultTo insertSelective(@ApiParam(value = "实体对象") @ModelAttribute T record) {
         ResultTo result = new ResultTo();
         baseService.insertSelective(record);
         return result;
@@ -320,7 +320,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "PUT")
-    public ModelAndView updateByPrimaryKey(@ApiParam(value = "实体对象") T record
+    public ModelAndView updateByPrimaryKey(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
@@ -337,7 +337,7 @@ public class BaseController<T, PK> extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/api", method = RequestMethod.PUT)
     @ApiOperation(value = "根据主键更新实体全部字段，null值会被更新", httpMethod = "PUT")
-    public ResultTo updateByPrimaryKey(@ApiParam(value = "实体对象") T record) {
+    public ResultTo updateByPrimaryKey(@ApiParam(value = "实体对象") @ModelAttribute T record) {
         ResultTo result = new ResultTo();
         baseService.updateByPrimaryKey(record);
         return result;
@@ -354,7 +354,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "/updateSelective", method = RequestMethod.PUT)
     @ApiOperation(value = "根据主键更新属性不为null的值", httpMethod = "PUT")
-    public ModelAndView updateSelective(@ApiParam(value = "实体对象") T record
+    public ModelAndView updateSelective(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
@@ -371,7 +371,7 @@ public class BaseController<T, PK> extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/api/updateSelective", method = RequestMethod.PUT)
     @ApiOperation(value = "根据主键更新属性不为null的值", httpMethod = "PUT")
-    public ResultTo updateSelective(@ApiParam(value = "实体对象") T record) {
+    public ResultTo updateSelective(@ApiParam(value = "实体对象") @ModelAttribute T record) {
         ResultTo result = new ResultTo();
         baseService.updateSelectiveByPrimaryKey(record);
         return result;
@@ -387,7 +387,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "/deleteSelective", method = RequestMethod.DELETE)
     @ApiOperation(value = "根据实体属性作为条件进行删除，查询条件使用等号", httpMethod = "DELETE")
-    public ModelAndView delete(@ApiParam(value = "实体对象") T record
+    public ModelAndView delete(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(viewName);
@@ -404,7 +404,7 @@ public class BaseController<T, PK> extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/api/deleteSelective", method = RequestMethod.DELETE)
     @ApiOperation(value = "根据实体属性作为条件进行删除，查询条件使用等号", httpMethod = "DELETE")
-    public ResultTo delete(@ApiParam(value = "实体对象") T record) {
+    public ResultTo delete(@ApiParam(value = "实体对象") @ModelAttribute T record) {
         ResultTo result = new ResultTo();
         baseService.delete(record);
         return result;
@@ -456,7 +456,7 @@ public class BaseController<T, PK> extends BasicController {
 
     @RequestMapping(value = "/pageList", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "GET")
-    public ModelAndView pageList(@ApiParam(value = "实体对象") T record
+    public ModelAndView pageList(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "页数") @RequestParam("page") Integer page
             , @ApiParam(value = "个数") @RequestParam("size") Integer size
             , @ApiParam(value = "view名称") @RequestParam("viewName") String viewName) {
@@ -479,7 +479,7 @@ public class BaseController<T, PK> extends BasicController {
     @ResponseBody
     @RequestMapping(value = "/api/pageList", method = RequestMethod.GET)
     @ApiOperation(value = "根据实体属性和RowBounds进行分页查询", httpMethod = "GET")
-    public ResultTo pageList(@ApiParam(value = "实体对象") T record
+    public ResultTo pageList(@ApiParam(value = "实体对象") @ModelAttribute T record
             , @ApiParam(value = "页数") @RequestParam("page") Integer page
             , @ApiParam(value = "个数") @RequestParam("size") Integer size) {
         ResultTo result = new ResultTo();
