@@ -5,7 +5,7 @@ import com.cardpay.mgt.industry.model.po.TIndustry;
 
 /**
  * 行业信息类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface IndustryService extends BaseService<TIndustry> {
     /**

@@ -69,6 +69,7 @@
             height:18px;
             padding:5px;
             border-radius: 4px;
+            margin-left: 20px;
         }
         .errorMsg{
             color:#e4393c;
@@ -85,6 +86,10 @@
             width:100px;
             border-radius: 4px;
         }
+        .codeImg,.codeDiv{
+            margin: 50px;
+        }
+
     </style>
 </head>
 <body>
@@ -108,17 +113,19 @@
 
         <div class="userNameDiv">
             <div class="errorMsg">错误</div>
-            <label for="">登录名：<input class="userName textInput" name="userName" type="text" placeholder="请输入您的用户名"></label>
+            <div>
+            <label for="" class="label_base">登录名：<input class="userName textInput" name="userName" type="text" placeholder="请输入您的用户名"></label>
+            </div>
             <div><button class="sure_btn base_btn" type="button">确定</button></div>
         </div>
 
         <div class="codeImg ifNone">
-            <label for="">邮箱或手机号：<input class="address textInput" type="text" name="address" placeholder="请输入绑定的邮箱或手机号"></label>
+            <label for="" class="label_base">邮箱或手机号：<input class="address textInput" type="text" name="address" placeholder="请输入绑定的邮箱或手机号"></label>
             <div><button class="get base_btn" type="button" >获取验证码</button></div>
         </div>
 
         <div class="codeDiv ifNone">
-            <label for="">新密码：<input type="text" name="code" class="code textInput" placeholder="请输入新密码"></label>
+            <label for="" class="label_base">新密码：<input type="text" name="code" class="code textInput" placeholder="请输入新密码"></label>
             <div><button class="sure base_btn" type="button" >确定</button></div>
         </div>
 

@@ -2,8 +2,8 @@ package com.cardpay.controller.manager;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.mgt.customer.customermanagerlevel.model.po.TCustomerManagerLevel;
-import com.cardpay.mgt.customer.customermanagerlevel.service.CustomerManagerLevelService;
+import com.cardpay.mgt.manager.customermanagerlevel.model.TCustomerManagerLevel;
+import com.cardpay.mgt.manager.customermanagerlevel.service.CustomerManagerLevelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 客户经理级别controller
  *
- * @author wangpeng
+ * @author yanweichen
  */
 @Api(value = "/customerManagerLevel", description = "客户经理级别")
 @RestController

@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -17,6 +16,16 @@ public class UserControllerTest extends TestEnv {
 
     @Autowired
     private RedisClient redisClient;
+
+    @Test
+    public void pageList() throws Exception {
+
+        String json = "{\"username\":\"rankai\"}";
+        mockMvc.perform(get("/user/jsonList")
+                .param("start", "1").param("length", "10").param("search", json))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
 
     @Test
     public void updatePassword() throws Exception {

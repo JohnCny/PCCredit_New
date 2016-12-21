@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * 行业信息controller
- * @author wangpeng
+ * @author yanweichen
  */
 @Api(value = "/industry", description = "行业信息")
 @RestController

@@ -1,7 +1,7 @@
 package com.cardpay.core.process;
 
-import com.cardpay.JRService.JRServiceServer;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.core.grpc.GRPCServer;
 import com.cardpay.mgt.menu.service.TMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -18,19 +18,22 @@ public class BeanPostProcessor implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private TMenuService tMenuService;
 
+    @Autowired
+    private GRPCServer gRPCServer;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         /*需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。*/
         try {
             //初始化菜单缓存
             tMenuService.updateMenuCache();
+            //启动gRPC服务监听
             new Thread(){
                 @Override
                 public void run() {
-                    final JRServiceServer server = new JRServiceServer();
                     try {
-                        server.start();
-                        server.blockUntilShutdown();
+                        gRPCServer.start();
+                        gRPCServer.blockUntilShutdown();
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {

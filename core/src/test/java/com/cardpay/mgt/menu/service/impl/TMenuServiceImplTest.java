@@ -1,22 +1,31 @@
 package com.cardpay.mgt.menu.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.redis.RedisClient;
+import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
+import com.cardpay.mgt.menu.enums.RoleEnum;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuAuth;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.model.Authority;
+import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.service.UserRoleService;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +33,12 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.when;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 /**
  * Created by yanwe on 2016/11/29.
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
 @PrepareForTest({TMenuServiceImpl.class})
 public class TMenuServiceImplTest {
 
@@ -37,6 +47,12 @@ public class TMenuServiceImplTest {
 
     @Mock
     private AuthorityMapper authorityMapper;
+
+    @Mock
+    private UserRoleService userRoleService;
+
+    @Mock
+    private RedisClient redisClient;
 
     @InjectMocks
     private TMenuServiceImpl tMenuService;
@@ -47,6 +63,7 @@ public class TMenuServiceImplTest {
 
     @Before
     public void setUp(){
+        MockitoAnnotations.initMocks(this);
         //权限数据
         authorities = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -111,12 +128,18 @@ public class TMenuServiceImplTest {
     }
 
     @Test
-    @Ignore
     public void selectMenuListByAll() throws Exception {
-        when(tMenuMapper.selectMenuListByUserAll(2)).thenReturn(tMenuVos);
+        UserRole criteria = new UserRole();
+        UserRole userRole = new UserRole();
+        userRole.setUserId(2);
+        userRole.setRoleId(2);
+        whenNew(UserRole.class).withNoArguments().thenReturn(criteria);
+        when(userRoleService.selectOne(criteria)).thenReturn(userRole);
+        when(redisClient.get(RedisKeyPrefixEnum.ROLE_MENU, RoleEnum.getValueById(userRole.getRoleId()).getRoleName()))
+                .thenReturn(JSON.toJSONString(tMenuVos));
         JSONArray tMenuVoList = tMenuService.selectMenuListByAll(2);
         assertTrue(tMenuVoList.size() > 0);
-        verify(tMenuMapper).selectMenuListByUserAll(2);
+        verify(userRoleService).selectOne(criteria);
     }
 
     @Test

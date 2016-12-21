@@ -5,6 +5,7 @@ import com.cardpay.mgt.product.model.TProductInvestPictureDesc;
 import com.cardpay.mgt.product.service.TProductInvestPictureDescService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author chenkai on 2016/12/12.
  */
-@RestController
+@Controller
 @RequestMapping("/productPicture")
 @Api(value = "/productPicture", description = "产品调查图片")
 public class ProductInvestPictureDescController extends BaseController<TProductInvestPictureDesc, Integer> {

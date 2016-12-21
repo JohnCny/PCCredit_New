@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 消息controller
- * @author wangpeng
+ * @author yanweichen
  */
 @Api(value = "/message", description = "消息")
 @RestController
