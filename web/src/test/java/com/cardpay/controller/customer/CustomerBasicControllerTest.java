@@ -1,43 +1,47 @@
 package com.cardpay.controller.customer;
 
+import com.cardpay.mgt.user.model.User;
 import com.cardpay.util.TestEnv;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 /**
  * 客户基本信息controller单元测试
  *
- * @author wangpeng
+ * @author chenkai
  */
 public class CustomerBasicControllerTest extends TestEnv {
 
+    private User user = User.UserBuilder.get().withId(1).build();
+
     @Test
+    @Ignore
     public void update() throws Exception {
-        mockMvc.perform(put("/customerBasic/")
-                .param("id", "1"))
+        setUser(user);
+        mockMvc.perform(put("/customerBasic")
+                .param("id", "1")
+                .param("cname", "2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
 
     @Test
+    @Ignore
     public void queryCustomer() throws Exception {
-        mockMvc.perform(put("/customerBasic/customer")
-                .param("id", "1"))
+        mockMvc.perform(get("/customerBasic/customer")
+                .param("id", "1")
+                .param("cname", "1"))
+                .andExpect(view().name("/customer/customer"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
-
-    @Test
-    public void changeCustomer() throws Exception {
-        mockMvc.perform(put("/customerBasic/customerStatus")
-                .param("id", "1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
+                .andDo(MockMvcResultHandlers.print()).andReturn();
     }
 
     @Test
@@ -69,8 +73,6 @@ public class CustomerBasicControllerTest extends TestEnv {
     }
 
     @Test
-    @Ignore
-    //TODO： 表不存在
     public void getProspectiveCustomers() throws Exception {
         mockMvc.perform(get("/customerBasic/prospectiveCustomers"))
                 .andExpect(status().isOk())
@@ -78,8 +80,6 @@ public class CustomerBasicControllerTest extends TestEnv {
     }
 
     @Test
-    @Ignore
-    //TODO： 表不存在
     public void validate() throws Exception {
         mockMvc.perform(get("/customerBasic/idCardExist")
                 .param("identityCard", "123456"))
@@ -94,8 +94,12 @@ public class CustomerBasicControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void returnNewCustomer() throws Exception {
-
+        mockMvc.perform(get("/customerBasic/new"))
+                .andExpect(view().name("/customer/new"))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print()).andReturn();
     }
 
 }
