@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,7 +111,13 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
     public ModelAndView returnNewCustomer(){
         ModelAndView modelAndView = new ModelAndView("/customer/new");
-        Map<String, SelectModel> dropDownList = customerBasicService.getDropDownList();
+        Map<String,  List<SelectModel>> dropDownList = new HashMap<>();
+        List<SelectModel> cert = customerBasicService.getCert();
+        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
+        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
+        dropDownList.put("cert", cert);
+        dropDownList.put("educationDegree", educationDegree);
+        dropDownList.put("marriageStatus", marriageStatus);
         modelAndView.addObject("dropDownList", dropDownList);
         return modelAndView;
     }
