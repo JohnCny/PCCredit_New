@@ -40,5 +40,5 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @param map 状态信息,客户id
      * @return 数据库变记录
      */
-    int updateStatus(Map map);
+    int updateStatus(Map<String, Object> map);
 }

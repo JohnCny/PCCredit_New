@@ -98,13 +98,13 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     @PostMapping("")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
-        Integer insert = customerBasicService.insert(tCustomerBasic);
+        Integer insert = customerBasicService.insertSelective(tCustomerBasic);
         return new ResultTo().setData(insert);
     }
 
     /**
      * 跳转新建客户经理页面
-     * @return
+     * @return 客户经理新建页面
      */
     @GetMapping("/new")
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
