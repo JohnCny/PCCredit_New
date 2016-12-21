@@ -1,7 +1,7 @@
 package com.cardpay.mgt.customerbasic.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.mgt.customer.basic.dao.TCustomerBasicMapper;
+import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.service.CustomerBasicService;
 import com.cardpay.mgt.customer.service.impl.CustomerBasicServiceImpl;

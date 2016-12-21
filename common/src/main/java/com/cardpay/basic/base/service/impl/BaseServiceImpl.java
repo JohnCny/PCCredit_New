@@ -2,6 +2,7 @@ package com.cardpay.basic.base.service.impl;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.basic.base.service.BaseService;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,20 +161,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      */
     @Override
     public List<T> pageList(T record, Integer page,Integer size){
-        RowBounds bounds = new RowBounds((page-1)*size,size);
-        return mapper.selectByRowBounds(record,bounds);
-    }
-
-    /**
-     * 根据实体属性和RowBounds进行分页查询，以开始行数start为参数
-     * @param record 实体
-     * @param start 起始行数
-     * @param size 个数
-     * @return 分页实体个数
-     */
-    @Override
-    public List<T> pageStartList(T record, Integer start,Integer size){
-        RowBounds bounds = new RowBounds(start,size);
-        return mapper.selectByRowBounds(record,bounds);
+        PageHelper.startPage(page,size);
+        return mapper.select(record);
     }
 }

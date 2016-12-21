@@ -29,6 +29,12 @@ public class MenuController {
     @Autowired
     private TMenuService tMenuService;
 
+    /**
+     * 根据角色查询菜单层级信息接口
+     *
+     * @param session session
+     * @return 菜单层级信息
+     */
     @ResponseBody
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     @ApiOperation(value = "根据角色查询菜单层级信息接口", notes = "查询菜单层级信息",  httpMethod = "GET")
@@ -41,6 +47,11 @@ public class MenuController {
         return resultTo;
     }
 
+    /**
+     * 查询菜单层级和权限信息接口
+     *
+     * @return 菜单层级和权限信息
+     */
     @ResponseBody
     @RequestMapping(value = "/allAuth",method = RequestMethod.GET)
     @ApiOperation(value = "查询菜单层级和权限信息接口", notes = "查询菜单层级和权限信息",  httpMethod = "GET")
@@ -51,6 +62,12 @@ public class MenuController {
         return resultTo;
     }
 
+    /**
+     * 添加菜单
+     *
+     * @param menu 菜单信息
+     * @return 添加菜单结果
+     */
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.POST)
     @ApiOperation(value = "添加菜单", notes = "添加菜单",  httpMethod = "POST")
@@ -59,6 +76,12 @@ public class MenuController {
         return resultTo;
     }
 
+    /**
+     * 更新菜单
+     *
+     * @param menu 菜单信息
+     * @return 更新结果
+     */
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.PUT)
     @ApiOperation(value = "更新菜单", notes = "更新菜单",  httpMethod = "PUT")
@@ -67,6 +90,12 @@ public class MenuController {
         return resultTo;
     }
 
+    /**
+     * 删除指定菜单下所有子菜单接口
+     *
+     * @param menuId 菜单id
+     * @return 删除结果
+     */
     @ResponseBody
     @RequestMapping(value = "/recursionDelete",method = RequestMethod.DELETE)
     @ApiOperation(value = "删除指定菜单下所有子菜单接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
@@ -74,6 +103,13 @@ public class MenuController {
         return tMenuService.recursionDelete(menuId,ShiroKit.getUserId());
     }
 
+    /**
+     * 记录选中的菜单
+     *
+     * @param session session
+     * @param menuId 菜单Id
+     * @return 记录结果
+     */
     @ResponseBody
     @RequestMapping(value = "/checkedMenu",method = RequestMethod.GET)
     @ApiOperation(value = "记录选中菜单", notes = "记录选中菜单",  httpMethod = "GET")

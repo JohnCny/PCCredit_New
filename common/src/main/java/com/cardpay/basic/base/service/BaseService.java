@@ -100,12 +100,4 @@ public interface BaseService<T>{
      */
     List<T> pageList(T record, Integer page,Integer size);
 
-    /**
-     * 根据实体属性和RowBounds进行分页查询，以开始行数start为参数
-     * @param record 实体
-     * @param start 起始行数
-     * @param size 个数
-     * @return 分页实体个数
-     */
-    List<T> pageStartList(T record, Integer start,Integer size);
 }
