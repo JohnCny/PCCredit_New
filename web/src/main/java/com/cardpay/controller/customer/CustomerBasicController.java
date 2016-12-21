@@ -84,7 +84,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
         ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
         returnMapParam.put("managerId", ShiroKit.getUserId());
         Map<Integer, String> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
-        modelAndView.addObject(queryCustomer);
+        modelAndView.addObject("queryCustomer", queryCustomer);
         return modelAndView;
     }
 
@@ -111,7 +111,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     public ModelAndView returnNewCustomer(){
         ModelAndView modelAndView = new ModelAndView("/customer/new");
         Map<String, SelectModel> dropDownList = customerBasicService.getDropDownList();
-        modelAndView.addObject(dropDownList);
+        modelAndView.addObject("dropDownList", dropDownList);
         return modelAndView;
     }
 
