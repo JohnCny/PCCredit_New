@@ -15,11 +15,16 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
+
+import java.util.List;
 
 /**
  * 用户控制层
@@ -42,6 +47,29 @@ public class UserController extends BaseController<User, Integer> {
 
     @Autowired
     private UserService userService;
+
+
+    /**
+     * 跳转用户列表页面
+     *
+     * @return 用户列表页面
+     */
+    @GetMapping
+    public String userPage() {
+        return "";
+    }
+
+    @GetMapping("jsonList")
+    @ResponseBody
+    public String userList(User user, WebRequest request) {
+        String draw = request.getParameter("draw");
+        String start = request.getParameter("start");
+        String length = request.getParameter("length");
+        List<User> list = userService.pageList(user, start, length);
+
+        return "";
+    }
+
 
     /**
      * 修改密码页面跳转
