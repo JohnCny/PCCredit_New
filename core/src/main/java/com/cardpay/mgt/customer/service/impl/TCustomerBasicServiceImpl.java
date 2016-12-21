@@ -83,7 +83,7 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public Map<Integer, String> queryCustomer(ReturnMapParam mapParam) {
+    public List<TCustomerBasic> queryCustomer(ReturnMapParam mapParam) {
         return customerBasicDao.queryCustomer(mapParam);
     }
 

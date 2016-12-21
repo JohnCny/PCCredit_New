@@ -56,7 +56,7 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      * @param mapParam managerId
      * @return 客户id, 客户名称
      */
-    Map<Integer, String> queryCustomer(ReturnMapParam mapParam);
+    List<TCustomerBasic> queryCustomer(ReturnMapParam mapParam);
 
     /**
      * 更新客户状态

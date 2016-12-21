@@ -31,7 +31,7 @@ import java.util.Map;
 @Api(value = "/customerTransfer", description = "客户移交")
 @RestController
 @RequestMapping("/customerTransfer")
-public class CustomerTransferController  {
+public class CustomerTransferController extends BaseController<TCustomerTransfer, Integer> {
     @Autowired
     private TCustomerTransferService customerTransferService;
 
@@ -91,7 +91,7 @@ public class CustomerTransferController  {
         map.put("customerIds", customerIds);
         map.put("managerId", ShiroKit.getUserId()); //自己转移给自己
         int count = customerBasicService.updateStatus(map);
-        logger.info("客户移交", "客户"+customerIds+"移交给了"+ShiroKit.getUserId());
+        logger.info("客户移交", "客户" + customerIds + "移交给了" + ShiroKit.getUserId());
         modelAndView.addObject(count);
         modelAndView.setViewName(viewName);
         return modelAndView;
@@ -117,12 +117,12 @@ public class CustomerTransferController  {
      * @return 客户id:客户名称
      */
     @GetMapping("")
-    @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转", httpMethod = "GET")
+    @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
     public ModelAndView queryCustomer() {
         ModelAndView modelAndView = new ModelAndView("customer/custransfer");
-        ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
+        ReturnMapParam returnMapParam = new ReturnMapParam("id", "cname");
         returnMapParam.put("managerId", ShiroKit.getUserId());
-        Map<Integer, String> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
+        List<TCustomerBasic> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
         modelAndView.addObject("queryCustomer", queryCustomer);
         return modelAndView;
     }

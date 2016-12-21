@@ -35,10 +35,10 @@ public class TCustomerBasicMapperTest extends TestEnv{
 
     @Test
     public void queryCustomer() throws Exception {
-        ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
+        ReturnMapParam returnMapParam = new ReturnMapParam("id", "cname");
         returnMapParam.put("managerId", 1);
-        Map map = tCustomerBasicMapper.queryCustomer(returnMapParam);
-        assertTrue(map.size()>0);
+        List<TCustomerBasic> tCustomerBasics= tCustomerBasicMapper.queryCustomer(returnMapParam);
+        assertTrue(tCustomerBasics.size()>0);
     }
 
     @Test

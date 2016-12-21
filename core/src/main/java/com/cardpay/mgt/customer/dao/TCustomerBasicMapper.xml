@@ -45,8 +45,8 @@
     </select>
 
     <!--查询客户经理所属客户返回id和name-->
-    <select id="queryCustomer" resultType="Map" parameterType="Map">
-        SELECT customer.id id, customer.cname name FROM T_CUSTOMER_BASIC customer, T_CUSTOMER_MANAGER manager
+    <select id="queryCustomer" resultMap="BaseResultMap" parameterType="Map">
+        SELECT customer.id id, customer.cname cname FROM T_CUSTOMER_BASIC customer, T_CUSTOMER_MANAGER manager
         WHERE manager.id = customer.CUSTOMER_MANAGER_ID
         AND manager.id = #{managerId}
     </select>

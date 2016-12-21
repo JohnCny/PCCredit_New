@@ -60,9 +60,11 @@ public class TCustomerBasicServiceImplTest {
         returnMapParam.put("managerId", 1);
         Map<Integer, String> map = new HashedMap();
         map.put(1, "1");
-        when(customerBasicMapper.queryCustomer(returnMapParam)).thenReturn(map);
-        Map map1 = customerBasicService.queryCustomer(returnMapParam);
-        assertEquals(map, map1);
+        List<TCustomerBasic> list = new ArrayList<>();
+        list.add(new TCustomerBasic());
+        when(customerBasicMapper.queryCustomer(returnMapParam)).thenReturn(list);
+        List<TCustomerBasic> tCustomerBasics = customerBasicService.queryCustomer(returnMapParam);
+        assertEquals(map, tCustomerBasics);
     }
 
     @Test

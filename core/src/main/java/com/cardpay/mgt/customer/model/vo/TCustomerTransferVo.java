@@ -1,5 +1,6 @@
 package com.cardpay.mgt.customer.model.vo;
 
+import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Column;
@@ -7,7 +8,7 @@ import javax.persistence.Column;
 /**
  * @author chenkai 2016/12/20 16:24
  */
-public class TCustomerTransferVo {
+public class TCustomerTransferVo extends GenericEntity<Integer> {
 
     /**
      * 客户id
@@ -78,5 +79,10 @@ public class TCustomerTransferVo {
 
     public void setTransferReason(String transferReason) {
         this.transferReason = transferReason;
+    }
+
+    @Override
+    public Integer getPK() {
+        return null;
     }
 }
