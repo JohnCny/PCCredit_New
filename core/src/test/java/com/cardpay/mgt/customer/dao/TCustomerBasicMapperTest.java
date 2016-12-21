@@ -4,6 +4,7 @@ import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.util.TestEnv;
 import org.apache.commons.collections.map.HashedMap;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,6 +42,7 @@ public class TCustomerBasicMapperTest extends TestEnv{
     }
 
     @Test
+    @Ignore
     public void updateStatus() throws Exception {
         Map<String, Object> map = new HashedMap();
         map.put("status", 1);
@@ -48,6 +50,12 @@ public class TCustomerBasicMapperTest extends TestEnv{
         map.put("managerId", "1");
         int i = tCustomerBasicMapper.updateStatus(map);
         assertTrue(i > 0);
+    }
+
+    @Test
+    public void queryCustomerList() throws Exception {
+        List<TCustomerBasic> tCustomerBasics = tCustomerBasicMapper.queryCustomerList(1);
+        assertTrue(tCustomerBasics.size() > 0);
     }
 
 }

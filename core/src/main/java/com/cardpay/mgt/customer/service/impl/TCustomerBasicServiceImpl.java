@@ -92,4 +92,9 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     public int updateStatus(Map map) {
         return customerBasicDao.updateStatus(map);
     }
+
+    @Override
+    public List<TCustomerBasic> queryCustomerList(int managerId) {
+        return customerBasicDao.queryCustomerList(managerId);
+    }
 }

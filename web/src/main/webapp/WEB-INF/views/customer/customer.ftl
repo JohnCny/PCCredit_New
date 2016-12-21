@@ -62,19 +62,21 @@
                             <th>姓名</th>
                             <th>性别</th>
                             <th>证件号码</th>
-                            <th>出生日期</th>
                             <th>家庭地址</th>
                             <th colspan="2">操作</th>
                         </tr>
                         </thead>
                         <tbody>
-
+                        <#list tCustomerBasicList as customer>
                         <tr>
-
+                            <th>${customer.id}</th>
+                            <th>${customer.cname}</th>
+                            <th>${customer.sex}</th>
+                            <th>${customer.certificateNumber}</th>
+                            <th>${customer.homeAddress}</th>
                         </tr>
-                        <tr>
+                        </#list>
 
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -85,6 +87,12 @@
 </#macro>
 <#macro script>
     <script>
+        $(function () {
+            $.ajax({
+                type:"get",
+                url:"/customerBasic/success"
+            });
+        })
 //        $(function () {
 //            var url = "/customerBasic/api/list";
 //            $.ajax({

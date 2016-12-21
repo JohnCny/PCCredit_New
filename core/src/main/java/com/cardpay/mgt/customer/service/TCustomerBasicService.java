@@ -65,4 +65,10 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      */
     int updateStatus(Map map);
 
+    /**
+     * 查询客户
+     * @param managerId 客户经理Id
+     * @return 客户列表
+     */
+    List<TCustomerBasic> queryCustomerList(int managerId);
 }

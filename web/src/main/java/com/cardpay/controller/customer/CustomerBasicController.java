@@ -81,7 +81,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     @GetMapping("/customer")
     @ApiOperation(value = "查询客户经理所属客户", notes = "客户经理基本信息更新", httpMethod = "GET")
     public ModelAndView queryCustomer() {
-        ModelAndView modelAndView = new ModelAndView("/customer/customer");
+        ModelAndView modelAndView = new ModelAndView();
         ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
         returnMapParam.put("managerId", ShiroKit.getUserId());
         Map<Integer, String> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
@@ -122,4 +122,16 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
         return modelAndView;
     }
 
+    /**
+     * 跳转查询客户页面
+     * @return 客户列表
+     */
+    @GetMapping("/success")
+    @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
+    public ModelAndView returnCustomerList(){
+        ModelAndView modelAndView = new ModelAndView("/customer/customer");
+        List<TCustomerBasic> tCustomerBasicList = customerBasicService.queryCustomerList(ShiroKit.getUserId());
+        modelAndView.addObject("tCustomerBasicList", tCustomerBasicList);
+        return modelAndView;
+    }
 }
