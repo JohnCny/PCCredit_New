@@ -10,6 +10,7 @@ import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import oracle.net.aso.i;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -116,7 +117,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
      * @return 数据库变更数量
      */
     @ResponseBody
-    @PutMapping("/")
+    @PutMapping("")
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
@@ -126,19 +127,42 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     /**
      * 查询客户经理所属客户
      *
-     * @param viewName 跳转地址
      * @return 客户id:客户名称
      */
-    @GetMapping("/customer")
+    @GetMapping("/")
     @ApiOperation(value = "查询客户经理所属客户", notes = "客户经理基本信息更新", httpMethod = "GET")
-    public ModelAndView queryCustomer(@ApiParam(value = "跳转试图地址", required = true) String viewName) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView queryCustomer() {
+        ModelAndView modelAndView = new ModelAndView("/customer/customer");
         ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
         returnMapParam.put("managerId", ShiroKit.getUserId());
         Map queryCustomer = customerBasicService.queryCustomer(returnMapParam);
         modelAndView.addObject(queryCustomer);
-        modelAndView.setViewName(viewName);
         return modelAndView;
+    }
+
+    /**
+     * 新建客戶经理
+     *
+     * @param tCustomerBasic 客户基本信息
+     * @return 数据库变更记录
+     */
+    @PostMapping("")
+    @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
+    public String newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
+        ModelAndView modelAndView = new ModelAndView("/customer/customer");
+        Integer insert = customerBasicService.insert(tCustomerBasic);
+        modelAndView.addObject(insert);
+        return "redirect:/customer";
+    }
+
+    /**
+     * 跳转新建客户经理页面
+     * @return
+     */
+    @GetMapping("/new")
+    @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
+    public ModelAndView returnNewCustomer(){
+        return new ModelAndView("/customer/new");
     }
 
 }
