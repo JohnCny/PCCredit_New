@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 消息服务实现类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements MessageService{

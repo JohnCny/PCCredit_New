@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 客户移交类
- * @author wangpeng
+ * @author yanweichen
  */
 public interface CustomerTransferService extends BaseService<TCustomerTransfer>{
     /**

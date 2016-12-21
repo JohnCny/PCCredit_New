@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 客户经理管理实现类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class CustomerManagerServiceImpl extends BaseServiceImpl<TCustomerManager> implements CustomerManagerService {

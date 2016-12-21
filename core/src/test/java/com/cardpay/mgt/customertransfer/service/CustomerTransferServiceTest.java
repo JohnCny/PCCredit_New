@@ -1,7 +1,7 @@
 package com.cardpay.mgt.customertransfer.service;
 
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.mgt.customer.transfer.dao.TCustomerTransferMapper;
+import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
 import com.cardpay.mgt.customer.service.CustomerTransferService;
 import com.cardpay.mgt.customer.service.impl.CustomerTransferServiceImpl;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *客户移交测试类
- * @author wangpeng
+ * @author yanweichen
  */
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({CustomerTransferService.class})

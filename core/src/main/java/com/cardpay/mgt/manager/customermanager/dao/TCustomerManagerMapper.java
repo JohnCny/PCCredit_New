@@ -5,7 +5,7 @@ import com.cardpay.mgt.manager.customermanager.model.TCustomerManager;
 
 /**
  * 客户经理信息Mapper
- * @author wangpeng
+ * @author yanweichen
  */
 public interface TCustomerManagerMapper extends BasicMapper<TCustomerManager> {
 }

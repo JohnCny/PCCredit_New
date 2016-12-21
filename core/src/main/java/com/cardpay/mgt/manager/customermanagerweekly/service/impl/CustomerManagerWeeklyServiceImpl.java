@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 客户经理周报类
- * @author wangpeng
+ * @author yanweichen
  */
 @Service
 public class CustomerManagerWeeklyServiceImpl extends BaseServiceImpl<TCustomerManagerWeekly> implements CustomerManagerWeeklyService{
