@@ -96,10 +96,6 @@ public class CustomerBasicControllerTest extends TestEnv {
     @Test
     @Ignore
     public void returnNewCustomer() throws Exception {
-        mockMvc.perform(get("/customerBasic/new"))
-                .andExpect(view().name("/customer/new"))
-                .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print()).andReturn();
     }
 
 }
