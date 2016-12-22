@@ -6,6 +6,7 @@ import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
@@ -141,14 +142,14 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @GetMapping("/condition")
     @SystemControllerLog(description = "按条件查询客户经理信息")
     @ApiOperation(value = "按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
-    public ResultTo queryCondition(@ApiParam("客户名称") @RequestParam String name
-            , @ApiParam("客户证件号码") @RequestParam String IdNumber) {
-        TCustomerBasic tCustomerBasic = new TCustomerBasic();
-        tCustomerBasic.setCname(name);
-        tCustomerBasic.setCertificateNumber(IdNumber);
-        tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
-        List<TCustomerBasic> tCustomerBasics = customerBasicService.queryCustomerByCondition(tCustomerBasic);
-        return new ResultTo().setData(tCustomerBasics);
+    public ResultTo queryCondition(@ApiParam("客户名称") @RequestParam(defaultValue = "") String name
+            , @ApiParam("客户证件号码") @RequestParam(defaultValue = "") String IdNumber) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("cname", name);
+        map.put("certificateNumber", IdNumber);
+        map.put("customerManagerId", ShiroKit.getUserId());
+        DataTablePage queryCustomerByCondition = dataTablePage("queryCustomerByCondition", map);
+        return new ResultTo().setData(queryCustomerByCondition);
     }
 
     /**

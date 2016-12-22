@@ -69,8 +69,8 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
 
     /**
      * 按条件查询客户信息
-     * @param tCustomerBasic 客户基本信息
+     * @param map 查询参数
      * @return 客户列表
      */
-    List<TCustomerBasic> queryCustomerByCondition(TCustomerBasic tCustomerBasic);
+    List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map);
 }

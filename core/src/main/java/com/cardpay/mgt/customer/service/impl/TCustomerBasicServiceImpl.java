@@ -98,7 +98,7 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public List<TCustomerBasic> queryCustomerByCondition(TCustomerBasic tCustomerBasic) {
-        return customerBasicDao.queryCustomerByCondition(tCustomerBasic);
+    public List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map) {
+        return customerBasicDao.queryCustomerByCondition(map);
     }
 }

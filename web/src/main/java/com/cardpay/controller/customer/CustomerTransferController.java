@@ -68,7 +68,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      */
     @ResponseBody
     @SystemControllerLog
-    @PutMapping("/customerTransfer")
+    @PutMapping()
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "状态(默认为正常)") @RequestParam(defaultValue = "0") int status
@@ -76,12 +76,12 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         List<Integer> ids = new ArrayList<>();
         //添加客户移交记录
         String[] split = customerIds.split(",");
-        for (String id : split) {
-            int customerId = Integer.parseInt(id);
-            TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
+        for (String idStr : split) {
+            int id = Integer.parseInt(idStr);
+            TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(id);
             TCustomerTransfer tCustomerTransfer = new TCustomerTransfer();
             tCustomerTransfer.setTransferTime(new Date());
-            tCustomerTransfer.setId(customerId);
+            tCustomerTransfer.setId(id);
             tCustomerTransfer.setCustomerCname(tCustomerBasic.getCname());
             tCustomerTransfer.setCustomerCertificateNumber(tCustomerBasic.getCertificateNumber());
             tCustomerTransfer.setOriginCustomerManager(tCustomerBasic.getCustomerManagerId());
@@ -89,7 +89,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
             tCustomerTransfer.setTransferTime(new Date());
             customerTransferService.insert(tCustomerTransfer);
-            ids.add(customerId);
+            ids.add(id);
         }
         Map<String, Object> map = new HashedMap();
         map.put("status", status);
