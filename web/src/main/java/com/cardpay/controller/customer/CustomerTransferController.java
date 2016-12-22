@@ -3,6 +3,7 @@ package com.cardpay.controller.customer;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
+import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
@@ -85,7 +86,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             tCustomerTransfer.setCustomerCertificateNumber(tCustomerBasic.getCertificateNumber());
             tCustomerTransfer.setOriginCustomerManager(tCustomerBasic.getCustomerManagerId());
             tCustomerTransfer.setTransferReason(reason);
-            tCustomerTransfer.setTransferStatus(0);
+            tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
             tCustomerTransfer.setTransferTime(new Date());
             customerTransferService.insert(tCustomerTransfer);
             ids.add(customerId);
@@ -106,7 +107,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 客户接收列表
      */
     @ResponseBody
-    @SystemControllerLog
+    @SystemControllerLog(description = "查询客户接收列表")
     @GetMapping("/queryTransfer")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
     public ResultTo queryTransfer(@ApiParam("客户移交状态(默认为未接受)") @RequestParam(defaultValue = "0") int status) {
@@ -120,7 +121,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 客户id:客户名称
      */
     @GetMapping("")
-    @SystemControllerLog
+    @SystemControllerLog(description = "查询客户经理所属客户(客户移交)")
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
     public ModelAndView queryCustomer() {
         ModelAndView modelAndView = new ModelAndView("customer/custransfer");
@@ -128,4 +129,33 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         modelAndView.addObject("queryCustomer", tCustomerVos);
         return modelAndView;
     }
+
+    /**
+     * 客户接受/拒绝
+     * @param customerIds
+     * @return
+     */
+    @PutMapping("/accept")
+    @SystemControllerLog
+    @ResponseBody
+    @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
+    public ResultTo CustomerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
+                                    @ApiParam("接收:1, 拒绝2") @RequestParam Integer flag) {
+        List<Integer> idList = new ArrayList<>();
+        String[] split = customerIds.split(",");
+        for (String id : split) {
+            int customerId = Integer.parseInt(id);
+            idList.add(customerId);
+        }
+        Map<String, Object> map = new HashedMap();
+        if (null != flag && ("1").equals(flag)){
+            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
+            map.put("nowCustomerManager", ShiroKit.getUserId());
+        }
+        map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
+        map.put("customerIds", idList);
+        int count = customerTransferService.accept(map);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
+
 }

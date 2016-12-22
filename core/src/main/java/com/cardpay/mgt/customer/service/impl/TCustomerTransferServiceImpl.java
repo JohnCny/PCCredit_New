@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户移交实现类
@@ -39,5 +40,10 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     @Override
     public List<TCustomerVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId) {
         return tCustomerIndustryDao.queryTransfer(status, managerId);
+    }
+
+    @Override
+    public int accept(Map<String, Object> map) {
+        return tCustomerIndustryDao.accept(map);
     }
 }

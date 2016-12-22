@@ -154,15 +154,15 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     /**
      * 客户更新页面跳转
      *
-     * @param id
-     * @return
+     * @param customerId 客户id
+     * @return 更新页面
      */
     @GetMapping("/{id}")
     @SystemControllerLog(description = "客户更新页面跳转")
     @ApiOperation(value = "按id查询客户基本信息", notes = "查询客户经理信息 返回参数名称:tCustomerBasic", httpMethod = "GET")
-    public ModelAndView returnUpdate(@PathVariable("id") int id) {
+    public ModelAndView returnUpdate(@ApiParam(value = "客户id", required = true)@PathVariable("id") int customerId) {
         ModelAndView modelAndView = new ModelAndView("/customer/update");
-        TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(id);
+        TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
         modelAndView.addObject("tCustomerBasic", tCustomerBasic);
         return modelAndView;
     }
