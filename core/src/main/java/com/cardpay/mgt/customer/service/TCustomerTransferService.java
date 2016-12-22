@@ -28,4 +28,13 @@ public interface TCustomerTransferService extends BaseService<TCustomerTransfer>
      * @return 客户接受列表
      */
     List<TCustomerVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId);
+
+    /**
+     * 客户接收
+     *
+     * @param customerIds 客户id
+     * @param flag 标记 ("接收:1, 拒绝2")
+     * @return 数据库变条数
+     */
+    int accept(String customerIds, Integer flag);
 }

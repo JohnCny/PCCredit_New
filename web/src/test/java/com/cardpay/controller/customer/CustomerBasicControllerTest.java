@@ -20,7 +20,6 @@ public class CustomerBasicControllerTest extends TestEnv {
     private User user = User.UserBuilder.get().withId(1).build();
 
     @Test
-    @Ignore
     public void deleteCustomer() throws Exception {
         setUser(user);
         mockMvc.perform(delete("/customerBasic/1")

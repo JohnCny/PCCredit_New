@@ -87,8 +87,8 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public  List<TCustomerTransferVo> queryCustomer(int managerId) {
-        return customerBasicDao.queryCustomer(managerId);
+    public  List<TCustomerTransferVo> queryCustomer(Map<String, Object> map) {
+        return customerBasicDao.queryCustomer(map);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public List<TCustomerBasic> queryCustomerByCondition(TCustomerBasic tCustomerBasic) {
-        return customerBasicDao.queryCustomerByCondition(tCustomerBasic);
+    public List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map) {
+        return customerBasicDao.queryCustomerByCondition(map);
     }
 }

@@ -1,7 +1,11 @@
 package com.cardpay.mgt.customer.service.impl;
 
+import com.cardpay.basic.common.constant.ConstantEnum;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
+import org.apache.commons.collections.map.HashedMap;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,7 +15,9 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -42,4 +48,21 @@ public class TCustomerTransferServiceImplTest {
         assertTrue(tCustomerTransferVos1.size() > 0);
     }
 
+    @Test
+    @Ignore
+    public void accept() throws Exception {
+        String customerIds = "1";
+        List<Integer> idList = new ArrayList<>();
+        String[] split = customerIds.split(",");
+        for (String id : split) {
+            int customerId = Integer.parseInt(id);
+            idList.add(customerId);
+        }
+        Map<String, Object> map = new HashedMap();
+        map.put("customerIds", idList);
+        map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
+        when(tCustomerTransferDao.accept(map)).thenReturn(1);
+        int accept = tCustomerTransferService.accept(customerIds, 1);
+        assertEquals(accept, 1);
+    }
 }

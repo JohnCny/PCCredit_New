@@ -55,10 +55,10 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
 
     /**
      * 查询客户经理所属客户
-     * @param managerId managerId
+     * @param map managerId
      * @return 客户id, 客户名称
      */
-    List<TCustomerTransferVo> queryCustomer(@Param("managerId") int managerId);
+    List<TCustomerTransferVo> queryCustomer(Map<String, Object> map);
 
     /**
      * 更新客户状态
@@ -69,8 +69,8 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
 
     /**
      * 按条件查询客户信息
-     * @param tCustomerBasic 客户基本信息
+     * @param map 查询参数
      * @return 客户列表
      */
-    List<TCustomerBasic> queryCustomerByCondition(TCustomerBasic tCustomerBasic);
+    List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map);
 }
