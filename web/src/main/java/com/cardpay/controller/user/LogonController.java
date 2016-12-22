@@ -129,7 +129,12 @@ public class LogonController extends BaseController<User> {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
-    public String logout() {
+    public String logout(HttpServletRequest request) {
+        User user = ShiroKit.getUser();
+        LoginLog loginLog = LoginLog.LoginLogBuilder.get().withLoginAccount(user.getUsername())
+                .withLoginOperation("退出").withLoginTime(new Date()).withLoginIp(RequestUtil.getRemoteHost(request))
+                .withLoginResult("退出成功").build();
+        loginLogService.insertSelective(loginLog);
         ShiroKit.getSession().removeAttribute(SESSION_KEY);
         ShiroKit.getSubject().logout();
         return RETURN_LOGIN;
