@@ -53,15 +53,18 @@
 <#macro css>
 
 </#macro>
+<#macro breadcrumb>
+
+</#macro>
 <#macro content>
 
-        <div class="row new_customer">
-            <div class=" cus_content">
-                <div class="create">
-                    新建
-                </div>
-                <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                <form action="">
+    <div class="row new_customer">
+        <div class=" cus_content">
+            <div class="create">
+                新建
+            </div>
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <form action="">
                 <div class="widclas">
                     <label for="cname">姓名</label>
                     <div class="input-icon right">
@@ -100,14 +103,14 @@
                         <div class="message" id="idMessage"></div>
                     </div>
                 </div>
-                    <div class="widclas">
-                        <label for="tel">手机号码</label>
-                        <div class="input-icon right">
-                            <i class="fa"></i>
-                            <input data-error="${telError}" id="tel" type="text" class="form-control" name="" value="${customerBasicInfo.tel}" placeholder="请输入正确的手机号码">
-                            <div class="message">${telError}</div>
-                        </div>
+                <div class="widclas">
+                    <label for="tel">手机号码</label>
+                    <div class="input-icon right">
+                        <i class="fa"></i>
+                        <input data-error="${telError}" id="tel" type="text" class="form-control" name="" value="${customerBasicInfo.tel}" placeholder="请输入正确的手机号码">
+                        <div class="message">${telError}</div>
                     </div>
+                </div>
                 <div class="widclas">
                     <label for="homeAddress">家庭住址</label>
                     <div class="input-icon right">
@@ -116,44 +119,44 @@
                         <div class="message">${homeAddressError}</div>
                     </div>
                 </div>
-                    <div class="widclas">
-                        <label for="marriageStatus">婚姻状况</label>
-                        <div class="input-icon right">
-                            <i class="fa"></i>
-                            <select id="marriageStatus" type="text"  name="" class="form-control" >
-                                <option value="">--请选择--</option>
-                                <option value="1">未婚</option>
-                                <option value="2">已婚</option>
-                                <option value="3">离婚</option>
-                                <option value="4">丧偶</option>
-                            </select>
-                            <div class="message">${marriageError}</div>
-                        </div>
+                <div class="widclas">
+                    <label for="marriageStatus">婚姻状况</label>
+                    <div class="input-icon right">
+                        <i class="fa"></i>
+                        <select id="marriageStatus" type="text"  name="" class="form-control" >
+                            <option value="">--请选择--</option>
+                            <option value="1">未婚</option>
+                            <option value="2">已婚</option>
+                            <option value="3">离婚</option>
+                            <option value="4">丧偶</option>
+                        </select>
+                        <div class="message">${marriageError}</div>
                     </div>
-                    <div class="widclas">
-                        <label for="educationDegree">教育情况</label>
-                        <div class="input-icon right">
-                            <i class="fa"></i>
-                            <select id="educationDegree" type="text" class="form-control" name="" >
-                                <option value="">--请选择--</option>
-                                <option value="1">本科以上</option>
-                                <option value="2">本科</option>
-                                <option value="3">大专</option>
-                                <option value="4">高中/中专</option>
-                                <option value="5">初中及以下</option>
-                            </select>
-                            <div class="message">${eductionError}</div>
-                        </div>
+                </div>
+                <div class="widclas">
+                    <label for="educationDegree">教育情况</label>
+                    <div class="input-icon right">
+                        <i class="fa"></i>
+                        <select id="educationDegree" type="text" class="form-control" name="" >
+                            <option value="">--请选择--</option>
+                            <option value="1">本科以上</option>
+                            <option value="2">本科</option>
+                            <option value="3">大专</option>
+                            <option value="4">高中/中专</option>
+                            <option value="5">初中及以下</option>
+                        </select>
+                        <div class="message">${eductionError}</div>
                     </div>
+                </div>
 
 
                 <div class="col-xs-12 contain">
                     <button id="btn_submit" class="btn btn-success" style="background-color: #6F7691;border-radius: 0px;border: 1px solid #6F7691；">确定</button>
                     <a href="/customer/customer" type="reset" class="btn btn-default"style="border-radius: 0px;border: 1px solid #2bb8c4；">取消</a>
                 </div>
-                </form>
-            </div>
+            </form>
         </div>
+    </div>
 
 
 </#macro>
@@ -167,7 +170,7 @@
 
             $("#btn_submit").click(function (e) {
                 e.preventDefault();
-             for(var i = 0; i < arr.length; i++){
+                for(var i = 0; i < arr.length; i++){
                     Obj[arr[i]]=$("#"+arr[i]).val();
                 }
                 var d = new Date();
