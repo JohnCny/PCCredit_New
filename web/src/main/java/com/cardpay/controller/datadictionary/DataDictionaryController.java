@@ -35,7 +35,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
     @ResponseBody
     @RequestMapping(value = "/pageList",method = RequestMethod.GET)
     @ApiOperation(value = "获取数据字典分页数据", notes = "获取数据字典分页数据",  httpMethod = "GET")
-    public DataTablePage<TDataDictionary> pageList(){
+    public DataTablePage pageList(){
         return dataTablePage();
     }
 

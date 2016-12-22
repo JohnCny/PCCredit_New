@@ -515,16 +515,6 @@ public class BaseController<T> extends BasicController {
 //        return modelAndView;
 //    }
 
-    /**
-     * 分页封装
-     *
-     * @return 分页数据
-     */
-    protected DataTablePage dataTablePage() {
-        Example example = null;
-        return dataTablePage(example);
-    }
-
 
     protected DataTablePage dataTablePage(String methodName, Map<String, Object> map) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -539,37 +529,28 @@ public class BaseController<T> extends BasicController {
     /**
      * 分页封装
      *
+     * @return 分页数据
+     */
+    protected DataTablePage dataTablePage() {
+        Example example = null;
+        return dataTablePage(example);
+    }
+
+    /**
+     * 分页封装
+     *
      * @param example 自定义方法名
      * @return 分页数据
      */
     protected DataTablePage dataTablePage(Example example) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-
-        return new DataTablePage(baseService, request, getGenericityClass(), example);
-    }
-
-    /**
-     * 获得当前泛型类型
-     *
-     * @return 当前泛型类型
-     */
-    protected Class<T> getGenericityClass(){
         Class<T> entityClass = null;
         Type genericSuperclass = getClass().getGenericSuperclass();
         if (genericSuperclass instanceof ParameterizedType) {
             Type[] types = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
-            return entityClass = (Class<T>) types[0];
+            entityClass = (Class<T>) types[0];
         }
-        return null;
-    }
-
-    /**
-     * 获取Example
-     *
-     * @return Example
-     */
-    protected Example getExample(){
-        return new Example(getClass());
+        return new DataTablePage(baseService, request, entityClass, example);
     }
 
 //-----------------根据实际情况选择需要的接口------------------------
