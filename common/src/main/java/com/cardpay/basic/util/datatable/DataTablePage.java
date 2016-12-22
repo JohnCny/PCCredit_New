@@ -20,15 +20,15 @@ import java.util.Map;
  * @author rankai
  *         Timecreate 2016-12-2016/12/21 11:06
  */
-public class DataTablePage<T> {
+public class DataTablePage {
 
     private int start = 0;// 起止位置'0'
     private int length = 10; // 数据长度'10'
 
     private long recordsTotal; // 数据总记录数
-    private List<T> data;
+    private List<Object> data;
 
-    public DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request, Map<String, Object> map) {
+    public DataTablePage(String methodName, BaseService baseService, HttpServletRequest request, Map<String, Object> map) {
         try {
             DataTablePage(methodName, baseService, request, null, null, map);
         } catch (NoSuchMethodException e) {
@@ -42,7 +42,7 @@ public class DataTablePage<T> {
         }
     }
 
-    public DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request) {
+    public DataTablePage(String methodName, BaseService baseService, HttpServletRequest request) {
         try {
             DataTablePage(methodName, baseService, request, null, null, null);
         } catch (NoSuchMethodException e) {
@@ -56,7 +56,7 @@ public class DataTablePage<T> {
         }
     }
 
-    public DataTablePage(BaseService<T> baseService, HttpServletRequest request, Class<T> clazz, Example example) {
+    public DataTablePage(BaseService baseService, HttpServletRequest request, Class clazz, Example example) {
         try {
             DataTablePage(null, baseService, request, clazz, example, null);
         } catch (NoSuchMethodException e) {
@@ -70,7 +70,7 @@ public class DataTablePage<T> {
         }
     }
 
-    private void DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request, Class<T> clazz, Example example, Map<String, Object> parameterMap) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    private void DataTablePage(String methodName, BaseService baseService, HttpServletRequest request, Class clazz, Example example, Map<String, Object> parameterMap) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         String start = request.getParameter("start");
         String length = request.getParameter("length");
         String search = request.getParameter("search");
@@ -91,7 +91,7 @@ public class DataTablePage<T> {
             method = baseService.getClass().getDeclaredMethod(methodName, Map.class);
             PageHelper.startPage(this.start, this.length);
             PageHelper.orderBy(finalOrder);
-            data = (List<T>) method.invoke(baseService, map);
+            data = (List<Object>) method.invoke(baseService, map);
         } else {
             if (example == null) {
                 example = new Example(clazz);
@@ -103,7 +103,7 @@ public class DataTablePage<T> {
                     }
                 }
             }
-            data = baseService.pageList(example, this.start, this.length);
+            data = (List<Object>) baseService.pageList(example, this.start, this.length);
         }
         PageInfo pageInfo = new PageInfo(this.data);
         setRecordsTotal(pageInfo.getTotal());
@@ -125,11 +125,11 @@ public class DataTablePage<T> {
         this.length = length;
     }
 
-    public List<T> getData() {
+    public List<Object> getData() {
         return data;
     }
 
-    public void setData(List<T> data) {
+    public void setData(List<Object> data) {
         this.data = data;
     }
 
