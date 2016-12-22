@@ -7,7 +7,7 @@ package com.cardpay.mgt.menu.enums;
 public enum RoleEnum {
 
     ADMIN("admin", 2),
-    MANAGER("manager", 3);
+    MANAGER("basic", 3);
 
     RoleEnum(String roleName, Integer roleId) {
         this.roleName = roleName;

@@ -44,7 +44,7 @@ import java.util.Date;
 @Controller
 @RequestMapping("/logon")
 @Api(value = "/logon", description = "用认证(登陆)")
-public class LogonController extends BaseController<User, Integer> {
+public class LogonController extends BaseController<User> {
 
     private static final String SESSION_KEY = "user";
 

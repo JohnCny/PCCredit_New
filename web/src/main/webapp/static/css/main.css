@@ -61,7 +61,7 @@ label{display:inline-block;}
 /*部门统计*/
 .report{float:left;background:#fff;border-radius:5px;width:98%;margin-bottom:20px;}
 .report h5{border-bottom: 1px dotted #c0c0c0;border-bottom: 1px dotted rgba(0, 0, 0, 0.2);padding: 15px;text-transform: uppercase;color: #535351;font-size: 16px;font-weight: bold;}
-.report table{width:95%;margin-left:2.5%;margin-top:20px;border-collapse: collapse;margin-bottom:20px;}
+.report table{width:95%;margin-top:20px;border-collapse: collapse;margin-bottom:20px;}
 .report table tr:nth-child(2n){background:#f7f7f7;}
 .report table tr th{border-bottom: 2px solid #ddd;color: #7a7676;font-size:14px;line-height:35px;}
 .report table tr td{border-bottom: 1px solid #ddd;color: #7a7676;text-align:center;font-size:14px;line-height:35px;}
@@ -165,7 +165,7 @@ input[type=password]{width:246px;}
 .button .back{background-color: #fff;border-color: #cccccc;color:#333359;}
 .button .back:hover{background-color: #ebebeb;}
 /*搜索*/
-.search{width:95%;margin-left:2.5%;background:#d9edf7;margin-top:20px;margin-bottom:-10px;color:#767676}
+.search{width:95%;margin-left:2.5%;background:#d9edf7;margin-top:20px;margin-bottom:-10px;color:#767676;line-height: 25px;height:50px;}
 .search span{display:inline-block;padding:0 20px;}
 
 /*统计报表*/
@@ -236,3 +236,38 @@ label.checked { background:url("../img/icon-ok.png") no-repeat 0px 0px;}
 .red{color:#a94442}
 h3.success{color:#a0d468;margin:40px 0 80px 0;text-align:center;}
 h3.success img{margin-top:-5px;}
+[v-cloak] {
+	display: none
+}
+.selected {
+	background-color: #DFF0D8;
+}
+
+#example_length,#topPlugin {
+	float: left;
+	height:45px;
+	line-height: 45px;
+}
+
+.dataTables_info{
+	float: left;
+	margin-top: 5px;
+}
+
+#topPlugin a,#topPlugin button {
+	margin-left: 10px;
+}
+
+div.dataTables_paginate {
+	float: right;
+	padding-top: 8px;
+	margin: 0;
+	white-space: nowrap;
+	text-align: right;
+	margin-top: 5px;
+}
+
+.table th, .table td {
+	text-align: center;
+	height:25px;
+}

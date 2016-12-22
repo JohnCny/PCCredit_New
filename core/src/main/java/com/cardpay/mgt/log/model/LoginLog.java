@@ -12,7 +12,7 @@ public class LoginLog {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select LOGIN_LOG_SEQ.nextval from dual")
-    @ApiModelProperty(value = "null", required = true)
+    @ApiModelProperty(value = "主键", required = true)
     private Integer id;
 
     /**
@@ -58,7 +58,7 @@ public class LoginLog {
     }
 
     /**
-     * @param id
+     * @param id 主键
      */
     public void setId(Integer id) {
         this.id = id;

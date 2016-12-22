@@ -2,7 +2,6 @@ package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
@@ -10,12 +9,10 @@ import com.cardpay.mgt.customer.model.vo.TCustomerMaintenanceVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
-import com.cardpay.mgt.manager.customermanager.model.TCustomerManager;
-import com.cardpay.mgt.manager.customermanager.service.CustomerManagerService;
+import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +22,12 @@ import java.util.List;
 /**
  * 客户维护controller
  *
- * @author yanweichen
+ * @author chenkai
  */
 @Api(value = "/customerMaintenance", description = "客户维护")
 @Controller
 @RequestMapping("/customerMaintenance")
-public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance, Integer> {
+public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance> {
     @Autowired
     private TCustomerMaintenanceService customerMaintenanceService;
 

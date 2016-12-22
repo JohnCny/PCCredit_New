@@ -29,7 +29,7 @@ import java.util.Map;
 @Api(value = "/customerBasic", description = "客户基本信息")
 @Controller
 @RequestMapping("/customerBasic")
-public class CustomerBasicController extends BaseController<TCustomerBasic, Integer> {
+public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @Autowired
     private TCustomerBasicService customerBasicService;
 
@@ -71,7 +71,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
-        return count!=0? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -85,18 +85,19 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
-        return count!=0? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
      * 跳转新建客户经理页面
+     *
      * @return 客户经理新建页面
      */
     @GetMapping("/new")
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
-    public ModelAndView returnNewCustomer(){
+    public ModelAndView returnNewCustomer() {
         ModelAndView modelAndView = new ModelAndView("/customer/new");
-        Map<String,  List<SelectModel>> dropDownList = new HashMap<>();
+        Map<String, List<SelectModel>> dropDownList = new HashMap<>();
         List<SelectModel> cert = customerBasicService.getCert();
         List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
         List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
@@ -109,28 +110,28 @@ public class CustomerBasicController extends BaseController<TCustomerBasic, Inte
 
     /**
      * 跳转查询客户页面
+     *
      * @return 客户列表
      */
     @GetMapping("/success")
-    @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
-    public ModelAndView returnCustomerList(){
-        ModelAndView modelAndView = new ModelAndView("/customer/index");
-/*        TCustomerBasic tCustomerBasic = new TCustomerBasic();
-        tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
-        List<TCustomerBasic> tCustomerBasicList = customerBasicService.select(tCustomerBasic);
-        modelAndView.addObject("tCustomerBasicList", tCustomerBasicList);*/
-        return modelAndView;
+    @ApiOperation(value = "跳转查询客户页面", notes = "查询客户页面", httpMethod = "GET")
+    public ModelAndView returnCustomerList() {
+        return new ModelAndView("/customer/index");
     }
 
     /**
      * 按条件查询客户经理信息
-     * @param tCustomerBasic 客户经理基本信息
-     * @return 客户经理信息
+     * @param name 客户名称
+     * @param IdNumber 客户证件号码
+     * @return 客户信息
      */
     @ResponseBody
     @GetMapping("/condition")
-    @ApiOperation(value ="按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
-    public ResultTo queryCondition(@ApiParam(value = "按客户名称和证件号码查询") @ModelAttribute TCustomerBasic tCustomerBasic){
+    @ApiOperation(value = "按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
+    public ResultTo queryCondition(@ApiParam("客户名称") String name, @ApiParam("客户证件号码") String IdNumber) {
+        TCustomerBasic tCustomerBasic = new TCustomerBasic();
+        tCustomerBasic.setCname(name);
+        tCustomerBasic.setCertificateNumber(IdNumber);
         tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
         List<TCustomerBasic> tCustomerBasics = customerBasicService.queryCustomerByCondition(tCustomerBasic);
         return new ResultTo().setData(tCustomerBasics);

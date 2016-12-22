@@ -16,7 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,12 +27,12 @@ import java.util.Map;
 /**
  * 客户移交controller
  *
- * @author yanweichen
+ * @author chenkai
  */
 @Api(value = "/customerTransfer", description = "客户移交")
 @RestController
 @RequestMapping("/customerTransfer")
-public class CustomerTransferController extends BaseController<TCustomerTransfer, Integer> {
+public class CustomerTransferController extends BaseController<TCustomerTransfer> {
     @Autowired
     private TCustomerTransferService customerTransferService;
 
