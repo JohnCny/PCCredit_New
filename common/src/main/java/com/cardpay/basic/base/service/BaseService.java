@@ -1,5 +1,7 @@
 package com.cardpay.basic.base.service;
 
+import tk.mybatis.mapper.entity.Example;
+
 import java.util.List;
 
 /**
@@ -124,4 +126,15 @@ public interface BaseService<T> {
      * @return 分页实体个数
      */
     List<T> pageList(T record, Integer page, Integer size);
+
+
+    /**
+     * 据实体属性和RowBounds进行分页查询,以page作为开始参数(基于example)
+     *
+     * @param example Examples示例
+     * @param page    实体
+     * @param size    个数
+     * @return 分页实体个数
+     */
+    List<T> pageList(Example example, Integer page, Integer size);
 }

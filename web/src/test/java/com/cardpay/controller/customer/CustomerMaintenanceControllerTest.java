@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class CustomerMaintenanceControllerTest extends TestEnv {
     @Test
+    @Ignore
     public void getMaintenanceTypeList() throws Exception {
         mockMvc.perform(get("/customerMaintenance/maintenanceTypeList"))
                 .andExpect(status().isOk())
@@ -22,7 +23,6 @@ public class CustomerMaintenanceControllerTest extends TestEnv {
 
     @Test
     @Ignore
-    //TODO： 表不存在
     public void getMaintenanceList() throws Exception {
         mockMvc.perform(get("/customerMaintenance/maintenanceList"))
                 .andExpect(status().isOk())

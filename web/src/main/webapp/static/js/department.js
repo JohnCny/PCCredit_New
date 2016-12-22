@@ -65,6 +65,31 @@ var myDataTable = function(options){
 					}
 				});
 			});
+			$(document).on("click",".resetBtn",function () {
+				var id = $(this).data("id");
+				$.ajax({
+					url:"/user",
+					data: {"id":id,"password":"1231"},
+					type:"PUT",
+					success:function () {
+						alert("重置成功");
+					},
+					error:function () {
+						alert("重置失败");
+					}
+					
+				})
+			});
+			/* 点击置空搜索内容 */
+			$(document).delegate('#reset','click',function() {
+				$(".formReset input").val("");
+			});
+
+			/* 自定义搜索  姓名  联系方式  证件号码  创建时间 */
+			$(document).delegate('.search','click',function() {
+				table.ajax.reload();
+				console.log(searchObj)
+			});
 		},
 	});
 }
@@ -219,12 +244,3 @@ $(document).delegate('.upOrderStatus','click',function() {
 
 
 
-/* 点击置空搜索内容 */
-$(document).delegate('#reset','click',function() {
-   $(".formReset input").val("");
-});
-
-/* 自定义搜索  姓名  联系方式  证件号码  创建时间 */
-$(document).delegate('.search','click',function() {
-	table.ajax.reload();
-});

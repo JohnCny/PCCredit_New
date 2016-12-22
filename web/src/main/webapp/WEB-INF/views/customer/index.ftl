@@ -90,15 +90,15 @@
         var tableId = $("#example");
         var searchObj = {
             "cname":$("#cname").val(),
-            "tel":$("#tel").val(),
             "certificateNumber":$("#certificateNumber").val(),
-            "createTime":$("#createTime").val()
         };
         var ajax ={
             "type" : "GET",
             "url" : url["urlList"],
             "data" : function(d){
-                d.search = searchObj
+                d.search = searchObj;
+                d.name = " ";
+                d.IdNumber = " ";
             }
         };
         var aoColumns = [{
@@ -124,7 +124,7 @@
             "mData" : "id",
             "sDefaultContent" : "",
             "render" : function(data, type, full, meta) {
-                return  '<a onclick="deleRow()" class="editOne" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                return  '<a onclick="deleRow()" class="editOne btn-info" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
             }
         }];
 

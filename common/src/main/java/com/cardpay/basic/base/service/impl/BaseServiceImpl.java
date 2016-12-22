@@ -198,4 +198,18 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         }
         return mapper.select(record);
     }
+
+    /**
+     * 据实体属性和RowBounds进行分页查询,以page作为开始参数(基于example)
+     *
+     * @param example Examples示例
+     * @param page    实体
+     * @param size    个数
+     * @return 分页实体个数
+     */
+    @Override
+    public List<T> pageList(Example example, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        return mapper.selectByExample(example);
+    }
 }

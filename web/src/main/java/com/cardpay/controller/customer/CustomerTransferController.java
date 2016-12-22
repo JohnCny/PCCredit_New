@@ -2,6 +2,8 @@ package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
+import com.cardpay.basic.common.annotation.SystemControllerLog;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -48,6 +50,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 移交接收意见状态列表
      */
     @GetMapping("/transferStatusList")
+    @SystemControllerLog
     @ApiOperation(value = "获取移交接收意见状态", notes = "移交接收意见状态", httpMethod = "GET")
     public ResultTo getTransferStatus() {
         List<SelectModel> transferStatus = customerTransferService.getTransferStatus();
@@ -63,6 +66,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 数据库变记录
      */
     @ResponseBody
+    @SystemControllerLog
     @PutMapping("/customerTransfer")
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) String customerIds
@@ -92,7 +96,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         map.put("managerId", ShiroKit.getUserId()); //自己转移给自己
         int count = customerBasicService.updateStatus(map);
         logger.info("客户移交", "客户" + customerIds + "移交给了" + ShiroKit.getUserId());
-        return new ResultTo().setData(count);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -102,6 +106,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 客户接收列表
      */
     @ResponseBody
+    @SystemControllerLog
     @GetMapping("/queryTransfer")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
     public ResultTo queryTransfer(@ApiParam("客户移交状态(默认为未接受)") @RequestParam(defaultValue = "0") int status) {
@@ -115,6 +120,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 客户id:客户名称
      */
     @GetMapping("")
+    @SystemControllerLog
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
     public ModelAndView queryCustomer() {
         ModelAndView modelAndView = new ModelAndView("customer/custransfer");
