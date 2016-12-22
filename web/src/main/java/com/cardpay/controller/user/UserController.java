@@ -3,6 +3,7 @@ package com.cardpay.controller.user;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.mgt.user.model.User;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * 用户控制层
  *
- * @author rankai .
+ * @author rankai
+ * @create 2016-12-2016/12/21 10:22
  */
 @Controller
 @RequestMapping("/user")
@@ -41,6 +44,29 @@ public class UserController extends BaseController<User, Integer> {
 
     @Autowired
     private UserService userService;
+
+
+    /**
+     * 跳转用户列表页面
+     *
+     * @return 用户列表页面
+     */
+//    @GetMapping()
+//    public String userPage() {
+//        return "";
+//    }
+
+    /**
+     * 用户分页
+     *
+     * @return 分页后的数据
+     */
+    @GetMapping("/jsonList")
+    @ResponseBody
+    public DataTablePage pageList() {
+        return dataTablePage();
+    }
+
 
     /**
      * 修改密码页面跳转
