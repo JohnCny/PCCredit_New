@@ -28,6 +28,7 @@ import static com.cardpay.basic.common.log.LogTemplate.error;
 
 /**
  * 日志切面,包括ControlService的处理
+ *
  * @author licho on 2016/6/5.
  */
 @Aspect
@@ -43,17 +44,19 @@ public class SystemLogAspect {
 
     /**
      * 请求用于打印Controller内方法的日志
-     * @param joinPoint   JoinPoint
+     *
+     * @param joinPoint JoinPoint
      */
     @After("controllerAspect()")
     public void doAfter(JoinPoint joinPoint) {
-        if(PropertiesUtil.getProperties("openSyslogController").equals("yes")){
+        if (PropertiesUtil.getProperties("openSyslogController").equals("yes")) {
             printNormalLog(joinPoint);
         }
     }
 
     /**
      * 用于打印Controller内方法的日志
+     *
      * @param joinPoint JoinPoint
      */
     private void printNormalLog(JoinPoint joinPoint) {
@@ -87,7 +90,7 @@ public class SystemLogAspect {
             String desc = getControllerMethodDescription(joinPoint);
             String methodName = joinPoint.getTarget().getClass().getName();
             logger.info("{} {} {}- - [{}] \"{} {}\" {} \"{}\" {}\" {}\" \"{}\"",
-                    ip, user.getId(), user.getUsername(), dt, hsr, status, length, source,desc, methodName,params);
+                    ip, user.getId(), user.getUsername(), dt, hsr, status, length, source, desc, methodName, params);
         } catch (Exception e) {
             //记录本地异常日志
             error(SystemLogAspect.class, e, "exception info:", e.getMessage());
@@ -105,16 +108,17 @@ public class SystemLogAspect {
      */
     /**
      * 正常通知 用于拦截service层记录正常日志信息
+     *
      * @param joinPoint JoinPoint
      * @return proceed对象
-     * @throws Throwable
+     * @throws Throwable 异常
      */
     @Around("serviceAspect()")
     public Object doServiceAfter(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object proceed ;
-        if(PropertiesUtil.getProperties("openSyslogController").equals("yes")){
+        Object proceed;
+        if (PropertiesUtil.getProperties("openSyslogController").equals("yes")) {
             proceed = printServiceLog(joinPoint);
-        }else{
+        } else {
             proceed = joinPoint.proceed();
         }
         return proceed;
@@ -145,7 +149,7 @@ public class SystemLogAspect {
                 paramStr.append("[" + parameterTypes[i].getSimpleName() + "(" + i + 1 + ")>>null]");
             }
         }
-        Object proceed ;
+        Object proceed;
         long startTime = System.currentTimeMillis();
         proceed = joinPoint.proceed();
         long endTime = System.currentTimeMillis();
@@ -163,6 +167,7 @@ public class SystemLogAspect {
 
     /**
      * 异常通知 用于拦截service层记录异常日志
+     *
      * @param joinPoint JoinPoint
      * @param e         Throwable
      */
@@ -199,6 +204,7 @@ public class SystemLogAspect {
 
     /**
      * 获取注解中对方法的描述信息 用于service层注解
+     *
      * @param joinPoint 切点
      * @return 方法描述
      * @throws Exception 异常
@@ -251,17 +257,18 @@ public class SystemLogAspect {
 
     /**
      * 将参数按照个数组装返回
+     *
      * @param paramsMap 参数map
      * @return 返回组装参数接口
      */
-    public static String getParams(Map<String,String[]> paramsMap){
+    public static String getParams(Map<String, String[]> paramsMap) {
         StringBuffer result = new StringBuffer();
         for (Map.Entry<String, String[]> entry : paramsMap.entrySet()) {
             StringBuffer valueTmp = new StringBuffer();
-            for(String value:entry.getValue()){
-                valueTmp.append(value+"  ");
+            for (String value : entry.getValue()) {
+                valueTmp.append(value + "  ");
             }
-            result.append(entry.getKey() + "=" + valueTmp+" ");
+            result.append(entry.getKey() + "=" + valueTmp + " ");
         }
         return result.toString();
     }
