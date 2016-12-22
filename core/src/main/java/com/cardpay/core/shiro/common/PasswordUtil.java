@@ -1,12 +1,14 @@
 package com.cardpay.core.shiro.common;
 
 import com.cardpay.mgt.user.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
 /**
  * 密码工具类,对密码进行加密
+ *
  * @author rankai
  */
 public class PasswordUtil {
@@ -31,8 +33,11 @@ public class PasswordUtil {
      * @return 加密后的字符串
      */
     public static String encryptPassword(String password) {
-        ByteSource salt = new Md5Hash(SALT_SOURCE);
-        return new SimpleHash(HASHA_LGORITHM_NAME, password, salt, HASH_ITERATIONS).toString();
+        if (StringUtils.isNotBlank(password)) {
+            ByteSource salt = new Md5Hash(SALT_SOURCE);
+            return new SimpleHash(HASHA_LGORITHM_NAME, password, salt, HASH_ITERATIONS).toString();
+        }
+        return "";
     }
 
     /**
@@ -41,8 +46,11 @@ public class PasswordUtil {
      * @param user User对象
      * @return 加密后的字符串
      */
-    public static String encryptPassword(User user) {
-        ByteSource salt = new Md5Hash(SALT_SOURCE);
-        return new SimpleHash(HASHA_LGORITHM_NAME, user.getPassword(), salt, HASH_ITERATIONS).toString();
+    public static void encryptPassword(User user) {
+        if (user != null && StringUtils.isNotBlank(user.getPassword())) {
+            ByteSource salt = new Md5Hash(SALT_SOURCE);
+            String password = new SimpleHash(HASHA_LGORITHM_NAME, user.getPassword(), salt, HASH_ITERATIONS).toString();
+            user.setPassword(password);
+        }
     }
 }

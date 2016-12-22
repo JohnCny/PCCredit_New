@@ -51,13 +51,13 @@
             "username":$("#username").val(),
             "tel":$("#tel").val(),
         };
-        var ajax ={
+        /*var ajax ={
             "type" : "GET",
             "url" : url["urlList"],
             "data" : function(d){
                 d.search = searchObj
             }
-        };
+        };*/
         var aoColumns = [{
             "mData" : "username",
         },{
@@ -87,14 +87,14 @@
                 }else{
                     html += '<button  class="btn btn-default activeBtn" data-id='+data+' data-status='+full.status+'>点击解锁</button>';
                 }
-                html += '<button class="btn btn-info resetBtn" data-id='+data+'>重置密码</button>>'
+                html += '<button class="btn btn-info resetBtn" data-id='+data+'>重置密码</button>'
                 return  html;
             }
         }];
 
         var options = {
             "tableId" : tableId,
-            "ajax" : ajax,
+            /*"ajax" : ajax,*/
             "aoColumns" : aoColumns
         }
         myDataTable(options);

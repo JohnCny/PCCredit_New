@@ -29,11 +29,12 @@
         .editOne:hover{
             text-decoration: none;
             color: #fff;
-            background-color: ;
+            background-color: #1f7acf;
         }
         #example tbody td,#example thead th{
            text-align: center;
             line-height: #1f7acf;
+            box-sizing: border-box;
         }
         #example tbody{
             position: relative;
@@ -82,60 +83,52 @@
 <#macro js>
 
     <script>
-        var url  = {
-            "urlList":"/customerBasic/condition",
-            "urlNew" : "/customerBasic/new",
-            "urlDel" : "/customerBasic",
-        }
-        var tableId = $("#example");
-        var searchObj = {
-            "cname":$("#cname").val(),
-            "certificateNumber":$("#certificateNumber").val(),
-        };
-        var ajax ={
-            "type" : "GET",
-            "url" : url["urlList"],
-            "data" : function(d){
-                d.search = searchObj;
-                d.name = " ";
-                d.IdNumber = " ";
-            }
-        };
-        var aoColumns = [{
-            "mData" : "cname",
-        },{
-            "mData" : "sex",
-            "sDefaultContent" : "",
-            "render" : function(data, type, full, meta) {
-                return	data?"男":"女";
-            }
-        },{
-            "mData" : "tel",
-        },{
-            "mData" : "certificateNumber",
-        },{
-            "mData" : "createTime",
-            "sDefaultContent" : "",
-            "render" : function(data, type, full, meta) {
-                //时间格式化
-                return  moment(data).format("YYYY-MM-DD");
-            }
-        },{
-            "mData" : "id",
-            "sDefaultContent" : "",
-            "render" : function(data, type, full, meta) {
-                return  '<a onclick="deleRow()" class="editOne btn-info" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
-            }
-        }];
+        $(function(){
 
-        var options = {
-            "urlNew" : url['urlNew'],
-            "urlDel" : url['urlDel'],
-            "tableId" : tableId,
-            "ajax" : ajax,
-            "aoColumns" : aoColumns
-        }
-        myDataTable(options);
+            var url  = {
+                "urlList":"/customerBasic/condition",
+                "urlNew" : "/customerBasic/new",
+                "urlDel" : "/customerBasic/",
+            }
+            var tableId = $("#example");
+            var aoColumns = [{
+                "mData" : "cname"
+            },{
+                "mData" : "sex",
+                "sDefaultContent" : "",
+                "render" : function(data, type, full, meta) {
+                    return	data?"男":"女";
+                }
+            },{
+                "mData" : "tel",
+            },{
+                "mData" : "certificateNumber",
+            },{
+                "mData" : "createTime",
+                "sDefaultContent" : "",
+                "render" : function(data, type, full, meta) {
+                    //时间格式化
+                    return  moment(data).format("YYYY-MM-DD");
+                }
+            },{
+                "mData" : "id",
+                "sDefaultContent" : "",
+                "render" : function(data, type, full, meta) {
+                    return  '<a onclick="deleRow()" class="editOne btn-info" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                }
+            }];
+
+
+
+            var options = {
+                "urlList" : url['urlList'],
+                "urlNew" : url['urlNew'],
+                "urlDel" : url['urlDel'],
+                "tableId" : tableId,
+                "aoColumns" : aoColumns
+            }
+            myDataTable(options);
+        }());
 
     </script>
 

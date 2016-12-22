@@ -1,6 +1,6 @@
+var QK_searchObj ={};
 var myDataTable = function(options){
-	var self = this;
-	var table = tableId.DataTable({
+	var table = options.tableId.DataTable({
 		"aLengthMenu":[10,20,40,60],
 		"searching":false,//禁用搜索,自定义搜索
 		"lengthChange":true,
@@ -15,8 +15,16 @@ var myDataTable = function(options){
 		"iDisplayStart" : 0,
 		"dom": '<l<\'#topPlugin\'>f>rt<ip><"clear">',
 		"ordering": false,//全局禁用排序
-		"ajax" : ajax,
-		"aoColumns" : aoColumns,
+		"ajax" : {
+			"type" : "GET",
+			"url" : options.urlList,
+			"data" : function(d){
+				d.search = QK_searchObj;
+				d.name = " ";
+				d.IdNumber = " ";
+			}
+		},
+		"aoColumns" : options.aoColumns,
 		/*"columnDefs" :[{
 			"orderable" : false, // 禁用排序
 			"targets" : [0], // 指定的列
@@ -54,14 +62,16 @@ var myDataTable = function(options){
 			$(document).on("click",".deleteOne",function(){
 				var id=$(this).data("id");
 				$.ajax({
-					url : options.urlDel,
+					url : options.urlDel+"{"+id+"}",
 					data : id,
 					type : "DELETE",
 					success: function(data){
-						alert("删除成功");
-					},
-					error:function(data){
-						alert("请求异常，删除失败！");
+						if(data.code == 200){
+							alert("删除成功");
+						}else{
+							alert("删除失败");
+						}
+
 					}
 				});
 			});
@@ -71,8 +81,10 @@ var myDataTable = function(options){
 					url:"/user",
 					data: {"id":id,"password":"1231"},
 					type:"PUT",
-					success:function () {
-						alert("重置成功");
+					success:function (data) {
+						if(data.code == 200){
+							alert("重置成功");
+						}
 					},
 					error:function () {
 						alert("重置失败");
@@ -80,6 +92,29 @@ var myDataTable = function(options){
 					
 				})
 			});
+			$(document).on("click",".activeBtn",function(){
+			 		var self = $(this);
+					var id = self.data("id");
+			 		var temp = self.data("status");
+			 		console.log(temp);
+			 		var status = temp?0:1;
+			 		$.ajax({
+			 			type : "PUT",
+						 url : "/user",
+			 			data : {"id":id,"status":status},
+						 success : function(res){
+						 console.log(status);
+			 			if(res.code == "200"){
+						if(status == 1){
+			 			self.removeClass("btn-success").addClass("btn-default").html("点击解锁").attr("data-status",status);
+						 }else if(status == 0){
+					 self.removeClass("btn-default").addClass("btn-success").html("点击锁定").attr("data-status",status);
+								}
+							 }
+
+						}
+					})
+			 });
 			/* 点击置空搜索内容 */
 			$(document).delegate('#reset','click',function() {
 				$(".formReset input").val("");
@@ -87,14 +122,16 @@ var myDataTable = function(options){
 
 			/* 自定义搜索  姓名  联系方式  证件号码  创建时间 */
 			$(document).delegate('.search','click',function() {
+				QK_searchObj = {
+					"cname" : $("#cname").val(),
+					"certificateNumber" : $("#certificateNumber").val()
+				};
 				table.ajax.reload();
-				console.log(searchObj)
+
 			});
 		},
 	});
 }
-
-
 
 
 /**

@@ -6,6 +6,7 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +44,8 @@ public class UserController extends BaseController<User> {
 
     private static final String RESET_PASSWORD_CHECKED = "/user/forget";
 
+    private static final String USER_INDEX = "/user/index";
+
     @Autowired
     private UserService userService;
 
@@ -51,20 +55,40 @@ public class UserController extends BaseController<User> {
      *
      * @return 用户列表页面
      */
-//    @GetMapping()
-//    public String userPage() {
-//        return "";
-//    }
+    @GetMapping()
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "用户列表页面", httpMethod = "GET")
+    public String userPage() {
+        return USER_INDEX;
+    }
 
     /**
      * 用户分页
      *
      * @return 分页后的数据
      */
-    @GetMapping("/jsonList")
+    @GetMapping("/pageList")
     @ResponseBody
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "用户分页数据", httpMethod = "GET")
     public DataTablePage pageList() {
         return dataTablePage();
+    }
+
+
+    @PutMapping
+    @ResponseBody
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "用户异步更新", httpMethod = "GET")
+    public ResultTo update(User user) {
+        if (StringUtils.isNotEmpty(user.getPassword())) {
+            user.setPassword(ShiroKit.DEFAULT_PASSWORD);
+            PasswordUtil.encryptPassword(user);
+        }
+        if (userService.updateSelectiveByPrimaryKey(user) > 0) {
+            return new ResultTo();
+        }
+        return new ResultTo(ResultEnum.OPERATION_FAILED);
     }
 
 
