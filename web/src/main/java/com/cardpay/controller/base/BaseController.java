@@ -526,6 +526,11 @@ public class BaseController<T> extends BasicController {
     }
 
 
+    protected DataTablePage<T> dataTablePage(String methodName, Map<String, Object> map) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return new DataTablePage(methodName, baseService, request, map);
+    }
+
     protected DataTablePage<T> dataTablePage(String methodName) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return new DataTablePage(methodName, baseService, request);
