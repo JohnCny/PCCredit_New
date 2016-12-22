@@ -2,13 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper">
   <resultMap id="BaseResultMap" type="com.cardpay.mgt.customermanager.basic.model.TCustomerManager">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <result column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="T_U_ID" jdbcType="DECIMAL" property="tUId" />
-    <result column="T_O_ID" jdbcType="DECIMAL" property="tOId" />
-    <result column="CNAME" jdbcType="VARCHAR" property="cname" />
+    <result column="C_NAME" jdbcType="VARCHAR" property="cName" />
     <result column="LEVEL_ID" jdbcType="DECIMAL" property="levelId" />
     <result column="CARD_NUMBER" jdbcType="VARCHAR" property="cardNumber" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
@@ -18,4 +13,27 @@
     <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy" />
     <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
+
+  <resultMap id="ListVoMap" type="com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerListVo">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="C_NAME" jdbcType="VARCHAR" property="cName" />
+    <result column="LEVEL_NAME" jdbcType="DECIMAL" property="levelName" />
+  </resultMap>
+
+  <!--查询客户经理列表-->
+  <select id="selectListVo" resultMap="ListVoMap">
+    SELECT CM.ID,CM.C_NAME,CML.LEVEL_NAME
+    FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML
+    WHERE T_CUSTOMER_MANAGER.LEVEL_ID = T_CUSTOMER_MANAGER_LEVEL.ID
+    AND ORGANIZATION_ID = #{organizationId}
+    <if test="cName != null">
+      AND CM.C_NAME LIKE #{cName}
+    </if>
+    <if test="levelId != null">
+      AND CML.LEVEL_NAME = #{levelName}
+    </if>
+    <if test="cName != null">
+      AND CM.ID = #{id}
+    </if>
+  </select>
 </mapper>

@@ -14,35 +14,21 @@ import javax.persistence.*;
 @Table(name = "T_CUSTOMER_MANAGER")
 @ApiModel(value="客户经理信息管理")
 public class TCustomerManager extends GenericEntity<Integer> {
+
     /**
      * 客户经理id(需要生成规则生成)
      */
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MANAGER_SEQ.nextval from dual")
     @ApiModelProperty(value="客户经理id(需要生成规则生成)",required = true)
-    @OrderBy("DESC")
     private Integer id;
-
-    /**
-     * 用户id
-     */
-    @Column(name = "T_U_ID")
-    @ApiModelProperty(value="用户id",required = true)
-    private Integer tUId;
-
-    /**
-     * id
-     */
-    @Column(name = "T_O_ID")
-    @ApiModelProperty(value="id",required = true)
-    private Integer tOId;
 
     /**
      * 客户经理姓名
      */
-    @Column(name = "CNAME")
+    @Column(name = "C_NAME")
     @ApiModelProperty(value="客户经理姓名",required = true)
-    private String cname;
+    private String cName;
 
     /**
      * 客户经理级别id
@@ -119,57 +105,21 @@ public class TCustomerManager extends GenericEntity<Integer> {
     }
 
     /**
-     * 获取用户id
-     *
-     * @return T_U_ID - 用户id
-     */
-    public Integer gettUId() {
-        return tUId;
-    }
-
-    /**
-     * 设置用户id
-     *
-     * @param tUId 用户id
-     */
-    public void settUId(Integer tUId) {
-        this.tUId = tUId;
-    }
-
-    /**
-     * 获取id
-     *
-     * @return T_O_ID - id
-     */
-    public Integer gettOId() {
-        return tOId;
-    }
-
-    /**
-     * 设置id
-     *
-     * @param tOId id
-     */
-    public void settOId(Integer tOId) {
-        this.tOId = tOId;
-    }
-
-    /**
      * 获取客户经理姓名
      *
      * @return CNAME - 客户经理姓名
      */
-    public String getCname() {
-        return cname;
+    public String getcName() {
+        return cName;
     }
 
     /**
      * 设置客户经理姓名
      *
-     * @param cname 客户经理姓名
+     * @param cName 客户经理姓名
      */
-    public void setCname(String cname) {
-        this.cname = cname;
+    public void setcName(String cName) {
+        this.cName = cName;
     }
 
     /**

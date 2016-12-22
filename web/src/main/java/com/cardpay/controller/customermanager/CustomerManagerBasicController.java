@@ -1,13 +1,14 @@
 package com.cardpay.controller.customermanager;
 
 import com.cardpay.basic.base.model.ResultTo;
-import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.util.ReflectUtil;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerListVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.service.UserService;
-import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 /**
  * 客户经理管理controller
@@ -31,6 +34,19 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
 
     @Autowired
     private CustomerManagerService customerManagerService;
+
+    /**
+     * 客户经理列表
+     */
+    @RequestMapping(value = "/pageList",method = RequestMethod.GET)
+    @ApiOperation(value = "客户经理列表页面", notes = "客户经理列表页面", httpMethod = "GET")
+    public void pageList(TCustomerManagerListVo customerManagerListVo){
+        TCustomerManager customerManager = customerManagerService.selectByPrimaryKey(ShiroKit.getUserId());
+        Map<String, Object> map = ReflectUtil.transBean2Map(customerManagerListVo);
+        map.put("organizationId",customerManager.getOrganizationId());
+        //查看当前机构下的客户经理
+        dataTablePage("selectListVo");
+    }
 
     /**
      * 前往客户经理创建页面

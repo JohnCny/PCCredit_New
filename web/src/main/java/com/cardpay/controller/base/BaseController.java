@@ -539,13 +539,32 @@ public class BaseController<T> extends BasicController {
      */
     protected DataTablePage<T> dataTablePage(Example example) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+        return new DataTablePage(baseService, request, getGenericityClass(), example);
+    }
+
+    /**
+     * 获得当前泛型类型
+     *
+     * @return 当前泛型类型
+     */
+    protected Class<T> getGenericityClass(){
         Class<T> entityClass = null;
         Type genericSuperclass = getClass().getGenericSuperclass();
         if (genericSuperclass instanceof ParameterizedType) {
             Type[] types = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
-            entityClass = (Class<T>) types[0];
+            return entityClass = (Class<T>) types[0];
         }
-        return new DataTablePage(baseService, request, entityClass, example);
+        return null;
+    }
+
+    /**
+     * 获取Example
+     *
+     * @return Example
+     */
+    protected Example getExample(){
+        return new Example(getClass());
     }
 
 //-----------------根据实际情况选择需要的接口------------------------
