@@ -1,4 +1,5 @@
 var myDataTable = function(options){
+	var self = this;
 	var table = tableId.DataTable({
 		"aLengthMenu":[10,20,40,60],
 		"searching":false,//禁用搜索,自定义搜索
@@ -16,15 +17,14 @@ var myDataTable = function(options){
 		"ordering": false,//全局禁用排序
 		"ajax" : ajax,
 		"aoColumns" : aoColumns,
-		"columnDefs" :
-			[{
-				"orderable" : false, // 禁用排序
-				"targets" : [0], // 指定的列
-				"data" : "id",
-				"render" : function(data, type, full, meta) {
-					return '<input type="checkbox" value="'+ data + '" name="id"/>';
-				}
-			}],
+		/*"columnDefs" :[{
+			"orderable" : false, // 禁用排序
+			"targets" : [0], // 指定的列
+			"data" : "id",
+			"render" : function(data, type, full, meta) {
+				return '<input type="checkbox" value="'+ data + '" name="id"/>';
+			}
+		}],*/
 		"oLanguage" : { // 国际化配置
 			"sProcessing" : "正在获取数据，请稍后...",
 			"sLengthMenu" : "&nbsp;&nbsp;<span>每页显示</span>&nbsp;_MENU_&nbsp;条 ",
@@ -42,18 +42,43 @@ var myDataTable = function(options){
 				"sLast" : "最后一页"
 			}
 		},
-		initComplete : initComplete,
+		"initComplete" : function(data){
+			//上方topPlugin DIV中追加HTML
+			//删除用户按钮的HTMLDOM
+			var topPlugin='<a href="" class="btn btn-primary btn-sm addBtn" ><i class="icon-add"></i>新 增</a>' +
+				/*'<button class="btn btn-danger btn-sm" id="deleteAll">批量删除</button>' +*/
+				'<button class="btn btn-info btn-sm" id="expCsv">导出全部</button>' +
+				'<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>';
+			$("#topPlugin").append(topPlugin);//在表格上方topPlugin DIV中追加HTML
+			$(".addBtn").attr("href",options.urlNew);
+			$(".editBtn").attr("href",options.urlEdit);
+		},
+		
+		"deleRow" : function(){
+			var id=$(this).data("id");
+			$.ajax({
+				url : options.urlDel,
+				data : id,
+				type : "DELETE",
+				success: function(data){
+					alert("删除成功");
+				},
+				error:function(data){
+					alert("请求异常，删除失败！");
+				}
+			});
+		}
 	});
 }
 
 
 
 
-	/**
+/**
  * 表格加载渲染完毕后执行的方法
  * @param data
  */
-function initComplete(data){
+/*function initComplete(data){
 	//上方topPlugin DIV中追加HTML
 	//删除用户按钮的HTMLDOM
 	var topPlugin='<a href="" class="btn btn-primary btn-sm addBtn" ><i class="icon-add"></i>新 增</a>' +
@@ -62,7 +87,7 @@ function initComplete(data){
 		'<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>';
 	$("#topPlugin").append(topPlugin);//在表格上方topPlugin DIV中追加HTML
 	$(".addBtn").attr("href",'sdfafd');
-}
+}*/
 
 
 
@@ -77,32 +102,7 @@ function initComplete(data){
 /**
  * 点击确认删除按钮
  */
-$(document).delegate('#delSubmit','click',function(){
-	var id=$(this).val();
-	$('#deleteOneModal').modal('hide');
-	$.ajax({
-		url:contextPath+"/department/delete.do?id="+id,
-		async:true,
-		type:"GET",
-		dataType:"json",
-		cache:false,    //不允许缓存
-		success: function(data){
-			var obj = eval(data);
-			if(obj.code==1)
-			{
-				window.location.reload();
-			}
-			else
-			{
-				alert("删除失败");
-			}
 
-		},
-		error:function(data){
-			alert("请求异常");
-		}
-	});
-});
 
 
 
