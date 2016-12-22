@@ -6,6 +6,7 @@ import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
@@ -22,10 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 客户移交controller
@@ -120,13 +118,15 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      *
      * @return 客户id:客户名称
      */
-    @GetMapping("")
+    @GetMapping()
     @SystemControllerLog(description = "查询客户经理所属客户(客户移交)")
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
     public ModelAndView queryCustomer() {
         ModelAndView modelAndView = new ModelAndView("customer/custransfer");
-        List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(ShiroKit.getUserId());
-        modelAndView.addObject("queryCustomer", tCustomerVos);
+        Map<String, Object> map = new HashMap();
+        map.put("managerId", ShiroKit.getUserId());
+        DataTablePage queryCustomer = dataTablePage("queryCustomer", map);
+        modelAndView.addObject("queryCustomer", queryCustomer);
         return modelAndView;
     }
 

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
             int customerId = Integer.parseInt(id);
             idList.add(customerId);
         }
-        Map<String, Object> map = new HashedMap();
+        Map<String, Object> map = new HashMap();
         if (null != flag && flag==1){
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
             map.put("nowCustomerManager", ShiroKit.getUserId());
