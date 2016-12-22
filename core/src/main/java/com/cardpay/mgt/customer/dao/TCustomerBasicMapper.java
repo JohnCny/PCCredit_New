@@ -30,10 +30,10 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
 
     /**
      * 查询客户经理所属客户
-     * @param managerId 客户经理Id
+     * @param map 客户经理Id
      * @return 客户id, 客户名称
      */
-    List<TCustomerTransferVo> queryCustomer(@Param("managerId") int managerId);
+    List<TCustomerTransferVo> queryCustomer(Map<String, Object> map);
 
     /**
      * 更新客户状态
@@ -44,8 +44,8 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
 
     /**
      * 按条件查询客户信息
-     * @param tCustomerBasic 客户基本信息
+     * @param map 客户基本信息
      * @return 客户列表
      */
-    List<TCustomerBasic> queryCustomerByCondition(TCustomerBasic tCustomerBasic);
+    List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map);
 }
