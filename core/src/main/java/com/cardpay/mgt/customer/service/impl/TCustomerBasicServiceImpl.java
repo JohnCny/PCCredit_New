@@ -6,7 +6,12 @@ import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
+import org.apache.commons.collections.MapUtils;
+import org.apache.ibatis.annotations.Param;
+import org.pdfbox.util.MapUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,8 +88,8 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public List<TCustomerBasic> queryCustomer(ReturnMapParam mapParam) {
-        return customerBasicDao.queryCustomer(mapParam);
+    public  List<TCustomerVo> queryCustomer(int managerId) {
+        return customerBasicDao.queryCustomer(managerId);
     }
 
     @Override

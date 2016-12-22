@@ -4,6 +4,8 @@ import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.vo.TCustomerVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -53,10 +55,10 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
 
     /**
      * 查询客户经理所属客户
-     * @param mapParam managerId
+     * @param managerId managerId
      * @return 客户id, 客户名称
      */
-    List<TCustomerBasic> queryCustomer(ReturnMapParam mapParam);
+    List<TCustomerVo> queryCustomer(@Param("managerId") int managerId);
 
     /**
      * 更新客户状态

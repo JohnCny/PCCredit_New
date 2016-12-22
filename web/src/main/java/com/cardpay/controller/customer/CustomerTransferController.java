@@ -9,11 +9,13 @@ import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -120,12 +122,8 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
     public ModelAndView queryCustomer() {
         ModelAndView modelAndView = new ModelAndView("customer/custransfer");
-        ReturnMapParam returnMapParam = new ReturnMapParam("id", "cname");
-        returnMapParam.put("managerId", ShiroKit.getUserId());
-        List<TCustomerBasic> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
-        modelAndView.addObject("queryCustomer", queryCustomer);
+        List<TCustomerVo> tCustomerVos = customerBasicService.queryCustomer(ShiroKit.getUserId());
+        modelAndView.addObject("queryCustomer", tCustomerVos);
         return modelAndView;
     }
-
-
 }
