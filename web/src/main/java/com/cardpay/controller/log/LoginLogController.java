@@ -2,6 +2,7 @@ package com.cardpay.controller.log;
 
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.mgt.log.model.LoginLog;
 import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/loginLog")
 @Api(value = "/loginLog", description = "登陆日志日志操作")
-public class LoginLogController extends BaseController<User, Integer> {
+public class LoginLogController extends BaseController<LoginLog> {
 
     /**
      * 登陆日志的跳转页面

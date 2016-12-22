@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @RequestMapping("/productPicture")
 @Api(value = "/productPicture", description = "产品调查图片")
-public class ProductInvestPictureDescController extends BaseController<TProductInvestPictureDesc, Integer> {
+public class ProductInvestPictureDescController extends BaseController<TProductInvestPictureDesc> {
     @Autowired //产品调查图片Service
     private TProductInvestPictureDescService tProductInvestPictureDescService;
 }

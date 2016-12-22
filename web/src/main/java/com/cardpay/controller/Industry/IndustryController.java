@@ -19,7 +19,7 @@ import java.util.Map;
 @Api(value = "/industry", description = "行业信息")
 @RestController
 @RequestMapping("/industry")
-public class IndustryController extends BaseController<TIndustry, Integer> {
+public class IndustryController extends BaseController<TIndustry> {
     @Autowired
     private IndustryService industryService;
 

@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "/businessparam", description = "参数")
 @RestController
 @RequestMapping("/businessparam")
-public class BusinessParamController extends BaseController<TBusinessParam, Integer> {
+public class BusinessParamController extends BaseController<TBusinessParam> {
 }
