@@ -104,6 +104,7 @@
                     <value>classpath:properties/dev/httpclient.properties</value>
                     <value>classpath:properties/dev/rabbitmq.properties</value>
                     <value>classpath:properties/dev/grpc.properties</value>
+                    <value>classpath:properties/dev/system.properties</value>
                 </list>
             </property>
         </bean>
@@ -121,6 +122,7 @@
                     <value>classpath:properties/prod/httpclient.properties</value>
                     <value>classpath:properties/prod/rabbitmq.properties</value>
                     <value>classpath:properties/prod/grpc.properties</value>
+                    <value>classpath:properties/dev/system.properties</value>
                 </list>
             </property>
         </bean>

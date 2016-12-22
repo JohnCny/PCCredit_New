@@ -33,6 +33,7 @@ public class CustomerTransferControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void queryTransfer() throws Exception {
         setUser(user);
         mockMvc.perform(get("/customerTransfer/queryTransfer")

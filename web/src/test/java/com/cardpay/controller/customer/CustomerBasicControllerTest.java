@@ -1,9 +1,11 @@
 package com.cardpay.controller.customer;
 
+import com.cardpay.mgt.user.model.User;
 import com.cardpay.util.TestEnv;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,6 +17,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author yanweichen
  */
 public class CustomerBasicControllerTest extends TestEnv {
+    private User user = User.UserBuilder.get().withId(1).build();
+
+    @Test
+    @Ignore
+    public void deleteCustomer() throws Exception {
+        setUser(user);
+        mockMvc.perform(delete("/customerBasic/1")
+                .param("customerIds", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
+
+    @Test
+    @Ignore
+    public void returnUpdate() throws Exception {
+        mockMvc.perform(get("/customerBasic/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
 
     @Test
     @Ignore
@@ -45,7 +66,6 @@ public class CustomerBasicControllerTest extends TestEnv {
 
     @Test
     @Ignore
-    //TODO： 表不存在
     public void getProspectiveCustomers() throws Exception {
         mockMvc.perform(get("/customerBasic/prospectiveCustomers"))
                 .andExpect(status().isOk())
@@ -54,7 +74,6 @@ public class CustomerBasicControllerTest extends TestEnv {
 
     @Test
     @Ignore
-    //TODO： 表不存在
     public void validate() throws Exception {
         mockMvc.perform(get("/customerBasic/idCardExist")
                 .param("identityCard", "123456"))
