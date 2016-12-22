@@ -2,8 +2,42 @@
 <#assign title = "客户"/>
 <#macro style>
     <style>
-        .delete,.editOne{
-            margin-left: 20px;
+        .delete{
+            margin-left: 10px;
+        }
+        .editOne{
+            margin-right: 10px;
+            color: #fff;
+            background-color: #1e92ff;
+            /*border-color: #46b8da;*/
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .editOne:hover{
+            text-decoration: none;
+            color: #fff;
+            background-color: ;
+        }
+        #example tbody td,#example thead th{
+           text-align: center;
+            line-height: #1f7acf;
+        }
+        #example tbody{
+            position: relative;
+            top:1px;
         }
     </style>
 </#macro>
@@ -90,7 +124,7 @@
             "mData" : "id",
             "sDefaultContent" : "",
             "render" : function(data, type, full, meta) {
-                return  '<a onclick="deleRow()" class="btn btn-info editOne" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                return  '<a onclick="deleRow()" class="editOne" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
             }
         }];
 
