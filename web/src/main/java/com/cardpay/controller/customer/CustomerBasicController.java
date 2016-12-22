@@ -74,22 +74,6 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     }
 
     /**
-     * 查询客户经理所属客户
-     *
-     * @return 客户id:客户名称
-     */
-    @GetMapping("/customer")
-    @ApiOperation(value = "查询客户经理所属客户", notes = "客户经理基本信息更新", httpMethod = "GET")
-    public ModelAndView queryCustomer() {
-        ModelAndView modelAndView = new ModelAndView();
-        ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
-        returnMapParam.put("managerId", ShiroKit.getUserId());
-        Map<Integer, String> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
-        modelAndView.addObject("queryCustomer", queryCustomer);
-        return modelAndView;
-    }
-
-    /**
      * 新建客戶经理
      *
      * @param tCustomerBasic 客户基本信息
