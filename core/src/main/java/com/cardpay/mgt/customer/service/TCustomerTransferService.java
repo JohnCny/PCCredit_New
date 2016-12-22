@@ -7,7 +7,6 @@ import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 客户移交类
@@ -32,8 +31,10 @@ public interface TCustomerTransferService extends BaseService<TCustomerTransfer>
 
     /**
      * 客户接收
-     * @param map 意见记录
+     *
+     * @param customerIds 客户id
+     * @param flag 标记 ("接收:1, 拒绝2")
      * @return 数据库变条数
      */
-    int accept(Map<String, Object> map);
+    int accept(String customerIds, Integer flag);
 }

@@ -3,10 +3,12 @@ package com.cardpay.mgt.customer.service.impl;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +45,20 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     }
 
     @Override
-    public int accept(Map<String, Object> map) {
+    public int accept(String customerIds, Integer flag) {
+        List<Integer> idList = new ArrayList<>();
+        String[] split = customerIds.split(",");
+        for (String id : split) {
+            int customerId = Integer.parseInt(id);
+            idList.add(customerId);
+        }
+        Map<String, Object> map = new HashedMap();
+        if (null != flag && ("1").equals(flag)){
+            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
+            map.put("nowCustomerManager", ShiroKit.getUserId());
+        }
+        map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
+        map.put("customerIds", idList);
         return tCustomerIndustryDao.accept(map);
     }
 }

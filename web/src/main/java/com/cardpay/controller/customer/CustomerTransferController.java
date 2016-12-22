@@ -141,20 +141,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
     public ResultTo CustomerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
                                     @ApiParam("接收:1, 拒绝2") @RequestParam Integer flag) {
-        List<Integer> idList = new ArrayList<>();
-        String[] split = customerIds.split(",");
-        for (String id : split) {
-            int customerId = Integer.parseInt(id);
-            idList.add(customerId);
-        }
-        Map<String, Object> map = new HashedMap();
-        if (null != flag && ("1").equals(flag)){
-            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
-            map.put("nowCustomerManager", ShiroKit.getUserId());
-        }
-        map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
-        map.put("customerIds", idList);
-        int count = customerTransferService.accept(map);
+        int count = customerTransferService.accept(customerIds, flag);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
