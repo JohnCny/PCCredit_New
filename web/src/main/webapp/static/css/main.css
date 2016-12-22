@@ -97,7 +97,7 @@ label{display:inline-block;}
 .project .edit:hover{background:url(../img/editH.png) no-repeat;}
 .project .delete:hover{background:url(../img/deleteH.png) no-repeat;}
 
-.common .row{margin-top:30px;margin-left:2.5%;width:97%;}
+
 /*列表*/
 .common .center tr th,.common .center tr td{text-align:center;border:1px solid #ddd;line-height:40px;}
 .common .center tr td{background:#fff;}
