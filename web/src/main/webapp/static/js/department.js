@@ -51,23 +51,21 @@ var myDataTable = function(options){
 				'<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>';
 			$("#topPlugin").append(topPlugin);//在表格上方topPlugin DIV中追加HTML
 			$(".addBtn").attr("href",options.urlNew);
-			$(".editBtn").attr("href",options.urlEdit);
-		},
-		
-		"deleRow" : function(){
-			var id=$(this).data("id");
-			$.ajax({
-				url : options.urlDel,
-				data : id,
-				type : "DELETE",
-				success: function(data){
-					alert("删除成功");
-				},
-				error:function(data){
-					alert("请求异常，删除失败！");
-				}
+			$(document).on("click",".deleteOne",function(){
+				var id=$(this).data("id");
+				$.ajax({
+					url : options.urlDel,
+					data : id,
+					type : "DELETE",
+					success: function(data){
+						alert("删除成功");
+					},
+					error:function(data){
+						alert("请求异常，删除失败！");
+					}
+				});
 			});
-		}
+		},
 	});
 }
 

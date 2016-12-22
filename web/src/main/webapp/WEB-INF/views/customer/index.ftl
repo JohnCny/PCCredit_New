@@ -1,7 +1,11 @@
 <#include "layout/base.html"/>
-<#local title = "客户"/>
+<#assign title = "客户"/>
 <#macro style>
-
+    <style>
+        .delete,.editOne{
+            margin-left: 20px;
+        }
+    </style>
 </#macro>
 <#macro css>
 
@@ -45,10 +49,9 @@
 
     <script>
         var url  = {
-            "urlList":"/customerMaintenance/maintenanceList",
+            "urlList":"/customerBasic/condition",
             "urlNew" : "/customerBasic/new",
             "urlDel" : "/customerBasic",
-            "urlEdit" : "/customerBasic"
         }
         var tableId = $("#example");
         var searchObj = {
@@ -87,14 +90,13 @@
             "mData" : "id",
             "sDefaultContent" : "",
             "render" : function(data, type, full, meta) {
-                return  '<a onclick="deleRow()" class="btn btn-danger deleteOne" href="javaScript:;" data-id='+data+'>删除</a><a onclick="deleRow()" class="btn btn-info editOne" href="" data-id='+data+'>编辑</a>';
+                return  '<a onclick="deleRow()" class="btn btn-info editOne" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
             }
         }];
 
         var options = {
             "urlNew" : url['urlNew'],
             "urlDel" : url['urlDel'],
-            "urlEdit" : url['urlEdit'],
             "tableId" : tableId,
             "ajax" : ajax,
             "aoColumns" : aoColumns

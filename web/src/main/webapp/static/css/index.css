@@ -164,7 +164,7 @@ body{background:#eff0f4;}
 	
 	
 /*底部内容*/
-	.bottom{position:absolute;top:50px;right:0;left:240px;bottom:0;z-index:-1;overflow:hidden;background-color: #efefef}
+	.bottom{position:absolute;top:50px;right:0;left:240px;bottom:0;z-index:-1;background-color: #efefef}
 	
 	/*滚动条样式*/
 	iframe::-webkit-scrollbar{width:5px;height:10px;}/*滚动条尺寸*/

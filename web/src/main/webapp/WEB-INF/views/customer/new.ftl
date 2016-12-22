@@ -193,7 +193,7 @@
                     data:Obj,
                     success: function(res){
                         if(res.code == 200){
-                            location.href="/customerBasic/index";
+                            location.href="/customerBasic/success";
                         }
                     },
                     error:function () {
