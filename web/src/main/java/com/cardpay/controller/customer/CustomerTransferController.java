@@ -3,6 +3,7 @@ package com.cardpay.controller.customer;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -95,7 +96,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         map.put("managerId", ShiroKit.getUserId()); //自己转移给自己
         int count = customerBasicService.updateStatus(map);
         logger.info("客户移交", "客户" + customerIds + "移交给了" + ShiroKit.getUserId());
-        return new ResultTo().setData(count);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**

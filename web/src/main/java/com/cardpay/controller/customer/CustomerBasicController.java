@@ -3,6 +3,7 @@ package com.cardpay.controller.customer;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
+import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.controller.base.BaseController;
@@ -14,11 +15,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.models.Model;
 import oracle.net.aso.i;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +64,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
     public ResultTo validate(@ApiParam(value = "证件号码", required = true) int identityCard) {
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
-        return new ResultTo().setData(idCardExist);
+        return idCardExist ? new ResultTo() : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -129,7 +132,8 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
     /**
      * 按条件查询客户经理信息
-     * @param name 客户名称
+     *
+     * @param name     客户名称
      * @param IdNumber 客户证件号码
      * @return 客户信息
      */
@@ -149,17 +153,43 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
     /**
      * 客户更新页面跳转
+     *
      * @param id
      * @return
      */
     @GetMapping("/{id}")
     @SystemControllerLog(description = "客户更新页面跳转")
     @ApiOperation(value = "按id查询客户基本信息", notes = "查询客户经理信息 返回参数名称:tCustomerBasic", httpMethod = "GET")
-    public ModelAndView returnUpdate(@PathVariable("id") int id){
+    public ModelAndView returnUpdate(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("/customer/update");
         TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(id);
         modelAndView.addObject("tCustomerBasic", tCustomerBasic);
         return modelAndView;
+    }
+
+    /**
+     * 批量删除用户
+     *
+     * @param customerIds 客户id(,分割)
+     * @return 删除
+     */
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    @ApiOperation(value = "批量删除用户", notes = "改变用户状态将用户设为不可用", httpMethod = "DELETE")
+    public ResultTo deleteCustomer(@ApiParam("客户id(,分割)") @PathVariable("id") String customerIds) {
+        List<Integer> ids = new ArrayList<>();
+        String[] split = customerIds.split(",");
+        for (String id : split) {
+            int customerId = Integer.parseInt(id);
+            ids.add(customerId);
+        }
+
+        Map<String, Object> map = new HashedMap();
+        map.put("status", ConstantEnum.CustomerStatus.STATUS3); //禁用
+        map.put("customerIds", ids);
+        map.put("managerId", ShiroKit.getUserId()); //自己转移给自己
+        int count = customerBasicService.updateStatus(map);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
 }
