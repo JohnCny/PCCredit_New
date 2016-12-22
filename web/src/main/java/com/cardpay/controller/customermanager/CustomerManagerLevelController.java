@@ -37,7 +37,7 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
     @ResponseBody
     @RequestMapping(value = "/pageList",method = RequestMethod.GET)
     @ApiOperation(value = "获取客户经理级别分页数据", notes = "获取客户经理级别分页数据",  httpMethod = "GET")
-    public DataTablePage<TCustomerManagerLevel> pageList(){
+    public DataTablePage pageList(){
         return dataTablePage();
     }
 

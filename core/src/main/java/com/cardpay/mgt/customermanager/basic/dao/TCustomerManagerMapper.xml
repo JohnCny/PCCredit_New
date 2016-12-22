@@ -25,7 +25,9 @@
     SELECT CM.ID,CM.C_NAME,CML.LEVEL_NAME
     FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML
     WHERE CM.LEVEL_ID = CML.ID
-    AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+    <if test="organizationId != null">
+      AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+    </if>
     <if test="cName != null">
       AND CM.C_NAME LIKE #{cName,jdbcType=VARCHAR}
     </if>

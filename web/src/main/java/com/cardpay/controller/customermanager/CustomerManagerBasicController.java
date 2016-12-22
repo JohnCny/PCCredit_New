@@ -43,10 +43,9 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @RequestMapping(value = "/pageList",method = RequestMethod.GET)
     @ApiOperation(value = "客户经理列表页面", notes = "客户经理列表页面", httpMethod = "GET")
     public DataTablePage pageList(TCustomerManagerListVo customerManagerListVo){
-//        TCustomerManager customerManager = customerManagerService.selectByPrimaryKey(ShiroKit.getUserId());
+        TCustomerManager customerManager = customerManagerService.selectByPrimaryKey(ShiroKit.getUserId());
         Map<String, Object> map = ReflectUtil.transBean2Map(customerManagerListVo);
-//        map.put("organizationId",customerManager.getOrganizationId());
-        map.put("organizationId",2);
+        map.put("organizationId",customerManager.getOrganizationId());
         //查看当前机构下的客户经理
         return dataTablePage("selectListVo",map);
     }
