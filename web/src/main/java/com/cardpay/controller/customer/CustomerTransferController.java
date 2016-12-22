@@ -70,9 +70,9 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @SystemControllerLog
     @PutMapping("/customerTransfer")
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
-    public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) String customerIds
+    public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "状态(默认为正常)") @RequestParam(defaultValue = "0") int status
-            , @ApiParam(value = "移交原因", required = true) String reason) {
+            , @ApiParam(value = "移交原因", required = true) @RequestParam String reason) {
         List<Integer> ids = new ArrayList<>();
         //添加客户移交记录
         String[] split = customerIds.split(",");

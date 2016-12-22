@@ -53,11 +53,12 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
             idList.add(customerId);
         }
         Map<String, Object> map = new HashedMap();
-        if (null != flag && ("1").equals(flag)){
+        if (null != flag && flag==1){
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
             map.put("nowCustomerManager", ShiroKit.getUserId());
+        }else {
+            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
         }
-        map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
         map.put("customerIds", idList);
         return tCustomerIndustryDao.accept(map);
     }
