@@ -2,6 +2,7 @@ package com.cardpay.controller.customermanager;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.util.ReflectUtil;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
@@ -38,14 +39,16 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     /**
      * 客户经理列表
      */
+    @ResponseBody
     @RequestMapping(value = "/pageList",method = RequestMethod.GET)
     @ApiOperation(value = "客户经理列表页面", notes = "客户经理列表页面", httpMethod = "GET")
-    public void pageList(TCustomerManagerListVo customerManagerListVo){
-        TCustomerManager customerManager = customerManagerService.selectByPrimaryKey(ShiroKit.getUserId());
+    public DataTablePage pageList(TCustomerManagerListVo customerManagerListVo){
+//        TCustomerManager customerManager = customerManagerService.selectByPrimaryKey(ShiroKit.getUserId());
         Map<String, Object> map = ReflectUtil.transBean2Map(customerManagerListVo);
-        map.put("organizationId",customerManager.getOrganizationId());
+//        map.put("organizationId",customerManager.getOrganizationId());
+        map.put("organizationId",2);
         //查看当前机构下的客户经理
-        dataTablePage("selectListVo");
+        return dataTablePage("selectListVo",map);
     }
 
     /**

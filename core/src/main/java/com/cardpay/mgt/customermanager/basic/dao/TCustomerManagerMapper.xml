@@ -24,16 +24,16 @@
   <select id="selectListVo" resultMap="ListVoMap">
     SELECT CM.ID,CM.C_NAME,CML.LEVEL_NAME
     FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML
-    WHERE T_CUSTOMER_MANAGER.LEVEL_ID = T_CUSTOMER_MANAGER_LEVEL.ID
-    AND ORGANIZATION_ID = #{organizationId}
+    WHERE CM.LEVEL_ID = CML.ID
+    AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
     <if test="cName != null">
-      AND CM.C_NAME LIKE #{cName}
+      AND CM.C_NAME LIKE #{cName,jdbcType=VARCHAR}
     </if>
-    <if test="levelId != null">
-      AND CML.LEVEL_NAME = #{levelName}
+    <if test="levelName != null">
+      AND CML.LEVEL_NAME = #{levelName,jdbcType=VARCHAR}
     </if>
-    <if test="cName != null">
-      AND CM.ID = #{id}
+    <if test="id != null">
+      AND CM.ID = #{id,jdbcType=DECIMAL}
     </if>
   </select>
 </mapper>

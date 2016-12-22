@@ -520,18 +520,18 @@ public class BaseController<T> extends BasicController {
      *
      * @return 分页数据
      */
-    protected DataTablePage<T> dataTablePage() {
+    protected DataTablePage dataTablePage() {
         Example example = null;
         return dataTablePage(example);
     }
 
 
-    protected DataTablePage<T> dataTablePage(String methodName, Map<String, Object> map) {
+    protected DataTablePage dataTablePage(String methodName, Map<String, Object> map) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return new DataTablePage(methodName, baseService, request, map);
     }
 
-    protected DataTablePage<T> dataTablePage(String methodName) {
+    protected DataTablePage dataTablePage(String methodName) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return new DataTablePage(methodName, baseService, request);
     }
@@ -542,7 +542,7 @@ public class BaseController<T> extends BasicController {
      * @param example 自定义方法名
      * @return 分页数据
      */
-    protected DataTablePage<T> dataTablePage(Example example) {
+    protected DataTablePage dataTablePage(Example example) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         return new DataTablePage(baseService, request, getGenericityClass(), example);
