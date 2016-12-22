@@ -85,7 +85,11 @@ public class DataTablePage {
         Map<String, Object> map = JSON.parseObject(search, Map.class);
         if (StringUtils.isNotBlank(methodName)) {
             if (parameterMap != null) {
-                map.putAll(parameterMap);
+                if (map != null) {
+                    map.putAll(parameterMap);
+                } else {
+                    map = parameterMap;
+                }
             }
             Method method;
             method = baseService.getClass().getDeclaredMethod(methodName, Map.class);
