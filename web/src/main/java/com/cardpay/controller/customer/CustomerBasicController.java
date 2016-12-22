@@ -28,7 +28,7 @@ import java.util.Map;
 @Api(value = "/customerBasic", description = "客户基本信息")
 @Controller
 @RequestMapping("/customerBasic")
-public class CustomerBasicController extends BaseController<TCustomerBasic, Integer> {
+public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @Autowired
     private TCustomerBasicService customerBasicService;
 

@@ -8,6 +8,7 @@ import com.cardpay.mgt.datadictionary.model.TDataDictionary;
 import com.cardpay.mgt.datadictionary.service.TDataDictionaryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/dataDictionary")
 @Api(value = "/dataDictionary", description = "数据字典")
-public class DataDictionaryController extends BaseController<TDataDictionary,Integer>{
+public class DataDictionaryController extends BaseController<TDataDictionary>{
 
     @Autowired
     private TDataDictionaryService dataDictionaryService;
@@ -59,7 +60,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary,Int
      */
     @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "添加数据字典接口", notes = "添加数据字典",  httpMethod = "POST")
-    public ModelAndView add(@ModelAttribute TDataDictionary dataDictionary){
+    public ModelAndView add(@ApiParam("数据字典信息") @ModelAttribute TDataDictionary dataDictionary){
         dataDictionaryService.insert(dataDictionary);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("");
@@ -78,7 +79,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary,Int
     public ResultTo delete(@RequestParam("dataId") Integer dataId){
         ResultTo resultTo = new ResultTo();
         Integer result = dataDictionaryService.deleteByPrimaryKey(dataId);
-        resultTo.setCode(result==1?ResultEnum.SUCCESS.getValue():ResultEnum.SERVICE_ERROR.getValue());
+        resultTo.setIsSuccess(result);
         return resultTo;
     }
 

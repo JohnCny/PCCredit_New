@@ -27,7 +27,7 @@ import java.util.List;
 @Api(value = "/customerMaintenance", description = "客户维护")
 @Controller
 @RequestMapping("/customerMaintenance")
-public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance, Integer> {
+public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance> {
     @Autowired
     private TCustomerMaintenanceService customerMaintenanceService;
 

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/operationLog")
 @Api(value = "/loginLog", description = "操作日志日志操作")
-public class OperationLogController extends BaseController<TOperationLog, Integer> {
+public class OperationLogController extends BaseController<TOperationLog> {
 
     /**
      * 登陆日志的跳转页面

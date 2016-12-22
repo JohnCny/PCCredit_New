@@ -14,5 +14,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "/customerManagerWeekly", description = "客户经理周报")
 @RestController
 @RequestMapping("/customerManagerWeekly")
-public class CustomerManagerWeeklyController extends BaseController<TCustomerManagerWeekly, Integer> {
+public class CustomerManagerWeeklyController extends BaseController<TCustomerManagerWeekly> {
 }

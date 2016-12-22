@@ -111,6 +111,21 @@ public class ResultTo extends HashMap<String, Object> implements Serializable {
     }
 
     /**
+     * 设置更新删除是否成功，传递Int型 不为1则返回500
+     *
+     * @param result 更新或删除的返回值
+     * @return 返回自身对象this
+     */
+    public ResultTo setIsSuccess(int result) {
+        int code = result==1? ResultEnum.SUCCESS.getValue():ResultEnum.SERVICE_ERROR.getValue();
+        this.put(RS_CODE, code);
+        if (null != RS_MAP.get(code)) {
+            this.put(RS_MSG, RS_MAP.get(code));
+        }
+        return this;
+    }
+
+    /**
      * 设置错误消息和错误码，此时会以设置的错误消息为准
      *
      * @param code 状态码

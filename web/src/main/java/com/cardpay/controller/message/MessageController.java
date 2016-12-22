@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "/message", description = "消息")
 @RestController
 @RequestMapping("/message")
-public class MessageController  extends BaseController<TMessage, Integer> {
+public class MessageController  extends BaseController<TMessage> {
 }

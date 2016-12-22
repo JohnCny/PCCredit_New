@@ -22,7 +22,8 @@ import java.util.Map;
 @Api(value = "/customerManagerLevel", description = "客户经理级别")
 @RestController
 @RequestMapping("/customerManagerLevel")
-public class CustomerManagerLevelController extends BaseController<TCustomerManagerLevel, Integer> {
+public class CustomerManagerLevelController extends BaseController<TCustomerManagerLevel> {
+
     @Autowired
     private CustomerManagerLevelService customerManagerLevelService;
 

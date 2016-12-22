@@ -37,7 +37,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/role")
 @Api(value = "/role", description = "角色信息控制层")
-public class RoleController extends BaseController<Role, Integer> {
+public class RoleController extends BaseController<Role> {
 
     @Autowired
     private RoleService roleService;
