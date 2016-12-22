@@ -9,6 +9,7 @@ import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -519,12 +520,25 @@ public class BaseController<T> extends BasicController {
      * @return 分页数据
      */
     protected DataTablePage<T> dataTablePage() {
+        return dataTablePage(null);
+    }
+
+    /**
+     * 分页封装
+     *
+     * @param methodName 自定义方法名
+     * @return 分页数据
+     */
+    protected DataTablePage<T> dataTablePage(String methodName) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Class<T> entityClass = null;
         Type genericSuperclass = getClass().getGenericSuperclass();
         if (genericSuperclass instanceof ParameterizedType) {
             Type[] types = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
             entityClass = (Class<T>) types[0];
+        }
+        if (StringUtils.isNotBlank(methodName)) {
+            return new DataTablePage(methodName, baseService, request, entityClass);
         }
         return new DataTablePage(baseService, request, entityClass);
     }

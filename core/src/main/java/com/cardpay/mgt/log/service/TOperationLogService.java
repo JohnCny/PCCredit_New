@@ -8,7 +8,7 @@ import com.cardpay.mgt.log.model.TOperationLog;
  * 操作日志服务接口
  *
  * @author yanweichen
- * @create 2016-12-2016/12/21 17:14
+ * createTime 2016-12-2016/12/21 17:14
  */
 public interface TOperationLogService extends BaseService<TOperationLog> {
 
