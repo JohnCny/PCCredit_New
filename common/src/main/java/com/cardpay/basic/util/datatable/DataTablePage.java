@@ -80,7 +80,13 @@ public class DataTablePage {
         this.length = Integer.parseInt(length);
         String finalOrder = "";
         if (StringUtils.isNotBlank(order)) {
-            finalOrder = order.replaceAll("[{}\"]", "").replace(":", " ");
+            Map<String, String> map = JSON.parseObject(order, Map.class);
+            if (map != null) {
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    finalOrder = entry.getKey() + " " + entry.getValue();
+                    break;
+                }
+            }
         }
         Map<String, Object> map = JSON.parseObject(search, Map.class);
         if (StringUtils.isNotBlank(methodName)) {
