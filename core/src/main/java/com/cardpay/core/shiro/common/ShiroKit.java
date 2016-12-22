@@ -15,7 +15,7 @@ public class ShiroKit {
     /**
      * 初始密码
      */
-    public static final String DEFAULT_PASSWORD = "123";
+    public static final String DEFAULT_PASSWORD = "321";
 
     /**
      * 账号锁定

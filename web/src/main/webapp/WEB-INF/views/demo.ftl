@@ -7,8 +7,8 @@
 
 </#macro>
 <#macro breadcrumb>
-    <h1>客户</h1>
-    <h2>当前位置：客户管理 / <span class="active">客户</span></h2>
+    <h1>${title}</h1>
+    <h2>当前位置：客户管理 / <span class="active">${title}</span></h2>
 </#macro>
 <#macro content>
 
