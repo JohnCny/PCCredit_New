@@ -1,116 +1,106 @@
 <#include "layout/base.html"/>
-
+<#local title = "客户"/>
 <#macro style>
-    <style>
-        [v-cloak] {
-            display: none
-        }
-        .row{
-            width: 95%;
-            margin: 50px auto 0px;
-            border: 1px solid #6F7691;
-        }
-        .caption{
-            width: 100%;
-            height: 30px;
-            background-color: #6F7691;
-            font-size: 16px;
-            font-weight: bold;
-            line-height: 30px;
-            color: #ffffff;
-            padding-left: 10px;
-        }
-        .portlet-body{
-            width: 95%;
-            margin: 0 auto;
-        }
-        .btn-success{
-            margin-top: 20px;
-        }
-        .table-striped{
-            margin-top: 20px;
-        }
-        .table-striped thead tr th{
-            text-align: center;
-        }
-    </style>
+
 </#macro>
 <#macro css>
 
 </#macro>
 <#macro breadcrumb>
 
+    <h1>${title}</h1>
+    <h2>当前位置：客户管理 / <span class="active">${title}</span></h2>
 </#macro>
 <#macro content>
-    <div class="row">
-        <div class=" ">
-            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <div class="portlet box green">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-user"></i>
-                        全部客户
-                    </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
-                        <!--<a href="" class="fullscreen" data-original-title="" title=""> </a>-->
-                        <!--<a href="javascript:;" class="remove" data-original-title="" title=""> </a>-->
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <a href="http://localhost/customerBasic/new" class="btn btn-success" style="background-color: #6F7691"><i class="icon-add position-left"></i> 添加</a>
-                    <table class="table table-striped table-bordered table-hover  order-column" id="dtCustomers">
-                        <thead>
-                        <tr>
-                            <th>编号</th>
-                            <th>姓名</th>
-                            <th>性别</th>
-                            <th>证件号码</th>
-                            <th>出生日期</th>
-                            <th>家庭地址</th>
-                            <th colspan="2">操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
 
-                        </tr>
-                        <tr>
+    <h5>客户列表</h5>
+    <div class="search" style="width:95%">
+        <span>客户名称：<input type="text" class="short" name="cname" id="cname" ></span>
+        <span>客户证件号码：<input type="text" name="certificateNumber" id="certificateNumber"></span>
+        <input type="button" value="搜 索">
+    </div>
 
-                        </tr>
-                        <tr>
-
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <div class="table-responsive" style="margin:50px auto; width:95%;">
+        <table id="example" class="table table-bordered" style="width: 100%" >
+            <thead>
+            <tr>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>联系方式</th>
+                <th>证件号码</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+        </table>
     </div>
 
 </#macro>
-<#macro script>
-    <script>
-//        $(function () {
-//            var url = "/customerBasic/api/list";
-//            $.ajax({
-//                type:"get",
-//                url:url,
-//                success:function (data) {
-//                    var result = data['data'];
-//                    console.log(result[0].id);
-//                    for(var i = 0; i <= result.length; i ++){
-//                        $(".table-striped tbody tr:eq(i) td" +
-//                                "" +
-//                                "").html(result[0].id);
-//                    }
-//                }
-//            })
-//        })
-    </script>
 
+<#macro script>
 
 </#macro>
+
 <#macro js>
+
+    <script>
+        var url  = {
+            "urlList":"/customerMaintenance/maintenanceList",
+            "urlNew" : "/customerBasic/new",
+            "urlDel" : "/customerBasic",
+            "urlEdit" : "/customerBasic"
+        }
+        var tableId = $("#example");
+        var searchObj = {
+            "cname":$("#cname").val(),
+            "tel":$("#tel").val(),
+            "certificateNumber":$("#certificateNumber").val(),
+            "createTime":$("#createTime").val()
+        };
+        var ajax ={
+            "type" : "GET",
+            "url" : url["urlList"],
+            "data" : function(d){
+                d.search = searchObj
+            }
+        };
+        var aoColumns = [{
+            "mData" : "cname",
+        },{
+            "mData" : "sex",
+            "sDefaultContent" : "",
+            "render" : function(data, type, full, meta) {
+                return	data?"男":"女";
+            }
+        },{
+            "mData" : "tel",
+        },{
+            "mData" : "certificateNumber",
+        },{
+            "mData" : "createTime",
+            "sDefaultContent" : "",
+            "render" : function(data, type, full, meta) {
+                //时间格式化
+                return  moment(data).format("YYYY-MM-DD");
+            }
+        },{
+            "mData" : "id",
+            "sDefaultContent" : "",
+            "render" : function(data, type, full, meta) {
+                return  '<a onclick="deleRow()" class="btn btn-danger deleteOne" href="javaScript:;" data-id='+data+'>删除</a><a onclick="deleRow()" class="btn btn-info editOne" href="" data-id='+data+'>编辑</a>';
+            }
+        }];
+
+        var options = {
+            "urlNew" : url['urlNew'],
+            "urlDel" : url['urlDel'],
+            "urlEdit" : url['urlEdit'],
+            "tableId" : tableId,
+            "ajax" : ajax,
+            "aoColumns" : aoColumns
+        }
+        myDataTable(options);
+
+    </script>
 
 </#macro>

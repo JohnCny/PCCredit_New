@@ -22,7 +22,7 @@
             margin-left: 10%;
             margin-top: 50px;
         }
-        @media screen and (max-width: 1200px){
+        @media screen and (max-width: 1300px){
             .widclas{
                 width: 30%;
                 float: left;
@@ -193,7 +193,7 @@
                     data:Obj,
                     success: function(res){
                         if(res.code == 200){
-                            location.href="/customerBasic/customer";
+                            location.href="/customerBasic/index";
                         }
                     },
                     error:function () {
