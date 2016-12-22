@@ -127,7 +127,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @SystemControllerLog(description = "跳转查询客户页面")
     @ApiOperation(value = "跳转查询客户页面", notes = "查询客户页面", httpMethod = "GET")
     public ModelAndView returnCustomerList() {
-        return new ModelAndView("/customer/index");
+        return new ModelAndView("customer/index");
     }
 
     /**

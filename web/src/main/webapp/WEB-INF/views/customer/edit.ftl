@@ -1,5 +1,5 @@
 <#include "layout/base.html"/>
-<#assign title = "客户"/>
+
 <#macro style>
     <style>
         input,select{
@@ -10,11 +10,9 @@
             display: none
         }
         .cus_content{
-            /*border: 1px solid #6F7691;*/
+            border: 1px solid #6F7691;
             padding-bottom: 30px;
             float: left;
-            margin-left:2.5%;
-            background-color: #F7F7F7;
         }
 
         .widclas{
@@ -50,11 +48,6 @@
         .contain{
             margin: 50px 0 0 8.7%;
         }
-        .title_head{
-            width: 100%;
-            height: 20px;
-            border-bottom: 1px solid black;
-        }
     </style>
 </#macro>
 <#macro css>
@@ -62,14 +55,14 @@
 </#macro>
 <#macro breadcrumb>
 
-    <h1>新建客户</h1>
-    <h2>当前位置：客户管理 / <span class="active">${title}</span></h2>
 </#macro>
 <#macro content>
 
     <div class="row new_customer">
-        <div class="title_head"></div>
         <div class=" cus_content">
+            <div class="create">
+                新建
+            </div>
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <form action="">
                 <div class="widclas">
@@ -200,7 +193,7 @@
                     data:Obj,
                     success: function(res){
                         if(res.code == 200){
-                            location.href="/customerBasic/success";
+                            //location.href="/customerBasic/success";
                         }
                     },
                     error:function () {
