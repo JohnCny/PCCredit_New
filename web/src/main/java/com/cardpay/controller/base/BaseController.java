@@ -19,6 +19,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.ParameterizedType;
@@ -520,16 +521,23 @@ public class BaseController<T> extends BasicController {
      * @return 分页数据
      */
     protected DataTablePage<T> dataTablePage() {
-        return dataTablePage(null);
+        Example example = null;
+        return dataTablePage(example);
+    }
+
+
+    protected DataTablePage<T> dataTablePage(String methodName) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return new DataTablePage(methodName, baseService, request);
     }
 
     /**
      * 分页封装
      *
-     * @param methodName 自定义方法名
+     * @param example 自定义方法名
      * @return 分页数据
      */
-    protected DataTablePage<T> dataTablePage(String methodName) {
+    protected DataTablePage<T> dataTablePage(Example example) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Class<T> entityClass = null;
         Type genericSuperclass = getClass().getGenericSuperclass();
@@ -537,10 +545,7 @@ public class BaseController<T> extends BasicController {
             Type[] types = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
             entityClass = (Class<T>) types[0];
         }
-        if (StringUtils.isNotBlank(methodName)) {
-            return new DataTablePage(methodName, baseService, request, entityClass);
-        }
-        return new DataTablePage(baseService, request, entityClass);
+        return new DataTablePage(baseService, request, entityClass, example);
     }
 
 //-----------------根据实际情况选择需要的接口------------------------
