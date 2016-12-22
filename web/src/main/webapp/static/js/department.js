@@ -1,5 +1,4 @@
 var myDataTable = function(options){
-	
 	var table = tableId.DataTable({
 		"aLengthMenu":[10,20,40,60],
 		"searching":false,//禁用搜索,自定义搜索
@@ -43,7 +42,7 @@ var myDataTable = function(options){
 				"sLast" : "最后一页"
 			}
 		},
-		initComplete:initComplete,
+		initComplete : initComplete,
 	});
 }
 
@@ -62,13 +61,10 @@ function initComplete(data){
 		'<button class="btn btn-info btn-sm" id="expCsv">导出全部</button>' +
 		'<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>';
 	$("#topPlugin").append(topPlugin);//在表格上方topPlugin DIV中追加HTML
-		
-
+	$(".addBtn").attr("href",'sdfafd');
 }
 
-function newFun(url){
-	$(".addBtn").attr("href",url);
-}
+
 
 
 

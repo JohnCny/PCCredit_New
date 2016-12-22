@@ -73,54 +73,58 @@
 </#macro>
 
 <#macro js>
-    <script>
-            var tableId = $("#example");
-            var ajax ={
-                "type" : "GET",
-                "url" : "/customerBasic/api/list",
-                "data" : function(d){
-                    d.search = {
-                        "cname":$("#cname").val(),
-                        "tel":$("#tel").val(),
-                        "certificateNumber":$("#certificateNumber").val(),
-                        "createTime":$("#createTime").val()
-                    }
-                }
-            };
-            var aoColumns = [{
-                "mData" : "id",
-            },{
-                "mData" : "cname",
-            },{
-                "mData" : "sex",
-                "sDefaultContent" : "",
-                "render" : function(data, type, full, meta) {
-                    return	data?"男":"女";
-                }
-            },{
-                "mData" : "tel",
-            },{
-                "mData" : "certificateNumber",
-            },{
-                "mData" : "createTime",
-                "sDefaultContent" : "",
-                "render" : function(data, type, full, meta) {
-                    //时间格式化
-                    return  moment(data).format("YYYY-MM-DD");
-                }
-            },{
-                "mData" : "id",
-                "sDefaultContent" : "",
-                "render" : function(data, type, full, meta) {
-                    return  '<a class="btn btn-danger deleteOne" href="" data-id='+data+'>删除</a>';
-                }
-            }];
 
-            var options = {
-                "tableId" : tableId,
-                "ajax" : ajax,
-                "aoColumns" : aoColumns
+    <script>
+
+        var searchObj = {
+            "cname":$("#cname").val(),
+            "tel":$("#tel").val(),
+            "certificateNumber":$("#certificateNumber").val(),
+            "createTime":$("#createTime").val()
+        };
+        var tableId = $("#example");
+        var ajax ={
+            "type" : "GET",
+            "url" : "/customerBasic/customer",
+            "data" : function(d){
+                d.search = searchObj
             }
+        };
+        var aoColumns = [{
+            "mData" : "id",
+        },{
+            "mData" : "cname",
+        },{
+            "mData" : "sex",
+            "sDefaultContent" : "",
+            "render" : function(data, type, full, meta) {
+                return	data?"男":"女";
+            }
+        },{
+            "mData" : "tel",
+        },{
+            "mData" : "certificateNumber",
+        },{
+            "mData" : "createTime",
+            "sDefaultContent" : "",
+            "render" : function(data, type, full, meta) {
+                //时间格式化
+                return  moment(data).format("YYYY-MM-DD");
+            }
+        },{
+            "mData" : "id",
+            "sDefaultContent" : "",
+            "render" : function(data, type, full, meta) {
+                return  '<a class="btn btn-danger deleteOne" href="" data-id='+data+'>删除</a>';
+            }
+        }];
+
+        var options = {
+            "tableId" : tableId,
+            "ajax" : ajax,
+            "aoColumns" : aoColumns
+        }
+        myDataTable(options);
 
     </script>
 
