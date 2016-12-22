@@ -3,8 +3,10 @@ package com.cardpay.basic.util;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * request工具
+ *
  * @author rankai
- * @create 2016-12-2016/12/21 17:29
+ *         Timecreate 2016-12-2016/12/21 17:29
  */
 public class RequestUtil {
     public static String getRemoteHost(HttpServletRequest request) {
