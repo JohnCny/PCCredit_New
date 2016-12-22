@@ -8,8 +8,8 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
-import com.cardpay.mgt.manager.customermanager.model.TCustomerManager;
-import com.cardpay.mgt.manager.customermanager.service.CustomerManagerService;
+import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
+import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,7 +27,7 @@ import java.util.List;
 @Api(value = "/customerMaintenance", description = "客户维护")
 @Controller
 @RequestMapping("/customerMaintenance")
-public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance, Integer> {
+public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance> {
     @Autowired
     private TCustomerMaintenanceService customerMaintenanceService;
 

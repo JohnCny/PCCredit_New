@@ -25,7 +25,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/productOrganization")
 @Api(value = "/productOrganization", description = "产品机构关联")
-public class ProductOrganizationController extends BaseController<TProductOrganization, Integer> {
+public class ProductOrganizationController extends BaseController<TProductOrganization> {
     @Autowired //产品机构关联Service
     private TProductOrganizationService tProductOrganizationService;
 

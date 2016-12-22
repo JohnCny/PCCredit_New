@@ -27,7 +27,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/product")
 @Api(value = "/product", description = "产品管理")
-public class ProductController extends BaseController<TProduct, Integer> {
+public class ProductController extends BaseController<TProduct> {
     @Autowired //产品Service
     private TProductService tProductService;
 

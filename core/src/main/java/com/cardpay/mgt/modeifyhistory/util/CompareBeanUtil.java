@@ -29,6 +29,7 @@ public class CompareBeanUtil {
      * @param baseService 对应的Service
      * @param moduleName 模块英文名
      * @param moduleNameZh 模块中文名
+     * @param user 用户
      * @param <T> 类型
      */
     public static <T extends GenericEntity<?>> void compareBean(T bean, BaseService<T> baseService, String moduleName,
@@ -45,6 +46,7 @@ public class CompareBeanUtil {
      * @param newBean 修改后的bean
      * @param moduleName 模块英文名
      * @param moduleNameZh 模块中文
+     * @param user 用户
      * @param <T> 类型
      * @return 该Bean的对比结果列表
      */
