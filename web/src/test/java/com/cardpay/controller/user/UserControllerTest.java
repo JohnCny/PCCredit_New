@@ -20,9 +20,25 @@ public class UserControllerTest extends TestEnv {
     @Test
     public void pageList() throws Exception {
 
-        String json = "{\"username\":\"rankai\"}";
+        String search = "{\"username\":\"rankai\"}";
+        String order = "{\"id\":\"desc\"}";
         mockMvc.perform(get("/user/jsonList")
-                .param("start", "1").param("length", "10").param("search", json))
+                .param("start", "1").param("length", "10").param("search", search).param("order", order))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+        mockMvc.perform(get("/user/jsonList")
+                .param("start", "1").param("length", "10"))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+        mockMvc.perform(get("/user/jsonList")
+                .param("start", "1").param("length", "10").param("search", search))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+        mockMvc.perform(get("/user/jsonList")
+                .param("start", "1").param("length", "10").param("order", order))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }

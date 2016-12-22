@@ -1,7 +1,7 @@
 package com.cardpay.mgt.customer.service.impl;
 
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
-import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -35,10 +35,10 @@ public class TCustomerTransferServiceImplTest {
 
     @Test
     public void queryTransfer() throws Exception {
-        List<TCustomerTransferVo> tCustomerTransferVos = new ArrayList<>();
-        tCustomerTransferVos.add(new TCustomerTransferVo());
+        List<TCustomerVo> tCustomerTransferVos = new ArrayList<>();
+        tCustomerTransferVos.add(new TCustomerVo());
         when(tCustomerTransferDao.queryTransfer(0, 1)).thenReturn(tCustomerTransferVos);
-        List<TCustomerTransferVo> tCustomerTransferVos1 = tCustomerTransferService.queryTransfer(0, 1);
+        List<TCustomerVo> tCustomerTransferVos1 = tCustomerTransferService.queryTransfer(0, 1);
         assertTrue(tCustomerTransferVos1.size() > 0);
     }
 
