@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/user")
 @Api(value = "/user", description = "用户控制层")
-public class UserController extends BaseController<User, Integer> {
+public class UserController extends BaseController<User> {
 
     private static final String UPDATE_PASSWORD_PAGE = "/user/change_password";
 

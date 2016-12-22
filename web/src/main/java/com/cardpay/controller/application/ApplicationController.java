@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/application/")
 @Api(value = "/application", description = "进件Controller类")
-public class ApplicationController extends BaseController<TApplication, Integer> {
+public class ApplicationController extends BaseController<TApplication> {
     @Autowired //进件
     private TApplicationService tApplicationService;
 

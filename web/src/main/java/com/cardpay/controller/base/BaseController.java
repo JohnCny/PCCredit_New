@@ -32,7 +32,7 @@ import java.util.Map;
  * @author rankai
  * @create 2016-12-2016/12/21 10:22
  */
-public class BaseController<T, PK> extends BasicController {
+public class BaseController<T> extends BasicController {
 
     /**
      * dozer mapper
