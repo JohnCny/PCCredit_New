@@ -5,7 +5,7 @@ import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
-import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     }
 
     @Override
-    public List<TCustomerTransferVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId) {
+    public List<TCustomerVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId) {
         return tCustomerIndustryDao.queryTransfer(status, managerId);
     }
 }

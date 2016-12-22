@@ -2,7 +2,7 @@ package com.cardpay.mgt.customer.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
-import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,6 +21,6 @@ public interface TCustomerTransferMapper extends BasicMapper<TCustomerTransfer> 
      * @param managerId 客户经理id
      * @return 客户接受列表
      */
-    List<TCustomerTransferVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId);
+    List<TCustomerVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId);
 
 }

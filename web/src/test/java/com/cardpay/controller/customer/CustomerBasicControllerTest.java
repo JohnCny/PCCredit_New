@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CustomerBasicControllerTest extends TestEnv {
 
     @Test
+    @Ignore
     public void update() throws Exception {
         mockMvc.perform(put("/customerBasic/")
                 .param("id", "1"))
@@ -25,6 +26,7 @@ public class CustomerBasicControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void queryCustomer() throws Exception {
         mockMvc.perform(put("/customerBasic/customer")
                 .param("id", "1"))
@@ -33,37 +35,10 @@ public class CustomerBasicControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void changeCustomer() throws Exception {
         mockMvc.perform(put("/customerBasic/customerStatus")
                 .param("id", "1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
-
-    @Test
-    public void getCertList() throws Exception {
-        mockMvc.perform(get("/customerBasic/certList"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
-
-    @Test
-    public void getEducationDegreeList() throws Exception {
-        mockMvc.perform(get("/customerBasic/educationDegreeList"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
-
-    @Test
-    public void getMarriageStatusList() throws Exception {
-        mockMvc.perform(get("/customerBasic/marriageStatusList"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
-
-    @Test
-    public void getCustomerStatusList() throws Exception {
-        mockMvc.perform(get("/customerBasic/customerStatusList"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }

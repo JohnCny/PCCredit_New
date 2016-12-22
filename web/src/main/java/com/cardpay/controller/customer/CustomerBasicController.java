@@ -2,6 +2,7 @@ package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -70,23 +71,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
-        return new ResultTo().setData(count);
-    }
-
-    /**
-     * 查询客户经理所属客户
-     *
-     * @return 客户id:客户名称
-     */
-    @GetMapping("/customer")
-    @ApiOperation(value = "查询客户经理所属客户", notes = "客户经理基本信息更新", httpMethod = "GET")
-    public ModelAndView queryCustomer() {
-        ModelAndView modelAndView = new ModelAndView();
-        ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
-        returnMapParam.put("managerId", ShiroKit.getUserId());
-        Map<Integer, String> queryCustomer = customerBasicService.queryCustomer(returnMapParam);
-        modelAndView.addObject("queryCustomer", queryCustomer);
-        return modelAndView;
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -99,19 +84,20 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @PostMapping("")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
-        Integer insert = customerBasicService.insertSelective(tCustomerBasic);
-        return new ResultTo().setData(insert);
+        Integer count = customerBasicService.insertSelective(tCustomerBasic);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
      * 跳转新建客户经理页面
+     *
      * @return 客户经理新建页面
      */
     @GetMapping("/new")
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
-    public ModelAndView returnNewCustomer(){
+    public ModelAndView returnNewCustomer() {
         ModelAndView modelAndView = new ModelAndView("/customer/new");
-        Map<String,  List<SelectModel>> dropDownList = new HashMap<>();
+        Map<String, List<SelectModel>> dropDownList = new HashMap<>();
         List<SelectModel> cert = customerBasicService.getCert();
         List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
         List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
@@ -124,14 +110,32 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
     /**
      * 跳转查询客户页面
+     *
      * @return 客户列表
      */
     @GetMapping("/success")
-    @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
-    public ModelAndView returnCustomerList(){
-        ModelAndView modelAndView = new ModelAndView("/customer/customer");
-        List<TCustomerBasic> tCustomerBasicList = customerBasicService.queryCustomerList(ShiroKit.getUserId());
-        modelAndView.addObject("tCustomerBasicList", tCustomerBasicList);
-        return modelAndView;
+    @ApiOperation(value = "跳转查询客户页面", notes = "查询客户页面", httpMethod = "GET")
+    public ModelAndView returnCustomerList() {
+        return new ModelAndView("/customer/index");
     }
+
+    /**
+     * 按条件查询客户经理信息
+     * @param name 客户名称
+     * @param IdNumber 客户证件号码
+     * @return 客户信息
+     */
+    @ResponseBody
+    @GetMapping("/condition")
+    @ApiOperation(value = "按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
+    public ResultTo queryCondition(@ApiParam("客户名称") String name, @ApiParam("客户证件号码") String IdNumber) {
+        TCustomerBasic tCustomerBasic = new TCustomerBasic();
+        tCustomerBasic.setCname(name);
+        tCustomerBasic.setCertificateNumber(IdNumber);
+        tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
+        List<TCustomerBasic> tCustomerBasics = customerBasicService.queryCustomerByCondition(tCustomerBasic);
+        return new ResultTo().setData(tCustomerBasics);
+    }
+
+
 }
