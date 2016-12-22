@@ -61,9 +61,10 @@ var myDataTable = function(options){
 			$(".addBtn").attr("href",options.urlNew);
 			$(document).on("click",".deleteOne",function(){
 				var id=$(this).data("id");
+				console.log(id);
+				console.log(options.urlDel);
 				$.ajax({
-					url : options.urlDel+"{"+id+"}",
-					data : id,
+					url : options.urlDel+id,
 					type : "DELETE",
 					success: function(data){
 						if(data.code == 200){
@@ -122,30 +123,12 @@ var myDataTable = function(options){
 
 			/* 自定义搜索  姓名  联系方式  证件号码  创建时间 */
 			$(document).delegate('.search','click',function() {
-				var arrVal = [],arrKey=[];
-				var username = $("#username").val();
-				var email = $("#email").val();
-
-				if(username){
-					arrKey.push("username")
-					arrVal.push(username);
-					username="";
-				}
-				if(email){
-					arrKey.push("email")
-					arrVal.push(email);
-					email="";
-				}
-				for(var i=0;i<arrKey.length;i++){
-					QK_searchObj[arrKey[i]] = arrVal[i]
-				}
-
-				/*QK_searchObj = {
+				QK_searchObj = {
 					"cname" : $("#cname").val(),
 					"certificateNumber" : $("#certificateNumber").val(),
 					"username" : $("#username").val(),
-					"email" : email
-				};*/
+					"email" : $("#email").val()
+				};
 				table.ajax.reload();
 			});
 		},

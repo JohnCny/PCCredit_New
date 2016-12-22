@@ -173,6 +173,7 @@
     <script>
         $(document).ready(function(){
             var url = "/customerBasic";
+            var urls = "/customerBasic/idCardExist";
             var Obj = {};
             var arr = ["cname","sex","certificateType","certificateNumber","tel","homeAddress","marriageStatus","educationDegree"];
             var createTime = "createTime",modifyTime = "modifyTime";
@@ -209,6 +210,14 @@
 
                     }
                 });
+            });
+            $("#certificateNumber").onblur(function () {
+                $.ajax({
+                    type:"get",
+                    url:urls,
+                    
+
+                })
             });
 
         });
