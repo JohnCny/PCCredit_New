@@ -15,6 +15,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author yanweichen
  */
 public class CustomerBasicControllerTest extends TestEnv {
+    @Test
+    @Ignore
+    public void returnUpdate() throws Exception {
+        mockMvc.perform(get("/customerBasic/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
+    }
 
     @Test
     @Ignore

@@ -2,6 +2,7 @@ package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
+import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.controller.base.BaseController;
@@ -11,6 +12,7 @@ import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.models.Model;
 import oracle.net.aso.i;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @GetMapping("/prospectiveCustomers")
+    @SystemControllerLog
     @ApiOperation(value = "查询潜在客户列表", notes = "潜在客户列表", httpMethod = "GET")
     public ResultTo getProspectiveCustomers() {
         List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(ShiroKit.getUserId());
@@ -54,6 +57,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @GetMapping("/idCardExist")
+    @SystemControllerLog
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
     public ResultTo validate(@ApiParam(value = "证件号码", required = true) int identityCard) {
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
@@ -68,6 +72,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @PutMapping("")
+    @SystemControllerLog
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
@@ -82,6 +87,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @PostMapping("")
+    @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
@@ -94,6 +100,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 客户经理新建页面
      */
     @GetMapping("/new")
+    @SystemControllerLog(description = "跳转新建客户经理页面")
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
     public ModelAndView returnNewCustomer() {
         ModelAndView modelAndView = new ModelAndView("/customer/new");
@@ -114,6 +121,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 客户列表
      */
     @GetMapping("/success")
+    @SystemControllerLog(description = "跳转查询客户页面")
     @ApiOperation(value = "跳转查询客户页面", notes = "查询客户页面", httpMethod = "GET")
     public ModelAndView returnCustomerList() {
         return new ModelAndView("/customer/index");
@@ -127,8 +135,10 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @GetMapping("/condition")
+    @SystemControllerLog(description = "按条件查询客户经理信息")
     @ApiOperation(value = "按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
-    public ResultTo queryCondition(@ApiParam("客户名称") String name, @ApiParam("客户证件号码") String IdNumber) {
+    public ResultTo queryCondition(@ApiParam("客户名称") @RequestParam String name
+            , @ApiParam("客户证件号码") @RequestParam String IdNumber) {
         TCustomerBasic tCustomerBasic = new TCustomerBasic();
         tCustomerBasic.setCname(name);
         tCustomerBasic.setCertificateNumber(IdNumber);
@@ -137,5 +147,19 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         return new ResultTo().setData(tCustomerBasics);
     }
 
+    /**
+     * 客户更新页面跳转
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @SystemControllerLog(description = "客户更新页面跳转")
+    @ApiOperation(value = "按id查询客户基本信息", notes = "查询客户经理信息 返回参数名称:tCustomerBasic", httpMethod = "GET")
+    public ModelAndView returnUpdate(@PathVariable("id") int id){
+        ModelAndView modelAndView = new ModelAndView("/customer/update");
+        TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(id);
+        modelAndView.addObject("tCustomerBasic", tCustomerBasic);
+        return modelAndView;
+    }
 
 }
