@@ -3,8 +3,12 @@ package com.cardpay.mgt.customer.service.impl;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
+import com.cardpay.mgt.customer.dao.TCustomerMaintenanceMapper;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
+import com.cardpay.mgt.customer.model.vo.TCustomerMaintenanceVo;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +20,9 @@ import java.util.List;
  */
 @Service
 public class TCustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMaintenance> implements TCustomerMaintenanceService {
+    @Autowired
+    private TCustomerMaintenanceMapper tCustomerMaintenanceDao;
+
     @Override
     public List<SelectModel> getMaintenanceType(){
         List<SelectModel> selects = new ArrayList<>();
@@ -26,6 +33,11 @@ public class TCustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMa
             selects.add(selectModel);
         }
         return selects;
+    }
+
+    @Override
+    public List<TCustomerMaintenanceVo> queryCustomerByCondition(TCustomerBasic tCustomerBasic) {
+        return tCustomerMaintenanceDao.queryCustomerByCondition(tCustomerBasic);
     }
 
 }

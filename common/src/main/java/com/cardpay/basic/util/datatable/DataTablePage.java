@@ -6,11 +6,13 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 /**
  * DataTable工具类
@@ -26,9 +28,9 @@ public class DataTablePage<T> {
     private long recordsTotal; // 数据总记录数
     private List<T> data;
 
-    public DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request, Class<T> clazz) {
+    public DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request) {
         try {
-            DataTablePage(methodName, baseService, request, clazz);
+            DataTablePage(methodName, baseService, request, null, null);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -40,9 +42,9 @@ public class DataTablePage<T> {
         }
     }
 
-    public DataTablePage(BaseService<T> baseService, HttpServletRequest request, Class<T> clazz) {
+    public DataTablePage(BaseService<T> baseService, HttpServletRequest request, Class<T> clazz, Example example) {
         try {
-            DataTablePage(null, baseService, request, clazz);
+            DataTablePage(null, baseService, request, clazz, example);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -54,39 +56,37 @@ public class DataTablePage<T> {
         }
     }
 
-    private void DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request, Class<T> clazz) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    private void DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request, Class<T> clazz, Example example) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         String start = request.getParameter("start");
         String length = request.getParameter("length");
         String search = request.getParameter("search");
         String order = request.getParameter("order");
         LogTemplate.info(this.getClass(), "message(BasePage)", "[start:" + start + "][length" + length + "][search" + search + "][order" + order + "]");
-        try {
-            this.start = Integer.parseInt(start);
-            this.length = Integer.parseInt(length);
-        } catch (Exception e) {
-            LogTemplate.error(this.getClass(), e, "message", "传入的参数有误");
-        }
-        T finalClass = null;
-        if (StringUtils.isNotBlank(search)) {
-            finalClass = JSON.parseObject(search, clazz);
-        }
-        if (finalClass == null) {
-            finalClass = clazz.newInstance();
-        }
+        this.start = Integer.parseInt(start);
+        this.length = Integer.parseInt(length);
         String finalOrder = "";
         if (StringUtils.isNotBlank(order)) {
             finalOrder = order.replaceAll("[{}\"]", "").replace(":", " ");
         }
+        Map<String, Object> map = JSON.parseObject(search, Map.class);
         if (StringUtils.isNotBlank(methodName)) {
-            PageHelper.startPage(this.start, this.length);
-            if (!finalOrder.isEmpty()) {
-                PageHelper.orderBy(finalOrder);
-            }
             Method method;
-            method = baseService.getClass().getDeclaredMethod(methodName, finalClass.getClass());
-            data = (List<T>) method.invoke(baseService, clazz);
+            method = baseService.getClass().getDeclaredMethod(methodName, Map.class);
+            PageHelper.startPage(this.start, this.length);
+            PageHelper.orderBy(finalOrder);
+            data = (List<T>) method.invoke(baseService, map);
         } else {
-            data = baseService.pageList(finalClass, this.start, this.length, finalOrder);
+            if (example == null) {
+                example = new Example(clazz);
+                example.orderBy(finalOrder);
+                if (map != null) {
+                    Example.Criteria criteria = example.createCriteria();
+                    for (Map.Entry<String, Object> entry : map.entrySet()) {
+                        criteria.andEqualTo(entry.getKey(), entry.getValue());
+                    }
+                }
+            }
+            data = baseService.pageList(example, this.start, this.length);
         }
         PageInfo pageInfo = new PageInfo(this.data);
         setRecordsTotal(pageInfo.getTotal());

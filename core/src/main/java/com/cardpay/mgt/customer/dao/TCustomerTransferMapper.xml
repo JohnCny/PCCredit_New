@@ -12,7 +12,7 @@
         <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
     </resultMap>
 
-    <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
+    <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerVo">
         <result column="ID" jdbcType="DECIMAL" property="customerId"/>
         <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
         <result column="CUSTOMER_CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="customerCertificateNumber"/>

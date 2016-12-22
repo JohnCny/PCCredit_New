@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.dozer.Mapping;
 
 import java.util.Date;
 import javax.persistence.*;

@@ -2,12 +2,14 @@ package com.cardpay.mgt.customer.dao;
 
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.user.model.User;
 import com.cardpay.util.TestEnv;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,11 +36,10 @@ public class TCustomerBasicMapperTest extends TestEnv{
     }
 
     @Test
+    @Ignore
     public void queryCustomer() throws Exception {
-        ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
+        ReturnMapParam returnMapParam = new ReturnMapParam("id", "cname");
         returnMapParam.put("managerId", 1);
-        Map map = tCustomerBasicMapper.queryCustomer(returnMapParam);
-        assertTrue(map.size()>0);
     }
 
     @Test
@@ -46,16 +47,23 @@ public class TCustomerBasicMapperTest extends TestEnv{
     public void updateStatus() throws Exception {
         Map<String, Object> map = new HashedMap();
         map.put("status", 1);
-        map.put("customerIds", 1);
+        List<Integer> list = new ArrayList<Integer>(){{
+            add(1);
+            add(2);
+        }};
+        map.put("customerIds", list);
         map.put("managerId", "1");
         int i = tCustomerBasicMapper.updateStatus(map);
         assertTrue(i > 0);
     }
 
     @Test
-    public void queryCustomerList() throws Exception {
-        List<TCustomerBasic> tCustomerBasics = tCustomerBasicMapper.queryCustomerList(1);
+    public void queryCustomerByCondition() throws Exception {
+        TCustomerBasic tCustomerBasic = new TCustomerBasic();
+        tCustomerBasic.setCustomerManagerId(1);
+        tCustomerBasic.setCname("1asd");
+        tCustomerBasic.setCertificateNumber("11");
+        List<TCustomerBasic> tCustomerBasics = tCustomerBasicMapper.queryCustomerByCondition(tCustomerBasic);
         assertTrue(tCustomerBasics.size() > 0);
     }
-
 }
