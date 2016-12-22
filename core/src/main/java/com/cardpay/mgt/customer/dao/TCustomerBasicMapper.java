@@ -1,9 +1,8 @@
 package com.cardpay.mgt.customer.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.customer.model.vo.TCustomerVo;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @param managerId 客户经理Id
      * @return 客户id, 客户名称
      */
-    List<TCustomerVo> queryCustomer(@Param("managerId") int managerId);
+    List<TCustomerTransferVo> queryCustomer(@Param("managerId") int managerId);
 
     /**
      * 更新客户状态
@@ -44,9 +43,9 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
     int updateStatus(Map<String, Object> map);
 
     /**
-     * 查询客户
-     * @param managerId 客户经理Id
+     * 按条件查询客户信息
+     * @param tCustomerBasic 客户基本信息
      * @return 客户列表
      */
-    List<TCustomerBasic> queryCustomerList(@Param("managerId") int managerId);
+    List<TCustomerBasic> queryCustomerByCondition(TCustomerBasic tCustomerBasic);
 }

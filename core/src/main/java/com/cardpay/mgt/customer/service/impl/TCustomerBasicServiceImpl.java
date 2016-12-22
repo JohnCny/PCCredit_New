@@ -1,17 +1,18 @@
 package com.cardpay.mgt.customer.service.impl;
 
+import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
-import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.TCustomerMaintenance;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
-import org.apache.commons.collections.MapUtils;
-import org.apache.ibatis.annotations.Param;
-import org.pdfbox.util.MapUtil;
-import org.springframework.beans.BeanUtils;
+import com.cardpay.mgt.manager.customermanager.model.TCustomerManager;
+import com.cardpay.mgt.manager.customermanager.service.CustomerManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,9 @@ import java.util.Map;
 public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements TCustomerBasicService {
     @Autowired
     private TCustomerBasicMapper customerBasicDao;
+
+    @Autowired//客户经理Service
+    private CustomerManagerService customerManagerService;
 
     @Override
     public List<SelectModel> getCert() {
@@ -88,7 +92,7 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public  List<TCustomerVo> queryCustomer(int managerId) {
+    public  List<TCustomerTransferVo> queryCustomer(int managerId) {
         return customerBasicDao.queryCustomer(managerId);
     }
 
@@ -99,7 +103,7 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public List<TCustomerBasic> queryCustomerList(int managerId) {
-        return customerBasicDao.queryCustomerList(managerId);
+    public List<TCustomerBasic> queryCustomerByCondition(TCustomerBasic tCustomerBasic) {
+        return customerBasicDao.queryCustomerByCondition(tCustomerBasic);
     }
 }
