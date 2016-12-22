@@ -4,9 +4,11 @@ import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.basic.base.service.BaseService;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -174,11 +176,26 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @param record 实体
      * @param page   页数
      * @param size   个数
-     * @return 分页实体个数
+     * @return 分页数据
+     */
+    public List<T> pageList(T record, Integer page, Integer size) {
+        return pageList(record, page, size, null);
+    }
+
+    /**
+     * 根据实体属性和RowBounds进行分页查询,以page作为开始参数
+     *
+     * @param record 实体
+     * @param page   页数
+     * @param size   个数
+     * @return 分页数据
      */
     @Override
-    public List<T> pageList(T record, Integer page, Integer size) {
+    public List<T> pageList(T record, Integer page, Integer size, String order) {
         PageHelper.startPage(page, size);
+        if (StringUtils.isNotBlank(order)) {
+            PageHelper.orderBy(order);
+        }
         return mapper.select(record);
     }
 }
