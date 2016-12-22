@@ -2,6 +2,7 @@ package com.cardpay.controller.customer;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
+import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      */
     @ResponseBody
     @GetMapping("/maintenanceTypeList")
+    @SystemControllerLog
     @ApiOperation(value = "维护类型类型", notes = "维护类型", httpMethod = "GET")
     public ResultTo getMaintenanceTypeList() {
         List<SelectModel> maintenanceType = customerMaintenanceService.getMaintenanceType();
@@ -58,6 +61,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      */
     @ResponseBody
     @GetMapping("")
+    @SystemControllerLog
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public ResultTo queryByCondition(@ApiParam(value = "查询条件") @ModelAttribute TCustomerBasic tCustomerBasic) {
         tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
@@ -71,10 +75,19 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 客户维护信息查询页面
      */
     @PostMapping("")
+    @SystemControllerLog
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
     public String insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance){
         customerMaintenanceService.insertSelective(tCustomerMaintenance);
         return "redirect:/maintenanceTypeList";
     }
 
+   @GetMapping("/{id}")
+   @SystemControllerLog
+   @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "GET")
+    public ModelAndView returnUpdate(@PathVariable("id") int customerId){
+       ModelAndView modelAndView = new ModelAndView("");
+
+       return modelAndView;
+   }
 }
