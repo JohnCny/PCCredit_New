@@ -21,6 +21,12 @@
         <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
     </resultMap>
 
+    <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
+        <result column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+
+
     <!--潜在客户挖掘-->
     <select id="getProspectiveCustomers" resultMap="BaseResultMap">
         SELECT c.*
@@ -45,7 +51,7 @@
     </select>
 
     <!--查询客户经理所属客户返回id和name-->
-    <select id="queryCustomer" resultType="Map" parameterType="Map">
+    <select id="queryCustomer" resultMap="BaseResultMapVo">
         SELECT customer.id id, customer.cname name FROM T_CUSTOMER_BASIC customer, T_CUSTOMER_MANAGER manager
         WHERE manager.id = customer.CUSTOMER_MANAGER_ID
         AND manager.id = #{managerId}
@@ -53,17 +59,30 @@
 
     <!--更新客户状态-->
     <update id="updateStatus" parameterType="Map">
-        <foreach item="item" index="index" collection="customerIds" open="begin" close="end;" separator=";">
+        <foreach item="item" index="index" collection="customerIds" open="BEGIN" separator=";" close=";END;">
             UPDATE T_CUSTOMER_BASIC
             <set>
                 CUSTOMER_STATUS = #{status}, CUSTOMER_MANAGER_ID = #{managerId}
             </set>
-            where id IN (#{item})
+            where id = #{item}
         </foreach>
     </update>
 
-    <!--查询客户详细信息-->
-    <select id="queryCustomerList" parameterType="Integer" resultMap="BaseResultMap">
-        SELECT * FROM T_CUSTOMER_BASIC WHERE CUSTOMER_MANAGER_ID = #{managerId}
+    <!--按条件查询客户信息-->
+    <select id="queryCustomerByCondition" resultMap="BaseResultMap">
+        SELECT basic.* FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_MANAGER manager
+        <where>
+            basic.CUSTOMER_MANAGER_ID = MANAGER.id AND MANAGER.id = #{customerManagerId}
+            OR MANAGER.ORGANIZATION_ID = (
+            SELECT ORGANIZATION_ID FROM T_CUSTOMER_MANAGER WHERE id = #{customerManagerId})
+            AND basic.CUSTOMER_STATUS = 0
+            <if test="cname!=null and cname!=''">
+                AND basic.cname = #{cname}
+            </if>
+            <if test="certificateNumber!=null and certificateNumber!=''">
+                AND basic.CERTIFICATE_NUMBER = #{certificateNumber}
+            </if>
+        </where>
     </select>
+
 </mapper>

@@ -1,13 +1,14 @@
 <#include "layout/base.html"/>
+
 <#macro style>
     <style>
         input,select{
-            width:80%
+            margin-top: 10px;
+            width:70%
         }
         [v-cloak] {
             display: none
         }
-
         .cus_content{
             border: 1px solid #6F7691;
             padding-bottom: 30px;
@@ -18,15 +19,24 @@
             width: 20%;
             float: left;
             height:80px;
-
             margin-left: 10%;
             margin-top: 50px;
+        }
+        @media screen and (max-width: 1200px){
+            .widclas{
+                width: 30%;
+                float: left;
+                height:80px;
+                margin-left: 10%;
+                margin-top: 50px;
+            }
         }
         .new_customer{
             padding: 50px;
         }
         .create{
             width: 100%;
+            min-width: 700px;
             height: 30px;
             background-color: #6F7691;
             font-size: 16px;
@@ -36,7 +46,7 @@
             color: #ffffff;
         }
         .contain{
-            margin: 50px 0 0 140px;
+            margin: 50px 0 0 8.7%;
         }
     </style>
 </#macro>
@@ -52,7 +62,6 @@
                 </div>
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                 <form action="">
-                    <#list dropDownList as dropDown>
                 <div class="widclas">
                     <label for="cname">姓名</label>
                     <div class="input-icon right">
@@ -78,16 +87,13 @@
                         <i class="fa"></i>
                         <select id="certificateType" type="text" name="" class="form-control">
                             <option value="">--请选择--</option>
-                            <#list dropDown.cert as cert>
-                                <option value="${cert.id}">${cert.value}</option>
-                            </#list>
+                            <option value="1" selected>身份证</option>
                         </select>
                         <div class="message">${certificateTypeError}</div>
                     </div>
                 </div>
                 <div class="widclas">
                     <label for="certificateNumber">证件号码</label>
-
                     <div class="input-icon right">
                         <i class="fa checkId"></i>
                         <input data-error="${idNumberError}" id="certificateNumber" type="text" class="form-control idNumber" name="" value="${customerBasicInfo.idNumber}" placeholder="请输入有效证件号码">
@@ -116,9 +122,10 @@
                             <i class="fa"></i>
                             <select id="marriageStatus" type="text"  name="" class="form-control" >
                                 <option value="">--请选择--</option>
-                                <#list dropDown.marriageStatus as marriageStatus>
-                                    <option value="${marriageStatus.id}">${marriageStatus.value}</option>
-                                </#list>
+                                <option value="1">未婚</option>
+                                <option value="2">已婚</option>
+                                <option value="3">离婚</option>
+                                <option value="4">丧偶</option>
                             </select>
                             <div class="message">${marriageError}</div>
                         </div>
@@ -129,18 +136,21 @@
                             <i class="fa"></i>
                             <select id="educationDegree" type="text" class="form-control" name="" >
                                 <option value="">--请选择--</option>
-                                <#list dropDown.educationDegree as educationDegree>
-                                    <option value="${educationDegree.id}">${educationDegree.value}</option>
-                                </#list>
+                                <option value="1">本科以上</option>
+                                <option value="2">本科</option>
+                                <option value="3">大专</option>
+                                <option value="4">高中/中专</option>
+                                <option value="5">初中及以下</option>
                             </select>
                             <div class="message">${eductionError}</div>
                         </div>
                     </div>
+
+
                 <div class="col-xs-12 contain">
                     <button id="btn_submit" class="btn btn-success" style="background-color: #6F7691;border-radius: 0px;border: 1px solid #6F7691；">确定</button>
                     <a href="/customer/customer" type="reset" class="btn btn-default"style="border-radius: 0px;border: 1px solid #2bb8c4；">取消</a>
                 </div>
-                    </#list>
                 </form>
             </div>
         </div>
@@ -171,19 +181,16 @@
                 Obj[createTime] = currentTime;
                 Obj[modifyTime] = currentTime;
                 console.log(Obj);
-                Obj = {"tUId":4156,"cname":"李明明",sex:41,certificateType:153,certificateNumber:123,tel:1535,homeAddress:15131,marriageStatus:12121,
-                    educationDegree:12313,userId:4135,customerManagerId:135132,createBy:110,createTime:'2016-12-16 10:25:36',modifyBy:1321,modifyTime:'2016-12-16 10:25:36',
-                    customerStatus:1231}
+//                Obj = {"tUId":4156,"cname":"李明明",sex:41,certificateType:153,certificateNumber:123,tel:1535,homeAddress:15131,marriageStatus:12121,
+//                    educationDegree:12313,userId:4135,customerManagerId:135132,createBy:110,createTime:'2016-12-16 10:25:36',modifyBy:1321,modifyTime:'2016-12-16 10:25:36',
+//                    customerStatus:1231}
                 $.ajax({
                     type:"post",
                     url:url,
                     data:Obj,
                     success: function(res){
                         if(res.code == 200){
-                            $.ajax({
-                                type:"get",
-                                url:"/customerBasic/success"
-                            });
+                            location.href="/customerBasic/customer";
                         }
                     },
                     error:function () {
@@ -191,16 +198,7 @@
                     }
                 });
             });
-//            $("#certificateNumber").onblur(function () {
-//                var url = "/customerBasic/idCardExist";
-//                $.ajax({
-//                    url:url,
-//                    type:"get",
-//                    success:function () {
-//
-//                    }
-//                });
-//            });
+
         });
     </script>
 

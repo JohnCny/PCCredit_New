@@ -3,7 +3,7 @@ package com.cardpay.mgt.customer.service;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
-import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -27,5 +27,5 @@ public interface TCustomerTransferService extends BaseService<TCustomerTransfer>
      * @param managerId 客户经理id
      * @return 客户接受列表
      */
-    List<TCustomerTransferVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId);
+    List<TCustomerVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId);
 }

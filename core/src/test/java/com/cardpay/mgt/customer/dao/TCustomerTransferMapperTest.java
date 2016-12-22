@@ -1,6 +1,6 @@
 package com.cardpay.mgt.customer.dao;
 
-import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.util.TestEnv;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class TCustomerTransferMapperTest extends TestEnv {
 
     @Test
     public void queryTransfer() throws Exception {
-        List<TCustomerTransferVo> tCustomerTransferVos = tCustomerTransferDao.queryTransfer(0, 1);
+        List<TCustomerVo> tCustomerTransferVos = tCustomerTransferDao.queryTransfer(0, 1);
         assertTrue(tCustomerTransferVos.size() > 0);
     }
 
