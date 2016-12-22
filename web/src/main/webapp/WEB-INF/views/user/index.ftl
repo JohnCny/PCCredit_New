@@ -15,7 +15,7 @@
     <div class="search" style="width:95%">
         <span>用户名称：<input type="text" class="short" name="username" id="username" ></span>
         <span>
-            邮件：<input type="text" name="certificateNumber" id="certificateNumber"></span>
+            邮件：<input type="text" name="email" id="email"></span>
         <input type="button" value="搜 索">
     </div>
 
@@ -47,17 +47,7 @@
             "urlList":"/user/pageList",
         }
         var tableId = $("#userList");
-        var searchObj = {
-            "username":$("#username").val(),
-            "tel":$("#tel").val(),
-        };
-        /*var ajax ={
-            "type" : "GET",
-            "url" : url["urlList"],
-            "data" : function(d){
-                d.search = searchObj
-            }
-        };*/
+
         var aoColumns = [{
             "mData" : "username",
         },{
@@ -93,8 +83,8 @@
         }];
 
         var options = {
+            "urlList" : url.urlList,
             "tableId" : tableId,
-            /*"ajax" : ajax,*/
             "aoColumns" : aoColumns
         }
         myDataTable(options);

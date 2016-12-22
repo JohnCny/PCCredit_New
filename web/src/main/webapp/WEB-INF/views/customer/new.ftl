@@ -69,7 +69,7 @@
     <form class="content">
         <div class="report common">
             <h5>客户信息</h5>
-            <!--<div class=" new_customer">-->
+            <div class=" new_customer">
                 <div class=" cus_content">
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <form action="">
@@ -163,7 +163,7 @@
                             <a href="/customer/customer" type="reset" class="btn btn-default"style="border-radius: 0px;border: 1px solid #2bb8c4；">取消</a>
                         </div>
                     </form>
-                <!--</div>-->
+                </div>
             </div>
         </div>
     </form>
