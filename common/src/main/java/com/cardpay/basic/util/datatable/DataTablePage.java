@@ -28,9 +28,23 @@ public class DataTablePage<T> {
     private long recordsTotal; // 数据总记录数
     private List<T> data;
 
+    public DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request, Map<String, Object> map) {
+        try {
+            DataTablePage(methodName, baseService, request, null, null, map);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+
     public DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request) {
         try {
-            DataTablePage(methodName, baseService, request, null, null);
+            DataTablePage(methodName, baseService, request, null, null, null);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -44,7 +58,7 @@ public class DataTablePage<T> {
 
     public DataTablePage(BaseService<T> baseService, HttpServletRequest request, Class<T> clazz, Example example) {
         try {
-            DataTablePage(null, baseService, request, clazz, example);
+            DataTablePage(null, baseService, request, clazz, example, null);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -56,7 +70,7 @@ public class DataTablePage<T> {
         }
     }
 
-    private void DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request, Class<T> clazz, Example example) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    private void DataTablePage(String methodName, BaseService<T> baseService, HttpServletRequest request, Class<T> clazz, Example example, Map<String, Object> parameterMap) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         String start = request.getParameter("start");
         String length = request.getParameter("length");
         String search = request.getParameter("search");
@@ -70,6 +84,9 @@ public class DataTablePage<T> {
         }
         Map<String, Object> map = JSON.parseObject(search, Map.class);
         if (StringUtils.isNotBlank(methodName)) {
+            if (parameterMap != null) {
+                map.putAll(parameterMap);
+            }
             Method method;
             method = baseService.getClass().getDeclaredMethod(methodName, Map.class);
             PageHelper.startPage(this.start, this.length);
