@@ -22,7 +22,7 @@ public class UserControllerTest extends TestEnv {
 
         String search = "{\"username\":\"rankai\"}";
         String order = "{\"id\":\"desc\"}";
-        mockMvc.perform(get("/user/jsonList")
+        mockMvc.perform(get("/user/pageList")
                 .param("start", "1").param("length", "10").param("search", search).param("order", order))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
