@@ -1,22 +1,26 @@
 <#include "layout/base.html"/>
 <#assign title = "用户管理"/>
 <#macro style>
+    <style>
 
+    </style>
 </#macro>
 <#macro css>
 
 </#macro>
 <#macro breadcrumb>
-    <h1>客户</h1>
+    <h1>用户</h1>
     <h2>当前位置：用户管理 / <span class="active">用户</span></h2>
 </#macro>
 <#macro content>
     <h5>用户列表</h5>
     <div class="search" style="width:95%">
+        <span>机构：<select name="" id="" class="">
+
+        </select></span>
         <span>用户名称：<input type="text" class="short" name="username" id="username" ></span>
-        <span>
-            邮件：<input type="text" name="email" id="email"></span>
-        <input type="button" value="搜 索">
+        <span> 邮件：<input type="text" name="email" id="email"></span>
+        <input class="searchBtn" type="button" value="搜 索">
     </div>
 
     <div class="table-responsive" style="margin:50px auto; width:95%;">
@@ -77,7 +81,8 @@
                 }else{
                     html += '<button  class="btn btn-default activeBtn" data-id='+data+' data-status='+full.status+'>点击解锁</button>';
                 }
-                html += '<button class="btn btn-info resetBtn" data-id='+data+'>重置密码</button>'
+                html += '<button class="btn btn-info resetBtn" data-id='+data+'>重置密码</button>';
+                html += '<button class="btn btn-primary" data-id='+data+'>角色管理</button>'
                 return  html;
             }
         }];
