@@ -36,13 +36,14 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 查询信息
      */
     @ResponseBody
-    @GetMapping("/index")
+    @GetMapping()
     @SystemControllerLog(description = "按条件查询客户维护信息")
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public DataTablePage queryByCondition() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerManagerId", ShiroKit.getUserId());
-        return dataTablePage("queryCustomerByCondition", map);
+        DataTablePage queryCustomerByCondition = dataTablePage("queryCustomerByCondition", map);
+        return queryCustomerByCondition;
     }
 
     /**
@@ -80,7 +81,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      *
      * @return 客户维护页面
      */
-    @GetMapping
+    @GetMapping("index")
     @SystemControllerLog(description = "跳转客户维护页面")
     @ApiOperation(value = "跳转客户维护页面", notes = "客户维护页面", httpMethod = "GET")
     public ModelAndView returnMaintenance() {

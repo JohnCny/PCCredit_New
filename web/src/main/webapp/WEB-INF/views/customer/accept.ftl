@@ -55,6 +55,12 @@
 <h1>客户接收</h1>
 <h2>当前位置：客户管理 / <span>客户接收</span></h2>
 
+<div class="search" style="width:95%">
+    <span>客户名称：<input type="text" class="short" name="cname" id="cname" ></span>
+    <span>客户证件号码：<input type="text" name="certificateNumber" id="certificateNumber"></span>
+    <input class="searchBtn" type="button" value="搜 索">
+</div>
+
 <div class="table-responsive" style="margin:50px auto; width:95%;">
     <table id="example" class="table table-bordered" style="width: 100%">
         <thead>
