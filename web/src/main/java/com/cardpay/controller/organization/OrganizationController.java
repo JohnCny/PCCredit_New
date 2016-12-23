@@ -23,7 +23,7 @@ import java.util.List;
 @Api(value = "/organization", description = "机构Controller类")
 @Controller
 @RequestMapping("/organization")
-public class OrganizationController  {
+public class OrganizationController {
     @Autowired
     private TOrganizationService tOrganizationService;
 
@@ -93,5 +93,21 @@ public class OrganizationController  {
         tOrganizationService.insertSelective(tOrganization);
         logger.info(OrganizationController.class, "新增机构", "机构id:" + tOrganization.getId());
         return new ResultTo().setData(tOrganization.getId());
+    }
+
+    /**
+     * 根据父ID获取机构列表
+     *
+     * @param parentId 父ID
+     * @return 机构列表
+     */
+    @GetMapping("/byParentId")
+    @ResponseBody
+    @ApiOperation(value = "根据父ID获取机构列表", httpMethod = "GET", notes = "默认父ID为0")
+    public ResultTo getOrganization(@RequestParam("parentId") Integer parentId) {
+        TOrganization organization = new TOrganization();
+        organization.setOrgParentId(parentId);
+        List<TOrganization> tOrganizations = tOrganizationService.select(organization);
+        return new ResultTo().setData(tOrganizations);
     }
 }
