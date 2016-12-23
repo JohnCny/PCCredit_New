@@ -34,7 +34,7 @@ public class TCustomerManagerBaseVo {
      * 客户经理级别
      */
     @ApiModelProperty(value="客户经理级别",required = true)
-    private Integer levelName;
+    private String levelName;
 
     /**
      * 客户经理所属机构id
@@ -46,7 +46,7 @@ public class TCustomerManagerBaseVo {
      * 客户经理所属机构名称
      */
     @ApiModelProperty(value="客户经理所属机构名称",required = true)
-    private Integer orgName;
+    private String orgName;
 
     /**
      * 客户经理状态
@@ -95,7 +95,7 @@ public class TCustomerManagerBaseVo {
      *
      * @return ID - 客户经理级别名称
      */
-    public Integer getLevelName() {
+    public String getLevelName() {
         return levelName;
     }
 
@@ -104,7 +104,7 @@ public class TCustomerManagerBaseVo {
      *
      * @param levelName 客户经理级别名称
      */
-    public void setLevelName(Integer levelName) {
+    public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
 
@@ -113,7 +113,7 @@ public class TCustomerManagerBaseVo {
      *
      * @return ID - 客户经理状态
      */
-    public Integer getOrgName() {
+    public String getOrgName() {
         return orgName;
     }
 
@@ -122,7 +122,7 @@ public class TCustomerManagerBaseVo {
      *
      * @param orgName 客户经理机构名称
      */
-    public void setOrgName(Integer orgName) {
+    public void setOrgName(String orgName) {
         this.orgName = orgName;
     }
 

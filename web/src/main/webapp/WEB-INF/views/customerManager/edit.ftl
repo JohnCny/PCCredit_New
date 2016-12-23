@@ -78,7 +78,7 @@
                         </select>
                     </td>
                     <td class="pull-right">是否暂停进件：</td>
-                    <td><input type="text" value="${customerManager.ifPause}"></td>
+                    <td><input type="text" value="${customerManager.status}"></td>
                 </tr>
             </table>
         </div>

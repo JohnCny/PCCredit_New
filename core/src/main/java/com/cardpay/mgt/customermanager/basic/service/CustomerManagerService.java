@@ -3,6 +3,8 @@ package com.cardpay.mgt.customermanager.basic.service;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerEditVo;
+import com.cardpay.mgt.user.model.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public interface CustomerManagerService extends BaseService<TCustomerManager> {
      * @param map 参数列表
      * @return 客户经理管理列表
      */
-    List<TCustomerManagerBaseVo> selectBaseVoList(Map<String,Object> map);
+    List<TCustomerManagerEditVo>  selectBaseVoList(Map<String,Object> map);
 
     /**
      * 根据UserId查询客户经理
@@ -38,4 +40,25 @@ public interface CustomerManagerService extends BaseService<TCustomerManager> {
      * @return 客户经理BaseVo
      */
     TCustomerManagerBaseVo selectBaseVoByUserId(Integer userId);
+
+    /**
+     * 组装编辑页面数据
+     *
+     * @return 编辑页面数据
+     */
+    TCustomerManagerEditVo assembleEditPageData(Integer userId);
+
+    /**
+     * 新增客户经理,插入权限用户等信息
+     *
+     * @return 是否成功
+     */
+    Boolean addCustomerManager(User user, TCustomerManager customerManager);
+
+    /**
+     * 更新客户经理,插入权限用户等信息
+     *
+     * @return 是否成功
+     */
+    Boolean updateCustomerManager(User user, TCustomerManager customerManager);
 }

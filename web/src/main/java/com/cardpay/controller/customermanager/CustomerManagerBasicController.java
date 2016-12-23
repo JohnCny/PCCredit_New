@@ -1,16 +1,14 @@
 package com.cardpay.controller.customermanager;
 
 import com.cardpay.basic.base.model.ResultTo;
-import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
-import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
-import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerEditVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.customermanager.level.service.CustomerManagerLevelService;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -96,10 +94,8 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @ApiOperation(value = "创建客户经理", notes = "创建客户经理", httpMethod = "POST")
     public ModelAndView add(@ApiParam("用户信息") @ModelAttribute User user,
                             @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
-        userService.insert(user);
-        customerManager.setUserId(user.getId());
-        customerManagerService.insert(customerManager);
         ModelAndView modelAndView = new ModelAndView();
+        customerManagerService.addCustomerManager(user, customerManager);
         modelAndView.setViewName("/customerManager/index");
         return modelAndView;
     }
@@ -113,12 +109,8 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @ApiOperation(value = "前往客户经理更新页面", notes = "前往客户经理更新页面", httpMethod = "GET")
     public ModelAndView toUpdate(@PathVariable("userId") Integer userId){
         ModelAndView modelAndView = new ModelAndView();
-        TCustomerManagerBaseVo customerManager = customerManagerService.selectBaseVoByUserId(userId);
-        TCustomerManagerEditVo customerManagerEditVo = DozerUtil.map(customerManager, TCustomerManagerEditVo.class);
-        customerManagerEditVo.setIfPause(0);
-        customerManagerEditVo.setSystemLevel("系统建议你是傻吊");
         modelAndView.setViewName("/customerManager/edit");
-        modelAndView.addObject("customerManager",customerManagerEditVo);
+        modelAndView.addObject("customerManager",customerManagerService.assembleEditPageData(userId));
         modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
         return modelAndView;
     }
@@ -134,11 +126,9 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @ApiOperation(value = "更新客户经理", notes = "更新客户经理", httpMethod = "PUT")
     public ModelAndView update(@ApiParam("用户信息") @ModelAttribute User user,
                                @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
-        userService.updateByPrimaryKey(user);
-        customerManager.setUserId(user.getId());
-        customerManagerService.updateByPrimaryKey(customerManager);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");
+        customerManagerService.updateCustomerManager(user,customerManager);
+        modelAndView.setViewName("/customerManager/index");
         return modelAndView;
     }
 

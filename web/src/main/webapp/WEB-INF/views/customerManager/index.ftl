@@ -96,9 +96,9 @@
             }
             var tableId = $("#example");
             var aoColumns = [{
-                "mData" : "cName"
+                "mData" : "userCname"
             },{
-                "mData" : "id",
+                "mData" : "employeeNumber",
             },{
                 "mData" : "levelName",
             },{

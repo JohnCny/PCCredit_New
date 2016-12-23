@@ -128,7 +128,7 @@ public class DataTablePage {
         Map<String, Object> newMap = new HashMap();
         if (map != null) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
-                if (StringUtils.isBlank(entry.getKey()) || StringUtils.isBlank((String) entry.getValue())) {
+                if (StringUtils.isBlank(entry.getKey()) || StringUtils.isBlank(String.valueOf(entry.getValue()))) {
                     continue;
                 }
                 newMap.put(entry.getKey(), entry.getValue());
