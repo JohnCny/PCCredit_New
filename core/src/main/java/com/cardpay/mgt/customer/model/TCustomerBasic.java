@@ -11,129 +11,130 @@ import javax.persistence.*;
 
 /**
  * 客户基本信息实体类
+ *
  * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_BASIC")
-@ApiModel(value="客户基本信息管理")
+@ApiModel(value = "客户基本信息管理")
 public class TCustomerBasic extends GenericEntity<Integer> {
     /**
      * 客户id(需要生成规则生成)
      */
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_BASIC_SEQ.nextval from dual")
-    @ApiModelProperty(value="客户id(需要生成规则生成)",required = true)
+    @ApiModelProperty(value = "客户id(需要生成规则生成)", required = true)
     private Integer id;
 
     /**
      * 用户id
      */
     @Column(name = "T_U_ID")
-    @ApiModelProperty(value="用户id",required = true)
+    @ApiModelProperty(value = "用户id", required = true)
     private Integer tUId;
 
     /**
      * 客户姓名
      */
     @Column(name = "CNAME")
-    @ApiModelProperty(value="客户姓名",required = true)
+    @ApiModelProperty(value = "客户姓名", required = true)
     private String cname;
 
     /**
      * 客户性别(0 男  1 女)
      */
     @Column(name = "SEX")
-    @ApiModelProperty(value="客户性别(0 男  1 女)",required = true)
+    @ApiModelProperty(value = "客户性别(0 男  1 女)", required = true)
     private Integer sex;
 
     /**
      * 证件类型(0 身份证，1 护照，2 驾驶证)
      */
     @Column(name = "CERTIFICATE_TYPE")
-    @ApiModelProperty(value="证件类型(0 身份证，1 护照，2 驾驶证)",required = true)
+    @ApiModelProperty(value = "证件类型(0 身份证，1 护照，2 驾驶证)", required = true)
     private Integer certificateType;
 
     /**
      * 证件号码
      */
     @Column(name = "CERTIFICATE_NUMBER")
-    @ApiModelProperty(value="证件号码",required = true)
+    @ApiModelProperty(value = "证件号码", required = true)
     private String certificateNumber;
 
     /**
      * 联系方式
      */
     @Column(name = "TEL")
-    @ApiModelProperty(value="联系方式",required = true)
+    @ApiModelProperty(value = "联系方式", required = true)
     private String tel;
 
     /**
      * 家庭住址
      */
     @Column(name = "HOME_ADDRESS")
-    @ApiModelProperty(value="家庭住址",required = true)
+    @ApiModelProperty(value = "家庭住址", required = true)
     private String homeAddress;
 
     /**
      * 婚姻状况(0 未婚 1  已婚 2  离异  3 未知)
      */
     @Column(name = "MARRIAGE_STATUS")
-    @ApiModelProperty(value="婚姻状况(0 未婚 1  已婚 2  离异  3 未知)",required = true)
+    @ApiModelProperty(value = "婚姻状况(0 未婚 1  已婚 2  离异  3 未知)", required = true)
     private Integer marriageStatus;
 
     /**
      * 文化程度(8 博士 7  硕士 6 本科  5  大专  4 高中3  中专 2 初中 1 小学 0 文盲)
      */
     @Column(name = "EDUCATION_DEGREE")
-    @ApiModelProperty(value="文化程度(8 博士 7  硕士 6 本科  5  大专  4 高中3  中专 2 初中 1 小学 0 文盲)",required = true)
+    @ApiModelProperty(value = "文化程度(8 博士 7  硕士 6 本科  5  大专  4 高中3  中专 2 初中 1 小学 0 文盲)", required = true)
     private Integer educationDegree;
 
     /**
      * 用户id(用于用于登录和查看个人信息，预留)
      */
     @Column(name = "USER_ID")
-    @ApiModelProperty(value="用户id(用于用于登录和查看个人信息，预留)",required = true)
+    @ApiModelProperty(value = "用户id(用于用于登录和查看个人信息，预留)", required = true)
     private Integer userId;
 
     /**
      * 客户所属客户经理用户id
      */
     @Column(name = "CUSTOMER_MANAGER_ID")
-    @ApiModelProperty(value="客户所属客户经理用户id",required = true)
+    @ApiModelProperty(value = "客户所属客户经理用户id", required = true)
     private Integer customerManagerId;
 
     /**
      * 创建人id
      */
     @Column(name = "CREATE_BY")
-    @ApiModelProperty(value="创建人id",required = true)
+    @ApiModelProperty(value = "创建人id", required = true)
     private Integer createBy;
 
     /**
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value="创建时间",required = true)
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 修改人id
      */
     @Column(name = "MODIFY_BY")
-    @ApiModelProperty(value="修改人id",required = true)
+    @ApiModelProperty(value = "修改人id", required = true)
     private Integer modifyBy;
 
     /**
      * 修改时间
      */
     @Column(name = "MODIFY_TIME")
-    @ApiModelProperty(value="修改时间",required = true)
+    @ApiModelProperty(value = "修改时间", required = true)
     private Date modifyTime;
 
     /**
      * 客户状态(0正常，1 高风险用户 2 黑名单用户 3 禁用客户)
      */
     @Column(name = "CUSTOMER_STATUS")
-    @ApiModelProperty(value="客户状态(0正常，1 高风险用户 2 黑名单用户 3 禁用客户)",required = true)
+    @ApiModelProperty(value = "客户状态(0正常，1 高风险用户 2 黑名单用户 3 禁用客户)", required = true)
     private Integer customerStatus;
 
     /**
