@@ -100,15 +100,16 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
 
     /**
      * 查询客户接收列表
-     *
+     * @param status 状态(默认为待确认)
      * @return 客户接收列表
      */
     @ResponseBody
     @SystemControllerLog(description = "查询客户接收列表")
     @GetMapping("/queryTransfer")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
-    public ResultTo queryTransfer() {
+    public ResultTo queryTransfer(@ApiParam("状态(默认为待确认)") @RequestParam(defaultValue = "0") int status) {
         Map<String, Object> map = new HashMap<>();
+        map.put("status", status);
         map.put("managerId", ShiroKit.getUserId());
         DataTablePage queryTransfer = dataTablePage("queryTransfer", map);
         return new ResultTo().setData(queryTransfer);

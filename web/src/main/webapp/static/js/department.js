@@ -22,7 +22,6 @@ var myDataTable = function(options){
 				d.search = JSON.stringify(QK_searchObj);
 				d.name = " ";
 				d.IdNumber = " ";
-				d.status = "0"
 			}
 		},
 		"aoColumns" : options.aoColumns,
