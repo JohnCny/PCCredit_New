@@ -75,7 +75,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 数据库变更数量
      */
     @ResponseBody
-    @PutMapping()
+    @PutMapping
     @SystemControllerLog(description = "更新客户基本信息")
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {

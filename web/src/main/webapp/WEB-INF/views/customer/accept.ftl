@@ -35,58 +35,61 @@
 <#macro content>
 <h1>客户接收</h1>
 <h2>当前位置：客户管理 / <span>客户接收</span></h2>
-<div class="report common tableB">
-    <h5>客户列表</h5>
-    <table class="center">
+
+<div class="table-responsive" style="margin:50px auto; width:95%;">
+    <table id="example" class="table table-bordered" style="width: 100%" >
+        <thead>
         <tr>
             <th>选择</th>
             <th>客户名称</th>
             <th>客户证件号码</th>
             <th>移交原因</th>
         </tr>
-        <tr onclick="selectTR2(this)">
-            <td><span class="hideInput"><input type="checkbox" name="checkbox"/><label class="checkbox"></label></span></td>
-            <td>客户1</td>
-            <td>132366523366</td>
-            <td>XXXXXXXXXXXXX</td>
-        </tr>
-        <tr onclick="selectTR2(this)">
-            <td><span class="hideInput"><input type="checkbox" name="checkbox"/><label class="checkbox"></label></span></td>
-            <td>客户2</td>
-            <td>132366523366</td>
-            <td>XXXXXXXXXXXXX</td>
-        </tr>
-        <tr onclick="selectTR2(this)">
-            <td><span class="hideInput"><input type="checkbox" name="checkbox"/><label class="checkbox"></label></span></td>
-            <td>客户3</td>
-            <td>132366523366</td>
-            <td>XXXXXXXXXXXXX</td>
-        </tr>
-        <tr onclick="selectTR2(this)">
-            <td><span class="hideInput"><input type="checkbox" name="checkbox"/><label class="checkbox"></label></span></td>
-            <td>客户4</td>
-            <td>132366523366</td>
-            <td>XXXXXXXXXXXXX</td>
-        </tr>
+        </thead>
     </table>
 </div>
+       <#-- <#list queryTransfer as transfer>
+        <tr onclick="selectTR2(this)">
+            <td><span class="hideInput"><input type="checkbox" name="checkbox"/><label class="checkbox"></label></span></td>
+            <td hidden>${transfer.customerId}</td>
+            <td>${transfer.cname}</td>
+            <td>${transfer.certificateNumber}</td>
+            <td>${transfer.transferReason}</td>
+        </tr>
+        </#list>-->
+
 <p class="button">
-    <input type="submit" value="接收"/>
-    <input type="reset" class="del" value="拒绝"/>
+    <input type="submit" value="接收"  id="btn_submit" />
+    <input type="reset"  value="拒绝" id="btn_submit2"/>
 </p>
 </#macro>
 
 <#macro script>
-<script>
-    $(function () {
-        $.ajax({
-            type:"get",
-            url:"/customerTransfer/queryTransfer",
-            success:function () {
 
-            }
-        });
-    })
+<script>
+    $(function(){
+
+        var url  = {
+            "urlList":"/customerTransfer/queryTransfer",
+        }
+        var tableId = $("#example");
+        var aoColumns = [{
+            "mData" : "cname"
+        },{
+            "mData" : "certificateNumber",
+        },{
+            "mData" : "transferReason",
+        }
+        ];
+
+        var options = {
+            "urlList" : url['urlList'],
+            "tableId" : tableId,
+            "aoColumns" : aoColumns
+        }
+        myDataTable(options);
+    }());
+
 </script>
 </#macro>
 

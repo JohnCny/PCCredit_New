@@ -64,7 +64,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      */
     @ResponseBody
     @SystemControllerLog(description = "客户移交确定按钮")
-    @PutMapping()
+    @PutMapping
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "状态(默认为正常)") @RequestParam(defaultValue = "0") int status
@@ -101,16 +101,14 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     /**
      * 查询客户接收列表
      *
-     * @param status 查询客户接收列表
      * @return 客户接收列表
      */
     @ResponseBody
     @SystemControllerLog(description = "查询客户接收列表")
     @GetMapping("/queryTransfer")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
-    public ResultTo queryTransfer(@ApiParam("客户移交状态(默认为未接受)") @RequestParam(defaultValue = "0") int status) {
+    public ResultTo queryTransfer() {
         Map<String, Object> map = new HashMap<>();
-        map.put("status", status);
         map.put("managerId", ShiroKit.getUserId());
         DataTablePage queryTransfer = dataTablePage("queryTransfer", map);
         return new ResultTo().setData(queryTransfer);
@@ -121,7 +119,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      *
      * @return 客户id:客户名称
      */
-    @GetMapping()
+    @GetMapping
     @SystemControllerLog(description = "查询客户经理所属客户(客户移交)")
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
     public ModelAndView queryCustomer() {

@@ -22,6 +22,7 @@ var myDataTable = function(options){
 				d.search = QK_searchObj;
 				d.name = " ";
 				d.IdNumber = " ";
+				d.status = "0"
 			}
 		},
 		"aoColumns" : options.aoColumns,
