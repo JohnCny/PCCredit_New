@@ -24,9 +24,9 @@
     <select id="queryTransfer" resultMap="BaseResultMapVo">
         SELECT basic.ID, basic.CERTIFICATE_NUMBER, transfer.TRANSFER_REASON, transfer.TRANSFER_STATUS
         FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_TRANSFER transfer
-        WHERE basic.id = transfer.id AND transfer.TRANSFER_STATUS = #{status}
+        WHERE basic.id = transfer.id AND transfer.TRANSFER_STATUS = #{status,jdbcType=DECIMAL}
         AND basic.CUSTOMER_STATUS = 0
-        AND basic.CUSTOMER_MANAGER_ID = #{managerId}
+        AND basic.CUSTOMER_MANAGER_ID = #{managerId,jdbcType=DECIMAL}
     </select>
 
     <!--客户接收-->

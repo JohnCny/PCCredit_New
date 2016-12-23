@@ -36,37 +36,16 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @Autowired
     private TCustomerMaintenanceService customerMaintenanceService;
 
-    @Autowired //客户Service
-    private TCustomerBasicService customerBasicService;
-
-    @Autowired//客户经理Service
-    private CustomerManagerService customerManagerService;
-
-    /**
-     * 维护类型
-     *
-     * @return 维护类型列表
-     */
-    @ResponseBody
-    @GetMapping("/maintenanceTypeList")
-    @SystemControllerLog
-    @ApiOperation(value = "维护类型类型", notes = "维护类型", httpMethod = "GET")
-    public ResultTo getMaintenanceTypeList() {
-        List<SelectModel> maintenanceType = customerMaintenanceService.getMaintenanceType();
-        return new ResultTo().setData(maintenanceType);
-    }
-
     /**
      * 按条件查询客户维护信息
      *
-     * @param tCustomerBasic 查询条件
      * @return 查询信息
      */
     @ResponseBody
-    @GetMapping
-    @SystemControllerLog
+    @GetMapping("/index")
+    @SystemControllerLog(description = "按条件查询客户维护信息")
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
-    public ResultTo queryByCondition(@ApiParam(value = "查询条件") @ModelAttribute TCustomerBasic tCustomerBasic) {
+    public ResultTo queryByCondition() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerManagerId", ShiroKit.getUserId());
         DataTablePage queryCustomerByCondition = dataTablePage("queryCustomerByCondition", map);
@@ -80,22 +59,22 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 客户维护信息查询页面
      */
     @PostMapping
-    @SystemControllerLog
+    @SystemControllerLog(description = "新增维护记录")
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
     public String insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
         customerMaintenanceService.insertSelective(tCustomerMaintenance);
-        return "redirect:/maintenanceTypeList";
+        return "redirect:/customerMaintenance";
     }
 
     /**
-     * 跳转客户维护页面
+     * 跳转查看客户维护信息页面
      *
      * @param id 客户id
      * @return 客户维护页面
      */
     @GetMapping("/{id}")
-    @SystemControllerLog(description = "跳转客户维护页面")
-    @ApiOperation(value = "新增维护记录", notes = "新增维护记录, 返回参数名称:customerMaintenance", httpMethod = "GET")
+    @SystemControllerLog(description = "跳转查看客户维护信息页面")
+    @ApiOperation(value = "跳转查看客户维护信息页面", notes = "跳转查看客户维护信息页面, 返回参数名称:customerMaintenance", httpMethod = "GET")
     public ModelAndView returnUpdate(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("/customer/maintenanceUpdate");
         TCustomerMaintenance tCustomerMaintenance = customerMaintenanceService.selectByPrimaryKey(id);
@@ -109,6 +88,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 客户维护页面
      */
     @GetMapping
+    @SystemControllerLog(description = "跳转客户维护页面")
     @ApiOperation(value = "跳转客户维护页面", notes = "客户维护页面", httpMethod = "GET")
     public ModelAndView returnMaintenance() {
         ModelAndView modelAndView = new ModelAndView("/customer/maintenance");
