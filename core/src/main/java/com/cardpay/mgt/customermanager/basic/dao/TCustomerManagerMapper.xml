@@ -3,31 +3,35 @@
 <mapper namespace="com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper">
   <resultMap id="BaseResultMap" type="com.cardpay.mgt.customermanager.basic.model.TCustomerManager">
     <result column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="C_NAME" jdbcType="VARCHAR" property="cName" />
     <result column="LEVEL_ID" jdbcType="DECIMAL" property="levelId" />
-    <result column="CARD_NUMBER" jdbcType="VARCHAR" property="cardNumber" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
     <result column="STATUS" jdbcType="DECIMAL" property="status" />
-    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy" />
-    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
 
   <resultMap id="BaseVoMap" type="com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo">
-    <result column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="C_NAME" jdbcType="VARCHAR" property="cName" />
+    <result column="ID" jdbcType="DECIMAL" property="managerId" />
+    <result column="LEVEL_ID" jdbcType="DECIMAL" property="levelId" />
     <result column="LEVEL_NAME" jdbcType="DECIMAL" property="levelName" />
-    <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORG_NAME" jdbcType="DECIMAL" property="orgName" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <association property="user" select="selectUser" column="USER_ID"/>
   </resultMap>
 
-  <!--查询客户经理列表-->
+  <!--查询用户-->
+  <select id="selectUser" resultType="com.cardpay.mgt.user.model.User">
+    SELECT * FROM T_USER WHERE id = #{userId}
+  </select>
+
+  <!--查询客户经理BaseVo列表-->
   <select id="selectBaseVoList" resultMap="BaseVoMap">
-    SELECT CM.ID,CM.C_NAME,CML.LEVEL_NAME,CM.USER_ID
-    FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML
-    WHERE CM.LEVEL_ID = CML.ID
-    AND CM.STATUS = #{status,jdbcType=DECIMAL}
+    SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
+      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG
+    WHERE
+          CM.LEVEL_ID = CML.ID
+      AND ORG.ID = CM.ORGANIZATION_ID
+      AND CM.STATUS = #{status,jdbcType=DECIMAL}
     <if test="organizationId != null">
       AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
     </if>
@@ -42,11 +46,13 @@
     </if>
   </select>
 
-  <!--根据UserID查询客户经理ListVo-->
+  <!--根据UserID查询客户经理BaseVo-->
   <select id="selectBaseVoByUserId" resultMap="BaseVoMap">
-    SELECT CM.ID,CM.C_NAME,CML.LEVEL_NAME,CM.USER_ID
-    FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML
-    WHERE CM.LEVEL_ID = CML.ID
-    AND CM.USER_ID = #{userId,jdbcType=DECIMAL}
+    SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
+      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG
+    WHERE
+          CM.LEVEL_ID = CML.ID
+      AND ORG.ID = CM.ORGANIZATION_ID
+      AND CM.USER_ID = #{userId,jdbcType=DECIMAL}
   </select>
 </mapper>

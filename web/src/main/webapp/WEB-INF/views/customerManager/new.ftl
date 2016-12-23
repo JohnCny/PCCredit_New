@@ -73,10 +73,10 @@
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <form action="">
                 <div class="widclas">
-                    <label for="cname">姓名</label>
+                    <label for="cname">用户名</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input  id="cname" type="text" class="form-control" name="" value="" placeholder="请输入至少2-10位汉字">
+                        <input  id="cName" type="text" class="form-control" name="cName" value="" placeholder="请输入至少2-10位汉字">
                     </div>
                 </div>
                 <div class="widclas">
@@ -155,7 +155,13 @@
                         <div class="message">${eductionError}</div>
                     </div>
                 </div>
-
+                <span>级别：
+                    <select>
+                        <#list customerManagerLevel as cml>
+                            <option value="" id="${cml.id}">${cml.value}</option>
+                        </#list>
+                    </select>
+                </span>
 
                 <div class="col-xs-12 contain">
                     <button id="btn_submit" class="btn btn-success" style="background-color: #6F7691;border-radius: 0px;border: 1px solid #6F7691；">确定</button>
@@ -172,7 +178,7 @@
         $(document).ready(function(){
             var url = "/customerBasic";
             var Obj = {};
-            var arr = ["cname","sex","certificateType","certificateNumber","tel","homeAddress","marriageStatus","educationDegree"];
+            var arr = ["cName","sex","certificateType","certificateNumber","tel","homeAddress","marriageStatus","educationDegree"];
             var createTime = "createTime",modifyTime = "modifyTime";
 
             $("#btn_submit").click(function (e) {

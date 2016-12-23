@@ -17,19 +17,12 @@ import javax.persistence.*;
 public class TCustomerManager extends GenericEntity<Integer> {
 
     /**
-     * 客户经理id(需要生成规则生成)
+     * 客户经理id
      */
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MANAGER_SEQ.nextval from dual")
-    @ApiModelProperty(value="客户经理id(需要生成规则生成)",required = true)
+    @ApiModelProperty(value="客户经理id",required = true)
     private Integer id;
-
-    /**
-     * 客户经理姓名
-     */
-    @Column(name = "C_NAME")
-    @ApiModelProperty(value="客户经理姓名",required = true)
-    private String cName;
 
     /**
      * 客户经理级别id
@@ -37,13 +30,6 @@ public class TCustomerManager extends GenericEntity<Integer> {
     @Column(name = "LEVEL_ID")
     @ApiModelProperty(value="客户经理级别id",required = true)
     private Integer levelId;
-
-    /**
-     * 客户经理身份证号
-     */
-    @Column(name = "CARD_NUMBER")
-    @ApiModelProperty(value="客户经理身份证号",required = true)
-    private String cardNumber;
 
     /**
      * 客户经理所属机构
@@ -65,34 +51,6 @@ public class TCustomerManager extends GenericEntity<Integer> {
     @Column(name = "STATUS")
     @ApiModelProperty(value="客户经理状态",required = true)
     private Integer status;
-
-    /**
-     * 创建人id
-     */
-    @Column(name = "CREATE_BY")
-    @ApiModelProperty(value="创建人id",required = true)
-    private Integer createBy;
-
-    /**
-     * 创建时间
-     */
-    @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value="创建时间",required = true)
-    private Date createTime;
-
-    /**
-     * 修改人id
-     */
-    @Column(name = "MODIFY_BY")
-    @ApiModelProperty(value="修改人id",required = true)
-    private Integer modifyBy;
-
-    /**
-     * 修改时间
-     */
-    @Column(name = "MODIFY_TIME")
-    @ApiModelProperty(value="修改时间",required = true)
-    private Date modifyTime;
 
     /**
      * 获取客户经理状态
@@ -131,24 +89,6 @@ public class TCustomerManager extends GenericEntity<Integer> {
     }
 
     /**
-     * 获取客户经理姓名
-     *
-     * @return CNAME - 客户经理姓名
-     */
-    public String getcName() {
-        return cName;
-    }
-
-    /**
-     * 设置客户经理姓名
-     *
-     * @param cName 客户经理姓名
-     */
-    public void setcName(String cName) {
-        this.cName = cName;
-    }
-
-    /**
      * 获取客户经理级别id
      *
      * @return LEVEL_ID - 客户经理级别id
@@ -164,24 +104,6 @@ public class TCustomerManager extends GenericEntity<Integer> {
      */
     public void setLevelId(Integer levelId) {
         this.levelId = levelId;
-    }
-
-    /**
-     * 获取客户经理身份证号
-     *
-     * @return CARD_NUMBER - 客户经理身份证号
-     */
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    /**
-     * 设置客户经理身份证号
-     *
-     * @param cardNumber 客户经理身份证号
-     */
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
     }
 
     /**
@@ -218,78 +140,6 @@ public class TCustomerManager extends GenericEntity<Integer> {
      */
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    /**
-     * 获取创建人id
-     *
-     * @return CREATE_BY - 创建人id
-     */
-    public Integer getCreateBy() {
-        return createBy;
-    }
-
-    /**
-     * 设置创建人id
-     *
-     * @param createBy 创建人id
-     */
-    public void setCreateBy(Integer createBy) {
-        this.createBy = createBy;
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return CREATE_TIME - 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * 获取修改人id
-     *
-     * @return MODIFY_BY - 修改人id
-     */
-    public Integer getModifyBy() {
-        return modifyBy;
-    }
-
-    /**
-     * 设置修改人id
-     *
-     * @param modifyBy 修改人id
-     */
-    public void setModifyBy(Integer modifyBy) {
-        this.modifyBy = modifyBy;
-    }
-
-    /**
-     * 获取修改时间
-     *
-     * @return MODIFY_TIME - 修改时间
-     */
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    /**
-     * 设置修改时间
-     *
-     * @param modifyTime 修改时间
-     */
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
     }
 
     @Override

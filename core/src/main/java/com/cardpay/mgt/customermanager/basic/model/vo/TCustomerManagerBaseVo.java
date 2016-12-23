@@ -1,9 +1,8 @@
 package com.cardpay.mgt.customermanager.basic.model.vo;
 
+import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.*;
 
 /**
  * 客户经理信息BaseVo
@@ -14,99 +13,171 @@ import javax.persistence.*;
 public class TCustomerManagerBaseVo {
 
     /**
-     * 客户经理id(需要生成规则生成)
+     * 客户经理用户基本信息
      */
-    @ApiModelProperty(value="客户经理id(需要生成规则生成)",required = true)
-    private Integer id;
+    @ApiModelProperty(value="客户经理用户基本信息",required = true)
+    private User user;
 
     /**
-     * 客户经理姓名
+     * 客户经理Id
      */
-    @ApiModelProperty(value="客户经理姓名",required = true)
-    private String cName;
+    @ApiModelProperty(value="客户经理Id",required = true)
+    private Integer managerId;
+
+    /**
+     * 客户经理级别id
+     */
+    @ApiModelProperty(value="客户经理级别id",required = true)
+    private Integer levelId;
 
     /**
      * 客户经理级别
      */
     @ApiModelProperty(value="客户经理级别",required = true)
-    private String levelName;
+    private Integer levelName;
 
     /**
-     * 客户经理用户id
+     * 客户经理所属机构id
      */
-    @ApiModelProperty(value="客户经理用户id",required = true)
-    private Integer userId;
+    @ApiModelProperty(value="客户经理所属机构id",required = true)
+    private Integer organizationId;
 
     /**
-     * 获取客户经理用户id
+     * 客户经理所属机构名称
+     */
+    @ApiModelProperty(value="客户经理所属机构名称",required = true)
+    private Integer orgName;
+
+    /**
+     * 客户经理状态
+     */
+    @ApiModelProperty(value="客户经理状态",required = true)
+    private Integer status;
+
+    /**
+     * 获取客户经理用户基本信息
      *
-     * @return USER_ID - 客户经理用户id
+     * @return user - 客户经理用户基本信息
      */
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * 设置客户经理用户id
+     * 设置客户经理用户基本信息
      *
-     * @param userId 客户经理用户id
+     * @param user 客户经理用户基本信息
      */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
-     * 获取客户经理级别
+     * 获取客户经理Id
      *
-     * @return levelName - 客户经理级别
+     * @return managerId - 客户经理id
      */
-    public String getLevelName() {
+    public Integer getManagerId() {
+        return managerId;
+    }
+
+    /**
+     * 设置客户经理id
+     *
+     * @param managerId 客户经理id
+     */
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
+    }
+
+    /**
+     * 获取客户经理级别名称
+     *
+     * @return ID - 客户经理级别名称
+     */
+    public Integer getLevelName() {
         return levelName;
     }
 
     /**
-     * 设置客户经理级别
+     * 设置客户经理级别名称
      *
-     * @param levelName 客户经理级别
+     * @param levelName 客户经理级别名称
      */
-    public void setLevelName(String levelName) {
+    public void setLevelName(Integer levelName) {
         this.levelName = levelName;
     }
 
     /**
-     * 获取客户经理id(需要生成规则生成)
+     * 获取客户经理状态
      *
-     * @return ID - 客户经理id(需要生成规则生成)
+     * @return ID - 客户经理状态
      */
-    public Integer getId() {
-        return id;
+    public Integer getOrgName() {
+        return orgName;
     }
 
     /**
-     * 设置客户经理id(需要生成规则生成)
+     * 设置客户经理机构名称
      *
-     * @param id 客户经理id(需要生成规则生成)
+     * @param orgName 客户经理机构名称
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setOrgName(Integer orgName) {
+        this.orgName = orgName;
     }
 
     /**
-     * 获取客户经理姓名
+     * 获取客户经理状态
      *
-     * @return CNAME - 客户经理姓名
+     * @return ID - 客户经理状态
      */
-    public String getcName() {
-        return cName;
+    public Integer getStatus() {
+        return status;
     }
 
     /**
-     * 设置客户经理姓名
+     * 设置客户经理状态
      *
-     * @param cName 客户经理姓名
+     * @param status 客户经理状态
      */
-    public void setcName(String cName) {
-        this.cName = cName;
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 获取客户经理级别id
+     *
+     * @return LEVEL_ID - 客户经理级别id
+     */
+    public Integer getLevelId() {
+        return levelId;
+    }
+
+    /**
+     * 设置客户经理级别id
+     *
+     * @param levelId 客户经理级别id
+     */
+    public void setLevelId(Integer levelId) {
+        this.levelId = levelId;
+    }
+
+    /**
+     * 获取客户经理所属机构
+     *
+     * @return ORGANIZATION_ID - 客户经理所属机构
+     */
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    /**
+     * 设置客户经理所属机构
+     *
+     * @param organizationId 客户经理所属机构
+     */
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
     }
 
 }

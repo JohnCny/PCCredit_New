@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,6 +80,8 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @ApiOperation(value = "前往客户经理创建页面", notes = "前往客户经理创建页面", httpMethod = "GET")
     public ModelAndView toAdd(){
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/customerManager/new");
+        modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
         return modelAndView;
     }
 
