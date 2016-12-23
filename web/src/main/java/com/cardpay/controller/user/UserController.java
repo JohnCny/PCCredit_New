@@ -148,6 +148,7 @@ public class UserController extends BaseController<User> {
     public String userRolePage(ModelMap map, @PathVariable("userId") Integer userId) {
         UserRole userRole = new UserRole();
         userRole.setUserId(userId);
+        map.put("userId", userId);
         map.put("roleAll", roleService.selectAll());
         map.put("userRole", userRoleService.select(userRole));
         return USER_ROLE;
