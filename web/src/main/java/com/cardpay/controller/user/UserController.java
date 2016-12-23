@@ -9,9 +9,9 @@ import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.service.TOrganizationService;
-import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.service.RoleService;
 import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -58,10 +58,13 @@ public class UserController extends BaseController<User> {
     private UserService userService;
 
     @Autowired
-    private UserRoleService userRoleService;
+    private TOrganizationService tOrganizationService;
 
     @Autowired
-    private TOrganizationService tOrganizationService;
+    private RoleService roleService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
 
     /**
@@ -108,6 +111,7 @@ public class UserController extends BaseController<User> {
         return new ResultTo(ResultEnum.OPERATION_FAILED);
     }
 
+
     /**
      * 用户角色页面跳转
      *
@@ -115,8 +119,12 @@ public class UserController extends BaseController<User> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户角色页面跳转", httpMethod = "GET")
-    @GetMapping("/role")
-    public String userRolePage() {
+    @RequestMapping(value = "/{userId}/role", method = RequestMethod.GET)
+    public String userRolePage(ModelMap map, @PathVariable("userId") Integer userId) {
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        map.put("roleAll", roleService.selectAll());
+        map.put("userRole", userRoleService.select(userRole));
         return USER_ROLE;
     }
 
