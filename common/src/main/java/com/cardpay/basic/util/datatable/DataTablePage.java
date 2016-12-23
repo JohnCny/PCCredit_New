@@ -11,6 +11,7 @@ import tk.mybatis.mapper.entity.Example;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,8 +77,8 @@ public class DataTablePage {
         String search = request.getParameter("search");
         String order = request.getParameter("order");
         LogTemplate.info(this.getClass(), "message(BasePage)", "[start:" + start + "][length" + length + "][search" + search + "][order" + order + "]");
-        this.start = Integer.parseInt(start);
-        this.length = Integer.parseInt(length);
+        this.start = start != null ? Integer.parseInt(start) : this.start;
+        this.length = length != null ? Integer.parseInt(length) : this.length;
         String finalOrder = "";
         if (StringUtils.isNotBlank(order)) {
             Map<String, String> map = JSON.parseObject(order, Map.class);
@@ -89,6 +90,9 @@ public class DataTablePage {
             }
         }
         Map<String, Object> map = JSON.parseObject(search, Map.class);
+
+
+
         if (StringUtils.isNotBlank(methodName)) {
             if (parameterMap != null) {
                 if (map != null) {
@@ -97,6 +101,7 @@ public class DataTablePage {
                     map = parameterMap;
                 }
             }
+            map = removeNull(map);
             Method method;
             method = baseService.getClass().getDeclaredMethod(methodName, Map.class);
             PageHelper.startPage(this.start, this.length);
@@ -104,6 +109,7 @@ public class DataTablePage {
             data = (List<Object>) method.invoke(baseService, map);
         } else {
             if (example == null) {
+                map = removeNull(map);
                 example = new Example(clazz);
                 example.orderBy(finalOrder);
                 if (map != null) {
@@ -117,6 +123,19 @@ public class DataTablePage {
         }
         PageInfo pageInfo = new PageInfo(this.data);
         setRecordsTotal(pageInfo.getTotal());
+    }
+
+    private Map<String, Object> removeNull(Map<String, Object> map) {
+        Map<String, Object> newMap = new HashMap();
+        if (map != null) {
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                if (entry.getKey() == null || entry.getValue() == null) {
+                    continue;
+                }
+                newMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return newMap;
     }
 
     public int getStart() {

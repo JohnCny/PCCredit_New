@@ -1,8 +1,6 @@
 package com.cardpay.mgt.customer.dao;
 
-import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.user.model.User;
 import com.cardpay.util.TestEnv;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Ignore;
@@ -13,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,22 +23,9 @@ public class TCustomerBasicMapperTest extends TestEnv{
     private TCustomerBasicMapper tCustomerBasicMapper;
 
     @Test
-    public void getProspectiveCustomers() throws Exception {
-        List<TCustomerBasic> prospectiveCustomers = tCustomerBasicMapper.getProspectiveCustomers(1);
-        assertTrue(prospectiveCustomers.size() > 0);
-    }
-
-    @Test
     public void isIdCardExist() throws Exception {
         Integer idCardExist = tCustomerBasicMapper.isIdCardExist(11);
         assertTrue(idCardExist > 0);
-    }
-
-    @Test
-    @Ignore
-    public void queryCustomer() throws Exception {
-        ReturnMapParam returnMapParam = new ReturnMapParam("id", "cname");
-        returnMapParam.put("managerId", 1);
     }
 
     @Test
@@ -49,12 +35,11 @@ public class TCustomerBasicMapperTest extends TestEnv{
         map.put("status", 1);
         List<Integer> list = new ArrayList<Integer>(){{
             add(1);
-            add(2);
         }};
         map.put("customerIds", list);
         map.put("managerId", "1");
         int i = tCustomerBasicMapper.updateStatus(map);
-        assertTrue(i > 0);
+        assertEquals(i, 1);
     }
 
     @Test

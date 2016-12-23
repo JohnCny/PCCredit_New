@@ -56,7 +56,7 @@
     <div class="search" style="width:95%">
         <span>客户名称：<input type="text" class="short" name="cname" id="cname" ></span>
         <span>客户证件号码：<input type="text" name="certificateNumber" id="certificateNumber"></span>
-        <input type="button" value="搜 索">
+        <input class="searchBtn" type="button" value="搜 索">
     </div>
 
     <div class="table-responsive" style="margin:50px auto; width:95%;">
