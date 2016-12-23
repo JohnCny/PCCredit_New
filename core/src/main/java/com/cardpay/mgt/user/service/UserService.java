@@ -83,5 +83,5 @@ public interface UserService extends BaseService<User> {
      * @param roleId 角色ID(组成结构:旧ID,新ID)
      * @return 成功或失败
      */
-    boolean update(User user, String orgId, String roleId);
+    boolean updateUser(User user, String orgId, String roleId);
 }

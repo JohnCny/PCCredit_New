@@ -188,7 +188,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public boolean update(User user, String orgId, String roleId) {
+    public boolean updateUser(User user, String orgId, String roleId) {
         user.setModifyBy(ShiroKit.getUserId());
         user.setModifyTime(new Date());
         int count = userMapper.updateByPrimaryKeySelective(user);

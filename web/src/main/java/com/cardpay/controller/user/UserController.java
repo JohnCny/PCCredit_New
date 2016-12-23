@@ -201,15 +201,16 @@ public class UserController extends BaseController<User> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "编辑用户实现", httpMethod = "POST")
     @ResponseBody
-    public ResultTo updateUser(@ApiParam("User对象") User user, BindingResult result, @ApiParam(value = "机构ID(结构:旧ID,新ID)") String orgId,
-                               @ApiParam(value = "角色ID(结构:旧ID,新ID)") String roleId) {
+    public ResultTo updateUser(@ApiParam("User对象") User user, BindingResult result,
+                               @ApiParam(value = "机构ID(结构:旧ID,新ID)") @RequestParam("orgId") String orgId,
+                               @ApiParam(value = "角色ID(结构:旧ID,新ID)") @RequestParam("roleId") String roleId) {
         LogTemplate.debug(this.getClass(), "orgId", orgId);
         LogTemplate.debug(this.getClass(), "roleId", roleId);
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
-        if (userService.update(user, orgId, roleId)) {
+        if (userService.updateUser(user, orgId, roleId)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
