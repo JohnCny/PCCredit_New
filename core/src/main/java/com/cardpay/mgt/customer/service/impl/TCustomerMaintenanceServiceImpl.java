@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户维护服务实现类
@@ -36,8 +37,8 @@ public class TCustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMa
     }
 
     @Override
-    public List<TCustomerMaintenanceVo> queryCustomerByCondition(TCustomerBasic tCustomerBasic) {
-        return tCustomerMaintenanceDao.queryCustomerByCondition(tCustomerBasic);
+    public List<TCustomerMaintenanceVo> queryCustomerByCondition(Map<String, Object> map) {
+        return tCustomerMaintenanceDao.queryCustomerByCondition(map);
     }
 
 }
