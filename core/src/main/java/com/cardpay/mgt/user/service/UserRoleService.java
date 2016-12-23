@@ -9,4 +9,11 @@ import com.cardpay.mgt.user.model.UserRole;
  * @author rankai
  */
 public interface UserRoleService extends BaseService<UserRole> {
+    /**
+     * 更新用户权限
+     *
+     * @param userRole UserRole对象
+     * @return 成功失败
+     */
+    boolean updateUserRole(UserRole userRole);
 }
