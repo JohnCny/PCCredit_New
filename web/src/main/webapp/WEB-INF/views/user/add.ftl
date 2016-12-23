@@ -2,7 +2,7 @@
 <#assign title = "用户管理"/>
 <#macro style>
     <style>
-        input,select{border:1px solid grey;height: 30px;border-radius: 5px}
+        input,select{border:1px solid  rgba(0, 0, 0, 0.2);height: 30px;border-radius: 5px}
         table, table  tr,table  tr td {background-color: #fff}
     </style>
 </#macro>
