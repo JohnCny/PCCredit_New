@@ -90,6 +90,9 @@ public class DataTablePage {
             }
         }
         Map<String, Object> map = JSON.parseObject(search, Map.class);
+
+
+
         if (StringUtils.isNotBlank(methodName)) {
             if (parameterMap != null) {
                 if (map != null) {
@@ -98,7 +101,7 @@ public class DataTablePage {
                     map = parameterMap;
                 }
             }
-            map = removeNullValue(map);
+            map = removeNull(map);
             Method method;
             method = baseService.getClass().getDeclaredMethod(methodName, Map.class);
             PageHelper.startPage(this.start, this.length);
@@ -106,7 +109,7 @@ public class DataTablePage {
             data = (List<Object>) method.invoke(baseService, map);
         } else {
             if (example == null) {
-                map = removeNullValue(map);
+                map = removeNull(map);
                 example = new Example(clazz);
                 example.orderBy(finalOrder);
                 if (map != null) {
@@ -122,7 +125,7 @@ public class DataTablePage {
         setRecordsTotal(pageInfo.getTotal());
     }
 
-    private Map<String, Object> removeNullValue(Map<String, Object> map) {
+    private Map<String, Object> removeNull(Map<String, Object> map) {
         Map<String, Object> newMap = new HashMap();
         if (map != null) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {

@@ -7,7 +7,12 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.organization.model.TOrganization;
+import com.cardpay.mgt.organization.service.TOrganizationService;
+import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +22,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,8 +52,16 @@ public class UserController extends BaseController<User> {
 
     private static final String USER_INDEX = "/user/index";
 
+    private static final String USER_ROLE = "";
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
+    private TOrganizationService tOrganizationService;
 
 
     /**
@@ -58,7 +72,10 @@ public class UserController extends BaseController<User> {
     @GetMapping()
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户列表页面", httpMethod = "GET")
-    public String userPage() {
+    public String userPage(ModelMap map) {
+        TOrganization tOrganization = new TOrganization();
+        tOrganization.setOrgParentId(0);
+        map.put("topOrganization", tOrganizationService.select(tOrganization));
         return USER_INDEX;
     }
 
@@ -86,6 +103,36 @@ public class UserController extends BaseController<User> {
             PasswordUtil.encryptPassword(user);
         }
         if (userService.updateSelectiveByPrimaryKey(user) > 0) {
+            return new ResultTo();
+        }
+        return new ResultTo(ResultEnum.OPERATION_FAILED);
+    }
+
+    /**
+     * 用户角色页面跳转
+     *
+     * @return 用户角色页面
+     */
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "用户角色页面跳转", httpMethod = "GET")
+    @GetMapping("/role")
+    public String userRolePage() {
+        return USER_ROLE;
+    }
+
+    /**
+     * 更新用户角色信息
+     *
+     * @return 成功或失败
+     */
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "用户角色页面跳转", httpMethod = "GET")
+    @RequestMapping(value = "/{userId}/{roleId}", method = RequestMethod.GET)
+    public ResultTo updateUserRole(@PathVariable("userId") Integer userId, @PathVariable("roleId") Integer roleId) {
+        UserRole userRole = new UserRole();
+        userRole.setRoleId(roleId);
+        userRole.setUserId(userId);
+        if (userRoleService.updateUserRole(userRole)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
