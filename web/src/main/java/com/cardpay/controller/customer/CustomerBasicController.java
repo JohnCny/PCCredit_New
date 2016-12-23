@@ -6,6 +6,7 @@ import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
@@ -74,7 +75,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 数据库变更数量
      */
     @ResponseBody
-    @PutMapping("")
+    @PutMapping()
     @SystemControllerLog
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
@@ -89,7 +90,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 数据库变更记录
      */
     @ResponseBody
-    @PostMapping("")
+    @PostMapping()
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
@@ -102,7 +103,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      *
      * @return 客户经理新建页面
      */
-    @GetMapping("/new")
+    @GetMapping()
     @SystemControllerLog(description = "跳转新建客户经理页面")
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
     public ModelAndView returnNewCustomer() {
@@ -123,7 +124,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      *
      * @return 客户列表
      */
-    @GetMapping("/success")
+    @GetMapping("/index")
     @SystemControllerLog(description = "跳转查询客户页面")
     @ApiOperation(value = "跳转查询客户页面", notes = "查询客户页面", httpMethod = "GET")
     public ModelAndView returnCustomerList() {
@@ -133,36 +134,31 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     /**
      * 按条件查询客户经理信息
      *
-     * @param name     客户名称
-     * @param IdNumber 客户证件号码
      * @return 客户信息
      */
     @ResponseBody
     @GetMapping("/condition")
     @SystemControllerLog(description = "按条件查询客户经理信息")
     @ApiOperation(value = "按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
-    public ResultTo queryCondition(@ApiParam("客户名称") @RequestParam String name
-            , @ApiParam("客户证件号码") @RequestParam String IdNumber) {
-        TCustomerBasic tCustomerBasic = new TCustomerBasic();
-        tCustomerBasic.setCname(name);
-        tCustomerBasic.setCertificateNumber(IdNumber);
-        tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
-        List<TCustomerBasic> tCustomerBasics = customerBasicService.queryCustomerByCondition(tCustomerBasic);
-        return new ResultTo().setData(tCustomerBasics);
+    public ResultTo queryCondition() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerManagerId", ShiroKit.getUserId());
+        DataTablePage queryCustomerByCondition = dataTablePage("queryCustomerByCondition", map);
+        return new ResultTo().setData(queryCustomerByCondition);
     }
 
     /**
      * 客户更新页面跳转
      *
-     * @param id
-     * @return
+     * @param customerId 客户id
+     * @return 更新页面
      */
     @GetMapping("/{id}")
     @SystemControllerLog(description = "客户更新页面跳转")
     @ApiOperation(value = "按id查询客户基本信息", notes = "查询客户经理信息 返回参数名称:tCustomerBasic", httpMethod = "GET")
-    public ModelAndView returnUpdate(@PathVariable("id") int id) {
+    public ModelAndView returnUpdate(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
         ModelAndView modelAndView = new ModelAndView("/customer/update");
-        TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(id);
+        TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
         modelAndView.addObject("tCustomerBasic", tCustomerBasic);
         return modelAndView;
     }
@@ -184,8 +180,8 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
             ids.add(customerId);
         }
 
-        Map<String, Object> map = new HashedMap();
-        map.put("status", ConstantEnum.CustomerStatus.STATUS3.getName());
+        Map<String, Object> map = new HashMap();
+        map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
         map.put("customerIds", ids);
         map.put("managerId", ShiroKit.getUserId());
         int count = customerBasicService.updateStatus(map);
