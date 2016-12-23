@@ -17,10 +17,13 @@ import com.cardpay.mgt.user.dao.UserMapper;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
+import com.cardpay.mgt.user.model.UserOrganization;
+import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,6 +45,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Autowired
     private RedisClient redisClient;
+
+    @Autowired
+    private UserOrganizationService userOrganizationService;
 
     @Autowired
     private MailSend mailSend;
@@ -152,5 +158,22 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             return new ResultTo(ResultEnum.OPERATION_FAILED);
         }
         return new ResultTo();
+    }
+
+    @Override
+    public boolean addUser(User user, Integer orgId) {
+        user.setCreateTime(new Date());
+        user.setCreateBy(ShiroKit.getUserId());
+        user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
+        user.setEmployeeNumber(VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 8, null));
+        Integer userId = userMapper.insertSelective(user);
+        if (userId == null) {
+            return Boolean.FALSE;
+        }
+        UserOrganization userOrganization = new UserOrganization();
+        userOrganization.setUserId(userId);
+        userOrganization.setOrganizationId(orgId);
+        userOrganizationService.insertSelective(userOrganization);
+        return Boolean.TRUE;
     }
 }

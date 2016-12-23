@@ -65,4 +65,13 @@ public interface UserService extends BaseService<User> {
      * @return 成功或失败
      */
     ResultTo resetPassword(Integer userId, String checkedCode, String password);
+
+    /**
+     * 增加用户
+     *
+     * @param user  User对象
+     * @param orgId 机构ID
+     * @return 成功或失败
+     */
+    boolean addUser(User user, Integer orgId);
 }

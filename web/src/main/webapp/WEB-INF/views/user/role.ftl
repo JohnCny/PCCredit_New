@@ -12,7 +12,7 @@
 </#macro>
 <#macro content>
 
-    <h5>客户列表</h5>
+    <h5>权限列表</h5>
 
 
     <div class="table-responsive" style="margin:50px auto; width:95%;">
@@ -22,30 +22,27 @@
                 <th>姓名</th>
                 <th>性别</th>
                 <th>联系方式</th>
-                <th>操作</th>
+                <th>操作权限</th>
             </tr>
-            <#list roleAll as roleAll>
+            <#list roleAll as temp>
                 <tr>
-                    <td>${roleAll.roleName}</td>
-                    <td>${roleAll.roleNameZh}</td>
-                    <td>${roleAll.roleDescription}</td>
+                    <td>${temp.roleName}</td>
+                    <td>${temp.roleNameZh}</td>
+                    <td>${temp.roleDescription}</td>
                     <td class="action">
                         <#if userRole>
-                            <#list userRole as userRole>
-                                <#if userRole.roleId == roleAll.id>
-                                    <input type="checkbox" name="check" class="checkbox" checked="checked" value="${userId}" data-id="${roleAll.id}">
-                                        <#else>
-                                             <input type="checkbox" name="check" class="checkbox" value="${userId}" data-id="${roleAll.id}">
-                                        </#else>
+                            <#list userRole as var>
+                                <#if var.roleId == temp.id>
+                                    <input type="checkbox" name="check" class="checkbox" checked="checked" value="${userId}" data-id="${temp.id}">
+                                <#else>
+                                    <#if var_index==0>
+                                        <input type="checkbox" name="check" class="checkbox" value="${userId}" data-id="${temp.id}">
+                                    </#if>
                                 </#if>
                             </#list>
-                            <#else>
-                                <input type="checkbox" name="check" class="checkbox" value="${userId}" data-id="${roleAll.id}">
-                            </#else>
-                       <#if>
-
-
-                    </td>
+                        <#else>
+                            <input type="checkbox" name="check" class="checkbox" value="${userId}" data-id="${temp.id}">
+                        </#if>
                 </tr>
 
 
@@ -63,13 +60,12 @@
             $(".checkbox").on("click",function () {
                 var userId = $(this).attr("value");
                 var roleId = $(this).data("id");
-
 //                if(that.prop("checked")){
 //                    $.ajax({})
 //                }else {
 //                    alert(321)
 //                }
-                console.log(roleId);
+                console.log(isChecked);
                 $.ajax({
                     type:"get",
                     url:"/user/"+userId+"/updateUserRole",
@@ -77,6 +73,13 @@
                     success:function (res) {
                         if(res.code == 200){
                             alert("成功");
+                        }else {
+                            var isChecked = $(this).prop("checked");
+                            if(isChecked){
+                                $(this).prop("checked") == true;
+                            }else {
+                                $(this).prop("checked") == false;
+                            }
                         }
                     }
 
