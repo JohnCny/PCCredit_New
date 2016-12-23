@@ -173,6 +173,8 @@
     <script>
         $(document).ready(function(){
             var url = "/customerBasic";
+            var urls = "/customerBasic/idCardExist";
+            var OBJ = {};
             var Obj = {};
             var arr = ["cname","sex","certificateType","certificateNumber","tel","homeAddress","marriageStatus","educationDegree"];
             var createTime = "createTime",modifyTime = "modifyTime";
@@ -193,6 +195,7 @@
                 Obj[createTime] = currentTime;
                 Obj[modifyTime] = currentTime;
                 console.log(Obj);
+                console.log(Obj["certificateNumber"]);
 //                Obj = {"tUId":4156,"cname":"李明明",sex:41,certificateType:153,certificateNumber:123,tel:1535,homeAddress:15131,marriageStatus:12121,
 //                    educationDegree:12313,userId:4135,customerManagerId:135132,createBy:110,createTime:'2016-12-16 10:25:36',modifyBy:1321,modifyTime:'2016-12-16 10:25:36',
 //                    customerStatus:1231}
@@ -202,13 +205,30 @@
                     data:Obj,
                     success: function(res){
                         if(res.code == 200){
-                            location.href="/customerBasic/success";
+//                            location.href="/customerBasic/success";
                         }
                     },
                     error:function () {
 
                     }
                 });
+            });
+            $("#certificateNumber").blur(function () {
+                var datas = $("#certificateNumber").val();
+                console.log(datas);
+                OBJ["identityCard"] = datas;
+                console.log( OBJ);
+                $.ajax({
+                    type:"get",
+                    url:urls,
+                    data:OBJ,
+                    success:function () {
+                        if(res.code == 200){
+
+                        }
+                    }
+
+                })
             });
 
         });
