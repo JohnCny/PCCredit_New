@@ -19,72 +19,71 @@
         <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px">
             <div class="report common list" >
                 <h5>机构列表</h5>
-                <div class='treeBox'><ul id='treeDemo' class='ztree'></ul></div>
+                <div class='treeBox'><ul id='treeDemo' class='ztree'>
+                    
+                </ul></div>
             </div>
         </div>
         <div class="col-xs-1"></div>
         <div class="col-xs-8" style="background-color: #ffffff; border-radius: 5px">
             <div class="report common" style="display:inline-block;width:100%">
                 <h5>填写用户信息</h5>
+                <form action="" id="userAdd">
                 <table>
                     <tr>
                         <td class="pull-right">姓名：</td>
-                        <td><input type="text"></td>
+                        <td><input type="text" name = "userCname"></td>
                         <td class="pull-right">登录名：</td>
-                        <td><input type="text"></td>
+                        <td><input type="text" name = "username"></td>
                     </tr>
                     <tr>
-                        <td class="pull-right">用户类型：</td>
-                        <td>
-                            <select>
-                                <option>---请选择---</option>
-                                <option>系统用户</option>
-                                <option>客户经理</option>
-                                <option>部门主管</option>
-                                <option>机构主管</option>
-                            </select>
-                        </td>
                         <td class="pull-right">员工工号：</td>
-                        <td><input type="text"></td>
+                        <td><input type="text" name = "employeeNumber"></td>
+                        <td class="pull-right">电话：</td>
+                        <td><input type="text" name="phone"></td>
                     </tr>
                     <tr>
                         <td class="pull-right">年龄：</td>
-                        <td><input type="text"></td>
+                        <td><input type="text" name="age"></td>
                         <td class="pull-right">性别：</td>
                         <td>
-                            <span class="hideInput"><input type="radio" name="radio"><label onclick="setRadio(this)" class="radio">男</label></span>
-                            <span class="hideInput"><input type="radio" name="radio"><label onclick="setRadio(this)" class="radio">女</label></span>
+                            <select name="sex">
+                                <option>---请选择---</option>
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
                         <td class="pull-right">邮箱：</td>
-                        <td><input type="text"></td>
-                        <td class="pull-right">电话：</td>
-                        <td><input type="text"></td>
+                        <td><input type="text" name="email"></td>
+                        <td class="pull-right">机构：</td>
+                        <td><input type="text" name="orgId" value="3"></td>
                     </tr>
                 </table>
                 <table>
                     <tr>
                         <td class="pull-right">用户角色：</td>
                         <td colspan="3">
-                            <span class="hideInput"><input type="radio" name="radio1"><label onclick="setRadio(this)" class="radio">系统管理员</label></span>
-                            <span class="hideInput"><input type="radio" name="radio1"><label onclick="setRadio(this)" class="radio">客户经理</label></span>
-                            <span class="hideInput"><input type="radio" name="radio1"><label onclick="setRadio(this)" class="radio">客户经理主管</label></span>
-                            <span class="hideInput"><input type="radio" name="radio1"><label onclick="setRadio(this)" class="radio">管理岗</label></span>
+                            <#list roleAll as temp>
+                            <span class="hideInput"><input type="radio" name="roleId" value="${temp.id}"><label onclick="setRadio(this)" class="radio">${temp.roleNameZh}</label></span>
+                            </#list>
                         </td>
                     </tr>
                     <tr>
                         <td class="pull-right">用户状态：</td>
                         <td colspan="3">
-                            <span class="hideInput"><input type="radio" name="radio2"><label onclick="setRadio(this)" class="radio">激活</label></span>
-                            <span class="hideInput"><input type="radio" name="radio2"><label onclick="setRadio(this)" class="radio">未激活</label></span>
+                            <span class="hideInput"><input type="radio" name="status" value="0"><label onclick="setRadio(this)" class="radio">正常</label></span>
+                            <span class="hideInput"><input type="radio" name="status" value="1"><label onclick="setRadio(this)" class="radio">锁定</label></span>
                         </td>
                     </tr>
                 </table>
+
                 <p class="button">
-                    <input type="button" value="保存" onclick="iframe('user.html')"/>
-                    <input type="button" class="back" value="返回" onclick="iframe('user.html')"/>
+                    <input type="button" value="保存" class="submit"/>
+                    <input type="button" class="back" value="返回"/>
                 </p>
+                </form>
             </div>
 
         </div>
@@ -96,7 +95,31 @@
 
 <#macro script>
     <script>
+        function setRadio(obj){//单选样式
+            $(obj).parent().parent().find("input[type=radio]").attr("checked",false)
+            $(obj).parent().parent().find("label").attr("class","radio")
+            $(obj).parent().find("input[type=radio]").attr("checked",true)
+            $(obj).parent().find("label").attr("class","radio radio_a")
+        }
+        $(function () {
 
+            var url = "/user";
+            $(".submit").click(function (e) {
+                e.preventDefault();
+                var obj = $("#userAdd").serializeArray();
+                console.log(obj);
+                $.ajax({
+                    type:"post",
+                    url:url,
+                    data:obj,
+                    success:function (res) {
+                        if(res.code == 200){
+                            alert("添加成功");
+                        }
+                    }
+                })
+            })
+        })
     </script>
 
 </#macro>
