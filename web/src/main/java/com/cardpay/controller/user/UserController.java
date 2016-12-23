@@ -8,11 +8,12 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -22,6 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -73,6 +75,12 @@ public class UserController extends BaseController<User> {
     @Autowired
     private UserRoleService userRoleService;
 
+    @Autowired
+    private UserOrganizationService userOrganizationService;
+
+    @Autowired
+    private TOrganizationService organizationService;
+
 
     /**
      * 跳转用户列表页面
@@ -82,7 +90,7 @@ public class UserController extends BaseController<User> {
     @GetMapping()
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户列表页面", httpMethod = "GET")
-    public String userPage(ModelMap map) {
+    public String userPage() {
         return USER_INDEX;
     }
 
@@ -99,8 +107,13 @@ public class UserController extends BaseController<User> {
         return dataTablePage();
     }
 
-
-    @PutMapping
+    /**
+     * 用户异步更新
+     *
+     * @param user User对象
+     * @return 成功或失败
+     */
+    @PutMapping("/lock")
     @ResponseBody
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户异步更新", httpMethod = "GET")
@@ -115,15 +128,30 @@ public class UserController extends BaseController<User> {
         return new ResultTo(ResultEnum.OPERATION_FAILED);
     }
 
+    /**
+     * 增加用户页面跳转
+     *
+     * @param map ModelMap对象
+     * @return 增加用户页面
+     */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "增加用户页面跳转", httpMethod = "GET")
     @GetMapping(value = "/addUser")
-    public String addUserPage() {
+    public String addUserPage(ModelMap map) {
+        map.put("roleAll", roleService.selectAll());
         return ADD_USER;
     }
 
+    /**
+     * 增加用实现
+     *
+     * @param user   User对象
+     * @param result 错误信息
+     * @param orgId  机构ID
+     * @return 成功或失败
+     */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "增加用户页面跳转", httpMethod = "POST")
+    @ApiOperation(value = "增加用实现", httpMethod = "POST")
     @PostMapping
     @ResponseBody
     public ResultTo addUser(User user, BindingResult result, @RequestParam("orgId") Integer orgId) {
@@ -136,6 +164,46 @@ public class UserController extends BaseController<User> {
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
     }
+
+    /**
+     * 编辑用户页面跳转
+     *
+     * @param map    ModelMap对象
+     * @param userId 用户ID
+     * @return 编辑用户页面
+     */
+    @RequestMapping(value = "/{userId}/updateUser")
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "编辑用户页面跳转", httpMethod = "POST")
+    public String updateUserPage(ModelMap map, @PathVariable("userId") Integer userId) {
+        UserOrganization userOrganization = new UserOrganization();
+        userOrganization.setUserId(userId);
+        UserOrganization newUserOrganization = userOrganizationService.selectOne(userOrganization);
+        map.put("org", organizationService.selectByPrimaryKey(newUserOrganization.getOrganizationId()));
+        map.put("roleAll", roleService.selectAll());
+        map.put("user", userService.selectByPrimaryKey(userId));
+        return UPDATE_USER;
+    }
+
+    /**
+     * 编辑用户页面实现
+     *
+     * @param user  User对象
+     * @param orgId 机构Id
+     * @return 成功或失败
+     */
+    @RequestMapping(value = "/{userId}/updateUser")
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "编辑用户实现", httpMethod = "POST")
+    @ResponseBody
+    public ResultTo updateUser(User user, BindingResult result, Integer orgId) {
+        Map<String, String> map = new HashedMap();
+        if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
+            return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
+        }
+        return new ResultTo();
+    }
+
 
     /**
      * 用户角色页面跳转
