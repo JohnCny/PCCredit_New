@@ -111,7 +111,7 @@
                 console.log(obj);
                 $.ajax({
                     type:"put",
-                    url:"/customerTransfer/customerTransfer",
+                    url:"/customerTransfer",
                     data:obj,
                     success:function () {
 
