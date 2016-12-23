@@ -69,7 +69,6 @@ public class TCustomerTransfer extends GenericEntity<Integer>{
      */
     @Column(name = "TRANSFER_TIME")
     @ApiModelProperty(value="移交时间",required = true)
-    @OrderBy("DESC")
     private Date transferTime;
 
     /**

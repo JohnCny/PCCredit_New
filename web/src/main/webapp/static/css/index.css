@@ -34,7 +34,7 @@ body{background:#eff0f4;}
 	.left .nav .menu-list .dhgl{background:url(../img/dhgl.png) no-repeat;}
 	.left .nav .menu-list .fxkz{background:url(../img/fxkz.png) no-repeat;}
 	.left .nav .menu-list .cpgl{background:url(../img/cpgl.png) no-repeat;}
-	.left .nav .menu-list .tjBb{background:url(../img/tjBb.png) no-repeat;}
+	.left .nav .menu-list .tjBb{background:url(../img/tjbb.png) no-repeat;}
 	.left .nav .menu-list .xtgl{background:url(../img/xtgl.png) no-repeat;}
 	/*一级普通菜单-鼠标经过*/
 	.left .nav .menu-list:hover{background-color: #353f4f;color: #65cea7;}
@@ -46,7 +46,7 @@ body{background:#eff0f4;}
 	.left .nav .menu-list:hover .dhgl{background:url(../img/dhgl_a.png) no-repeat;}
 	.left .nav .menu-list:hover .fxkz{background:url(../img/fxkz_a.png) no-repeat;}
 	.left .nav .menu-list:hover .cpgl{background:url(../img/cpgl_a.png) no-repeat;}
-	.left .nav .menu-list:hover .tjBb{background:url(../img/tjBb_a.png) no-repeat;}
+	.left .nav .menu-list:hover .tjBb{background:url(../img/tjbb_a.png) no-repeat;}
 	.left .nav .menu-list:hover .xtgl{background:url(../img/xtgl_a.png) no-repeat;}
 	/*一级选中菜单*/
 	.left .nav .active{background-color: #353f4f;color: #65cea7;padding:0px 20px;margin-top:1px;cursor:pointer;line-height:40px;}

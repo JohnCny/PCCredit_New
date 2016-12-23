@@ -54,7 +54,7 @@ public class OrganizationController {
      * @return 所有机构层级信息
      */
     @ResponseBody
-    @GetMapping("/")
+    @GetMapping()
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
         List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
@@ -68,7 +68,7 @@ public class OrganizationController {
      * @return 1成功, 0失败
      */
     @ResponseBody
-    @DeleteMapping("/")
+    @DeleteMapping()
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息", httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id) {
         int flag = tOrganizationService.deleteOrganization(id);

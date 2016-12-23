@@ -7,6 +7,7 @@ import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.model.vo.TCustomerMaintenanceVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户维护服务类
@@ -21,8 +22,8 @@ public interface TCustomerMaintenanceService extends BaseService<TCustomerMainte
 
     /**
      * 按条件查询客户维护信息
-     * @param tCustomerBasic 客户基本信息
+     * @param map 客户基本信息
      * @return 客户列表
      */
-    List<TCustomerMaintenanceVo> queryCustomerByCondition(TCustomerBasic tCustomerBasic);
+    List<TCustomerMaintenanceVo> queryCustomerByCondition(Map<String, Object> map);
 }
