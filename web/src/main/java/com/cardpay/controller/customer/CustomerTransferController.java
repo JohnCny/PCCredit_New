@@ -11,14 +11,12 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
-import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,7 +47,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 移交接收意见状态列表
      */
     @GetMapping("/transferStatusList")
-    @SystemControllerLog
+    @SystemControllerLog(description = "获取移交接收意见状态")
     @ApiOperation(value = "获取移交接收意见状态", notes = "移交接收意见状态", httpMethod = "GET")
     public ResultTo getTransferStatus() {
         List<SelectModel> transferStatus = customerTransferService.getTransferStatus();
@@ -65,7 +63,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 数据库变记录
      */
     @ResponseBody
-    @SystemControllerLog
+    @SystemControllerLog(description = "客户移交确定按钮")
     @PutMapping()
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
@@ -74,9 +72,11 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         List<Integer> ids = new ArrayList<>();
         //添加客户移交记录
         String[] split = customerIds.split(",");
-        for (String idStr : split) {
-            int id = Integer.parseInt(idStr);
-            TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(id);
+        for (String customerId : split) {
+            Integer id = Integer.parseInt(customerId);
+            TCustomerBasic basic = new TCustomerBasic();
+            basic.setId(id);
+            TCustomerBasic tCustomerBasic = customerBasicService.selectOne(basic);
             TCustomerTransfer tCustomerTransfer = new TCustomerTransfer();
             tCustomerTransfer.setTransferTime(new Date());
             tCustomerTransfer.setId(id);
@@ -86,15 +86,15 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             tCustomerTransfer.setTransferReason(reason);
             tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
             tCustomerTransfer.setTransferTime(new Date());
-            customerTransferService.insert(tCustomerTransfer);
+            customerTransferService.insertSelective(tCustomerTransfer);
             ids.add(id);
         }
-        Map<String, Object> map = new HashedMap();
+        Map<String, Object> map = new HashMap();
         map.put("status", status);
         map.put("customerIds", ids);
         map.put("managerId", ShiroKit.getUserId()); //自己转移给自己
         int count = customerBasicService.updateStatus(map);
-        logger.info("客户移交", "客户" + customerIds + "移交给了" + ShiroKit.getUserId());
+        logger.info("客户移交", "客户：" + customerIds + "移交给了客户经理：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -109,8 +109,11 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @GetMapping("/queryTransfer")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
     public ResultTo queryTransfer(@ApiParam("客户移交状态(默认为未接受)") @RequestParam(defaultValue = "0") int status) {
-        List<TCustomerVo> tCustomerTransferVos = customerTransferService.queryTransfer(status, ShiroKit.getUserId());
-        return new ResultTo().setData(tCustomerTransferVos);
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", status);
+        map.put("managerId", ShiroKit.getUserId());
+        DataTablePage queryTransfer = dataTablePage("queryTransfer", map);
+        return new ResultTo().setData(queryTransfer);
     }
 
     /**
@@ -123,20 +126,19 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
     public ModelAndView queryCustomer() {
         ModelAndView modelAndView = new ModelAndView("customer/custransfer");
-        Map<String, Object> map = new HashMap();
-        map.put("managerId", ShiroKit.getUserId());
-        DataTablePage queryCustomer = dataTablePage("queryCustomer", map);
-        modelAndView.addObject("queryCustomer", queryCustomer);
+        List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(ShiroKit.getUserId());
+        modelAndView.addObject("queryCustomer", tCustomerVos);
         return modelAndView;
     }
 
     /**
      * 客户接受/拒绝
-     * @param customerIds
-     * @return
+     *
+     * @param customerIds 客户id (,分割)
+     * @return 数据库变记录
      */
     @PutMapping("/accept")
-    @SystemControllerLog
+    @SystemControllerLog(description = "客户接受/拒绝")
     @ResponseBody
     @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
     public ResultTo CustomerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
@@ -145,4 +147,14 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
+    /**
+     * 跳转客户接收页面
+     *
+     * @return 客户接收页面
+     */
+    @GetMapping("/accept")
+    @ApiOperation(value = "跳转客户接收页面", notes = "客户接收页面", httpMethod = "GET")
+    public ModelAndView returnAccept() {
+        return new ModelAndView("/customer/accept");
+    }
 }

@@ -60,7 +60,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 查询信息
      */
     @ResponseBody
-    @GetMapping("")
+    @GetMapping()
     @SystemControllerLog
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public ResultTo queryByCondition(@ApiParam(value = "查询条件") @ModelAttribute TCustomerBasic tCustomerBasic) {
@@ -74,7 +74,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @param tCustomerMaintenance 维护信息
      * @return 客户维护信息查询页面
      */
-    @PostMapping("")
+    @PostMapping()
     @SystemControllerLog
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
     public String insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance){
@@ -82,8 +82,13 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
         return "redirect:/maintenanceTypeList";
     }
 
+    /**
+     *
+     * @param customerId
+     * @return
+     */
    @GetMapping("/{id}")
-   @SystemControllerLog
+   @SystemControllerLog(description = "跳转新增维护记录")
    @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "GET")
     public ModelAndView returnUpdate(@PathVariable("id") int customerId){
        ModelAndView modelAndView = new ModelAndView("");

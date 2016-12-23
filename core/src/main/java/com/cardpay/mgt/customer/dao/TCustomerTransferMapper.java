@@ -18,11 +18,10 @@ public interface TCustomerTransferMapper extends BasicMapper<TCustomerTransfer> 
     /**
      * 查询客户接受列表
      *
-     * @param status    移交状态
-     * @param managerId 客户经理id
+     * @param map    移交状态&客户经理id
      * @return 客户接受列表
      */
-    List<TCustomerVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId);
+    List<TCustomerVo> queryTransfer(Map<String, Object> map);
 
     /**
      * 客户接收

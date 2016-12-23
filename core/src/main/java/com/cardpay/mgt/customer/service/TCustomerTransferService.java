@@ -7,6 +7,7 @@ import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户移交类
@@ -23,11 +24,10 @@ public interface TCustomerTransferService extends BaseService<TCustomerTransfer>
     /**
      * 查询客户接受列表
      *
-     * @param status    移交状态
-     * @param managerId 客户经理id
+     * @param map    移交状态&客户经理id
      * @return 客户接受列表
      */
-    List<TCustomerVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId);
+    List<TCustomerVo> queryTransfer(Map<String, Object> map);
 
     /**
      * 客户接收

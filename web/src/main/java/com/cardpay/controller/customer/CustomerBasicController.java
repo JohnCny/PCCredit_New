@@ -61,11 +61,11 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @GetMapping("/idCardExist")
-    @SystemControllerLog
+    @SystemControllerLog(description = "验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
-    public ResultTo validate(@ApiParam(value = "证件号码", required = true) int identityCard) {
+    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam int identityCard) {
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
-        return idCardExist ? new ResultTo() : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return idCardExist ? new ResultTo().setData(idCardExist) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -76,7 +76,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @PutMapping()
-    @SystemControllerLog
+    @SystemControllerLog(description = "更新客户基本信息")
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
@@ -171,6 +171,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @DeleteMapping("/{id}")
     @ResponseBody
+    @SystemControllerLog(description = "批量删除用户")
     @ApiOperation(value = "批量删除用户", notes = "改变用户状态将用户设为不可用", httpMethod = "DELETE")
     public ResultTo deleteCustomer(@ApiParam("客户id(,分割)") @PathVariable("id") String customerIds) {
         List<Integer> ids = new ArrayList<>();

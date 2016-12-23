@@ -41,8 +41,8 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     }
 
     @Override
-    public List<TCustomerVo> queryTransfer(@Param("status") int status, @Param("managerId") int managerId) {
-        return tCustomerIndustryDao.queryTransfer(status, managerId);
+    public List<TCustomerVo> queryTransfer(Map<String, Object> map) {
+        return tCustomerIndustryDao.queryTransfer(map);
     }
 
     @Override
