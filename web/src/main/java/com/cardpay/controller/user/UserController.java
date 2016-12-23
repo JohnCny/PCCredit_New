@@ -196,12 +196,15 @@ public class UserController extends BaseController<User> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "编辑用户实现", httpMethod = "POST")
     @ResponseBody
-    public ResultTo updateUser(User user, BindingResult result, Integer orgId) {
+    public ResultTo updateUser(User user, BindingResult result, Integer orgId, Integer roleId) {
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
-        return new ResultTo();
+        if (userService.update(user, orgId, roleId)) {
+            return new ResultTo();
+        }
+        return new ResultTo(ResultEnum.OPERATION_FAILED);
     }
 
 
