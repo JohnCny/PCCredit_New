@@ -192,7 +192,7 @@ public class UserController extends BaseController<User> {
      * @param orgId 机构Id
      * @return 成功或失败
      */
-    @RequestMapping(value = "/{userId}/updateUser")
+    @PutMapping
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "编辑用户实现", httpMethod = "POST")
     @ResponseBody

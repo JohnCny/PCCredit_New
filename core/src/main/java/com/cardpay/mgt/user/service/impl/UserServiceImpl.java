@@ -179,6 +179,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public boolean update(User user, Integer orgId, Integer roleId) {
+        user.setModifyBy(ShiroKit.getUserId());
+        user.setModifyTime(new Date());
+        userMapper.updateByPrimaryKeySelective(user);
         return false;
     }
 }
