@@ -78,7 +78,7 @@ public class BaseController<T> extends BasicController {
                                                                     String moduleNameZh) {
         BaseService<T> baseService = (BaseService<T>) this.baseService;
         CompareBeanUtil.compareBean(bean, baseService, moduleName, moduleNameZh, ShiroKit.getUser());
-        Integer updateResult = baseService.updateByPrimaryKey(bean);
+        Integer updateResult = baseService.updateSelectiveByPrimaryKey(bean);
         return updateResult;
     }
 
