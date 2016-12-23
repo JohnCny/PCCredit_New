@@ -30,7 +30,7 @@
         AND basic.CUSTOMER_MANAGER_ID = #{managerId,jdbcType=DECIMAL}
     </select>
 
-    <!--客户接收-->
+    <!--客户接收(批量更新)-->
     <update id="accept" parameterType="Map">
         <foreach item="item" index="index" collection="customerIds" open="BEGIN" separator=";" close=";END;">
             UPDATE T_CUSTOMER_TRANSFER
