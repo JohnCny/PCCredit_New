@@ -25,8 +25,8 @@
         SELECT basic.ID as customerId, basic.CERTIFICATE_NUMBER as certificateNumber,
         basic.CNAME as cname, transfer.TRANSFER_REASON as transferReason, transfer.TRANSFER_STATUS as transferStatus
         FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_TRANSFER transfer
-        WHERE basic.id = transfer.id AND transfer.TRANSFER_STATUS = #{status,jdbcType=DECIMAL}
-        AND basic.CUSTOMER_STATUS = 0
+        WHERE basic.id = transfer.id AND transfer.TRANSFER_STATUS != 2
+        AND basic.CUSTOMER_STATUS != 3
         AND basic.CUSTOMER_MANAGER_ID = #{managerId,jdbcType=DECIMAL}
     </select>
 

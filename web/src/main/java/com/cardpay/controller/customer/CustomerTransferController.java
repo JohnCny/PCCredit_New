@@ -72,14 +72,12 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         List<Integer> ids = new ArrayList<>();
         //添加客户移交记录
         String[] split = customerIds.split(",");
-        for (String customerId : split) {
-            Integer id = Integer.parseInt(customerId);
-            TCustomerBasic basic = new TCustomerBasic();
-            basic.setId(id);
-            TCustomerBasic tCustomerBasic = customerBasicService.selectOne(basic);
+        for (String id : split) {
+            Integer customerId = Integer.parseInt(id);
+            TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
             TCustomerTransfer tCustomerTransfer = new TCustomerTransfer();
             tCustomerTransfer.setTransferTime(new Date());
-            tCustomerTransfer.setId(id);
+            tCustomerTransfer.setId(customerId);
             tCustomerTransfer.setCustomerCname(tCustomerBasic.getCname());
             tCustomerTransfer.setCustomerCertificateNumber(tCustomerBasic.getCertificateNumber());
             tCustomerTransfer.setOriginCustomerManager(tCustomerBasic.getCustomerManagerId());
@@ -87,7 +85,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
             tCustomerTransfer.setTransferTime(new Date());
             customerTransferService.insertSelective(tCustomerTransfer);
-            ids.add(id);
+            ids.add(customerId);
         }
         Map<String, Object> map = new HashMap();
         map.put("status", status);
