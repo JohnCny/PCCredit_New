@@ -91,8 +91,8 @@
                 "urlDel" : "/customerBasic/",
             }
             var QK_searchObj = {
-                /*"cname" : $("#cname").val(),
-                "certificateNumber" : $("#certificateNumber").val(),*/
+                "cname" : $("#cname").val(),
+                "certificateNumber" : $("#certificateNumber").val(),
             };
             var ajax = {
                 "type" : "GET",

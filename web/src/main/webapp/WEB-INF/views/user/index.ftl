@@ -86,6 +86,7 @@
         }
         var QK_searchObj = {
             "email" : $("#email").val(),
+            "username":$("#username").val()
         }
         var tableId = $("#userList");
         var ajax = {
@@ -93,8 +94,6 @@
             "url" : "/user/pageList",
             "data" : function(d){
                 d.search = JSON.stringify(QK_searchObj);
-                d.name = " ";
-                d.IdNumber = " ";
             }
         }
         var aoColumns = [{
