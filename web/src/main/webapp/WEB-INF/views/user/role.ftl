@@ -30,14 +30,19 @@
                     <td>${roleAll.roleNameZh}</td>
                     <td>${roleAll.roleDescription}</td>
                     <td class="action">
-                        <#list userRole as userRole>
-                            <#if userRole.roleId == roleAll.id>
-                                <input type="checkbox" name="check" class="checkbox" checked="checked" value="${userRole.userId}" data-id="${roleAll.id}">
-                                <#else>
-                                <input type="checkbox" name="check" class="checkbox" value="${userRole.userId}" data-id="${roleAll.id}">
-                            </#if>
-
-                        </#list>
+                        <#if userRole>
+                            <#list userRole as userRole>
+                                <#if userRole.roleId == roleAll.id>
+                                    <input type="checkbox" name="check" class="checkbox" checked="checked" value="${userId}" data-id="${roleAll.id}">
+                                        <#else>
+                                             <input type="checkbox" name="check" class="checkbox" value="${userId}" data-id="${roleAll.id}">
+                                        </#else>
+                                </#if>
+                            </#list>
+                            <#else>
+                                <input type="checkbox" name="check" class="checkbox" value="${userId}" data-id="${roleAll.id}">
+                            </#else>
+                       <#if>
 
 
                     </td>
