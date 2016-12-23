@@ -19,7 +19,7 @@ var myDataTable = function(options){
 			"type" : "GET",
 			"url" : options.urlList,
 			"data" : function(d){
-				d.search = QK_searchObj;
+				d.search = JSON.stringify(QK_searchObj);
 				d.name = " ";
 				d.IdNumber = " ";
 			}
@@ -122,12 +122,15 @@ var myDataTable = function(options){
 
 			/* 自定义搜索  姓名  联系方式  证件号码  创建时间 */
 			$(document).delegate('.search','click',function() {
-				QK_searchObj = {
-					"cname" : $("#cname").val(),
-					"certificateNumber" : $("#certificateNumber").val()
-				};
-				table.ajax.reload();
 
+				QK_searchObj = {
+					/*"cname" : $("#cname").val(),
+					 "certificateNumber" : $("#certificateNumber").val(),*/
+					"username" : $("#username").val(),
+					"email" : $("#email").val()
+				};
+				console.log(QK_searchObj)
+				table.ajax.reload();
 			});
 		},
 	});
