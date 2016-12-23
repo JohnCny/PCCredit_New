@@ -23,7 +23,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -154,12 +153,18 @@ public class UserController extends BaseController<User> {
     @ApiOperation(value = "增加用实现", httpMethod = "POST")
     @PostMapping
     @ResponseBody
-    public ResultTo addUser(User user, BindingResult result, @RequestParam("orgId") Integer orgId) {
+    public ResultTo addUser(@ApiParam("user对象") User user, BindingResult result, @ApiParam(value = "机构ID") Integer orgId,
+                            @ApiParam(value = "角色ID") Integer roleId) {
+        if (orgId == null || roleId == null) {
+            LogTemplate.info(this.getClass(), "orgId", orgId);
+            LogTemplate.info(this.getClass(), "roleId", roleId);
+            return new ResultTo(ResultEnum.PARAM_ERROR);
+        }
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
-        if (userService.addUser(user, orgId)) {
+        if (userService.addUser(user, orgId, roleId)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
@@ -175,7 +180,7 @@ public class UserController extends BaseController<User> {
     @RequestMapping(value = "/{userId}/updateUser")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "编辑用户页面跳转", httpMethod = "POST")
-    public String updateUserPage(ModelMap map, @PathVariable("userId") Integer userId) {
+    public String updateUserPage(ModelMap map, @ApiParam("用户ID") @PathVariable("userId") Integer userId) {
         UserOrganization userOrganization = new UserOrganization();
         userOrganization.setUserId(userId);
         UserOrganization newUserOrganization = userOrganizationService.selectOne(userOrganization);
@@ -196,7 +201,10 @@ public class UserController extends BaseController<User> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "编辑用户实现", httpMethod = "POST")
     @ResponseBody
-    public ResultTo updateUser(User user, BindingResult result, Integer orgId, Integer roleId) {
+    public ResultTo updateUser(@ApiParam("User对象") User user, BindingResult result, @ApiParam(value = "机构ID(结构:旧ID,新ID)") String orgId,
+                               @ApiParam(value = "角色ID(结构:旧ID,新ID)") String roleId) {
+        LogTemplate.debug(this.getClass(), "orgId", orgId);
+        LogTemplate.debug(this.getClass(), "roleId", roleId);
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
