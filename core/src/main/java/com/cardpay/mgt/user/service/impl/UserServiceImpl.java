@@ -177,12 +177,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             return Boolean.FALSE;
         }
         UserOrganization userOrganization = new UserOrganization();
-        userOrganization.setUserId(userId);
+        userOrganization.setUserId(user.getId());
         userOrganization.setOrganizationId(orgId);
         userOrganizationMapper.insertSelective(userOrganization);
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleId);
-        userRole.setUserId(userId);
+        userRole.setUserId(user.getId());
         userRoleMapper.insertSelective(userRole);
         return Boolean.TRUE;
     }
