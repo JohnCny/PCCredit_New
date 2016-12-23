@@ -5,7 +5,6 @@ import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.enums.ResultEnum;
-import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -14,9 +13,6 @@ import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.models.Model;
-import oracle.net.aso.i;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -140,11 +136,10 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @GetMapping("/condition")
     @SystemControllerLog(description = "按条件查询客户经理信息")
     @ApiOperation(value = "按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
-    public ResultTo queryCondition() {
+    public DataTablePage queryCondition() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerManagerId", ShiroKit.getUserId());
-        DataTablePage queryCustomerByCondition = dataTablePage("queryCustomerByCondition", map);
-        return new ResultTo().setData(queryCustomerByCondition);
+        return dataTablePage("queryCustomerByCondition", map);
     }
 
     /**

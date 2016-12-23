@@ -1,20 +1,14 @@
 package com.cardpay.controller.customer;
 
-import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.customer.model.vo.TCustomerMaintenanceVo;
-import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
-import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,11 +39,10 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @GetMapping("/index")
     @SystemControllerLog(description = "按条件查询客户维护信息")
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
-    public ResultTo queryByCondition() {
+    public DataTablePage queryByCondition() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerManagerId", ShiroKit.getUserId());
-        DataTablePage queryCustomerByCondition = dataTablePage("queryCustomerByCondition", map);
-        return new ResultTo().setData(queryCustomerByCondition);
+        return dataTablePage("queryCustomerByCondition", map);
     }
 
     /**
