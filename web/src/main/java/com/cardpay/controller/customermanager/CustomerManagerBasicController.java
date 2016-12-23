@@ -1,13 +1,15 @@
 package com.cardpay.controller.customermanager;
 
 import com.cardpay.basic.base.model.ResultTo;
-import com.cardpay.basic.util.ReflectUtil;
+import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
-import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerListVo;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerEditVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
+import com.cardpay.mgt.customermanager.level.service.CustomerManagerLevelService;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,18 +40,36 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @Autowired
     private CustomerManagerService customerManagerService;
 
+    @Autowired
+    private CustomerManagerLevelService customerManagerLevelService;
+
+    /**
+     * 前往客户经理列表
+     *
+     * @return 客户经理列表页面
+     */
+    @GetMapping("/index")
+    @ApiOperation(value = "前往客户经理列表", notes = "前往客户经理列表", httpMethod = "GET")
+    public ModelAndView toList(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
+        modelAndView.setViewName("/customerManager/index");
+        return modelAndView;
+    }
+
     /**
      * 客户经理列表
      */
     @ResponseBody
-    @RequestMapping(value = "/pageList",method = RequestMethod.GET)
-    @ApiOperation(value = "客户经理列表页面", notes = "客户经理列表页面", httpMethod = "GET")
-    public DataTablePage pageList(TCustomerManagerListVo customerManagerListVo){
-        TCustomerManager customerManager = customerManagerService.selectByPrimaryKey(ShiroKit.getUserId());
-        Map<String, Object> map = ReflectUtil.transBean2Map(customerManagerListVo);
-        map.put("organizationId",customerManager.getOrganizationId());
+    @GetMapping(value = "/pageList")
+    @ApiOperation(value = "获取客户经理列表", notes = "获取客户经理列表", httpMethod = "GET")
+    public DataTablePage pageList(){
+        TCustomerManager customerManager = customerManagerService.selectByUserId(ShiroKit.getUserId());
+        Map<String, Object> map = new HashMap();
         //查看当前机构下的客户经理
-        return dataTablePage("selectListVo",map);
+        map.put("organizationId",customerManager.getOrganizationId());
+        map.put("status",0);//TODO:等冉凯写枚举
+        return dataTablePage("selectBaseVoList",map);
     }
 
     /**
@@ -55,7 +77,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      *
      * @return 页面
      */
-    @RequestMapping(value = "/toAdd",method = RequestMethod.GET)
+    @GetMapping(value = "/toAdd")
     @ApiOperation(value = "前往客户经理创建页面", notes = "前往客户经理创建页面", httpMethod = "GET")
     public ModelAndView toAdd(){
         ModelAndView modelAndView = new ModelAndView();
@@ -69,7 +91,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      * @param customerManager 客户经理信息
      * @return 视图和数据
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping()
     @ApiOperation(value = "创建客户经理", notes = "创建客户经理", httpMethod = "POST")
     public ModelAndView add(@ApiParam("用户信息") @ModelAttribute User user,
                             @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
@@ -77,19 +99,26 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
         customerManager.setUserId(user.getId());
         customerManagerService.insert(customerManager);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");
+        modelAndView.setViewName("/customerManager/index");
         return modelAndView;
     }
 
     /**
-     * 前往客户经理创建页面
+     * 前往客户经理更新页面
      *
      * @return 页面
      */
-    @RequestMapping(value = "/toUpdate",method = RequestMethod.GET)
+    @GetMapping(value = "/{userId}")
     @ApiOperation(value = "前往客户经理更新页面", notes = "前往客户经理更新页面", httpMethod = "GET")
-    public ModelAndView toUpdate(){
+    public ModelAndView toUpdate(@PathVariable("userId") Integer userId){
         ModelAndView modelAndView = new ModelAndView();
+        TCustomerManagerBaseVo customerManager = customerManagerService.selectBaseVoByUserId(userId);
+        TCustomerManagerEditVo customerManagerEditVo = DozerUtil.map(customerManager, TCustomerManagerEditVo.class);
+        customerManagerEditVo.setIfPause(0);
+        customerManagerEditVo.setSystemLevel("系统建议你是傻吊");
+        modelAndView.setViewName("/customerManager/edit");
+        modelAndView.addObject("customerManager",customerManagerEditVo);
+        modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
         return modelAndView;
     }
 
@@ -100,7 +129,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      * @param customerManager 客户经理信息
      * @return 视图和数据
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping()
     @ApiOperation(value = "更新客户经理", notes = "更新客户经理", httpMethod = "PUT")
     public ModelAndView update(@ApiParam("用户信息") @ModelAttribute User user,
                                @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
@@ -119,8 +148,8 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      * @return 删除结果
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.DELETE)
-    public ResultTo delete(@ApiParam("用户信息") @RequestParam("userId") Integer userId){
+    @DeleteMapping(value = "/{userId}")
+    public ResultTo delete(@ApiParam("用户信息") @PathVariable("userId") Integer userId){
         ResultTo resultTo = new ResultTo();
         User user = new User();
         user.setId(userId);

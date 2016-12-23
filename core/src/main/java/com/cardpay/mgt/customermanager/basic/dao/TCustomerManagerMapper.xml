@@ -8,23 +8,26 @@
     <result column="CARD_NUMBER" jdbcType="VARCHAR" property="cardNumber" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
     <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy" />
     <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
 
-  <resultMap id="ListVoMap" type="com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerListVo">
+  <resultMap id="BaseVoMap" type="com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo">
     <result column="ID" jdbcType="DECIMAL" property="id" />
     <result column="C_NAME" jdbcType="VARCHAR" property="cName" />
     <result column="LEVEL_NAME" jdbcType="DECIMAL" property="levelName" />
+    <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
   </resultMap>
 
   <!--查询客户经理列表-->
-  <select id="selectListVo" resultMap="ListVoMap">
-    SELECT CM.ID,CM.C_NAME,CML.LEVEL_NAME
+  <select id="selectBaseVoList" resultMap="BaseVoMap">
+    SELECT CM.ID,CM.C_NAME,CML.LEVEL_NAME,CM.USER_ID
     FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML
     WHERE CM.LEVEL_ID = CML.ID
+    AND CM.STATUS = #{status,jdbcType=DECIMAL}
     <if test="organizationId != null">
       AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
     </if>
@@ -37,5 +40,13 @@
     <if test="id != null">
       AND CM.ID = #{id,jdbcType=DECIMAL}
     </if>
+  </select>
+
+  <!--根据UserID查询客户经理ListVo-->
+  <select id="selectBaseVoByUserId" resultMap="BaseVoMap">
+    SELECT CM.ID,CM.C_NAME,CML.LEVEL_NAME,CM.USER_ID
+    FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML
+    WHERE CM.LEVEL_ID = CML.ID
+    AND CM.USER_ID = #{userId,jdbcType=DECIMAL}
   </select>
 </mapper>

@@ -6,11 +6,12 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.*;
 
 /**
- * 客户经理信息实体类
+ * 客户经理信息BaseVo
+ *
  * @author yanweichen
  */
 @ApiModel(value="客户经理信息管理")
-public class TCustomerManagerListVo {
+public class TCustomerManagerBaseVo {
 
     /**
      * 客户经理id(需要生成规则生成)
@@ -29,6 +30,30 @@ public class TCustomerManagerListVo {
      */
     @ApiModelProperty(value="客户经理级别",required = true)
     private String levelName;
+
+    /**
+     * 客户经理用户id
+     */
+    @ApiModelProperty(value="客户经理用户id",required = true)
+    private Integer userId;
+
+    /**
+     * 获取客户经理用户id
+     *
+     * @return USER_ID - 客户经理用户id
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设置客户经理用户id
+     *
+     * @param userId 客户经理用户id
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     /**
      * 获取客户经理级别

@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 /**
  * 客户经理信息实体类
+ *
  * @author yanweichen
  */
 @Table(name = "T_CUSTOMER_MANAGER")
@@ -59,6 +60,13 @@ public class TCustomerManager extends GenericEntity<Integer> {
     private Integer userId;
 
     /**
+     * 客户经理状态
+     */
+    @Column(name = "STATUS")
+    @ApiModelProperty(value="客户经理状态",required = true)
+    private Integer status;
+
+    /**
      * 创建人id
      */
     @Column(name = "CREATE_BY")
@@ -85,6 +93,24 @@ public class TCustomerManager extends GenericEntity<Integer> {
     @Column(name = "MODIFY_TIME")
     @ApiModelProperty(value="修改时间",required = true)
     private Date modifyTime;
+
+    /**
+     * 获取客户经理状态
+     *
+     * @return ID - 客户经理状态
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置客户经理状态
+     *
+     * @param status 客户经理状态
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     /**
      * 获取客户经理id(需要生成规则生成)
