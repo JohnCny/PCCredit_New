@@ -52,13 +52,10 @@ public class UserController extends BaseController<User> {
 
     private static final String USER_INDEX = "/user/index";
 
-    private static final String USER_ROLE = "";
+    private static final String USER_ROLE = "/user/role";
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private TOrganizationService tOrganizationService;
 
     @Autowired
     private RoleService roleService;
@@ -76,9 +73,6 @@ public class UserController extends BaseController<User> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户列表页面", httpMethod = "GET")
     public String userPage(ModelMap map) {
-        TOrganization tOrganization = new TOrganization();
-        tOrganization.setOrgParentId(0);
-        map.put("topOrganization", tOrganizationService.select(tOrganization));
         return USER_INDEX;
     }
 
@@ -135,8 +129,8 @@ public class UserController extends BaseController<User> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户角色页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/{userId}/{roleId}", method = RequestMethod.GET)
-    public ResultTo updateUserRole(@PathVariable("userId") Integer userId, @PathVariable("roleId") Integer roleId) {
+    @RequestMapping(value = "/{userId}/updateUserRole", method = RequestMethod.GET)
+    public ResultTo updateUserRole(@PathVariable("userId") Integer userId, @RequestParam("roleId") Integer roleId) {
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleId);
         userRole.setUserId(userId);
