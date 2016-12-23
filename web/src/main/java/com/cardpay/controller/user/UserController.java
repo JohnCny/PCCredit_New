@@ -153,8 +153,9 @@ public class UserController extends BaseController<User> {
     @ApiOperation(value = "增加用实现", httpMethod = "POST")
     @PostMapping
     @ResponseBody
-    public ResultTo addUser(@ApiParam("user对象") User user, BindingResult result, @ApiParam(value = "机构ID") Integer orgId,
-                            @ApiParam(value = "角色ID") Integer roleId) {
+    public ResultTo addUser(@ApiParam("user对象") User user, BindingResult result,
+                            @ApiParam(value = "机构ID") @RequestParam("orgId") Integer orgId,
+                            @ApiParam(value = "角色ID") @RequestParam("roleId") Integer roleId) {
         if (orgId == null || roleId == null) {
             LogTemplate.info(this.getClass(), "orgId", orgId);
             LogTemplate.info(this.getClass(), "roleId", roleId);

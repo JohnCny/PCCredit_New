@@ -120,6 +120,7 @@
             "sDefaultContent" : "",
             "render" : function(data, type, full, meta) {
                 var html = "";
+                html += '<button class="btn btn-primary" data-id='+data+'>编辑</button>'
                 if(!full.status){
                     html += '<button  class="btn btn-success activeBtn" data-id='+data+' data-status='+full.status+'>点击锁定</button>';
                 }else{
