@@ -61,9 +61,10 @@ var myDataTable = function(options){
 			$(".addBtn").attr("href",options.urlNew);
 			$(document).on("click",".deleteOne",function(){
 				var id=$(this).data("id");
+				console.log(id);
+				console.log(options.urlDel);
 				$.ajax({
-					url : options.urlDel+"{"+id+"}",
-					data : id,
+					url : options.urlDel+id,
 					type : "DELETE",
 					success: function(data){
 						if(data.code == 200){
@@ -79,7 +80,7 @@ var myDataTable = function(options){
 				var id = $(this).data("id");
 				$.ajax({
 					url:"/user",
-					data: {"id":id,"password":"1231"},
+					data: {"id":id,"password":"123"},
 					type:"PUT",
 					success:function (data) {
 						if(data.code == 200){
@@ -98,22 +99,47 @@ var myDataTable = function(options){
 			 		var temp = self.data("status");
 			 		console.log(temp);
 			 		var status = temp?0:1;
-			 		$.ajax({
-			 			type : "PUT",
-						 url : "/user",
-			 			data : {"id":id,"status":status},
-						 success : function(res){
-						 console.log(status);
-			 			if(res.code == "200"){
-						if(status == 1){
-			 			self.removeClass("btn-success").addClass("btn-default").html("点击解锁").attr("data-status",status);
-						 }else if(status == 0){
-					 self.removeClass("btn-default").addClass("btn-success").html("点击锁定").attr("data-status",status);
+			 		// $.ajax({
+			 		// 	type : "PUT",
+					// 	 url : "/user",
+			 		// 	data : {"id":id,"status":status},
+					// 	 success : function(res){
+					// 	 console.log(status);
+			 		// 	if(res.code == "200"){
+					// 	if(status == 1){
+			 		// 	self.removeClass("btn-success").addClass("btn-default").html("点击解锁").attr("data-status",status);
+					// 	 }else if(status == 0){
+					//  self.removeClass("btn-default").addClass("btn-success").html("点击锁定").attr("data-status",status);
+					// 			}
+					// 		 }
+                    //
+					// 	}
+					// })
+					switch (status){
+						case 1:
+							$.ajax({
+								type : "PUT",
+								url : "/user",
+								data : {"id":id,"status":status},
+								success:function (res) {
+									if (res.code == "200"){
+										self.removeClass("btn-success").addClass("btn-default").html("点击解锁").attr("data-status",status);
+									}
 								}
-							 }
-
-						}
-					})
+							});
+							break;
+						case 0:
+							$.ajax({
+								type : "PUT",
+								url : "/user",
+								data : {"id":id,"status":status},
+								success:function (res) {
+									if (res.code == "200"){
+										self.removeClass("btn-default").addClass("btn-success").html("点击锁定").attr("data-status",status);
+									}
+								}
+							});
+					}
 			 });
 			/* 点击置空搜索内容 */
 			$(document).delegate('#reset','click',function() {
@@ -121,15 +147,13 @@ var myDataTable = function(options){
 			});
 
 			/* 自定义搜索  姓名  联系方式  证件号码  创建时间 */
-			$(document).delegate('.search','click',function() {
-
+			$(document).delegate('.searchBtn','click',function() {
 				QK_searchObj = {
-					/*"cname" : $("#cname").val(),
-					 "certificateNumber" : $("#certificateNumber").val(),*/
+					"cname" : $("#cname").val(),
+					"certificateNumber" : $("#certificateNumber").val(),
 					"username" : $("#username").val(),
 					"email" : $("#email").val()
 				};
-				console.log(QK_searchObj)
 				table.ajax.reload();
 			});
 		},
