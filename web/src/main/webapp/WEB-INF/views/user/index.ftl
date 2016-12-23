@@ -15,8 +15,11 @@
 <#macro content>
     <h5>用户列表</h5>
     <div class="search" style="width:95%">
-        <span>机构：<select name="" id="" class="">
-
+        <span>机构：<select name="" id="organization" class="">
+            <option value="">--请输入--</option>
+            <#list topOrganization as organization>
+                    <option value="${organization.id}">${organization.orgName}</option>
+            </#list>>
         </select></span>
         <span>用户名称：<input type="text" class="short" name="username" id="username" ></span>
         <span> 邮件：<input type="text" name="email" id="email"></span>
@@ -41,6 +44,29 @@
 </#macro>
 
 <#macro script>
+    <script>
+        $(function () {
+            var url = ""
+            $("#organization").change(function () {
+                var parentId = $("#organization>option:selected").attr("value");
+                console.log(parentId);
+                if (parentId != ""){
+                    $.ajax({
+                        type:"get",
+                        url:"/organization/byParentId",
+                        data:{"parentId" : parentId},
+                        success:function (res) {
+                            if(res.code == 200){
+                                if(res.data == ""){
+
+                                }
+                            }
+                        }
+                    })
+                }
+            })
+        });
+    </script>
 
 </#macro>
 
@@ -48,10 +74,21 @@
 
     <script>
         var url  = {
-            "urlList":"/user/pageList",
+
+        }
+        var QK_searchObj = {
+            "email" : $("#email").val(),
         }
         var tableId = $("#userList");
-
+        var ajax = {
+            "type" : "GET",
+            "url" : "/user/pageList",
+            "data" : function(d){
+                d.search = JSON.stringify(QK_searchObj);
+                d.name = " ";
+                d.IdNumber = " ";
+            }
+        }
         var aoColumns = [{
             "mData" : "username",
         },{
@@ -88,7 +125,7 @@
         }];
 
         var options = {
-            "urlList" : url.urlList,
+            "ajax" : ajax,
             "tableId" : tableId,
             "aoColumns" : aoColumns
         }
