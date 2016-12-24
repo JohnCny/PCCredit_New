@@ -190,7 +190,7 @@ public class UserController extends BaseController<User> {
         map.put("user", userService.selectByPrimaryKey(userId));
         UserRole userRole = new UserRole();
         userRole.setUserId(userId);
-        map.put("userRole", userRoleService.select(userRole));
+        map.put("userRole", userRoleService.selectOne(userRole));
         return UPDATE_USER;
     }
 
