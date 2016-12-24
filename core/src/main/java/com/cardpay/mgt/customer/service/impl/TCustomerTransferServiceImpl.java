@@ -12,6 +12,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 /**
  * 客户移交实现类
+ *
  * @author yanweichen
  */
 @Service
@@ -27,12 +29,11 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     @Autowired
     private TCustomerTransferMapper tCustomerIndustryDao;
 
-
     @Override
-    public List<SelectModel> getTransferStatus(){
+    public List<SelectModel> getTransferStatus() {
         List<SelectModel> selects = new ArrayList<>();
-        for (ConstantEnum.TransferStatus value : ConstantEnum.TransferStatus.values()){
-            SelectModel selectModel=new SelectModel();
+        for (ConstantEnum.TransferStatus value : ConstantEnum.TransferStatus.values()) {
+            SelectModel selectModel = new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
             selects.add(selectModel);
@@ -46,6 +47,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     }
 
     @Override
+    @Transactional
     public int accept(String customerIds, Integer flag) {
         List<Integer> idList = new ArrayList<>();
         String[] split = customerIds.split(",");
@@ -54,10 +56,10 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
             idList.add(customerId);
         }
         Map<String, Object> map = new HashMap();
-        if (null != flag && flag==1){
+        if (null != flag && flag == 1) {
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
             map.put("nowCustomerManager", ShiroKit.getUserId());
-        }else {
+        } else {
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
         }
         map.put("customerIds", idList);
