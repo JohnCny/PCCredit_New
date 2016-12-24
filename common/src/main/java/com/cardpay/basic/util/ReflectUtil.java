@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
@@ -278,6 +277,44 @@ public class ReflectUtil {
         } catch (Exception e) {
             System.out.println("transMap2Bean2 Error " + e);
         }
+    }
+
+    /**
+     * 检查对象所有属性是否为空
+     *
+     * @param obj 对象
+     * @param excludeField 排除检查的字段
+     * @return 全部为空返回 true 只要有不为空则为false
+     */
+    public static boolean checkBeanAllFiledIsNull(Object obj,String ... excludeField){
+        if (obj==null){return true;}
+        for (Field field : obj.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            try {
+                if (field.get(obj) == null || isInFields(field,excludeField)) { //判断字段是否为空，并且对象属性中的基本都会转为对象类型来判断
+                    continue;
+                } else {
+                  return false;
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 是否为需要排除的属性
+     * @param field 属性
+     * @param FieldNames 排除的属性名
+     * @return
+     */
+    private static boolean isInFields(Field field, String ...FieldNames){
+        if(FieldNames.length==0){return false;}
+        for (String filedName : FieldNames) {
+            return field.getName().equals(filedName);
+        }
+        return false;
     }
 }
 

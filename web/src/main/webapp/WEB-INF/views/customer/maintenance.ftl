@@ -81,7 +81,20 @@
             "urlList": "/customerMaintenance/condition",
             "urlNew" : "/customerMaintenance"
         }
+        var QK_searchObj = {
+            "cname" : $("#cname").val(),
+            "certificateNumber" : $("#certificateNumber").val(),
+        };
         var tableId = $("#example");
+        var ajax = {
+            "type" : "GET",
+            "url" : "/customerBasic/condition",
+            "data" : function(d){
+                d.search = JSON.stringify(QK_searchObj);
+                d.name = " ";
+                d.IdNumber = " ";
+            }
+        }
         var aoColumns = [
             {
                 "mData": "cname"
@@ -94,7 +107,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a  class="editOne btn-info" href="/customerMaintenance?id='+data+'">新增</a><a onclick="deleRow()" class="editOne btn-info" href="/customerMaintenance/'+data+'">查看</a>';
+                    return  '<a  class="editOne btn-info" href="/customerMaintenance?customerId='+data+'">新增</a><a onclick="deleRow()" class="editOne btn-info" href="/customerMaintenance/'+data+'">查看</a>';
                 }
             }];
 
@@ -102,7 +115,8 @@
             "urlList": url['urlList'],
             "urlNew" : url['urlNew'],
             "tableId": tableId,
-            "aoColumns": aoColumns
+            "aoColumns": aoColumns,
+            "ajax" : ajax
         }
         myDataTable(options);
     }());

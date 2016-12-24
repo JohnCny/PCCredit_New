@@ -21,12 +21,12 @@ public class TCustomerMaintenanceMapperTest extends TestEnv{
     @Test
     @Ignore
     public void queryCustomerByCondition() throws Exception {
-        TCustomerBasic tCustomerBasic = new TCustomerBasic();
+    /*    TCustomerBasic tCustomerBasic = new TCustomerBasic();
         tCustomerBasic.setCustomerManagerId(141);
         tCustomerBasic.setCname("1asd");
         tCustomerBasic.setCertificateNumber("11");
         List<TCustomerMaintenanceVo> tCustomerMaintenanceVos = tCustomerMaintenanceDao.queryCustomerByCondition(tCustomerBasic);
-        assertTrue(tCustomerMaintenanceVos.size() > 0);
+        assertTrue(tCustomerMaintenanceVos.size() > 0);*/
     }
 
 }

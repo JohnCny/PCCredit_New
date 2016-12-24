@@ -19,7 +19,6 @@ public class TCustomerManager extends GenericEntity<Integer> {
     /**
      * 客户经理id
      */
-    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MANAGER_SEQ.nextval from dual")
     @ApiModelProperty(value="客户经理id",required = true)
@@ -50,26 +49,26 @@ public class TCustomerManager extends GenericEntity<Integer> {
     /**
      * 客户经理状态
      */
-    @Column(name = "STATUS")
+    @Column(name = "MANAGER_STATUS")
     @ApiModelProperty(value="客户经理状态",required = true)
-    private Integer status;
+    private Integer managerStatus;
 
     /**
      * 获取客户经理状态
      *
      * @return ID - 客户经理状态
      */
-    public Integer getStatus() {
-        return status;
+    public Integer getManagerStatus() {
+        return managerStatus;
     }
 
     /**
      * 设置客户经理状态
      *
-     * @param status 客户经理状态
+     * @param managerStatus 客户经理状态
      */
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setManagerStatus(Integer managerStatus) {
+        this.managerStatus = managerStatus;
     }
 
     /**
@@ -146,6 +145,6 @@ public class TCustomerManager extends GenericEntity<Integer> {
 
     @Override
     public Integer getPK() {
-        return id;
+        return userId;
     }
 }

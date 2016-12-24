@@ -6,7 +6,7 @@
     <result column="LEVEL_ID" jdbcType="DECIMAL" property="levelId" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
-    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="MANAGER_STATUS" jdbcType="DECIMAL" property="managerStatus" />
   </resultMap>
 
   <resultMap id="BaseVoMap" type="com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo">
@@ -15,7 +15,7 @@
     <result column="LEVEL_NAME" jdbcType="VARCHAR" property="levelName" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
-    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="MANAGER_STATUS" jdbcType="DECIMAL" property="managerStatus" />
     <association property="user" select="selectUser" column="USER_ID"/>
   </resultMap>
 
@@ -37,12 +37,12 @@
     <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
     <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
     <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+    <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
   </resultMap>
 
   <!--查询用户-->
   <select id="selectUser" resultMap="UserMap">
-   SELECT ID,USERNAME,PASSWORD,LAST_LOGIN_TIME,EMAIL,TEL,CREATE_TIME,STATUS,USER_CNAME,SEX,CREATE_BY,AGE,PHONE
-   ,ID_CARD_NUMBER,EMPLOYEE_NUMBER,MODIFY_BY,MODIFY_TIME
+   SELECT *
     FROM T_USER
    WHERE
     ID = #{userId}
@@ -51,23 +51,23 @@
   <!--查询客户经理BaseVo列表-->
   <select id="selectBaseVoList" resultMap="BaseVoMap">
     SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
-      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG,T_USER USR
+    FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG,T_USER USR
     WHERE
-          CM.LEVEL_ID = CML.ID
-      AND ORG.ID = CM.ORGANIZATION_ID
-      AND USR.ID = CM.USER_ID
-      AND USR.STATUS = #{status,jdbcType=DECIMAL}
+    CM.LEVEL_ID = CML.ID
+    AND ORG.ID = CM.ORGANIZATION_ID
+    AND USR.ID = CM.USER_ID
+    AND USR.STATUS = #{status,jdbcType=DECIMAL}
     <if test="organizationId != null">
       AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
     </if>
-    <if test="cName != null">
-      AND CM.C_NAME LIKE #{cName,jdbcType=VARCHAR}
+    <if test="userCname != null">
+      AND USR.USER_CNAME LIKE CONCAT(CONCAT('%',#{userCname}),'%')
     </if>
-    <if test="levelName != null">
-      AND CML.LEVEL_NAME = #{levelName,jdbcType=VARCHAR}
+    <if test="levelId != null and levelId != -1">
+      AND CML.ID = #{levelId,jdbcType=DECIMAL}
     </if>
-    <if test="id != null">
-      AND CM.ID = #{id,jdbcType=DECIMAL}
+    <if test="employeeNumber != null">
+      AND USR.EMPLOYEE_NUMBER = #{employeeNumber,jdbcType=VARCHAR}
     </if>
   </select>
 

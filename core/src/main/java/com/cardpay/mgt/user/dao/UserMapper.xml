@@ -22,6 +22,7 @@
         <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
         <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
         <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
     </resultMap>
 
     <resultMap id="UserAuthorityMap" type="com.cardpay.mgt.user.model.UserAuthority">
