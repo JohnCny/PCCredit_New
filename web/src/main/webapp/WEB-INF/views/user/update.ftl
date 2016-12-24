@@ -32,33 +32,40 @@
                     <table>
                         <tr>
                             <td class="pull-right">姓名：</td>
-                            <td><input type="text" name = "userCname"></td>
+                            <td><input type="text" name = "userCname" value="${user.userCname}"></td>
                             <td class="pull-right">登录名：</td>
-                            <td><input type="text" name = "username"></td>
+                            <td><input type="text" name = "username" value="${user.username}"></td>
                         </tr>
                         <tr>
                             <td class="pull-right">员工工号：</td>
-                            <td><input type="text" name = "employeeNumber"></td>
+                            <td><input type="text" name = "employeeNumber" value="${user.employeeNumber}"></td>
                             <td class="pull-right">电话：</td>
-                            <td><input type="text" name="phone"></td>
+                            <td><input type="text" name="phone" value="${user.phone}"></td>
                         </tr>
                         <tr>
                             <td class="pull-right">年龄：</td>
-                            <td><input type="text" name="age"></td>
+                            <td><input type="text" name="age" value="${user.age}"></td>
                             <td class="pull-right">性别：</td>
                             <td>
                                 <select name="sex">
-                                    <option>---请选择---</option>
+                                   <!-- <option>-&#45;&#45;请选择-&#45;&#45;</option>
                                     <option value="1">男</option>
-                                    <option value="2">女</option>
+                                    <option value="2">女</option>-->
+                                    <#if user.sex == 1>
+                                        <option value="1" selected>男</option>
+                                        <option value="2">女</option>
+                                        <#else>
+                                            <option value="2" selected>女</option>
+                                            <option value="1">男</option>
+                                    </#if>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="pull-right">邮箱：</td>
-                            <td><input type="text" name="email"></td>
+                            <td><input type="text" name="email" value="${user.email}"></td>
                             <td class="pull-right">机构：</td>
-                            <td><input type="text" name="orgId" value="3"></td>
+                            <td><input type="text" name="orgId" value="${org.orgName}"></td>
                         </tr>
                     </table>
                     <table>
@@ -66,15 +73,23 @@
                             <td class="pull-right">用户角色：</td>
                             <td colspan="3">
                                 <#list roleAll as temp>
-                                    <span class="hideInput"><input id="roleId" type="radio" name="roleId" value="${temp.id}"><label onclick="setRadio(this)" class="radio">${temp.roleNameZh}</label></span>
+                                    <span class="hideInput">
+                                        <input <#if userRole == temp.id>checked = "checked"</#if> id="roleId" type="radio" name="roleId"  value="${temp.id}">
+                                        <label onclick="setRadio(this)" class="radio">${temp.roleNameZh}</label>
+                                    </span>
                                 </#list>
                             </td>
                         </tr>
                         <tr>
                             <td class="pull-right">用户状态：</td>
                             <td colspan="3">
-                                <span class="hideInput"><input type="radio" name="status" value="0"><label onclick="setRadio(this)" class="radio">正常</label></span>
+                                <#if user.status == 0>
+                                <span class="hideInput"><input type="radio" name="status" value="0" checked="checked"><label onclick="setRadio(this)" class="radio radio_a">正常</label></span>
                                 <span class="hideInput"><input type="radio" name="status" value="1"><label onclick="setRadio(this)" class="radio">锁定</label></span>
+                                <#else>
+                                 <span class="hideInput"><input type="radio" name="status" value="0"><label onclick="setRadio(this)" class="radio">正常</label></span>
+                                 <span class="hideInput"><input type="radio" name="status" value="1" checked="checked"><label onclick="setRadio(this)" class="radio radio_a">锁定</label></span>
+                                </#if>
                             </td>
                         </tr>
                     </table>
