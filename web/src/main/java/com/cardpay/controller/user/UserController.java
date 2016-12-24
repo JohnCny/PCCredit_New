@@ -3,15 +3,17 @@ package com.cardpay.controller.user;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.basic.util.ErrorMessageUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -19,17 +21,22 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 /**
  * 用户控制层
@@ -54,6 +61,10 @@ public class UserController extends BaseController<User> {
 
     private static final String USER_ROLE = "/user/role";
 
+    private static final String ADD_USER = "/user/add";
+
+    private static final String UPDATE_USER = "/user/update";
+
     @Autowired
     private UserService userService;
 
@@ -62,6 +73,12 @@ public class UserController extends BaseController<User> {
 
     @Autowired
     private UserRoleService userRoleService;
+
+    @Autowired
+    private UserOrganizationService userOrganizationService;
+
+    @Autowired
+    private TOrganizationService organizationService;
 
 
     /**
@@ -72,7 +89,7 @@ public class UserController extends BaseController<User> {
     @GetMapping()
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户列表页面", httpMethod = "GET")
-    public String userPage(ModelMap map) {
+    public String userPage() {
         return USER_INDEX;
     }
 
@@ -89,8 +106,13 @@ public class UserController extends BaseController<User> {
         return dataTablePage();
     }
 
-
-    @PutMapping
+    /**
+     * 用户异步更新
+     *
+     * @param user User对象
+     * @return 成功或失败
+     */
+    @PutMapping("/lock")
     @ResponseBody
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户异步更新", httpMethod = "GET")
@@ -100,6 +122,96 @@ public class UserController extends BaseController<User> {
             PasswordUtil.encryptPassword(user);
         }
         if (userService.updateSelectiveByPrimaryKey(user) > 0) {
+            return new ResultTo();
+        }
+        return new ResultTo(ResultEnum.OPERATION_FAILED);
+    }
+
+    /**
+     * 增加用户页面跳转
+     *
+     * @param map ModelMap对象
+     * @return 增加用户页面
+     */
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "增加用户页面跳转", httpMethod = "GET")
+    @GetMapping(value = "/addUser")
+    public String addUserPage(ModelMap map) {
+        map.put("roleAll", roleService.selectAll());
+        return ADD_USER;
+    }
+
+    /**
+     * 增加用实现
+     *
+     * @param user   User对象
+     * @param result 错误信息
+     * @param orgId  机构ID
+     * @return 成功或失败
+     */
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "增加用实现", httpMethod = "POST")
+    @PostMapping
+    @ResponseBody
+    public ResultTo addUser(@ApiParam("user对象") User user, BindingResult result,
+                            @ApiParam(value = "机构ID") @RequestParam("orgId") Integer orgId,
+                            @ApiParam(value = "角色ID") @RequestParam("roleId") Integer roleId) {
+        if (orgId == null || roleId == null) {
+            LogTemplate.info(this.getClass(), "orgId", orgId);
+            LogTemplate.info(this.getClass(), "roleId", roleId);
+            return new ResultTo(ResultEnum.PARAM_ERROR);
+        }
+        Map<String, String> map = new HashedMap();
+        if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
+            return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
+        }
+        if (userService.addUser(user, orgId, roleId)) {
+            return new ResultTo();
+        }
+        return new ResultTo(ResultEnum.OPERATION_FAILED);
+    }
+
+    /**
+     * 编辑用户页面跳转
+     *
+     * @param map    ModelMap对象
+     * @param userId 用户ID
+     * @return 编辑用户页面
+     */
+    @RequestMapping(value = "/{userId}/updateUser")
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "编辑用户页面跳转", httpMethod = "POST")
+    public String updateUserPage(ModelMap map, @ApiParam("用户ID") @PathVariable("userId") Integer userId) {
+        UserOrganization userOrganization = new UserOrganization();
+        userOrganization.setUserId(userId);
+        UserOrganization newUserOrganization = userOrganizationService.selectOne(userOrganization);
+        map.put("org", organizationService.selectByPrimaryKey(newUserOrganization.getOrganizationId()));
+        map.put("roleAll", roleService.selectAll());
+        map.put("user", userService.selectByPrimaryKey(userId));
+        return UPDATE_USER;
+    }
+
+    /**
+     * 编辑用户页面实现
+     *
+     * @param user  User对象
+     * @param orgId 机构Id
+     * @return 成功或失败
+     */
+    @PutMapping
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "编辑用户实现", httpMethod = "POST")
+    @ResponseBody
+    public ResultTo updateUser(@ApiParam("User对象") User user, BindingResult result,
+                               @ApiParam(value = "机构ID(结构:旧ID,新ID)") @RequestParam("orgId") String orgId,
+                               @ApiParam(value = "角色ID(结构:旧ID,新ID)") @RequestParam("roleId") String roleId) {
+        LogTemplate.debug(this.getClass(), "orgId", orgId);
+        LogTemplate.debug(this.getClass(), "roleId", roleId);
+        Map<String, String> map = new HashedMap();
+        if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
+            return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
+        }
+        if (userService.updateUser(user, orgId, roleId)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
@@ -117,6 +229,7 @@ public class UserController extends BaseController<User> {
     public String userRolePage(ModelMap map, @PathVariable("userId") Integer userId) {
         UserRole userRole = new UserRole();
         userRole.setUserId(userId);
+        map.put("userId", userId);
         map.put("roleAll", roleService.selectAll());
         map.put("userRole", userRoleService.select(userRole));
         return USER_ROLE;
@@ -129,7 +242,8 @@ public class UserController extends BaseController<User> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户角色页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/{userId}/updateUserRole", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}/updateUserRole", method = RequestMethod.GET, params = "roleId")
+    @ResponseBody
     public ResultTo updateUserRole(@PathVariable("userId") Integer userId, @RequestParam("roleId") Integer roleId) {
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleId);
@@ -146,7 +260,7 @@ public class UserController extends BaseController<User> {
      *
      * @return 修改密码页面
      */
-    @RequestMapping(value = "/updatePasswordPage", method = RequestMethod.GET)
+    @GetMapping(value = "/updatePasswordPage")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "修改密码页面跳转", httpMethod = "GET")
     public String updatePassword() {
@@ -160,7 +274,7 @@ public class UserController extends BaseController<User> {
      * @param newPassword 新密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+    @PostMapping(value = "/updatePassword")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "修改密码", httpMethod = "POST")
     @ResponseBody
@@ -181,7 +295,7 @@ public class UserController extends BaseController<User> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/anon/resetPasswordPage", method = RequestMethod.GET)
+    @GetMapping(value = "/anon/resetPasswordPage")
     public String resetPasswordPage() {
         return RESET_PASSWORD_PAGE;
     }
@@ -212,7 +326,7 @@ public class UserController extends BaseController<User> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/anon/sendCodePage", method = RequestMethod.GET)
+    @GetMapping(value = "/anon/sendCodePage")
     public String sendCodePage() {
         return RESET_PASSWORD_SEND;
     }
@@ -224,7 +338,7 @@ public class UserController extends BaseController<User> {
      * @param address 用户Email或Phone
      * @return 成功或失败
      */
-    @RequestMapping(value = "/resetPassword/sendCode", method = RequestMethod.POST)
+    @PostMapping(value = "/resetPassword/sendCode")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "发送验证码", httpMethod = "POST")
     @ResponseBody
@@ -242,7 +356,7 @@ public class UserController extends BaseController<User> {
      * @param code    验证码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/resetPassword/checkedCode", method = RequestMethod.POST)
+    @PostMapping(value = "/resetPassword/checkedCode")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "验证验证码", httpMethod = "POST")
     @ResponseBody
@@ -260,7 +374,7 @@ public class UserController extends BaseController<User> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/anon/checkedCodedPage", method = RequestMethod.GET)
+    @GetMapping(value = "/anon/checkedCodedPage")
     public String resetPassword() {
         return RESET_PASSWORD_CHECKED;
     }
