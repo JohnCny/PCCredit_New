@@ -105,56 +105,56 @@
 </#macro>
 
 <#macro script>
-    <script type="text/javascript" src="/static/js/ztree-org.js"/>
+<script type="text/javascript" src="/static/js/ztree-org.js"/>
 </#macro>
 
 <#macro js>
-    <script type="text/javascript">
-        var urlMy = "/organization/orgAll";
-        var setting = {
-            data: {
-                simpleData: {
-                    enable: true,
-                }
-            },
-            callback: {
-                onClick: onClick
+<script type="text/javascript">
+    var urlMy = "/organization/orgAll";
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true,
             }
-        };
-        baseTree(urlMy, setting);
-        function onClick(event, treeId, treeNode, clickFlag) {
-            $("#orgId").attr("value", treeNode.name);
-            $("#orgId").attr("data-id", treeNode.id);
-
+        },
+        callback: {
+            onClick: onClick
         }
-    </script>
-    <script>
-        function setRadio(obj) {//单选样式
-            $(obj).parent().parent().find("input[type=radio]").attr("checked", false)
-            $(obj).parent().parent().find("label").attr("class", "radio")
-            $(obj).parent().find("input[type=radio]").attr("checked", true)
-            $(obj).parent().find("label").attr("class", "radio radio_a")
-        }
-        $(function () {
+    };
+    baseTree(urlMy, setting);
+    function onClick(event, treeId, treeNode, clickFlag) {
+        $("#orgId").attr("value", treeNode.name);
+        $("#orgId").attr("data-id", treeNode.id);
 
-            var url = "/user";
-            $(".submit").click(function (e) {
-                e.preventDefault();
-                var obj = $("#userAdd").serializeArray();
-                obj.push({"name": "roleId", "value": $("#roleId").val()});
-                console.log(obj);
-                $.ajax({
-                    type: "post",
-                    url: url,
-                    data: obj,
-                    success: function (res) {
-                        if (res.code == 200) {
-                            alert("添加成功");
-                            location.href = "/user";
-                        }
+    }
+</script>
+<script>
+    function setRadio(obj) {//单选样式
+        $(obj).parent().parent().find("input[type=radio]").attr("checked", false)
+        $(obj).parent().parent().find("label").attr("class", "radio")
+        $(obj).parent().find("input[type=radio]").attr("checked", true)
+        $(obj).parent().find("label").attr("class", "radio radio_a")
+    }
+    $(function () {
+
+        var url = "/user";
+        $(".submit").click(function (e) {
+            e.preventDefault();
+            var obj = $("#userAdd").serializeArray();
+            obj.push({"name": "roleId", "value": $("#roleId").val()});
+            console.log(obj);
+            $.ajax({
+                type: "post",
+                url: url,
+                data: obj,
+                success: function (res) {
+                    if (res.code == 200) {
+                        alert("添加成功");
+                        location.href = "/user";
                     }
-                })
+                }
             })
         })
-    </script>
+    })
+</script>
 </#macro>
