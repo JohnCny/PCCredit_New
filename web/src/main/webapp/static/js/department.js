@@ -45,11 +45,12 @@ var myDataTable = function(options){
 			//上方topPlugin DIV中追加HTML
 			//删除用户按钮的HTMLDOM
 			var topPlugin='<a href="" class="btn btn-primary btn-sm addBtn" ><i class="icon-add"></i>新 增</a>' +
-				/*'<button class="btn btn-danger btn-sm" id="deleteAll">批量删除</button>' +*/
+				'<button class="btn btn-danger btn-sm" id="deleteAll">批量删除</button>' +
 				'<button class="btn btn-info btn-sm" id="expCsv">导出全部</button>' +
 				'<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>';
 			$("#topPlugin").append(topPlugin);//在表格上方topPlugin DIV中追加HTML
 			$(".addBtn").attr("href",options.urlNew);
+
 			$(document).on("click",".deleteOne",function(){
 				var id=$(this).data("id");
 				$.ajax({
@@ -58,6 +59,7 @@ var myDataTable = function(options){
 					success: function(data){
 						if(data.code == 200){
 							alert("删除成功");
+                            window.location.reload();
 						}else{
 							alert("删除失败");
 						}
@@ -65,6 +67,24 @@ var myDataTable = function(options){
 					}
 				});
 			});
+            $(document).on("click","#deleteAll",function(){
+                var ids = [];
+                var inputs = $(".deleteAllTable").find("input[type=checkbox]")
+                var tempIds = ids.join(",");
+                $.ajax({
+                    url : options.urlDel+tempIds,
+                    type : "DELETE",
+                    success: function(data){
+                        if(data.code == 200){
+                            alert("删除成功");
+                        }else{
+                            alert("删除失败");
+                        }
+
+                    }
+                });
+            });
+
 			$(document).on("click",".resetBtn",function () {
 				var id = $(this).data("id");
 				$.ajax({

@@ -94,7 +94,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a  class="editOne btn-info" href="/customerMaintenance?id='+data+'">新增</a><a onclick="deleRow()" class="editOne btn-info" href="/customerMaintenance/'+data+'">查看</a>';
+                    return  '<a  class="editOne btn-info" href="/customerMaintenance?customerId='+data+'">新增</a><a onclick="deleRow()" class="editOne btn-info" href="/customerMaintenance/'+data+'">查看</a>';
                 }
             }];
 
