@@ -83,7 +83,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * 新建客戶经理
      *
      * @param tCustomerBasic 客户基本信息
-     * @return 数据库变更记录
+     * @return 新建的id
      */
     @ResponseBody
     @PostMapping()
@@ -91,7 +91,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
-        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return count != 0 ? new ResultTo().setData(tCustomerBasic.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -99,7 +99,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      *
      * @return 客户经理新建页面
      */
-    @GetMapping()
+    @GetMapping
     @SystemControllerLog(description = "跳转新建客户经理页面")
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
     public ModelAndView returnNewCustomer() {

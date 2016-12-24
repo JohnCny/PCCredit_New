@@ -3,7 +3,6 @@
 <mapper namespace="com.cardpay.mgt.customer.dao.TCustomerBasicMapper">
     <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.model.TCustomerBasic">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
-        <result column="T_U_ID" jdbcType="DECIMAL" property="tUId"/>
         <result column="CNAME" jdbcType="VARCHAR" property="cname"/>
         <result column="SEX" jdbcType="DECIMAL" property="sex"/>
         <result column="CERTIFICATE_TYPE" jdbcType="DECIMAL" property="certificateType"/>
@@ -75,7 +74,7 @@
             basic.CUSTOMER_MANAGER_ID = MANAGER.id AND MANAGER.id = #{customerManagerId}
             OR MANAGER.ORGANIZATION_ID = (
             SELECT ORGANIZATION_ID FROM T_CUSTOMER_MANAGER WHERE id = #{customerManagerId})
-            AND basic.CUSTOMER_STATUS = 0
+            AND basic.CUSTOMER_STATUS != 3
             <if test="cname!=null and cname!=''">
                 AND basic.cname = #{cname}
             </if>
