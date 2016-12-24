@@ -44,8 +44,6 @@
                             <input type="checkbox" name="check" class="checkbox" value="${userId}" data-id="${temp.id}">
                         </#if>
                 </tr>
-
-
             </#list>
             </thead>
         </table>
@@ -56,7 +54,6 @@
 <#macro script>
     <script>
         $(function () {
-            var roleAllid =
             $(".checkbox").on("click",function () {
                 var userId = $(this).attr("value");
                 var roleId = $(this).data("id");
@@ -65,7 +62,6 @@
 //                }else {
 //                    alert(321)
 //                }
-                console.log(isChecked);
                 $.ajax({
                     type:"get",
                     url:"/user/"+userId+"/updateUserRole",

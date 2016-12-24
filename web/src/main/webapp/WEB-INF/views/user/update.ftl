@@ -16,11 +16,11 @@
 </#macro>
 <#macro content>
     <div class="row" style="background-color: #efefef;width: 100%;margin-left: 0" >
-        <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px;height: 705px">
+        <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px">
             <div class="report common list" >
                 <h5>机构列表</h5>
                 <div class='treeBox'><ul id='treeDemo' class='ztree'>
-                    
+
                 </ul></div>
             </div>
         </div>
@@ -66,7 +66,7 @@
                             <td class="pull-right">用户角色：</td>
                             <td colspan="3">
                                 <#list roleAll as temp>
-                                <span class="hideInput"><input id="roleId" type="radio" name="roleId" value="${temp.id}"><label onclick="setRadio(this)" class="radio">${temp.roleNameZh}</label></span>
+                                    <span class="hideInput"><input id="roleId" type="radio" name="roleId" value="${temp.id}"><label onclick="setRadio(this)" class="radio">${temp.roleNameZh}</label></span>
                                 </#list>
                             </td>
                         </tr>
@@ -107,7 +107,9 @@
             $(".submit").click(function (e) {
                 e.preventDefault();
                 var obj = $("#userAdd").serializeArray();
+
                 obj.push({"name":"roleId","value":$("#roleId").val()});
+
                 console.log(obj);
                 $.ajax({
                     type:"post",
@@ -132,4 +134,4 @@
 
     </script>
 
-</#macro>
+    </#macro>
