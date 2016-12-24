@@ -6,7 +6,7 @@
     <result column="LEVEL_ID" jdbcType="DECIMAL" property="levelId" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
-    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="MANAGER_STATUS" jdbcType="DECIMAL" property="managerStatus" />
   </resultMap>
 
   <resultMap id="BaseVoMap" type="com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo">
@@ -15,7 +15,7 @@
     <result column="LEVEL_NAME" jdbcType="VARCHAR" property="levelName" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
-    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="MANAGER_STATUS" jdbcType="DECIMAL" property="managerStatus" />
     <association property="user" select="selectUser" column="USER_ID"/>
   </resultMap>
 
@@ -37,6 +37,7 @@
     <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
     <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
     <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+    <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
   </resultMap>
 
   <!--查询用户-->

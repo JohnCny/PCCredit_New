@@ -127,6 +127,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     public ResultTo update(@ApiParam("用户信息") @ModelAttribute User user,
                                @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
         ResultTo resultTo = new ResultTo();
+        user.setId(customerManager.getUserId());
         Integer result = customerManagerService.updateCustomerManager(user, customerManager, ShiroKit.getUser());
         resultTo.setIsSuccess(result);
         return resultTo;

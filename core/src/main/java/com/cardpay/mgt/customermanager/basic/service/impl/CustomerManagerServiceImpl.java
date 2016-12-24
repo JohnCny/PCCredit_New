@@ -1,6 +1,7 @@
 package com.cardpay.mgt.customermanager.basic.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.util.ReflectUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
@@ -65,6 +66,7 @@ public class CustomerManagerServiceImpl extends BaseServiceImpl<TCustomerManager
     public TCustomerManagerEditVo assembleEditPageData(Integer userId) {
         TCustomerManagerBaseVo customerManager = selectBaseVoByUserId(userId);
         TCustomerManagerEditVo customerManagerEditVo = conventEditVo(customerManager);
+        //TODO:待需求确定系统建议规则
         customerManagerEditVo.setSystemLevel("系统建议你是傻吊");
         return customerManagerEditVo;
     }
@@ -86,18 +88,18 @@ public class CustomerManagerServiceImpl extends BaseServiceImpl<TCustomerManager
     @Override
     @Transactional
     public Integer updateCustomerManager(User user, TCustomerManager customerManager,User modifyUser) {
-        Integer userResult = null;
-        if(user!=null){
+        int userResult = 0;
+        if(!ReflectUtil.checkBeanAllFiledIsNull(user,"id")){
             userResult = userService.updateSelectiveByPrimaryKey(user);
             CompareBeanUtil.compareBean(user, userService, "User", "用户模块", modifyUser);
         }
-        Integer customerManagerResult = null;
-        if(customerManager!=null){
-        customerManagerResult = updateSelectiveByPrimaryKey(customerManager);
-        CompareBeanUtil.compareBean(customerManager, this, "CustomerManager"
-                , "客户经理模块", modifyUser);
+        int customerManagerResult = 0;
+        if(!ReflectUtil.checkBeanAllFiledIsNull(customerManager,"userId")){
+            customerManagerResult = updateSelectiveByPrimaryKey(customerManager);
+            CompareBeanUtil.compareBean(customerManager, this, "CustomerManager"
+                    , "客户经理模块", modifyUser);
         }
-        Integer finalResult = customerManagerResult+userResult;
+        int finalResult = customerManagerResult+userResult;
         return finalResult==2?1:1;
     }
 
@@ -109,10 +111,11 @@ public class CustomerManagerServiceImpl extends BaseServiceImpl<TCustomerManager
      */
     private TCustomerManagerEditVo conventEditVo(TCustomerManagerBaseVo customerManagerBaseVo){
         TCustomerManagerEditVo customerManagerEditVo = new TCustomerManagerEditVo();
+        customerManagerEditVo.setUserId(customerManagerBaseVo.getUser().getId());
         customerManagerEditVo.setLevelName(customerManagerBaseVo.getLevelName());
         customerManagerEditVo.setUserCname(customerManagerBaseVo.getUser().getUserCname());
         customerManagerEditVo.setEmployeeNumber(customerManagerBaseVo.getUser().getEmployeeNumber());
-        customerManagerEditVo.setStatus(customerManagerBaseVo.getStatus());
+        customerManagerEditVo.setManagerStatus(customerManagerBaseVo.getManagerStatus());
         return customerManagerEditVo;
     }
 }
