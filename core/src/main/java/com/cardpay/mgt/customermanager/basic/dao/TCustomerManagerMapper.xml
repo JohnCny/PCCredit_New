@@ -2,20 +2,82 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper">
   <resultMap id="BaseResultMap" type="com.cardpay.mgt.customermanager.basic.model.TCustomerManager">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <result column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="T_U_ID" jdbcType="DECIMAL" property="tUId" />
-    <result column="T_O_ID" jdbcType="DECIMAL" property="tOId" />
-    <result column="CNAME" jdbcType="VARCHAR" property="cname" />
     <result column="LEVEL_ID" jdbcType="DECIMAL" property="levelId" />
-    <result column="CARD_NUMBER" jdbcType="VARCHAR" property="cardNumber" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
-    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy" />
-    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
   </resultMap>
+
+  <resultMap id="BaseVoMap" type="com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo">
+    <result column="ID" jdbcType="DECIMAL" property="managerId" />
+    <result column="LEVEL_ID" jdbcType="DECIMAL" property="levelId" />
+    <result column="LEVEL_NAME" jdbcType="VARCHAR" property="levelName" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <association property="user" select="selectUser" column="USER_ID"/>
+  </resultMap>
+
+  <resultMap id="UserMap" type="com.cardpay.mgt.user.model.User">
+    <result column="ID" jdbcType="DECIMAL" property="id"/>
+    <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+    <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+    <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+    <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+    <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+    <result column="AGE" jdbcType="DECIMAL" property="age"/>
+    <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+    <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+    <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+    <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+  </resultMap>
+
+  <!--查询用户-->
+  <select id="selectUser" resultMap="UserMap">
+   SELECT ID,USERNAME,PASSWORD,LAST_LOGIN_TIME,EMAIL,TEL,CREATE_TIME,STATUS,USER_CNAME,SEX,CREATE_BY,AGE,PHONE
+   ,ID_CARD_NUMBER,EMPLOYEE_NUMBER,MODIFY_BY,MODIFY_TIME
+    FROM T_USER
+   WHERE
+    ID = #{userId}
+  </select>
+
+  <!--查询客户经理BaseVo列表-->
+  <select id="selectBaseVoList" resultMap="BaseVoMap">
+    SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
+      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG,T_USER USR
+    WHERE
+          CM.LEVEL_ID = CML.ID
+      AND ORG.ID = CM.ORGANIZATION_ID
+      AND USR.ID = CM.USER_ID
+      AND USR.STATUS = #{status,jdbcType=DECIMAL}
+    <if test="organizationId != null">
+      AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+    </if>
+    <if test="cName != null">
+      AND CM.C_NAME LIKE #{cName,jdbcType=VARCHAR}
+    </if>
+    <if test="levelName != null">
+      AND CML.LEVEL_NAME = #{levelName,jdbcType=VARCHAR}
+    </if>
+    <if test="id != null">
+      AND CM.ID = #{id,jdbcType=DECIMAL}
+    </if>
+  </select>
+
+  <!--根据UserID查询客户经理BaseVo-->
+  <select id="selectBaseVoByUserId" resultMap="BaseVoMap">
+    SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
+      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG
+    WHERE
+          CM.LEVEL_ID = CML.ID
+      AND ORG.ID = CM.ORGANIZATION_ID
+      AND CM.USER_ID = #{userId,jdbcType=DECIMAL}
+  </select>
 </mapper>
