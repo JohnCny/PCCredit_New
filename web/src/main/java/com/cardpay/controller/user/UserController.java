@@ -188,6 +188,9 @@ public class UserController extends BaseController<User> {
         map.put("org", organizationService.selectByPrimaryKey(newUserOrganization.getOrganizationId()));
         map.put("roleAll", roleService.selectAll());
         map.put("user", userService.selectByPrimaryKey(userId));
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        map.put("userRole", userRoleService.select(userRole));
         return UPDATE_USER;
     }
 
