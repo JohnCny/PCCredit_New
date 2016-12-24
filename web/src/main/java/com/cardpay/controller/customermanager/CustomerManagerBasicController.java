@@ -49,16 +49,17 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     public ModelAndView toList(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
-        modelAndView.setViewName("/customerManager/index");
+        modelAndView.setViewName("/customerManager/basic/index");
         return modelAndView;
     }
 
     /**
      * 客户经理列表
+     * levelId = -1 查询所有级别
      */
     @ResponseBody
     @GetMapping(value = "/pageList")
-    @ApiOperation(value = "获取客户经理列表", notes = "获取客户经理列表", httpMethod = "GET")
+    @ApiOperation(value = "获取客户经理列表", notes = "获取客户经理列表 levelId = -1 查询所有级别", httpMethod = "GET")
     public DataTablePage pageList(){
         TCustomerManager customerManager = customerManagerService.selectByUserId(ShiroKit.getUserId());
         Map<String, Object> map = new HashMap();
@@ -77,7 +78,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @ApiOperation(value = "前往客户经理创建页面", notes = "前往客户经理创建页面", httpMethod = "GET")
     public ModelAndView toAdd(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/customerManager/new");
+        modelAndView.setViewName("/customerManager/basic/new");
         modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
         return modelAndView;
     }
@@ -95,7 +96,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
                             @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
         ModelAndView modelAndView = new ModelAndView();
         customerManagerService.addCustomerManager(user, customerManager);
-        modelAndView.setViewName("/customerManager/index");
+        modelAndView.setViewName("/customerManager/basic/index");
         return modelAndView;
     }
 
@@ -108,7 +109,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @ApiOperation(value = "前往客户经理更新页面", notes = "前往客户经理更新页面", httpMethod = "GET")
     public ModelAndView toUpdate(@PathVariable("userId") Integer userId){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/customerManager/edit");
+        modelAndView.setViewName("/customerManager/basic/edit");
         modelAndView.addObject("customerManager",customerManagerService.assembleEditPageData(userId));
         modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
         return modelAndView;

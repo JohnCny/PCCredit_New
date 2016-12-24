@@ -42,8 +42,7 @@
 
   <!--查询用户-->
   <select id="selectUser" resultMap="UserMap">
-   SELECT ID,USERNAME,PASSWORD,LAST_LOGIN_TIME,EMAIL,TEL,CREATE_TIME,STATUS,USER_CNAME,SEX,CREATE_BY,AGE,PHONE
-   ,ID_CARD_NUMBER,EMPLOYEE_NUMBER,MODIFY_BY,MODIFY_TIME
+   SELECT *
     FROM T_USER
    WHERE
     ID = #{userId}
@@ -52,23 +51,23 @@
   <!--查询客户经理BaseVo列表-->
   <select id="selectBaseVoList" resultMap="BaseVoMap">
     SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
-      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG,T_USER USR
+    FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG,T_USER USR
     WHERE
-          CM.LEVEL_ID = CML.ID
-      AND ORG.ID = CM.ORGANIZATION_ID
-      AND USR.ID = CM.USER_ID
-      AND USR.STATUS = #{status,jdbcType=DECIMAL}
+    CM.LEVEL_ID = CML.ID
+    AND ORG.ID = CM.ORGANIZATION_ID
+    AND USR.ID = CM.USER_ID
+    AND USR.STATUS = #{status,jdbcType=DECIMAL}
     <if test="organizationId != null">
       AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
     </if>
-    <if test="cName != null">
-      AND CM.C_NAME LIKE #{cName,jdbcType=VARCHAR}
+    <if test="userCname != null">
+      AND USR.USER_CNAME LIKE CONCAT(CONCAT('%',#{userCname}),'%')
     </if>
-    <if test="levelName != null">
-      AND CML.LEVEL_NAME = #{levelName,jdbcType=VARCHAR}
+    <if test="levelId != null and levelId != -1">
+      AND CML.ID = #{levelId,jdbcType=DECIMAL}
     </if>
-    <if test="id != null">
-      AND CM.ID = #{id,jdbcType=DECIMAL}
+    <if test="employeeNumber != null">
+      AND USR.EMPLOYEE_NUMBER = #{employeeNumber,jdbcType=VARCHAR}
     </if>
   </select>
 
