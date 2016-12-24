@@ -104,14 +104,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
     public ModelAndView returnNewCustomer() {
         ModelAndView modelAndView = new ModelAndView("/customer/new");
-        Map<String, List<SelectModel>> dropDownList = new HashMap<>();
-        List<SelectModel> cert = customerBasicService.getCert();
-        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
-        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
-        dropDownList.put("cert", cert);
-        dropDownList.put("educationDegree", educationDegree);
-        dropDownList.put("marriageStatus", marriageStatus);
-        modelAndView.addObject("dropDownList", dropDownList);
+        modelAndView.addObject("dropDownList", selectInput());
         return modelAndView;
     }
 
@@ -154,8 +147,25 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     public ModelAndView returnUpdate(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
         ModelAndView modelAndView = new ModelAndView("/customer/update");
         TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
+        modelAndView.addObject("dropDownList", selectInput());
         modelAndView.addObject("tCustomerBasic", tCustomerBasic);
         return modelAndView;
+    }
+
+    /**
+     * 查询客户编辑页面下拉框信息
+     *
+     * @return 客户编辑页面下拉框信息
+     */
+    private Map<String, List<SelectModel>> selectInput() {
+        Map<String, List<SelectModel>> dropDownList = new HashMap<>();
+        List<SelectModel> cert = customerBasicService.getCert();
+        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
+        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
+        dropDownList.put("cert", cert);
+        dropDownList.put("educationDegree", educationDegree);
+        dropDownList.put("marriageStatus", marriageStatus);
+        return dropDownList;
     }
 
     /**
