@@ -27,6 +27,8 @@ public class DataTablePage {
     private int length = 10; // 数据长度'10'
 
     private long recordsTotal; // 数据总记录数
+    private long recordsFiltered; // 过滤数据总记录数
+
     private List<Object> data;
 
     public DataTablePage(String methodName, BaseService baseService, HttpServletRequest request, Map<String, Object> map) {
@@ -122,6 +124,7 @@ public class DataTablePage {
         }
         PageInfo pageInfo = new PageInfo(this.data);
         setRecordsTotal(pageInfo.getTotal());
+        setRecordsFiltered(pageInfo.getTotal());
     }
 
     private Map<String, Object> removeNull(Map<String, Object> map) {
@@ -167,5 +170,13 @@ public class DataTablePage {
 
     public void setRecordsTotal(long recordsTotal) {
         this.recordsTotal = recordsTotal;
+    }
+
+    public long getRecordsFiltered() {
+        return recordsFiltered;
+    }
+
+    public void setRecordsFiltered(long recordsFiltered) {
+        this.recordsFiltered = recordsFiltered;
     }
 }

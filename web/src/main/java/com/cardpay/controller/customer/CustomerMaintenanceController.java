@@ -1,5 +1,6 @@
 package com.cardpay.controller.customer;
 
+import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.util.datatable.DataTablePage;
@@ -66,18 +67,18 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 客户维护信息查询页面
      */
     @PostMapping
+    @ResponseBody
     @SystemControllerLog(description = "新增维护记录")
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
-    // TODO:　客户id(需要生成规则生成)
-    public String insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
-        Integer managerId = ShiroKit.getUserId();
-        TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(managerId);
+    public ResultTo insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
+        Integer userId = ShiroKit.getUserId();
+      //  TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
         tCustomerMaintenance.setCustomerCname("测试");
-        tCustomerMaintenance.setOperationId(managerId);
-        tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
+        tCustomerMaintenance.setOperationId(userId);
+    //    tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
         tCustomerMaintenance.setOperationTime(new Date());
         customerMaintenanceService.insertSelective(tCustomerMaintenance);
-        return "redirect:/customerMaintenance/index";
+        return new ResultTo().setData(tCustomerMaintenance.getId());
     }
 
     /**
@@ -91,8 +92,10 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @ApiOperation(value = "跳转查看客户维护信息页面", notes = "跳转查看客户维护信息页面, 返回参数名称:customerMaintenance", httpMethod = "GET")
     public ModelAndView returnUpdate(@PathVariable("id") int customerId) {
         ModelAndView modelAndView = new ModelAndView("/customer/maintenanceUpdate");
-        TCustomerMaintenance tCustomerMaintenance = customerMaintenanceService.selectByPrimaryKey(customerId);
-        modelAndView.addObject("tCustomerMaintenance", tCustomerMaintenance);
+        TCustomerMaintenance manager = new TCustomerMaintenance();
+        manager.setId(customerId);
+        List<TCustomerMaintenance> tCustomerMaintenances = customerMaintenanceService.select(manager);
+        modelAndView.addObject("tCustomerMaintenance", tCustomerMaintenances);
         return modelAndView;
     }
 
