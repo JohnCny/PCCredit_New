@@ -28,7 +28,7 @@ var myDataTable = function(options){
 			"sProcessing" : "正在获取数据，请稍后...",
 			"sLengthMenu" : "&nbsp;&nbsp;<span>每页显示</span>&nbsp;_MENU_&nbsp;条 ",
 			"sZeroRecords" : "没有找到数据",
-			"sInfo" : "",
+			"sInfo" : "共 _TOTAL_ 条数据，显示第 _START_ 到第 _END_ 条",
 			"sInfoEmpty" : "",
 			"sInfoFiltered" : "共 _TOTAL_ 条数据，显示第 _START_ 到第 _END_ 条",
 			"sInfoPostFix" : "",

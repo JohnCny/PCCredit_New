@@ -15,7 +15,7 @@ public class TCustomerManagerEditVo {
      * 客户经理姓名
      */
     @ApiModelProperty(value="客户经理姓名",required = true)
-    private String userId;
+    private Integer userId;
 
     /**
      * 客户经理姓名
@@ -39,7 +39,7 @@ public class TCustomerManagerEditVo {
      * 是否暂停进件
      */
     @ApiModelProperty(value="是否暂停进件",required = true)
-    private Integer status;
+    private Integer managerStatus;
 
     /**
      * 客户经理工号
@@ -47,11 +47,11 @@ public class TCustomerManagerEditVo {
     @ApiModelProperty(value="客户经理工号",required = true)
     private String employeeNumber;
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -114,17 +114,17 @@ public class TCustomerManagerEditVo {
      *
      * @return ifPause 是否暂停进件
      */
-    public Integer getStatus() {
-        return status;
+    public Integer getManagerStatus() {
+        return managerStatus;
     }
 
     /**
      * 设置是否暂停进件
      *
-     * @param status 是否暂停进件
+     * @param managerStatus 是否暂停进件
      */
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setManagerStatus(Integer managerStatus) {
+        this.managerStatus = managerStatus;
     }
 
     /**
