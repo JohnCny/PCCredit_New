@@ -22,7 +22,7 @@ public class CustomerManagerLevelServiceImpl extends BaseServiceImpl<TCustomerMa
     private TCustomerManagerLevelMapper customerManagerLevelMapper;
 
     @Override
-    public Object getCustomerManagerLevel(){
+    public List<SelectModel> getCustomerManagerLevel(){
         List<SelectModel> selects = new ArrayList<>();
 
         List<TCustomerManagerLevel> customerManagerLevels = customerManagerLevelMapper.selectAll();
