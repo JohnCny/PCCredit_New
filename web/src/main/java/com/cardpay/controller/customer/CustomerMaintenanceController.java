@@ -9,6 +9,8 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
+import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -69,10 +71,10 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     // TODO:　客户id(需要生成规则生成)
     public String insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
         Integer managerId = ShiroKit.getUserId();
-        //      TCustomerManager manager = customerManagerService.selectByPrimaryKey(managerId);
+        TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(managerId);
         tCustomerMaintenance.setCustomerCname("测试");
         tCustomerMaintenance.setOperationId(managerId);
-        //     tCustomerMaintenance.setOperationName(manager.getCname());
+        tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
         tCustomerMaintenance.setOperationTime(new Date());
         customerMaintenanceService.insertSelective(tCustomerMaintenance);
         return "redirect:/customerMaintenance/index";
