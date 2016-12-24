@@ -14,13 +14,19 @@ import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.dao.RoleMapper;
 import com.cardpay.mgt.user.dao.UserMapper;
+import com.cardpay.mgt.user.dao.UserOrganizationMapper;
+import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
+import com.cardpay.mgt.user.model.UserOrganization;
+import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,6 +48,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Autowired
     private RedisClient redisClient;
+
+    @Autowired
+    private UserOrganizationMapper userOrganizationMapper;
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     @Autowired
     private MailSend mailSend;
@@ -152,5 +164,55 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             return new ResultTo(ResultEnum.OPERATION_FAILED);
         }
         return new ResultTo();
+    }
+
+    @Override
+    public boolean addUser(User user, Integer orgId, Integer roleId) {
+        user.setCreateTime(new Date());
+        user.setCreateBy(ShiroKit.getUserId());
+        user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
+        user.setEmployeeNumber(VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 8, null));
+        Integer userId = userMapper.insertSelective(user);
+        if (userId == null) {
+            return Boolean.FALSE;
+        }
+        UserOrganization userOrganization = new UserOrganization();
+        userOrganization.setUserId(user.getId());
+        userOrganization.setOrganizationId(orgId);
+        userOrganizationMapper.insertSelective(userOrganization);
+        UserRole userRole = new UserRole();
+        userRole.setRoleId(roleId);
+        userRole.setUserId(user.getId());
+        userRoleMapper.insertSelective(userRole);
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public boolean updateUser(User user, String orgId, String roleId) {
+        user.setModifyBy(ShiroKit.getUserId());
+        user.setModifyTime(new Date());
+        int count = userMapper.updateByPrimaryKeySelective(user);
+        if (count <= 0) {
+            return Boolean.FALSE;
+        }
+        if (orgId != null) {
+            String[] split = orgId.split(",");
+            UserOrganization userOrganization = new UserOrganization();
+            userOrganization.setUserId(user.getId());
+            userOrganization.setOrganizationId(Integer.parseInt(split[0]));
+            userOrganizationMapper.delete(userOrganization);
+            userOrganization.setOrganizationId(Integer.parseInt(split[1]));
+            userOrganizationMapper.insertSelective(userOrganization);
+        }
+        if (roleId != null) {
+            String[] split = roleId.split(",");
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getId());
+            userRole.setRoleId(Integer.parseInt(split[0]));
+            userRoleMapper.delete(userRole);
+            userRole.setRoleId(Integer.parseInt(split[1]));
+            userRoleMapper.insertSelective(userRole);
+        }
+        return Boolean.TRUE;
     }
 }

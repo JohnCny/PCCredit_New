@@ -83,12 +83,25 @@
 <#macro js>
 
     <script>
+
         $(function(){
 
             var url  = {
-                "urlList":"/customerBasic/condition",
                 "urlNew" : "/customerBasic/new",
                 "urlDel" : "/customerBasic/",
+            }
+            var QK_searchObj = {
+                "cname" : $("#cname").val(),
+                "certificateNumber" : $("#certificateNumber").val(),
+            };
+            var ajax = {
+                "type" : "GET",
+                "url" : "/customerBasic/condition",
+                "data" : function(d){
+                    d.search = JSON.stringify(QK_searchObj);
+                    d.name = " ";
+                    d.IdNumber = " ";
+                }
             }
             var tableId = $("#example");
             var aoColumns = [{
@@ -121,9 +134,9 @@
 
 
             var options = {
-                "urlList" : url['urlList'],
                 "urlNew" : url['urlNew'],
                 "urlDel" : url['urlDel'],
+                "ajax" : ajax,
                 "tableId" : tableId,
                 "aoColumns" : aoColumns
             }

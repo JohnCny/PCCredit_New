@@ -1,4 +1,3 @@
-var QK_searchObj ={};
 var myDataTable = function(options){
 	var table = options.tableId.DataTable({
 		"aLengthMenu":[10,20,40,60],
@@ -15,15 +14,7 @@ var myDataTable = function(options){
 		"iDisplayStart" : 0,
 		"dom": '<l<\'#topPlugin\'>f>rt<ip><"clear">',
 		"ordering": false,//全局禁用排序
-		"ajax" : {
-			"type" : "GET",
-			"url" : options.urlList,
-			"data" : function(d){
-				d.search = JSON.stringify(QK_searchObj);
-				d.name = " ";
-				d.IdNumber = " ";
-			}
-		},
+		"ajax" : options.ajax,
 		"aoColumns" : options.aoColumns,
 		/*"columnDefs" :[{
 			"orderable" : false, // 禁用排序
@@ -62,8 +53,6 @@ var myDataTable = function(options){
 
 			$(document).on("click",".deleteOne",function(){
 				var id=$(this).data("id");
-				console.log(id);
-				console.log(options.urlDel);
 				$.ajax({
 					url : options.urlDel+id,
 					type : "DELETE",
@@ -168,12 +157,6 @@ var myDataTable = function(options){
 
 			/* 自定义搜索  姓名  联系方式  证件号码  创建时间 */
 			$(document).delegate('.searchBtn','click',function() {
-				QK_searchObj = {
-					"cname" : $("#cname").val(),
-					"certificateNumber" : $("#certificateNumber").val(),
-					"username" : $("#username").val(),
-					"email" : $("#email").val()
-				};
 				table.ajax.reload();
 			});
 		},
