@@ -9,9 +9,9 @@ import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.service.TOrganizationService;
-import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.service.RoleService;
 import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -52,16 +52,16 @@ public class UserController extends BaseController<User> {
 
     private static final String USER_INDEX = "/user/index";
 
-    private static final String USER_ROLE = "";
+    private static final String USER_ROLE = "/user/role";
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private UserRoleService userRoleService;
+    private RoleService roleService;
 
     @Autowired
-    private TOrganizationService tOrganizationService;
+    private UserRoleService userRoleService;
 
 
     /**
@@ -73,9 +73,6 @@ public class UserController extends BaseController<User> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户列表页面", httpMethod = "GET")
     public String userPage(ModelMap map) {
-        TOrganization tOrganization = new TOrganization();
-        tOrganization.setOrgParentId(0);
-        map.put("topOrganization", tOrganizationService.select(tOrganization));
         return USER_INDEX;
     }
 
@@ -108,6 +105,7 @@ public class UserController extends BaseController<User> {
         return new ResultTo(ResultEnum.OPERATION_FAILED);
     }
 
+
     /**
      * 用户角色页面跳转
      *
@@ -115,8 +113,12 @@ public class UserController extends BaseController<User> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户角色页面跳转", httpMethod = "GET")
-    @GetMapping("/role")
-    public String userRolePage() {
+    @RequestMapping(value = "/{userId}/role", method = RequestMethod.GET)
+    public String userRolePage(ModelMap map, @PathVariable("userId") Integer userId) {
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        map.put("roleAll", roleService.selectAll());
+        map.put("userRole", userRoleService.select(userRole));
         return USER_ROLE;
     }
 
@@ -127,8 +129,8 @@ public class UserController extends BaseController<User> {
      */
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户角色页面跳转", httpMethod = "GET")
-    @RequestMapping(value = "/{userId}/{roleId}", method = RequestMethod.GET)
-    public ResultTo updateUserRole(@PathVariable("userId") Integer userId, @PathVariable("roleId") Integer roleId) {
+    @RequestMapping(value = "/{userId}/updateUserRole", method = RequestMethod.GET)
+    public ResultTo updateUserRole(@PathVariable("userId") Integer userId, @RequestParam("roleId") Integer roleId) {
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleId);
         userRole.setUserId(userId);

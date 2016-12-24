@@ -72,6 +72,69 @@ public class User extends GenericEntity<Integer> {
     private Integer status;
 
     /**
+     * 用户姓名
+     */
+    @Column(name = "USER_CNAME")
+    @ApiModelProperty(value = "用户姓名", required = true)
+    private String userCname;
+
+    /**
+     * 用户性别
+     */
+    @Column(name = "SEX")
+    @ApiModelProperty(value = "用户性别", required = true)
+    private Short sex;
+
+    /**
+     * 创建人
+     */
+    @Column(name = "CREATE_BY")
+    @ApiModelProperty(value = "创建人", required = true)
+    private Integer createBy;
+
+    /**
+     * 用户年龄
+     */
+    @Column(name = "AGE")
+    @ApiModelProperty(value = "用户年龄", required = true)
+    private Short age;
+
+    /**
+     * 手机号码
+     */
+    @Column(name = "PHONE")
+    @ApiModelProperty(value = "手机号码", required = true)
+    private String phone;
+
+    /**
+     * 身份证号
+     */
+    @Column(name = "ID_CARD_NUMBER")
+    @ApiModelProperty(value = "身份证号", required = true)
+    private String idCardNumber;
+
+    /**
+     * 员工号
+     */
+    @Column(name = "EMPLOYEE_NUMBER")
+    @ApiModelProperty(value = "员工号", required = true)
+    private String employeeNumber;
+
+    /**
+     * 修改人
+     */
+    @Column(name = "MODIFY_BY")
+    @ApiModelProperty(value = "修改人", required = true)
+    private Integer modifyBy;
+
+    /**
+     * 修改时间
+     */
+    @Column(name = "MODIFY_TIME")
+    @ApiModelProperty(value = "修改时间", required = true)
+    private Date modifyTime;
+
+    /**
      * 获取用户id
      *
      * @return ID - 用户id
@@ -215,6 +278,168 @@ public class User extends GenericEntity<Integer> {
         this.status = status;
     }
 
+    /**
+     * 获取用户姓名
+     *
+     * @return USER_CNAME - 用户姓名
+     */
+    public String getUserCname() {
+        return userCname;
+    }
+
+    /**
+     * 设置用户姓名
+     *
+     * @param userCname 用户姓名
+     */
+    public void setUserCname(String userCname) {
+        this.userCname = userCname;
+    }
+
+    /**
+     * 获取用户性别
+     *
+     * @return SEX - 用户性别
+     */
+    public Short getSex() {
+        return sex;
+    }
+
+    /**
+     * 设置用户性别
+     *
+     * @param sex 用户性别
+     */
+    public void setSex(Short sex) {
+        this.sex = sex;
+    }
+
+    /**
+     * 获取创建人
+     *
+     * @return CREATE_BY - 创建人
+     */
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    /**
+     * 设置创建人
+     *
+     * @param createBy 创建人
+     */
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
+    }
+
+    /**
+     * 获取用户年龄
+     *
+     * @return AGE - 用户年龄
+     */
+    public Short getAge() {
+        return age;
+    }
+
+    /**
+     * 设置用户年龄
+     *
+     * @param age 用户年龄
+     */
+    public void setAge(Short age) {
+        this.age = age;
+    }
+
+    /**
+     * 获取手机号码
+     *
+     * @return PHONE - 手机号码
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * 设置手机号码
+     *
+     * @param phone 手机号码
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * 获取身份证号
+     *
+     * @return ID_CARD_NUMBER - 身份证号
+     */
+    public String getIdCardNumber() {
+        return idCardNumber;
+    }
+
+    /**
+     * 设置身份证号
+     *
+     * @param idCardNumber 身份证号
+     */
+    public void setIdCardNumber(String idCardNumber) {
+        this.idCardNumber = idCardNumber;
+    }
+
+    /**
+     * 获取员工号
+     *
+     * @return EMPLOYEE_NUMBER - 员工号
+     */
+    public String getEmployeeNumber() {
+        return employeeNumber;
+    }
+
+    /**
+     * 设置员工号
+     *
+     * @param employeeNumber 员工号
+     */
+    public void setEmployeeNumber(String employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+
+    /**
+     * 获取修改人
+     *
+     * @return MODIFY_BY - 修改人
+     */
+    public Integer getModifyBy() {
+        return modifyBy;
+    }
+
+    /**
+     * 设置修改人
+     *
+     * @param modifyBy 修改人
+     */
+    public void setModifyBy(Integer modifyBy) {
+        this.modifyBy = modifyBy;
+    }
+
+    /**
+     * 获取修改时间
+     *
+     * @return MODIFY_TIME - 修改时间
+     */
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    /**
+     * 设置修改时间
+     *
+     * @param modifyTime 修改时间
+     */
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
     @Override
     public Integer getPK() {
         return this.id;
@@ -230,6 +455,15 @@ public class User extends GenericEntity<Integer> {
         private String tel;
         private Date createTime;
         private Integer status;
+        private String userCname;
+        private Short sex;
+        private Integer createBy;
+        private Short age;
+        private String phone;
+        private String idCardNumber;
+        private String employeeNumber;
+        private Integer modifyBy;
+        private Date modifyTime;
 
         private UserBuilder() {
         }
@@ -278,6 +512,51 @@ public class User extends GenericEntity<Integer> {
             return this;
         }
 
+        public UserBuilder withUserCname(String userCname) {
+            this.userCname = userCname;
+            return this;
+        }
+
+        public UserBuilder withSex(Short sex) {
+            this.sex = sex;
+            return this;
+        }
+
+        public UserBuilder withCreateBy(Integer createBy) {
+            this.createBy = createBy;
+            return this;
+        }
+
+        public UserBuilder withAge(Short age) {
+            this.age = age;
+            return this;
+        }
+
+        public UserBuilder withPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public UserBuilder withIdCardNumber(String idCardNumber) {
+            this.idCardNumber = idCardNumber;
+            return this;
+        }
+
+        public UserBuilder withEmployeeNumber(String employeeNumber) {
+            this.employeeNumber = employeeNumber;
+            return this;
+        }
+
+        public UserBuilder withModifyBy(Integer modifyBy) {
+            this.modifyBy = modifyBy;
+            return this;
+        }
+
+        public UserBuilder withModifyTime(Date modifyTime) {
+            this.modifyTime = modifyTime;
+            return this;
+        }
+
         public User build() {
             User user = new User();
             user.setId(id);
@@ -288,6 +567,15 @@ public class User extends GenericEntity<Integer> {
             user.setTel(tel);
             user.setCreateTime(createTime);
             user.setStatus(status);
+            user.setUserCname(userCname);
+            user.setSex(sex);
+            user.setCreateBy(createBy);
+            user.setAge(age);
+            user.setPhone(phone);
+            user.setIdCardNumber(idCardNumber);
+            user.setEmployeeNumber(employeeNumber);
+            user.setModifyBy(modifyBy);
+            user.setModifyTime(modifyTime);
             return user;
         }
     }

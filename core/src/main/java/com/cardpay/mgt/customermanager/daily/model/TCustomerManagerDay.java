@@ -41,7 +41,6 @@ public class TCustomerManagerDay extends GenericEntity<Integer> {
      */
     @Column(name = "DAILY_TIME")
     @ApiModelProperty(value="日报时间(yyyy-mm-dd)",required = true)
-    @OrderBy("DESC")
     private Date dailyTime;
 
     /**
