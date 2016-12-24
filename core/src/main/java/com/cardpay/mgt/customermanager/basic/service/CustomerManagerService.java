@@ -51,6 +51,8 @@ public interface CustomerManagerService extends BaseService<TCustomerManager> {
     /**
      * 新增客户经理,插入权限用户等信息
      *
+     * @param user 用户信息
+     * @param customerManager 客户经理信息
      * @return 是否成功
      */
     Boolean addCustomerManager(User user, TCustomerManager customerManager);
@@ -58,7 +60,10 @@ public interface CustomerManagerService extends BaseService<TCustomerManager> {
     /**
      * 更新客户经理,插入权限用户等信息
      *
+     * @param user 用户信息
+     * @param customerManager 客户经理信息
+     * @param modifyUser 修改人
      * @return 是否成功
      */
-    Boolean updateCustomerManager(User user, TCustomerManager customerManager);
+    Integer updateCustomerManager(User user, TCustomerManager customerManager,User modifyUser);
 }

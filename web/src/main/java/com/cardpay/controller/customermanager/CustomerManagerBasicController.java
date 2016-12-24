@@ -8,7 +8,6 @@ import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.customermanager.level.service.CustomerManagerLevelService;
 import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -122,14 +121,15 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      * @param customerManager 客户经理信息
      * @return 视图和数据
      */
+    @ResponseBody
     @PutMapping()
     @ApiOperation(value = "更新客户经理", notes = "更新客户经理", httpMethod = "PUT")
-    public ModelAndView update(@ApiParam("用户信息") @ModelAttribute User user,
+    public ResultTo update(@ApiParam("用户信息") @ModelAttribute User user,
                                @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
-        ModelAndView modelAndView = new ModelAndView();
-        customerManagerService.updateCustomerManager(user,customerManager);
-        modelAndView.setViewName("/customerManager/index");
-        return modelAndView;
+        ResultTo resultTo = new ResultTo();
+        Integer result = customerManagerService.updateCustomerManager(user, customerManager, ShiroKit.getUser());
+        resultTo.setIsSuccess(result);
+        return resultTo;
     }
 
     /**

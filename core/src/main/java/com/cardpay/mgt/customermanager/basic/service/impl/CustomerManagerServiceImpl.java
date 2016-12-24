@@ -1,6 +1,7 @@
 package com.cardpay.mgt.customermanager.basic.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
@@ -8,6 +9,7 @@ import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerEditVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.customermanager.level.service.CustomerManagerLevelService;
 import com.cardpay.mgt.menu.enums.RoleEnum;
+import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.service.UserRoleService;
@@ -83,12 +85,20 @@ public class CustomerManagerServiceImpl extends BaseServiceImpl<TCustomerManager
 
     @Override
     @Transactional
-    public Boolean updateCustomerManager(User user, TCustomerManager customerManager) {
-        Integer userResult = userService.updateByPrimaryKey(user);
-        customerManager.setUserId(user.getId());
-        Integer customerManagerResult = updateByPrimaryKey(customerManager);
+    public Integer updateCustomerManager(User user, TCustomerManager customerManager,User modifyUser) {
+        Integer userResult = null;
+        if(user!=null){
+            userResult = userService.updateSelectiveByPrimaryKey(user);
+            CompareBeanUtil.compareBean(user, userService, "User", "用户模块", modifyUser);
+        }
+        Integer customerManagerResult = null;
+        if(customerManager!=null){
+        customerManagerResult = updateSelectiveByPrimaryKey(customerManager);
+        CompareBeanUtil.compareBean(customerManager, this, "CustomerManager"
+                , "客户经理模块", modifyUser);
+        }
         Integer finalResult = customerManagerResult+userResult;
-        return finalResult==2?true:false;
+        return finalResult==2?1:1;
     }
 
     /**

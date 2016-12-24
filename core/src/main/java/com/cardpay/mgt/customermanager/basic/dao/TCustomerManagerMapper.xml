@@ -51,11 +51,12 @@
   <!--查询客户经理BaseVo列表-->
   <select id="selectBaseVoList" resultMap="BaseVoMap">
     SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
-      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG
+      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG,T_USER USR
     WHERE
           CM.LEVEL_ID = CML.ID
       AND ORG.ID = CM.ORGANIZATION_ID
-      AND CM.STATUS = #{status,jdbcType=DECIMAL}
+      AND USR.ID = CM.USER_ID
+      AND USR.STATUS = #{status,jdbcType=DECIMAL}
     <if test="organizationId != null">
       AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
     </if>

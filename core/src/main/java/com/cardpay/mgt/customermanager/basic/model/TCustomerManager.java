@@ -19,7 +19,6 @@ public class TCustomerManager extends GenericEntity<Integer> {
     /**
      * 客户经理id
      */
-    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MANAGER_SEQ.nextval from dual")
     @ApiModelProperty(value="客户经理id",required = true)
@@ -42,6 +41,7 @@ public class TCustomerManager extends GenericEntity<Integer> {
     /**
      * 客户经理用户id
      */
+    @Id
     @Column(name = "USER_ID")
     @ApiModelProperty(value="客户经理用户id",required = true)
     private Integer userId;

@@ -91,7 +91,7 @@
         $(function(){
             var url  = {
                 "urlList":"/customerManager/pageList",
-                "urlNew" : "/customerManager/new",
+                "urlNew" : "/customerManager/toAdd",
                 "urlDel" : "/customerManager/",
             }
             var tableId = $("#example");
