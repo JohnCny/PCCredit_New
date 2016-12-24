@@ -92,7 +92,6 @@ public class DataTablePage {
         Map<String, Object> map = JSON.parseObject(search, Map.class);
 
 
-
         if (StringUtils.isNotBlank(methodName)) {
             if (parameterMap != null) {
                 if (map != null) {
@@ -129,7 +128,7 @@ public class DataTablePage {
         Map<String, Object> newMap = new HashMap();
         if (map != null) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
-                if (entry.getKey() == null || entry.getValue() == null) {
+                if (StringUtils.isBlank(entry.getKey()) || StringUtils.isBlank(String.valueOf(entry.getValue()))) {
                     continue;
                 }
                 newMap.put(entry.getKey(), entry.getValue());
