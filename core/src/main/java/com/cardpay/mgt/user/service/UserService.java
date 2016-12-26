@@ -4,6 +4,8 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.User;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -73,15 +75,23 @@ public interface UserService extends BaseService<User> {
      * @param orgId 机构ID
      * @return 成功或失败
      */
-    boolean addUser(User user, Integer orgId, Integer roleId);
+    boolean addUser(User user, Integer orgId, Integer roleId) throws RuntimeException;
 
     /**
      * 编辑用户
      *
-     * @param user   User对象
-     * @param orgId  机构ID(组成结构:旧ID,新ID)
-     * @param roleId 角色ID(组成结构:旧ID,新ID)
+     * @param user    User对象
+     * @param orgIds  机构ID(组成结构:旧ID,新ID)
+     * @param roleIds 角色ID(组成结构:旧ID,新ID)
      * @return 成功或失败
      */
-    boolean updateUser(User user, String orgId, String roleId);
+    boolean updateUser(User user, String[] orgIds, String[] roleIds);
+
+    /**
+     * 带搜索的用户分页,自定义SQL(此处是反射应用,没有显示调用)
+     *
+     * @param map 参数map
+     * @return 用户列表
+     */
+    List<User> userPageList(Map<String, Object> map);
 }

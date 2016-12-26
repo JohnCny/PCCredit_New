@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.InvocationTargetException;
@@ -212,4 +213,5 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         PageHelper.startPage(page, size);
         return mapper.selectByExample(example);
     }
+
 }
