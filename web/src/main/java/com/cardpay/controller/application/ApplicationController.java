@@ -6,6 +6,9 @@ import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.model.TApplication;
 import com.cardpay.mgt.application.service.TApplicationService;
+import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
+import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
+import com.cardpay.mgt.product.model.TProduct;
 import com.cardpay.mgt.product.service.TProductService;
 import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
@@ -20,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by chenkai on 2016/12/6.
  */
 @RestController
-@RequestMapping("/application/")
-@Api(value = "/application", description = "进件Controller类")
+@RequestMapping("/application")
+@Api(value = "/application", description = "进件")
 public class ApplicationController extends BaseController<TApplication> {
     @Autowired //进件
     private TApplicationService tApplicationService;
@@ -33,16 +36,15 @@ public class ApplicationController extends BaseController<TApplication> {
       private TProductService tProductService;
 
     @Autowired//客户经理
-    private ManagerService tManagerService;
+    private CustomerManagerService tManagerService;
+
+    private Integer userId = ShiroKit.getUserId();
 
     @RequestMapping
     public ResultTo productNext(@ApiParam(value = "产品ID", required = true) @RequestParam("id") int productId) {
         User user = (User) ShiroKit.getPrincipal();
-     /*   TManager tManager = tManagerService.get(user.getId());
-        TProduct tProduct =tProductService.get(id);
-        if(tManager.getsmallnt()){
-
-        }*/
+        TCustomerManager tCustomerManager = tManagerService.selectByUserId(userId);
+        TProduct tProduct =tProductService.selectByPrimaryKey(productId);
         return new ResultTo();
     }
 

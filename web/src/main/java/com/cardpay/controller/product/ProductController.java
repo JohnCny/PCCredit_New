@@ -83,11 +83,12 @@ public class ProductController extends BaseController<TProduct> {
             //拆分文件路径用于删除文件
             String[] split = queryProduct.getProductPictureUrl().split("/");
             StringBuffer buf = new StringBuffer();
-            for (int i = 1; i < split.length; i++) {
-                buf.append(split[i]);
+            for (String str : split) {
+                buf.append(str);
             }
             String path = buf.toString();
             Integer flag = fileManager.deleteFile(split[0], path);
+
             //更新图片信息
             if (null != flag) {
                 String upLoadParam = fileManager.upLoad(file);
