@@ -21,7 +21,6 @@ import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
 import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
-import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +28,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -160,7 +160,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         User user = new User();
         user.setId(userId);
         user.setPassword(PasswordUtil.encryptPassword(password));
-        if (userMapper.updateByPrimaryKeySelective(user) == 0) {
+        if (userMapper.updateByPrimaryKeySelective(user) <= 0) {
             return new ResultTo(ResultEnum.OPERATION_FAILED);
         }
         return new ResultTo();
@@ -171,11 +171,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setCreateTime(new Date());
         user.setCreateBy(ShiroKit.getUserId());
         user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
-        user.setEmployeeNumber(VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 8, null));
-        Integer userId = userMapper.insertSelective(user);
-        if (userId == null) {
-            return Boolean.FALSE;
-        }
+        userMapper.insertSelective(user);
         UserOrganization userOrganization = new UserOrganization();
         userOrganization.setUserId(user.getId());
         userOrganization.setOrganizationId(orgId);
@@ -188,31 +184,31 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public boolean updateUser(User user, String orgId, String roleId) {
+    public boolean updateUser(User user, String[] orgIds, String[] roleIds) {
         user.setModifyBy(ShiroKit.getUserId());
         user.setModifyTime(new Date());
-        int count = userMapper.updateByPrimaryKeySelective(user);
-        if (count <= 0) {
-            return Boolean.FALSE;
-        }
-        if (orgId != null) {
-            String[] split = orgId.split(",");
+        userMapper.updateByPrimaryKeySelective(user);
+        if (orgIds.length != 0) {
             UserOrganization userOrganization = new UserOrganization();
             userOrganization.setUserId(user.getId());
-            userOrganization.setOrganizationId(Integer.parseInt(split[0]));
+            userOrganization.setOrganizationId(Integer.parseInt(orgIds[0]));
             userOrganizationMapper.delete(userOrganization);
-            userOrganization.setOrganizationId(Integer.parseInt(split[1]));
+            userOrganization.setOrganizationId(Integer.parseInt(orgIds[1]));
             userOrganizationMapper.insertSelective(userOrganization);
         }
-        if (roleId != null) {
-            String[] split = roleId.split(",");
+        if (roleIds.length != 0) {
             UserRole userRole = new UserRole();
             userRole.setUserId(user.getId());
-            userRole.setRoleId(Integer.parseInt(split[0]));
+            userRole.setRoleId(Integer.parseInt(roleIds[0]));
             userRoleMapper.delete(userRole);
-            userRole.setRoleId(Integer.parseInt(split[1]));
+            userRole.setRoleId(Integer.parseInt(roleIds[1]));
             userRoleMapper.insertSelective(userRole);
         }
         return Boolean.TRUE;
+    }
+
+    @Override
+    public List<User> userPageList(Map<String, Object> map) {
+        return userMapper.userPageList(map);
     }
 }
