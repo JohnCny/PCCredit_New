@@ -53,27 +53,12 @@
 <#macro content>
 
     <h5>客户经理列表</h5>
-    <div class="search" style="width:95%">
-        <span>客户经理名称：<input type="text" class="short" name="userCname" id="userCname" ></span>
-        <span>工号：<input type="text" name="employeeNumber" id="employeeNumber"></span>
-        <span>级别：
-            <select name="levelId" id="levelId">
-                <option id="-1" value="-1">所有级别</option>
-                <#list customerManagerLevel as cml>
-                    <option id="${cml.id}" value="${cml.id}">${cml.value}</option>
-                </#list>
-            </select>
-        </span>
-        <input class="searchBtn" type="button" value="搜 索">
-    </div>
-
     <div class="table-responsive" style="margin:50px auto; width:95%;">
-        <table id="customerManagerList" class="table table-bordered" style="width: 100%" >
+        <table id="customerManagerLevelList" class="table table-bordered" style="width: 100%" >
             <thead>
             <tr>
-                <th>客户经理</th>
-                <th>工号</th>
-                <th>当前级别	</th>
+                <th>级别名称	</th>
+                <th>对应额度	</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -92,33 +77,23 @@
         $(function(){
 
             var url  = {
-                "urlNew" : "/customerManager/toAdd",
-                "urlDel" : "/customerManager/",
+                "urlNew" : "/customerManagerLevel/toAdd",
+                "urlDel" : "/customerManagerLevel/",
             }
             var ajax = {
                 "type" : "GET",
-                "url" : "/customerManager/pageList",
-                "data" : function(d){
-                    var QK_searchObj = {
-                        "userCname" : $("#userCname").val(),
-                        "employeeNumber":$("#employeeNumber").val(),
-                        "levelId":$("#levelId").val()
-                    }
-                    d.search = JSON.stringify(QK_searchObj);
-                }
+                "url" : "/customerManagerLevel/pageList",
             }
-            var tableId = $("#customerManagerList");
+            var tableId = $("#customerManagerLevelList");
             var aoColumns = [{
-                "mData" : "userCname"
+                "mData" : "levelName"
             },{
-                "mData" : "employeeNumber",
+                "mData" : "levelCredit",
             },{
-                "mData" : "levelName",
-            },{
-                "mData" : "userId",
+                "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a class="editOne btn-info" href="/customerManager/'+data+'">管理</a>' +
+                    return  '<a class="editOne btn-info" href="/customerManagerLevel/'+data+'">管理</a>' +
                             '<a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
                 }
             }];
