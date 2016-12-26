@@ -155,6 +155,10 @@
                 data: {
                     simpleData: {
                         enable: true,
+                        pIdKey: "orgParentId"
+                    },
+                    key: {
+                        name: "orgName",
                     }
                 },
                 callback: {
@@ -163,7 +167,7 @@
             };
             baseTree(urlMy, setting);
             function onClick(event, treeId, treeNode, clickFlag) {
-                $("#orgId").attr("value", treeNode.name);
+                $("#orgId").attr("value", treeNode.orgName);
                 $("#orgHidden").attr("name", "orgid");
                 var orgIds = $("#orgHidden").data("id") + "," + treeNode.id
                 $("#orgHidden").attr("value", orgIds);
