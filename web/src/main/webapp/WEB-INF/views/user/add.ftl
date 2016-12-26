@@ -65,7 +65,10 @@
                         <td class="pull-right">邮箱：</td>
                         <td><input type="text" name="email"></td>
                         <td class="pull-right">机构：</td>
-                        <td><input type="text" name="orgId" value="3"></td>
+                        <td>
+                            <input type="text" readonly="readonly" id="orgId" disabled="disabled">
+                            <input type="hidden" id="orgIdHidden" name="orgId">
+                        </td>
                     </tr>
                     <tr>
                         <td class="pull-right">身份证：</td>
@@ -119,9 +122,8 @@
 </#macro>
 
 <#macro script>
-<script type="text/javascript" src="/static/js/ztree-org.js"/>
+<script type="text/javascript" src="/static/js/ztree-org.js"></script>
 </#macro>
-
 <#macro js>
 <script type="text/javascript">
     var urlMy = "/organization/orgAll";
@@ -138,8 +140,7 @@
     baseTree(urlMy, setting);
     function onClick(event, treeId, treeNode, clickFlag) {
         $("#orgId").attr("value", treeNode.name);
-        $("#orgId").attr("data-id", treeNode.id);
-
+        $("#orgIdHidden").attr("value", treeNode.id);
     }
 </script>
 <script>

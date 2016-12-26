@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,13 +50,13 @@ import java.util.Map;
 @Api(value = "/user", description = "用户控制层")
 public class UserController extends BaseController<User> {
 
-    private static final String UPDATE_PASSWORD_PAGE = "/user/change_password";
+    private static final String UPDATE_PASSWORD_PAGE = "/user/changePassword";
 
     private static final String RESET_PASSWORD_PAGE = "/user/forget";
 
-    private static final String RESET_PASSWORD_SEND = "/user/forget_send";
+    private static final String RESET_PASSWORD_SEND = "/user/forgetSend";
 
-    private static final String RESET_PASSWORD_CHECKED = "/user/forget_checked";
+    private static final String RESET_PASSWORD_CHECKED = "/user/forgetChecked";
 
     private static final String USER_INDEX = "/user/index";
 
@@ -103,7 +104,7 @@ public class UserController extends BaseController<User> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户分页数据", httpMethod = "GET")
     public DataTablePage pageList() {
-        return dataTablePage();
+        return dataTablePage("userPageList");
     }
 
     /**
@@ -414,5 +415,24 @@ public class UserController extends BaseController<User> {
         LogTemplate.debug(this.getClass(), "checkedCode", checkedCode);
         LogTemplate.debug(this.getClass(), "password", password);
         return userService.resetPassword(userId, checkedCode, password);
+    }
+
+    /**
+     * 用户身份证验重
+     *
+     * @param idCard
+     * @return 存在 ture
+     */
+    @PostMapping("/isIdCard")
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "用户身份证号码验重", httpMethod = "POST")
+    @ResponseBody
+    public ResultTo isIdCard(@RequestParam("idCard") String idCard) {
+        User user = new User();
+        user.setIdCardNumber(idCard);
+        if (userService.selectOne(user) != null) {
+            return new ResultTo().setData(Boolean.TRUE);
+        }
+        return new ResultTo().setData(Boolean.FALSE);
     }
 }

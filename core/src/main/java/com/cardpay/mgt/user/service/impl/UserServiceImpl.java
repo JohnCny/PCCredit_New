@@ -21,16 +21,14 @@ import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
 import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
-import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -207,5 +205,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             userRoleMapper.insertSelective(userRole);
         }
         return Boolean.TRUE;
+    }
+
+    @Override
+    public List<User> userPageList(Map<String, Object> map) {
+        return userMapper.userPageList(map);
     }
 }

@@ -11,7 +11,10 @@
     table, table tr, table tr td {
         background-color: #fff
     }
-    .captap{width: 80px;}
+
+    .captap {
+        width: 80px;
+    }
 </style>
 </#macro>
 <#macro css>
@@ -56,8 +59,8 @@
                         <td class="pull-right">性别：</td>
                         <td>
                             <select name="sex">
-                                 <option value="1" <#if user.sex == 1>selected</#if>>男</option>
-                                 <option value="2" <#if user.sex == 2>selected</#if>>女</option>
+                                <option value="1" <#if user.sex == 1>selected</#if>>男</option>
+                                <option value="2" <#if user.sex == 2>selected</#if>>女</option>
                             </select>
                         </td>
                     </tr>
@@ -66,14 +69,13 @@
                         <td><input type="text" name="email" value="${user.email}"></td>
                         <td class="pull-right">机构：</td>
                         <td>
-                            <input type="text" readonly="readonly" data-id="${org.id}" id="orgId"
-                                   value="${org.orgName}">
-                            <input type="hidden" id="orgHidden">
+                            <input type="text" readonly="readonly" disabled="disabled" id="orgId" value="${org.orgName}">
+                            <input type="hidden" id="orgHidden" data-id="${org.id}">
                         </td>
                     </tr>
                     <tr>
                         <td class="pull-right">身份证：</td>
-                        <td><input type="text" readonly="readonly" value="${user.idCardNumber}"></td>
+                        <td><input type="text" readonly="readonly" disabled="disabled" value="${user.idCardNumber}"></td>
                         <td class="pull-right">用户类型：</td>
                         <td>
                             <select name="userType">
@@ -140,29 +142,34 @@
 
 </#macro>
 
+
+
 <#macro script>
-<script type="text/javascript" src="/static/js/ztree-org.js"/>
+<script type="text/javascript" src="/static/js/ztree-org.js"></script>
 </#macro>
-
 <#macro js>
-<script type="text/javascript">
-    var urlMy = "/organization/orgAll";
-    var setting = {
-        data: {
-            simpleData: {
-                enable: true,
-            }
-        },
-        callback: {
-            onClick: onClick
-        }
-    };
-    baseTree(urlMy, setting);
-    function onClick(event, treeId, treeNode, clickFlag) {
-        $("#orgId").attr("value", treeNode.name);
-        $("#orgId").attr("data-id", treeNode.id);
+<script type = "text/javascript" >
+        $(document).ready(function () {
+            var urlMy = "/organization/orgAll";
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                    }
+                },
+                callback: {
+                    onClick: onClick
+                }
+            };
+            baseTree(urlMy, setting);
+            function onClick(event, treeId, treeNode, clickFlag) {
+                $("#orgId").attr("value", treeNode.name);
+                $("#orgHidden").attr("name", "orgid");
+                var orgIds = $("#orgHidden").data("id") + "," + treeNode.id
+                $("#orgHidden").attr("value", orgIds);
 
-    }
+            }
+        });
 </script>
 <script>
     function setRadio(obj, inputId) {//单选样式
@@ -197,8 +204,4 @@
         })
     })
 </script>
-
-
-</script>
-
 </#macro>

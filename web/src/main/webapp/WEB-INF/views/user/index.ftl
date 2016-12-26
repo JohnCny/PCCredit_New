@@ -27,9 +27,10 @@
     <div class="col-xs-8" style="background-color: #ffffff; border-radius: 5px">
         <h5>用户列表</h5>
         <div class="search" style="width:95%">
-            <span>机构：<input type="text" class="short" readonly="readonly" name="orgId" id="orgId"></span>
+            <span>机构：<input type="text" class="short" readonly="readonly" disabled="disabled" name="orgId"
+                            id="orgId"></span>
             <span>用户名称：<input type="text" class="short" name="username" id="username"></span>
-            <span> 邮件：<input type="text" name="email" id="email"></span>
+            <span> 邮件：<input type="text" name="idCardNumber" id="idCardNumber"></span>
             <input class="searchBtn" type="button" value="搜 索">
         </div>
         <div class="table-responsive list_show" style=" width:100%;">
@@ -48,48 +49,42 @@
         </div>
     </div>
 </div>
-
-
-
 </#macro>
 
 <#macro script>
-<script type="text/javascript" src="/static/js/ztree-org.js"/>
+<script type="text/javascript" src="/static/js/ztree-org.js"></script>
 </#macro>
 <#macro js>
 <script type="text/javascript">
-    var urlMy = "/organization/orgAll";
-    var setting = {
-        data: {
-            simpleData: {
-                enable: true,
+    $(document).ready(function () {
+        var urlMy = "/organization/orgAll";
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true,
+                }
+            },
+            callback: {
+                onClick: onClick
             }
-        },
-        callback: {
-            onClick: onClick
+        };
+        baseTree(urlMy, setting);
+        function onClick(event, treeId, treeNode, clickFlag) {
+            $("#orgId").attr("value", treeNode.name);
+            $("#orgId").attr("data-id", treeNode.id);
         }
-    };
-    baseTree(urlMy, setting);
-    function onClick(event, treeId, treeNode, clickFlag) {
-        $("#orgId").attr("value", treeNode.name);
-        $("#orgId").attr("data-id", treeNode.id);
-
-    }
+    });
 </script>
-
 <script>
     $(function () {
-
-
         var url = {}
-
         var tableId = $("#userList");
         var ajax = {
             "type": "GET",
             "url": "/user/pageList",
             "data": function (d) {
                 var QK_searchObj = {
-                    "email": $("#email").val(),
+                    "idCardNumber": $("#idCardNumber").val(),
                     "username": $("#username").val(),
                     "orgId": $("#orgId").data("id"),
                 };
@@ -140,6 +135,5 @@
         myDataTable(options);
     })
 </script>
-
 </#macro>
 
