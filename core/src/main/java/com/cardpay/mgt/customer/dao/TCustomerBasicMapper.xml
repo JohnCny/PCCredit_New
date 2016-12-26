@@ -68,15 +68,21 @@
     </update>
 
     <!--按条件查询客户信息-->
-    <select id="queryCustomerByCondition" resultMap="BaseResultMap">
-        SELECT basic.* FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_MANAGER manager
+    <select id="queryCustomerByCondition" parameterType="Map" resultMap="BaseResultMap">
+        SELECT basic.*
+        FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_MANAGER manager
         <where>
-            basic.CUSTOMER_MANAGER_ID = MANAGER.id AND MANAGER.id = #{customerManagerId}
-            OR MANAGER.ORGANIZATION_ID = (
-            SELECT ORGANIZATION_ID FROM T_CUSTOMER_MANAGER WHERE id = #{customerManagerId})
+            basic.CUSTOMER_MANAGER_ID = MANAGER.id
+            AND MANAGER.ORGANIZATION_ID =
+            (
+            SELECT ORGANIZATION_ID
+            FROM T_CUSTOMER_MANAGER
+            WHERE
+            USER_ID = #{customerManagerId}
+            )
             AND basic.CUSTOMER_STATUS != 3
             <if test="cname!=null and cname!=''">
-                AND basic.cname = #{cname}
+                AND basic.cname LIKE CONCAT(CONCAT('%',#{cname}),'%')
             </if>
             <if test="certificateNumber!=null and certificateNumber!=''">
                 AND basic.CERTIFICATE_NUMBER = #{certificateNumber}

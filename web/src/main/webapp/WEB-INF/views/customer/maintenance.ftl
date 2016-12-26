@@ -81,7 +81,22 @@
             "urlList": "/customerMaintenance/condition",
             "urlNew" : "/customerMaintenance"
         }
+        var QK_searchObj = {
+            "cname" : $("#cname").val(),
+            "certificateNumber" : $("#certificateNumber").val(),
+        };
         var tableId = $("#example");
+        var ajax = {
+            "type" : "GET",
+            "url" : "/customerBasic/condition",
+            "data" : function(d){
+                var QK_searchObj = {
+                    "cname" : $("#cname").val(),
+                    "certificateNumber":$("#certificateNumber").val(),
+                }
+                d.search = JSON.stringify(QK_searchObj);
+            }
+        }
         var aoColumns = [
             {
                 "mData": "cname"
@@ -102,7 +117,8 @@
             "urlList": url['urlList'],
             "urlNew" : url['urlNew'],
             "tableId": tableId,
-            "aoColumns": aoColumns
+            "aoColumns": aoColumns,
+            "ajax" : ajax
         }
         myDataTable(options);
     }());

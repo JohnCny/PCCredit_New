@@ -35,34 +35,25 @@ public class TCustomerTransferServiceImplTest {
 
 
     @Test
-    public void getTransferStatus() throws Exception {
-
-    }
-
-    @Test
     public void queryTransfer() throws Exception {
-      /*  List<TCustomerVo> tCustomerTransferVos = new ArrayList<>();
+        Map<String, Object> map = new HashedMap();
+        map.put("managerId", 1);
+       List<TCustomerVo> tCustomerTransferVos = new ArrayList<>();
         tCustomerTransferVos.add(new TCustomerVo());
-        when(tCustomerTransferDao.queryTransfer(0, 1)).thenReturn(tCustomerTransferVos);
-        List<TCustomerVo> tCustomerTransferVos1 = tCustomerTransferService.queryTransfer(0, 1);
-        assertTrue(tCustomerTransferVos1.size() > 0);*/
+        when(tCustomerTransferDao.queryTransfer(map)).thenReturn(tCustomerTransferVos);
+        List<TCustomerVo> customerVos = tCustomerTransferService.queryTransfer(map);
+        assertTrue(customerVos.size() > 0);
     }
 
     @Test
-    @Ignore
     public void accept() throws Exception {
-        String customerIds = "1";
-        List<Integer> idList = new ArrayList<>();
-        String[] split = customerIds.split(",");
-        for (String id : split) {
-            int customerId = Integer.parseInt(id);
-            idList.add(customerId);
-        }
         Map<String, Object> map = new HashedMap();
+        List<Integer> idList = new ArrayList<>();
+        idList.add(1);
         map.put("customerIds", idList);
         map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
         when(tCustomerTransferDao.accept(map)).thenReturn(1);
-        int accept = tCustomerTransferService.accept(customerIds, 1);
-        assertEquals(accept, 1);
+        int accept = tCustomerTransferService.accept("1", 2);
+        assertEquals(accept, 0);
     }
 }
