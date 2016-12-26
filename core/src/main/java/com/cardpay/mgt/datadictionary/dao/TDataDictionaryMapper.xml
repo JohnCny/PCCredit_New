@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.datadictionary.dao.TDataDictionaryMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.datadictionary.model.TDataDictionary">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="DATA_ID" jdbcType="DECIMAL" property="dataId" />
+    <result column="DATA_TYPE" jdbcType="VARCHAR" property="dataType" />
+    <result column="DATA_CODE" jdbcType="VARCHAR" property="dataCode" />
+    <result column="DATA_NAME" jdbcType="VARCHAR" property="dataName" />
+    <result column="BANK_CODE" jdbcType="VARCHAR" property="bankCode" />
+  </resultMap>
+</mapper>

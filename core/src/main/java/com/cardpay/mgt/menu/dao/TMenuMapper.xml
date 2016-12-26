@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.menu.dao.TMenuMapper">
+      <resultMap id="BaseResultMap" type="com.cardpay.mgt.menu.model.TMenu">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="DECIMAL" property="id" />
+        <result column="MENU_NAME_ZH" jdbcType="VARCHAR" property="menuNameZh" />
+        <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+        <result column="MENU_PARENT_ID" jdbcType="DECIMAL" property="menuParentId" />
+        <result column="MENU_PICTURE" jdbcType="VARCHAR" property="menuPicture" />
+        <result column="MENU_URL" jdbcType="VARCHAR" property="menuUrl" />
+        <result column="MENU_DESCRIPTION" jdbcType="VARCHAR" property="menuDescription" />
+        <result column="MENU_ORDER" jdbcType="DECIMAL" property="menuOrder" />
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+      </resultMap>
+      <!--控制深度查询-->
+      <resultMap id="MenuListResultMapVo" type="com.cardpay.mgt.menu.model.vo.TMenuVo">
+        <id column="ID" jdbcType="DECIMAL" property="id" />
+        <result column="MENU_NAME_ZH" jdbcType="VARCHAR" property="menuNameZh" />
+        <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+        <result column="MENU_PARENT_ID" jdbcType="DECIMAL" property="menuParentId" />
+        <result column="MENU_PICTURE" jdbcType="VARCHAR" property="menuPicture" />
+        <result column="MENU_URL" jdbcType="VARCHAR" property="menuUrl" />
+        <result column="MENU_DESCRIPTION" jdbcType="VARCHAR" property="menuDescription" />
+        <result column="MENU_ORDER" jdbcType="DECIMAL" property="menuOrder" />
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+      </resultMap>
+    <!--查询全部包含权限-->
+    <resultMap id="MenuListAndAuthResultMap" type="com.cardpay.mgt.menu.model.TMenuAuth">
+        <id column="ID" jdbcType="DECIMAL" property="id" />
+        <result column="MENU_NAME_ZH" jdbcType="VARCHAR" property="menuNameZh" />
+        <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+        <result column="MENU_PARENT_ID" jdbcType="DECIMAL" property="menuParentId" />
+        <result column="MENU_PICTURE" jdbcType="VARCHAR" property="menuPicture" />
+        <result column="MENU_URL" jdbcType="VARCHAR" property="menuUrl" />
+        <result column="MENU_DESCRIPTION" jdbcType="VARCHAR" property="menuDescription" />
+        <result column="MENU_ORDER" jdbcType="DECIMAL" property="menuOrder" />
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="AUTHORITY_NAME" jdbcType="VARCHAR" property="auth" />
+        <result column="AUTH_ID" jdbcType="DECIMAL" property="authId" />
+        <result column="IS_HAVE" jdbcType="DECIMAL" property="isHaveAuth" />
+    </resultMap>
+
+    <!--根据用户查询菜单列表(有限层级)-->
+    <select id="selectMenuListByUserLevel" resultMap="MenuListResultMapVo">
+        SELECT LEVEL AS M_LEVEL, T .*
+            FROM
+            (
+                SELECT DISTINCT
+                T_MENU.MENU_NAME,
+                T_MENU. ID,
+                T_MENU.MENU_NAME_ZH,
+                T_MENU.MENU_PARENT_ID,
+                T_MENU.MENU_PICTURE,
+                T_MENU.MENU_URL,
+                T_MENU.MENU_DESCRIPTION,
+                T_MENU.MENU_ORDER,
+                T_MENU.CREATE_BY,
+                T_MENU.CREATE_TIME
+                FROM
+                T_MENU,
+                T_USER,
+                T_USER_ROLE,
+                T_ROLE_AUTHORITY,
+                T_AUTHORITY,
+                T_AUTHORITY_MENU
+                WHERE
+                T_USER. ID = T_USER_ROLE.USER_ID
+                AND T_ROLE_AUTHORITY.ROLE_ID = T_USER_ROLE.ROLE_ID
+                AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+                AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
+                AND T_USER. ID = #{userId}
+            ) T
+            WHERE
+            LEVEL <![CDATA[<=]]> #{level,jdbcType=DECIMAL}
+            CONNECT BY PRIOR ID = menu_parent_id
+            START WITH menu_parent_id = #{parentId,jdbcType=DECIMAL}
+    </select>
+
+    <!--根据用户查询菜单列表(无限层级)-->
+    <select id="selectMenuListByUserAll" resultMap="MenuListResultMapVo">
+        SELECT DISTINCT
+            T_MENU.MENU_NAME,
+            T_MENU. ID,
+            T_MENU.MENU_NAME_ZH,
+            T_MENU.MENU_PARENT_ID,
+            T_MENU.MENU_PICTURE,
+            T_MENU.MENU_URL,
+            T_MENU.MENU_DESCRIPTION,
+            T_MENU.MENU_ORDER,
+            T_MENU.CREATE_BY,
+            T_MENU.CREATE_TIME
+        FROM
+            T_MENU,
+            T_USER,
+            T_USER_ROLE,
+            T_ROLE_AUTHORITY,
+            T_AUTHORITY,
+            T_AUTHORITY_MENU
+        WHERE
+            T_USER. ID = T_USER_ROLE.USER_ID
+        AND T_ROLE_AUTHORITY.ROLE_ID = T_USER_ROLE.ROLE_ID
+        AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+        AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
+        AND T_USER. ID = #{userId}
+    </select>
+
+    <!--根据角色查询菜单列表(无限层级)-->
+    <select id="selectMenuListByRoleAll" resultMap="MenuListResultMapVo">
+        SELECT DISTINCT
+            T_MENU.MENU_NAME,
+            T_MENU. ID,
+            T_MENU.MENU_NAME_ZH,
+            T_MENU.MENU_PARENT_ID,
+            T_MENU.MENU_PICTURE,
+            T_MENU.MENU_URL,
+            T_MENU.MENU_DESCRIPTION,
+            T_MENU.MENU_ORDER,
+            T_MENU.CREATE_BY,
+            T_MENU.CREATE_TIME
+        FROM
+            T_MENU,
+            T_ROLE,
+            T_ROLE_AUTHORITY,
+            T_AUTHORITY,
+            T_AUTHORITY_MENU
+        WHERE
+                T_ROLE_AUTHORITY.ROLE_ID = T_ROLE.ID
+        AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+        AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
+        AND T_ROLE. ID = #{roleId}
+    </select>
+
+    <!--递归删除菜单-->
+    <delete id="recursionDelete">
+      DELETE FROM T_MENU WHERE id IN (SELECT id FROM T_MENU CONNECT BY PRIOR id = menu_parent_id START WITH id = #{id})
+    </delete>
+
+    <!--根据用户查询全部菜单包括权限-->
+    <select id="selectMenuListAndAuthByUser" resultMap="MenuListAndAuthResultMap">
+        SELECT
+          *
+        FROM
+          (
+            SELECT
+              T_MENU.*, T_AUTHORITY.AUTHORITY_NAME,
+              T_AUTHORITY. ID AS AUTH_ID
+            FROM
+              T_MENU,
+              T_AUTHORITY,
+              T_AUTHORITY_MENU
+            WHERE
+              T_MENU."ID" = T_AUTHORITY_MENU.MENU_ID
+            AND T_AUTHORITY."ID" = T_AUTHORITY_MENU.AUTHORITY_ID
+          ) ALL_MENU
+        LEFT JOIN (
+          SELECT
+            T_AUTHORITY."ID" AS IS_HAVE
+          FROM
+            T_USER,
+            T_USER_ROLE,
+            T_ROLE_AUTHORITY,
+            T_MENU,
+            T_AUTHORITY_MENU,
+            T_AUTHORITY
+          WHERE
+            T_USER. ID = T_USER_ROLE.USER_ID
+          AND T_USER_ROLE.ROLE_ID = T_ROLE_AUTHORITY.ROLE_ID
+          AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY. ID
+          AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+          AND T_MENU. ID = T_AUTHORITY_MENU.MENU_ID
+          AND T_USER. ID = #{userId}
+        ) USER_MENU ON ALL_MENU.AUTH_ID = USER_MENU.IS_HAVE
+    </select>
+</mapper>
