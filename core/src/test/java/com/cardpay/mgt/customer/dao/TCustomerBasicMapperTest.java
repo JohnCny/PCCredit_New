@@ -31,13 +31,11 @@ public class TCustomerBasicMapperTest extends TestEnv {
 
     }
 
-
     @Test
     public void queryCustomer() throws Exception {
         List<TCustomerTransferVo> tCustomerTransferVos = tCustomerBasicMapper.queryCustomer(1);
         assertTrue(tCustomerTransferVos.size() > 0);
     }
-
 
     @Test
     public void isIdCardExist() throws Exception {
@@ -59,12 +57,10 @@ public class TCustomerBasicMapperTest extends TestEnv {
     }
 
     @Test
-    @Ignore
-    //TODO：　数据库问题
     public void queryCustomerByCondition() throws Exception {
         Map<String, Object> map = new HashedMap();
         map.put("customerManagerId", 4);
         List<TCustomerBasic> tCustomerBasics = tCustomerBasicMapper.queryCustomerByCondition(map);
-         assertTrue(tCustomerBasics.size() > 0);
+        assertTrue(tCustomerBasics.size() > 0);
     }
 }

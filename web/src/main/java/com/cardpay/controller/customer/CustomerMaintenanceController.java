@@ -69,10 +69,10 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
     public ResultTo insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
         Integer userId = ShiroKit.getUserId();
-      //  TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
+        //  TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
         tCustomerMaintenance.setCustomerCname("测试");
         tCustomerMaintenance.setOperationId(userId);
-    //    tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
+        //    tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
         tCustomerMaintenance.setOperationTime(new Date());
         customerMaintenanceService.insertSelective(tCustomerMaintenance);
         return new ResultTo().setData(tCustomerMaintenance.getId());
@@ -98,6 +98,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
 
     /**
      * 跳转新增客户维护页面
+     *
      * @param customerId 客户id
      * @return 客户维护页面
      */

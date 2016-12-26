@@ -137,9 +137,10 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @SystemControllerLog(description = "客户接受/拒绝")
     @ResponseBody
     @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
-    public ResultTo CustomerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
+    public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
                                     @ApiParam("接收:1, 拒绝2") @RequestParam Integer flag) {
         int count = customerTransferService.accept(customerIds, flag);
+        logger.info("客户接受/拒绝", "客户：" + customerIds + "接受/拒绝"+flag+",给了客户经理：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
