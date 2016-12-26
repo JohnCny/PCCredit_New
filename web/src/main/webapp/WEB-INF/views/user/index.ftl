@@ -74,7 +74,6 @@
         };
         baseTree(urlMy, setting);
         function onClick(event, treeId, treeNode, clickFlag) {
-            alert(treeNode.orgName);
             $("#orgId").attr("value", treeNode.orgName);
             $("#orgId").attr("data-id", treeNode.id);
         }

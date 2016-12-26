@@ -3,10 +3,6 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee "
          version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
 
-    <welcome-file-list>
-        <welcome-file>/login.html</welcome-file>
-    </welcome-file-list>
-
     <!--配置spring 上下文配置文件-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -142,9 +138,10 @@
         <location>/WEB-INF/views/error/404.html</location>
     </error-page>
 
-    <error-page>
-        <error-code>500</error-code>
-        <location>/WEB-INF/views/error/500.html</location>
-    </error-page>
+    <!--<error-page>-->
+        <!--<error-code>500</error-code>-->
+        <!--<location>/WEB-INF/views/error/500.html</location>-->
+    <!--</error-page>-->
+
 </web-app>
 
