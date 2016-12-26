@@ -15,11 +15,10 @@ import javax.persistence.*;
 @ApiModel(value="客户移交记录")
 public class TCustomerTransfer extends GenericEntity<Integer>{
     /**
-     * 客户id(需要生成规则生成)
+     * 客户id
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_TRANSFER_SEQ.nextval from dual")
     @ApiModelProperty(value="客户id(需要生成规则生成)",required = true)
     private Integer id;
 
