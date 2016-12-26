@@ -10,6 +10,7 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -69,10 +70,9 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
     public ResultTo insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
         Integer userId = ShiroKit.getUserId();
-      //  TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
-        tCustomerMaintenance.setCustomerCname("测试");
+        TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
         tCustomerMaintenance.setOperationId(userId);
-    //    tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
+        tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
         tCustomerMaintenance.setOperationTime(new Date());
         customerMaintenanceService.insertSelective(tCustomerMaintenance);
         return new ResultTo().setData(tCustomerMaintenance.getId());
@@ -98,6 +98,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
 
     /**
      * 跳转新增客户维护页面
+     *
      * @param customerId 客户id
      * @return 客户维护页面
      */

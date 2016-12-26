@@ -17,7 +17,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author yanweichen
  */
 public class CustomerBasicControllerTest extends TestEnv {
+
+
     private User user = User.UserBuilder.get().withId(1).build();
+
+    @Test
+    public void returnCustomerList() throws Exception {
+
+    }
+
+    @Test
+    public void queryCondition() throws Exception {
+
+    }
+
 
     @Test
     public void deleteCustomer() throws Exception {
