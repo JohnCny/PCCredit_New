@@ -25,6 +25,8 @@ import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -160,39 +162,50 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         User user = new User();
         user.setId(userId);
         user.setPassword(PasswordUtil.encryptPassword(password));
-        if (userMapper.updateByPrimaryKeySelective(user) == 0) {
+        if (userMapper.updateByPrimaryKeySelective(user) <= 0) {
             return new ResultTo(ResultEnum.OPERATION_FAILED);
         }
         return new ResultTo();
     }
 
     @Override
+    @Transactional
     public boolean addUser(User user, Integer orgId, Integer roleId) {
         user.setCreateTime(new Date());
         user.setCreateBy(ShiroKit.getUserId());
         user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
-        user.setEmployeeNumber(VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 8, null));
-        Integer userId = userMapper.insertSelective(user);
-        if (userId == null) {
+        int userId = userMapper.insertSelective(user);
+        if (userId <= 0) {
+            rollbackOnly();
             return Boolean.FALSE;
         }
         UserOrganization userOrganization = new UserOrganization();
         userOrganization.setUserId(user.getId());
         userOrganization.setOrganizationId(orgId);
-        userOrganizationMapper.insertSelective(userOrganization);
+        int insertSelective = userOrganizationMapper.insertSelective(userOrganization);
+        if (insertSelective <= 0) {
+            rollbackOnly();
+            return Boolean.FALSE;
+        }
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleId);
         userRole.setUserId(user.getId());
-        userRoleMapper.insertSelective(userRole);
+        int userRoleInsertSelective = userRoleMapper.insertSelective(userRole);
+        if (userRoleInsertSelective <= 0) {
+            rollbackOnly();
+            return Boolean.FALSE;
+        }
         return Boolean.TRUE;
     }
 
     @Override
+    @Transactional
     public boolean updateUser(User user, String orgId, String roleId) {
         user.setModifyBy(ShiroKit.getUserId());
         user.setModifyTime(new Date());
         int count = userMapper.updateByPrimaryKeySelective(user);
         if (count <= 0) {
+            rollbackOnly();
             return Boolean.FALSE;
         }
         if (orgId != null) {
@@ -200,18 +213,34 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             UserOrganization userOrganization = new UserOrganization();
             userOrganization.setUserId(user.getId());
             userOrganization.setOrganizationId(Integer.parseInt(split[0]));
-            userOrganizationMapper.delete(userOrganization);
+            int delete = userOrganizationMapper.delete(userOrganization);
+            if (delete <= 0) {
+                rollbackOnly();
+                return Boolean.FALSE;
+            }
             userOrganization.setOrganizationId(Integer.parseInt(split[1]));
-            userOrganizationMapper.insertSelective(userOrganization);
+            int insertSelective = userOrganizationMapper.insertSelective(userOrganization);
+            if (insertSelective <= 0) {
+                rollbackOnly();
+                return Boolean.FALSE;
+            }
         }
         if (roleId != null) {
             String[] split = roleId.split(",");
             UserRole userRole = new UserRole();
             userRole.setUserId(user.getId());
             userRole.setRoleId(Integer.parseInt(split[0]));
-            userRoleMapper.delete(userRole);
+            int delete = userRoleMapper.delete(userRole);
+            if (delete <= 0) {
+                rollbackOnly();
+                return Boolean.FALSE;
+            }
             userRole.setRoleId(Integer.parseInt(split[1]));
-            userRoleMapper.insertSelective(userRole);
+            int insertSelective = userRoleMapper.insertSelective(userRole);
+            if (insertSelective <= 0) {
+                throw new RuntimeException();
+                return Boolean.FALSE;
+            }
         }
         return Boolean.TRUE;
     }
