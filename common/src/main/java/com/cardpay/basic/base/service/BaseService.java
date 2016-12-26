@@ -137,4 +137,5 @@ public interface BaseService<T> {
      * @return 分页实体个数
      */
     List<T> pageList(Example example, Integer page, Integer size);
+
 }

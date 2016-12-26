@@ -18,12 +18,12 @@ import java.util.Map;
 public interface CustomerManagerService extends BaseService<TCustomerManager> {
 
     /**
-     * 客户经理管理列表
+     * 客户经理管理列表(此处是反射应用,没有显示调用)
      *
      * @param map 参数列表
      * @return 客户经理管理列表
      */
-    List<TCustomerManagerEditVo>  selectBaseVoList(Map<String,Object> map);
+    List<TCustomerManagerEditVo> selectBaseVoList(Map<String, Object> map);
 
     /**
      * 根据UserId查询客户经理
@@ -51,7 +51,7 @@ public interface CustomerManagerService extends BaseService<TCustomerManager> {
     /**
      * 新增客户经理,插入权限用户等信息
      *
-     * @param user 用户信息
+     * @param user            用户信息
      * @param customerManager 客户经理信息
      * @return 是否成功
      */
@@ -60,10 +60,10 @@ public interface CustomerManagerService extends BaseService<TCustomerManager> {
     /**
      * 更新客户经理,插入权限用户等信息
      *
-     * @param user 用户信息
+     * @param user            用户信息
      * @param customerManager 客户经理信息
-     * @param modifyUser 修改人
+     * @param modifyUser      修改人
      * @return 是否成功
      */
-    Integer updateCustomerManager(User user, TCustomerManager customerManager,User modifyUser);
+    Integer updateCustomerManager(User user, TCustomerManager customerManager, User modifyUser);
 }

@@ -6,6 +6,7 @@ import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.model.TApplication;
 import com.cardpay.mgt.application.service.TApplicationService;
+import com.cardpay.mgt.product.service.TProductService;
 import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -28,12 +29,12 @@ public class ApplicationController extends BaseController<TApplication> {
     @Autowired
     private FileManager fileManager;
 
-    /*  @Autowired //产品
+      @Autowired //产品
       private TProductService tProductService;
 
     @Autowired//客户经理
-    private TManagerService tManagerService;
-  */
+    private ManagerService tManagerService;
+
     @RequestMapping
     public ResultTo productNext(@ApiParam(value = "产品ID", required = true) @RequestParam("id") int productId) {
         User user = (User) ShiroKit.getPrincipal();

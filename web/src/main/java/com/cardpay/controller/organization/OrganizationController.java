@@ -2,10 +2,10 @@ package com.cardpay.controller.organization;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
+import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,18 +96,15 @@ public class OrganizationController {
     }
 
     /**
-     * 根据父ID获取机构列表
+     * 获取机构列表
      *
-     * @param parentId 父ID
      * @return 机构列表
      */
-    @GetMapping("/byParentId")
+    @GetMapping("/orgAll")
     @ResponseBody
     @ApiOperation(value = "根据父ID获取机构列表", httpMethod = "GET", notes = "默认父ID为0")
-    public ResultTo getOrganization(@RequestParam("parentId") Integer parentId) {
-        TOrganization organization = new TOrganization();
-        organization.setOrgParentId(parentId);
-        List<TOrganization> tOrganizations = tOrganizationService.select(organization);
+    public ResultTo getAllForTree() {
+        List<TreeOrgVO> tOrganizations = tOrganizationService.getAllForTree();
         return new ResultTo().setData(tOrganizations);
     }
 }
