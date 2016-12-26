@@ -10,8 +10,6 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
-import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
-import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,8 +54,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     public DataTablePage queryByCondition() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerManagerId", ShiroKit.getUserId());
-        DataTablePage queryCustomerByCondition = dataTablePage("queryCustomerByCondition", map);
-        return queryCustomerByCondition;
+        return dataTablePage("queryCustomerByCondition", map);
     }
 
     /**
@@ -94,8 +91,8 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
         ModelAndView modelAndView = new ModelAndView("/customer/maintenanceUpdate");
         TCustomerMaintenance manager = new TCustomerMaintenance();
         manager.setId(customerId);
-        List<TCustomerMaintenance> tCustomerMaintenances = customerMaintenanceService.select(manager);
-        modelAndView.addObject("tCustomerMaintenance", tCustomerMaintenances);
+        List<TCustomerMaintenance> customerMaintenance = customerMaintenanceService.select(manager);
+        modelAndView.addObject("tCustomerMaintenance", customerMaintenance);
         return modelAndView;
     }
 
@@ -108,10 +105,12 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @SystemControllerLog(description = "跳转新增客户维护页面")
     @ApiOperation(value = "跳转新增客户维护页面", notes = "跳转新增维护记录,返回参数名:tCustomerBasic", httpMethod = "GET")
     public ModelAndView returnMaintenance(@ApiParam("客户id") @RequestParam int customerId) {
-        ModelAndView modelAndView = new ModelAndView("/customer/maintenanceNew");
-        TCustomerBasic tCustomerBasic = tCustomerBasicService.selectByPrimaryKey(customerId);
         Map<String, List<SelectModel>> dropDownList = new HashMap<>();
         List<SelectModel> maintenanceType = customerMaintenanceService.getMaintenanceType();
+
+        ModelAndView modelAndView = new ModelAndView("/customer/maintenanceNew");
+        TCustomerBasic tCustomerBasic = tCustomerBasicService.selectByPrimaryKey(customerId);
+
         dropDownList.put("maintenanceType", maintenanceType);
         modelAndView.addObject("dropDownList", dropDownList);
         modelAndView.addObject("tCustomerBasic", tCustomerBasic);
@@ -119,12 +118,12 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     }
 
     /**
-     * 跳转新增维护页面
+     * 跳转新增维护列表页
      *
      * @return
      */
     @GetMapping("/index")
-    @ApiOperation(value = "跳转客户维护页面", notes = "客户维护页面", httpMethod = "GET")
+    @ApiOperation(value = "跳转客户维护页面", notes = "客户维护列表页面", httpMethod = "GET")
     public ModelAndView returnNew() {
         return new ModelAndView("/customer/maintenance");
     }

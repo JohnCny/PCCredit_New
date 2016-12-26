@@ -1,5 +1,5 @@
 <#include "layout/base.html"/>
-<#assign title = "客户经理"/>
+<#assign title = "客户"/>
 <#macro style>
     <style>
         .delete{
@@ -48,32 +48,26 @@
 <#macro breadcrumb>
 
     <h1>${title}</h1>
-    <h2>当前位置：客户经理管理 / <span class="active">${title}</span></h2>
+    <h2>当前位置：客户管理 / <span class="active">${title}</span></h2>
 </#macro>
 <#macro content>
 
-    <h5>客户经理列表</h5>
+    <h5>客户列表</h5>
     <div class="search" style="width:95%">
-        <span>客户经理名称：<input type="text" class="short" name="userCname" id="userCname" ></span>
-        <span>工号：<input type="text" name="employeeNumber" id="employeeNumber"></span>
-        <span>级别：
-            <select name="levelId" id="levelId">
-                <option id="-1" value="-1">所有级别</option>
-                <#list customerManagerLevel as cml>
-                    <option id="${cml.id}" value="${cml.id}">${cml.value}</option>
-                </#list>
-            </select>
-        </span>
+        <span>客户名称：<input type="text" class="short" name="cname" id="cname" ></span>
+        <span>客户证件号码：<input type="text" name="certificateNumber" id="certificateNumber"></span>
         <input class="searchBtn" type="button" value="搜 索">
     </div>
 
     <div class="table-responsive" style="margin:50px auto; width:95%;">
-        <table id="customerManagerList" class="table table-bordered" style="width: 100%" >
+        <table id="example" class="table table-bordered" style="width: 100%" >
             <thead>
             <tr>
-                <th>客户经理</th>
-                <th>工号</th>
-                <th>当前级别	</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>联系方式</th>
+                <th>证件号码</th>
+                <th>创建时间</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -89,44 +83,62 @@
 <#macro js>
 
     <script>
+
         $(function(){
 
             var url  = {
-                "urlNew" : "/customerManager/toAdd",
-                "urlDel" : "/customerManager/",
+                "urlNew" : "/customerBasic/new",
+                "urlDel" : "/customerBasic/",
             }
+            var QK_searchObj = {
+                "cname" : $("#cname").val(),
+                "certificateNumber" : $("#certificateNumber").val(),
+            };
             var ajax = {
                 "type" : "GET",
-                "url" : "/customerManager/pageList",
+                "url" : "/customerBasic/condition",
                 "data" : function(d){
                     var QK_searchObj = {
-                        "userCname" : $("#userCname").val(),
-                        "employeeNumber":$("#employeeNumber").val(),
-                        "levelId":$("#levelId").val()
+                        "cname" : $("#cname").val(),
+                        "certificateNumber":$("#certificateNumber").val(),
                     }
                     d.search = JSON.stringify(QK_searchObj);
                 }
             }
-            var tableId = $("#customerManagerList");
+            var tableId = $("#example");
             var aoColumns = [{
-                "mData" : "userCname"
+                "mData" : "cname"
             },{
-                "mData" : "employeeNumber",
-            },{
-                "mData" : "levelName",
-            },{
-                "mData" : "userId",
+                "mData" : "sex",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a class="editOne btn-info" href="/customerManager/'+data+'">管理</a>' +
-                            '<a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                    return	data?"男":"女";
+                }
+            },{
+                "mData" : "tel",
+            },{
+                "mData" : "certificateNumber",
+            },{
+                "mData" : "createTime",
+                "sDefaultContent" : "",
+                "render" : function(data, type, full, meta) {
+                    //时间格式化
+                    return  moment(data).format("YYYY-MM-DD");
+                }
+            },{
+                "mData" : "id",
+                "sDefaultContent" : "",
+                "render" : function(data, type, full, meta) {
+                    return  '<a onclick="deleRow()" class="editOne btn-info" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
                 }
             }];
 
+
+
             var options = {
-                "ajax" : ajax,
                 "urlNew" : url['urlNew'],
                 "urlDel" : url['urlDel'],
+                "ajax" : ajax,
                 "tableId" : tableId,
                 "aoColumns" : aoColumns
             }

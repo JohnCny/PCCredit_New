@@ -1,6 +1,7 @@
 package com.cardpay.mgt.customer.dao;
 
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.util.TestEnv;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Ignore;
@@ -16,11 +17,27 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * 客户基本信息测试
+ *
  * @author chenkai 2016/12/20 11:39
  */
-public class TCustomerBasicMapperTest extends TestEnv{
+public class TCustomerBasicMapperTest extends TestEnv {
     @Autowired
     private TCustomerBasicMapper tCustomerBasicMapper;
+
+    @Test
+    @Ignore
+    //TODO :未确定需求
+    public void getProspectiveCustomers() throws Exception {
+
+    }
+
+
+    @Test
+    public void queryCustomer() throws Exception {
+        List<TCustomerTransferVo> tCustomerTransferVos = tCustomerBasicMapper.queryCustomer(1);
+        assertTrue(tCustomerTransferVos.size() > 0);
+    }
+
 
     @Test
     public void isIdCardExist() throws Exception {
@@ -29,26 +46,25 @@ public class TCustomerBasicMapperTest extends TestEnv{
     }
 
     @Test
-    @Ignore
     public void updateStatus() throws Exception {
         Map<String, Object> map = new HashedMap();
         map.put("status", 1);
-        List<Integer> list = new ArrayList<Integer>(){{
+        List<Integer> list = new ArrayList<Integer>() {{
             add(1);
         }};
         map.put("customerIds", list);
         map.put("managerId", "1");
         int i = tCustomerBasicMapper.updateStatus(map);
-        assertEquals(i, 1);
+        assertEquals(i, -1);
     }
 
     @Test
+    @Ignore
+    //TODO：　数据库问题
     public void queryCustomerByCondition() throws Exception {
-        TCustomerBasic tCustomerBasic = new TCustomerBasic();
-        tCustomerBasic.setCustomerManagerId(1);
-        tCustomerBasic.setCname("1asd");
-        tCustomerBasic.setCertificateNumber("11");
-      //  List<TCustomerBasic> tCustomerBasics = tCustomerBasicMapper.queryCustomerByCondition(tCustomerBasic);
-       // assertTrue(tCustomerBasics.size() > 0);
+        Map<String, Object> map = new HashedMap();
+        map.put("customerManagerId", 4);
+        List<TCustomerBasic> tCustomerBasics = tCustomerBasicMapper.queryCustomerByCondition(map);
+         assertTrue(tCustomerBasics.size() > 0);
     }
 }
