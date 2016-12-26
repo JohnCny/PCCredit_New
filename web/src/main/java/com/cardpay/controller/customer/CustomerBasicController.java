@@ -35,8 +35,6 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @Autowired
     private TCustomerBasicService customerBasicService;
 
-    private Integer userId = ShiroKit.getUserId();
-
     /**
      * 获取潜在客户列表
      *
@@ -47,7 +45,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @SystemControllerLog(description = "获取潜在客户列表")
     @ApiOperation(value = "查询潜在客户列表", notes = "潜在客户列表", httpMethod = "GET")
     public ResultTo getProspectiveCustomers() {
-        List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(userId);
+        List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(ShiroKit.getUserId());
         return new ResultTo().setData(customerBasics);
     }
 
@@ -133,7 +131,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
     public DataTablePage queryCondition() {
         Map<String, Object> map = new HashMap<>();
-        map.put("customerManagerId", userId);
+        map.put("customerManagerId", ShiroKit.getUserId());
         return dataTablePage("queryCustomerByCondition", map);
     }
 
@@ -191,7 +189,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         Map<String, Object> map = new HashMap();
         map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
         map.put("customerIds", ids);
-        map.put("managerId", userId);
+        map.put("managerId", ShiroKit.getUserId());
         int count = customerBasicService.updateStatus(map);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

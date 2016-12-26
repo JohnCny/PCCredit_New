@@ -93,10 +93,11 @@
 
 <script>
     $(function () {
-        var url = {
-            "urlList": "/customerTransfer/queryTransfer",
-        }
         var tableId = $("#example");
+        var ajax = {
+            type : "GET",
+            url : "/customerTransfer/queryTransfer",
+        }
         var aoColumns = [
             {
                 "mData": "customerId",
@@ -115,8 +116,8 @@
             }];
 
         var options = {
-            "urlList": url['urlList'],
             "tableId": tableId,
+            "ajax" :ajax,
             "aoColumns": aoColumns
         }
         myDataTable(options);
@@ -126,7 +127,7 @@
         var ids = [];
         var userIds = [];
         var obj = {};
-        var keyobj = {;}
+        var keyobj = {};
         var url = "/customerTransfer/accept";
         $("#btn_submit").click(function () {
             $("input[name='checkbox']:checkbox:checked").each(function(){

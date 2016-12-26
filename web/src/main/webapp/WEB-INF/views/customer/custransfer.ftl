@@ -114,7 +114,7 @@
                     url:"/customerTransfer",
                     data:obj,
                     success:function () {
-
+                        location = "/customerTransfer"
                     }
                 });
             });
