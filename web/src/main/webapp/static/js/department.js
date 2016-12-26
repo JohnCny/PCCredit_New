@@ -128,7 +128,7 @@ var myDataTable = function(options){
 						case 1:
 							$.ajax({
 								type : "PUT",
-								url : "/user",
+								url : "/user/lock",
 								data : {"id":id,"status":status},
 								success:function (res) {
 									if (res.code == "200"){
@@ -140,7 +140,7 @@ var myDataTable = function(options){
 						case 0:
 							$.ajax({
 								type : "PUT",
-								url : "/user",
+								url : "/user/lock",
 								data : {"id":id,"status":status},
 								success:function (res) {
 									if (res.code == "200"){

@@ -67,6 +67,20 @@
                         <td class="pull-right">机构：</td>
                         <td><input type="text" name="orgId" value="3"></td>
                     </tr>
+                    <tr>
+                        <td class="pull-right">身份证：</td>
+                        <td><input type="text" name="idCardNumber"></td>
+                        <td class="pull-right">用户类型：</td>
+                        <td>
+                            <select name="userType">
+                                <option>---请选择---</option>
+                                <option value="1">系统用户</option>
+                                <option value="2">客户经理</option>
+                                <option value="3">部门主管</option>
+                                <option value="4">机构主管</option>
+                            </select>
+                        </td>
+                    </tr>
                 </table>
                 <table>
                     <tr>

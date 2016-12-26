@@ -11,6 +11,7 @@
     table, table tr, table tr td {
         background-color: #fff
     }
+    .captap{width: 80px;}
 </style>
 </#macro>
 <#macro css>
@@ -44,7 +45,7 @@
                         <td><input type="text" name="username" value="${user.username}"></td>
                     </tr>
                     <tr>
-                        <td class="pull-right">员工工号：</td>
+                        <td class="pull-right captap">员工工号：</td>
                         <td><input type="text" name="employeeNumber" value="${user.employeeNumber}"></td>
                         <td class="pull-right">电话：</td>
                         <td><input type="text" name="phone" value="${user.phone}"></td>
@@ -55,16 +56,8 @@
                         <td class="pull-right">性别：</td>
                         <td>
                             <select name="sex">
-                                <!-- <option>-&#45;&#45;请选择-&#45;&#45;</option>
-                                 <option value="1">男</option>
-                                 <option value="2">女</option>-->
-                                <#if user.sex == 1>
-                                    <option value="1" selected>男</option>
-                                    <option value="2">女</option>
-                                <#else>
-                                    <option value="2" selected>女</option>
-                                    <option value="1">男</option>
-                                </#if>
+                                 <option value="1" <#if user.sex == 1>selected</#if>>男</option>
+                                 <option value="2" <#if user.sex == 2>selected</#if>>女</option>
                             </select>
                         </td>
                     </tr>
@@ -76,6 +69,19 @@
                             <input type="text" readonly="readonly" data-id="${org.id}" id="orgId"
                                    value="${org.orgName}">
                             <input type="hidden" id="orgHidden">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pull-right">身份证：</td>
+                        <td><input type="text" readonly="readonly" value="${user.idCardNumber}"></td>
+                        <td class="pull-right">用户类型：</td>
+                        <td>
+                            <select name="userType">
+                                <option value="1" <#if user.userType == 1>selected</#if>>系统用户</option>
+                                <option value="2" <#if user.userType == 2>selected</#if>>客户经理</option>
+                                <option value="3" <#if user.userType == 3>selected</#if>>部门主管</option>
+                                <option value="4" <#if user.userType == 4>selected</#if>>机构主管</option>
+                            </select>
                         </td>
                     </tr>
                 </table>
@@ -175,9 +181,7 @@
         $(".submit").click(function (e) {
             e.preventDefault();
             var obj = $("#userAdd").serializeArray();
-
             obj.push({"name": "roleId", "value": $("#roleId").val()});
-
             console.log(obj);
             $.ajax({
                 type: "post",
