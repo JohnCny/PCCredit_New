@@ -238,7 +238,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             userRole.setRoleId(Integer.parseInt(split[1]));
             int insertSelective = userRoleMapper.insertSelective(userRole);
             if (insertSelective <= 0) {
-                throw new RuntimeException();
+//                throw new RuntimeException();
                 return Boolean.FALSE;
             }
         }
