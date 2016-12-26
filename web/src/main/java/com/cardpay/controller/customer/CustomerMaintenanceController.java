@@ -10,6 +10,7 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +43,8 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @Autowired //客户Service
     private TCustomerBasicService tCustomerBasicService;
 
+    private Integer userId = ShiroKit.getUserId();
+
     /**
      * 按条件查询客户维护信息
      *
@@ -53,7 +56,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public DataTablePage queryByCondition() {
         Map<String, Object> map = new HashMap<>();
-        map.put("customerManagerId", ShiroKit.getUserId());
+        map.put("customerManagerId", userId);
         return dataTablePage("queryCustomerByCondition", map);
     }
 
@@ -68,11 +71,9 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @SystemControllerLog(description = "新增维护记录")
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
     public ResultTo insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
-        Integer userId = ShiroKit.getUserId();
-        //  TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
-        tCustomerMaintenance.setCustomerCname("测试");
+        TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
         tCustomerMaintenance.setOperationId(userId);
-        //    tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
+        tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
         tCustomerMaintenance.setOperationTime(new Date());
         customerMaintenanceService.insertSelective(tCustomerMaintenance);
         return new ResultTo().setData(tCustomerMaintenance.getId());
