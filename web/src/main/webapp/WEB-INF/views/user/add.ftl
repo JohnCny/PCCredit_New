@@ -26,8 +26,8 @@
     <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px;height: 705px">
         <div class="report common list">
             <h5>机构列表</h5>
-            <div class='treeBox'>
-                <ul id='treeDemo' class='ztree'></ul>
+            <div class="treeBox" style="height: 581px;">
+                <ul id="treeDemo" class="ztree"></ul>
             </div>
         </div>
     </div>

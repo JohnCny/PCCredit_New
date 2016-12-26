@@ -26,10 +26,8 @@
     <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px">
         <div class="report common list">
             <h5>机构列表</h5>
-            <div class='treeBox'>
-                <ul id='treeDemo' class='ztree'>
-
-                </ul>
+            <div class="treeBox" style="height: 581px;">
+                <ul id="treeDemo" class="ztree"></ul>
             </div>
         </div>
     </div>
@@ -86,16 +84,17 @@
                         <td class="pull-right">用户角色：</td>
                         <td colspan="3">
                             <#list roleAll as temp>
-                            <span class="hideInput">
-                                <input id="roleId_${temp.id}" type="radio" data-id="${userRole.roleId}" value="${temp.id}">
+                                <span class="hideInput">
+                                <input id="roleId_${temp.id}" type="radio" data-id="${userRole.roleId}"
+                                       value="${temp.id}">
                                 <input type="hidden" id="roleHidden">
-                                <#if userRole.roleId == temp.id>
-                                    <label onclick="setRadio(this,'roleId_${temp.id}')"
-                                           class="radio radio_a">${temp.roleNameZh}</label>
-                                <#else>
-                                    <label onclick="setRadio(this,'roleId_${temp.id}')"
-                                           class="radio">${temp.roleNameZh}</label>
-                                </#if>
+                                    <#if userRole.roleId == temp.id>
+                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
+                                               class="radio radio_a">${temp.roleNameZh}</label>
+                                    <#else>
+                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
+                                               class="radio">${temp.roleNameZh}</label>
+                                    </#if>
                             </span>
                             </#list>
 
@@ -136,11 +135,29 @@
 </#macro>
 
 <#macro script>
-
-
+<script type="text/javascript" src="/static/js/ztree-org.js"/>
 </#macro>
 
 <#macro js>
+<script type="text/javascript">
+    var urlMy = "/organization/orgAll";
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true,
+            }
+        },
+        callback: {
+            onClick: onClick
+        }
+    };
+    baseTree(urlMy, setting);
+    function onClick(event, treeId, treeNode, clickFlag) {
+        $("#orgId").attr("value", treeNode.name);
+        $("#orgId").attr("data-id", treeNode.id);
+
+    }
+</script>
 <script>
     function setRadio(obj, inputId) {//单选样式
         $(obj).parent().parent().find("input[type=radio]").attr("checked", false)
@@ -175,8 +192,6 @@
             })
         })
     })
-
-
 </script>
 
 

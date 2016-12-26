@@ -73,15 +73,15 @@ public interface UserService extends BaseService<User> {
      * @param orgId 机构ID
      * @return 成功或失败
      */
-    boolean addUser(User user, Integer orgId, Integer roleId);
+    boolean addUser(User user, Integer orgId, Integer roleId) throws RuntimeException;
 
     /**
      * 编辑用户
      *
-     * @param user   User对象
-     * @param orgId  机构ID(组成结构:旧ID,新ID)
-     * @param roleId 角色ID(组成结构:旧ID,新ID)
+     * @param user    User对象
+     * @param orgIds  机构ID(组成结构:旧ID,新ID)
+     * @param roleIds 角色ID(组成结构:旧ID,新ID)
      * @return 成功或失败
      */
-    boolean updateUser(User user, String orgId, String roleId);
+    boolean updateUser(User user, String[] orgIds, String[] roleIds);
 }

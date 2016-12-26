@@ -19,8 +19,7 @@
         <div class="report common list">
             <h5>机构列表</h5>
             <div class="treeBox" style="height: 581px;">
-                <ul id="treeDemo" class="ztree">
-                </ul>
+                <ul id="treeDemo" class="ztree"></ul>
             </div>
         </div>
     </div>
@@ -58,30 +57,6 @@
 <script type="text/javascript" src="/static/js/ztree-org.js"/>
 </#macro>
 <#macro js>
-<script>
-    $(function () {
-        var url = ""
-        $("#organization").change(function () {
-            var parentId = $("#organization>option:selected").attr("value");
-            console.log(parentId);
-            if (parentId != "") {
-                $.ajax({
-                    type: "get",
-                    url: "/organization/byParentId",
-                    data: {"parentId": parentId},
-                    success: function (res) {
-                        if (res.code == 200) {
-                            if (res.data != "") {
-                                var html = "";
-                                html += '<select >'
-                            }
-                        }
-                    }
-                })
-            }
-        })
-    });
-</script>
 <script type="text/javascript">
     var urlMy = "/organization/orgAll";
     var setting = {
@@ -101,67 +76,68 @@
 
     }
 </script>
+
 <script>
     $(function () {
 
 
-    var url = {}
+        var url = {}
 
-    var tableId = $("#userList");
-    var ajax = {
-        "type": "GET",
-        "url": "/user/pageList",
-        "data": function (d) {
-            var QK_searchObj = {
-                "email": $("#email").val(),
-                "username": $("#username").val(),
-                "orgId": $("#orgId").data("id"),
-            };
-            d.search = JSON.stringify(QK_searchObj);
-        }
-    }
-    var aoColumns = [{
-        "mData": "username",
-    }, {
-        "mData": "sex",
-        "sDefaultContent": "",
-        "render": function (data, type, full, meta) {
-            return data ? "男" : "女";
-        }
-    }, {
-        "mData": "tel",
-    }, {
-        "mData": "email",
-    }, {
-        "mData": "lastLoginTime",
-        "sDefaultContent": "",
-        "render": function (data, type, full, meta) {
-            //时间格式化
-            return moment(data).format("YYYY-MM-DD");
-        }
-    }, {
-        "mData": "id",
-        "sDefaultContent": "",
-        "render": function (data, type, full, meta) {
-            var html = "";
-            html += '<button class="btn btn-primary" data-id=' + data + '>编辑</button>'
-            if (!full.status) {
-                html += '<button  class="btn btn-success activeBtn" data-id=' + data + ' data-status=' + full.status + '>点击锁定</button>';
-            } else {
-                html += '<button  class="btn btn-default activeBtn" data-id=' + data + ' data-status=' + full.status + '>点击解锁</button>';
+        var tableId = $("#userList");
+        var ajax = {
+            "type": "GET",
+            "url": "/user/pageList",
+            "data": function (d) {
+                var QK_searchObj = {
+                    "email": $("#email").val(),
+                    "username": $("#username").val(),
+                    "orgId": $("#orgId").data("id"),
+                };
+                d.search = JSON.stringify(QK_searchObj);
             }
-            html += '<button class="btn btn-info resetBtn" data-id=' + data + '>重置密码</button>';
-            html += '<button class="btn btn-primary" data-id=' + data + '>角色管理</button>'
-            return html;
         }
-    }];
+        var aoColumns = [{
+            "mData": "username",
+        }, {
+            "mData": "sex",
+            "sDefaultContent": "",
+            "render": function (data, type, full, meta) {
+                return data ? "男" : "女";
+            }
+        }, {
+            "mData": "tel",
+        }, {
+            "mData": "email",
+        }, {
+            "mData": "lastLoginTime",
+            "sDefaultContent": "",
+            "render": function (data, type, full, meta) {
+                //时间格式化
+                return moment(data).format("YYYY-MM-DD");
+            }
+        }, {
+            "mData": "id",
+            "sDefaultContent": "",
+            "render": function (data, type, full, meta) {
+                var html = "";
+                html += '<button class="btn btn-primary" data-id=' + data + '>编辑</button>'
+                if (!full.status) {
+                    html += '<button  class="btn btn-success activeBtn" data-id=' + data + ' data-status=' + full.status + '>点击锁定</button>';
+                } else {
+                    html += '<button  class="btn btn-default activeBtn" data-id=' + data + ' data-status=' + full.status + '>点击解锁</button>';
+                }
+                html += '<button class="btn btn-info resetBtn" data-id=' + data + '>重置密码</button>';
+                html += '<button class="btn btn-primary" data-id=' + data + '>角色管理</button>'
+                return html;
+            }
+        }];
 
-    var options = {
-        "ajax": ajax,
-        "tableId": tableId,
-        "aoColumns": aoColumns
-    }
-    myDataTable(options);
+        var options = {
+            "ajax": ajax,
+            "tableId": tableId,
+            "aoColumns": aoColumns
+        }
+        myDataTable(options);
     })
 </script>
 

@@ -167,9 +167,6 @@ public class UserServiceImplTest {
         PowerMockito.mockStatic(ShiroKit.class);
         PowerMockito.when(ShiroKit.getPrincipal()).thenReturn(user);
         UserOrganization userOrganization = new UserOrganization();
-        BaseServiceImpl spy = PowerMockito.spy(new BaseServiceImpl());
-        PowerMockito.doNothing().when(spy, "rollbackOnly");
-
         PowerMockito.whenNew(UserOrganization.class).withAnyArguments().thenReturn(userOrganization);
         UserRole userRole = new UserRole();
         PowerMockito.whenNew(UserRole.class).withAnyArguments().thenReturn(userRole);
@@ -180,29 +177,14 @@ public class UserServiceImplTest {
         PowerMockito.when(userRoleMapper.insertSelective(userRole)).thenReturn(1);
         flag = userService.addUser(user, 1, 1);
         Assert.assertTrue(flag);
-
-        PowerMockito.when(userMapper.insertSelective(user)).thenReturn(0);
-        PowerMockito.when(userOrganizationMapper.insertSelective(userOrganization)).thenReturn(1);
-        PowerMockito.when(userRoleMapper.insertSelective(userRole)).thenReturn(1);
-        flag = userService.addUser(user, 1, 1);
-        Assert.assertFalse(flag);
-
-        PowerMockito.when(userMapper.insertSelective(user)).thenReturn(1);
-        PowerMockito.when(userOrganizationMapper.insertSelective(userOrganization)).thenReturn(0);
-        PowerMockito.when(userRoleMapper.insertSelective(userRole)).thenReturn(1);
-        flag = userService.addUser(user, 1, 1);
-        Assert.assertFalse(flag);
-
-        PowerMockito.when(userMapper.insertSelective(user)).thenReturn(1);
-        PowerMockito.when(userOrganizationMapper.insertSelective(userOrganization)).thenReturn(1);
-        PowerMockito.when(userRoleMapper.insertSelective(userRole)).thenReturn(0);
-        flag = userService.addUser(user, 1, 1);
-        Assert.assertFalse(flag);
     }
 
     @Test
     public void updateUser() throws Exception {
-
+        PowerMockito.when(userMapper.updateByPrimaryKeySelective(user)).thenReturn(1);
+        PowerMockito.when(userMapper.updateByPrimaryKeySelective(user)).thenReturn(1);
+        PowerMockito.when(userMapper.updateByPrimaryKeySelective(user)).thenReturn(1);
+        PowerMockito.when(userMapper.updateByPrimaryKeySelective(user)).thenReturn(1);
     }
 
 }

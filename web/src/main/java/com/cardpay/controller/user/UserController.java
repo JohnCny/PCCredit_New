@@ -214,7 +214,20 @@ public class UserController extends BaseController<User> {
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
-        if (userService.updateUser(user, orgId, roleId)) {
+        String[] orgIds = new String[0], roleIds = new String[0];
+        if (orgId != null) {
+            orgIds = orgId.split(",");
+            if (orgIds.length != 2) {
+                return new ResultTo(ResultEnum.PARAM_ERROR);
+            }
+        }
+        if (roleId != null) {
+            roleIds = roleId.split(",");
+            if (roleIds.length != 2) {
+                return new ResultTo(ResultEnum.PARAM_ERROR);
+            }
+        }
+        if (userService.updateUser(user, orgIds, roleIds)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
