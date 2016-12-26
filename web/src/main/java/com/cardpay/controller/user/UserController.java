@@ -53,9 +53,9 @@ public class UserController extends BaseController<User> {
 
     private static final String RESET_PASSWORD_PAGE = "/user/forget";
 
-    private static final String RESET_PASSWORD_SEND = "/user/forget";
+    private static final String RESET_PASSWORD_SEND = "/user/forget_send";
 
-    private static final String RESET_PASSWORD_CHECKED = "/user/forget";
+    private static final String RESET_PASSWORD_CHECKED = "/user/forget_checked";
 
     private static final String USER_INDEX = "/user/index";
 
@@ -256,7 +256,6 @@ public class UserController extends BaseController<User> {
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
     }
-
 
     /**
      * 修改密码页面跳转

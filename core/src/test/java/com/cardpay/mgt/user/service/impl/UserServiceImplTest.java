@@ -1,15 +1,20 @@
 package com.cardpay.mgt.user.service.impl;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.mail.MailSend;
 import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.dao.RoleMapper;
 import com.cardpay.mgt.user.dao.UserMapper;
+import com.cardpay.mgt.user.dao.UserOrganizationMapper;
+import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
+import com.cardpay.mgt.user.model.UserOrganization;
+import com.cardpay.mgt.user.model.UserRole;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,26 +25,36 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({UserServiceImpl.class, ShiroKit.class, User.class})
+@PrepareForTest({UserServiceImpl.class, ShiroKit.class, User.class, TransactionAspectSupport.class})
 public class UserServiceImplTest {
 
     @InjectMocks
     private UserServiceImpl userService;
 
     @Mock
-    private RoleMapper roleMapper;
+    private BaseServiceImpl baseService;
 
     @Mock
     private UserMapper userMapper;
 
     @Mock
+    private RoleMapper roleMapper;
+
+    @Mock
     private RedisClient redisClient;
+
+    @Mock
+    private UserOrganizationMapper userOrganizationMapper;
+
+    @Mock
+    private UserRoleMapper userRoleMapper;
 
     @Mock
     private MailSend mailSend;
@@ -144,6 +159,50 @@ public class UserServiceImplTest {
 
         resultTo = userService.resetPassword(1, "aaaaaaaaaaaaaaaa", "654321");
         Assert.assertEquals(resultTo.getCode(), 5021);
+    }
+
+    @Test
+    public void addUser() throws Exception {
+
+        PowerMockito.mockStatic(ShiroKit.class);
+        PowerMockito.when(ShiroKit.getPrincipal()).thenReturn(user);
+        UserOrganization userOrganization = new UserOrganization();
+        BaseServiceImpl spy = PowerMockito.spy(new BaseServiceImpl());
+        PowerMockito.doNothing().when(spy, "rollbackOnly");
+
+        PowerMockito.whenNew(UserOrganization.class).withAnyArguments().thenReturn(userOrganization);
+        UserRole userRole = new UserRole();
+        PowerMockito.whenNew(UserRole.class).withAnyArguments().thenReturn(userRole);
+        boolean flag;
+
+        PowerMockito.when(userMapper.insertSelective(user)).thenReturn(1);
+        PowerMockito.when(userOrganizationMapper.insertSelective(userOrganization)).thenReturn(1);
+        PowerMockito.when(userRoleMapper.insertSelective(userRole)).thenReturn(1);
+        flag = userService.addUser(user, 1, 1);
+        Assert.assertTrue(flag);
+
+        PowerMockito.when(userMapper.insertSelective(user)).thenReturn(0);
+        PowerMockito.when(userOrganizationMapper.insertSelective(userOrganization)).thenReturn(1);
+        PowerMockito.when(userRoleMapper.insertSelective(userRole)).thenReturn(1);
+        flag = userService.addUser(user, 1, 1);
+        Assert.assertFalse(flag);
+
+        PowerMockito.when(userMapper.insertSelective(user)).thenReturn(1);
+        PowerMockito.when(userOrganizationMapper.insertSelective(userOrganization)).thenReturn(0);
+        PowerMockito.when(userRoleMapper.insertSelective(userRole)).thenReturn(1);
+        flag = userService.addUser(user, 1, 1);
+        Assert.assertFalse(flag);
+
+        PowerMockito.when(userMapper.insertSelective(user)).thenReturn(1);
+        PowerMockito.when(userOrganizationMapper.insertSelective(userOrganization)).thenReturn(1);
+        PowerMockito.when(userRoleMapper.insertSelective(userRole)).thenReturn(0);
+        flag = userService.addUser(user, 1, 1);
+        Assert.assertFalse(flag);
+    }
+
+    @Test
+    public void updateUser() throws Exception {
+
     }
 
 }
