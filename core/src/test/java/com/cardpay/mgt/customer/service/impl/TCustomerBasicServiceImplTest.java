@@ -1,12 +1,10 @@
 package com.cardpay.mgt.customer.service.impl;
 
-import com.cardpay.basic.base.model.SelectModel;
-import com.cardpay.basic.common.interceptor.mapper.ReturnMapParam;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import org.apache.commons.collections.map.HashedMap;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,12 +21,19 @@ import static org.junit.Assert.*;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
- *客户基本信息测试类
+ * 客户基本信息测试类
+ *
  * @author chenkai
  */
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({TCustomerBasicService.class})
 public class TCustomerBasicServiceImplTest {
+
+    @Test
+    public void queryCustomerByCondition() throws Exception {
+
+    }
+
     @Mock
     private TCustomerBasicMapper customerBasicMapper;
 
@@ -37,7 +42,7 @@ public class TCustomerBasicServiceImplTest {
 
     @Test
     public void getProspectiveCustomers() throws Exception {
-        List<TCustomerBasic> lists = new ArrayList<TCustomerBasic>(){
+        List<TCustomerBasic> lists = new ArrayList<TCustomerBasic>() {
             {
                 add(new TCustomerBasic());
             }
@@ -56,17 +61,12 @@ public class TCustomerBasicServiceImplTest {
     }
 
     @Test
-    @Ignore
     public void queryCustomer() throws Exception {
-/*        ReturnMapParam returnMapParam = new ReturnMapParam("id", "name");
-        returnMapParam.put("managerId", 1);
-        Map<Integer, String> map = new HashedMap();
-        map.put(1, "1");
-        List<TCustomerBasic> list = new ArrayList<>();
-        list.add(new TCustomerBasic());
-        when(customerBasicMapper.queryCustomer(returnMapParam)).thenReturn(list);
-        List<TCustomerBasic> tCustomerBasics = customerBasicService.queryCustomer(returnMapParam);
-        assertEquals(map, tCustomerBasics);*/
+        List<TCustomerTransferVo> list = new ArrayList<>();
+        list.add(new TCustomerTransferVo());
+        when(customerBasicMapper.queryCustomer(1)).thenReturn(list);
+        List<TCustomerTransferVo> tCustomerBasics = customerBasicService.queryCustomer(1);
+        assertTrue(tCustomerBasics.size() > 0);
     }
 
     @Test

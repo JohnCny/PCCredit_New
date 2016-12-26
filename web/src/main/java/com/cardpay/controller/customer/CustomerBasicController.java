@@ -42,7 +42,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @GetMapping("/prospectiveCustomers")
-    @SystemControllerLog
+    @SystemControllerLog(description = "获取潜在客户列表")
     @ApiOperation(value = "查询潜在客户列表", notes = "潜在客户列表", httpMethod = "GET")
     public ResultTo getProspectiveCustomers() {
         List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(ShiroKit.getUserId());
@@ -86,7 +86,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 新建的id
      */
     @ResponseBody
-    @PostMapping()
+    @PostMapping
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
