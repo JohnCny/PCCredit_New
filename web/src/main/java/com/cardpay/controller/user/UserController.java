@@ -188,6 +188,9 @@ public class UserController extends BaseController<User> {
         map.put("org", organizationService.selectByPrimaryKey(newUserOrganization.getOrganizationId()));
         map.put("roleAll", roleService.selectAll());
         map.put("user", userService.selectByPrimaryKey(userId));
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        map.put("userRole", userRoleService.selectOne(userRole));
         return UPDATE_USER;
     }
 
@@ -203,8 +206,8 @@ public class UserController extends BaseController<User> {
     @ApiOperation(value = "编辑用户实现", httpMethod = "POST")
     @ResponseBody
     public ResultTo updateUser(@ApiParam("User对象") User user, BindingResult result,
-                               @ApiParam(value = "机构ID(结构:旧ID,新ID)") @RequestParam("orgId") String orgId,
-                               @ApiParam(value = "角色ID(结构:旧ID,新ID)") @RequestParam("roleId") String roleId) {
+                               @ApiParam(value = "机构ID(结构:旧ID,新ID)") @RequestParam(value = "orgId", required = false) String orgId,
+                               @ApiParam(value = "角色ID(结构:旧ID,新ID)") @RequestParam(value = "roleId", required = false) String roleId) {
         LogTemplate.debug(this.getClass(), "orgId", orgId);
         LogTemplate.debug(this.getClass(), "roleId", roleId);
         Map<String, String> map = new HashedMap();

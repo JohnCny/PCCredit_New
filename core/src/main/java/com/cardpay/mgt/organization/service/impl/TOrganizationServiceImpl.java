@@ -5,6 +5,7 @@ import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.organization.dao.TOrganizationMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
+import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 
 /**
  * 机构service实现类
+ *
  * @author chenkai on 2016/11/24.
  */
 @Service
@@ -39,5 +41,16 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     public List<TOrganizationVo> queryAll(int parentId) {
         TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
         return tree.getChildNodesByParentId(tOrganizationDao.queryAll(), parentId);
+    }
+
+    @Override
+    public List<TreeOrgVO> getAllForTree() {
+        List<TreeOrgVO> allForTree = tOrganizationDao.getAllForTree();
+        for (TreeOrgVO treeOrgVO : allForTree) {
+            if (treeOrgVO.getpId() == 0) {
+                treeOrgVO.setOpen(Boolean.TRUE);
+            }
+        }
+        return allForTree;
     }
 }
