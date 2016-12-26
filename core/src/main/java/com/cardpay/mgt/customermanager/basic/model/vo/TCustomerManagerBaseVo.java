@@ -52,7 +52,7 @@ public class TCustomerManagerBaseVo {
      * 客户经理状态
      */
     @ApiModelProperty(value="客户经理状态",required = true)
-    private Integer status;
+    private Integer managerStatus;
 
     /**
      * 获取客户经理用户基本信息
@@ -129,19 +129,19 @@ public class TCustomerManagerBaseVo {
     /**
      * 获取客户经理状态
      *
-     * @return ID - 客户经理状态
+     * @return managerStatus - 客户经理状态
      */
-    public Integer getStatus() {
-        return status;
+    public Integer getManagerStatus() {
+        return managerStatus;
     }
 
     /**
      * 设置客户经理状态
      *
-     * @param status 客户经理状态
+     * @param managerStatus 客户经理状态
      */
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setManagerStatus(Integer managerStatus) {
+        this.managerStatus = managerStatus;
     }
 
     /**

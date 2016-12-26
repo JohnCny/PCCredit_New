@@ -86,7 +86,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 新建的id
      */
     @ResponseBody
-    @PostMapping()
+    @PostMapping
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {

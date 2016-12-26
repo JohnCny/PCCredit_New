@@ -54,20 +54,21 @@
 
     <h5>客户经理列表</h5>
     <div class="search" style="width:95%">
-        <span>客户经理名称：<input type="text" class="short" name="cname" id="cname" ></span>
-        <span>工号：<input type="text" name="certificateNumber" id="certificateNumber"></span>
+        <span>客户经理名称：<input type="text" class="short" name="userCname" id="userCname" ></span>
+        <span>工号：<input type="text" name="employeeNumber" id="employeeNumber"></span>
         <span>级别：
-            <select>
+            <select name="levelId" id="levelId">
+                <option id="-1" value="-1">所有级别</option>
                 <#list customerManagerLevel as cml>
-                    <option value="" id="${cml.id}">${cml.value}</option>
+                    <option id="${cml.id}" value="${cml.id}">${cml.value}</option>
                 </#list>
             </select>
         </span>
-        <input type="button" value="搜 索">
+        <input class="searchBtn" type="button" value="搜 索">
     </div>
 
     <div class="table-responsive" style="margin:50px auto; width:95%;">
-        <table id="example" class="table table-bordered" style="width: 100%" >
+        <table id="customerManagerList" class="table table-bordered" style="width: 100%" >
             <thead>
             <tr>
                 <th>客户经理</th>
@@ -89,12 +90,24 @@
 
     <script>
         $(function(){
+
             var url  = {
-                "urlList":"/customerManager/pageList",
                 "urlNew" : "/customerManager/toAdd",
                 "urlDel" : "/customerManager/",
             }
-            var tableId = $("#example");
+            var ajax = {
+                "type" : "GET",
+                "url" : "/customerManager/pageList",
+                "data" : function(d){
+                    var QK_searchObj = {
+                        "userCname" : $("#userCname").val(),
+                        "employeeNumber":$("#employeeNumber").val(),
+                        "levelId":$("#levelId").val()
+                    }
+                    d.search = JSON.stringify(QK_searchObj);
+                }
+            }
+            var tableId = $("#customerManagerList");
             var aoColumns = [{
                 "mData" : "userCname"
             },{
@@ -105,13 +118,13 @@
                 "mData" : "userId",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a onclick="deleRow()" class="editOne btn-info" href="/customerManager/'+data+'">管理</a>' +
+                    return  '<a class="editOne btn-info" href="/customerManager/'+data+'">管理</a>' +
                             '<a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
                 }
             }];
 
             var options = {
-                "urlList" : url['urlList'],
+                "ajax" : ajax,
                 "urlNew" : url['urlNew'],
                 "urlDel" : url['urlDel'],
                 "tableId" : tableId,

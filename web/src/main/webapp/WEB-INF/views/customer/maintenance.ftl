@@ -90,9 +90,11 @@
             "type" : "GET",
             "url" : "/customerBasic/condition",
             "data" : function(d){
+                var QK_searchObj = {
+                    "cname" : $("#cname").val(),
+                    "certificateNumber":$("#certificateNumber").val(),
+                }
                 d.search = JSON.stringify(QK_searchObj);
-                d.name = " ";
-                d.IdNumber = " ";
             }
         }
         var aoColumns = [

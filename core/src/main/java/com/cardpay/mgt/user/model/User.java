@@ -121,6 +121,13 @@ public class User extends GenericEntity<Integer> {
     private String employeeNumber;
 
     /**
+     * 用户类型
+     */
+    @Column(name = "USER_TYPE")
+    @ApiModelProperty(value = "用户类型", required = true)
+    private Integer userType;
+
+    /**
      * 修改人
      */
     @Column(name = "MODIFY_BY")
@@ -240,6 +247,24 @@ public class User extends GenericEntity<Integer> {
      */
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    /**
+     * 获取用户类型
+     *
+     * @return userType - 用户类型
+     */
+    public Integer getUserType() {
+        return userType;
+    }
+
+    /**
+     * 设置用户类型
+     *
+     * @param userType 用户类型
+     */
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
     /**
