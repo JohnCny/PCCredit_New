@@ -1,13 +1,18 @@
 package com.cardpay.mgt.customer.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.Column;
 
 /**
+ * 客户信息Vo
  * @author chenkai 2016/12/20 16:24
  */
+@Lazy
+@ApiModel(value = "客户信息Vo")
 public class TCustomerVo extends GenericEntity<Integer> {
 
     /**

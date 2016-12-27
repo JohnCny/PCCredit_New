@@ -3,9 +3,17 @@ package com.cardpay.mgt.file.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
+import jdk.nashorn.internal.runtime.logging.Logger;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
 import javax.persistence.*;
+
+/**
+ * 文件上传类
+ * @author chenkai
+ */
+@Lazy
 @Api("文件上传类")
 @Table(name = "T_FILE")
 public class TFile extends GenericEntity<Integer>{

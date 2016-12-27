@@ -6,6 +6,7 @@ import com.cardpay.basic.util.treeutil.annotation.TreeId;
 import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.List;
  * 机构表VO类
  * @author chenkai on 2016/11/23.
  */
+@Lazy
 @ApiModel(value = "机构表VO类")
 public class TOrganizationVo extends GenericEntity<Integer> {
     /**
