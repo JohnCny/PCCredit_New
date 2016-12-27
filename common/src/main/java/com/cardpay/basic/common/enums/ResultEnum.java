@@ -117,7 +117,12 @@ public enum ResultEnum {
     /**
      * 客户输入验证码为空
      */
-    CAPTCHA_NULL(5024);
+    CAPTCHA_NULL(5024),
+
+    /**
+     * 身份证格式错误
+     */
+    ID_CARD_ERROR(5025);
 
     private int value; // 自定义数据域，private为了封装
 

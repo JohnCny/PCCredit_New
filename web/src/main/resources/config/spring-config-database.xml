@@ -97,14 +97,14 @@
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.cardpay.mgt" />
+        <property name="basePackage" value="com.cardpay" />
         <!--扫描的mapper必须继承接口,如果不添加则会重复扫描其他bean导致无法注入-->
         <property name="markerInterface" value="com.cardpay.basic.base.mapper.BasicMapper"/>
     </bean>
 
     <!--通用Mapper配置-->
     <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.cardpay.mgt"/>
+        <property name="basePackage" value="com.cardpay"/>
         <!--扫描的mapper必须继承接口,如果不添加则会重复扫描其他bean导致无法注入-->
         <property name="markerInterface" value="com.cardpay.basic.base.mapper.BasicMapper"/>
         <property name="properties">

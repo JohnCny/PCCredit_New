@@ -38,11 +38,21 @@
 <script>
     $(function(){
         /*如果是第一次进入该页面就设置默认页面为index；不是就取本地缓存的页面为当前高亮*/
+
         function setUrl(){
-            return localStorage.url?localStorage.url:'/index';
+            if(!localStorage.url){
+                return '/index';
+            }else{
+                return localStorage.url;
+            }
         }
         $(document).on("click","ul.second-nav li a",function() {
-            localStorage.url = $(this).parent("li").data("name");
+            var url = $(this).parent("li").data("name");
+            if(url.indexOf("javaScript") > -1){
+                return;
+            }else{
+                localStorage.url = url;
+            }
         });
         var parent=$(".nav"),html=" ",url=setUrl();
         $.ajax({
