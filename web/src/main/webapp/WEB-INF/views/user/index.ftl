@@ -76,6 +76,7 @@
         function onClick(event, treeId, treeNode, clickFlag) {
             $("#orgId").attr("value", treeNode.orgName);
             $("#orgId").attr("data-id", treeNode.id);
+
         }
     });
 </script>
