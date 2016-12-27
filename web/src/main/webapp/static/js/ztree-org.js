@@ -9,6 +9,7 @@ function baseTree(url, setting) {
         url: url,
         success: function (res) {
             zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, res.data);
+            zTreeObj.expandAll(true);
         }
     });
 }

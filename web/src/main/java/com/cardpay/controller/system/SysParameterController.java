@@ -1,7 +1,9 @@
 package com.cardpay.controller.system;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -23,10 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/system")
-@Api(value = "/organization", description = "系统参数配置")
+@Api(value = "/system", description = "系统参数配置")
 public class SysParameterController extends BaseController<TSysParameter> {
     @Autowired
     private TSysParameterService tSysParameterService;
+
+    @Autowired
+    private static LogTemplate logger;
 
     /**
      * 跳转系统参数配置主页
@@ -34,6 +39,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
      * @return 统参数配置主页
      */
     @GetMapping("/index")
+    @SystemControllerLog(description = "跳转系统参数配置主页")
     @ApiOperation(value = "跳转系统参数配置主页", notes = "系统参数配置主页", httpMethod = "GET")
     public ModelAndView index() {
         return new ModelAndView("/system/index");
@@ -46,6 +52,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
      * @return 编辑系统参数配置页面
      */
     @GetMapping("/{id}")
+    @SystemControllerLog(description = "跳转编辑系统参数配置页面")
     @ApiOperation(value = "跳转编辑系统参数配置页面", notes = "编辑系统参数配置页面", httpMethod = "GET")
     public ModelAndView returnUpdate(@ApiParam(value = "主键", required = true) @PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("/system/update");
@@ -61,6 +68,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
      */
     @GetMapping
     @ResponseBody
+    @SystemControllerLog(description = "获取所有系统参数配置")
     @ApiOperation(value = "获取所有系统参数配置", notes = "所有系统参数配置", httpMethod = "GET")
     public DataTablePage queryAll() {
         return dataTablePage();
@@ -74,10 +82,12 @@ public class SysParameterController extends BaseController<TSysParameter> {
      */
     @PutMapping
     @ResponseBody
+    @SystemControllerLog(description = "更新系统参数配置")
     @ApiOperation(value = "更新系统参数配置", notes = "更新系统参数配置", httpMethod = "PUT")
     public ResultTo update(@ApiParam("系统参数实体信息") @ModelAttribute TSysParameter tSysParameter) {
         tSysParameter.setModifyBy(ShiroKit.getUserId());
         Integer count = tSysParameterService.updateByPrimaryKey(tSysParameter);
+        logger.info("更新系统参数配置","用户id:"+ShiroKit.getUserId()+",更新了参数"+tSysParameter);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -89,10 +99,12 @@ public class SysParameterController extends BaseController<TSysParameter> {
      */
     @PostMapping
     @ResponseBody
+    @SystemControllerLog(description = "添加系统参数配置")
     @ApiOperation(value = "新增系统参数配置", notes = "新增系统参数配置", httpMethod = "POST")
     public ResultTo insert(@ApiParam("系统参数实体信息") @ModelAttribute TSysParameter tSysParameter) {
         tSysParameter.setCreateBy(ShiroKit.getUserId());
         Integer count = tSysParameterService.insertSelective(tSysParameter);
+        logger.info("新增系统参数配置","用户id:"+ShiroKit.getUserId()+",添加了参数"+tSysParameter);
         return count != 0 ? new ResultTo().setData(tSysParameter.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 

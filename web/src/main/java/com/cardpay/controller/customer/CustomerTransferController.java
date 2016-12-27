@@ -10,6 +10,7 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
@@ -169,6 +170,21 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         Example example = new Example(TCustomerTransfer.class);
         example.createCriteria().andEqualTo("id", customerId);
         return dataTablePage(example);
+    }
+
+    /**
+     * 按id查询客户移交记录
+     *
+     * @param customerId 客户Id
+     * @return 客户移交记录
+     */
+    @ResponseBody
+    @GetMapping("/transfer/{id}")
+    @SystemControllerLog(description = "按id查询移交记录")
+    @ApiOperation(value = "按id查询移交记录", notes = "按id查询移交记录 ", httpMethod = "GET")
+    public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
+        TCustomerTransfer tCustomerTransfer = customerTransferService.selectByPrimaryKey(customerId);
+        return new ResultTo().setData(tCustomerTransfer);
     }
 
 }

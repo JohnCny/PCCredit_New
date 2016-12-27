@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 菜单权限
+ * 菜单权限展示
  * @author yanwe
  */
 @ApiModel(value = "菜单权限")
@@ -20,7 +20,8 @@ public class MenuAuth {
      * 权限类型
      */
     @ApiModelProperty(value = "权限类型", required = true)
-    private String authType;
+    //为了适应前段插件显示修改为menuNameZh,实际为menuNameZh
+    private String menuNameZh;
 
     /**
      * 是否拥有权限
@@ -36,12 +37,12 @@ public class MenuAuth {
         this.authId = authId;
     }
 
-    public String getAuthType() {
-        return authType;
+    public String getMenuNameZh() {
+        return menuNameZh;
     }
 
-    public void setAuthType(String authType) {
-        this.authType = authType;
+    public void setMenuNameZh(String menuNameZh) {
+        this.menuNameZh = menuNameZh;
     }
 
     public boolean isHaveAuth() {
