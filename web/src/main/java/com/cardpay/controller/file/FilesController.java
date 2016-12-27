@@ -92,8 +92,8 @@ public class FilesController {
      */
     @GetMapping("/queryFile")
     @ApiOperation(value = "文件查询接口", notes = "查询dfs服务器中指定文件", httpMethod = "GET")
-    public ResultTo queryFile(@ApiParam(value = "组名", required = true) String groupName
-            , @ApiParam(value = "fastDfs中文件名称", required = true) String fileName) {
+    public ResultTo queryFile(@ApiParam(value = "组名", required = true) @RequestParam String groupName
+            , @ApiParam(value = "fastDfs中文件名称", required = true) @RequestParam String fileName) {
         FileInfo fileInfo = FileManager.queryFile(groupName, fileName);
         return new ResultTo().setData(fileInfo);
     }
