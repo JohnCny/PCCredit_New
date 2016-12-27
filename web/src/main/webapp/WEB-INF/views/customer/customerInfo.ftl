@@ -77,32 +77,14 @@
         <div class="tabContent" id="khwhjl" style="display:none;">
             <div class="report common">
                 <h5>维护记录</h5>
-                <table class="center">
+                <table class="center whTable">
                     <tr>
                         <th>选择</th>
                         <th>维护类型</th>
                         <th>维护时间</th>
                         <th>维护人</th>
                     </tr>
-                    <tr onclick="selectTR(this);$('#whxx').show()">
-                        <td><span class="hideInput"><input type="radio" name="radio0"><label class="radio"></label></span></td>
-                        <td>编辑基本信息</td>
-                        <td>2016-05-12</td>
-                        <td>admin</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="report common" style="display:none;" id="whxx">
-                <h5>维护信息</h5>
-                <table class="bxd">
-                    <tr>
-                        <td>维护类型：<span>编辑基本信息</span></td>
-                        <td>维护时间：<span>2016-05-12</span></td>
-                    </tr>
-                    <tr>
-                        <td>维护人：<span>admin</span></td>
-                        <td>维护纪要：<span>XXXXXXXXXXXXXX</span></td>
-                    </tr>
+
                 </table>
             </div>
         </div>
@@ -154,7 +136,7 @@
         <div class="tabContent" id="yjjl" style="display:none;">
             <div class="report common">
                 <h5>客户移交记录</h5>
-                <table class="center">
+                <table class="center transferd">
                     <tr>
                         <th>移交日期</th>
                         <th>原客户经理</th>
@@ -162,20 +144,7 @@
                         <th>移交原因</th>
                         <th>移交结果</th>
                     </tr>
-                    <tr>
-                        <td>XXXX</td>
-                        <td>XXXX</td>
-                        <td>XXXX</td>
-                        <td>XXXX</td>
-                        <td><span class="label label-success">成功</span></td>
-                    </tr>
-                    <tr>
-                        <td>XXXX</td>
-                        <td>XXXX</td>
-                        <td>XXXX</td>
-                        <td>XXXX</td>
-                        <td><span class="label label-important">失败</span></td>
-                    </tr>
+
                 </table>
             </div>
         </div>
@@ -198,6 +167,14 @@
             $(".tabContent").hide();
             $("#"+id).show();
         }
+        function selectTR(obj){//单选行
+            $(obj).parent().find("tr td").css("background","#fff");
+            $(obj).find("td").css("background","#dff0d8");//改变行背景
+            $(obj).parent().find("").removeAttr("checked")
+            $(obj).parent().find("label").attr("class","radio")
+            $(obj).find("input[type=radio]").attr("checked","checked")
+            $(obj).find("label").attr("class","radio radio_a")//radio
+        }
         $(function () {
             var href = location.href;
             console.log(href);
@@ -207,8 +184,63 @@
             console.log(lens);
             var Id = hrefs[lens - 1];
             console.log(Id);
+            var Url = "/customerMaintenance/maintenance/" + Id;
+            var Urls = "/customerTransfer/transfer/" + Id;
+            console.log(Url)
             $.ajax({
-                type
+                type:"get",
+                url:Url,
+                success:function (res) {
+
+                    console.log(res.data.length)
+                    var datas = res.data;
+                    console.log(datas);
+                    var html = '' , htmls = '';
+                    for(var i = 0; i <= datas.length-1;i++){
+                        console.log(i);
+                        html += '<tr onclick="selectTR(this);$(\'#whxx' + i +'\').show();$(\'#whxx' + i +'\').siblings(\'div.showz\').hide()" class="prevet">';
+                        html += '<td><span class="hideInput"><input type="radio" name="radio0"><label class="radio"></label></span></td>';
+                        html += '<td>'+datas[i].maintenanceType+'</td>';
+                        html += '<td>'+datas[i].operationTime +'</td>';
+                        html += '<td>'+datas[i].operationName+'</td>';
+                        html += '</tr>';
+                        console.log(html)
+                        $(".whTable").append(html);
+                        html="";
+
+
+                        htmls += ' <div class="report common showz" style="display:none;" id="whxx'+ i +'">';
+                        htmls += ' <h5>维护信息</h5>';
+                        htmls += ' <table class="bxd">';
+                        htmls += '<tr><td>维护类型：<span>'+datas[i].maintenanceType+'</span></td><td>维护时间：<span>'+datas[i].operationTime +'</span></td></tr>';
+                        htmls += '<tr><td>维护人：<span>'+datas[i].operationName+'</span></td><td>维护纪要：<span>'+datas[i].maintennaceSummary+'</span></td></tr>';
+                        htmls += '</table>';
+                        htmls += '</div>';
+                        $("#khwhjl").append(htmls);
+                        htmls = '';
+                    }
+                }
+            });
+            $.ajax({
+                type:'get',
+                url: Urls,
+                success:function (res) {
+                    var datas = res.data;
+                    console.log(datas.length);
+                    var html = "";
+                    for(var i = 0; i <= datas.length-1;i++){
+                        html += '<tr><td>'+ datas[i].transferTime+'</td><td></td><td>'+datas[i].originCustomerManager+'</td><td>'+datas[i].nowCustomerManager+'</td><td>'+datas[i].transferReason+'</td>';
+                        if(data[i].transferStatus == 0){
+                            html += '<td><span class="label label-important">未接收</span></td> </tr>'
+                        }else if(data[i].transferStatus == 1){
+                            html += '<td><span class="label label-success">成功</span></td></tr>';
+                        }else {
+                            html += '<td><span class="label label-important">失败</span></td></tr>';
+                        }
+                        $(".transferd").append(html);
+                        html ='';
+                    }
+                }
             })
         });
     </script>
