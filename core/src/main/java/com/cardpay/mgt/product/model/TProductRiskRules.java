@@ -3,6 +3,7 @@ package com.cardpay.mgt.product.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import java.math.BigDecimal;
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
  * 产品风险规则
  * @author chenkai
  */
+@Lazy
 @Table(name = "T_PRODUCT_RISK_RULES")
 @ApiModel(value="产品风险规则")
 public class TProductRiskRules extends GenericEntity<Integer> {

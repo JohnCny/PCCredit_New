@@ -5,6 +5,7 @@ import com.cardpay.basic.util.treeutil.annotation.TreeId;
 import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.Transient;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * 产品机构Po类
  * Created by chenkai on 2016/12/12.
  */
+@Lazy
 @ApiModel(value = "产品机构Po类")
 public class TProductOrganizationVo {
 
