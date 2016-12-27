@@ -12,94 +12,192 @@
 </#macro>
 <#macro content>
 
-    <h5>客户列表</h5>
-    <div class="search" style="width:95%">
-        <span>客户名称：<input type="text" class="short" name="cname" id="cname" ></span>
-        <span>客户证件号码：<input type="text" name="certificateNumber" id="certificateNumber"></span>
-        <input type="button" value="搜 索">
-    </div>
-
-    <div class="table-responsive" style="margin:50px auto; width:95%;">
-        <table id="example" class="table table-bordered" style="width: 100%" >
-            <thead>
-            <tr>
-                <th>姓名</th>
-                <th>性别</th>
-                <th>联系方式</th>
-                <th>证件号码</th>
-                <th>创建时间</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-        </table>
-    </div>
+    <form class="content">
+        <h1>查看客户信息</h1>
+        <h2>当前位置：客户管理 / 客户信息查询 / 客户1 / <span>查看客户信息</span></h2>
+        <ul class="myTab">
+            <li class="active" onclick="setTab2(this,'jbxx')">客户基本信息</li>
+            <li onclick="setTab2(this,'dkqk')">客户贷款情况</li>
+            <li onclick="setTab2(this,'khwhjl')">客户维护记录</li>
+            <li onclick="setTab2(this,'dhjkjl')">贷后监控记录</li>
+            <li onclick="setTab2(this,'csjl')">逾期/不良催收记录</li>
+            <li onclick="setTab2(this,'yjjl')">客户移交记录</li>
+        </ul>
+        <!--*******************************************客户基本信息*******************************************************-->
+        <div class="tabContent" id="jbxx">
+            <div class="report common">
+                <h5>基本信息</h5>
+                <table class="bxd">
+                    <tr>
+                        <td>客户名称：<span>客户1</span></td>
+                        <td>性别：<span>男</span></td>
+                    </tr>
+                    <tr>
+                        <td>证件类型：<span>身份证</span></td>
+                        <td>证件号码：<span>XXXXXXXXXXXXXX</span></td>
+                    </tr>
+                    <tr>
+                        <td>联系方式：<span>XXXXXXXXXXXXXX</span></td>
+                        <td>家庭住址：<span>XXXXXXXXXXXXXX</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">所属行业：<span>aa</span>、<span>bb</span>、<span>cc</span></td>
+                    </tr>
+                    <tr>
+                        <td>婚姻状况：<span>已婚</span></td>
+                        <td>文化程度：<span>本科</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">建档时间：<span>XXXXXXXXXXXXXX</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--*******************************************客户贷款情况*******************************************************-->
+        <div class="tabContent" id="dkqk" style="display:none;">
+            <div class="report common">
+                <h5>贷款情况</h5>
+                <table class="bxd">
+                    <tr>
+                        <td>产品：<span>产品1</span></td>
+                        <td>申请日期：<span>XXXXXXXXXXXXXX</span></td>
+                    </tr>
+                    <tr>
+                        <td>是否申请成功：
+                            <span class="label label-success" style="color:#fff;">是</span>
+                            <span class="label label-important" style="color:#fff;">否</span>
+                        </td>
+                        <td>额度：<span>XXXXXXXXXXXXXX</span></td>
+                    </tr>
+                    <tr>
+                        <td>利率：<span>XXXXXXXXXXXXXX</span></td>
+                        <td>放款日期：<span>XXXXXXXXXXXXXX</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">当前余额：<span>￥20000</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--*******************************************客户维护记录*******************************************************-->
+        <div class="tabContent" id="khwhjl" style="display:none;">
+            <div class="report common">
+                <h5>维护记录</h5>
+                <table class="center">
+                    <tr>
+                        <th>选择</th>
+                        <th>维护类型</th>
+                        <th>维护时间</th>
+                        <th>维护人</th>
+                    </tr>
+                    <tr onclick="selectTR(this);$('#whxx').show()">
+                        <td><span class="hideInput"><input type="radio" name="radio0"><label class="radio"></label></span></td>
+                        <td>编辑基本信息</td>
+                        <td>2016-05-12</td>
+                        <td>admin</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="report common" style="display:none;" id="whxx">
+                <h5>维护信息</h5>
+                <table class="bxd">
+                    <tr>
+                        <td>维护类型：<span>编辑基本信息</span></td>
+                        <td>维护时间：<span>2016-05-12</span></td>
+                    </tr>
+                    <tr>
+                        <td>维护人：<span>admin</span></td>
+                        <td>维护纪要：<span>XXXXXXXXXXXXXX</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--*******************************************贷后监控记录*******************************************************-->
+        <div class="tabContent" id="dhjkjl" style="display:none;">
+            <div class="report common">
+                <h5>贷后监控记录</h5>
+                <table class="center">
+                    <tr>
+                        <th>客户经理</th>
+                        <th>贷后监控方式</th>
+                        <th>贷后监控结果</th>
+                    </tr>
+                    <tr>
+                        <td>admin</td>
+                        <td>上门</td>
+                        <td>XXXX</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--*******************************************逾期/不良催收记录*******************************************************-->
+        <div class="tabContent" id="csjl" style="display:none;">
+            <div class="report common">
+                <h5>逾期/不良催收记录</h5>
+                <table class="center">
+                    <tr>
+                        <th>催收原因</th>
+                        <th>金额</th>
+                        <th>催收日期</th>
+                        <th>催收客户经理</th>
+                    </tr>
+                    <tr>
+                        <td>逾期</td>
+                        <td>1000</td>
+                        <td>XXXX</td>
+                        <td>XXXX</td>
+                    </tr>
+                    <tr>
+                        <td>不良</td>
+                        <td>1000</td>
+                        <td>XXXX</td>
+                        <td>XXXX</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--*******************************************客户移交记录*******************************************************-->
+        <div class="tabContent" id="yjjl" style="display:none;">
+            <div class="report common">
+                <h5>客户移交记录</h5>
+                <table class="center">
+                    <tr>
+                        <th>移交日期</th>
+                        <th>原客户经理</th>
+                        <th>移交后客户经理</th>
+                        <th>移交原因</th>
+                        <th>移交结果</th>
+                    </tr>
+                    <tr>
+                        <td>XXXX</td>
+                        <td>XXXX</td>
+                        <td>XXXX</td>
+                        <td>XXXX</td>
+                        <td><span class="label label-success">成功</span></td>
+                    </tr>
+                    <tr>
+                        <td>XXXX</td>
+                        <td>XXXX</td>
+                        <td>XXXX</td>
+                        <td>XXXX</td>
+                        <td><span class="label label-important">失败</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <p class="button">
+            <input type="button" value="返回"  onclick="iframe('kh_list.html')"/>
+        </p>
+    </form>
 
 </#macro>
 
 <#macro script>
-
+    <script src="../../../static/js/main.js"></script>
 </#macro>
 
 <#macro js>
 
-    <script>
-        var url  = {
-            "urlList":"/customerMaintenance/maintenanceList",
-            "urlNew" : "/customerBasic/new",
-            "urlDel" : "/customerBasic",
-            "urlEdit" : "/customerBasic"
-        }
-        var tableId = $("#example");
-        var searchObj = {
-            "cname":$("#cname").val(),
-            "tel":$("#tel").val(),
-            "certificateNumber":$("#certificateNumber").val(),
-            "createTime":$("#createTime").val()
-        };
-        var ajax ={
-            "type" : "GET",
-            "url" : url["urlList"],
-            "data" : function(d){
-                d.search = searchObj
-            }
-        };
-        var aoColumns = [{
-            "mData" : "cname",
-        },{
-            "mData" : "sex",
-            "sDefaultContent" : "",
-            "render" : function(data, type, full, meta) {
-                return	data?"男":"女";
-            }
-        },{
-            "mData" : "tel",
-        },{
-            "mData" : "certificateNumber",
-        },{
-            "mData" : "createTime",
-            "sDefaultContent" : "",
-            "render" : function(data, type, full, meta) {
-                //时间格式化
-                return  moment(data).format("YYYY-MM-DD");
-            }
-        },{
-            "mData" : "id",
-            "sDefaultContent" : "",
-            "render" : function(data, type, full, meta) {
-                return  '<a onclick="deleRow()" class="btn btn-danger deleteOne" href="javaScript:;" data-id='+data+'>删除</a><a onclick="deleRow()" class="btn btn-info editOne" href="" data-id='+data+'>编辑</a>';
-            }
-        }];
 
-        var options = {
-            "urlNew" : url['urlNew'],
-            "urlDel" : url['urlDel'],
-            "urlEdit" : url['urlEdit'],
-            "tableId" : tableId,
-            "ajax" : ajax,
-            "aoColumns" : aoColumns
-        }
-        myDataTable(options);
-
-    </script>
 
 </#macro>

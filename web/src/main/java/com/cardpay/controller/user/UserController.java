@@ -318,7 +318,7 @@ public class UserController extends BaseController<User> {
      * @param userName 用户名
      * @return 不存在返回null, 存在返回用户Id
      */
-    @RequestMapping(value = "/ann/resetPassword/{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/anon/resetPassword/{userName}", method = RequestMethod.GET)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据登录名查询用户", httpMethod = "GET", notes = "不存在返回null, 存在返回用户Id")
     @ResponseBody
@@ -337,7 +337,7 @@ public class UserController extends BaseController<User> {
      * @param address 用户Email或Phone
      * @return 成功或失败
      */
-    @PostMapping(value = "/ann/resetPassword/sendCode")
+    @PostMapping(value = "/anon/resetPassword/sendCode")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "发送验证码", httpMethod = "POST")
     @ResponseBody
@@ -355,7 +355,7 @@ public class UserController extends BaseController<User> {
      * @param code    验证码
      * @return 成功或失败
      */
-    @PostMapping(value = "/ann/resetPassword/checkedCode")
+    @PostMapping(value = "/anon/resetPassword/checkedCode")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "验证验证码", httpMethod = "POST")
     @ResponseBody
@@ -374,7 +374,7 @@ public class UserController extends BaseController<User> {
      * @param password    密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/ann/resetPassword/{checkedCode}", method = RequestMethod.POST)
+    @RequestMapping(value = "/anon/resetPassword/{checkedCode}", method = RequestMethod.POST)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "重置密码", httpMethod = "POST")
     @ResponseBody

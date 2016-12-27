@@ -9,7 +9,7 @@
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/main.css" rel="stylesheet">
     <style>
-        /*input[type=password]{
+        input[type=password]{
             display: inline-block;
             height: 20px;
             padding: 4px 6px;
@@ -21,7 +21,10 @@
             -webkit-border-radius: 4px;
             -moz-border-radius: 4px;
             border-radius: 4px;
-        }*/
+        }
+        .common{
+            background-color: #f7f7f7;
+        }
     </style>
 
 </head>
@@ -33,7 +36,7 @@
     <div class="report common">
         <h5>填写新密码</h5>
         <form id="Form">
-            <table>
+            <table style="margin: 0 auto">
                 <tr>
                     <td class="pull-right">原始密码<font class="red">*</font>：</td>
                     <td style="width:60%">

@@ -2,6 +2,7 @@ package com.cardpay.controller.system;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -27,6 +28,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class SysParameterController extends BaseController<TSysParameter> {
     @Autowired
     private TSysParameterService tSysParameterService;
+
+    @Autowired
+    private static LogTemplate logger;
 
     /**
      * 跳转系统参数配置主页
