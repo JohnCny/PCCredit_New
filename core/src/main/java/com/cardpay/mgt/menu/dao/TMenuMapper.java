@@ -42,12 +42,12 @@ public interface TMenuMapper extends BasicMapper<TMenu> {
     List<TMenuVo> selectMenuListByRoleAll(@Param("roleId") Integer roleId);
 
     /**
-     * 根据用户查询所有菜单包含权限
+     * 根据角色查询所有菜单包含权限
      *
-     * @param userId 用户id
+     * @param roleId 角色Id
      * @return 菜单列表包括权限
      */
-    List<TMenuAuth> selectMenuListAndAuthByUser(@Param("userId") Integer userId);
+    List<TMenuAuth> selectMenuListAndAuthByRole(@Param("roleId") Integer roleId);
 
     /**
      * 递归删除菜单

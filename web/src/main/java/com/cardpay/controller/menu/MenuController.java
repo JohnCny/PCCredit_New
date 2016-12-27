@@ -8,12 +8,16 @@ import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.service.UserRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -31,6 +35,12 @@ public class MenuController {
     @Autowired
     private TMenuService tMenuService;
 
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private UserRoleService userRoleService;
+
     /**
      * 根据角色查询菜单层级信息接口
      *
@@ -38,7 +48,7 @@ public class MenuController {
      * @return 菜单层级信息
      */
     @ResponseBody
-    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     @ApiOperation(value = "根据角色查询菜单层级信息接口", notes = "查询菜单层级信息",  httpMethod = "GET")
     @SystemControllerLog(description = "查询全部菜单数据")
     public ResultTo selectMenuList(HttpSession session){
@@ -55,10 +65,10 @@ public class MenuController {
      * @return 菜单层级和权限信息
      */
     @ResponseBody
-    @RequestMapping(value = "/allAuth",method = RequestMethod.GET)
+    @GetMapping("/allAuth")
     @ApiOperation(value = "查询菜单层级和权限信息接口", notes = "查询菜单层级和权限信息",  httpMethod = "GET")
-    public ResultTo selectMenuAndAuthList(){
-        List<TMenuAuthVo> tMenuAuthVos = tMenuService.selectMenuListAndAuth(ShiroKit.getUserId());
+    public ResultTo selectMenuAndAuthList(@ApiParam(value = "角色Id", required = true) @RequestParam("roleId") Integer roleId){
+        List<TMenuAuthVo> tMenuAuthVos = tMenuService.selectMenuListAndAuth(roleId);
         ResultTo resultTo = new ResultTo();
         resultTo.setData(tMenuAuthVos);
         return resultTo;
@@ -71,7 +81,7 @@ public class MenuController {
      * @return 添加菜单结果
      */
     @ResponseBody
-    @RequestMapping(value = "",method = RequestMethod.POST)
+    @PostMapping
     @ApiOperation(value = "添加菜单", notes = "添加菜单",  httpMethod = "POST")
     public ResultTo addMenu(@ApiParam(value = "菜单", required = true) @ModelAttribute TMenu menu){
         ResultTo resultTo = tMenuService.addMenu(menu, ShiroKit.getUserId());
@@ -85,7 +95,7 @@ public class MenuController {
      * @return 更新结果
      */
     @ResponseBody
-    @RequestMapping(value = "",method = RequestMethod.PUT)
+    @PutMapping
     @ApiOperation(value = "更新菜单", notes = "更新菜单",  httpMethod = "PUT")
     public ResultTo updateMenu(@ApiParam(value = "菜单", required = true) @ModelAttribute TMenu menu){
         ResultTo resultTo = tMenuService.updateMenu(menu, ShiroKit.getUserId());
@@ -99,7 +109,7 @@ public class MenuController {
      * @return 删除结果
      */
     @ResponseBody
-    @RequestMapping(value = "/recursionDelete",method = RequestMethod.DELETE)
+    @DeleteMapping("/recursionDelete")
     @ApiOperation(value = "删除指定菜单下所有子菜单接口", notes = "递归删除层级信息",  httpMethod = "DELETE")
     public ResultTo recursionDelete(@ApiParam(value = "菜单id", required = true) @RequestParam("menuId") Integer menuId){
         return tMenuService.recursionDelete(menuId,ShiroKit.getUserId());
@@ -113,7 +123,7 @@ public class MenuController {
      * @return 记录结果
      */
     @ResponseBody
-    @RequestMapping(value = "/checkedMenu",method = RequestMethod.GET)
+    @GetMapping("/checkedMenu")
     @ApiOperation(value = "记录选中菜单", notes = "记录选中菜单",  httpMethod = "GET")
     public ResultTo setCheckedMenu(HttpSession session,@ApiParam(value = "菜单id", required = true)
                                             @RequestParam("menuId") Integer menuId){
@@ -121,9 +131,35 @@ public class MenuController {
         return new ResultTo();
     }
 
-    @RequestMapping("/test")
+    /**
+     * 菜单管理
+     *
+     * @return 菜单管理页面
+     */
+    @GetMapping("/manage")
     @SystemControllerLog
-    public String test(){
-        return "demo";
+    public ModelAndView manage(){
+        ModelAndView modelAndView = new ModelAndView();
+        UserRole userRole = new UserRole();
+        userRole.setUserId(ShiroKit.getUserId());
+        UserRole currentUserRole = userRoleService.selectOne(userRole);
+        modelAndView.addObject("currentUserRole",currentUserRole.getRoleId());
+        modelAndView.addObject("roleAll", roleService.selectAll());
+        modelAndView.setViewName("/system/menuManage");
+        return modelAndView;
+    }
+
+    /**
+     * 刷新菜单缓存
+     *
+     * @return 刷新菜单缓存
+     */
+    @ResponseBody
+    @GetMapping("/refresh")
+    @SystemControllerLog
+    public ResultTo refresh(){
+        ResultTo resultTo = new ResultTo();
+        tMenuService.updateMenuCache();
+        return resultTo;
     }
 }
