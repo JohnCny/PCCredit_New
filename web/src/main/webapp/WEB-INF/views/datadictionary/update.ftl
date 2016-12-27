@@ -120,7 +120,7 @@
                     Obj[arr[i]]=$("#"+arr[i]).val();
                 }
                 $.ajax({
-                    type:"post",
+                    type:"put",
                     url:url,
                     data:Obj,
                     success: function(res){

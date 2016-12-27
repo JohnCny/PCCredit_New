@@ -1,5 +1,5 @@
 <#include "layout/base.html"/>
-<#assign title = "客户"/>
+<#assign title = "系统管理"/>
 <#macro style>
     <style>
         .delete{
