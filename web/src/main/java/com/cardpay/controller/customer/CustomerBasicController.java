@@ -194,4 +194,14 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
+    /**
+     * 查看客户信息
+     *
+     * @return 查看客户信息
+     */
+    @GetMapping("/customerInfo")
+    @ApiOperation(value = "查看客户信息", notes = "查看客户信息", httpMethod = "GET")
+    public ModelAndView index() {
+        return new ModelAndView("/customer/customerInfo");
+    }
 }
