@@ -82,7 +82,6 @@
 </script>
 <script>
     $(function () {
-        var url = {}
         var tableId = $("#userList");
         var ajax = {
             "type": "GET",
@@ -120,7 +119,7 @@
             "sDefaultContent": "",
             "render": function (data, type, full, meta) {
                 var html = "";
-                html += '<a class="btn btn-primary" href="" data-id=' + data + '>编辑</a>'
+                html += '<a class="btn btn-primary" href="/user/'+ data +'/updateUser" data-id=' + data + '>编辑</a>'
                 if (!full.status) {
                     html += '<button  class="btn btn-success activeBtn" data-id=' + data + ' data-status=' + full.status + '>点击锁定</button>';
                 } else {
@@ -133,6 +132,7 @@
         }];
 
         var options = {
+            "urlNew":"/user/addUser",
             "ajax": ajax,
             "tableId": tableId,
             "aoColumns": aoColumns
