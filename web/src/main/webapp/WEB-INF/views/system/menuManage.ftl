@@ -101,15 +101,26 @@
 
     function beforeDrop(treeId, treeNodes, targetNode, moveType) {
         console.log("Drop")
-        console.log(treeNodes+":"+targetNode.menuNameZh)
-//        $.ajax({
-//            type: "POST",
-//            url: "some.php",
-//            data: "name=John&location=Boston",
-//            success: function(msg){
-//                alert( "Data Saved: " + msg );
-//            }
-//        });
+        var arr = [];
+        console.log(treeNodes);
+        for(var i=0;i<treeNodes.length;i++){
+            var dataJson = {
+                id:treeNodes[i].id,
+                menuParentId:targetNode.id
+            };
+            arr[i] = (dataJson);
+        }
+
+        console.log(arr.join(","))
+
+        $.ajax({
+            type:"put",
+            url:"/menu",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(arr),
+            success: function(msg){
+            }
+        });
     }
 
 

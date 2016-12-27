@@ -181,4 +181,5 @@
             AND T_ROLE. ID = #{roleId}
         ) USER_MENU ON ALL_MENU.AUTH_ID = USER_MENU.IS_HAVE
     </select>
+
 </mapper>
