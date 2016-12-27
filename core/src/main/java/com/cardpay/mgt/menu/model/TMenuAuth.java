@@ -13,79 +13,66 @@ import java.util.List;
  * 菜单Vo类
  * @author yanwe 2016年11月23日17:11:56
  */
-@Table(name = "T_MENU")
 @ApiModel(value = "菜单")
 public class TMenuAuth extends GenericEntity<Integer>{
 
     /**
      * 菜单id
      */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MENU_SEQ.nextval from dual")
     @ApiModelProperty(value = "菜单id", required = true)
     private Integer id;
 
     /**
      * 菜单中文名称
      */
-    @Column(name = "MENU_NAME_ZH")
     @ApiModelProperty(value = "菜单名称", required = true)
     private String menuNameZh;
 
     /**
      * 菜单名称
      */
-    @Column(name = "MENU_NAME")
     @ApiModelProperty(value = "菜单中文名称", required = true)
     private String menuName;
 
     /**
      * 父菜单id
      */
-    @Column(name = "MENU_PARENT_ID")
     @ApiModelProperty(value = "父菜单id", required = true)
     private Integer menuParentId;
 
     /**
      * 菜单图片url
      */
-    @Column(name = "MENU_PICTURE")
     @ApiModelProperty(value = "菜单图片url", required = true)
     private String menuPicture;
 
     /**
      * 菜单链接url
      */
-    @Column(name = "MENU_URL")
     @ApiModelProperty(value = "菜单链接url", required = true)
     private String menuUrl;
 
     /**
      * 菜单功能描述
      */
-    @Column(name = "MENU_DESCRIPTION")
     @ApiModelProperty(value = "菜单功能描述", required = true)
     private String menuDescription;
 
     /**
      * 统一父菜单下的菜单排列次序
      */
-    @Column(name = "MENU_ORDER")
     @ApiModelProperty(value = "统一父菜单下的菜单排列次序", required = true)
     private Integer menuOrder;
 
     /**
      * 创建用户id
      */
-    @Column(name = "CREATE_BY")
     @ApiModelProperty(value = "创建用户id", required = true)
     private Integer createBy;
 
     /**
      * 创建时间
      */
-    @Column(name = "CREATE_TIME")
     @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
@@ -96,10 +83,16 @@ public class TMenuAuth extends GenericEntity<Integer>{
     private List<TMenuVo> menuLists;
 
     /**
-     * 权限
+     * 权限名称
      */
-    @ApiModelProperty(value = "权限", required = true)
+    @ApiModelProperty(value = "权限名称", required = true)
     private String auth;
+
+    /**
+     * 权限中文名称
+     */
+    @ApiModelProperty(value = "权限中文名称", required = true)
+    private String authZh;
 
     /**
      * 权限id
@@ -112,6 +105,24 @@ public class TMenuAuth extends GenericEntity<Integer>{
      */
     @ApiModelProperty(value = "是否拥有这个权限", required = true)
     private Integer isHaveAuth;
+
+    /**
+     * 获取权限中文名称
+     *
+     * @return 权限中文名称
+     */
+    public String getAuthZh() {
+        return authZh;
+    }
+
+    /**
+     * 设置权限中文名称
+     *
+     * @param authZh 权限中文名称
+     */
+    public void setAuthZh(String authZh) {
+        this.authZh = authZh;
+    }
 
     /**
      * 获取是否拥有这个权限

@@ -24,9 +24,6 @@ public class TMenuAuthVo extends GenericEntity<Integer> {
     /**
      * 菜单id
      */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select MENU_SEQ.nextval from dual")
     @ApiModelProperty(value = "菜单id", required = true)
     @TreeId
     private Integer id;
@@ -34,21 +31,18 @@ public class TMenuAuthVo extends GenericEntity<Integer> {
     /**
      * 菜单名称
      */
-    @Column(name = "MENU_NAME_ZH")
     @ApiModelProperty(value = "菜单id", required = true)
     private String menuNameZh;
 
     /**
      * 菜单中文名称
      */
-    @Column(name = "MENU_NAME")
     @ApiModelProperty(value = "菜单名称", required = true)
     private String menuName;
 
     /**
      * 父菜单id
      */
-    @Column(name = "MENU_PARENT_ID")
     @ApiModelProperty(value = "父菜单id", required = true)
     @TreeParentId
     private Integer menuParentId;
@@ -56,42 +50,36 @@ public class TMenuAuthVo extends GenericEntity<Integer> {
     /**
      * 菜单图片url
      */
-    @Column(name = "MENU_PICTURE")
     @ApiModelProperty(value = "菜单图片url", required = true)
     private String menuPicture;
 
     /**
      * 菜单链接url
      */
-    @Column(name = "MENU_URL")
     @ApiModelProperty(value = "菜单链接url", required = true)
     private String menuUrl;
 
     /**
      * 菜单功能描述
      */
-    @Column(name = "MENU_DESCRIPTION")
     @ApiModelProperty(value = "菜单功能描述", required = true)
     private String menuDescription;
 
     /**
      * 统一父菜单下的菜单排列次序
      */
-    @Column(name = "MENU_ORDER")
     @ApiModelProperty(value = "统一父菜单下的菜单排列次序", required = true)
     private Integer menuOrder;
 
     /**
      * 创建用户id
      */
-    @Column(name = "CREATE_BY")
     @ApiModelProperty(value = "创建用户id", required = true)
     private Integer createBy;
 
     /**
      * 创建时间
      */
-    @Column(name = "CREATE_TIME")
     @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
@@ -107,6 +95,54 @@ public class TMenuAuthVo extends GenericEntity<Integer> {
      */
     @ApiModelProperty(value = "权限列表", required = true)
     private List<MenuAuth> authList;
+
+    /**
+     * 查看权限
+     */
+    @ApiModelProperty(value = "查看权限", required = true)
+    private boolean seeAuth;
+
+    /**
+     * 权限Id
+     */
+    @ApiModelProperty(value = "权限Id", required = true)
+    private Integer seeAuthId;
+
+    /**
+     * 获取权限Id
+     *
+     * @return 权限id
+     */
+    public Integer getSeeAuthId() {
+        return seeAuthId;
+    }
+
+    /**
+     * 设置权限id
+     *
+     * @param seeAuthId 权限id
+     */
+    public void setSeeAuthId(Integer seeAuthId) {
+        this.seeAuthId = seeAuthId;
+    }
+
+    /**
+     * 获取查看权限
+     *
+     * @return 查看权限
+     */
+    public boolean isSeeAuth() {
+        return seeAuth;
+    }
+
+    /**
+     * 设置查看权限
+     *
+     * @param seeAuth 是否有查看权限
+     */
+    public void setSeeAuth(boolean seeAuth) {
+        this.seeAuth = seeAuth;
+    }
 
     /**
      * 获取权限列表

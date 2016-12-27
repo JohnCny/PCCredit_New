@@ -204,6 +204,9 @@
             $(".tabContent").hide();
             $("#"+id).show();
         }
+        $(function () {
+            $.aja
+        });
     </script>
 
 
