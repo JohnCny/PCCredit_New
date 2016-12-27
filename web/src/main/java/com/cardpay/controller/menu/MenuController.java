@@ -91,14 +91,18 @@ public class MenuController {
     /**
      * 更新菜单
      *
-     * @param menu 菜单信息
+     * @param menus 菜单信息
      * @return 更新结果
      */
     @ResponseBody
     @PutMapping
     @ApiOperation(value = "更新菜单", notes = "更新菜单",  httpMethod = "PUT")
-    public ResultTo updateMenu(@ApiParam(value = "菜单", required = true) @ModelAttribute TMenu menu){
-        ResultTo resultTo = tMenuService.updateMenu(menu, ShiroKit.getUserId());
+    public ResultTo updateMenu(@ApiParam(value = "菜单", required = true) @RequestBody String menus){
+        List<TMenu> tMenus = JSONArray.parseArray(menus, TMenu.class);
+        for (TMenu menu : tMenus) {
+            tMenuService.updateMenu(menu, ShiroKit.getUserId());
+        }
+        ResultTo resultTo = new ResultTo();
         return resultTo;
     }
 

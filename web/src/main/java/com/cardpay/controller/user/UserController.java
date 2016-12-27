@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ErrorMessageUtil;
+import com.cardpay.basic.util.IDcardUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
@@ -391,18 +392,22 @@ public class UserController extends BaseController<User> {
      * 用户身份证验重
      *
      * @param idCard
-     * @return 存在 ture
+     * @return 存在 true
      */
     @PostMapping("/isIdCard")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户身份证号码验重", httpMethod = "POST")
     @ResponseBody
     public ResultTo isIdCard(@RequestParam("idCard") String idCard) {
+        LogTemplate.debug(this.getClass(), "idCard", idCard);
         User user = new User();
         user.setIdCardNumber(idCard);
-        if (userService.selectOne(user) != null) {
-            return new ResultTo().setData(Boolean.TRUE);
+        if (!IDcardUtil.verify(idCard)) {
+            return new ResultTo(ResultEnum.ID_CARD_ERROR);
         }
-        return new ResultTo().setData(Boolean.FALSE);
+        if (userService.selectOne(user) != null) {
+            return new ResultTo(ResultEnum.USER_EXIST);
+        }
+        return new ResultTo();
     }
 }
