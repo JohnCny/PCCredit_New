@@ -61,9 +61,31 @@
         #formUl li{
             list-style: none;
         }
-        @media screen and (max-width: 1900px) {
+        #formUl{
+            margin-top: 50px;
+        }
+        .inpttext{
+            border:1px solid rgba(153,153,153,0.5);
+            padding: 5px;
+            width: 120px;
+            margin-left: 180px;
+        }
+        @media screen and (max-width: 920px) {
             .line_flow li{
                 list-style: none;
+                margin-top: 20px;
+                float: none;
+            }
+            .inpttext{
+                margin-left: 0px;
+            }
+        }
+        .changepass{
+            margin-left: 100px;
+        }
+        @media screen and (max-width: 635px){
+            .changepass{
+                margin-left: 0px;
             }
         }
     </style>
@@ -111,7 +133,7 @@
         <div class="usernameput usernameputtwo" style="display: none">
             <p>为了您的账号安全，请完成身份验证</p>
             <p style="font-size: 16px;margin: 30px 0 0 0;color: rgb(51,51,51);">手机号码或绑定邮箱号：<input type="text" placeholder="请输入绑定的邮箱或手机号" class="address"></p>
-            <input type="text" class="inpttext" style=" border:1px solid rgba(153,153,153,0.5);padding: 5px;width: 120px;margin-left: 180px">
+            <input type="text" class="inpttext" style="">
             <input type="button" class="get" value="免费获取验证码" style="height: 35px;width:110px; background-color: rgb(17,148,229);display: inline-block;line-height: 35px;border-radius: 5px;text-align: center;color: #fff">
             <p style="font-size: 14px;margin-top: 30px;color: rgb(153,153,153);">邮箱不可用?<a href="" style="text-decoration: none">请使用手机验证</a></p>
             <a href="javascript:void(0);" class="button_a"><span class="btn btn-info button_next next_p" style="">下一步</span></a>
@@ -128,7 +150,7 @@
                     <input type="text" name="amStartTime" id="startTime" class="form-control" value="" placeholder="请再次输入新密码"/>
                 </li>
              </ul>
-            <a href="javascript:void(0)" class="button_a"><span class="btn btn-info button_next changepass" style="margin-left: 100px">完成</span></a>
+            <a href="javascript:void(0)" class="button_a"><span class="btn btn-info button_next changepass">完成</span></a>
         </div>
 
     </div>
@@ -148,7 +170,7 @@
                 console.log(userName);
                 if(userName.length>0){
                     $.ajax({
-                        url:'/user/resetPassword/'+userName,
+                        url:'/user/anon/resetPassword/'+userName,
                         type:"get",
                         success:function (res) {
                             var userId = res['data'];
@@ -170,7 +192,7 @@
                                                 $(".errorMsg").html('');
                                                 $.ajax({
                                                     type : "POST",
-                                                    url : "/user/resetPassword/sendCode",
+                                                    url : "/user/anon/resetPassword/sendCode",
                                                     data : {"address":address,"userId":userId},
                                                     success:function (res) {
                                                         if(res['code'] != 200){
@@ -184,7 +206,7 @@
                                                                     var code = $(".inpttext").val();
                                                                     $.ajax({
                                                                         type : "POST",
-                                                                        url: "/user/resetPassword/checkedCode",
+                                                                        url: "/user/anon/resetPassword/checkedCode",
                                                                         data : {"code":code,"address":address},
                                                                         success:function (res) {
                                                                             if(res.code != 200){
@@ -207,7 +229,7 @@
                                                                                     }else {
                                                                                         $.ajax({
                                                                                             type:"post",
-                                                                                            url:"/user/ann/resetPassword/"+ datas +"",
+                                                                                            url:"/user/anon/resetPassword/"+ datas +"",
                                                                                             data:{"userId":userId,"password":password1},
                                                                                             success:function (res) {
                                                                                                 if(res.code == 200){
