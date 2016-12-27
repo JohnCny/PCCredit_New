@@ -185,7 +185,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
         boolean canDelete = isHaveAuth(authorities, UPDATE);
         ResultTo resultTo = new ResultTo();
         if (canDelete) {
-            tMenuMapper.updateByPrimaryKey(menu);
+            tMenuMapper.updateByPrimaryKeySelective(menu);
             return resultTo;
         } else {
             resultTo.setCode(ResultEnum.NO_PERMITTION.getValue());

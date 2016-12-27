@@ -130,7 +130,7 @@ public class LogonController extends BaseController<User> {
         User user = ShiroKit.getUser();
         LoginLog loginLog = LoginLog.LoginLogBuilder.get().withLoginAccount(user.getUsername())
                 .withLoginOperation(0).withLoginTime(new Date()).withLoginIp(RequestUtil.getRemoteHost(request))
-                .withLoginResult(LogEnum.LOGOUT.getValue()).build();
+                .withLoginResult(LogEnum.SUCCESS.getValue()).build();
         loginLogService.insertSelective(loginLog);
         ShiroKit.getSession().removeAttribute(SESSION_KEY);
         ShiroKit.getSubject().logout();
