@@ -48,7 +48,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
     @ApiOperation(value = "前往添加数据字典页面接口", notes = "前往添加数据字典页面",  httpMethod = "GET")
     public ModelAndView toAdd(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");
+        modelAndView.setViewName("/dataDictionary/add");
         return modelAndView;
     }
 
@@ -63,7 +63,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
     public ModelAndView add(@ApiParam("数据字典信息") @ModelAttribute TDataDictionary dataDictionary){
         dataDictionaryService.insert(dataDictionary);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");
+        modelAndView.setViewName("/dataDictionary/index");
         return modelAndView;
     }
 
@@ -95,7 +95,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
         TDataDictionary dataDictionary = dataDictionaryService.selectByPrimaryKey(dataId);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("dataDictionary",dataDictionary);
-        modelAndView.setViewName("");
+        modelAndView.setViewName("/dataDictionary/update");
         return modelAndView;
     }
 
@@ -110,7 +110,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
     public ModelAndView update(@ModelAttribute TDataDictionary dataDictionary){
         dataDictionaryService.updateByPrimaryKey(dataDictionary);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");
+        modelAndView.setViewName("/dataDictionary/index");
         return modelAndView;
     }
 }

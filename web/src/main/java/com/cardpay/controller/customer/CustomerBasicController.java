@@ -13,6 +13,7 @@ import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -181,16 +182,19 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "批量删除用户", notes = "改变用户状态将用户设为不可用", httpMethod = "DELETE")
     public ResultTo deleteCustomer(@ApiParam("客户id(,分割)") @PathVariable("id") String customerIds) {
         List<Integer> ids = new ArrayList<>();
-        String[] split = customerIds.split(",");
+        String[] split = StringUtils.split(customerIds);
         for (String id : split) {
             int customerId = Integer.parseInt(id);
             ids.add(customerId);
         }
 
-        Map<String, Object> map = new HashMap();
-        map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
-        map.put("customerIds", ids);
-        map.put("managerId", ShiroKit.getUserId());
+        Map<String, Object> map = new HashMap<String, Object> (){
+            {
+                put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
+                put("customerIds", ids);
+                put("managerId", ShiroKit.getUserId());
+            }
+        };
         int count = customerBasicService.updateStatus(map);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
@@ -201,7 +205,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 客户信息页面
      */
     @GetMapping("/customerInfo/{id}")
-    @ApiOperation(value = "查看客户信息", notes = "查看客户信息", httpMethod = "GET")
+    @ApiOperation(value = "查看客户信息", notes = "查看客户信息, 返回参数: tCustomerBasic", httpMethod = "GET")
     public ModelAndView index(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
         ModelAndView modelAndView = new ModelAndView("/customer/customerInfo");
         TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);

@@ -140,7 +140,9 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @SystemControllerLog(description = "按id查询维护信息")
     @ApiOperation(value = "按id查询维护信息", notes = "按id查询维护信息 ", httpMethod = "GET")
     public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
-        TCustomerMaintenance tCustomerMaintenance = customerMaintenanceService.selectByPrimaryKey(customerId);
-        return new ResultTo().setData(tCustomerMaintenance);
+        TCustomerMaintenance manager = new TCustomerMaintenance();
+        manager.setId(customerId);
+        List<TCustomerMaintenance> customerMaintenance = customerMaintenanceService.select(manager);
+        return new ResultTo().setData(customerMaintenance);
     }
 }

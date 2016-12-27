@@ -3,6 +3,7 @@ package com.cardpay.core.webSocket;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
@@ -42,8 +43,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
         users.add(session);
         Integer userId = null;
         try {
-            User user= (User)ShiroKit.getPrincipal();
-            userId = user.getId();
+            userId = ShiroKit.getUserId();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     public void handleMessage(WebSocketSession session, WebSocketMessage message)
             throws Exception {
         session.sendMessage(new TextMessage(message.getPayload().toString()));
-        logger.info(SystemWebSocketHandler.class, "", message.getPayload().toString());
+        logger.info(SystemWebSocketHandler.class, "接受客户端信息", message.getPayload().toString());
     }
 
     /**
