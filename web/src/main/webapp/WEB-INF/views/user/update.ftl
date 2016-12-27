@@ -43,7 +43,10 @@
                 <table>
                     <tr>
                         <td class="pull-right">姓名：</td>
-                        <td><input type="text" name="userCname" value="${user.userCname}"></td>
+                        <td>
+                            <input type="text" name="userCname" value="${user.userCname}">
+                            <input type="hidden" id="id" name="id" value="${user.id}">
+                        </td>
                         <td class="pull-right">登录名：</td>
                         <td><input type="text" name="username" value="${user.username}"></td>
                     </tr>
@@ -155,6 +158,10 @@
                 data: {
                     simpleData: {
                         enable: true,
+                        pIdKey: "orgParentId"
+                    },
+                    key: {
+                        name: "orgName",
                     }
                 },
                 callback: {
@@ -163,7 +170,7 @@
             };
             baseTree(urlMy, setting);
             function onClick(event, treeId, treeNode, clickFlag) {
-                $("#orgId").attr("value", treeNode.name);
+                $("#orgId").attr("value", treeNode.orgName);
                 $("#orgHidden").attr("name", "orgid");
                 var orgIds = $("#orgHidden").data("id") + "," + treeNode.id
                 $("#orgHidden").attr("value", orgIds);
