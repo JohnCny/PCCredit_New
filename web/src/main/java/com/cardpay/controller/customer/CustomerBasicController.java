@@ -153,6 +153,21 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     }
 
     /**
+     * 按id查询客户信息
+     *
+     * @param customerId 客户Id
+     * @return 客户基本信息
+     */
+    @ResponseBody
+    @GetMapping("/basic/{id}")
+    @SystemControllerLog(description = "按id查询客户信息")
+    @ApiOperation(value = "按id查询客户信息", notes = "按id查询客户信息 ", httpMethod = "GET")
+    public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
+        TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
+        return new ResultTo().setData(tCustomerBasic);
+    }
+
+    /**
      * 查询客户编辑页面下拉框信息
      *
      * @return 客户编辑页面下拉框信息

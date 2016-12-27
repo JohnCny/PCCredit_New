@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8">
-    <title>OA管理系统</title>
+    <title>修改密码</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
@@ -11,9 +11,9 @@
     <style>
         input[type=password]{
             display: inline-block;
-            height: 20px;
+            height: 35px;
             padding: 4px 6px;
-            margin-bottom: 10px;
+            margin-bottom: 0px;
             font-size: 14px;
             line-height: 20px;
             color: #555555;
@@ -57,7 +57,7 @@
                     </td>
                 </tr>
             </table>
-            <p class="button" style="text-align:center;">
+            <p class="button" style="text-align:center; margin-top: 30px">
                 <input id="change_button" type="button" value="提 交" style="margin-right:10px;"/>
                 <input type="reset" value="重 置"/>
             </p>

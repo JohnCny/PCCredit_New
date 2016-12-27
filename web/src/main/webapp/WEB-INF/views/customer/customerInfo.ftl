@@ -193,11 +193,18 @@
 </#macro>
 
 <#macro script>
-    <script src="../../../static/js/main.js"></script>
+    <!--<script src="../../../static/js/main.js"></script>-->
 </#macro>
 
 <#macro js>
-
+    <script>
+        function setTab2(obj,id){//切换tab页
+            $(obj).parent().find("li").attr("class","")
+            $(obj).attr("class","active")
+            $(".tabContent").hide();
+            $("#"+id).show();
+        }
+    </script>
 
 
 </#macro>
