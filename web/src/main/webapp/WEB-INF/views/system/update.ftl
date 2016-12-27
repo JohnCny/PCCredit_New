@@ -64,24 +64,20 @@
                 编辑
             </div>
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <form action="">
-                <!--<input type="hidden" id="id" name="id" value="${tSysParameter.id}"/>-->
-                <!--<input type="hidden" id="createBy" name="createBy" value="${tSysParameter.createBy}"/>-->
-                <!--<input type="hidden" id="createTime" name="createTime" value="${tSysParameter.createTime}"/>-->
-                <!--<input type="hidden" id="modifyBy" name="modifyBy" value="${tSysParameter.modifyBy}"/>-->
-                <!--<input type="hidden" id="modifyTime" name="modifyTime" value="${tSysParameter.modifyTime}"/>-->
+            <form action="" id="contenttable">
+                <input type="hidden" id="id" name="id" value="${tSysParameter.id}"/>
                 <div class="widclas">
                     <label for="parameterName">参数名称：</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input  id="parameterName" type="text" class="form-control" name="" value="${tSysParameter.parameterName}" placeholder="请输入至少2-10位汉字">
+                        <input  id="parameterName" type="text" class="form-control" name="parameterName" value="${tSysParameter.parameterName}" placeholder="请输入至少2-10位汉字">
                     </div>
                 </div>
                 <div class="widclas">
                     <label for="parameterValue">参数值：</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input id="parameterValue" type="text" class="form-control" name="" value="${tSysParameter.parameterValue}" placeholder="请输入正确的手机号码">
+                        <input id="parameterValue" type="text" class="form-control" name="parameterValue" value="${tSysParameter.parameterValue}" placeholder="请输入正确的手机号码">
                         <div class="message">${parameterValueError}</div>
                     </div>
                 </div>
@@ -89,7 +85,7 @@
                     <label for="parameterNameZn">参数中文名：</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input   id="parameterNameZn" type="text" class="form-control" name="" value="${tSysParameter.parameterNameZn}" placeholder="请输入有效地址">
+                        <input   id="parameterNameZn" type="text" class="form-control" name="parameterNameZn" value="${tSysParameter.parameterNameZn}" placeholder="请输入有效地址">
                         <div class="message">${parameterNameZnError}</div>
                     </div>
                 </div>
@@ -97,7 +93,7 @@
                     <label for="parameterDescription">参数描述：</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input   id="parameterDescription" type="text" class="form-control" name="" value="${tSysParameter.parameterDescription}" placeholder="请输入有效地址">
+                        <input   id="parameterDescription" type="text" class="form-control" name="parameterDescription" value="${tSysParameter.parameterDescription}" placeholder="请输入有效地址">
                         <div class="message">${parameterDescriptionError}</div>
                     </div>
                 </div>
@@ -113,34 +109,28 @@
 
 </#macro>
 <#macro script>
-    <!--<script>-->
-        <!--$(document).ready(function(){-->
-            <!--var url = "/system";-->
-            <!--var Obj = {};-->
-            <!--var arr = ["id","parameterName","parameterValue","parameterNameZn","parameterDescription","createBy","createTime","modifyBy","modifyTime"];-->
+<script>
+    $(function () {
+        var url = "/system";
+        $("#btn_submit").click(function (e) {
+            e.preventDefault();
+            var Obj = $("#contenttable").serializeArray();
+            console.log(Obj);
+            $.ajax({
+                type:"put",
+                url:url,
+                data:Obj,
+                success: function(res){
+                    if(res.code == 200){
+                        location.href="/system/index";
+                    }
+                }
+            });
 
-            <!--$("#btn_submit").click(function (e) {-->
-                <!--e.preventDefault();-->
-                <!--for(var i = 0; i < arr.length; i++){-->
-                    <!--Obj[arr[i]]=$("#"+arr[i]).val();-->
-                <!--}-->
-                <!--$.ajax({-->
-                    <!--type:"put",-->
-                    <!--url:url,-->
-                    <!--data:Obj,-->
-                    <!--success: function(res){-->
-                        <!--if(res.code == 200){-->
-                            <!--location.href="/system/index";-->
-                        <!--}-->
-                    <!--},-->
-                    <!--error:function () {-->
+        })
+    })
+</script>
 
-                    <!--}-->
-                <!--});-->
-            <!--});-->
-
-        <!--});-->
-    <!--</script>-->
 
 </#macro>
 <#macro js>

@@ -64,12 +64,13 @@
                 编辑
             </div>
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <form action="">
+            <form action="" id="contenttable">
+                <input type="hidden" id="dataId" name="dataId" value="${dataDictionary.dataId}"/>
                 <div class="widclas">
                     <label for="dataType">字典类别：</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input  id="dataType" type="text" class="form-control" name="" value="${dataDictionary.dataType}" placeholder="请输入至少2-10位汉字">
+                        <input  id="dataType" type="text" class="form-control" name="dataType" value="${dataDictionary.dataType}" placeholder="请输入至少2-10位汉字">
                     </div>
                 </div>
 
@@ -77,7 +78,7 @@
                     <label for="dataCode">字典代码：</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input id="dataCode" type="text" class="form-control" name="" value="${dataDictionary.dataCode}" placeholder="请输入正确的手机号码">
+                        <input id="dataCode" type="text" class="form-control" name="dataCode" value="${dataDictionary.dataCode}" placeholder="请输入正确的手机号码">
                         <div class="message">${telError}</div>
                     </div>
                 </div>
@@ -85,7 +86,7 @@
                     <label for="dataName">字典名称：</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input   id="dataName" type="text" class="form-control" name="" value="${dataDictionary.dataName}" placeholder="请输入有效地址">
+                        <input   id="dataName" type="text" class="form-control" name="dataName" value="${dataDictionary.dataName}" placeholder="请输入有效地址">
                         <div class="message">${homeAddressError}</div>
                     </div>
                 </div>
@@ -93,7 +94,7 @@
                     <label for="bankCode">银行代码：</label>
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input   id="bankCode" type="text" class="form-control" name="" value="${dataDictionary.bankCode}" placeholder="请输入有效地址">
+                        <input   id="bankCode" type="text" class="form-control" name="bankCode" value="${dataDictionary.bankCode}" placeholder="请输入有效地址">
                         <div class="message">${homeAddressError}</div>
                     </div>
                 </div>
@@ -108,33 +109,27 @@
 
 </#macro>
 <#macro script>
-    <script>
-        $(document).ready(function(){
-            var url = "/dataDictionary";
-            var Obj = {};
-            var arr = ["dataType","dataCode","dataName","bankCode"];
-
-            $("#btn_submit").click(function (e) {
-                e.preventDefault();
-                for(var i = 0; i < arr.length; i++){
-                    Obj[arr[i]]=$("#"+arr[i]).val();
-                }
-                $.ajax({
-                    type:"put",
-                    url:url,
-                    data:Obj,
-                    success: function(res){
-                        if(res.code == 200){
-                            location.href="/system/index";
-                        }
-                    },
-                    error:function () {
-
+<script>
+    $(function () {
+        var url = "/dataDictionary";
+        $("#btn_submit").click(function (e) {
+            e.preventDefault();
+            var Obj = $("#contenttable").serializeArray();
+            console.log(Obj);
+            $.ajax({
+                type:"put",
+                url:url,
+                data:Obj,
+                success: function(res){
+                    if(res.code == 200){
+                        location.href="/dataDictionary/index";
                     }
-                });
+                }
             });
 
-        });
+        })
+    })
+</script>
     </script>
 
 </#macro>
