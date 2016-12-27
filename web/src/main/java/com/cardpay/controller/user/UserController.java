@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ErrorMessageUtil;
+import com.cardpay.basic.util.IDcardUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
@@ -53,10 +54,6 @@ public class UserController extends BaseController<User> {
     private static final String UPDATE_PASSWORD_PAGE = "/user/changePassword";
 
     private static final String RESET_PASSWORD_PAGE = "/user/forget";
-
-    private static final String RESET_PASSWORD_SEND = "/user/forgetSend";
-
-    private static final String RESET_PASSWORD_CHECKED = "/user/forgetChecked";
 
     private static final String USER_INDEX = "/user/index";
 
@@ -322,7 +319,7 @@ public class UserController extends BaseController<User> {
      * @param userName 用户名
      * @return 不存在返回null, 存在返回用户Id
      */
-    @RequestMapping(value = "/resetPassword/{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/anon/resetPassword/{userName}", method = RequestMethod.GET)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据登录名查询用户", httpMethod = "GET", notes = "不存在返回null, 存在返回用户Id")
     @ResponseBody
@@ -334,19 +331,6 @@ public class UserController extends BaseController<User> {
         return new ResultTo().setData(userOne == null ? null : userOne.getId());
     }
 
-
-    /**
-     * 发送验证码页面
-     *
-     * @return 发送验证码页面
-     */
-    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @GetMapping(value = "/anon/sendCodePage")
-    public String sendCodePage() {
-        return RESET_PASSWORD_SEND;
-    }
-
     /**
      * 发送验证码
      *
@@ -354,7 +338,7 @@ public class UserController extends BaseController<User> {
      * @param address 用户Email或Phone
      * @return 成功或失败
      */
-    @PostMapping(value = "/resetPassword/sendCode")
+    @PostMapping(value = "/anon/resetPassword/sendCode")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "发送验证码", httpMethod = "POST")
     @ResponseBody
@@ -372,7 +356,7 @@ public class UserController extends BaseController<User> {
      * @param code    验证码
      * @return 成功或失败
      */
-    @PostMapping(value = "/resetPassword/checkedCode")
+    @PostMapping(value = "/anon/resetPassword/checkedCode")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "验证验证码", httpMethod = "POST")
     @ResponseBody
@@ -384,19 +368,6 @@ public class UserController extends BaseController<User> {
     }
 
     /**
-     * 重置密码界面
-     *
-     * @return 重置密码界面
-     */
-    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @GetMapping(value = "/anon/checkedCodedPage")
-    public String resetPassword() {
-        return RESET_PASSWORD_CHECKED;
-    }
-
-
-    /**
      * 重置密码
      *
      * @param userId      用户ID
@@ -404,7 +375,7 @@ public class UserController extends BaseController<User> {
      * @param password    密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/resetPassword/{checkedCode}", method = RequestMethod.POST)
+    @RequestMapping(value = "/anon/resetPassword/{checkedCode}", method = RequestMethod.POST)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "重置密码", httpMethod = "POST")
     @ResponseBody
@@ -421,18 +392,22 @@ public class UserController extends BaseController<User> {
      * 用户身份证验重
      *
      * @param idCard
-     * @return 存在 ture
+     * @return 存在 true
      */
     @PostMapping("/isIdCard")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户身份证号码验重", httpMethod = "POST")
     @ResponseBody
     public ResultTo isIdCard(@RequestParam("idCard") String idCard) {
+        LogTemplate.debug(this.getClass(), "idCard", idCard);
         User user = new User();
         user.setIdCardNumber(idCard);
-        if (userService.selectOne(user) != null) {
-            return new ResultTo().setData(Boolean.TRUE);
+        if (!IDcardUtil.verify(idCard)) {
+            return new ResultTo(ResultEnum.ID_CARD_ERROR);
         }
-        return new ResultTo().setData(Boolean.FALSE);
+        if (userService.selectOne(user) != null) {
+            return new ResultTo(ResultEnum.USER_EXIST);
+        }
+        return new ResultTo();
     }
 }

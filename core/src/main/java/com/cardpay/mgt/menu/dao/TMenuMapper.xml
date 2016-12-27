@@ -42,6 +42,7 @@
         <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
         <result column="AUTHORITY_NAME" jdbcType="VARCHAR" property="auth" />
+        <result column="AUTHORITY_NAME_ZH" jdbcType="VARCHAR" property="authZh" />
         <result column="AUTH_ID" jdbcType="DECIMAL" property="authId" />
         <result column="IS_HAVE" jdbcType="DECIMAL" property="isHaveAuth" />
     </resultMap>
@@ -74,6 +75,8 @@
                 AND T_ROLE_AUTHORITY.ROLE_ID = T_USER_ROLE.ROLE_ID
                 AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
                 AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
+                AND T_AUTHORITY."ID" = T_AUTHORITY_MENU.AUTHORITY_ID
+				AND T_AUTHORITY.AUTHORITY_NAME LIKE '%:Select'
                 AND T_USER. ID = #{userId}
             ) T
             WHERE
@@ -107,6 +110,8 @@
         AND T_ROLE_AUTHORITY.ROLE_ID = T_USER_ROLE.ROLE_ID
         AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
         AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
+        AND T_AUTHORITY."ID" = T_AUTHORITY_MENU.AUTHORITY_ID
+		AND T_AUTHORITY.AUTHORITY_NAME LIKE '%:Select'
         AND T_USER. ID = #{userId}
     </select>
 
@@ -133,6 +138,8 @@
                 T_ROLE_AUTHORITY.ROLE_ID = T_ROLE.ID
         AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
         AND T_AUTHORITY_MENU.MENU_ID = T_MENU. ID
+        AND T_AUTHORITY."ID" = T_AUTHORITY_MENU.AUTHORITY_ID
+		AND T_AUTHORITY.AUTHORITY_NAME LIKE '%:Select'
         AND T_ROLE. ID = #{roleId}
     </select>
 
@@ -142,39 +149,36 @@
     </delete>
 
     <!--根据用户查询全部菜单包括权限-->
-    <select id="selectMenuListAndAuthByUser" resultMap="MenuListAndAuthResultMap">
-        SELECT
-          *
+    <select id="selectMenuListAndAuthByRole" resultMap="MenuListAndAuthResultMap">
+       SELECT
+            *
         FROM
-          (
-            SELECT
-              T_MENU.*, T_AUTHORITY.AUTHORITY_NAME,
-              T_AUTHORITY. ID AS AUTH_ID
-            FROM
-              T_MENU,
-              T_AUTHORITY,
-              T_AUTHORITY_MENU
-            WHERE
-              T_MENU."ID" = T_AUTHORITY_MENU.MENU_ID
-            AND T_AUTHORITY."ID" = T_AUTHORITY_MENU.AUTHORITY_ID
-          ) ALL_MENU
+            (
+                SELECT
+                    T_MENU.*, T_AUTHORITY.AUTHORITY_NAME,T_AUTHORITY.AUTHORITY_NAME_ZH,T_AUTHORITY."ID" AS AUTH_ID
+                FROM
+                    T_MENU,
+                    T_AUTHORITY,
+                    T_AUTHORITY_MENU
+                WHERE
+                    T_MENU."ID" = T_AUTHORITY_MENU.MENU_ID
+                AND T_AUTHORITY."ID" = T_AUTHORITY_MENU.AUTHORITY_ID
+            ) ALL_MENU
         LEFT JOIN (
-          SELECT
-            T_AUTHORITY."ID" AS IS_HAVE
-          FROM
-            T_USER,
-            T_USER_ROLE,
-            T_ROLE_AUTHORITY,
-            T_MENU,
-            T_AUTHORITY_MENU,
-            T_AUTHORITY
-          WHERE
-            T_USER. ID = T_USER_ROLE.USER_ID
-          AND T_USER_ROLE.ROLE_ID = T_ROLE_AUTHORITY.ROLE_ID
-          AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY. ID
-          AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
-          AND T_MENU. ID = T_AUTHORITY_MENU.MENU_ID
-          AND T_USER. ID = #{userId}
+            SELECT
+                T_AUTHORITY."ID" AS IS_HAVE
+            FROM
+                T_ROLE,
+                T_ROLE_AUTHORITY,
+                T_MENU,
+                T_AUTHORITY_MENU,
+                T_AUTHORITY
+            WHERE
+                    T_ROLE. ID = T_ROLE_AUTHORITY.ROLE_ID
+            AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY. ID
+            AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+            AND T_MENU. ID = T_AUTHORITY_MENU.MENU_ID
+            AND T_ROLE. ID = #{roleId}
         ) USER_MENU ON ALL_MENU.AUTH_ID = USER_MENU.IS_HAVE
     </select>
 </mapper>

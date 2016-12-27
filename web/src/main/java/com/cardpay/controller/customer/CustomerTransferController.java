@@ -17,6 +17,7 @@ import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,7 +73,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             , @ApiParam(value = "移交原因", required = true) @RequestParam String reason) {
         List<Integer> customerIdList = new ArrayList<>();
         //添加客户移交记录
-        String[] split = customerIds.split(",");
+        String[] split = StringUtils.split(customerIds);
         for (String id : split) {
             Integer customerId = Integer.parseInt(id);
             TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
@@ -169,6 +170,23 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         Example example = new Example(TCustomerTransfer.class);
         example.createCriteria().andEqualTo("id", customerId);
         return dataTablePage(example);
+    }
+
+    /**
+     * 按id查询客户移交记录
+     *
+     * @param customerId 客户Id
+     * @return 客户移交记录
+     */
+    @ResponseBody
+    @GetMapping("/transfer/{id}")
+    @SystemControllerLog(description = "按id查询移交记录")
+    @ApiOperation(value = "按id查询移交记录", notes = "按id查询移交记录 ", httpMethod = "GET")
+    public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
+        TCustomerTransfer tCustomerTransfer = new TCustomerTransfer();
+        tCustomerTransfer.setId(customerId);
+        List<TCustomerTransfer> tCustomerTransfers = customerTransferService.select(tCustomerTransfer);
+        return new ResultTo().setData(tCustomerTransfers);
     }
 
 }

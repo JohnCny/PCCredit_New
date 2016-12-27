@@ -3,6 +3,7 @@ package com.cardpay.controller.file;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.core.fastdfs.FileManager;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.csource.fastdfs.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ import java.util.List;
 
 /**
  * 文件上传下载Controller
- * @author  chenkai .
+ *
+ * @author chenkai .
  */
 @Api(value = "/file", description = "文件上传类")
 @RestController
@@ -33,7 +35,7 @@ public class FilesController {
     @ApiOperation(value = "文件下载接口", notes = "下载dfs服务器文件", httpMethod = "GET")
     public ResultTo download(@ApiParam(value = "组名,文件名,另存为名称", required = true)
                              @RequestParam("file") String file) {
-        String[] str = file.split(",");
+        String[] str = StringUtils.split(file);
         ResponseEntity<byte[]> download = fileManager.download(str[0], str[1], str[2]);
         return new ResultTo().setData(download);
     }
@@ -76,7 +78,7 @@ public class FilesController {
     @DeleteMapping("/delete")
     @ApiOperation(value = "文件删除接口", notes = "删除dfs服务器中指定文件", httpMethod = "DELETE")
     public ResultTo delete(@ApiParam(value = "组名,文件名", required = true) @RequestParam("file") String file) {
-        String[] str = file.split(",");
+        String[] str = StringUtils.split(file);
         int count = fileManager.deleteFile(str[0], str[1]);
         return new ResultTo().setData(count);
     }
@@ -90,8 +92,8 @@ public class FilesController {
      */
     @GetMapping("/queryFile")
     @ApiOperation(value = "文件查询接口", notes = "查询dfs服务器中指定文件", httpMethod = "GET")
-    public ResultTo queryFile(@ApiParam(value = "组名", required = true) String groupName
-            , @ApiParam(value = "fastDfs中文件名称", required = true) String fileName) {
+    public ResultTo queryFile(@ApiParam(value = "组名", required = true) @RequestParam String groupName
+            , @ApiParam(value = "fastDfs中文件名称", required = true) @RequestParam String fileName) {
         FileInfo fileInfo = FileManager.queryFile(groupName, fileName);
         return new ResultTo().setData(fileInfo);
     }

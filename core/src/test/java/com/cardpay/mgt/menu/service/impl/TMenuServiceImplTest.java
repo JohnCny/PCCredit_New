@@ -13,17 +13,14 @@ import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.model.Authority;
-import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.service.UserRoleService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -196,9 +193,9 @@ public class TMenuServiceImplTest {
                 menuAuth.setMenuParentId(3);
             }
         }
-        when(tMenuMapper.selectMenuListAndAuthByUser(1)).thenReturn(tMenuAuthList);
+        when(tMenuMapper.selectMenuListAndAuthByRole(1)).thenReturn(tMenuAuthList);
         List<TMenuAuthVo> tMenuAuthVos = tMenuService.selectMenuListAndAuth(1);
-        verify(tMenuMapper).selectMenuListAndAuthByUser(1);
+        verify(tMenuMapper).selectMenuListAndAuthByRole(1);
         assertTrue(tMenuAuthVos.size() == 3);
     }
 

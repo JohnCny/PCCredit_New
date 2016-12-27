@@ -8,6 +8,7 @@ import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.util.List;
  *
  * @author chenkai on 2016/11/24.
  */
+@Lazy
 @Service
 public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> implements TOrganizationService {
     @Autowired
@@ -41,16 +43,5 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     public List<TOrganizationVo> queryAll(int parentId) {
         TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
         return tree.getChildNodesByParentId(tOrganizationDao.queryAll(), parentId);
-    }
-
-    @Override
-    public List<TreeOrgVO> getAllForTree() {
-        List<TreeOrgVO> allForTree = tOrganizationDao.getAllForTree();
-        for (TreeOrgVO treeOrgVO : allForTree) {
-            if (treeOrgVO.getpId() == 0) {
-                treeOrgVO.setOpen(Boolean.TRUE);
-            }
-        }
-        return allForTree;
     }
 }

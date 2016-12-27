@@ -13,7 +13,6 @@ import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
 import com.cardpay.mgt.menu.enums.RoleEnum;
-import com.cardpay.mgt.menu.model.MenuAuth;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuAuth;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
@@ -51,6 +50,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     @Autowired
     private RedisClient redisClient;
 
+    private static final String SELECT = "Select";
     private static final String DELETE = "Delete";
     private static final String UPDATE = "Update";
     private static final String ADD = "Add";
@@ -74,8 +74,8 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     }
 
     @Override
-    public List<TMenuAuthVo> selectMenuListAndAuth(int userId) {
-        List<TMenuAuth> tMenuAuthList = tMenuMapper.selectMenuListAndAuthByUser(userId);
+    public List<TMenuAuthVo> selectMenuListAndAuth(int roleId) {
+        List<TMenuAuth> tMenuAuthList = tMenuMapper.selectMenuListAndAuthByRole(roleId);
         return convertMenu2Tree(assemblyAuth(getGroupByAuthName(tMenuAuthList)));
     }
 
@@ -108,17 +108,21 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
             List<TMenuAuth> singleTMenuAuthList = entry.getValue();
 
             TMenuAuthVo tMenuAuthVo = DozerUtil.map(singleTMenuAuthList.get(0), TMenuAuthVo.class);
-            List<MenuAuth> authList = new ArrayList<>();
+//            List<MenuAuth> authList = new ArrayList<>();
             for (TMenuAuth tMenuAuth : singleTMenuAuthList) {
-                MenuAuth menuAuth = new MenuAuth();
-                menuAuth.setAuthId(tMenuAuth.getAuthId());
-                menuAuth.setAuthType(tMenuAuth.getAuth().split(":")[1]);
-                menuAuth.setHaveAuth(tMenuAuth.getIsHaveAuth() != null);
-                authList.add(menuAuth);
+//                MenuAuth menuAuth = new MenuAuth();
+//                menuAuth.setAuthId(tMenuAuth.getAuthId());
+//                menuAuth.setMenuNameZh(tMenuAuth.getAuthZh());
+//                menuAuth.setHaveAuth(tMenuAuth.getIsHaveAuth() != null);
+//                authList.add(menuAuth);
+                if (SELECT.equals(tMenuAuth.getAuth().split(":")[1])){
+                    tMenuAuthVo.setSeeAuth(tMenuAuth.getIsHaveAuth() != null);
+                    tMenuAuthVo.setSeeAuthId(tMenuAuth.getAuthId());
+                }
             }
-            tMenuAuthVo.setAuthList(authList);
-
             tMenuAuthVoList.add(tMenuAuthVo);
+//            tMenuAuthVo.setAuthList(authList);
+
         }
         return tMenuAuthVoList;
     }

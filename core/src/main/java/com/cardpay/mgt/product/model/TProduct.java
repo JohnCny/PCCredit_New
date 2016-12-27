@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.dozer.Mapping;
+import org.springframework.context.annotation.Lazy;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,6 +15,7 @@ import javax.persistence.*;
  *
  * @author chenkai
  */
+@Lazy
 @Table(name = "T_PRODUCT")
 @ApiModel(value = "产品管理")
 public class TProduct extends GenericEntity<Integer> {

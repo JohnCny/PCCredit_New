@@ -128,4 +128,21 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     public ModelAndView returnNew() {
         return new ModelAndView("/customer/maintenance");
     }
+
+    /**
+     * 按id查询客户维护信息
+     *
+     * @param customerId 客户Id
+     * @return 客户维护信息
+     */
+    @ResponseBody
+    @GetMapping("/maintenance/{id}")
+    @SystemControllerLog(description = "按id查询维护信息")
+    @ApiOperation(value = "按id查询维护信息", notes = "按id查询维护信息 ", httpMethod = "GET")
+    public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
+        TCustomerMaintenance manager = new TCustomerMaintenance();
+        manager.setId(customerId);
+        List<TCustomerMaintenance> customerMaintenance = customerMaintenanceService.select(manager);
+        return new ResultTo().setData(customerMaintenance);
+    }
 }

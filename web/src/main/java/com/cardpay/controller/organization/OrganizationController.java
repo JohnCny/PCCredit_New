@@ -11,6 +11,7 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author chenkai on 2016/11/24.
  */
-@Api(value = "/organization", description = "机构Controller类")
+@Api(value = "/organization", description = "机构")
 @Controller
 @RequestMapping("/organization")
 public class OrganizationController {
@@ -104,7 +105,18 @@ public class OrganizationController {
     @ResponseBody
     @ApiOperation(value = "根据父ID获取机构列表", httpMethod = "GET", notes = "默认父ID为0")
     public ResultTo getAllForTree() {
-        List<TreeOrgVO> tOrganizations = tOrganizationService.getAllForTree();
+        List<TOrganization> tOrganizations = tOrganizationService.selectAll();
         return new ResultTo().setData(tOrganizations);
+    }
+
+    /**
+     * 跳转查看客户信息
+     *
+     * @return 跳转查看客户信息
+     */
+    @GetMapping("/index")
+    @ApiOperation(value = "跳转查看客户信息", notes = "跳转查看客户信息", httpMethod = "GET")
+    public ModelAndView index() {
+        return new ModelAndView("/customer/customerInfo");
     }
 }
