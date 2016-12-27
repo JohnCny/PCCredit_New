@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.dozer.Mapping;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.persistence.*;
  *
  * @author yanweichen
  */
+@Lazy
 @Table(name = "T_CUSTOMER_BASIC")
 @ApiModel(value = "客户基本信息管理")
 public class TCustomerBasic extends GenericEntity<Integer> {

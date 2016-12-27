@@ -9,6 +9,7 @@ import com.cardpay.mgt.customer.model.TCustomerMaintenance;
 import com.cardpay.mgt.customer.model.vo.TCustomerMaintenanceVo;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Map;
  * 客户维护服务实现类
  * @author yanweichen
  */
+@Lazy
 @Service
 public class TCustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMaintenance> implements TCustomerMaintenanceService {
     @Autowired

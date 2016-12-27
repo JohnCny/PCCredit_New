@@ -3,9 +3,15 @@ package com.cardpay.mgt.product.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 
+/**
+ * 产品类型表
+ * @author chenkai
+ */
+@Lazy
 @Table(name = "T_PRODUCT_TYPE")
 @ApiModel(value="产品类型表")
 public class TProductType extends GenericEntity<Integer> {

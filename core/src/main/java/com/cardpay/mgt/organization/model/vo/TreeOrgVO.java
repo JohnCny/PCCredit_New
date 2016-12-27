@@ -1,12 +1,18 @@
 package com.cardpay.mgt.organization.model.vo;
 
+import com.cardpay.basic.base.model.GenericEntity;
+import io.swagger.annotations.ApiModel;
+import org.springframework.context.annotation.Lazy;
+
 /**
  * zTree专用VO
  *
  * @author rankai
  *         createTime 2016-12-2016/12/24 14:42
  */
-public class TreeOrgVO {
+@Lazy
+@ApiModel(value = "zTree专用VO")
+public class TreeOrgVO extends GenericEntity<Integer> {
 
     private Integer id;
 
@@ -46,5 +52,10 @@ public class TreeOrgVO {
 
     public void setOpen(boolean open) {
         this.open = open;
+    }
+
+    @Override
+    public Integer getPK() {
+        return id;
     }
 }
