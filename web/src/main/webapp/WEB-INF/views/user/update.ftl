@@ -43,7 +43,10 @@
                 <table>
                     <tr>
                         <td class="pull-right">姓名：</td>
-                        <td><input type="text" name="userCname" value="${user.userCname}"></td>
+                        <td>
+                            <input type="text" name="userCname" value="${user.userCname}">
+                            <input type="hidden" id="id" name="id" value="${user.id}">
+                        </td>
                         <td class="pull-right">登录名：</td>
                         <td><input type="text" name="username" value="${user.username}"></td>
                     </tr>
