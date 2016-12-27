@@ -121,6 +121,7 @@
                 }
             },{
                 "mData" : "modifyBy",
+                
             },{
                 "mData" : "modifyTime",
                 "sDefaultContent" : "",
