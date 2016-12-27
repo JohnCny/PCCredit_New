@@ -229,10 +229,10 @@
                     console.log(datas.length);
                     var html = "";
                     for(var i = 0; i <= datas.length-1;i++){
-                        html += '<tr><td>'+ datas[i].transferTime+'</td><td></td><td>'+datas[i].originCustomerManager+'</td><td>'+datas[i].nowCustomerManager+'</td><td>'+datas[i].transferReason+'</td>';
-                        if(data[i].transferStatus == 0){
+                        html += '<tr><td>'+ datas[i].transferTime+'</td><td>'+datas[i].originCustomerManager+'</td><td>'+datas[i].nowCustomerManager+'</td><td>'+datas[i].transferReason+'</td>';
+                        if(datas[i].transferStatus == 0){
                             html += '<td><span class="label label-important">未接收</span></td> </tr>'
-                        }else if(data[i].transferStatus == 1){
+                        }else if(datas[i].transferStatus == 1){
                             html += '<td><span class="label label-success">成功</span></td></tr>';
                         }else {
                             html += '<td><span class="label label-important">失败</span></td></tr>';
