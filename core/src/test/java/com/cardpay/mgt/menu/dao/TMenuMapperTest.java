@@ -38,7 +38,7 @@ public class TMenuMapperTest extends TestEnv{
 
     @Test
     public void selectMenuListAndAuthByUser() throws Exception {
-        List<TMenuAuth> tMenuAuths = tMenuMapper.selectMenuListAndAuthByUser(2);
+        List<TMenuAuth> tMenuAuths = tMenuMapper.selectMenuListAndAuthByRole(2);
         assertTrue(tMenuAuths.size() > 0);
     }
 
