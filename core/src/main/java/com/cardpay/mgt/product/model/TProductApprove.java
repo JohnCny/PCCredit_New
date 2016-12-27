@@ -3,6 +3,7 @@ package com.cardpay.mgt.product.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
  * 产品审批管理
  * @author chenkai
  */
+@Lazy
 @Table(name = "T_PRODUCT_APPROVE")
 @ApiModel(value="产品审批管理")
 public class TProductApprove extends GenericEntity<Integer> {

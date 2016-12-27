@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(value = "/loginLog", description = "登陆日志日志操作")
 public class LoginLogController extends BaseController<LoginLog> {
 
+    private final static String LOGIN_LOG_PAGE = "/log/loginLog";
+
     /**
      * 登陆日志的跳转页面
      *
@@ -34,7 +36,7 @@ public class LoginLogController extends BaseController<LoginLog> {
     @ApiOperation(value = "登陆日志的跳转页面", httpMethod = "GET")
     @GetMapping()
     public String loginLogPage() {
-        return "/test";
+        return LOGIN_LOG_PAGE;
     }
 
     /**

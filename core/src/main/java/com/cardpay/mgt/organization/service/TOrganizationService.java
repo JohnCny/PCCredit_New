@@ -35,9 +35,4 @@ public interface TOrganizationService extends BaseService<TOrganization> {
      */
     List<TOrganizationVo> queryAll(int parentId);
 
-    /**
-     * 获取全部机构信息(自定义字段)
-     * @return 机构信息
-     */
-    List<TreeOrgVO> getAllForTree();
 }

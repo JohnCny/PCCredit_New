@@ -11,6 +11,7 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author chenkai on 2016/11/24.
  */
-@Api(value = "/organization", description = "机构Controller类")
+@Api(value = "/organization", description = "机构")
 @Controller
 @RequestMapping("/organization")
 public class OrganizationController {
@@ -54,7 +55,7 @@ public class OrganizationController {
      * @return 所有机构层级信息
      */
     @ResponseBody
-    @GetMapping()
+    @GetMapping
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
         List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
@@ -68,7 +69,7 @@ public class OrganizationController {
      * @return 1成功, 0失败
      */
     @ResponseBody
-    @DeleteMapping()
+    @DeleteMapping
     @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息", httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id) {
         int flag = tOrganizationService.deleteOrganization(id);
@@ -83,7 +84,7 @@ public class OrganizationController {
      * @return 机构id
      */
     @ResponseBody
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
     public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {
         tOrganization.setOrgId("1234");
@@ -104,7 +105,18 @@ public class OrganizationController {
     @ResponseBody
     @ApiOperation(value = "根据父ID获取机构列表", httpMethod = "GET", notes = "默认父ID为0")
     public ResultTo getAllForTree() {
-        List<TreeOrgVO> tOrganizations = tOrganizationService.getAllForTree();
+        List<TOrganization> tOrganizations = tOrganizationService.selectAll();
         return new ResultTo().setData(tOrganizations);
+    }
+
+    /**
+     * 跳转查看客户信息
+     *
+     * @return 跳转查看客户信息
+     */
+    @GetMapping("/index")
+    @ApiOperation(value = "跳转查看客户信息", notes = "跳转查看客户信息", httpMethod = "GET")
+    public ModelAndView index() {
+        return new ModelAndView("/customer/customerInfo");
     }
 }

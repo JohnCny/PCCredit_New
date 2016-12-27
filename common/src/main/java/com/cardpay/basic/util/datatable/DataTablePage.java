@@ -81,22 +81,21 @@ public class DataTablePage {
         LogTemplate.info(this.getClass(), "message(BasePage)", "[start:" + start + "][length" + length + "][search" + search + "][order" + order + "]");
         this.start = start != null ? Integer.parseInt(start) : this.start;
         this.length = length != null ? Integer.parseInt(length) : this.length;
-        String finalOrder = "";
+        String finalOrder = null;
         if (StringUtils.isNotBlank(order)) {
             Map<String, String> map = JSON.parseObject(order, Map.class);
-            if (map != null) {
+            if (null != map) {
                 for (Map.Entry<String, String> entry : map.entrySet()) {
                     finalOrder = entry.getKey() + " " + entry.getValue();
                     break;
                 }
             }
         }
+
         Map<String, Object> map = JSON.parseObject(search, Map.class);
-
-
         if (StringUtils.isNotBlank(methodName)) {
-            if (parameterMap != null) {
-                if (map != null) {
+            if (null != parameterMap) {
+                if (null != map) {
                     map.putAll(parameterMap);
                 } else {
                     map = parameterMap;
@@ -109,7 +108,7 @@ public class DataTablePage {
             PageHelper.orderBy(finalOrder);
             data = (List<Object>) method.invoke(baseService, map);
         } else {
-            if (example == null) {
+            if (null == example) {
                 map = removeNull(map);
                 example = new Example(clazz);
                 example.orderBy(finalOrder);

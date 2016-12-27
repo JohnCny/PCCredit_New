@@ -1,11 +1,10 @@
 package com.cardpay.controller.product;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.controller.organization.OrganizationController;
 import com.cardpay.core.fastdfs.FileManager;
-import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.product.model.*;
 import com.cardpay.mgt.product.service.*;
 import io.swagger.annotations.Api;
@@ -54,14 +53,14 @@ public class ProductController extends BaseController<TProduct> {
         tProduct.setProductPictureUrl(upLoadParam);
         tProduct.setCreateTime(new Date());
         tProduct.setModifyTime(new Date());
-        tProductService.insertSelective(tProduct);
+        Integer count = tProductService.insertSelective(tProduct);
         logger.info("新建产品", "产品id:" + tProduct.getId());
         //若添加失败则删除fastDfs上的文件
-        if (tProduct.getId() == null) {
+        if (null == tProduct.getId()) {
             String[] split = upLoadParam.split(",");
             fileManager.deleteFile(split[0], split[1]);
         }
-        return new ResultTo().setData(tProduct.getId());
+        return count != 0 ? new ResultTo().setData(tProduct.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -72,7 +71,7 @@ public class ProductController extends BaseController<TProduct> {
      * @return 数据库变更个数
      */
     @ResponseBody
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "更新产品信息接口", notes = "更新产品基本信息", httpMethod = "PUT")
     public ResultTo updateProduct(@ApiParam(value = "产品信息", required = true) @ModelAttribute TProduct tProduct
             , @ApiParam(value = "图片信息(需要上传)") @RequestPart(value = "file", required = false) MultipartFile file) {
@@ -81,11 +80,13 @@ public class ProductController extends BaseController<TProduct> {
             TProduct queryProduct = tProductService.selectByPrimaryKey(tProduct.getId());
             //拆分文件路径用于删除文件
             String[] split = queryProduct.getProductPictureUrl().split("/");
-            String path = null;
-            for (int i = 1; i < split.length; i++) {
-                path += split[i];
+            StringBuffer buf = new StringBuffer();
+            for (String str : split) {
+                buf.append(str);
             }
+            String path = buf.toString();
             Integer flag = fileManager.deleteFile(split[0], path);
+
             //更新图片信息
             if (null != flag) {
                 String upLoadParam = fileManager.upLoad(file);
@@ -94,7 +95,7 @@ public class ProductController extends BaseController<TProduct> {
             }
         }
         Integer count = tProductService.updateSelectiveByPrimaryKey(tProduct);
-        return new ResultTo().setData(count);
+        return count != 0 ? new ResultTo().setData(tProduct.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
 }

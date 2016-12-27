@@ -137,14 +137,14 @@
 
 
     <!--拦截器异常处理配置-->
-    <bean id="handlerExceptionResolver"
-          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="exceptionMappings">
-            <props>
-                <prop key="com.cardpay.common.exception.AuthorizationException">redirect:/login</prop>
-            </props>
-        </property>
-    </bean>
+    <!--<bean id="handlerExceptionResolver"-->
+          <!--class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+        <!--<property name="exceptionMappings">-->
+            <!--<props>-->
+                <!--<prop key="com.cardpay.common.exception.AuthorizationException">redirect:/login</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <!--解决spring json conversion bug-->
     <bean id="utf8Charset" class="java.nio.charset.Charset"
