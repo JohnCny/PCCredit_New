@@ -48,6 +48,8 @@ public class ResultTo extends HashMap<String, Object> implements Serializable {
             put(ResultEnum.API_TIMEOUT.getValue(), "api timeout");
             put(ResultEnum.LOGIN_TIMEOUT.getValue(), "login timeout");
             put(ResultEnum.APPSIN_INCOMPATIBLE.getValue(), "appsin incompatible");
+            put(ResultEnum.CAPTCHA_NULL.getValue(),"captcha null");
+            put(ResultEnum.ID_CARD_ERROR.getValue(), "idcard error");
         }
     };
 
@@ -117,7 +119,7 @@ public class ResultTo extends HashMap<String, Object> implements Serializable {
      * @return 返回自身对象this
      */
     public ResultTo setIsSuccess(int result) {
-        int code = result==1? ResultEnum.SUCCESS.getValue():ResultEnum.SERVICE_ERROR.getValue();
+        int code = result == 1 ? ResultEnum.SUCCESS.getValue() : ResultEnum.SERVICE_ERROR.getValue();
         this.put(RS_CODE, code);
         if (null != RS_MAP.get(code)) {
             this.put(RS_MSG, RS_MAP.get(code));
