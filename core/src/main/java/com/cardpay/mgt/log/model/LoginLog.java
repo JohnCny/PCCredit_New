@@ -23,11 +23,11 @@ public class LoginLog {
     private String loginAccount;
 
     /**
-     * 操作
+     * 操作 (0:退出1:登陆)
      */
     @Column(name = "LOGIN_OPERATION")
     @ApiModelProperty(value = "操作", required = true)
-    private String loginOperation;
+    private Integer loginOperation;
 
     /**
      * 登陆时间
@@ -41,7 +41,7 @@ public class LoginLog {
      */
     @Column(name = "LOGIN_RESULT")
     @ApiModelProperty(value = "结果", required = true)
-    private String loginResult;
+    private Integer loginResult;
 
     /**
      * 登陆IP
@@ -87,7 +87,7 @@ public class LoginLog {
      *
      * @return LOGIN_OPERATION - 操作
      */
-    public String getLoginOperation() {
+    public Integer getLoginOperation() {
         return loginOperation;
     }
 
@@ -96,7 +96,7 @@ public class LoginLog {
      *
      * @param loginOperation 操作
      */
-    public void setLoginOperation(String loginOperation) {
+    public void setLoginOperation(Integer loginOperation) {
         this.loginOperation = loginOperation;
     }
 
@@ -123,7 +123,7 @@ public class LoginLog {
      *
      * @return LOGIN_RESULT - 结果
      */
-    public String getLoginResult() {
+    public Integer getLoginResult() {
         return loginResult;
     }
 
@@ -132,7 +132,7 @@ public class LoginLog {
      *
      * @param loginResult 结果
      */
-    public void setLoginResult(String loginResult) {
+    public void setLoginResult(Integer loginResult) {
         this.loginResult = loginResult;
     }
 
@@ -158,9 +158,9 @@ public class LoginLog {
     public static final class LoginLogBuilder {
         private Integer id;
         private String loginAccount;
-        private String loginOperation;
+        private Integer loginOperation;
         private Date loginTime;
-        private String loginResult;
+        private Integer loginResult;
         private String loginIp;
 
         private LoginLogBuilder() {
@@ -180,7 +180,7 @@ public class LoginLog {
             return this;
         }
 
-        public LoginLogBuilder withLoginOperation(String loginOperation) {
+        public LoginLogBuilder withLoginOperation(Integer loginOperation) {
             this.loginOperation = loginOperation;
             return this;
         }
@@ -190,7 +190,7 @@ public class LoginLog {
             return this;
         }
 
-        public LoginLogBuilder withLoginResult(String loginResult) {
+        public LoginLogBuilder withLoginResult(Integer loginResult) {
             this.loginResult = loginResult;
             return this;
         }
