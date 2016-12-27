@@ -11,8 +11,7 @@ public enum LogEnum {
     USER_PWD_ERROR(2),
     LOCKED_ACCOUNT(3),
     DISABLED_ACCOUNT(4),
-    SUCCESS(5),
-    LOGOUT(6);
+    SUCCESS(5);
 
     private int value; // 自定义数据域，private为了封装
 
