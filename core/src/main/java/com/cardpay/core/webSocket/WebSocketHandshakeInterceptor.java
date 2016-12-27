@@ -2,6 +2,7 @@ package com.cardpay.core.webSocket;
 
 import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.core.shiro.common.ShiroKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -32,12 +33,12 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
         logger.info(WebSocketHandshakeInterceptor.class, "", "websocket before handshake");
-        //User user = (User) SecurityUtils.getSubject().getPrincipal();
+
         if (request instanceof ServerHttpRequest){
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
             HttpSession session = servletRequest.getServletRequest().getSession(false);
             if (session!=null){
-                Integer userId = (Integer) session.getAttribute(Constant.WEBSOCKET_USERID);
+                Integer userId = ShiroKit.getUserId();
                 if (userId!=null){
                      attributes.put(Constant.WEBSOCKET_USERID, userId);
                 }

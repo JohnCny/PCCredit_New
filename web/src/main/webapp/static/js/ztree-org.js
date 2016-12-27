@@ -1,6 +1,5 @@
 function baseTree(url, setting) {
     var height = $(window).height();
-    var height = $(window).height();
     $(".treeBox").css("height", (parseInt(height) - 170) + "px");
     $(".wdlb").css("height", (parseInt(height) - 176) + "px");
     var zTreeObj;
@@ -10,6 +9,7 @@ function baseTree(url, setting) {
         success: function (res) {
             zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, res.data);
             zTreeObj.expandAll(true);
+            $("#treeDemo").find("[id^=treeDemo_]").addClass("searchBtn")
         }
     });
 }

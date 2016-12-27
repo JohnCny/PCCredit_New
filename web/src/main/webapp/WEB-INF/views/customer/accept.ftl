@@ -146,6 +146,7 @@
                 success:function (res) {
                     if(res.code == 200){
                         alert("接收成功");
+                        location.href="/customerTransfer/accept";
                     }
                 }
             });
@@ -167,6 +168,7 @@
                 success:function (res) {
                     if(res.code == 200){
                         alert("拒绝成功");
+                        location.href="/customerTransfer/accept";
                     }
                 }
             })
