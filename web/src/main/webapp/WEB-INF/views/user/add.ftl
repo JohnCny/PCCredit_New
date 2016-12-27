@@ -26,8 +26,8 @@
     <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px;height: 705px">
         <div class="report common list">
             <h5>机构列表</h5>
-            <div class='treeBox'>
-                <ul id='treeDemo' class='ztree'></ul>
+            <div class="treeBox" style="height: 581px;">
+                <ul id="treeDemo" class="ztree"></ul>
             </div>
         </div>
     </div>
@@ -65,7 +65,10 @@
                         <td class="pull-right">邮箱：</td>
                         <td><input type="text" name="email"></td>
                         <td class="pull-right">机构：</td>
-                        <td><input type="text" name="orgId" value="3"></td>
+                        <td>
+                            <input type="text" readonly="readonly" id="orgId" disabled="disabled">
+                            <input type="hidden" id="orgIdHidden" name="orgId">
+                        </td>
                     </tr>
                     <tr>
                         <td class="pull-right">身份证：</td>
@@ -119,9 +122,8 @@
 </#macro>
 
 <#macro script>
-<script type="text/javascript" src="/static/js/ztree-org.js"/>
+<script type="text/javascript" src="/static/js/ztree-org.js"></script>
 </#macro>
-
 <#macro js>
 <script type="text/javascript">
     var urlMy = "/organization/orgAll";
@@ -129,6 +131,10 @@
         data: {
             simpleData: {
                 enable: true,
+                pIdKey: "orgParentId"
+            },
+            key: {
+                name: "orgName",
             }
         },
         callback: {
@@ -137,9 +143,8 @@
     };
     baseTree(urlMy, setting);
     function onClick(event, treeId, treeNode, clickFlag) {
-        $("#orgId").attr("value", treeNode.name);
-        $("#orgId").attr("data-id", treeNode.id);
-
+        $("#orgId").attr("value", treeNode.orgName);
+        $("#orgIdHidden").attr("value", treeNode.id);
     }
 </script>
 <script>

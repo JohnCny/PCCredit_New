@@ -214,7 +214,4 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         return mapper.selectByExample(example);
     }
 
-    protected void rollbackOnly() {
-        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-    }
 }

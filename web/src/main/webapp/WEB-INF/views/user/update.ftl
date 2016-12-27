@@ -11,7 +11,10 @@
     table, table tr, table tr td {
         background-color: #fff
     }
-    .captap{width: 80px;}
+
+    .captap {
+        width: 80px;
+    }
 </style>
 </#macro>
 <#macro css>
@@ -27,10 +30,8 @@
     <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px">
         <div class="report common list">
             <h5>机构列表</h5>
-            <div class='treeBox'>
-                <ul id='treeDemo' class='ztree'>
-
-                </ul>
+            <div class="treeBox" style="height: 581px;">
+                <ul id="treeDemo" class="ztree"></ul>
             </div>
         </div>
     </div>
@@ -61,8 +62,8 @@
                         <td class="pull-right">性别：</td>
                         <td>
                             <select name="sex">
-                                 <option value="1" <#if user.sex == 1>selected</#if>>男</option>
-                                 <option value="2" <#if user.sex == 2>selected</#if>>女</option>
+                                <option value="1" <#if user.sex == 1>selected</#if>>男</option>
+                                <option value="2" <#if user.sex == 2>selected</#if>>女</option>
                             </select>
                         </td>
                     </tr>
@@ -71,14 +72,13 @@
                         <td><input type="text" name="email" value="${user.email}"></td>
                         <td class="pull-right">机构：</td>
                         <td>
-                            <input type="text" readonly="readonly" data-id="${org.id}" id="orgId"
-                                   value="${org.orgName}">
-                            <input type="hidden" id="orgHidden">
+                            <input type="text" readonly="readonly" disabled="disabled" id="orgId" value="${org.orgName}">
+                            <input type="hidden" id="orgHidden" data-id="${org.id}">
                         </td>
                     </tr>
                     <tr>
                         <td class="pull-right">身份证：</td>
-                        <td><input type="text" readonly="readonly" value="${user.idCardNumber}"></td>
+                        <td><input type="text" readonly="readonly" disabled="disabled" value="${user.idCardNumber}"></td>
                         <td class="pull-right">用户类型：</td>
                         <td>
                             <select name="userType">
@@ -95,16 +95,17 @@
                         <td class="pull-right">用户角色：</td>
                         <td colspan="3">
                             <#list roleAll as temp>
-                            <span class="hideInput">
-                                <input id="roleId_${temp.id}" type="radio" data-id="${userRole.roleId}" value="${temp.id}">
+                                <span class="hideInput">
+                                <input id="roleId_${temp.id}" type="radio" data-id="${userRole.roleId}"
+                                       value="${temp.id}">
                                 <input type="hidden" id="roleHidden">
-                                <#if userRole.roleId == temp.id>
-                                    <label onclick="setRadio(this,'roleId_${temp.id}')"
-                                           class="radio radio_a">${temp.roleNameZh}</label>
-                                <#else>
-                                    <label onclick="setRadio(this,'roleId_${temp.id}')"
-                                           class="radio">${temp.roleNameZh}</label>
-                                </#if>
+                                    <#if userRole.roleId == temp.id>
+                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
+                                               class="radio radio_a">${temp.roleNameZh}</label>
+                                    <#else>
+                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
+                                               class="radio">${temp.roleNameZh}</label>
+                                    </#if>
                             </span>
                             </#list>
 
@@ -144,12 +145,39 @@
 
 </#macro>
 
+
+
 <#macro script>
-
-
+<script type="text/javascript" src="/static/js/ztree-org.js"></script>
 </#macro>
-
 <#macro js>
+<script type = "text/javascript" >
+        $(document).ready(function () {
+            var urlMy = "/organization/orgAll";
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                        pIdKey: "orgParentId"
+                    },
+                    key: {
+                        name: "orgName",
+                    }
+                },
+                callback: {
+                    onClick: onClick
+                }
+            };
+            baseTree(urlMy, setting);
+            function onClick(event, treeId, treeNode, clickFlag) {
+                $("#orgId").attr("value", treeNode.orgName);
+                $("#orgHidden").attr("name", "orgid");
+                var orgIds = $("#orgHidden").data("id") + "," + treeNode.id
+                $("#orgHidden").attr("value", orgIds);
+
+            }
+        });
+</script>
 <script>
     function setRadio(obj, inputId) {//单选样式
         $(obj).parent().parent().find("input[type=radio]").attr("checked", false)
@@ -182,11 +210,5 @@
             })
         })
     })
-
-
 </script>
-
-
-</script>
-
 </#macro>

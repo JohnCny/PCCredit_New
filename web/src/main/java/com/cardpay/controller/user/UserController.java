@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,13 +50,9 @@ import java.util.Map;
 @Api(value = "/user", description = "用户控制层")
 public class UserController extends BaseController<User> {
 
-    private static final String UPDATE_PASSWORD_PAGE = "/user/change_password";
+    private static final String UPDATE_PASSWORD_PAGE = "/user/changePassword";
 
     private static final String RESET_PASSWORD_PAGE = "/user/forget";
-
-    private static final String RESET_PASSWORD_SEND = "/user/forget_send";
-
-    private static final String RESET_PASSWORD_CHECKED = "/user/forget_checked";
 
     private static final String USER_INDEX = "/user/index";
 
@@ -103,7 +100,7 @@ public class UserController extends BaseController<User> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "用户分页数据", httpMethod = "GET")
     public DataTablePage pageList() {
-        return dataTablePage();
+        return dataTablePage("userPageList");
     }
 
     /**
@@ -214,7 +211,20 @@ public class UserController extends BaseController<User> {
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
-        if (userService.updateUser(user, orgId, roleId)) {
+        String[] orgIds = new String[0], roleIds = new String[0];
+        if (orgId != null) {
+            orgIds = orgId.split(",");
+            if (orgIds.length != 2) {
+                return new ResultTo(ResultEnum.PARAM_ERROR);
+            }
+        }
+        if (roleId != null) {
+            roleIds = roleId.split(",");
+            if (roleIds.length != 2) {
+                return new ResultTo(ResultEnum.PARAM_ERROR);
+            }
+        }
+        if (userService.updateUser(user, orgIds, roleIds)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
@@ -308,7 +318,7 @@ public class UserController extends BaseController<User> {
      * @param userName 用户名
      * @return 不存在返回null, 存在返回用户Id
      */
-    @RequestMapping(value = "/resetPassword/{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/ann/resetPassword/{userName}", method = RequestMethod.GET)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据登录名查询用户", httpMethod = "GET", notes = "不存在返回null, 存在返回用户Id")
     @ResponseBody
@@ -320,19 +330,6 @@ public class UserController extends BaseController<User> {
         return new ResultTo().setData(userOne == null ? null : userOne.getId());
     }
 
-
-    /**
-     * 发送验证码页面
-     *
-     * @return 发送验证码页面
-     */
-    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @GetMapping(value = "/anon/sendCodePage")
-    public String sendCodePage() {
-        return RESET_PASSWORD_SEND;
-    }
-
     /**
      * 发送验证码
      *
@@ -340,7 +337,7 @@ public class UserController extends BaseController<User> {
      * @param address 用户Email或Phone
      * @return 成功或失败
      */
-    @PostMapping(value = "/resetPassword/sendCode")
+    @PostMapping(value = "/ann/resetPassword/sendCode")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "发送验证码", httpMethod = "POST")
     @ResponseBody
@@ -358,7 +355,7 @@ public class UserController extends BaseController<User> {
      * @param code    验证码
      * @return 成功或失败
      */
-    @PostMapping(value = "/resetPassword/checkedCode")
+    @PostMapping(value = "/ann/resetPassword/checkedCode")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "验证验证码", httpMethod = "POST")
     @ResponseBody
@@ -370,19 +367,6 @@ public class UserController extends BaseController<User> {
     }
 
     /**
-     * 重置密码界面
-     *
-     * @return 重置密码界面
-     */
-    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "忘记密码页面跳转", httpMethod = "GET")
-    @GetMapping(value = "/anon/checkedCodedPage")
-    public String resetPassword() {
-        return RESET_PASSWORD_CHECKED;
-    }
-
-
-    /**
      * 重置密码
      *
      * @param userId      用户ID
@@ -390,7 +374,7 @@ public class UserController extends BaseController<User> {
      * @param password    密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/resetPassword/{checkedCode}", method = RequestMethod.POST)
+    @RequestMapping(value = "/ann/resetPassword/{checkedCode}", method = RequestMethod.POST)
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "重置密码", httpMethod = "POST")
     @ResponseBody
@@ -401,5 +385,24 @@ public class UserController extends BaseController<User> {
         LogTemplate.debug(this.getClass(), "checkedCode", checkedCode);
         LogTemplate.debug(this.getClass(), "password", password);
         return userService.resetPassword(userId, checkedCode, password);
+    }
+
+    /**
+     * 用户身份证验重
+     *
+     * @param idCard
+     * @return 存在 ture
+     */
+    @PostMapping("/isIdCard")
+    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "用户身份证号码验重", httpMethod = "POST")
+    @ResponseBody
+    public ResultTo isIdCard(@RequestParam("idCard") String idCard) {
+        User user = new User();
+        user.setIdCardNumber(idCard);
+        if (userService.selectOne(user) != null) {
+            return new ResultTo().setData(Boolean.TRUE);
+        }
+        return new ResultTo().setData(Boolean.FALSE);
     }
 }

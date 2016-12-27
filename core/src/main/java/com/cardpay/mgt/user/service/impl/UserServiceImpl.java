@@ -21,16 +21,14 @@ import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
 import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
-import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -169,79 +167,48 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    @Transactional
     public boolean addUser(User user, Integer orgId, Integer roleId) {
         user.setCreateTime(new Date());
         user.setCreateBy(ShiroKit.getUserId());
         user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
-        int userId = userMapper.insertSelective(user);
-        if (userId <= 0) {
-            rollbackOnly();
-            return Boolean.FALSE;
-        }
+        userMapper.insertSelective(user);
         UserOrganization userOrganization = new UserOrganization();
         userOrganization.setUserId(user.getId());
         userOrganization.setOrganizationId(orgId);
-        int insertSelective = userOrganizationMapper.insertSelective(userOrganization);
-        if (insertSelective <= 0) {
-            rollbackOnly();
-            return Boolean.FALSE;
-        }
+        userOrganizationMapper.insertSelective(userOrganization);
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleId);
         userRole.setUserId(user.getId());
-        int userRoleInsertSelective = userRoleMapper.insertSelective(userRole);
-        if (userRoleInsertSelective <= 0) {
-            rollbackOnly();
-            return Boolean.FALSE;
+        userRoleMapper.insertSelective(userRole);
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public boolean updateUser(User user, String[] orgIds, String[] roleIds) {
+        user.setModifyBy(ShiroKit.getUserId());
+        user.setModifyTime(new Date());
+        userMapper.updateByPrimaryKeySelective(user);
+        if (orgIds.length != 0) {
+            UserOrganization userOrganization = new UserOrganization();
+            userOrganization.setUserId(user.getId());
+            userOrganization.setOrganizationId(Integer.parseInt(orgIds[0]));
+            userOrganizationMapper.delete(userOrganization);
+            userOrganization.setOrganizationId(Integer.parseInt(orgIds[1]));
+            userOrganizationMapper.insertSelective(userOrganization);
+        }
+        if (roleIds.length != 0) {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getId());
+            userRole.setRoleId(Integer.parseInt(roleIds[0]));
+            userRoleMapper.delete(userRole);
+            userRole.setRoleId(Integer.parseInt(roleIds[1]));
+            userRoleMapper.insertSelective(userRole);
         }
         return Boolean.TRUE;
     }
 
     @Override
-    @Transactional
-    public boolean updateUser(User user, String orgId, String roleId) {
-        user.setModifyBy(ShiroKit.getUserId());
-        user.setModifyTime(new Date());
-        int count = userMapper.updateByPrimaryKeySelective(user);
-        if (count <= 0) {
-            rollbackOnly();
-            return Boolean.FALSE;
-        }
-        if (orgId != null) {
-            String[] split = orgId.split(",");
-            UserOrganization userOrganization = new UserOrganization();
-            userOrganization.setUserId(user.getId());
-            userOrganization.setOrganizationId(Integer.parseInt(split[0]));
-            int delete = userOrganizationMapper.delete(userOrganization);
-            if (delete <= 0) {
-                rollbackOnly();
-                return Boolean.FALSE;
-            }
-            userOrganization.setOrganizationId(Integer.parseInt(split[1]));
-            int insertSelective = userOrganizationMapper.insertSelective(userOrganization);
-            if (insertSelective <= 0) {
-                rollbackOnly();
-                return Boolean.FALSE;
-            }
-        }
-        if (roleId != null) {
-            String[] split = roleId.split(",");
-            UserRole userRole = new UserRole();
-            userRole.setUserId(user.getId());
-            userRole.setRoleId(Integer.parseInt(split[0]));
-            int delete = userRoleMapper.delete(userRole);
-            if (delete <= 0) {
-                rollbackOnly();
-                return Boolean.FALSE;
-            }
-            userRole.setRoleId(Integer.parseInt(split[1]));
-            int insertSelective = userRoleMapper.insertSelective(userRole);
-            if (insertSelective <= 0) {
-//                throw new RuntimeException();
-                return Boolean.FALSE;
-            }
-        }
-        return Boolean.TRUE;
+    public List<User> userPageList(Map<String, Object> map) {
+        return userMapper.userPageList(map);
     }
 }

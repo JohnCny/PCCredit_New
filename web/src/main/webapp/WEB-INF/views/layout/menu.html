@@ -111,6 +111,7 @@
             type : "GET",
             url : "/menu/all",
             success : function(result){
+                parent.empty();
                 var menu = result.data.menus;
                 $(menu).each(function(i,v){
                     html += '<li onclick="showMenu(this)" class="menu-list"><a href="javascript:;">'+$(v)[0].menuNameZh+'<i class="pull-right"></i></a>';
@@ -118,7 +119,7 @@
 
                        html += '<ul class="second-nav">';
                        $($(v)[0].menuLists).each(function(i,v) {
-                           html += '<li><a href='+$(v)[0].menuUrl+'>'+$(v)[0].menuNameZh+'</a></li>';
+                           html += '<li><a href=/'+$(v)[0].menuUrl+'>'+$(v)[0].menuNameZh+'</li>';
                        });
                        html += '</ul>'
                    }

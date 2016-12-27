@@ -60,8 +60,4 @@
     DELETE FROM T_ORGANIZATION WHERE ID in (
     SELECT ID FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{id} )
     </delete>
-
-    <select id="getAllForTree" resultMap="treeMap">
-        SELECT ID AS id,ORG_NAME AS name,ORG_PARENT_ID AS pId FROM T_ORGANIZATION
-    </select>
 </mapper>

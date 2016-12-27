@@ -18,6 +18,7 @@ public class TCustomerManagerLevel extends GenericEntity<Integer> {
     /**
      * 级别id
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MANAGER_LEVEL_SEQ.nextval from dual")
     @ApiModelProperty(value="级别id",required = true)

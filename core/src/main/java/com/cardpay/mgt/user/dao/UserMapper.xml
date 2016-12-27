@@ -68,4 +68,21 @@
         TAR.RESOURCE_ID=TRS.ID
   </select>
 
+    <select id="userPageList" resultMap="BaseResultMap">
+        SELECT * FROM T_USER TU,T_USER_ORGANIZATION TUO WHERE 1=1
+        <if test="username !=null">
+            AND
+            TU.USERNAME=#{username,jdbcType=VARCHAR}
+        </if>
+        <if test="idCardNumber !=null">
+            AND
+            TU.ID_CARD_NUMBER=#{idCardNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="orgId != null">
+            AND
+            TU.ID=TUO.USER_ID
+            AND
+            TUO.ORGANIZATION_ID=#{orgId,jdbcType=VARCHAR}
+        </if>
+    </select>
 </mapper>
