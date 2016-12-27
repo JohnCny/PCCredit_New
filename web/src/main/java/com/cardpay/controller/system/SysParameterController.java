@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
+
 /**
  * 系统参数配置Controller
  *
@@ -53,11 +55,11 @@ public class SysParameterController extends BaseController<TSysParameter> {
      */
     @GetMapping("/{id}")
     @SystemControllerLog(description = "跳转编辑系统参数配置页面")
-    @ApiOperation(value = "跳转编辑系统参数配置页面", notes = "编辑系统参数配置页面", httpMethod = "GET")
+    @ApiOperation(value = "跳转编辑系统参数配置页面", notes = "编辑系统参数配置页面, 返回参数 tSysParameter", httpMethod = "GET")
     public ModelAndView returnUpdate(@ApiParam(value = "主键", required = true) @PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("/system/update");
         TSysParameter tSysParameter = tSysParameterService.selectByPrimaryKey(id);
-        modelAndView.addObject(tSysParameter);
+        modelAndView.addObject("tSysParameter", tSysParameter);
         return modelAndView;
     }
 
@@ -86,7 +88,8 @@ public class SysParameterController extends BaseController<TSysParameter> {
     @ApiOperation(value = "更新系统参数配置", notes = "更新系统参数配置", httpMethod = "PUT")
     public ResultTo update(@ApiParam("系统参数实体信息") @ModelAttribute TSysParameter tSysParameter) {
         tSysParameter.setModifyBy(ShiroKit.getUserId());
-        Integer count = tSysParameterService.updateByPrimaryKey(tSysParameter);
+        tSysParameter.setModifyTime(new Date());
+        Integer count = tSysParameterService.updateSelectiveByPrimaryKey(tSysParameter);
         logger.info("更新系统参数配置","用户id:"+ShiroKit.getUserId()+",更新了参数"+tSysParameter);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
@@ -106,6 +109,18 @@ public class SysParameterController extends BaseController<TSysParameter> {
         Integer count = tSysParameterService.insertSelective(tSysParameter);
         logger.info("新增系统参数配置","用户id:"+ShiroKit.getUserId()+",添加了参数"+tSysParameter);
         return count != 0 ? new ResultTo().setData(tSysParameter.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
+
+    /**
+     * 跳转添加页面
+     *
+     * @return 跳转添加页面
+     */
+    @GetMapping("/toAdd")
+    @SystemControllerLog(description = "跳转添加页面")
+    @ApiOperation(value = "跳转添加页面", notes = "跳转添加页面", httpMethod = "GET")
+    public ModelAndView toAdd() {
+        return new ModelAndView("/system/add");
     }
 
 }

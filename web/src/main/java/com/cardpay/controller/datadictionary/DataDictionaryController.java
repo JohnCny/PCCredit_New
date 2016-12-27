@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/dataDictionary")
 @Api(value = "/dataDictionary", description = "数据字典")
-public class DataDictionaryController extends BaseController<TDataDictionary>{
+public class DataDictionaryController extends BaseController<TDataDictionary> {
 
     @Autowired
     private TDataDictionaryService dataDictionaryService;
@@ -33,9 +33,9 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
      * @return 分页数据
      */
     @ResponseBody
-    @RequestMapping(value = "/pageList",method = RequestMethod.GET)
-    @ApiOperation(value = "获取数据字典分页数据", notes = "获取数据字典分页数据",  httpMethod = "GET")
-    public DataTablePage pageList(){
+    @RequestMapping(value = "/pageList", method = RequestMethod.GET)
+    @ApiOperation(value = "获取数据字典分页数据", notes = "获取数据字典分页数据", httpMethod = "GET")
+    public DataTablePage pageList() {
         return dataTablePage();
     }
 
@@ -44,11 +44,11 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
      *
      * @return 页面
      */
-    @RequestMapping(value = "/toAdd",method = RequestMethod.GET)
-    @ApiOperation(value = "前往添加数据字典页面接口", notes = "前往添加数据字典页面",  httpMethod = "GET")
-    public ModelAndView toAdd(){
+    @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
+    @ApiOperation(value = "前往添加数据字典页面接口", notes = "前往添加数据字典页面", httpMethod = "GET")
+    public ModelAndView toAdd() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");
+        modelAndView.setViewName("/datadictionary/add");
         return modelAndView;
     }
 
@@ -59,11 +59,11 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
      * @return 页面
      */
     @RequestMapping(method = RequestMethod.POST)
-    @ApiOperation(value = "添加数据字典接口", notes = "添加数据字典",  httpMethod = "POST")
-    public ModelAndView add(@ApiParam("数据字典信息") @ModelAttribute TDataDictionary dataDictionary){
+    @ApiOperation(value = "添加数据字典接口", notes = "添加数据字典", httpMethod = "POST")
+    public ModelAndView add(@ApiParam("数据字典信息") @ModelAttribute TDataDictionary dataDictionary) {
         dataDictionaryService.insert(dataDictionary);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");
+        modelAndView.setViewName("/datadictionary/index");
         return modelAndView;
     }
 
@@ -75,8 +75,8 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE)
-    @ApiOperation(value = "删除数据字典接口", notes = "删除数据字典",  httpMethod = "DELETE")
-    public ResultTo delete(@RequestParam("dataId") Integer dataId){
+    @ApiOperation(value = "删除数据字典接口", notes = "删除数据字典", httpMethod = "DELETE")
+    public ResultTo delete(@RequestParam("dataId") Integer dataId) {
         ResultTo resultTo = new ResultTo();
         Integer result = dataDictionaryService.deleteByPrimaryKey(dataId);
         resultTo.setIsSuccess(result);
@@ -89,13 +89,13 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
      * @param dataId 数据字典id
      * @return 页面和数据
      */
-    @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "前往更新数据字典接口", notes = "根据ID获取数据字典信息,前往更新数据字典",  httpMethod = "GET")
-    public ModelAndView toUpdate(@ModelAttribute Integer dataId){
+    @GetMapping("/{id}")
+    @ApiOperation(value = "前往更新数据字典接口", notes = "根据ID获取数据字典信息,前往更新数据字典", httpMethod = "GET")
+    public ModelAndView toUpdate(@PathVariable("id") Integer dataId) {
         TDataDictionary dataDictionary = dataDictionaryService.selectByPrimaryKey(dataId);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("dataDictionary",dataDictionary);
-        modelAndView.setViewName("");
+        modelAndView.addObject("dataDictionary", dataDictionary);
+        modelAndView.setViewName("/datadictionary/update");
         return modelAndView;
     }
 
@@ -103,14 +103,26 @@ public class DataDictionaryController extends BaseController<TDataDictionary>{
      * 更新数据字典接口
      *
      * @param dataDictionary 数据字典信息
+     * @return 数据库变记录
+     */
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
+    @ApiOperation(value = "更新数据字典接口", notes = "根据ID更新数据字典信息", httpMethod = "PUT")
+    public ResultTo update(@ModelAttribute TDataDictionary dataDictionary) {
+        Integer count = dataDictionaryService.updateSelectiveByPrimaryKey(dataDictionary);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
+
+    /**
+     * 跳转数据字典页面
+     *
+     * @param dataDictionary 数据字典信息
      * @return 页面
      */
-    @RequestMapping(method = RequestMethod.PUT)
-    @ApiOperation(value = "更新数据字典接口", notes = "根据ID更新数据字典信息",  httpMethod = "PUT")
-    public ModelAndView update(@ModelAttribute TDataDictionary dataDictionary){
-        dataDictionaryService.updateByPrimaryKey(dataDictionary);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");
-        return modelAndView;
+    @GetMapping("index")
+    @ApiOperation(value = "跳转数据字典页面", notes = "跳转数据字典页面", httpMethod = "GET")
+    public ModelAndView index(@ModelAttribute TDataDictionary dataDictionary) {
+        return new ModelAndView("/datadictionary/index");
     }
+
 }
