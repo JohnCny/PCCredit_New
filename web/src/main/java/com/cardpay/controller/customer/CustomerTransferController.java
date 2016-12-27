@@ -18,6 +18,7 @@ import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -73,7 +74,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             , @ApiParam(value = "移交原因", required = true) @RequestParam String reason) {
         List<Integer> customerIdList = new ArrayList<>();
         //添加客户移交记录
-        String[] split = customerIds.split(",");
+        String[] split = StringUtils.split(customerIds);
         for (String id : split) {
             Integer customerId = Integer.parseInt(id);
             TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
