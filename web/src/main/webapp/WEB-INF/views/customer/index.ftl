@@ -83,12 +83,27 @@
 <#macro js>
 
     <script>
+
         $(function(){
 
             var url  = {
-                "urlList":"/customerBasic/condition",
                 "urlNew" : "/customerBasic/new",
                 "urlDel" : "/customerBasic/",
+            }
+            var QK_searchObj = {
+                "cname" : $("#cname").val(),
+                "certificateNumber" : $("#certificateNumber").val(),
+            };
+            var ajax = {
+                "type" : "GET",
+                "url" : "/customerBasic/condition",
+                "data" : function(d){
+                    var QK_searchObj = {
+                        "cname" : $("#cname").val(),
+                        "certificateNumber":$("#certificateNumber").val(),
+                    }
+                    d.search = JSON.stringify(QK_searchObj);
+                }
             }
             var tableId = $("#example");
             var aoColumns = [{
@@ -114,16 +129,16 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a onclick="deleRow()" class="editOne btn-info" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                    return  '<a onclick="deleRow()" class="editOne btn-info" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
                 }
             }];
 
 
 
             var options = {
-                "urlList" : url['urlList'],
                 "urlNew" : url['urlNew'],
                 "urlDel" : url['urlDel'],
+                "ajax" : ajax,
                 "tableId" : tableId,
                 "aoColumns" : aoColumns
             }

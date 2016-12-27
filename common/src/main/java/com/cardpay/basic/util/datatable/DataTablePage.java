@@ -27,6 +27,8 @@ public class DataTablePage {
     private int length = 10; // 数据长度'10'
 
     private long recordsTotal; // 数据总记录数
+    private long recordsFiltered; // 过滤数据总记录数
+
     private List<Object> data;
 
     public DataTablePage(String methodName, BaseService baseService, HttpServletRequest request, Map<String, Object> map) {
@@ -79,23 +81,21 @@ public class DataTablePage {
         LogTemplate.info(this.getClass(), "message(BasePage)", "[start:" + start + "][length" + length + "][search" + search + "][order" + order + "]");
         this.start = start != null ? Integer.parseInt(start) : this.start;
         this.length = length != null ? Integer.parseInt(length) : this.length;
-        String finalOrder = "";
+        String finalOrder = null;
         if (StringUtils.isNotBlank(order)) {
             Map<String, String> map = JSON.parseObject(order, Map.class);
-            if (map != null) {
+            if (null != map) {
                 for (Map.Entry<String, String> entry : map.entrySet()) {
                     finalOrder = entry.getKey() + " " + entry.getValue();
                     break;
                 }
             }
         }
+
         Map<String, Object> map = JSON.parseObject(search, Map.class);
-
-
-
         if (StringUtils.isNotBlank(methodName)) {
-            if (parameterMap != null) {
-                if (map != null) {
+            if (null != parameterMap) {
+                if (null != map) {
                     map.putAll(parameterMap);
                 } else {
                     map = parameterMap;
@@ -108,7 +108,7 @@ public class DataTablePage {
             PageHelper.orderBy(finalOrder);
             data = (List<Object>) method.invoke(baseService, map);
         } else {
-            if (example == null) {
+            if (null == example) {
                 map = removeNull(map);
                 example = new Example(clazz);
                 example.orderBy(finalOrder);
@@ -123,13 +123,14 @@ public class DataTablePage {
         }
         PageInfo pageInfo = new PageInfo(this.data);
         setRecordsTotal(pageInfo.getTotal());
+        setRecordsFiltered(pageInfo.getTotal());
     }
 
     private Map<String, Object> removeNull(Map<String, Object> map) {
         Map<String, Object> newMap = new HashMap();
         if (map != null) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
-                if (entry.getKey() == null || entry.getValue() == null) {
+                if (StringUtils.isBlank(entry.getKey()) || StringUtils.isBlank(String.valueOf(entry.getValue()))) {
                     continue;
                 }
                 newMap.put(entry.getKey(), entry.getValue());
@@ -168,5 +169,13 @@ public class DataTablePage {
 
     public void setRecordsTotal(long recordsTotal) {
         this.recordsTotal = recordsTotal;
+    }
+
+    public long getRecordsFiltered() {
+        return recordsFiltered;
+    }
+
+    public void setRecordsFiltered(long recordsFiltered) {
+        this.recordsFiltered = recordsFiltered;
     }
 }

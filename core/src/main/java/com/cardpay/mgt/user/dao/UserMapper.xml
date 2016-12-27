@@ -13,6 +13,16 @@
         <result column="TEL" jdbcType="VARCHAR" property="tel"/>
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+        <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="AGE" jdbcType="DECIMAL" property="age"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+        <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
     </resultMap>
 
     <resultMap id="UserAuthorityMap" type="com.cardpay.mgt.user.model.UserAuthority">
@@ -58,4 +68,21 @@
         TAR.RESOURCE_ID=TRS.ID
   </select>
 
+    <select id="userPageList" resultMap="BaseResultMap">
+        SELECT * FROM T_USER TU,T_USER_ORGANIZATION TUO WHERE 1=1
+        <if test="username !=null">
+            AND
+            TU.USERNAME=#{username,jdbcType=VARCHAR}
+        </if>
+        <if test="idCardNumber !=null">
+            AND
+            TU.ID_CARD_NUMBER=#{idCardNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="orgId != null">
+            AND
+            TU.ID=TUO.USER_ID
+            AND
+            TUO.ORGANIZATION_ID=#{orgId,jdbcType=VARCHAR}
+        </if>
+    </select>
 </mapper>

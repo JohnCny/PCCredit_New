@@ -29,6 +29,9 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
                                          Exception ex) {
+
+        System.out.println(ex);
+
         LogTemplate.error(GlobalExceptionHandler.class, ex, "页面请求出现异常", null);
          /*判断是否ajax请求*/
         if (!(request.getHeader("accept").indexOf("application/json") > -1
@@ -63,11 +66,11 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
                 LogTemplate.error(GlobalExceptionHandler.class, e, "异常信息", null);
             }
         }
-        Object obj = ContextProperty.getContextProperty("exceptionEmails");
-        if (obj != null) {
-            String[] emails = obj.toString().split(",");
-            mailSend.send(null, emails, ex.toString());
-        }
+//        Object obj = ContextProperty.getContextProperty("exceptionEmails");
+//        if (obj != null) {
+//            String[] emails = obj.toString().split(",");
+//            mailSend.send(null, emails, ex.toString());
+//        }
         return null;
     }
 }

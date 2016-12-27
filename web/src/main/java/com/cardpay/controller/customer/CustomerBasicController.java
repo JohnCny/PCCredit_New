@@ -42,7 +42,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      */
     @ResponseBody
     @GetMapping("/prospectiveCustomers")
-    @SystemControllerLog
+    @SystemControllerLog(description = "获取潜在客户列表")
     @ApiOperation(value = "查询潜在客户列表", notes = "潜在客户列表", httpMethod = "GET")
     public ResultTo getProspectiveCustomers() {
         List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(ShiroKit.getUserId());
@@ -83,15 +83,15 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * 新建客戶经理
      *
      * @param tCustomerBasic 客户基本信息
-     * @return 数据库变更记录
+     * @return 新建的id
      */
     @ResponseBody
-    @PostMapping()
+    @PostMapping
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
-        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return count != 0 ? new ResultTo().setData(tCustomerBasic.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -99,19 +99,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      *
      * @return 客户经理新建页面
      */
-    @GetMapping()
+    @GetMapping
     @SystemControllerLog(description = "跳转新建客户经理页面")
     @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
     public ModelAndView returnNewCustomer() {
         ModelAndView modelAndView = new ModelAndView("/customer/new");
-        Map<String, List<SelectModel>> dropDownList = new HashMap<>();
-        List<SelectModel> cert = customerBasicService.getCert();
-        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
-        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
-        dropDownList.put("cert", cert);
-        dropDownList.put("educationDegree", educationDegree);
-        dropDownList.put("marriageStatus", marriageStatus);
-        modelAndView.addObject("dropDownList", dropDownList);
+        modelAndView.addObject("dropDownList", selectInput());
         return modelAndView;
     }
 
@@ -154,8 +147,40 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     public ModelAndView returnUpdate(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
         ModelAndView modelAndView = new ModelAndView("/customer/update");
         TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
+        modelAndView.addObject("dropDownList", selectInput());
         modelAndView.addObject("tCustomerBasic", tCustomerBasic);
         return modelAndView;
+    }
+
+    /**
+     * 按id查询客户信息
+     *
+     * @param customerId 客户Id
+     * @return 客户基本信息
+     */
+    @ResponseBody
+    @GetMapping("/basic/{id}")
+    @SystemControllerLog(description = "按id查询客户信息")
+    @ApiOperation(value = "按id查询客户信息", notes = "按id查询客户信息 ", httpMethod = "GET")
+    public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
+        TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
+        return new ResultTo().setData(tCustomerBasic);
+    }
+
+    /**
+     * 查询客户编辑页面下拉框信息
+     *
+     * @return 客户编辑页面下拉框信息
+     */
+    private Map<String, List<SelectModel>> selectInput() {
+        Map<String, List<SelectModel>> dropDownList = new HashMap<>();
+        List<SelectModel> cert = customerBasicService.getCert();
+        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
+        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
+        dropDownList.put("cert", cert);
+        dropDownList.put("educationDegree", educationDegree);
+        dropDownList.put("marriageStatus", marriageStatus);
+        return dropDownList;
     }
 
     /**
@@ -184,4 +209,14 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
+    /**
+     * 查看客户信息
+     *
+     * @return 查看客户信息
+     */
+    @GetMapping("/customerInfo")
+    @ApiOperation(value = "查看客户信息", notes = "查看客户信息", httpMethod = "GET")
+    public ModelAndView index() {
+        return new ModelAndView("/customer/customerInfo");
+    }
 }

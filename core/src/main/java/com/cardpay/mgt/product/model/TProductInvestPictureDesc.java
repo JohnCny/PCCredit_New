@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.In;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
  * 产品对应调查图片图片说明
  * @author chenkai
  */
+@Lazy
 @Table(name = "T_PRODUCT_INVEST_PICTURE_DESC")
 @ApiModel(value="产品对应调查图片图片说明")
 public class TProductInvestPictureDesc extends GenericEntity<Integer> {

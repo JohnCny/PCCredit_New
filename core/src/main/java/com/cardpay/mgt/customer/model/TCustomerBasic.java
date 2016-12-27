@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.dozer.Mapping;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -14,23 +15,19 @@ import javax.persistence.*;
  *
  * @author yanweichen
  */
+@Lazy
 @Table(name = "T_CUSTOMER_BASIC")
 @ApiModel(value = "客户基本信息管理")
 public class TCustomerBasic extends GenericEntity<Integer> {
     /**
      * 客户id(需要生成规则生成)
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_BASIC_SEQ.nextval from dual")
     @ApiModelProperty(value = "客户id(需要生成规则生成)", required = true)
     private Integer id;
 
-    /**
-     * 用户id
-     */
-    @Column(name = "T_U_ID")
-    @ApiModelProperty(value = "用户id", required = true)
-    private Integer tUId;
 
     /**
      * 客户姓名
@@ -155,23 +152,6 @@ public class TCustomerBasic extends GenericEntity<Integer> {
         this.id = id;
     }
 
-    /**
-     * 获取用户id
-     *
-     * @return T_U_ID - 用户id
-     */
-    public Integer gettUId() {
-        return tUId;
-    }
-
-    /**
-     * 设置用户id
-     *
-     * @param tUId 用户id
-     */
-    public void settUId(Integer tUId) {
-        this.tUId = tUId;
-    }
 
     /**
      * 获取客户姓名

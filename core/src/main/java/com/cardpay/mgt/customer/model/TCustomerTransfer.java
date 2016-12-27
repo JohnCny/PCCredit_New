@@ -3,6 +3,7 @@ package com.cardpay.mgt.customer.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -11,14 +12,15 @@ import javax.persistence.*;
  * 客户移交信息实体类
  * @author yanweichen
  */
+@Lazy
 @Table(name = "T_CUSTOMER_TRANSFER")
 @ApiModel(value="客户移交记录")
 public class TCustomerTransfer extends GenericEntity<Integer>{
     /**
-     * 客户id(需要生成规则生成)
+     * 客户id
      */
+    @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_TRANSFER_SEQ.nextval from dual")
     @ApiModelProperty(value="客户id(需要生成规则生成)",required = true)
     private Integer id;
 

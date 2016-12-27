@@ -4,12 +4,15 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
-import java.beans.IntrospectionException;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 利用反射进行操作的一个工具类
@@ -223,6 +226,95 @@ public class ReflectUtil {
                 }
             }
         }
+    }
+
+    /**
+     * Bean转Map
+     * @param obj Bean
+     * @return Map
+     */
+    public static Map<String, Object> transBean2Map(Object obj) {
+
+        if(obj == null){
+            return null;
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+            for (PropertyDescriptor property : propertyDescriptors) {
+                String key = property.getName();
+
+                // 过滤class属性
+                if (!key.equals("class")) {
+                    // 得到property对应的getter方法
+                    Method getter = property.getReadMethod();
+                    Object value = getter.invoke(obj);
+
+                    map.put(key, value);
+                }
+
+            }
+        } catch (Exception e) {
+            System.out.println("transBean2Map Error " + e);
+        }
+
+        return map;
+
+    }
+
+    /**
+     * Map转Bean
+     * @param map map
+     * @param obj Bean
+     */
+    public static void transMap2Bean(Map<String, Object> map, Object obj) {
+        if (map == null || obj == null) {
+            return;
+        }
+        try {
+            BeanUtils.populate(obj, map);
+        } catch (Exception e) {
+            System.out.println("transMap2Bean2 Error " + e);
+        }
+    }
+
+    /**
+     * 检查对象所有属性是否为空
+     *
+     * @param obj 对象
+     * @param excludeField 排除检查的字段
+     * @return 全部为空返回 true 只要有不为空则为false
+     */
+    public static boolean checkBeanAllFiledIsNull(Object obj,String ... excludeField){
+        if (obj==null){return true;}
+        for (Field field : obj.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            try {
+                if (field.get(obj) == null || isInFields(field,excludeField)) { //判断字段是否为空，并且对象属性中的基本都会转为对象类型来判断
+                    continue;
+                } else {
+                  return false;
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 是否为需要排除的属性
+     * @param field 属性
+     * @param FieldNames 排除的属性名
+     * @return
+     */
+    private static boolean isInFields(Field field, String ...FieldNames){
+        if(FieldNames.length==0){return false;}
+        for (String filedName : FieldNames) {
+            return field.getName().equals(filedName);
+        }
+        return false;
     }
 }
 

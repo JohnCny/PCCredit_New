@@ -55,8 +55,14 @@
 <h1>客户接收</h1>
 <h2>当前位置：客户管理 / <span>客户接收</span></h2>
 
+<div class="search" style="width:95%">
+    <span>客户名称：<input type="text" class="short" name="cname" id="cname"></span>
+    <span>客户证件号码：<input type="text" name="certificateNumber" id="certificateNumber"></span>
+    <input class="searchBtn" type="button" value="搜 索">
+</div>
+
 <div class="table-responsive" style="margin:50px auto; width:95%;">
-    <table id="example" class="table table-bordered" style="width: 100%">
+    <table id="example" class="table table-bordered deleteAllTable" style="width: 100%">
         <thead>
         <tr>
             <th>选择</th>
@@ -87,14 +93,19 @@
 
 <script>
     $(function () {
-
-        var url = {
-            "urlList": "/customerTransfer/queryTransfer",
-        }
         var tableId = $("#example");
+        var ajax = {
+            type : "GET",
+            url : "/customerTransfer/queryTransfer",
+        }
         var aoColumns = [
             {
-                "mData": ""
+                "mData": "customerId",
+                "render":function (data,full) {
+                    var html = "";
+                    html += '<input type="checkbox" class="check" value='+data+' name="checkbox">';
+                    return  html;
+                }
             },
             {
                 "mData": "cname"
@@ -105,12 +116,64 @@
             }];
 
         var options = {
-            "urlList": url['urlList'],
             "tableId": tableId,
+            "ajax" :ajax,
             "aoColumns": aoColumns
         }
         myDataTable(options);
     }());
+
+    $(function () {
+        var ids = [];
+        var userIds = [];
+        var obj = {};
+        var keyobj = {};
+        var url = "/customerTransfer/accept";
+        $("#btn_submit").click(function () {
+            $("input[name='checkbox']:checkbox:checked").each(function(){
+                var id = $(this).val();
+                ids.push(id);
+            })
+            var tempid = ids.join(",");
+            obj["customerIds"] = tempid;
+            obj["flag"] = 1;
+            console.log(obj);
+            console.log(tempid);
+            $.ajax({
+                type:"put",
+                url : url,
+                data: obj,
+                success:function (res) {
+                    if(res.code == 200){
+                        alert("接收成功");
+                    }
+                }
+            });
+        });
+        $("#btn_submit2").click(function () {
+            $("input[name='checkbox']:checkbox:checked").each(function(){
+                var id = $(this).val();
+                userIds.push(id);
+            })
+            var tempid = userIds.join(",");
+            keyobj["customerIds"] = tempid;
+            keyobj["flag"] = 2;
+            console.log(keyobj);
+            console.log(tempid);
+            $.ajax({
+                type:"put",
+                url : url,
+                data: keyobj,
+                success:function (res) {
+                    if(res.code == 200){
+                        alert("拒绝成功");
+                    }
+                }
+            })
+
+        })
+
+        })
 
 </script>
 </#macro>

@@ -1,4 +1,3 @@
-var QK_searchObj ={};
 var myDataTable = function(options){
 	var table = options.tableId.DataTable({
 		"aLengthMenu":[10,20,40,60],
@@ -15,15 +14,7 @@ var myDataTable = function(options){
 		"iDisplayStart" : 0,
 		"dom": '<l<\'#topPlugin\'>f>rt<ip><"clear">',
 		"ordering": false,//全局禁用排序
-		"ajax" : {
-			"type" : "GET",
-			"url" : options.urlList,
-			"data" : function(d){
-				d.search = JSON.stringify(QK_searchObj);
-				d.name = " ";
-				d.IdNumber = " ";
-			}
-		},
+		"ajax" : options.ajax,
 		"aoColumns" : options.aoColumns,
 		/*"columnDefs" :[{
 			"orderable" : false, // 禁用排序
@@ -37,7 +28,7 @@ var myDataTable = function(options){
 			"sProcessing" : "正在获取数据，请稍后...",
 			"sLengthMenu" : "&nbsp;&nbsp;<span>每页显示</span>&nbsp;_MENU_&nbsp;条 ",
 			"sZeroRecords" : "没有找到数据",
-			"sInfo" : "",
+			"sInfo" : "共 _TOTAL_ 条数据，显示第 _START_ 到第 _END_ 条",
 			"sInfoEmpty" : "",
 			"sInfoFiltered" : "共 _TOTAL_ 条数据，显示第 _START_ 到第 _END_ 条",
 			"sInfoPostFix" : "",
@@ -54,21 +45,21 @@ var myDataTable = function(options){
 			//上方topPlugin DIV中追加HTML
 			//删除用户按钮的HTMLDOM
 			var topPlugin='<a href="" class="btn btn-primary btn-sm addBtn" ><i class="icon-add"></i>新 增</a>' +
-				/*'<button class="btn btn-danger btn-sm" id="deleteAll">批量删除</button>' +*/
+				'<button class="btn btn-danger btn-sm" id="deleteAll">批量删除</button>' +
 				'<button class="btn btn-info btn-sm" id="expCsv">导出全部</button>' +
 				'<button class="btn btn-warning btn-sm" id="reset">重置搜索条件</button>';
 			$("#topPlugin").append(topPlugin);//在表格上方topPlugin DIV中追加HTML
 			$(".addBtn").attr("href",options.urlNew);
+
 			$(document).on("click",".deleteOne",function(){
 				var id=$(this).data("id");
-				console.log(id);
-				console.log(options.urlDel);
 				$.ajax({
 					url : options.urlDel+id,
 					type : "DELETE",
 					success: function(data){
 						if(data.code == 200){
 							alert("删除成功");
+                            window.location.reload();
 						}else{
 							alert("删除失败");
 						}
@@ -76,6 +67,24 @@ var myDataTable = function(options){
 					}
 				});
 			});
+            $(document).on("click","#deleteAll",function(){
+                var ids = [];
+                var inputs = $(".deleteAllTable").find("input[type=checkbox]")
+                var tempIds = ids.join(",");
+                $.ajax({
+                    url : options.urlDel+tempIds,
+                    type : "DELETE",
+                    success: function(data){
+                        if(data.code == 200){
+                            alert("删除成功");
+                        }else{
+                            alert("删除失败");
+                        }
+
+                    }
+                });
+            });
+
 			$(document).on("click",".resetBtn",function () {
 				var id = $(this).data("id");
 				$.ajax({
@@ -119,7 +128,7 @@ var myDataTable = function(options){
 						case 1:
 							$.ajax({
 								type : "PUT",
-								url : "/user",
+								url : "/user/lock",
 								data : {"id":id,"status":status},
 								success:function (res) {
 									if (res.code == "200"){
@@ -131,7 +140,7 @@ var myDataTable = function(options){
 						case 0:
 							$.ajax({
 								type : "PUT",
-								url : "/user",
+								url : "/user/lock",
 								data : {"id":id,"status":status},
 								success:function (res) {
 									if (res.code == "200"){
@@ -148,12 +157,6 @@ var myDataTable = function(options){
 
 			/* 自定义搜索  姓名  联系方式  证件号码  创建时间 */
 			$(document).delegate('.searchBtn','click',function() {
-				QK_searchObj = {
-					"cname" : $("#cname").val(),
-					"certificateNumber" : $("#certificateNumber").val(),
-					"username" : $("#username").val(),
-					"email" : $("#email").val()
-				};
 				table.ajax.reload();
 			});
 		},

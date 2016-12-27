@@ -3,25 +3,24 @@ package com.cardpay.mgt.customer.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * 客户维护实体类
  * @author yanweichen
  */
+@Lazy
 @Table(name = "T_CUSTOMER_MAINTENANCE")
 @ApiModel(value="客户维护记录")
 public class TCustomerMaintenance extends GenericEntity<Integer> {
     /**
-     * 客户id(需要生成规则生成)
+     * 客户id
      */
+    @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MAINTENANCE_SEQ.nextval from dual")
     @ApiModelProperty(value="客户id(需要生成规则生成)",required = true)
     private Integer id;
 
