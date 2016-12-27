@@ -105,7 +105,7 @@ public class OrganizationController {
     @ResponseBody
     @ApiOperation(value = "根据父ID获取机构列表", httpMethod = "GET", notes = "默认父ID为0")
     public ResultTo getAllForTree() {
-        List<TreeOrgVO> tOrganizations = tOrganizationService.getAllForTree();
+        List<TOrganization> tOrganizations = tOrganizationService.selectAll();
         return new ResultTo().setData(tOrganizations);
     }
 
