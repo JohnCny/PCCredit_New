@@ -29,26 +29,20 @@
                 <h5>基本信息</h5>
                 <table class="bxd">
                     <tr>
-                        <td>客户名称：<span>客户1</span></td>
+                        <td>客户名称：<span>${tCustomerBasic.cname}</span></td>
                         <td>性别：<span>男</span></td>
                     </tr>
                     <tr>
                         <td>证件类型：<span>身份证</span></td>
-                        <td>证件号码：<span>XXXXXXXXXXXXXX</span></td>
+                        <td>证件号码：<span>${tCustomerBasic.certificateNumber}</span></td>
                     </tr>
                     <tr>
-                        <td>联系方式：<span>XXXXXXXXXXXXXX</span></td>
-                        <td>家庭住址：<span>XXXXXXXXXXXXXX</span></td>
+                        <td>联系方式：<span>${tCustomerBasic.tel}</span></td>
+                        <td>家庭住址：<span>${tCustomerBasic.homeAddress}</span></td>
                     </tr>
                     <tr>
-                        <td colspan="2">所属行业：<span>aa</span>、<span>bb</span>、<span>cc</span></td>
-                    </tr>
-                    <tr>
-                        <td>婚姻状况：<span>已婚</span></td>
-                        <td>文化程度：<span>本科</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">建档时间：<span>XXXXXXXXXXXXXX</span></td>
+                        <td>婚姻状况：<span>${tCustomerBasic.marriageStatus}</span></td>
+                        <td>文化程度：<span>${tCustomerBasic.educationDegree}</span></td>
                     </tr>
                 </table>
             </div>
@@ -205,7 +199,17 @@
             $("#"+id).show();
         }
         $(function () {
-            $.aja
+            var href = location.href;
+            console.log(href);
+            var hrefs = href.split("/");
+            console.log(hrefs);
+            var lens = hrefs.length;
+            console.log(lens);
+            var Id = hrefs[lens - 1];
+            console.log(Id);
+            $.ajax({
+                type
+            })
         });
     </script>
 

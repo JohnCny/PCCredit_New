@@ -130,7 +130,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a href="/customerBasic/customerInfo/"'+data+' class="btn btn-info editOne look">查看</a><a onclick="deleRow()" class="editOne btn-info" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
+                    return  '<a href="/customerBasic/customerInfo/'+data+'" class="btn btn-info editOne look">查看</a><a onclick="deleRow()" class="editOne btn-info" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
                 }
             }];
 
