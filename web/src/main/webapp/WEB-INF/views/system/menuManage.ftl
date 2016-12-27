@@ -60,8 +60,14 @@
     var roleId = 2;
     var urlMy = "/menu/allAuth?roleId="+roleId;
     var setting = {
+        edit: {
+            enable: true,
+            showRemoveBtn: false,
+            showRenameBtn: false
+        },
         check:{
-            enable: true
+            enable: true,
+            autoCheckTrigger:true
         },
         data: {
             key:{
@@ -74,7 +80,9 @@
             }
         },
         callback: {
-            onCheck: zTreeOnCheck
+            onCheck: zTreeOnCheck,
+            beforeDrop: beforeDrop
+
         }
     };
 
@@ -89,7 +97,21 @@
                     console.log("Data Loaded: " + data)
                 }
         );
-    };
+    }
+
+    function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+        console.log("Drop")
+        console.log(treeNodes+":"+targetNode.menuNameZh)
+//        $.ajax({
+//            type: "POST",
+//            url: "some.php",
+//            data: "name=John&location=Boston",
+//            success: function(msg){
+//                alert( "Data Saved: " + msg );
+//            }
+//        });
+    }
+
 
     $("#saveMenu").click( function () {
         $.get("/menu/refresh",

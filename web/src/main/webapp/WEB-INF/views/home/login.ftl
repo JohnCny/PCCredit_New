@@ -43,6 +43,7 @@
                     url : "/logon/login",
                     data : data,
                     success : function(result){
+                        localStorage.url = null;
                         if(result.code != 200){
                             $(".errorMessage").show().find("span").text(message(result['code']));
                         }else{
