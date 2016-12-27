@@ -1,99 +1,117 @@
 <#include "layout/base.html"/>
-<#assign title = "系统管理"/>
+<#assign title = "客户"/>
 <#macro style>
-
+    <style>
+        .delete{
+            margin-left: 10px;
+        }
+        .editOne{
+            margin-right: 10px;
+            color: #fff;
+            background-color: #1e92ff;
+            /*border-color: #46b8da;*/
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .editOne:hover{
+            text-decoration: none;
+            color: #fff;
+            background-color: #1f7acf;
+        }
+        #example tbody td,#example thead th{
+            text-align: center;
+            line-height: #1f7acf;
+            box-sizing: border-box;
+        }
+        #example tbody{
+            position: relative;
+            top:1px;
+        }
+    </style>
 </#macro>
 <#macro css>
 
 </#macro>
 <#macro breadcrumb>
+
     <h1>${title}</h1>
     <h2>当前位置：系统管理 / <span class="active">${title}</span></h2>
 </#macro>
 <#macro content>
-    <div class="content">
-        <h1>数据字典管理</h1>
-        <h2>当前位置：系统管理 / <span>数据字典管理</span></h2>
-        <div class="report common tableB">
-            <h5>数据字典列表</h5>
-            <div class="search">
-                <span>字典类别：<input type="text" class="short" name=""></span>
-                <span>字典代码：<input type="text" class="short" name=""></span>
-                <span>字典名称：<input type="text" class="short" name=""></span>
-                <input type="button" value="搜 索">
-            </div>
-            <table class="center">
-                <colgroup>
-                    <col width="20%"></col>
-                    <col width="20%"></col>
-                    <col width="20%"></col>
-                    <col width="20%"></col>
-                    <col width="20%"></col>
-                </colgroup>
-                <tr>
-                    <th>字典类别</th>
-                    <th>字典代码</th>
-                    <th>字典名称</th>
-                    <th>银行代码</th>
-                    <th>操作</th>
-                </tr>
-                <tr>
-                    <td>APPRETURESION</td>
-                    <td>APPRETURESION01</td>
-                    <td>身份信息不正确</td>
-                    <td></td>
-                    <td><button class="edit" onclick="iframe('edit_sjzd.html')"><i class="icon-pencil icon-white"></i>编辑</button></td>
-                </tr>
-                <tr>
-                    <td>APPRETURESION</td>
-                    <td>APPRETURESION02</td>
-                    <td>居住地址缺失</td>
-                    <td></td>
-                    <td><button class="edit" onclick="iframe('edit_sjzd.html')"><i class="icon-pencil icon-white"></i>编辑</button></td>
-                </tr>
-            </table>
 
-            <div class="page-div">
-                <span style="CURSOR: pointer"><img src="../../../static/img/prev.png"/></span>
-                &#160;第&#160;<font color="#0088cc">1</font>&#160;页&#160; /
-                &#160;共&#160;<font color="#0088cc">1</font>&#160;页&#160;
-                <span style="CURSOR: pointer"><img src="../../../static/img/next.png"/></span>
-            </div>
+    <h5>数据字典列表</h5>
 
-        </div>
-
+    <div class="table-responsive" style="margin:50px auto; width:95%;">
+        <table id="example" class="table table-bordered" style="width: 100%" >
+            <thead>
+            <tr>
+                <th>字典类别	</th>
+                <th>字典代码	</th>
+                <th>字典名称	</th>
+                <th>银行代码	</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+        </table>
     </div>
-
 
 </#macro>
 
 <#macro script>
-    <script>
-        $(function () {
-            var url = "/customerMaintenance";
-            var arr = ["id", "maintenanceType","maintennaceSummary"];
-            var Obj = {};
-            $("#btn_submit").click(function (e) {
-                e.preventDefault();
-                for(var i = 0; i < arr.length; i++){
-                    Obj[arr[i]]=$("#"+arr[i]).val();
-                }
-                $.ajax({
-                    type:"post",
-                    url:url,
-                    data:Obj,
-                    success: function(res){
-                        if(res.code == 200){
-                            location.href="/customerMaintenance/index";
-                        }
-                    }
-                });
-            })
-        })
-    </script>
+
 </#macro>
 
 <#macro js>
 
+    <script>
+
+        $(function(){
+
+            var url  = {
+                "urlNew" : "/dataDictionary",
+                "urlDel" : "/dataDictionary",
+            }
+
+            var tableId = $("#example");
+            var aoColumns = [{
+                "mData" : "dataType"
+            },{
+                "mData" : "dataCode",
+            },{
+                "mData" : "dataName",
+            },{
+                "mData" : "bankCode",
+            },{
+                "mData" : "dataId",
+                "sDefaultContent" : "",
+                "render" : function(data, type, full, meta) {
+                    return  '<a onclick="deleRow()" class="editOne btn-info" href="/system/update/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
+                }
+            }];
+
+            var options = {
+                "urlNew" : url['urlNew'],
+                "urlDel" : url['urlDel'],
+                "ajax" : ajax,
+                "tableId" : tableId,
+                "aoColumns" : aoColumns
+            }
+            myDataTable(options);
+        }());
+
+    </script>
 
 </#macro>
