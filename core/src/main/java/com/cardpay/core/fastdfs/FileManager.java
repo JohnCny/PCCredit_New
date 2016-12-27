@@ -4,6 +4,7 @@ package com.cardpay.core.fastdfs;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.file.model.TFile;
 import com.cardpay.mgt.file.service.TFileService;
+import org.apache.commons.lang3.StringUtils;
 import org.csource.common.MyException;
 import org.csource.fastdfs.*;
 import org.csource.common.NameValuePair;
@@ -65,13 +66,11 @@ public class FileManager implements FileManagerConfig {
      */
     private static String upload(FastDFSFile file, NameValuePair[] valuePairs) {
         String[] uploadResults;
-        String groupName = null;
-        String remoteFileName = null;
         try {
             uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), valuePairs);
             if (uploadResults.length > 0) {
-                groupName = uploadResults[0];
-                remoteFileName = uploadResults[1];
+                String groupName  = uploadResults[0];
+                String remoteFileName = uploadResults[1];
                 return groupName + "," + remoteFileName;
             }
 
@@ -138,7 +137,7 @@ public class FileManager implements FileManagerConfig {
         TFile tFile = new TFile();
         tFile.setFastName(remoteFileName);
         TFile fileEntity = tFileService.selectOne(tFile);
-        fileEntity.setModifyBy(ShiroKit.getUserId().toString());
+        fileEntity.setModifyBy(String.valueOf(ShiroKit.getUserId()));
         fileEntity.setRemark("downLoad");
         return tFileService.updateByPrimaryKey(fileEntity);
     }
@@ -228,7 +227,7 @@ public class FileManager implements FileManagerConfig {
             fileName = upload(fastDFSFile, metaList);
             //插入数据库t_file表
             if (!fileName.isEmpty()) {
-                String[] str = fileName.split(",");
+                String[] split = StringUtils.split(fileName);
                 String userId = String.valueOf(ShiroKit.getUserId());
                 TFile tFile = TFile.TFileBuilder.get()
                         .withId(1)
@@ -239,8 +238,8 @@ public class FileManager implements FileManagerConfig {
                         .withCreatedAt(new Date())
                         .withModifiedBy(userId)
                         .withModifiedAt(new Date())
-                        .withGroupName(str[0])
-                        .withFastName(str[1])
+                        .withGroupName(split[0])
+                        .withFastName(split[1])
                         .build();
                 tFiles.add(tFile);
                 tFileService.batchInsertFile(tFiles);
