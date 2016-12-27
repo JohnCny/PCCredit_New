@@ -1,91 +1,21 @@
-
+<link href="/static/css/menu.css" rel="stylesheet">
 <!--**********************************************左侧*********************************************************-->
 <div class="left">
     <div class="logo">
-        <a href="javascript:void(0);" onclick="Iframe('welcome_khjl.html');setNav()"><img src="../static/img/logo.png" alt=""></a>
+        <a href="javascript:;"><img src="/static/img/logo.png" alt=""></a>
     </div>
     <ul class="nav">
 
     </ul>
 </div>
-<div class="small-left">
+<!--<div class="small-left">
     <div class="logo">
-        <a href="javascript:void(0);" onclick="Iframe('welcome.html');setNav()"><img src="../static/img/small-logo.png" alt=""></a>
+        <a href="javascript:"><img src="../static/img/small-logo.png" alt=""></a>
     </div>
     <ul class="nav">
-        <li class="menu-list">
-            <a href="javascript:void(0);"><i class="icon jjgl"></i></a>
-            <div class="small-list">
-                <div><img src="../static/img/small-list.png" alt=""><span>进件管理</span></div>
-                <ul>
 
-                </ul>
-            </div>
-        </li>
-        <li class="menu-list">
-            <a href="javascript:void(0);"><i class="icon khgl"></i></a>
-            <div class="small-list">
-                <div><img src="../static/img/small-list.png" alt=""><span>客户管理</span></div>
-                <ul>
-
-                </ul>
-            </div>
-        </li>
-        <li class="menu-list">
-            <a href="javascript:void(0);"><i class="icon khjlgl"></i></a>
-            <div class="small-list">
-                <div><img src="../static/img/small-list.png" alt=""><span>客户经理管理</span></div>
-                <ul>
-
-                </ul>
-            </div>
-        </li>
-        <li class="menu-list">
-            <a href="javascript:void(0);"><i class="icon dhgl"></i></a>
-            <div class="small-list">
-                <div><img src="../static/img/small-list.png" alt=""><span>贷后管理</span></div>
-                <ul>
-
-                </ul>
-            </div>
-        </li>
-        <li class="menu-list">
-            <a href="javascript:void(0);"><i class="icon fxkz"></i></a>
-            <div class="small-list">
-                <div><img src="../static/img/small-list.png" alt=""><span>风险控制</span></div>
-                <ul>
-
-                </ul>
-            </div>
-        </li>
-        <li class="menu-list">
-            <a href="javascript:void(0);"><i class="icon cpgl"></i></a>
-            <div class="small-list">
-                <div><img src="../static/img/small-list.png" alt=""><span>产品管理</span></div>
-                <ul>
-
-                </ul>
-            </div>
-        </li>
-        <li class="menu-list">
-            <a href="javascript:void(0);"><i class="icon tjBb"></i></a>
-            <div class="small-list">
-                <div><img src="../static/img/small-list.png" alt=""><span>统计报表</span></div>
-                <ul>
-
-                </ul>
-            </div>
-        </li>
-        <li class="menu-list">
-            <a href="javascript:void(0);"><i class="icon xtgl"></i></a>
-            <div class="small-list">
-                <div><img src="../static/img/small-list.png" alt=""><span>系统管理</span></div>
-                <ul>
-                </ul>
-            </div>
-        </li>
     </ul>
-</div>
+</div>-->
 <!--**********************************************顶部*********************************************************-->
 <div class="top">
     <div class="hideNav" onclick="changeNav()"></div>
@@ -104,30 +34,42 @@
 </div>
 <!--**********************************************底部*********************************************************-->
 <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/static/js/menu.js"></script>
 <script>
     $(function(){
-        var parent=$(".nav"),html=" ";
+        /*如果是第一次进入该页面就设置默认页面为index；不是就取本地缓存的页面为当前高亮*/
+        function setUrl(){
+            return localStorage.url?localStorage.url:'/index';
+        }
+        $(document).on("click","ul.second-nav li a",function() {
+            localStorage.url = $(this).parent("li").data("name");
+        });
+        var parent=$(".nav"),html=" ",url=setUrl();
         $.ajax({
             type : "GET",
             url : "/menu/all",
             success : function(result){
+                parent.empty();
                 var menu = result.data.menus;
                 $(menu).each(function(i,v){
                     html += '<li onclick="showMenu(this)" class="menu-list"><a href="javascript:;">'+$(v)[0].menuNameZh+'<i class="pull-right"></i></a>';
                    if($(v)[0].menuLists.length > 0){
-
                        html += '<ul class="second-nav">';
                        $($(v)[0].menuLists).each(function(i,v) {
-                           html += '<li><a href='+$(v)[0].menuUrl+'>'+$(v)[0].menuNameZh+'</a></li>';
+                           var tempA = $(v)[0];
+                           html += '<li data-name='+tempA.menuUrl;
+                           if(url == tempA.menuUrl){
+                               html += ' class = second-active';
+                           }
+                           html += '><a href=/'+tempA.menuUrl+'>'+tempA.menuNameZh+'</li>';
                        });
                        html += '</ul>'
                    }
-
                     html += '</li>';
                 });
                 parent.html(html);
-
+                $("ul.second-nav li.second-active").parent("ul.second-nav").show().parents("li.menu-list").addClass("active");
             }
         })
-    }())
+    }());
 </script>
