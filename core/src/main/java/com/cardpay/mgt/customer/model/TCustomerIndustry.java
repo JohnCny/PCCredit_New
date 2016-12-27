@@ -3,6 +3,7 @@ package com.cardpay.mgt.customer.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
  * 客户所属行业实体类
  * @author yanweichen
  */
+@Lazy
 @Table(name = "T_CUSTOMER_INDUSTRY")
 @ApiModel(value="客户行业信息表")
 public class TCustomerIndustry extends GenericEntity<Integer> {

@@ -4,9 +4,11 @@ import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.dozer.Mapping;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
 import javax.persistence.*;
+@Lazy
 @ApiModel(value = "机构表")
 @Table(name = "T_ORGANIZATION")
 public class TOrganization extends GenericEntity<Integer>{

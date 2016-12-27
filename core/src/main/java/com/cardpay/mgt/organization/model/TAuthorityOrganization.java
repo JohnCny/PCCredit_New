@@ -3,8 +3,10 @@ package com.cardpay.mgt.organization.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
+@Lazy
 @ApiModel(value = "权限机构关联表")
 @Table(name = "T_AUTHORITY_ORGANIZATION")
 public class TAuthorityOrganization extends GenericEntity<Integer>{
