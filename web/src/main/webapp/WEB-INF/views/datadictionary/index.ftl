@@ -55,7 +55,7 @@
     <h5>数据字典列表</h5>
 
     <div class="table-responsive" style="margin:50px auto; width:95%;">
-        <table id="example" class="table table-bordered" style="width: 100%" >
+        <table id="dictionary" class="table table-bordered" style="width: 100%" >
             <thead>
             <tr>
                 <th>字典类别	</th>
@@ -97,7 +97,7 @@
                 }
             }
 
-            var tableId = $("#example");
+            var tableId = $("#dictionary");
             var aoColumns = [{
                 "mData" : "dataType"
             },{
