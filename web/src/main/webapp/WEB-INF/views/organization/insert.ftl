@@ -27,18 +27,25 @@
             <input type="hidden" name="orgId" id="orgId">
         </div>
         <div class="table-responsive list_show" style=" width:100%;">
-            <table id="userList" class="table table-bordered" style="width: 100%">
-                <thead>
+            <form id="contenttable" action="">
+                <input class="searchBtn" type="hidden" name="id" id="id" value="${tOrganization.id}">
                 <tr>
-                    <th>机构名称</th>
-                    <th>负责人</th>
-                    <th>后勤</th>
-                    <th>操作</th>
+                    <td class="pull-right">机构名称：</td>
+                    <td colspan="3"><input type="text" id="orgName" name="orgName" ></td>
                 </tr>
-                </thead>
-            </table>
+                <tr>
+                    <td class="pull-right">负责人：</td>
+                    <td><input type="text" id="orgDirectorName" name="orgDirectorName" ></td>
+                    <td class="pull-right">后勤：</td>
+                    <td><input type="text" id="orgLogisticsId" name="orgLogisticsId"></td>
+                </tr>
         </div>
+        <p class="button">
+            <input type="button" id="btn_submit" value="保存" />
+        </p>
+        </form>
     </div>
+</div>
 </div>
 
 </#macro>
@@ -77,9 +84,7 @@
         function onClick(event, treeId, treeNode, clickFlag) {
             $("#orgId").attr("value", treeNode.orgName);
             $("#orgId").attr("data-id", treeNode.id);
-
         }
-
         function beforeDrop(treeId, treeNodes, targetNode, moveType) {
             var arr = [];
             var isSuc = false;
@@ -107,48 +112,25 @@
             });
             return isSuc;
         }
+        $(function () {
+            var url = "/organization";
+            $("#btn_submit").click(function (e) {
+                e.preventDefault();
+                var Obj = $("#contenttable").serializeArray();
+                console.log(Obj);
+                $.ajax({
+                    type:"post",
+                    url:url,
+                    data:Obj,
+                    success: function(res){
+                        if(res.code == 200){
+                            location.href="/organization/index";
+                        }
+                    }
+                });
 
-
-        var ajax = {
-            "type" : "GET",
-            "url" : "/organization/pageList",
-            "data" : function(d){
-                var QK_searchObj = {
-                    "orgName" :$("#orgId").val()
-                }
-                d.search = JSON.stringify(QK_searchObj);
-            }
-
-        }
-
-        var url  = {
-            "urlNew" : "/organization/add",
-            "urlDel" : "/organization/"
-        }
-
-        var tableId = $("#userList");
-        var aoColumns = [{
-            "mData": "orgName"
-        }, {
-            "mData": "orgDirectorName"
-
-        }, {
-            "mData": "orgLogisticsId",
-        }, {
-            "mData": "id",
-            "sDefaultContent": "",
-            "render": function (data, type, full, meta) {
-                return '<a onclick="deleRow()" class="btn editOne btn-info" href="/organization/toAdd">添加</a><a onclick="deleRow()" class="btn editOne btn-info" href="/organization/' + data + '">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
-            }
-        }];
-        var options = {
-            "urlNew" : url['urlNew'],
-            "urlDel" : url['urlDel'],
-            "ajax" : ajax,
-            "tableId" : tableId,
-            "aoColumns" : aoColumns
-        }
-        myDataTable(options);
+            })
+        })
 
     });
 
