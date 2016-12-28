@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +38,7 @@ import java.util.Map;
  * @author rankai
  * @create 2016-12-2016/12/21 10:22
  */
-@RestController
+@Controller
 @RequestMapping("/role")
 @Api(value = "/role", description = "角色信息控制层")
 public class RoleController extends BaseController<Role> {
@@ -80,6 +81,7 @@ public class RoleController extends BaseController<Role> {
     @GetMapping(value = "/add")
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "获取权限组", httpMethod = "GET")
+    @ResponseBody
     public ResultTo authorityGroup() {
         List<AuthorityGroup> authorityGroups = roleService.selectAuthorityGroup();
         return new ResultTo().setData(authorityGroups);
@@ -94,6 +96,7 @@ public class RoleController extends BaseController<Role> {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "增加角色信息", httpMethod = "POST")
+    @ResponseBody
     public ResultTo add(@ApiParam("角色实体对象") @Valid Role role, BindingResult result, @ApiParam("权限ID数组") Integer authorityId[]) {
         Map<String, String> map = new HashMap<>();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
@@ -116,6 +119,7 @@ public class RoleController extends BaseController<Role> {
     @RequestMapping(value = "/{roleId}/page", method = RequestMethod.GET)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据角色ID获取角色的权限信息", httpMethod = "GET")
+    @ResponseBody
     public ResultTo updatePage(@ApiParam("角色ID") @PathVariable("roleId") Integer roleId) {
         Role role = roleService.selectByPrimaryKey(roleId);
         List<AuthorityGroup> list = roleService.selectRole(roleId);
@@ -134,6 +138,7 @@ public class RoleController extends BaseController<Role> {
     @RequestMapping(value = "/{groupName}/update", method = RequestMethod.GET)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "获取权限组", httpMethod = "POST")
+    @ResponseBody
     public ResultTo operationList(@ApiParam("权限组名") @PathVariable("groupName") String groupName) {
         List<Authority> list = roleService.selectOperationList(groupName);
         return new ResultTo().setData(list);
@@ -150,6 +155,7 @@ public class RoleController extends BaseController<Role> {
     @RequestMapping(method = RequestMethod.GET, params = {"roleId", "oldAuthorityId", "newAuthorityId"})
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "获取权限组", httpMethod = "GET")
+    @ResponseBody
     public ResultTo update(@ApiParam("角色ID") @RequestParam(value = "roleId") Integer roleId,
                            @ApiParam("原权限ID") @RequestParam(value = "oldAuthorityId", defaultValue = "-1") Integer oldAuthorityId,
                            @ApiParam("新权限ID") @RequestParam(value = "newAuthorityId", defaultValue = "-1") Integer newAuthorityId) {
