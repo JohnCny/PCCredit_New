@@ -12,6 +12,7 @@ import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.AuthorityGroup;
 import com.cardpay.mgt.user.service.RoleService;
+import io.swagger.models.auth.In;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,10 +99,18 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
             LogTemplate.info(this.getClass(), "count", count);
             return Boolean.FALSE;
         }
-        Map<String, Object> map = new HashedMap();
-        map.put("roleId", role.getId());
-        map.put("authorityIds", authorityIds);
-        roleAuthorityMapper.insertArray(map);
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < authorityIds.length; i++) {
+            if (authorityIds[i] != -1) {
+                list.add(authorityIds[i]);
+            }
+        }
+        if (list.size() > 0) {
+            Map<String, Object> map = new HashedMap();
+            map.put("roleId", role.getId());
+            map.put("authorityIds", list);
+            roleAuthorityMapper.insertArray(map);
+        }
         return Boolean.TRUE;
     }
 

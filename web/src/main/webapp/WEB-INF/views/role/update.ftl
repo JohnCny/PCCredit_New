@@ -38,7 +38,7 @@
 </#macro>
 <#macro breadcrumb>
 <h1>新增角色</h1>
-<h2>当前位置：系统管理 / 角色权限管理 / <span>新增角色</span></h2>
+<h2>当前位置：系统管理 / 角色权限管理 / <span>编辑角色</span></h2>
 </#macro>
 <#macro content>
 <form class="content" id="roleMes">
@@ -60,20 +60,18 @@
         <ul class="rightRole">
             <li class="col-md-4 col-sm-12 col-xs-12">
                 <label for="">角色名称:</label>
-                <input type="text" name="roleName">
+                <input type="text" name="roleName" value="${role.roleName}">
             </li>
             <li class="col-md-4 col-sm-6 col-xs-12">
                 <label for="dfaa">是否启用:</label>
                 <select name="roleStatus" id="dfaa">
-                    <option value="1">启用</option>
-                    <option value="0">禁用</option>
+                    <option value="1" <#if roleStatus==1>selected="selected"</#if>>启用</option>
+                    <option value="0" <#if roleStatus==0>selected="selected"</#if>>禁用</option>
                 </select>
             </li>
             <li class="col-md-4 col-sm-6 col-xs-12">
                 <label for="dddf">描述信息:</label>
-                <textarea name="roleDescription" id="dddf">
-
-                    </textarea>
+                <textarea name="roleDescription" id="dddf">${roleDescription}</textarea>
             </li>
         </ul>
     </div>
@@ -105,7 +103,8 @@
                     <select name="authorityId" id="roleled">
                         <option value="-1">---请选择---</option>
                         <#list temp.authorityList as var>
-                            <option value="${var.id}">${var.authorityNameZh}</option>
+                            <option <#list roleAuthorities as param ><#if param.authorityId==var.id>selected="selected"</#if></#list>
+                                    value="${var.id}" data-id="${var.id}">${var.authorityNameZh}</option>
                         </#list>
                     </select>
                 </li>
