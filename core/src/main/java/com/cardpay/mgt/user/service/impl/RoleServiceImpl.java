@@ -93,13 +93,13 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
         role.setCreateBy(user.getId());
         role.setCreateTime(new Date());
         role.setRoleStatus(1);
-        int roleId = roleMapper.insertSelective(role);
-        if (roleId <= 0) {
-            LogTemplate.info(this.getClass(), "roleId", roleId);
+        int count = roleMapper.insertSelective(role);
+        if (count <= 0) {
+            LogTemplate.info(this.getClass(), "count", count);
             return Boolean.FALSE;
         }
         Map<String, Object> map = new HashedMap();
-        map.put("roleId", roleId);
+        map.put("roleId", role.getId());
         map.put("authorityIds", authorityIds);
         roleAuthorityMapper.insertArray(map);
         return Boolean.TRUE;

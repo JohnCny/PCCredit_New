@@ -115,7 +115,7 @@ public class RoleController extends BaseController<Role> {
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "增加角色信息", httpMethod = "POST")
     @ResponseBody
-    public ResultTo add(@ApiParam("角色实体对象") @Valid Role role, BindingResult result, @ApiParam("权限ID数组") Integer authorityId[]) {
+    public ResultTo add(@ApiParam("角色实体对象") Role role, BindingResult result, @ApiParam("权限ID数组") Integer authorityId[]) {
         Map<String, String> map = new HashMap<>();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             LogTemplate.info(this.getClass(), "message", "增加角色参数有误");
