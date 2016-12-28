@@ -28,15 +28,15 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public List<TOrganizationVo> queryOrganization(int id, int levels) {
-        tOrganizationDao.createOrganizationView(id, levels);
-        return tOrganizationDao.queryOrganization(id);
+    public List<TOrganizationVo> queryOrganization(int parentId, int levels) {
+        tOrganizationDao.createOrganizationView(parentId, levels);
+        return tOrganizationDao.queryOrganization(parentId);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public int deleteOrganization(int id) {
-        return tOrganizationDao.deleteOrganization(id);
+    public int deleteOrganization(int organizationId) {
+        return tOrganizationDao.deleteOrganization(organizationId);
     }
 
     @Override
