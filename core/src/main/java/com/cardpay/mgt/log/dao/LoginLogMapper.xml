@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.log.dao.LoginLogMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.log.model.LoginLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="LOGIN_ACCOUNT" jdbcType="VARCHAR" property="loginAccount" />
+    <result column="LOGIN_OPERATION" jdbcType="VARCHAR" property="loginOperation" />
+    <result column="LOGIN_TIME" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="LOGIN_RESULT" jdbcType="VARCHAR" property="loginResult" />
+    <result column="LOGIN_IP" jdbcType="VARCHAR" property="loginIp" />
+  </resultMap>
+</mapper>

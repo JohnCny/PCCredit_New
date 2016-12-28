@@ -1,0 +1,85 @@
+<link href="/static/css/menu.css" rel="stylesheet">
+<!--**********************************************左侧*********************************************************-->
+<div class="left">
+    <div class="logo">
+        <a href="javascript:;"><img src="/static/img/logo.png" alt=""></a>
+    </div>
+    <ul class="nav">
+
+    </ul>
+</div>
+<!--<div class="small-left">
+    <div class="logo">
+        <a href="javascript:"><img src="../static/img/small-logo.png" alt=""></a>
+    </div>
+    <ul class="nav">
+
+    </ul>
+</div>-->
+<!--**********************************************顶部*********************************************************-->
+<div class="top">
+    <div class="hideNav" onclick="changeNav()"></div>
+    <div class="userMenu">
+        <img src="../static/img/user/01.png"/>
+        <span>客户经理</span>
+        <div class="slowDown">
+            <img src="../static/img/slowDown.png" class="boxJ"/>
+            <ul><!--
+					<li><i class="gr"></i><a>个人资料</a></li> -->
+                <li onclick="Iframe('change_password.html');setNav()"><i class="gm"></i><a>修改密码</a></li>
+                <li onclick="window.location.href='/logon/logout';"><i class="dc"></i><a>退出</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--**********************************************底部*********************************************************-->
+<script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/static/js/menu.js"></script>
+<script>
+    $(function(){
+        /*如果是第一次进入该页面就设置默认页面为index；不是就取本地缓存的页面为当前高亮*/
+
+        function setUrl(){
+            if(!localStorage.url){
+                return '/index';
+            }else{
+                return localStorage.url;
+            }
+        }
+        $(document).on("click","ul.second-nav li a",function() {
+            var url = $(this).parent("li").data("name");
+            if(url.indexOf("javaScript") > -1){
+                return;
+            }else{
+                localStorage.url = url;
+            }
+        });
+        var parent=$(".nav"),html=" ",url=setUrl();
+        $.ajax({
+            type : "GET",
+            url : "/menu/all",
+            success : function(result){
+                parent.empty();
+                var menu = result.data.menus;
+                $(menu).each(function(i,v){
+                    html += '<li onclick="showMenu(this)" class="menu-list"><a href="javascript:;">'+$(v)[0].menuNameZh+'<i class="pull-right"></i></a>';
+                   if($(v)[0].menuLists.length > 0){
+                       html += '<ul class="second-nav">';
+                       $($(v)[0].menuLists).each(function(i,v) {
+                           var tempA = $(v)[0];
+                           html += '<li data-name='+tempA.menuUrl;
+                           if(url == tempA.menuUrl){
+                               html += ' class = second-active';
+                           }
+                           html += '><a href=/'+tempA.menuUrl+'>'+tempA.menuNameZh+'</li>';
+                       });
+                       html += '</ul>'
+                   }
+                    html += '</li>';
+                });
+                parent.html(html);
+                $("ul.second-nav li.second-active").parent("ul.second-nav").show().parents("li.menu-list").addClass("active");
+            }
+        })
+    }());
+</script>

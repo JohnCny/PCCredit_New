@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.customer.dao.TCustomerMaintenanceMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.model.TCustomerMaintenance">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
+        <result column="MAINTENANCE_TYPE" jdbcType="DECIMAL" property="maintenanceType"/>
+        <result column="MAINTENNACE_SUMMARY" jdbcType="VARCHAR" property="maintennaceSummary"/>
+        <result column="OPERATION_ID" jdbcType="DECIMAL" property="operationId"/>
+        <result column="OPERATION_NAME" jdbcType="VARCHAR" property="operationName"/>
+        <result column="OPERATION_TIME" jdbcType="TIMESTAMP" property="operationTime"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerMaintenanceVo">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="certificateNumber"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+    </resultMap>
+
+    <!--按条件查询客户维护信息-->
+    <select id="queryCustomerByCondition" resultMap="BaseResultMapVo">
+        SELECT basic.id as id, basic.CERTIFICATE_NUMBER AS certificateNumber, basic.tel as tel, basic.cname as cname
+        FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_MANAGER manager, T_CUSTOMER_MAINTENANCE maintenance
+        <where>
+            basic.CUSTOMER_MANAGER_ID = MANAGER.id AND maintenance.id = basic.id
+            AND MANAGER.ORGANIZATION_ID = (
+            SELECT ORGANIZATION_ID FROM T_CUSTOMER_MANAGER WHERE USER_ID = #{customerManagerId})
+            AND basic.CUSTOMER_STATUS = 0
+            <if test="cname!=null and cname!=''">
+                AND basic.cname = #{cname}
+            </if>
+            <if test="certificateNumber!=null and certificateNumber!=''">
+                AND basic.CERTIFICATE_NUMBER = #{certificateNumber}
+            </if>
+        </where>
+    </select>
+</mapper>
