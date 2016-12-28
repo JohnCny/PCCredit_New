@@ -5,7 +5,6 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
-import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,17 +62,17 @@ public class OrganizationController {
     }
 
     /**
-     * 递归删除层级信息
+     * 删除机构以及其资机构信息
      *
-     * @param id 层级id
+     * @param organizationId 层级id
      * @return 1成功, 0失败
      */
     @ResponseBody
     @DeleteMapping
-    @ApiOperation(value = "递归删除层级接口", notes = "递归删除层级信息", httpMethod = "DELETE")
-    public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam int id) {
-        int flag = tOrganizationService.deleteOrganization(id);
-        logger.info(OrganizationController.class, "递归删除层级信息", "层级id:" + id);
+    @ApiOperation(value = "递归删除层级接口", notes = "删除机构以及其资机构信息", httpMethod = "DELETE")
+    public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @RequestParam("organizationId") int organizationId) {
+        int flag = tOrganizationService.deleteOrganization(organizationId);
+        logger.info(OrganizationController.class, "递归删除层级信息", "层级id:" + organizationId);
         return new ResultTo().setData(flag);
     }
 
@@ -110,13 +109,13 @@ public class OrganizationController {
     }
 
     /**
-     * 跳转查看客户信息
+     * 跳转机构管理主页
      *
-     * @return 跳转查看客户信息
+     * @return 跳转机构管理主页
      */
     @GetMapping("/index")
-    @ApiOperation(value = "跳转查看客户信息", notes = "跳转查看客户信息", httpMethod = "GET")
+    @ApiOperation(value = "跳转机构管理主页", notes = "跳转机构管理主页", httpMethod = "GET")
     public ModelAndView index() {
-        return new ModelAndView("/customer/customerInfo");
+        return new ModelAndView("/organization/index");
     }
 }
