@@ -24,7 +24,7 @@
     <div class="col-xs-8" style="background-color: #ffffff; border-radius: 5px">
         <h5>机构信息</h5>
         <div class="search" style="width:95%">
-            <input type="hidden" name="orgId" id="orgId">
+            <input type="hidden" name="orgId" id="orgId" data-id="0">
         </div>
         <div class="table-responsive list_show" style=" width:100%;">
             <table id="userList" class="table table-bordered" style="width: 100%">
@@ -77,7 +77,8 @@
         function onClick(event, treeId, treeNode, clickFlag) {
             $("#orgId").attr("value", treeNode.orgName);
             $("#orgId").attr("data-id", treeNode.id);
-
+            var table = $("#userList").DataTable();
+            table.ajax.reload();
         }
 
         function beforeDrop(treeId, treeNodes, targetNode, moveType) {
@@ -108,13 +109,12 @@
             return isSuc;
         }
 
-
         var ajax = {
             "type" : "GET",
             "url" : "/organization/pageList",
             "data" : function(d){
                 var QK_searchObj = {
-                    "orgName" :$("#orgId").val()
+                    "topId" :$("#orgId").attr("data-id")
                 }
                 d.search = JSON.stringify(QK_searchObj);
             }

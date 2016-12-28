@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -62,7 +63,9 @@ public class OrganizationController extends BaseController<TOrganization> {
     @GetMapping
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
-        List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("topId", topId);
+        List<TOrganizationVo> organization = tOrganizationService.queryAll(map);
         return new ResultTo().setData(organization);
     }
 
@@ -143,7 +146,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     @ResponseBody
     @ApiOperation(value = "机构分页信息", notes = "机构分页信息", httpMethod = "GET")
     public DataTablePage pageList() {
-        return dataTablePage();
+        return dataTablePage("queryAll");
     }
 
     /**
@@ -163,6 +166,7 @@ public class OrganizationController extends BaseController<TOrganization> {
 
     /**
      * 更新机构信息
+     *
      * @param tOrganization 机构信息
      * @return 数据库变记录
      */
@@ -176,6 +180,7 @@ public class OrganizationController extends BaseController<TOrganization> {
 
     /**
      * 拖拽更新机构层级信息
+     *
      * @param organization 机构信息
      * @return 数据库变记录
      */
