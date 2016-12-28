@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ErrorMessageUtil;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.user.model.Authority;
 import com.cardpay.mgt.user.model.Role;
@@ -17,10 +18,12 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -39,15 +42,42 @@ import java.util.Map;
 @Api(value = "/role", description = "角色信息控制层")
 public class RoleController extends BaseController<Role> {
 
+    private static final String ROLE_PAGE = "/role/index";
+
     @Autowired
     private RoleService roleService;
+
+    /**
+     * 角色管理列表跳转
+     *
+     * @return 角色管理页面
+     */
+    @GetMapping("/rolePage")
+    @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "角色管理列表跳转", httpMethod = "GET")
+    public String roleList() {
+        return ROLE_PAGE;
+    }
+
+    /**
+     * 获取角色分页数据
+     *
+     * @return 角色分页数据
+     */
+    @GetMapping("/pageList")
+    @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "获取角色分页数据", httpMethod = "GET")
+    @ResponseBody
+    public DataTablePage pageList() {
+        return dataTablePage();
+    }
 
     /**
      * 增加角色时获取的权限组信息
      *
      * @return 权限组信息
      */
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @GetMapping(value = "/add")
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "获取权限组", httpMethod = "GET")
     public ResultTo authorityGroup() {
