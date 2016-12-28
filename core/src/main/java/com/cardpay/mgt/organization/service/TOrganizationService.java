@@ -15,18 +15,18 @@ import java.util.List;
 public interface TOrganizationService extends BaseService<TOrganization> {
     /**
      *  递归查询机构层级信息
-     * @param id 父级id
+     * @param parentId 父级id
      * @param levels 查询的层级数量
      * @return 机构层级信息
      */
-    List<TOrganizationVo> queryOrganization(int id, int levels);
+    List<TOrganizationVo> queryOrganization(int parentId, int levels);
 
     /**
      *  递归删除机构信息
-     * @param id 机构id
+     * @param organizationId 机构id
      * @return 1成功, 0失败
      */
-    int deleteOrganization(@Param("id") int id);
+    int deleteOrganization( int organizationId);
 
     /**
      * 查询所有机构信息

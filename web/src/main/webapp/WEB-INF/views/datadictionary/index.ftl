@@ -53,6 +53,12 @@
 <#macro content>
 
     <h5>数据字典列表</h5>
+    <div class="search" style="width:95%">
+    <span>字典类别：<input type="text" class="short" name="dataType" id="dataType" ></span>
+    <span>数据字典代码：<input type="text" name="dataCode" id="dataCode"></span>
+    <span>字典名称：<input type="text" name="dataName" id="dataName"></span>
+    <input class="searchBtn" type="button" value="搜 索">
+    </div>
 
     <div class="table-responsive" style="margin:50px auto; width:95%;">
         <table id="example" class="table table-bordered" style="width: 100%" >
@@ -88,12 +94,12 @@
                 "type" : "GET",
                 "url" : "/dataDictionary/pageList",
                 "data" : function(d){
-//                    var QK_searchObj = {
-//                        "userCname" : $("#userCname").val(),
-//                        "employeeNumber":$("#employeeNumber").val(),
-//                        "levelId":$("#levelId").val()
-//                    }
-//                    d.search = JSON.stringify(QK_searchObj);
+                    var QK_searchObj = {
+                        "dataType" : $("#dataType").val(),
+                        "dataCode":$("#dataCode").val(),
+                        "dataName":$("#dataName").val()
+                    }
+                    d.search = JSON.stringify(QK_searchObj);
                 }
             }
 
