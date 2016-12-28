@@ -23,16 +23,23 @@
     <form class="content">
         <div class="report common">
             <h5>填写角色信息</h5>
-            <table>
+            <table width="95%" border="1" cellpadding="2" cellspacing="1" style="margin: 50px auto 0">
                 <tr>
-                    <td class="pull-right" width="100px" nowrap>角色名称<font class="red">*</font>：</td>
-                    <td width="900px" nowrap><input type="text"></td>
+                    <td class="pull-right" width="90px" nowrap>角色名称<font class="red">*</font>：</td>
+                    <td width="400px" nowrap><input type="text"></td>
+                    <td class="pull-right" width="100px" nowrap>是否启用<font class="red">*</font>：</td>
+                    <td width="400px" nowrap>
+                        <select name="" id="">
+                            <option value="0">禁用</option>
+                            <option value="1">启用</option>
+                        </select>
+                    </td>
                 </tr>
             </table>
         </div>
         <div class="report common">
             <h5>配置角色权限</h5>
-            <table  width="95%" border="1" cellpadding="2" cellspacing="1">
+            <table  width="95%" border="1" cellpadding="2" cellspacing="1" style="margin: 50px auto 0">
                 <tr>
                     <td class="pull-right" width="80px" nowrap>进件管理：</td>
                     <td width="100px" nowrap>
