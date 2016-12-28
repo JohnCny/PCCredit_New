@@ -63,11 +63,11 @@ public interface TMenuService extends BaseService<TMenu> {
     /**
      * 更新菜单
      *
-     * @param menu   菜单
+     * @param menus   菜单
      * @param userId 用户id
      * @return 更新结果
      */
-    ResultTo updateMenu(TMenu menu, Integer userId);
+    boolean updateMenu(List<TMenu> menus, Integer userId);
 
     /**
      * 更新菜单缓存

@@ -211,7 +211,7 @@ public class TMenuServiceImplTest {
     public void addMenu() throws Exception {
         when(authorityMapper.selectMenuAuthorityByUser(1,1)).thenReturn(authorities);
         TMenu tMenu = new TMenu();
-        tMenu.setMenuParentId(1);
+        tMenu.setId(1);
         ResultTo resultTo = tMenuService.addMenu(tMenu, 1);
         verify(tMenuMapper).insert(tMenu);
         assertTrue(resultTo.getCode()==200);
@@ -220,11 +220,14 @@ public class TMenuServiceImplTest {
     @Test
     public void updateMenu() throws Exception {
         when(authorityMapper.selectMenuAuthorityByUser(1,1)).thenReturn(authorities);
+        List<TMenu> menus = new ArrayList<>();
         TMenu tMenu = new TMenu();
-        tMenu.setMenuParentId(1);
-        ResultTo resultTo = tMenuService.updateMenu(tMenu, 1);
-        verify(tMenuMapper).updateByPrimaryKey(tMenu);
-        assertTrue(resultTo.getCode()==200);
+        tMenu.setId(1);
+        menus.add(tMenu);
+        when(tMenuMapper.updateByPrimaryKeySelective(tMenu)).thenReturn(1);
+        boolean result = tMenuService.updateMenu(menus, 1);
+        verify(tMenuMapper).updateByPrimaryKeySelective(tMenu);
+        assertTrue(result);
     }
 
 }

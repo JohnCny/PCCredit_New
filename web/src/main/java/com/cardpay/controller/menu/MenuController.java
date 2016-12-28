@@ -3,6 +3,7 @@ package com.cardpay.controller.menu;
 import com.alibaba.fastjson.JSONArray;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
@@ -99,10 +100,9 @@ public class MenuController {
     @ApiOperation(value = "更新菜单", notes = "更新菜单",  httpMethod = "PUT")
     public ResultTo updateMenu(@ApiParam(value = "菜单", required = true) @RequestBody String menus){
         List<TMenu> tMenus = JSONArray.parseArray(menus, TMenu.class);
-        for (TMenu menu : tMenus) {
-            tMenuService.updateMenu(menu, ShiroKit.getUserId());
-        }
+        boolean result = tMenuService.updateMenu(tMenus, ShiroKit.getUserId());
         ResultTo resultTo = new ResultTo();
+        resultTo.setCode(result? ResultEnum.SUCCESS.getValue():ResultEnum.NO_PERMITTION.getValue());
         return resultTo;
     }
 

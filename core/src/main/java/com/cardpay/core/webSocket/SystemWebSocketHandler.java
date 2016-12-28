@@ -1,5 +1,6 @@
 package com.cardpay.core.webSocket;
 
+import com.cardpay.basic.common.constant.Constant;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.model.User;
@@ -41,12 +42,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         //将客户信息添加到session,用于在线发送信息
         users.add(session);
-        Integer userId = null;
-        try {
-            userId = ShiroKit.getUserId();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        Integer userId = (Integer) session.getAttributes().get(Constant.WEBSOCKET_USERID);
         webSocketSessions.put(userId, session);//用户上线
     }
 

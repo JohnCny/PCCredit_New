@@ -35,6 +35,7 @@
 <!--**********************************************底部*********************************************************-->
 <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/static/js/menu.js"></script>
+<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
 <script>
     $(function(){
         /*如果是第一次进入该页面就设置默认页面为index；不是就取本地缓存的页面为当前高亮*/
@@ -82,4 +83,22 @@
             }
         })
     }());
+
+    var websocket;
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://localhost/webSocketServer");
+    } else if ('MozWebSocket' in window) {
+        websocket = new MozWebSocket("ws://localhost/webSocketServer");
+    } else {
+        websocket = new SockJS("http://localhost/sockjs/webSocketServer");
+    }
+    websocket.onopen = function (evnt) {
+    };
+    websocket.onmessage = function (evnt) {
+        alert(evnt.data)
+    };
+    websocket.onerror = function (evnt) {
+    };
+    websocket.onclose = function (evnt) {
+    }
 </script>
