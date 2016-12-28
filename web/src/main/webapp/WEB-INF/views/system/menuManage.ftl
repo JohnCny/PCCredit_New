@@ -60,8 +60,13 @@
     var roleId = 2;
     var urlMy = "/menu/allAuth?roleId="+roleId;
     var setting = {
+        edit: {
+            enable: true,
+            showRemoveBtn: false,
+        },
         check:{
-            enable: true
+            enable: true,
+            autoCheckTrigger:true
         },
         data: {
             key:{
@@ -74,7 +79,10 @@
             }
         },
         callback: {
-            onCheck: zTreeOnCheck
+            onCheck: zTreeOnCheck,
+            beforeDrop: beforeDrop,
+            onRename: onRename
+
         }
     };
 
@@ -83,19 +91,81 @@
     function zTreeOnCheck(event, treeId, treeNode) {
         var oldId = !treeNode.seeAuth?treeNode.seeAuthId:-1;
         var newId = oldId==-1?treeNode.seeAuthId:-1;
+        var isSuc = false;
         console.log("roleId:"+roleId+",oldId:"+oldId+",newId:"+newId);
         $.get("/role", { roleId: roleId, oldAuthorityId: oldId,newAuthorityId:newId},
-                function(data){
-                    console.log("Data Loaded: " + data)
+                function(msg){
+                    if(msg.code == 200){
+                        isSuc = true;
+                    }else{
+                        isSuc = false;
+                    }
                 }
         );
-    };
+        return isSuc;
+    }
+
+    function onRename(e, treeId, treeNode, isCancel) {
+        var arr = [];
+        var isSuc = false;
+        arr[0] = {
+            menuNameZh:treeNode.menuNameZh,
+            id:treeNode.id
+        }
+        $.ajax({
+            type:"put",
+            url:"/menu",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(arr),
+            success: function(msg){
+                if(msg.code == 200){
+                    location.reload()
+                    isSuc = true;
+                }else{
+                    isSuc = false;
+                }
+            }
+        });
+        return isSuc;
+    }
+
+    function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+        var arr = [];
+        var isSuc = false;
+        $(treeNodes).each(function(i){
+            var dataJson = {
+                id:this.id,
+                menuParentId:targetNode.id
+            };
+            arr[i] = dataJson;
+        })
+
+        $.ajax({
+            type:"put",
+            url:"/menu",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(arr),
+            success: function(msg){
+                if(msg.code == 200){
+                    location.reload()
+                    isSuc = true;
+                }else{
+                    isSuc = false;
+                }
+            }
+        });
+        return isSuc;
+    }
+
 
     $("#saveMenu").click( function () {
         $.get("/menu/refresh",
-                function(data){
+            function(msg){
+                if(msg.code==200){
                     alert("保存成功")
+                    location.reload()
                 }
+            }
         );
     });
 

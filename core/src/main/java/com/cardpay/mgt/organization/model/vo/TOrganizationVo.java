@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.GenericEntity;
 import com.cardpay.basic.util.treeutil.annotation.TreeChild;
 import com.cardpay.basic.util.treeutil.annotation.TreeId;
 import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
+import com.cardpay.mgt.organization.model.TOrganization;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Lazy;

@@ -167,7 +167,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
     @Override
     public ResultTo addMenu(TMenu menu, Integer userId) {
-        List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menu.getMenuParentId());
+        List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menu.getId());
         boolean canDelete = isHaveAuth(authorities, ADD);
         ResultTo resultTo = new ResultTo();
         if (canDelete) {
@@ -181,11 +181,11 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
     @Override
     public ResultTo updateMenu(TMenu menu, Integer userId) {
-        List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menu.getMenuParentId());
+        List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menu.getId());
         boolean canDelete = isHaveAuth(authorities, UPDATE);
         ResultTo resultTo = new ResultTo();
         if (canDelete) {
-            tMenuMapper.updateByPrimaryKey(menu);
+            tMenuMapper.updateByPrimaryKeySelective(menu);
             return resultTo;
         } else {
             resultTo.setCode(ResultEnum.NO_PERMITTION.getValue());
