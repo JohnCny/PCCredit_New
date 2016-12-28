@@ -10,11 +10,11 @@
 </head>
 <body>
 <div class="login-box">
-    <img src="../static/img/login-logo1.png"/>
+    <img src="../static/images/login-logo1.png"/>
     <form id="loginForm">
         <!--错误信息提示-->
 			<div class="errorMessage">
-				<img src="/static/img/icon-warning.png"/>&nbsp;<span></span>
+				<img src="/static/images/icon-warning.png"/>&nbsp;<span></span>
 			</div>
         <input  id="user" name="userName" type="text" class="login-input" placeholder="用户名">
         <input id="password" name="password" type="password" class="login-input" placeholder="密码">
