@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,7 +86,8 @@ public class RoleController extends BaseController<Role> {
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "增加角色页面跳转", httpMethod = "GET")
     @GetMapping("/addPage")
-    public String addPage() {
+    public String addPage(ModelMap map) {
+        map.put("authorityGroup", roleService.selectAuthorityGroup());
         return ROLE_ADD_PAGE;
     }
 
