@@ -1,7 +1,11 @@
 <#include "layout/base.html"/>
 <#assign title = "客户"/>
 <#macro style>
-
+    <style>
+        .editOne{
+            text-align: center;
+        }
+    </style>
 </#macro>
 <#macro css>
 
@@ -138,7 +142,7 @@
             "mData": "id",
             "sDefaultContent": "",
             "render": function (data, type, full, meta) {
-                return '<a onclick="deleRow()" class="btn editOne btn-info" href="/organization/toAdd">添加</a><a onclick="deleRow()" class="btn editOne btn-info" href="/organization/' + data + '">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                return '<a onclick="deleRow()" class="btn editOne btn-info " href="/organization/toAdd">添加</a><a onclick="deleRow()" class="btn editOne btn-info" href="/organization/' + data + '">编辑</a><a class="btn btn-danger deleteOne delete editOne" href="javaScript:;" data-id='+data+'>删除</a>';
             }
         }];
         var options = {

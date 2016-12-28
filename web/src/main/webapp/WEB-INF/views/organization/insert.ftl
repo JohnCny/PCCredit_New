@@ -1,10 +1,37 @@
 <#include "layout/base.html"/>
 <#assign title = "客户"/>
 <#macro style>
-
+    <style>
+        input,select,textarea{
+            border: 1px solid lightgray;
+            border-radius: 3px;
+        }
+        input,textarea,select{
+            height: 30px;
+            padding: 5px;
+        }
+        .rightRole{
+            width: 100%;
+            list-style: none;
+            margin: 30px auto 0;
+        }
+        .rightRole li{
+            float: left;
+            margin-top: 20px;
+        }
+        .rightRole li select,.rightRole li input,.rightRole li textarea{
+            width: 60%;
+        }
+        .rightRole li label{
+            display: inline-block;
+            width: 40%;
+            color: #7a7676;
+            font-weight: normal;
+        }
+    </style>
 </#macro>
 <#macro css>
-
+    <link href="../../../static/css/main.css" rel="stylesheet">
 </#macro>
 <#macro breadcrumb>
 <h1>${title}</h1>
@@ -23,25 +50,27 @@
     <div class="col-xs-1"></div>
     <div class="col-xs-8" style="background-color: #ffffff; border-radius: 5px">
         <h5>机构信息</h5>
-        <div class="search" style="width:95%">
             <input type="hidden" name="orgId" id="orgId">
-        </div>
-        <div class="table-responsive list_show" style=" width:100%;">
-            <form id="contenttable" action="">
-                <input class="searchBtn" type="hidden" name="id" id="id" value="${tOrganization.id}">
-                <tr>
-                    <td class="pull-right">机构名称：</td>
-                    <td colspan="3"><input type="text" id="orgName" name="orgName" ></td>
-                </tr>
-                <tr>
-                    <td class="pull-right">负责人：</td>
-                    <td><input type="text" id="orgDirectorName" name="orgDirectorName" ></td>
-                    <td class="pull-right">后勤：</td>
-                    <td><input type="text" id="orgLogisticsId" name="orgLogisticsId"></td>
-                </tr>
-        </div>
+        <form id="contenttable" action="">
+            <div class="common report">
+               <input class="searchBtn" type="hidden" name="id" id="id" value="${tOrganization.id}">
+                <ul class="rightRole">
+                    <li class="col-md-4 col-sm-12 col-xs-12">
+                        <label>机构名称：</label>
+                        <input type="text" id="orgName" name="orgName">
+                    </li>
+                    <li class="col-md-4 col-sm-12 col-xs-12">
+                        <label>负责人：</label>
+                        <input type="text" id="orgDirectorName" name="orgDirectorName">
+                    </li>
+                    <li class="col-md-4 col-sm-12 col-xs-12">
+                        <label>后勤：</label>
+                        <input type="text" id="orgLogisticsId" name="orgLogisticsId">
+                    </li>
+                </ul>
+            </div>
         <p class="button">
-            <input type="button" id="btn_submit" value="保存" />
+            <input type="button" id="btn_submit" value="保存" style="line-height: 30px;margin: 50px auto 0" />
         </p>
         </form>
     </div>
