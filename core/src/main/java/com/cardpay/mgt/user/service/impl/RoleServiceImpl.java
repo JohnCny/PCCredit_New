@@ -42,7 +42,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
     @Override
     public List<AuthorityGroup> selectAuthorityGroup() {
         List<String> authorityGroups = authorityMapper.selectAuthorityGroup();
-        List<Authority> authorities = authorityMapper.selectAll();
+        List<Authority> authorities = authorityMapper.selectAllByStatus();
         return getGroup(authorityGroups, authorities);
     }
 
