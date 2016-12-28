@@ -81,7 +81,7 @@
             </ul>
         </div>
         <p class="button">
-            <input type="button" id="btn_submit" value="保存" />
+            <a href="javascript:void(0);" class="btn btn-success" id="btn_submit">保存</a>
         </p>
         </form>
         </div>

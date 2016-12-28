@@ -70,7 +70,8 @@
                 </ul>
             </div>
         <p class="button">
-            <input type="button" id="btn_submit" value="保存" style="line-height: 30px;margin: 50px auto 0" />
+            <!--<input type="button" id="btn_submit" value="保存" style="line-height: 30px;margin: 50px auto 0" />-->
+            <a href="javascript:void(0);" class="btn btn-success" id="btn_submit">保存</a>
         </p>
         </form>
     </div>

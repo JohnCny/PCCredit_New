@@ -2,7 +2,10 @@
 <#assign title = "用户管理"/>
 <#macro style>
 <style>
-
+    .btn{
+        width: 80px;
+        margin-left: 10px;
+    }
 </style>
 </#macro>
 <#macro css>
