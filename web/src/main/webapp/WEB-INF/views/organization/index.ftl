@@ -2,7 +2,11 @@
 <#assign title = "客户"/>
 <#macro style>
     <style>
-        .editOne{
+        .btn{
+            width: 80px;
+            margin-left: 10px;
+        }
+        .list_show table tr th,.list_show table tr td{
             text-align: center;
         }
     </style>
