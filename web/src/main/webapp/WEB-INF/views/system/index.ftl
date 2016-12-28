@@ -121,7 +121,7 @@
                 }
             },{
                 "mData" : "modifyBy",
-                
+
             },{
                 "mData" : "modifyTime",
                 "sDefaultContent" : "",
@@ -142,9 +142,11 @@
                 "urlNew" : url['urlNew'],
                 "urlDel" : url['urlDel'],
                 "tableId" : tableId,
-                "aoColumns" : aoColumns
+                "aoColumns" : aoColumns,
             }
+
             myDataTable(options);
+            $("#topPlugin").hide();
         }());
 
     </script>
