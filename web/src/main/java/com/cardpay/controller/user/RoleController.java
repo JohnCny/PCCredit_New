@@ -45,6 +45,10 @@ public class RoleController extends BaseController<Role> {
 
     private static final String ROLE_PAGE = "/role/index";
 
+    private static final String ROLE_ADD_PAGE = "/role/add";
+
+    private static final String ROLE_UPDATE_PAGE = "/role/update";
+
     @Autowired
     private RoleService roleService;
 
@@ -56,7 +60,7 @@ public class RoleController extends BaseController<Role> {
     @GetMapping("/rolePage")
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "角色管理列表跳转", httpMethod = "GET")
-    public String roleList() {
+    public String listPage() {
         return ROLE_PAGE;
     }
 
@@ -71,6 +75,18 @@ public class RoleController extends BaseController<Role> {
     @ResponseBody
     public DataTablePage pageList() {
         return dataTablePage();
+    }
+
+    /**
+     * 增加角色页面跳转
+     *
+     * @return 增加角色页面
+     */
+    @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "增加角色页面跳转", httpMethod = "GET")
+    @GetMapping("/addPage")
+    public String addPage() {
+        return ROLE_ADD_PAGE;
     }
 
     /**
@@ -127,6 +143,19 @@ public class RoleController extends BaseController<Role> {
         map.put("role", role);
         map.put("authority", list);
         return new ResultTo().setData(map);
+    }
+
+
+    /**
+     * 角色编辑页面跳转
+     *
+     * @return 角色编辑页面
+     */
+    @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
+    @ApiOperation(value = "角色编辑页面跳转", httpMethod = "GET")
+    @GetMapping("/updatePage")
+    public String updatePage() {
+        return ROLE_UPDATE_PAGE;
     }
 
     /**
