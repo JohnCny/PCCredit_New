@@ -28,6 +28,7 @@
                     <span class="tools pull-right">
              </span>
                 </header>
+
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table id="example" class="table table-bordered" >
