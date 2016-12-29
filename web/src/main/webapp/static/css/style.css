@@ -3,7 +3,7 @@ Template Name: AdminEx Dashboard
 Author: ThemeBucket
 -------------------------------------------*/
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);*/
 @import url('bootstrap.min.css');
 @import url('bootstrap-reset.css');
 @import url('jquery-ui-1.10.3.css');
@@ -19,7 +19,7 @@ body {
 }
 
 input, select, textarea {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Hiragino Sans GB','Microsoft Yahei',"WenQuanYi Micro Hei",SimSun,Tahoma,Arial,Helvetica,STHeiti;
     color: #767676;
 }
 
@@ -94,7 +94,7 @@ hr {
     font-weight: normal;
     color: #fff;
     font-weight: normal;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Hiragino Sans GB','Microsoft Yahei',"WenQuanYi Micro Hei",SimSun,Tahoma,Arial,Helvetica,STHeiti;
     position: absolute;
     bottom: -50px;
     width: 100%;
@@ -134,7 +134,7 @@ hr {
     color: #fff;
     text-transform: uppercase;
     font-weight: normal;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Hiragino Sans GB','Microsoft Yahei',"WenQuanYi Micro Hei",SimSun,Tahoma,Arial,Helvetica,STHeiti;
     margin: 20px 0 5px;
     padding: 5px;
     -webkit-transition: all 0.3s;
