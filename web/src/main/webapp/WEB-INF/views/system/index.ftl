@@ -115,7 +115,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a onclick="deleRow()" class="label label-primary" href="/system/'+data+'">编辑</a>';
+                    return  '<a onclick="deleRow()" class="btn btn-info" href="/system/'+data+'">编辑</a>';
                 }
             }];
 

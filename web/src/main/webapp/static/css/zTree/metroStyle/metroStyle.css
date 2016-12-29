@@ -94,3 +94,58 @@ span.tmpzTreeMove_arrow {width:16px; height:21px; display: inline-block; padding
 
 ul.ztree.zTreeDragUL {margin:0; padding:0; position:absolute; width:auto; height:auto;overflow:hidden; background-color:#cfcfcf; border:1px #00B83F dotted; opacity:0.8; filter:alpha(opacity=80)}
 .ztreeMask {z-index:10000; background-color:#cfcfcf; opacity:0.0; filter:alpha(opacity=0); position:absolute}
+
+ #topPlugin{
+     margin-top: -50px;
+     margin-left: 180px;
+     /*margin-top: 14px;*/
+ }
+#example_length,#topPlugin {
+    float: left;
+    line-height: -45px;
+    margin-bottom: -10px;
+}
+
+#topPlugin a,#topPlugin button {
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+.search{
+    margin-left: 10px;
+}
+.search input[type=button] {
+    width: 60px;
+    line-height: 25px;
+    font-family: 微软雅黑;
+    margin: 11.5px 20px 0 0;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #5bc0de;
+    border: 1px solid #46b8da;
+
+}
+
+.search input[type=button]:hover {
+    background-color: #39b3d7;
+}
+.btn {
+    margin-left: 10px;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
