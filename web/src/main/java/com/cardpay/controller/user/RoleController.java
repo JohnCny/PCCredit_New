@@ -6,16 +6,16 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ErrorMessageUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.mgt.user.model.Authority;
 import com.cardpay.mgt.user.model.Role;
+import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.vo.AuthorityGroup;
+import com.cardpay.mgt.user.service.RoleAuthorityService;
 import com.cardpay.mgt.user.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,8 +48,13 @@ public class RoleController extends BaseController<Role> {
 
     private static final String ROLE_UPDATE_PAGE = "/role/update";
 
+    private static final String ROLE_AUTHORITY_PAGE = "/role/authority";
+
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private RoleAuthorityService roleAuthorityService;
 
     /**
      * 角色管理列表跳转
@@ -87,22 +90,8 @@ public class RoleController extends BaseController<Role> {
     @ApiOperation(value = "增加角色页面跳转", httpMethod = "GET")
     @GetMapping("/addPage")
     public String addPage(ModelMap map) {
-        map.put("authorityGroup", roleService.selectAuthorityGroup());
+        map.put("authorityGroups", roleService.selectAuthorityGroup());
         return ROLE_ADD_PAGE;
-    }
-
-    /**
-     * 增加角色时获取的权限组信息
-     *
-     * @return 权限组信息
-     */
-    @GetMapping(value = "/add")
-    @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "获取权限组", httpMethod = "GET")
-    @ResponseBody
-    public ResultTo authorityGroup() {
-        List<AuthorityGroup> authorityGroups = roleService.selectAuthorityGroup();
-        return new ResultTo().setData(authorityGroups);
     }
 
     /**
@@ -115,7 +104,7 @@ public class RoleController extends BaseController<Role> {
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "增加角色信息", httpMethod = "POST")
     @ResponseBody
-    public ResultTo add(@ApiParam("角色实体对象") @Valid Role role, BindingResult result, @ApiParam("权限ID数组") Integer authorityId[]) {
+    public ResultTo add(@ApiParam("角色实体对象") Role role, BindingResult result, @ApiParam("权限ID数组") Integer authorityId[]) {
         Map<String, String> map = new HashMap<>();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             LogTemplate.info(this.getClass(), "message", "增加角色参数有误");
@@ -129,7 +118,7 @@ public class RoleController extends BaseController<Role> {
     }
 
     /**
-     * 根据角色ID获取角色信息
+     * 编辑角色页面跳转
      *
      * @param roleId 角色ID
      * @return 角色信息
@@ -137,42 +126,30 @@ public class RoleController extends BaseController<Role> {
     @RequestMapping(value = "/{roleId}/page", method = RequestMethod.GET)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
     @ApiOperation(value = "根据角色ID获取角色的权限信息", httpMethod = "GET")
-    @ResponseBody
-    public ResultTo updatePage(@ApiParam("角色ID") @PathVariable("roleId") Integer roleId) {
-        Role role = roleService.selectByPrimaryKey(roleId);
-        List<AuthorityGroup> list = roleService.selectRole(roleId);
-        Map<String, Object> map = new HashedMap();
-        map.put("role", role);
-        map.put("authority", list);
-        return new ResultTo().setData(map);
-    }
-
-
-    /**
-     * 角色编辑页面跳转
-     *
-     * @return 角色编辑页面
-     */
-    @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "角色编辑页面跳转", httpMethod = "GET")
-    @GetMapping("/updatePage")
-    public String updatePage() {
+    public String updatePage(@ApiParam("角色ID") @PathVariable("roleId") Integer roleId, ModelMap map) {
+        LogTemplate.debug(this.getClass(), "roleId", roleId);
+        map.put("role", roleService.selectByPrimaryKey(roleId));
         return ROLE_UPDATE_PAGE;
     }
 
     /**
-     * 根据权限分组名获取权限操作集合
+     * 角色的权限编辑页面跳转
      *
-     * @param groupName
-     * @return 权限操作集合
+     * @param roleId 角色ID
+     * @param map    ModelMap
+     * @return 角色的权限编辑页面
      */
-    @RequestMapping(value = "/{groupName}/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/{roleId}/authorityPage", method = RequestMethod.GET)
     @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "获取权限组", httpMethod = "POST")
-    @ResponseBody
-    public ResultTo operationList(@ApiParam("权限组名") @PathVariable("groupName") String groupName) {
-        List<Authority> list = roleService.selectOperationList(groupName);
-        return new ResultTo().setData(list);
+    @ApiOperation(value = "角色的权限编辑页面跳转", httpMethod = "GET")
+    public String authorities(@ApiParam("角色ID") @PathVariable("roleId") Integer roleId, ModelMap map) {
+        RoleAuthority roleAuthority = new RoleAuthority();
+        roleAuthority.setRoleId(roleId);
+        List<RoleAuthority> roleAuthorities = roleAuthorityService.select(roleAuthority);
+        List<AuthorityGroup> authorityGroups = roleService.selectAuthorityGroup();
+        map.put("roleAuthorities", roleAuthorities);
+        map.put("authorityGroups", authorityGroups);
+        return ROLE_AUTHORITY_PAGE;
     }
 
     /**
