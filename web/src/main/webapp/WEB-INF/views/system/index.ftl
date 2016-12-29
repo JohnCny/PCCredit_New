@@ -26,8 +26,6 @@
                 <header class="panel-heading">
                     系统参数配置浏览
                     <span class="tools pull-right">
-                <!--<a href="javascript:;" class="fa fa-chevron-down"></a>-->
-                <!--<a href="javascript:;" class="fa fa-times"></a>-->
              </span>
                 </header>
                 <div class="panel-body">
@@ -116,7 +114,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a onclick="deleRow()" class="btn-info" href="/system/'+data+'">编辑</a>';
+                    return  '<a onclick="deleRow()" class="label label-primary" href="/system/'+data+'">编辑</a>';
                 }
             }];
 

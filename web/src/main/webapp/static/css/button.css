@@ -1,0 +1,16 @@
+#topPlugin{
+    margin-top: 14px;
+}
+
+#example_length,#topPlugin {
+    float: left;
+    line-height: -45px;
+    margin-bottom: -15px;
+}
+
+#topPlugin a,#topPlugin button {
+    margin-left: 10px;
+}
+.search{
+    margin-left: 25px;
+}
