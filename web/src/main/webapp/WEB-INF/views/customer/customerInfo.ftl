@@ -1,20 +1,56 @@
 <#include "layout/base.html"/>
 <#assign title = "客户"/>
 <#macro style>
+    <style>
+        .myTab {margin:0;}
+        .myTab li{display:inline-block;list-style:none;background:#fff;border:1px solid #eff0f4;color:#bbb;padding:7px 15px;border-radius:5px 5px 0 0;margin-right:1px;cursor:pointer;}
+        .myTab .active{color:#fff;background: #65cea7!important;border:1px solid #65cea7;}
+        .tabContent{border:1px solid #65cea7;width:98%;margin-bottom:20px;}
+        .tabPage{background:#fff;margin:0;padding-bottom:20px;}
+        .tabPage .report{width:100%;padding-bottom:30px;}
+        .tabContent .report{float:none;margin:0;padding:10px;}
+        .tabContent .report table{margin:10px;width:98%;}
+        .tabContent3{width:auto;overflow:hidden}
+        .content h1{color: #49586e;font-size: 25px;font-weight: normal;margin:5px 0;}
+        .content h2{color: #999999;font-size: 14px;font-weight: normal;margin-top:0;}
+        .content h2 span{color: #65CEA7;}
+        .report{float:left;background:#fff;border-radius:5px;width:98%;margin-bottom:20px;}
+        .report h5{border-bottom: 1px dotted #c0c0c0;border-bottom: 1px dotted rgba(0, 0, 0, 0.2);padding: 15px;text-transform: uppercase;color: #535351;font-size: 16px;font-weight: bold;}
+        .report table{width:95%;margin-top:20px;border-collapse: collapse;margin-bottom:20px;}
+        .report table tr:nth-child(2n){background:#f7f7f7;}
+        .report table tr th{border-bottom: 2px solid #ddd;color: #7a7676;font-size:14px;line-height:35px;}
+        .report table tr td{border-bottom: 1px solid #ddd;color: #7a7676;text-align:center;font-size:14px;line-height:35px;}
 
+        /*新增报销*/
+        .common table{background: #f7f7f7;padding:0 20px;}
+        .common table tr th{border-bottom:0;text-align:left;line-height:45px;}
+        .common table tr td{border-bottom:0;text-align:left;line-height:45px;}
+        .common .treeBox{margin-left:1em;}
+        .button{text-align:center;width:98%;}
+        .button input{width:90px;line-height:30px;font-family: 微软雅黑;margin:0 5px;border-radius: 5px;color: #fff;background-color: #5cb85c;border:1px solid #4cae4c;}
+        .button input:hover{background-color: #47a447;}
+        .button .del{background-color: #d9534f;border-color: #d43f3a;}
+        .button .del:hover{background-color: #d2322d;}
+        .button .back{background-color: #fff;border-color: #cccccc;color:#333359;}
+        .button .back:hover{background-color: #ebebeb;}
+    </style>
 </#macro>
 <#macro css>
-
 </#macro>
 <#macro breadcrumb>
-    <h1>${title}</h1>
-    <h2>当前位置：客户管理 / <span class="active">${title}</span></h2>
+    <h3>
+        客户
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">当前位置：客户管理</a>
+        </li>
+        <li class="active"> 客户信息查看</li>
+    </ul>
 </#macro>
 <#macro content>
 
     <form class="content">
-        <h1>查看客户信息</h1>
-        <h2>当前位置：客户管理 / 客户信息查询 / 客户1 / <span>查看客户信息</span></h2>
         <ul class="myTab">
             <li class="active" onclick="setTab2(this,'jbxx')">客户基本信息</li>
             <li onclick="setTab2(this,'dkqk')">客户贷款情况</li>
@@ -149,7 +185,7 @@
             </div>
         </div>
         <p class="button">
-            <input type="button" value="返回"  onclick="iframe('kh_list.html')"/>
+            <input type="button" value="返回" class=""  onclick="iframe('kh_list.html')"/>
         </p>
     </form>
 

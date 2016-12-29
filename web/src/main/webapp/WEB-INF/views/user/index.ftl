@@ -2,20 +2,33 @@
 <#assign title = "用户管理"/>
 <#macro style>
 <style>
-
+    .btn{
+        width: 100px;
+        margin-left: 10px;
+    }
+    .tools span ,.tools input{
+        margin-top: 10px;
+    }
 </style>
 </#macro>
 <#macro css>
-
+    <link rel="stylesheet" href="/static/css/zTree/metroStyle/metroStyle.css">
 </#macro>
 <#macro breadcrumb>
-<h1>用户</h1>
-<h2>当前位置：用户管理 / <span class="active">用户</span></h2>
+    <h3>
+        用户
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">当前位置：用户管理</a>
+        </li>
+        <li class="active"> 用户</li>
+    </ul>
 
 </#macro>
 <#macro content>
-<div class="row" style="background-color: #efefef;width: 100%;margin-left: 0">
-    <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px">
+<div class="row">
+    <div class="col-sm-3" style="background-color: #fff ;border-radius: 5px">
         <div class="report common list">
             <h5>机构列表</h5>
             <div class="treeBox" style="height: 581px;">
@@ -23,38 +36,133 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-1"></div>
-    <div class="col-xs-8" style="background-color: #ffffff; border-radius: 5px">
-        <h5>用户列表</h5>
-        <div class="search" style="width:95%">
-            <span>机构：<input type="text" class="short" placeholder="请在左侧选择机构" readonly="readonly" disabled="disabled"
-                            name="orgId" id="orgId" style="width: 160px"></span>
-            <span>用户名称：<input type="text" class="short" name="username" id="username"></span>
-            <span> 身份证：<input type="text" name="idCardNumber" id="idCardNumber"></span>
-            <input class="searchBtn" type="button" value="搜 索">
+
+    <!--<div class="row">-->
+        <!--<div class="col-md-2">-->
+            <!--<section class="panel">-->
+                <!--<header class="panel-heading">-->
+                    <!--机构列表-->
+                    <!--<span class="tools pull-right">-->
+             <!--</span>-->
+                <!--</header>-->
+                <!--<div class="panel-body">-->
+                    <!--<div class="table-responsive">-->
+                            <!--<div class="treeBox" style="height: 581px;">-->
+                                <!--<ul id="treeDemo" class="ztree"></ul>-->
+                            <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</section>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+
+    <!--<div class="col-xs-8" style="background-color: #ffffff; border-radius: 5px">-->
+        <!--<h5>用户列表</h5>-->
+        <!--<div class="search" style="width:95%">-->
+            <!--<span>机构：<input type="text" class="short" placeholder="请在左侧选择机构" readonly="readonly" disabled="disabled"-->
+                            <!--name="orgId" id="orgId" style="width: 160px"></span>-->
+            <!--<span>用户名称：<input type="text" class="short" name="username" id="username"></span>-->
+            <!--<span> 身份证：<input type="text" name="idCardNumber" id="idCardNumber"></span>-->
+            <!--<input class="searchBtn" type="button" value="搜 索">-->
+        <!--</div>-->
+        <!--<div class="table-responsive list_show" style=" width:100%;">-->
+            <!--<table id="userList" class="table table-bordered" style="width: 100%">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>姓名</th>-->
+                    <!--<th>性别</th>-->
+                    <!--<th>联系方式</th>-->
+                    <!--<th>邮件</th>-->
+                    <!--<th>创建时间</th>-->
+                    <!--<th>操作</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+            <!--</table>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+    <!--<div class="row">
+        <div class="col-sm-8">
+            <section class="panel">
+                <header class="panel-heading">
+                    系统参数配置浏览
+                </header>
+                <div class="panel-body">
+                        <div class="row">
+                          <span class="tools">
+                            <span class="col-md-4 col-xs-4">机构：<input type="text" class="short" placeholder="请在左侧选择机构" readonly="readonly" disabled="disabled"name="orgId" id="orgId" style="width: 160px"></span>
+                            <span class="col-md-4 col-xs-4">用户名称：<input type="text" class="short" name="username" id="username"></span>
+                            <span class="col-md-3 col-xs-3"> 身份证：<input type="text" name="idCardNumber" id="idCardNumber"></span>
+                            <input class="searchBtn pull-right col-md-1 col-xs-2" type="button" value="搜 索">
+                            </span>
+                        </div>
+                    <div class="table-responsive">
+                        <table id="userList" class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>联系方式</th>
+                                <th>邮件</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div class="table-responsive list_show" style=" width:100%;">
-            <table id="userList" class="table table-bordered" style="width: 100%">
-                <thead>
-                <tr>
-                    <th>姓名</th>
-                    <th>性别</th>
-                    <th>联系方式</th>
-                    <th>邮件</th>
-                    <th>创建时间</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-            </table>
+    </div>-->
+
+    <div class="row">
+        <div class="col-sm-9">
+            <section class="panel">
+                <header class="panel-heading">
+                    系统参数配置浏览
+                    <span class="tools pull-right">
+                <!--<a href="javascript:;" class="fa fa-chevron-down"></a>-->
+                        <!--<a href="javascript:;" class="fa fa-times"></a>-->
+             </span>
+                </header>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="userList" class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>联系方式</th>
+                                <th>邮件</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
+
+
 </div>
 </#macro>
-
-<#macro script>
-<script type="text/javascript" src="/static/js/ztree-org.js"></script>
-</#macro>
 <#macro js>
+    <script type="text/javascript" src="/static/js/ztree-org.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.ztree.all.js"></script>
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
+    <script src="/static/js/department.js" type="text/javascript"></script>
+    <script src="/static/js/moment.min.js" type="text/javascript"></script>
+</#macro>
+<#macro script>
 <script type="text/javascript">
     $(document).ready(function () {
         var urlMy = "/organization/orgAll";
