@@ -1,9 +1,7 @@
 package com.cardpay.mgt.user.service;
 
-import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.Authority;
-import com.cardpay.mgt.user.model.AuthorityOperation;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.vo.AuthorityGroup;
 
