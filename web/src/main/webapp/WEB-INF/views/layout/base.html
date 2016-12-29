@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="ThemeBucket">
-    <link rel="shortcut icon" href="#" type="image/png">
+    <link rel="shortcut icon" href="/static/images/small-logo.png" type="image/png">
 
     <title>乾康微贷管理系统</title>
 
@@ -41,7 +41,7 @@
 
         <div class="left-side-inner">
 
-            <!-- 隐藏的用户信息，再导航收缩后显示 only -->
+            <!-- 隐藏的用户信息，在导航收缩后显示 only -->
             <div class="visible-xs hidden-sm hidden-md hidden-lg">
                 <div class="media logged-user">
                     <img alt="" src="/static/images/photos/user-avatar.png" class="media-object">
@@ -60,7 +60,21 @@
             </div>
 
             <!--侧导航 start-->
+            <#--
             <#include "layout/menu.html"/>
+            -->
+            <ul class="nav nav-pills nav-stacked custom-nav"  id="leftNav">
+                <!--<li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>我的工作台</span></a></li>-->
+                <!--<li class="menu-list"><a href=""><i class="fa fa-laptop"></i> <span>客户管理</span></a>-->
+                <!--<ul class="sub-menu-list">-->
+                <!--<li><a href="blank_page.html"> 新建客户</a></li>-->
+                <!--<li><a href="boxed_view.html"> 客户信息查询</a></li>-->
+                <!--<li><a href="leftmenu_collapsed_view.html"> 客户维护</a></li>-->
+                <!--<li><a href="horizontal_menu.html"> 客户移交</a></li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!--<li><a href="login.html"><i class="fa fa-sign-in"></i> <span>Login Page</span></a></li>-->
+            </ul>
             <!--侧导航 end-->
 
         </div>
@@ -79,7 +93,7 @@
 
             <!--顶部搜索 start-->
             <form class="searchform" action="index.html" method="post">
-                <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+                <input type="text" class="form-control" name="keyword" placeholder="请输入···" />
             </form>
             <!--顶部搜索 end-->
 
@@ -287,7 +301,7 @@
         <!--内容区域 end-->
 
         <!--底部 start-->
-        <footer>
+        <footer  class="sticky-footer">
             2014-2016 &copy; All Rights Reserved.   <a target="_blank" href="http://www.qkjr.com.cn/">乾康（上海）金融信息服务股份有限公司</a>
         </footer>
         <!--底部 end-->
@@ -308,5 +322,44 @@
 <script src="/static/js/scripts.js"></script>
 <@js/>
 <@script/>
+<script>
+    $(function () {
+        /*如果是第一次进入该页面就设置默认页面为index；不是就取本地缓存的页面为当前高亮*/
+        function setUrl() {
+            return localStorage.url ? localStorage.url : '/index';
+        }
+
+        $(document).on("click", "ul.sub-menu-list li", function () {
+            localStorage.url = $(this).data("name");
+        });
+        var parent = $("#leftNav"), html = " ", url = setUrl();
+        $.ajax({
+            type: "GET",
+            url: "/menu/all",
+            success: function (result) {
+                parent.empty();
+                var menu = result.data.menus;
+                $(menu).each(function (i, v) {
+                    html += '<li class="menu-list"><a href="javascript:;"><i  class="fa fa-home"></i><span>' + $(v)[0].menuNameZh + '</span></a>';
+                    if ($(v)[0].menuLists.length > 0) {
+                        html += '<ul class="sub-menu-list">';
+                        $($(v)[0].menuLists).each(function (i, v) {
+                            var tempA = $(v)[0];
+                            html += '<li data-name=' + tempA.menuUrl;
+                            if (url == tempA.menuUrl) {
+                                html += ' class = second-active';
+                            }
+                            html += '><a href=/' + tempA.menuUrl + '>' + tempA.menuNameZh + '</li>';
+                        });
+                        html += '</ul>'
+                    }
+                    html += '</li>';
+                });
+                parent.html(html);
+//                $("ul.sub-menu-list li.second-active").parent("ul.sub-menu-list").show().parents("li.menu-list").addClass("active");
+            }
+        })
+    });
+</script>
 </body>
 </html>

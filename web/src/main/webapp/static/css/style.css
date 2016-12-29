@@ -11,7 +11,7 @@ Author: ThemeBucket
 
 body {
     background: #424f63;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Hiragino Sans GB','Microsoft Yahei',"WenQuanYi Micro Hei",SimSun,Tahoma,Arial,Helvetica,STHeiti;
     color: #7a7676;
     line-height: 20px;
     overflow-x: hidden;
@@ -36,7 +36,7 @@ a:focus, a:active, a:hover {
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Hiragino Sans GB','Microsoft Yahei',"WenQuanYi Micro Hei",SimSun,Tahoma,Arial,Helvetica,STHeiti;
 }
 
 .mtop10 {
