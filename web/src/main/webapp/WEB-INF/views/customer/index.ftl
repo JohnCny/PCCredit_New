@@ -44,7 +44,8 @@
     </style>
 </#macro>
 <#macro css>
-
+    <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
 </#macro>
 <#macro breadcrumb>
 
@@ -76,13 +77,15 @@
     </div>
 
 </#macro>
-
-<#macro script>
-
+<#macro js>
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
+    <script src="/static/js/department.js" type="text/javascript"></script>
+    <script src="/static/js/moment.min.js" type="text/javascript"></script>
 </#macro>
 
-<#macro js>
-
+<#macro script>
     <script>
 
         $(function(){
@@ -147,5 +150,6 @@
         }());
 
     </script>
-
 </#macro>
+
+
