@@ -53,11 +53,10 @@
     </div>
 </div>
 </#macro>
-
-<#macro script>
+<#macro js>
 <script type="text/javascript" src="/static/js/ztree-org.js"></script>
 </#macro>
-<#macro js>
+<#macro script>
 <script type="text/javascript">
     $(document).ready(function () {
         var urlMy = "/organization/orgAll";
