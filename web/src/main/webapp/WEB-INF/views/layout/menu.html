@@ -18,8 +18,8 @@
             return localStorage.url ? localStorage.url : '/index';
         }
 
-        $(document).on("click", "ul.sub-menu-list li a", function () {
-            localStorage.url = $(this).parent("li").data("name");
+        $(document).on("click", "ul.sub-menu-list li", function () {
+            localStorage.url = $(this).data("name");
         });
         var parent = $(".nav"), html = " ", url = setUrl();
         $.ajax({
@@ -48,5 +48,5 @@
 //                $("ul.sub-menu-list li.second-active").parent("ul.sub-menu-list").show().parents("li.menu-list").addClass("active");
             }
         })
-    }());
+    });
 </script>
