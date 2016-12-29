@@ -9,6 +9,9 @@
     .tools span ,.tools input{
         margin-top: 10px;
     }
+    .reset,.locks{
+        margin: 0 5px 0;
+    }
 </style>
 </#macro>
 <#macro css>
@@ -228,12 +231,12 @@
                 var html = "";
                 html += '<a class="label label-primary" href="/user/'+ data +'/updateUser" data-id=' + data + '>编辑</a>'
                 if (!full.status) {
-                    html += '<button  class="btn btn-success activeBtn" data-id=' + data + ' data-status=' + full.status + '>点击锁定</button>';
+                    html += '<a  class="label label-success activeBtn locks" data-id=' + data + ' data-status=' + full.status + '>点击锁定</a>';
                 } else {
-                    html += '<button  class="btn btn-default activeBtn" data-id=' + data + ' data-status=' + full.status + '>点击解锁</button>';
+                    html += '<a  class="label label-default activeBtn locks" data-id=' + data + ' data-status=' + full.status + '>点击解锁</a>';
                 }
-                html += '<button class="btn btn-info resetBtn" data-id=' + data + '>重置密码</button>';
-                html += '<button class="btn btn-primary" data-id=' + data + '>角色管理</button>'
+                html += '<a class="label label-info resetBtn reset" data-id=' + data + '>重置密码</a>';
+                html += '<a class="label label-primary" data-id=' + data + '>角色管理</a>'
                 return html;
             }
         }];
