@@ -29,6 +29,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/organization")
 public class OrganizationController extends BaseController<TOrganization> {
+
+    private static final String ORGANIZATION_INSERT_PAGE = "/organization/insert";
+
     @Autowired
     private TOrganizationService tOrganizationService;
 
@@ -120,7 +123,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     @GetMapping("/toAdd")
     @ApiOperation(value = "跳转机构管理主页", notes = "跳转机构管理主页", httpMethod = "GET")
     public ModelAndView toAdd() {
-        return new ModelAndView("/organization/insert");
+        return new ModelAndView(ORGANIZATION_INSERT_PAGE);
     }
 
     /**
@@ -131,7 +134,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     @GetMapping("/index")
     @ApiOperation(value = "跳转机构管理主页", notes = "跳转机构管理主页", httpMethod = "GET")
     public ModelAndView index() {
-        return new ModelAndView("/organization/index");
+        return new ModelAndView(ORGANIZATION_INSERT_PAGE);
     }
 
     /**
@@ -163,6 +166,7 @@ public class OrganizationController extends BaseController<TOrganization> {
 
     /**
      * 更新机构信息
+     *
      * @param tOrganization 机构信息
      * @return 数据库变记录
      */
@@ -176,6 +180,7 @@ public class OrganizationController extends BaseController<TOrganization> {
 
     /**
      * 拖拽更新机构层级信息
+     *
      * @param organization 机构信息
      * @return 数据库变记录
      */

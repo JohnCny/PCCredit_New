@@ -29,6 +29,13 @@ import java.util.Date;
 @RequestMapping("/system")
 @Api(value = "/system", description = "系统参数配置")
 public class SysParameterController extends BaseController<TSysParameter> {
+
+    private static final String SYSTEM_UPDATE_PAGE = "/system/update";
+
+    private static final String SYSTEM_INDEX_PAGE = "/system/index";
+
+    private static final String SYSTEM_ADD_PAGE = "/system/add";
+
     @Autowired
     private TSysParameterService tSysParameterService;
 
@@ -44,7 +51,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
     @SystemControllerLog(description = "跳转系统参数配置主页")
     @ApiOperation(value = "跳转系统参数配置主页", notes = "系统参数配置主页", httpMethod = "GET")
     public ModelAndView index() {
-        return new ModelAndView("/system/index");
+        return new ModelAndView(SYSTEM_INDEX_PAGE);
     }
 
     /**
@@ -57,7 +64,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
     @SystemControllerLog(description = "跳转编辑系统参数配置页面")
     @ApiOperation(value = "跳转编辑系统参数配置页面", notes = "编辑系统参数配置页面, 返回参数 tSysParameter", httpMethod = "GET")
     public ModelAndView returnUpdate(@ApiParam(value = "主键", required = true) @PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView("/system/update");
+        ModelAndView modelAndView = new ModelAndView(SYSTEM_UPDATE_PAGE);
         TSysParameter tSysParameter = tSysParameterService.selectByPrimaryKey(id);
         modelAndView.addObject("tSysParameter", tSysParameter);
         return modelAndView;
@@ -90,7 +97,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
         tSysParameter.setModifyBy(ShiroKit.getUserId());
         tSysParameter.setModifyTime(new Date());
         Integer count = tSysParameterService.updateSelectiveByPrimaryKey(tSysParameter);
-        logger.info("更新系统参数配置","用户id:"+ShiroKit.getUserId()+",更新了参数"+tSysParameter);
+        logger.info("更新系统参数配置", "用户id:" + ShiroKit.getUserId() + ",更新了参数" + tSysParameter);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -107,7 +114,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
     public ResultTo insert(@ApiParam("系统参数实体信息") @ModelAttribute TSysParameter tSysParameter) {
         tSysParameter.setCreateBy(ShiroKit.getUserId());
         Integer count = tSysParameterService.insertSelective(tSysParameter);
-        logger.info("新增系统参数配置","用户id:"+ShiroKit.getUserId()+",添加了参数"+tSysParameter);
+        logger.info("新增系统参数配置", "用户id:" + ShiroKit.getUserId() + ",添加了参数" + tSysParameter);
         return count != 0 ? new ResultTo().setData(tSysParameter.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -120,7 +127,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
     @SystemControllerLog(description = "跳转添加页面")
     @ApiOperation(value = "跳转添加页面", notes = "跳转添加页面", httpMethod = "GET")
     public ModelAndView toAdd() {
-        return new ModelAndView("/system/add");
+        return new ModelAndView(SYSTEM_ADD_PAGE);
     }
 
 }
