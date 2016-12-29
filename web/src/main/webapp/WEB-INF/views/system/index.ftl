@@ -16,7 +16,7 @@
         <li>
             <a href="#">系统管理</a>
         </li>
-        <li class="active"> 系统管理</li>
+        <li class="active"> 系统参数配置</li>
     </ul>
 </#macro>
 <#macro content>
@@ -61,12 +61,6 @@
     <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
     <script src="/static/js/department.js" type="text/javascript"></script>
     <script src="/static/js/moment.min.js" type="text/javascript"></script>
-
-    <!--<script src="/static/js/datatables/datatables.min.js"-->
-            <!--type="text/javascript"></script>-->
-    <!--<script src="/static/js/datatables/plugins/bootstrap/datatables.bootstrap.js"-->
-            <!--type="text/javascript"></script>-->
-
 </#macro>
 
 <#macro script>
@@ -136,7 +130,7 @@
 
             myDataTable(options);
             $("#topPlugin").hide();
-        }());
+        });
 
     </script>
 </#macro>
