@@ -38,17 +38,17 @@
                                 <span>字典名称：<input type="text" class="form-control" aria-controls="dynamic-table" name="dataName" id="dataName"></span>
                                 <input class="searchBtn" type="button" value="搜 索">
                             </div>
-                    <table id="example" class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>字典类别</th>
-                            <th>字典代码</th>
-                            <th>字典名称</th>
-                            <th>银行代码</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                    </table>
+                        <table id="example" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>字典类别</th>
+                                <th>字典代码</th>
+                                <th>字典名称</th>
+                                <th>银行代码</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
                         </div>
                     </div>
                 </div>
