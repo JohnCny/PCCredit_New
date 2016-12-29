@@ -7,6 +7,7 @@
 <#macro css>
     <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
     <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
+    <link rel="stylesheet" href="/static/css/button.css"/>
 </#macro>
 <#macro breadcrumb>
     <h3>
@@ -45,35 +46,37 @@
 
 
 
-    <div class="search" style="width:95%">
-        <span>客户名称：<input type="text" class="short" name="cname" id="cname" ></span>
-        <span>客户证件号码：<input type="text" name="certificateNumber" id="certificateNumber"></span>
-        <input class="searchBtn" type="button" value="搜 索">
-    </div>
+
     <div class="row">
         <div class="col-sm-12">
             <section class="panel">
                 <header class="panel-heading">
                     系统参数配置浏览
-                    <span class="tools pull-right">
-                <!--<a href="javascript:;" class="fa fa-chevron-down"></a>-->
-                        <!--<a href="javascript:;" class="fa fa-times"></a>-->
-             </span>
                 </header>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table id="example" class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>姓名</th>
-                                <th>性别</th>
-                                <th>联系方式</th>
-                                <th>证件号码</th>
-                                <th>创建时间</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                        </table>
+
+                        <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                            <div class="row-fluid">
+                                <div class="search">
+                                    <span>客户名称：<input type="text" class="short" name="cname" id="cname" ></span>
+                                    <span>客户证件号码：<input type="text" name="certificateNumber" id="certificateNumber"></span>
+                                    <input class="searchBtn" type="button" value="搜 索">
+                                </div>
+                                <table id="example" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>性别</th>
+                                        <th>联系方式</th>
+                                        <th>证件号码</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -137,7 +140,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a href="/customerBasic/customerInfo/'+data+'" class="btn btn-info editOne look">查看</a><a onclick="deleRow()" class="btn btn-warning" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
+                    return  '<a href="/customerBasic/customerInfo/'+data+'" class="btn btn-info">查看</a><a onclick="deleRow()" class="btn btn-warning" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
                 }
             }];
 

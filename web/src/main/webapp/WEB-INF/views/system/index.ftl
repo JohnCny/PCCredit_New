@@ -21,37 +21,36 @@
 </#macro>
 <#macro content>
     <div class="row">
-    <div class="col-sm-12">
-        <section class="panel">
-            <header class="panel-heading">
-                系统参数配置浏览
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    系统参数配置浏览
                     <span class="tools pull-right">
-                <!--<a href="javascript:;" class="fa fa-chevron-down"></a>-->
-                        <!--<a href="javascript:;" class="fa fa-times"></a>-->
              </span>
-            </header>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table id="example" class="table table-bordered" >
-                        <thead>
-                        <tr>
-                            <th>参数名称	</th>
-                            <th>参数值</th>
-                            <th>参数中文名</th>
-                            <th>参数描述</th>
-                            <th>创建人</th>
-                            <th>创建时间</th>
-                            <th>修改人</th>
-                            <th>修改时间</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                    </table>
+                </header>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered" >
+                            <thead>
+                            <tr>
+                                <th>参数名称	</th>
+                                <th>参数值</th>
+                                <th>参数中文名</th>
+                                <th>参数描述</th>
+                                <th>创建人</th>
+                                <th>创建时间</th>
+                                <th>修改人</th>
+                                <th>修改时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
-</div>
 
 </#macro>
 
@@ -116,7 +115,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a onclick="deleRow()" class="btn-info" href="/system/'+data+'">编辑</a>';
+                    return  '<a onclick="deleRow()" class="label label-primary" href="/system/'+data+'">编辑</a>';
                 }
             }];
 
