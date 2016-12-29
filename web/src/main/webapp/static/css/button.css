@@ -26,7 +26,7 @@
     border: 1px solid #46b8da;
 
 }
-.search span input{
+.search span input,.search span select{
     border-radius: 5px;
 }
 .search input[type=button]:hover {

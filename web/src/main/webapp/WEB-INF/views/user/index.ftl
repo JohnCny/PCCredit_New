@@ -124,7 +124,7 @@
     </div>-->
 
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
             <section class="panel">
                 <header class="panel-heading">
                     系统参数配置浏览
