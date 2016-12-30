@@ -3,7 +3,6 @@
 <#macro css>
     <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
     <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
-    <!--<link rel="stylesheet" href="/static/css/button.css"/>-->
     <link href="/static/css/zTree/metroStyle/metroStyle.css" rel="stylesheet">
 </#macro>
 <#macro style>
@@ -13,13 +12,13 @@
 </#macro>
 <#macro breadcrumb>
     <h3>
-        客户管理
+        机构管理
     </h3>
     <ul class="breadcrumb">
         <li>
-            <a href="#">客户</a>
+            <a href="#">机构</a>
         </li>
-        <li class="active"> 客户管理</li>
+        <li class="active"> 机构管理</li>
     </ul>
 </#macro>
 
@@ -45,7 +44,7 @@
             <div class="col-xs-10">
                 <section class="panel">
                     <header class="panel-heading">
-                        用户列表
+                        机构信息
                     </header>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -75,6 +74,7 @@
     <script src="/static/js/department.js" type="text/javascript"></script>
     <script src="/static/js/moment.min.js" type="text/javascript"></script>
 </#macro>
+
 <#macro script>
     <script type="text/javascript">
         $(document).ready(function () {
