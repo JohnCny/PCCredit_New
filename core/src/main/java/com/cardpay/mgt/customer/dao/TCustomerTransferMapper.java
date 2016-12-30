@@ -2,6 +2,7 @@ package com.cardpay.mgt.customer.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,10 @@ public interface TCustomerTransferMapper extends BasicMapper<TCustomerTransfer> 
      */
     int accept(Map<String, Object> map);
 
+    /**
+     * 根据科技经理ID查询移交信息
+     * @param customerId 客户经理Id
+     * @return 移交记录
+     */
+    List<TCustomerTransferVo> queryById(@Param("customerId") int customerId);
 }

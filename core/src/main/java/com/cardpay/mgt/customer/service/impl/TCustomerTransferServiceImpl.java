@@ -6,6 +6,7 @@ import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import org.apache.commons.collections.map.HashedMap;
@@ -66,5 +67,10 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
         }
         map.put("customerIds", idList);
         return tCustomerIndustryDao.accept(map);
+    }
+
+    @Override
+    public List<TCustomerTransferVo> queryById(int customerId) {
+        return tCustomerIndustryDao.queryById(customerId);
     }
 }

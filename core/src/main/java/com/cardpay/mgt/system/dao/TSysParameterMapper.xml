@@ -30,20 +30,32 @@
     <resultMap id="UserMap" type="com.cardpay.mgt.user.model.User">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
         <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+        <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="AGE" jdbcType="DECIMAL" property="age"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+        <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
     </resultMap>
 
+    <!--查询创建人信息-->
     <select id="selectCreateUser" resultMap="UserMap">
-    SELECT *
-    FROM T_USER
-    WHERE
-    ID = #{createBy}
+    SELECT * FROM T_USER WHERE ID = #{createBy}
   </select>
 
+    <!--查询修改人信息-->
     <select id="selectModifyUser" resultMap="UserMap">
-    SELECT *
-    FROM T_USER
-    WHERE
-    ID = #{modifyBy}
+    SELECT * FROM T_USER WHERE ID = #{modifyBy}
   </select>
 
     <!--返回Vo信息-->
