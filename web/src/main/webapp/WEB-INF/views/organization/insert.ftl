@@ -4,6 +4,14 @@
     <link href="/static/css/zTree/metroStyle/metroStyle.css" rel="stylesheet">
 </#macro>
 <#macro style>
+    <style>
+        .distance{
+            margin-top: -20px;
+        }
+        .dis{
+            margin-top: 20px;
+        }
+    </style>
 </#macro>
 <#macro breadcrumb>
     <h3>
@@ -18,9 +26,10 @@
 </#macro>
 
 <#macro content>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="col-xs-2">
+    <div class="row" style="background-color: #efefef;width: 100%;margin-left: 0">
+        <div class="col-md-12">
+
+            <div class="col-md-3">
                 <div class="report common list">
                     <section class="panel">
                         <header class="panel-heading">
@@ -32,37 +41,47 @@
                     </section>
                 </div>
             </div>
-            <!--<div class="col-xs-1"></div>-->
-            <div class="col-xs-10" style="background-color: #ffffff; border-radius: 5px">
+
+            <div class="col-md-9" style="background-color: #ffffff; border-radius: 5px">
                 <section class="panel">
                     <header class="panel-heading">
                         机构信息
                     </header>
-                    <input type="hidden" name="orgId" id="orgId">
-
-                    <form id="contenttable" action="">
-                        <div class="common report">
+                    <div class="portlet-body">
+                        <input type="hidden" name="orgId" id="orgId">
+                        <form id="contenttable" action="">
                             <input class="searchBtn" type="hidden" name="id" id="id" value="${tOrganization.id}">
-                            <ul class="rightRole">
-                                <li class="col-md-4 col-sm-12 col-xs-12">
-                                    <label>机构名称：</label>
-                                    <input type="text" id="orgName" name="orgName">
-                                </li>
-                                <li class="col-md-4 col-sm-12 col-xs-12">
-                                    <label>负责人：</label>
-                                    <input type="text" id="orgDirectorName" name="orgDirectorName">
-                                </li>
-                                <li class="col-md-4 col-sm-12 col-xs-12">
-                                    <label>后勤：</label>
-                                    <input type="text" id="orgLogisticsId" name="orgLogisticsId">
-                                </li>
-                            </ul>
-                        </div>
-                        <p class="button">
-                            <a href="javascript:void(0);" class="btn btn-success" id="btn_submit">保存</a>
-                        </p>
-                    </form>
-
+                            <div class="row dis">
+                                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                                    <label for="orgName">机构名称</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input id="orgName" type="text" class="form-control distance" name="orgName">
+                                        <div class="message"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                                    <label for="orgDirectorName">负责人</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input id="orgDirectorName" type="text" class="form-control distance" name="orgDirectorName">
+                                        <div class="message"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                                    <label for="orgLogisticsId">后勤</label>
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input id="orgLogisticsId" type="text" class="form-control distance" name="orgLogisticsId">
+                                        <div class="message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12" style="margin-left: -25px;margin-bottom: 20px;">
+                                <a href="javascript:void(0);" class="btn btn-success" id="btn_submit">保存</a>
+                            </div>
+                        </form>
+                    </div>
                 </section>
             </div>
         </div>
