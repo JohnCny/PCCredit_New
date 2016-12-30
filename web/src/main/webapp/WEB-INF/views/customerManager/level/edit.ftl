@@ -107,7 +107,7 @@
                         </div>
                         <div class="col-md-12 col-xs-12" style="margin-bottom: 20px;">
                             <input class="btn btn-success" type="button" id="btn_submit" value="保存"/>
-                            <input type="button"  class="btn btn-info" class="back" value="返回"/>
+                            <a href="/experts/list" type="reset" class="btn btn-default">取消</a>
                         </div>
                     </div>
 
