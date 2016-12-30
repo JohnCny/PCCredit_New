@@ -1,0 +1,6 @@
+/*radio*/
+.radio{background:url(../images/radio.png) no-repeat left center;padding-left:30px;padding-right:10px;display:inline-block;line-height:24px;height:24px;}
+.radio_a{background:url(../images/radio_a.png) no-repeat left center;}
+.hideInput input{visibility:hidden;}
+
+.center .radio{vertical-align:middle;padding-right:0;}
