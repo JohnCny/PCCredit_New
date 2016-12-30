@@ -1,9 +1,15 @@
 <#include "layout/base.html"/>
 <#assign title = "客户"/>
+<#macro css>
+    <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
+    <link href="/static/css/zTree/metroStyle/metroStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/radio.css">
+</#macro>
 <#macro style>
 <style>
     input, select {
-        margin-top: 10px;
+        margin-top: 0px;
         width: 70%
     }
 
@@ -24,7 +30,7 @@
         float: left;
         height: 80px;
         margin-left: 10%;
-        margin-top: 50px;
+        margin-top: 30px;
     }
 
     @media screen and (max-width: 1300px) {
@@ -33,7 +39,7 @@
             float: left;
             height: 80px;
             margin-left: 10%;
-            margin-top: 50px;
+            margin-top: 30px;
         }
     }
     .contain {
@@ -41,9 +47,7 @@
     }
 </style>
 </#macro>
-<#macro css>
 
-</#macro>
 <#macro breadcrumb>
     <h3>
        新建客户
@@ -56,133 +60,11 @@
     </ul>
 </#macro>
 <#macro content>
-
-
-
-
-
-<!--<form class="content">
-    <div class="report common">
-        <h5>客户信息</h5>
-        <div class=" new_customer">
-            <div class=" cus_content">
-                &lt;!&ndash; BEGIN EXAMPLE TABLE PORTLET&ndash;&gt;
-                <form action="">
-                    <#list dropDownList as dropDown>
-                        <div class="widclas">
-                            <label for="cname">姓名</label>
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <input id="cname" type="text" class="form-control" name="" value=""
-                                       placeholder="请输入至少2-10位汉字">
-                            </div>
-                        </div>
-                        <div class="widclas">
-                            <label for="sex">性别</label>
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <select id="sex" type="text" name="" class="form-control">
-                                    <option value="">&#45;&#45;请选择&#45;&#45;</option>
-                                    <option value="1">男</option>
-                                    <option value="0">女</option>
-                                </select>
-                                <div class="message">${sexError}</div>
-                            </div>
-                        </div>
-                        <div class="widclas">
-                            <label for="certificateType">证件类型</label>
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <div class="message">${certificateTypeError}</div>
-
-                                <select id="certificateType" type="text" name="" class="form-control">
-                                    <option value="">&#45;&#45;请选择&#45;&#45;</option>
-                                    <#list dropDown.cert as cert>
-                                        <option value="${cert.id}">${cert.value}</option>
-                                    </#list>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="widclas">
-                            <label for="certificateNumber">证件号码</label>
-                            <div class="input-icon right">
-                                <i class="fa checkId"></i>
-                                <input data-error="${idNumberError}" id="certificateNumber" type="text"
-                                       class="form-control idNumber"
-                                       name="" value="${customerBasicInfo.idNumber}" placeholder="请输入有效证件号码">
-                                <div class="message" id="idMessage"></div>
-                            </div>
-                        </div>
-                        <div class="widclas">
-                            <label for="tel">手机号码</label>
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <input data-error="${telError}" id="tel" type="text" class="form-control" name=""
-                                       value="${customerBasicInfo.tel}" placeholder="请输入正确的手机号码">
-                                <div class="message">${telError}</div>
-                            </div>
-                        </div>
-                        <div class="widclas">
-                            <label for="homeAddress">家庭住址</label>
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <input id="homeAddress" type="text" class="form-control" name=""
-                                       value="${customerBasicInfo.homeAddress}" placeholder="请输入有效地址">
-                                <div class="message">${homeAddressError}</div>
-                            </div>
-                        </div>
-                        <div class="widclas">
-                            <label for="marriageStatus">婚姻状况</label>
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <select id="marriageStatus" type="text" name="" class="form-control">
-
-                                    <option value="">&#45;&#45;请选择&#45;&#45;</option>
-                                    <#list dropDown.marriageStatus as marriageStatus>
-                                        <option value="${marriageStatus.id}">${marriageStatus.value}</option>
-                                    </#list>
-                                </select>
-                                <div class="message">${marriageError}</div>
-                            </div>
-                        </div>
-                        <div class="widclas">
-                            <label for="educationDegree">教育情况</label>
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <select id="educationDegree" type="text" class="form-control" name="">
-                                    <option value="">&#45;&#45;请选择&#45;&#45;</option>
-                                    <#list dropDown.educationDegree as educationDegree>
-                                        <option value="${educationDegree.id}">${educationDegree.value}</option>
-                                    </#list>
-                                </select>
-                                <div class="message">${eductionError}</div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-xs-12 contain">
-                            <button id="btn_submit" class="btn btn-success"
-                                    style="background-color: #6F7691;border-radius: 0px;border: 1px solid #6F7691；">确定
-                            </button>
-                            <a href="/customer/customer" type="reset" class="btn btn-default"
-                               style="border-radius: 0px;border: 1px solid #2bb8c4；">取消</a>
-                        </div>
-                    </#list>
-                </form>
-            </div>
-        </div>
-    </div>
-</form>-->
-
     <div class="row">
         <div class="col-sm-12">
             <section class="panel">
                 <header class="panel-heading">
                     新建客户
-                    <span class="tools pull-right">
-                <!--<a href="javascript:;" class="fa fa-chevron-down"></a>-->
-                        <!--<a href="javascript:;" class="fa fa-times"></a>-->
-             </span>
                 </header>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -281,11 +163,9 @@
 
 
                                     <div class="col-xs-12 contain">
-                                        <button id="btn_submit" class="btn btn-success"
-                                                style="background-color: #6F7691;border-radius: 0px;border: 1px solid #6F7691；">确定
+                                        <button id="btn_submit" class="btn btn-success">确定
                                         </button>
-                                        <a href="/customer/customer" type="reset" class="btn btn-default"
-                                           style="border-radius: 0px;border: 1px solid #2bb8c4；">取消</a>
+                                        <a href="/customer/customer" type="reset" class="btn btn-default">取消</a>
                                     </div>
                                 </#list>
                             </form>
@@ -296,6 +176,15 @@
         </div>
     </div>
 
+</#macro>
+<#macro js>
+    <script type="text/javascript" src="/static/js/jquery.ztree.all.js"></script>
+    <script type="text/javascript" src="/static/js/ztree-org.js"></script>
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
+    <script src="/static/js/department.js" type="text/javascript"></script>
+    <script src="/static/js/moment.min.js" type="text/javascript"></script>
 </#macro>
 <#macro script>
 <script>
@@ -332,7 +221,7 @@
                 data: Obj,
                 success: function (res) {
                     if (res.code == 200) {
-//                            location.href="/customerBasic/success";
+                            location.href="/customerBasic/index";
                     }
                 },
                 error: function () {
@@ -360,8 +249,5 @@
 
     });
 </script>
-
-</#macro>
-<#macro js>
 
 </#macro>

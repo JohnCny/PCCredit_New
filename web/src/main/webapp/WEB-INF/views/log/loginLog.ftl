@@ -9,47 +9,103 @@
 </style>
 </#macro>
 <#macro css>
-
+    <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
+    <link rel="stylesheet" href="/static/css/button.css"/>
 </#macro>
 <#macro breadcrumb>
-<h1>登录日志管理</h1>
-<h2>当前位置：系统管理 / <span class="active">登录日志管理</span></h2>
-
+    <h3>
+        登录日志管理
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">当前位置：系统管理</a>
+        </li>
+        <li class="active"> 登录日志管理</li>
+    </ul>
 </#macro>
 <#macro content>
-<h5>客户列表</h5>
-<div class="search" style="width:95%">
-    <span>登陆账号：<input type="text" class="short" id="loginAccount"></span>
-    <span>操作：<select id="loginOperation" class="short">
-         <option value="">--请选择--</option>
-            <option value="1">登陆</option>
-            <option value="0">退出</option>
-      </select></span>
-    <span>操作时间：<input type="text" class="short" id="loginTime" onclick="laydate()"></span>
+<!--<div class="search" style="width:95%">-->
+    <!--<span>登陆账号：<input type="text" class="short" id="loginAccount"></span>-->
+    <!--<span>操作：<select id="loginOperation" class="short">-->
+         <!--<option value="">&#45;&#45;请选择&#45;&#45;</option>-->
+            <!--<option value="1">登陆</option>-->
+            <!--<option value="0">退出</option>-->
+      <!--</select></span>-->
+    <!--<span>操作时间：<input type="text" class="short" id="loginTime" onclick="laydate()"></span>-->
 
-    <input class="searchBtn" type="button" value="搜 索">
-</div>
+    <!--<input class="searchBtn" type="button" value="搜 索">-->
+<!--</div>-->
 
-<div class="table-responsive" style="margin:50px auto; width:95%;">
-    <table id="loginLogList" class="table table-bordered" style="width: 100%">
-        <thead>
-        <tr>
-            <th>登入名</th>
-            <th>操作</th>
-            <th>操作时间</th>
-            <th>登入结果</th>
-            <th>IP地址</th>
-        </tr>
-        </thead>
-    </table>
-</div>
+<!--<div class="table-responsive" style="margin:50px auto; width:95%;">-->
+    <!--<table id="loginLogList" class="table table-bordered" style="width: 100%">-->
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th>登入名</th>-->
+            <!--<th>操作</th>-->
+            <!--<th>操作时间</th>-->
+            <!--<th>登入结果</th>-->
+            <!--<th>IP地址</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+    <!--</table>-->
+<!--</div>-->
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    登录日志管理
+                </header>
+                <div class="panel-body ">
+                    <div class="table-responsive">
+                        <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                            <div class="row-fluid">
+                                <div class="search" >
+                                    <span>登陆账号：<input type="text" class="short" id="loginAccount"></span>
+                                    <span>
+                                        操作：
+                                        <select id="loginOperation" class="short">
+                                            <option value="">--请选择--</option>
+                                            <option value="1">登陆</option>
+                                            <option value="0">退出</option>
+                                      </select>
+                                    </span>
+                                    <span>操作时间：<input type="text" class="short" id="loginTime" onclick="laydate()"></span>
+                                    <input class="searchBtn" type="button" value="搜 索">
+                                </div>
+                                <table id="loginLogList" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>登入名</th>
+                                        <th>操作</th>
+                                        <th>操作时间</th>
+                                        <th>登入结果</th>
+                                        <th>IP地址</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</#macro>
+<#macro js>
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
+    <script src="/static/js/department.js" type="text/javascript"></script>
+    <script src="/static/js/moment.min.js" type="text/javascript"></script>
 </#macro>
 
 <#macro script>
-</#macro>
-<#macro js>
 <script>
-
     $(function () {
         var ajax = {
             "type": "GET",

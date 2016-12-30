@@ -2,6 +2,9 @@
 <#assign title = "客户"/>
 <#macro style>
     <style>
+        .edit{
+            margin: 0 5px 0;
+        }
     </style>
 </#macro>
 <#macro css>
@@ -51,7 +54,7 @@
         <div class="col-sm-12">
             <section class="panel">
                 <header class="panel-heading">
-                    系统参数配置浏览
+                    客户管理
                 </header>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -140,7 +143,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a href="/customerBasic/customerInfo/'+data+'" class="btn btn-info">查看</a><a onclick="deleRow()" class="btn btn-warning" href="/customerBasic/'+data+'">编辑</a><a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
+                    return  '<a href="/customerBasic/customerInfo/'+data+'" class="label label-info">查看</a><a onclick="deleRow()" class="label label-warning edit " href="/customerBasic/'+data+'">编辑</a><a class="label label-danger deleteOne delete" href="javaScript:;" data-id='+data+'>禁用</a>';
                 }
             }];
 

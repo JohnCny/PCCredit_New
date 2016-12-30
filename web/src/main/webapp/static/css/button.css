@@ -26,7 +26,11 @@
     border: 1px solid #46b8da;
 
 }
-
+.search span input,.search span select{
+    border-radius: 5px;
+}
 .search input[type=button]:hover {
     background-color: #39b3d7;
 }
+.leftindex{margin-left: 5px}
+.rightindex{margin-right: 5px}
