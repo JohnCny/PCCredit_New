@@ -28,19 +28,20 @@
 <#macro content>
 <div class="row">
 
-    <div class="col-xs-2">
+    <div class="col-md-3">
         <div class="report common list">
             <section class="panel">
                 <header class="panel-heading">
                     机构列表
                 </header>
-            <div class="treeBox">
-                <ul id="treeDemo" class="ztree"></ul>
-            </div>
+                <div class="treeBox">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
             </section>
         </div>
     </div>
-        <div class="col-sm-10">
+
+        <div class="col-md-9">
             <section class="panel">
                 <header class="panel-heading">
                     客户管理

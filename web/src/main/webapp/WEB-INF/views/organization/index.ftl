@@ -24,9 +24,10 @@
 
 
 <#macro content>
-    <div class="row">
+    <div class="row" style="background-color: #efefef;width: 100%;margin-left: 0">
         <div class="col-sm-12">
-            <div class="col-xs-2">
+
+            <div class="col-md-3">
                 <div class="report common list">
                     <section class="panel">
                         <header class="panel-heading">
@@ -41,12 +42,12 @@
 
     <!--<div class="col-xs-1"></div>-->
 
-            <div class="col-xs-10">
+            <div class="col-xs-9" style="background-color: #ffffff; border-radius: 5px">
                 <section class="panel">
                     <header class="panel-heading">
                         机构信息
                     </header>
-                    <div class="panel-body">
+                    <div class="portlet-body">
                         <div class="table-responsive">
                             <table id="userList" class="table table-bordered">
                                 <thead>
@@ -62,6 +63,9 @@
                     </div>
                 </section>
              </div>
+
+
+
         </div>
     </div>
 </#macro>
