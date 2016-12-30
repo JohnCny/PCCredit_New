@@ -47,18 +47,22 @@
     <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
 </#macro>
 <#macro breadcrumb>
-
-    <h1>${title}</h1>
-    <h2>当前位置：客户经理管理 / <span class="active">${title}</span></h2>
+    <h3>
+        客户经理管理
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">当前位置：客户经理管理</a>
+        </li>
+        <li class="active"> 客户经理管理</li>
+    </ul>
 </#macro>
 <#macro content>
-
-    <h5>客户经理列表</h5>
     <div class="row">
         <div class="col-sm-12">
             <section class="panel">
                 <header class="panel-heading">
-                    系统参数配置浏览
+                    客户经理管理
                 </header>
 
                 <div class="panel-body">
@@ -108,8 +112,8 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a class="label label-info" href="/customerManagerLevel/'+data+'">管理</a>' +
-                            '<a class="label label-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                    return  '<a class="btn btn-info" href="/customerManagerLevel/'+data+'">管理</a>' +
+                            '<a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
                 }
             }];
 

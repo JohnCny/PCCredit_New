@@ -21,9 +21,9 @@
     </h3>
     <ul class="breadcrumb">
         <li>
-            <a href="#">机构</a>
+            <a href="#">当前位置：机构管理编辑</a>
         </li>
-        <li class="active"> 机构管理</li>
+        <li class="active"> 机构管理编辑</li>
     </ul>
 </#macro>
 <#macro content>

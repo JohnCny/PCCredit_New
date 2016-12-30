@@ -13,11 +13,11 @@
 </#macro>
 <#macro breadcrumb>
     <h3>
-        客户
+        客户维护
     </h3>
     <ul class="breadcrumb">
         <li>
-            <a href="#">当前位置：客户管理</a>
+            <a href="#">当前位置：客户维护</a>
         </li>
         <li class="active">客户维护</li>
     </ul>
@@ -102,7 +102,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a  class="label label-warning add" href="/customerMaintenance?customerId='+data+'">新增</a><a onclick="deleRow()" class="label label-info look" href="/customerMaintenance/'+data+'">查看</a>';
+                    return  '<a  class="btn btn-warning add" href="/customerMaintenance?customerId='+data+'">新增</a><a onclick="deleRow()" class="btn btn-info look" href="/customerMaintenance/'+data+'">查看</a>';
                 }
             }];
 
