@@ -20,7 +20,7 @@
             float: left;
             height:80px;
             margin-left: 10%;
-            margin-top: 50px;
+            margin-top: 30px;
         }
         @media screen and (max-width: 1300px){
             .widclas{
