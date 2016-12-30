@@ -1,87 +1,160 @@
 <#include "layout/base.html"/>
 <#assign title = "客户"/>
 <#macro style>
+    <style>
+        input, select {
+            margin-top: 0px;
+            width: 70%
+        }
 
+        [v-cloak] {
+            display: none
+        }
+
+        .cus_content {
+            /*border: 1px solid #6F7691;*/
+            padding-bottom: 30px;
+            float: left;
+            margin-left: 2.5%;
+            background-color: #F7F7F7;
+        }
+
+        .widclas {
+            width: 20%;
+            float: left;
+            height: 80px;
+            margin-left: 10%;
+            margin-top: 30px;
+        }
+
+        @media screen and (max-width: 1300px) {
+            .widclas {
+                width: 30%;
+                float: left;
+                height: 80px;
+                margin-left: 10%;
+                margin-top: 30px;
+            }
+        }
+        .contain {
+            margin: 50px 0 0 8.7%;
+        }
+    </style>
 </#macro>
 <#macro css>
 
 </#macro>
 <#macro breadcrumb>
-<h1>${title}</h1>
-<h2>当前位置：客户管理 / <span class="active">${title}</span></h2>
+    <h3>
+        客户编辑
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">当前位置：客户编辑</a>
+        </li>
+        <li class="active"> 客户编辑</li>
+    </ul>
 </#macro>
 <#macro content>
-<form id="contenttable" action="">
-    <#list dropDownList as dropDown>
-    <h1>编辑客户信息</h1>
-    <h2>当前位置：客户管理 / 客户信息查询 / 客户1 / <span>编辑客户信息</span></h2>
-    <div class="report common">
-        <h5>客户信息</h5>
-        <input class="searchBtn" type="hidden" name="id" id="id" value="${tCustomerBasic.id}">
-        <table>
-            <tr>
-                <td class="pull-right">客户名称：</td>
-                <td colspan="3"><input type="text" id="cname" name="cname" value="${tCustomerBasic.cname}"></td>
-            </tr>
-            <tr>
-                <td class="pull-right">证件类型：</td>
-                <td>
-                    <select name="certificateType">
-                        <#list dropDown.cert as cert>
-                            <option <#if tCustomerBasic.certificateType == cert.id>selected</#if>  value="${cert.id}">
-                                ${cert.value}
-                            </option>
-                        </#list>
-                    </select>
-                </td>
-                <td class="pull-right">证件号码：</td>
-                <td><input type="text" disabled id="certificateNumber" name="certificateNumber" value="${tCustomerBasic.certificateNumber}"></td>
-            </tr>
-            <tr>
-                <td class="pull-right">联系方式：</td>
-                <td><input type="text" id="tel" name="tel" value="${tCustomerBasic.tel}"></td>
-                <td class="pull-right">家庭住址：</td>
-                <td><input type="text" id="homeAddress" name="homeAddress" value="${tCustomerBasic.homeAddress}"></td>
-            </tr>
-            <tr>
-                <td class="pull-right">所属行业：</td>
-                <td colspan="3">
-                    <div class="selectResult" id="fzrhy"></div><br>
-                    <select>
-                        <option>---请选择---</option>
-                        <option>呜呜呜呜呜呜</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="pull-right">婚姻状况：</td>
-                <td>
-                    <select name="marriageStatus">
-                        <#list dropDown.marriageStatus as marriageStatus>
-                            <option <#if tCustomerBasic.marriageStatus == marriageStatus.id>selected</#if>  value="${marriageStatus.id}">
-                            ${marriageStatus.value}
-                            </option>
-                        </#list>
-                    </select>
-                </td>
-                <td class="pull-right">文化程度：</td>
-                <td>
-                    <select name="educationDegree">
-                        <#list dropDown.educationDegree as educationDegree>
-                            <option <#if tCustomerBasic.educationDegree == educationDegree.id>selected</#if>  value="${educationDegree.id}">
-                            ${educationDegree.value}
-                            </option>
-                        </#list>
-                    </select>
-                </td>
-            </tr>
-        </table>
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    客户编辑
+                </header>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <form id="contenttable" action="">
+                            <#list dropDownList as dropDown>
+                                <div class="report common">
+                                    <input class="searchBtn" type="hidden" name="id" id="id" value="${tCustomerBasic.id}">
+                                    <div class="widclas">
+                                        <label for="cname">姓名</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" id="cname" name="cname" class="form-control" value="${tCustomerBasic.cname}">
+                                        </div>
+                                    </div>
+                                    <div class="widclas">
+                                        <label for="">证件类型</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select name="certificateType" class="form-control">
+                                                <#list dropDown.cert as cert>
+                                                    <option <#if tCustomerBasic.certificateType == cert.id>selected</#if>  value="${cert.id}">
+                                                    ${cert.value}
+                                                    </option>
+                                                </#list>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="widclas">
+                                        <label for="certificateNumber">证件号码</label>
+                                        <div class="input-icon right">
+                                            <i class="fa checkId"></i>
+                                            <input type="text" disabled id="certificateNumber" class="form-control" name="certificateNumber" value="${tCustomerBasic.certificateNumber}">
+                                            <div class="message" id="idMessage"></div>
+                                        </div>
+                                    </div>
+                                    <div class="widclas">
+                                        <label for="tel">手机号码</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" id="tel" name="tel" class="form-control" value="${tCustomerBasic.tel}">
+                                            <div class="message">${telError}</div>
+                                        </div>
+                                    </div>
+                                    <div class="widclas">
+                                        <label for="homeAddress">家庭住址</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" id="homeAddress" name="homeAddress" class="form-control" value="${tCustomerBasic.homeAddress}">
+                                            <div class="message">${homeAddressError}</div>
+                                        </div>
+                                    </div>
+                                    <div class="widclas">
+                                        <label for="">婚姻状况</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select name="marriageStatus" class="form-control">
+                                                <#list dropDown.marriageStatus as marriageStatus>
+                                                    <option <#if tCustomerBasic.marriageStatus == marriageStatus.id>selected</#if>  value="${marriageStatus.id}">
+                                                    ${marriageStatus.value}
+                                                    </option>
+                                                </#list>
+                                            </select>
+                                            <div class="message">${marriageError}</div>
+                                        </div>
+                                    </div>
+                                    <div class="widclas">
+                                        <label for="">教育情况</label>
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <select name="educationDegree" class="form-control">
+                                                <#list dropDown.educationDegree as educationDegree>
+                                                    <option <#if tCustomerBasic.educationDegree == educationDegree.id>selected</#if>  value="${educationDegree.id}">
+                                                    ${educationDegree.value}
+                                                    </option>
+                                                </#list>
+                                            </select>
+                                            <div class="message">${eductionError}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 contain">
+                                    <button id="btn_submit" class="btn btn-success">保存</button>
+                                </div>
+                            </#list>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
-    <p class="button">
-        <input type="button" id="btn_submit" value="保存" />
-    </p>
-    </#list>
-</form>
 </#macro>
 
 <#macro script>
