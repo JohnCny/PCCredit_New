@@ -49,10 +49,9 @@
                         机构信息
                     </header>
                     <div class="portlet-body">
-                            <input type="hidden" name="orgId" id="orgId">
+                        <input type="hidden" name="orgId" id="orgId">
                         <form id="contenttable" action="">
-
-                            <input class="searchBtn" type="hidden" name="id" id="id" value="${tOrganization.id}">
+                        <input class="searchBtn" type="hidden" name="id" id="id" value="${tOrganization.id}">
                         <div class="row dis">
                             <div class="form-group col-md-4 col-sm-6 col-xs-12">
                                 <label for="orgName">机构名称</label>
@@ -62,7 +61,6 @@
                                     <div class="message"></div>
                                 </div>
                             </div>
-
                             <div class="form-group col-md-4 col-sm-6 col-xs-12">
                                 <label for="orgDirectorName">负责人</label>
                                 <div class="input-icon right">
@@ -71,8 +69,6 @@
                                     <div class="message"></div>
                                 </div>
                             </div>
-
-
                             <div class="form-group col-md-4 col-sm-6 col-xs-12">
                                 <label for="orgLogisticsId">后勤</label>
                                 <div class="input-icon right">
