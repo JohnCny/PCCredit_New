@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
     <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
     <link rel="stylesheet" href="/static/css/button.css"/>
+
 </#macro>
 <#macro style>
 </#macro>
@@ -26,7 +27,8 @@
             <header class="panel-heading">
                 数据字典列表
             </header>
-            <div class="panel-body ">
+
+            <div class="panel-body">
             <div class="table-responsive">
                     <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
                         <div class="row-fluid">
@@ -96,7 +98,7 @@
                 "mData": "dataId",
                 "sDefaultContent": "",
                 "render": function (data, type, full, meta) {
-                    return '<a onclick="deleRow()" class="label label-primary" href="/dataDictionary/' + data + '">编辑</a>'
+                    return '<a onclick="deleRow()" class="btn btn-info" style="padding: 5px 10px;" href="/dataDictionary/' + data + '">编辑</a>'
                 }
             }];
 
