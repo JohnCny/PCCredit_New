@@ -153,14 +153,14 @@
                 "sDefaultContent": "",
                 "render": function (data, type, full, meta) {
                     var html = "";
-                    html += '<a class="label label-info" style="padding: 5px 10px;" href="/user/'+ data +'/updateUser" data-id=' + data + '>编辑</a>'
+                    html += '<a class="btn btn-info" style="padding: 5px 10px;" href="/user/'+ data +'/updateUser" data-id=' + data + '>编辑</a>'
                     if (!full.status) {
-                        html += '<a  class="label label-danger locks"  style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击锁定</a>';
+                        html += '<a  class="btn btn-danger locks"  style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击锁定</a>';
                     } else {
-                        html += '<a  class="label label-default locks" style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击解锁</a>';
+                        html += '<a  class="btn btn-default locks" style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击解锁</a>';
                     }
-                    html += '<a class="label label-warning reste" style="padding: 5px 10px;" data-id=' + data + '>重置密码</a>';
-                    html += '<a class="label label-success"  style="padding: 5px 10px;" data-id=' + data + '>角色管理</a>'
+                    html += '<a class="btn btn-warning reste" style="padding: 5px 10px;" data-id=' + data + '>重置密码</a>';
+                    html += '<a class="btn btn-success"  style="padding: 5px 10px;" data-id=' + data + '>角色管理</a>'
                     return html;
                 }
             }];
