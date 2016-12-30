@@ -59,8 +59,6 @@
             <section class="panel">
                 <header class="panel-heading">
                     系统参数配置浏览
-                    <span class="tools pull-right">
-             </span>
                 </header>
 
                 <div class="panel-body">

@@ -27,7 +27,6 @@
 
 <#macro content>
 <div class="row">
-    <div class="col-sm-12">
 
     <div class="col-xs-2">
         <div class="report common list">
@@ -41,42 +40,47 @@
             </section>
         </div>
     </div>
+        <div class="col-sm-10">
+            <section class="panel">
+                <header class="panel-heading">
+                    客户管理
+                </header>
+                <div class="panel-body">
+                    <div class="table-responsive">
 
-    <div class="col-xs-10">
-                <section class="panel">
-                    <header class="panel-heading">
-                        用户列表
-                    </header>
-                    <div class="panel-body">
-                         <div class="table-responsive">
-                             <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                <div class="row-fluid">
-                                  <div class="search">
-                                     <span>机构：<input type="text" class="form-control" aria-controls="dynamic-table" placeholder="请在左侧选择机构" readonly="readonly" disabled="disabled" name="orgId" id="orgId"></span>
+                        <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                            <div class="row-fluid">
+                                        <!--<div class="">-->
+                                         <!---->
+                                            <!--<ul id="treeDemo" class="ztree"></ul>-->
+                                        <!--</div>-->
+                                <div class="search">
+                                    <span>机构：<input type="text" class="form-control" aria-controls="dynamic-table" placeholder="请在左侧选择机构" readonly="readonly" disabled="disabled" name="orgId" id="orgId"></span>
                                     <span>用户名称：<input type="text" class="form-control" aria-controls="dynamic-table" name="username" id="username"></span>
                                     <span> 身份证：<input type="text" class="form-control" aria-controls="dynamic-table" name="idCardNumber" id="idCardNumber"></span>
                                     <input class="searchBtn" type="button" value="搜 索">
-                                 </div>
-                                     <table id="userList" class="table table-bordered table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>姓名</th>
-                                            <th>性别</th>
-                                            <th>联系方式</th>
-                                            <th>邮件</th>
-                                            <th>创建时间</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                     </table>
-                                    </div>
                                 </div>
+                                <table id="userList" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>性别</th>
+                                        <th>联系方式</th>
+                                        <th>邮件</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
                             </div>
-                         </div>
-                        </section>
+                        </div>
+                    </div>
                 </div>
+            </section>
+        </div>
     </div>
-</div>
+
+
 </#macro>
 <#macro js>
     <script type="text/javascript" src="/static/js/jquery.ztree.all.js"></script>

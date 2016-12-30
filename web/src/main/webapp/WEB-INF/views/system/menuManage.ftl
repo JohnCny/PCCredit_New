@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
     <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
     <link rel="stylesheet" href="/static/css/radio.css"/>
-    <!--<link rel="stylesheet" href="/static/css/button.css"/>-->
     <link href="/static/css/zTree/metroStyle/metroStyle.css" rel="stylesheet">
 </#macro>
 <#macro style>

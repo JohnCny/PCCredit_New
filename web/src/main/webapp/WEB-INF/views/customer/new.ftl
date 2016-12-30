@@ -1,5 +1,11 @@
 <#include "layout/base.html"/>
 <#assign title = "客户"/>
+<#macro css>
+    <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
+    <link href="/static/css/zTree/metroStyle/metroStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/radio.css">
+</#macro>
 <#macro style>
 <style>
     input, select {
@@ -41,9 +47,7 @@
     }
 </style>
 </#macro>
-<#macro css>
 
-</#macro>
 <#macro breadcrumb>
     <h3>
        新建客户
@@ -173,6 +177,15 @@
     </div>
 
 </#macro>
+<#macro js>
+    <script type="text/javascript" src="/static/js/jquery.ztree.all.js"></script>
+    <script type="text/javascript" src="/static/js/ztree-org.js"></script>
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
+    <script src="/static/js/department.js" type="text/javascript"></script>
+    <script src="/static/js/moment.min.js" type="text/javascript"></script>
+</#macro>
 <#macro script>
 <script>
     $(document).ready(function () {
@@ -236,8 +249,5 @@
 
     });
 </script>
-
-</#macro>
-<#macro js>
 
 </#macro>
