@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.system.dao.TSysParameterMapper">
-  <resultMap id="BaseResultMap" type="com.cardpay.mgt.system.model.TSysParameter">
-    <id column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="PARAMETER_NAME" jdbcType="VARCHAR" property="parameterName" />
-    <result column="PARAMETER_VALUE" jdbcType="VARCHAR" property="parameterValue" />
-    <result column="PARAMETER_NAME_ZN" jdbcType="VARCHAR" property="parameterNameZn" />
-    <result column="PARAMETER_DESCRIPTION" jdbcType="VARCHAR" property="parameterDescription" />
-    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy" />
-    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.system.model.TSysParameter">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="PARAMETER_NAME" jdbcType="VARCHAR" property="parameterName"/>
+        <result column="PARAMETER_VALUE" jdbcType="VARCHAR" property="parameterValue"/>
+        <result column="PARAMETER_NAME_ZN" jdbcType="VARCHAR" property="parameterNameZn"/>
+        <result column="PARAMETER_DESCRIPTION" jdbcType="VARCHAR" property="parameterDescription"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.system.model.vo.TSysParameterVo">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="PARAMETER_NAME" jdbcType="VARCHAR" property="parameterName"/>
+        <result column="PARAMETER_VALUE" jdbcType="VARCHAR" property="parameterValue"/>
+        <result column="PARAMETER_NAME_ZN" jdbcType="VARCHAR" property="parameterNameZn"/>
+        <result column="PARAMETER_DESCRIPTION" jdbcType="VARCHAR" property="parameterDescription"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <association property="createUser" select="selectCreateUser" column="CREATE_BY"/>
+        <association property="modifyUser" select="selectModifyUser" column="MODIFY_BY"/>
+    </resultMap>
+
+    <resultMap id="UserMap" type="com.cardpay.mgt.user.model.User">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+    </resultMap>
+
+    <select id="selectCreateUser" resultMap="UserMap">
+    SELECT *
+    FROM T_USER
+    WHERE
+    ID = #{createBy}
+  </select>
+
+    <select id="selectModifyUser" resultMap="UserMap">
+    SELECT *
+    FROM T_USER
+    WHERE
+    ID = #{modifyBy}
+  </select>
+
+    <!--返回Vo信息-->
+    <select id="queryAll" resultMap="BaseResultMapVo">
+    SELECT * FROM T_SYS_PARAMETER
+  </select>
 </mapper>

@@ -188,19 +188,17 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
             ids.add(customerId);
         }
 
-        Map<String, Object> map = new HashMap<String, Object> (){
-            {
-                put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
-                put("customerIds", ids);
-                put("managerId", ShiroKit.getUserId());
-            }
-        };
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
+        map.put("customerIds", ids);
+        map.put("managerId", ShiroKit.getUserId());
         int count = customerBasicService.updateStatus(map);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
      * 查看客户信息
+     *
      * @param customerId 客户id
      * @return 客户信息页面
      */

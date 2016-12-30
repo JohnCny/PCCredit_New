@@ -37,23 +37,6 @@ public class OrganizationController extends BaseController<TOrganization> {
     private static LogTemplate logger;
 
     /**
-     * 动态查询机构层级信息接口
-     *
-     * @param parentId 要查询的顶级层级ID
-     * @param level    查询层级信息数量
-     * @return 机构层级信息
-     */
-    @ResponseBody
-    @GetMapping("/movementOrganization")
-    @ApiOperation(value = "动态查询机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
-    public ResultTo changeQueryOrganization(@ApiParam(value = "要查询的顶级层级ID(默认最高级)")
-                                            @RequestParam(value = "parentId", defaultValue = "0") int parentId
-            , @ApiParam(value = "查询层级信息数量(默认1层)") @RequestParam(value = "level", defaultValue = "1") int level) {
-        List<TOrganizationVo> organization = tOrganizationService.queryOrganization(parentId, level);
-        return new ResultTo().setData(organization);
-    }
-
-    /**
      * 查询所有机构层级信息接口
      *
      * @param topId 顶级id
