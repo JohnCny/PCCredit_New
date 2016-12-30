@@ -264,7 +264,7 @@
                                             <label for="">年龄</label>
                                             <div class="input-icon right">
                                                 <i class="fa"></i>
-                                                <input  class="form-control" type="text" name="age" value="${user.age} placeholder="请输入至少2-10位汉字">
+                                                <input  class="form-control" type="text" name="age" value="${user.age}" placeholder="请输入至少2-10位汉字">
                                             </div>
                                         </div>
                                         <div class="widclas">
@@ -318,18 +318,18 @@
                                         <div class="ledd">
                                             <label for="" style="">用户角色</label>
                                             <#list roleAll as temp>
-                                                <span class="hideInput">
-                                                <input id="roleId_${temp.id}" type="radio" data-id="${userRole.roleId}"
-                                                       value="${temp.id}">
-                                                <input type="hidden" id="roleHidden">
-                                                    <#if userRole.roleId == temp.id>
-                                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
-                                                               class="radio radio_a" style="padding-left: 30px">${temp.roleNameZh}</label>
-                                                    <#else>
-                                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
-                                                               class="radio" style="padding-left: 30px">${temp.roleNameZh}</label>
-                                                    </#if>
-                                            </span>
+                                <span class="hideInput">
+                                <input id="roleId_${temp.id}" type="radio" data-id="${userRole.roleId}"
+                                       value="${temp.id}">
+                                <input type="hidden" id="roleHidden" name="dsaddsad">
+                                    <#if userRole.roleId == temp.id>
+                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
+                                               class="radio radio_a" style="padding-left: 30px">${temp.roleNameZh}</label>
+                                    <#else>
+                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
+                                               class="radio" style="padding-left: 30px">${temp.roleNameZh}</label>
+                                    </#if>
+                            </span>
                                             </#list>
                                         </div>
 
@@ -410,14 +410,12 @@
 
             }
         });
-</script>
-<script>
+
     function setRadio(obj, inputId) {//单选样式
         $(obj).parent().parent().find("input[type=radio]").attr("checked", false)
         $(obj).parent().parent().find("label").attr("class", "radio")
         $(obj).parent().find("input[type=radio]").attr("checked", true)
         $(obj).parent().find("label").attr("class", "radio radio_a")
-
         $("#roleHidden").attr("name", "roleId");
         var value = $("#" + inputId).data("id") + "," + $("#" + inputId).val();
         $("#roleHidden").attr("value", value);
