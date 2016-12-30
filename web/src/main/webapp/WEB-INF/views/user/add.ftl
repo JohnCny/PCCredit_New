@@ -68,8 +68,7 @@
 <#macro content>
     <div class="row">
         <div class="col-sm-12">
-
-            <div class="col-xs-2">
+            <div class="col-md-2 col-xs-12">
                 <div class="report common list">
                     <section class="panel">
                         <header class="panel-heading">
@@ -84,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-10">
+            <div class="col-md-10 col-xs-12">
                 <section class="panel">
                     <header class="panel-heading">
                         用户列表

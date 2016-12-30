@@ -11,8 +11,15 @@
     <link rel="stylesheet" href="/static/css/button.css"/>
 </#macro>
 <#macro breadcrumb>
-<h1>${title}</h1>
-<h2>当前位置：客户管理 / <span class="active">${title}</span></h2>
+    <h3>
+        客户接收
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">当前位置：客户接收</a>
+        </li>
+        <li class="active"> 客户接收</li>
+    </ul>
 </#macro>
 <#macro content>
     <div class="row">

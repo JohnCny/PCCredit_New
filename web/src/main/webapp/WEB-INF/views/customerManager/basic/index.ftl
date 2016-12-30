@@ -142,8 +142,8 @@
                 "mData" : "userId",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a class=" label label-info manage" href="/customerManager/'+data+'">管理</a>' +
-                        '<a class="label label-danger del" href="javaScript:;" data-id='+data+'>删除</a>';
+                    return  '<a class=" btn btn-info manage" href="/customerManager/'+data+'">管理</a>' +
+                        '<a class="btn btn-danger del" href="javaScript:;" data-id='+data+'>删除</a>';
                 }
             }];
 
