@@ -1,19 +1,19 @@
 package com.cardpay.controller.product;
 
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.mgt.product.model.TProductType;
+import com.cardpay.mgt.product.model.ProductType;
 import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 产品类型Controller
  *
- * @author chenkai on 2016/12/13.
+ * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
 @RequestMapping("/productType")
 @Api(value = "/productType", description = "产品类型")
-public class ProductTypeController extends BaseController<TProductType> {
+public class ProductTypeController extends BaseController<ProductType> {
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.product.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.product.model.Product">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRODUCT_LIMIT_MAX" jdbcType="DECIMAL" property="productLimitMax" />
+    <result column="PRODUCT_LIMIT_MIN" jdbcType="DECIMAL" property="productLimitMin" />
+    <result column="PRODUCT_INTEREST_MAX" jdbcType="DECIMAL" property="productInterestMax" />
+    <result column="PRODUCT_INTEREST_MIN" jdbcType="DECIMAL" property="productInterestMin" />
+    <result column="PRODUCT_STATE" jdbcType="DECIMAL" property="productState" />
+    <result column="PRODUCT_TYPE" jdbcType="DECIMAL" property="productType" />
+    <result column="PRODUCT_DESCRIPTION" jdbcType="VARCHAR" property="productDescription" />
+    <result column="PRODUCT_PICTURE_URL" jdbcType="VARCHAR" property="productPictureUrl" />
+    <result column="PRODUCT_LOAN_PERIOD" jdbcType="DECIMAL" property="productLoanPeriod" />
+    <result column="PRODUCT_REPAYMENT_MODE" jdbcType="DECIMAL" property="productRepaymentMode" />
+    <result column="PRODUCT_APPLY_TEMPLATE_ID" jdbcType="DECIMAL" property="productApplyTemplateId" />
+    <result column="PRODUCT_SEND_PRODUCT_NUMBER" jdbcType="VARCHAR" property="productSendProductNumber" />
+    <result column="PRODUCT_HOUSEHOLD_LEVEL_LIMIT" jdbcType="DECIMAL" property="productHouseholdLevelLimit" />
+    <result column="PRODUCT_CREDIT_LEVEL_LIMIT" jdbcType="VARCHAR" property="productCreditLevelLimit" />
+    <result column="PRODUCT_AGE_MAX_LIMIT" jdbcType="DECIMAL" property="productAgeMaxLimit" />
+    <result column="PRODUCT_AGE_MIN_LIMIT" jdbcType="DECIMAL" property="productAgeMinLimit" />
+    <result column="PRODUCT_INDUSTRY_LIMIT" jdbcType="VARCHAR" property="productIndustryLimit" />
+    <result column="PRODUCT_MARRIAGE_LIMIT" jdbcType="DECIMAL" property="productMarriageLimit" />
+    <result column="CUSTOMER_MANAGER_LEVEL_ID" jdbcType="DECIMAL" property="customerManagerLevelId" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy" />
+  </resultMap>
+</mapper>

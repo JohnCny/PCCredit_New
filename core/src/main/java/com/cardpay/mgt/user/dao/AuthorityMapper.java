@@ -12,6 +12,7 @@ import java.util.List;
  * 权限Dao层接口
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 public interface AuthorityMapper extends BasicMapper<Authority> {
     /**
