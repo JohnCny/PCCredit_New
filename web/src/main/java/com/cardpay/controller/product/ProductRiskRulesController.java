@@ -19,6 +19,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/productRisk")
 @Api(value = "/productRisk", description = "产品贷后监控规则")
 public class ProductRiskRulesController extends BaseController<ProductRiskRules> {
-    @Autowired //产品产品风险规则Service
-    private ProductRiskRulesService productRiskRulesService;
+
 }
