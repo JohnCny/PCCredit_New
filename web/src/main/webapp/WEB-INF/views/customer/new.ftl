@@ -238,10 +238,13 @@
                 type: "get",
                 url: urls,
                 data: OBJ,
-                success: function () {
+                success: function (res) {
                     if (res.code == 200) {
 
                     }
+                },
+                error:function () {
+                    alert(dasdsd)
                 }
 
             })

@@ -262,7 +262,7 @@
                                             <label for="">年龄</label>
                                             <div class="input-icon right">
                                                 <i class="fa"></i>
-                                                <input  class="form-control" type="text" name="age" value="${user.age} placeholder="请输入至少2-10位汉字">
+                                                <input  class="form-control" type="text" name="age" value="${user.age}" placeholder="请输入至少2-10位汉字">
                                             </div>
                                         </div>
                                         <div class="widclas">
@@ -270,8 +270,8 @@
                                             <div class="input-icon right">
                                                 <i class="fa"></i>
                                                 <select name="sex" class="form-control">
-                                                    <option value="1" <#if user.sex == 1>selected</#if>>男</option>
-                                                    <option value="2" <#if user.sex == 2>selected</#if>>女</option>
+                                                    <option value="0" <#if user.sex == 1>selected</#if>>男</option>
+                                                    <option value="1" <#if user.sex == 2>selected</#if>>女</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -426,10 +426,10 @@
         $(".submit").click(function (e) {
             e.preventDefault();
             var obj = $("#userAdd").serializeArray();
-            obj.push({"name": "roleId", "value": $("#roleId").val()});
+
             console.log(obj);
             $.ajax({
-                type: "post",
+                type: "put",
                 url: url,
                 data: obj,
                 success: function (res) {

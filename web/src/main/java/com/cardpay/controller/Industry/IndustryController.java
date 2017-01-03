@@ -2,7 +2,7 @@ package com.cardpay.controller.Industry;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.controller.base.BaseController;
-import com.cardpay.mgt.industry.model.po.TIndustry;
+import com.cardpay.mgt.industry.model.TIndustry;
 import com.cardpay.mgt.industry.service.IndustryService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

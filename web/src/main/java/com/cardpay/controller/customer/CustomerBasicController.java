@@ -9,7 +9,11 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
+import com.cardpay.mgt.customer.service.TCustomerIndustryService;
+import com.cardpay.mgt.industry.model.TIndustry;
+import com.cardpay.mgt.industry.service.IndustryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -36,6 +40,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @Autowired
     private TCustomerBasicService customerBasicService;
 
+    @Autowired //行业信息
+    private IndustryService industryService;
+
+    @Autowired //客户行业信息关联表
+    private TCustomerIndustryService tCustomerIndustryService;
+
     /**
      * 获取潜在客户列表
      *
@@ -60,9 +70,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @GetMapping("/idCardExist")
     @SystemControllerLog(description = "验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
-    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam int identityCard) {
+    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam long identityCard) {
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
-        return idCardExist ? new ResultTo().setData(idCardExist) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return new ResultTo().setData(idCardExist);
     }
 
     /**
@@ -90,9 +100,25 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @PostMapping
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
-    public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
+    public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic
+            , @ApiParam("行业id(,分割)") @RequestParam String industry) {
+        tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
-        return count != 0 ? new ResultTo().setData(tCustomerBasic.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        if (count != 0) {
+            String[] split = industry.split(",");
+            List<TCustomerIndustry> list = new ArrayList<>();
+            for (String id : split) {
+                int industryId = Integer.parseInt(id);
+                TCustomerIndustry tCustomerIndustry = new TCustomerIndustry();
+                tCustomerIndustry.setCustomerId(tCustomerBasic.getId());
+                tCustomerIndustry.setIndustryId(industryId);
+                list.add(tCustomerIndustry);
+            }
+            tCustomerIndustryService.batchInsertFile(list);
+            return new ResultTo().setData(tCustomerBasic.getId());
+        }
+
+        return new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -159,14 +185,16 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      *
      * @return 客户编辑页面下拉框信息
      */
-    private Map<String, List<SelectModel>> selectInput() {
-        Map<String, List<SelectModel>> dropDownList = new HashMap<>();
+    private Map<String, Object> selectInput() {
+        Map<String, Object> dropDownList = new HashMap<>();
         List<SelectModel> cert = customerBasicService.getCert();
         List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
         List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
+        List<TIndustry> tIndustries = industryService.selectAll();
         dropDownList.put("cert", cert);
         dropDownList.put("educationDegree", educationDegree);
         dropDownList.put("marriageStatus", marriageStatus);
+        dropDownList.put("industries", tIndustries);
         return dropDownList;
     }
 
@@ -182,25 +210,23 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "批量删除用户", notes = "改变用户状态将用户设为不可用", httpMethod = "DELETE")
     public ResultTo deleteCustomer(@ApiParam("客户id(,分割)") @PathVariable("id") String customerIds) {
         List<Integer> ids = new ArrayList<>();
-        String[] split = StringUtils.split(customerIds);
+        String[] split = customerIds.split(",");
         for (String id : split) {
             int customerId = Integer.parseInt(id);
             ids.add(customerId);
         }
 
-        Map<String, Object> map = new HashMap<String, Object> (){
-            {
-                put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
-                put("customerIds", ids);
-                put("managerId", ShiroKit.getUserId());
-            }
-        };
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
+        map.put("customerIds", ids);
+        map.put("managerId", ShiroKit.getUserId());
         int count = customerBasicService.updateStatus(map);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
      * 查看客户信息
+     *
      * @param customerId 客户id
      * @return 客户信息页面
      */

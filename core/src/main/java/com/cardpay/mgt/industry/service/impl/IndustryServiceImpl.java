@@ -3,7 +3,7 @@ package com.cardpay.mgt.industry.service.impl;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.industry.dao.TIndustryMapper;
-import com.cardpay.mgt.industry.model.po.TIndustry;
+import com.cardpay.mgt.industry.model.TIndustry;
 import com.cardpay.mgt.industry.service.IndustryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

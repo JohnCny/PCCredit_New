@@ -7,6 +7,7 @@ import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import com.cardpay.mgt.organization.service.TOrganizationService;
+import com.cardpay.mgt.user.dao.UserOrganizationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 机构service实现类
@@ -26,6 +28,9 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     @Autowired
     private TOrganizationMapper tOrganizationDao;
 
+    @Autowired
+    private UserOrganizationMapper userOrganizationDao;
+
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public List<TOrganizationVo> queryOrganization(int parentId, int levels) {
@@ -36,12 +41,14 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public int deleteOrganization(int organizationId) {
-        return tOrganizationDao.deleteOrganization(organizationId);
+        int number = tOrganizationDao.querySubsidiary(organizationId);
+        int count = userOrganizationDao.queryUserOrg(organizationId);
+        return number != 0 || count != 0 ? 0 : tOrganizationDao.deleteOrganization(organizationId);
     }
 
     @Override
-    public List<TOrganizationVo> queryAll(int parentId) {
+    public List<TOrganizationVo> queryAll(Map<String, Object> map) {
         TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
-        return tree.getChildNodesByParentId(tOrganizationDao.queryAll(), parentId);
+        return tree.getChildNodesByParentId(tOrganizationDao.queryAll(), map.get("topId"));
     }
 }

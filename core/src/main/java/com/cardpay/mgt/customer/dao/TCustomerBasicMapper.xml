@@ -25,7 +25,6 @@
         <result column="CNAME" jdbcType="VARCHAR" property="name"/>
     </resultMap>
 
-
     <!--潜在客户挖掘-->
     <select id="getProspectiveCustomers" resultMap="BaseResultMap">
         SELECT c.*
@@ -43,7 +42,7 @@
     </select>
 
     <!--查询身份证是否存在-->
-    <select id="isIdCardExist" parameterType="Integer" resultType="Integer">
+    <select id="isIdCardExist" parameterType="Long" resultType="Integer">
         SELECT COUNT(1)
         FROM t_customer_basic basic
         WHERE basic.CERTIFICATE_NUMBER = #{idCard}
@@ -52,7 +51,7 @@
     <!--查询客户经理所属客户-->
     <select id="queryCustomer" resultMap="BaseResultMapVo">
         SELECT customer.id id, customer.cname name FROM T_CUSTOMER_BASIC customer, T_CUSTOMER_MANAGER manager
-        WHERE manager.id = customer.CUSTOMER_MANAGER_ID
+        WHERE manager.id = customer.CUSTOMER_MANAGER_ID AND customer.CUSTOMER_STATUS !=3
         AND manager.id = #{managerId}
     </select>
 
@@ -85,7 +84,7 @@
                 AND basic.cname LIKE CONCAT(CONCAT('%',#{cname}),'%')
             </if>
             <if test="certificateNumber!=null and certificateNumber!=''">
-                AND basic.CERTIFICATE_NUMBER = #{certificateNumber}
+                AND basic.CERTIFICATE_NUMBER LIKE CONCAT(CONCAT('%',#{certificateNumber}),'%')
             </if>
         </where>
     </select>

@@ -80,4 +80,5 @@
       AND ORG.ID = CM.ORGANIZATION_ID
       AND CM.USER_ID = #{userId,jdbcType=DECIMAL}
   </select>
+
 </mapper>
