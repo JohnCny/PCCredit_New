@@ -12,6 +12,7 @@ import java.util.Map;
  * 角色权限关系Dao层接口
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 public interface RoleAuthorityMapper extends BasicMapper<RoleAuthority> {
     /**

@@ -27,6 +27,7 @@ import java.util.Map;
  * 角色Service层实现
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService {

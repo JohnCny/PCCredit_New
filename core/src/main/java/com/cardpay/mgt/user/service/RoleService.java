@@ -12,6 +12,13 @@ import java.util.List;
  *
  * @author rankai
  */
+
+/**
+ * 角色Service层接口
+ *
+ * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
+ */
 public interface RoleService extends BaseService<Role> {
 
     /**

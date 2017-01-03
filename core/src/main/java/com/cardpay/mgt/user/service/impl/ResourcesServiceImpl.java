@@ -8,6 +8,7 @@ import com.cardpay.mgt.user.service.ResourcesService;
  * 资源Service层实现
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 public class ResourcesServiceImpl extends BaseServiceImpl<Resources> implements ResourcesService {
 }
