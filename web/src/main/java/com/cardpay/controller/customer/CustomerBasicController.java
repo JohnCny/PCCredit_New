@@ -12,11 +12,14 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
+import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
+import com.cardpay.mgt.customer.service.impl.TCustomerTransferServiceImpl;
 import com.cardpay.mgt.industry.model.TIndustry;
 import com.cardpay.mgt.industry.service.IndustryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +45,14 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @Autowired //行业信息
     private IndustryService industryService;
 
-    @Autowired //客户行业信息关联表
+    @Autowired //客户行业信息
     private TCustomerIndustryService tCustomerIndustryService;
+
+    @Autowired //客户维护服务
+    private TCustomerMaintenanceService tCustomerMaintenanceService;
+
+    @Autowired //客户移交
+    private TCustomerTransferServiceImpl tCustomerTransferService;
 
     /**
      * 获取潜在客户列表
@@ -91,8 +100,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
     /**
      * 新建客戶经理
+     *
      * @param tCustomerBasic 客户基本信息
-     * @param industry  行业id
+     * @param industry       行业id
      * @return 客户id
      */
     @ResponseBody
@@ -243,4 +253,28 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         return modelAndView;
     }
 
+    /**
+     * 查询可删除的客户经理
+     *
+     * @return 可删除的客户经理信息
+     */
+    @GetMapping("/all")
+    @ApiOperation(value = "查询可删除的客户经理", notes = "查询可删除的客户经理", httpMethod = "GET")
+    public DataTablePage selectDelete() {
+        Map<String, Object> map = new HashMap();
+        map.put("managerId", ShiroKit.getUserId());
+        return dataTablePage("selectDelete", map);
+    }
+
+    /**
+     * 删除客户信息
+     * @param customerId 客户id
+     * @return 数据库变记录
+     */
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除客户经理信息", notes = "删除客户经理信息", httpMethod = "DELETE")
+    public ResultTo delete(@ApiParam(value = "客户经理id", required = true) @RequestParam int customerId) {
+        Integer count = customerBasicService.deleteCustomer(customerId);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
 }

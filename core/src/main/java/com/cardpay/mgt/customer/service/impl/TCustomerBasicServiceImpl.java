@@ -7,7 +7,10 @@ import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
+import com.cardpay.mgt.customer.service.TCustomerIndustryService;
+import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -27,8 +30,14 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     @Autowired
     private TCustomerBasicMapper customerBasicDao;
 
-    @Autowired//客户经理Service
-    private CustomerManagerService customerManagerService;
+    @Autowired //客户行业信息
+    private TCustomerIndustryService tCustomerIndustryService;
+
+    @Autowired //客户维护服务
+    private TCustomerMaintenanceService tCustomerMaintenanceService;
+
+    @Autowired //客户移交
+    private TCustomerTransferServiceImpl tCustomerTransferService;
 
     @Override
     public List<SelectModel> getCert() {
@@ -102,5 +111,19 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     @Override
     public List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map) {
         return customerBasicDao.queryCustomerByCondition(map);
+    }
+
+    @Override
+    public List<TCustomerBasic> selectDelete(Map<String, Object> map) {
+        return customerBasicDao.selectDelete(map);
+    }
+
+    @Override
+    public Integer deleteCustomer(int customerId) {
+        Integer integer0 = customerBasicDao.deleteByPrimaryKey(customerId);
+        Integer integer1 = tCustomerIndustryService.deleteByPrimaryKey(customerId);
+        Integer integer2 = tCustomerMaintenanceService.deleteByPrimaryKey(customerId);
+        Integer integer3 = tCustomerTransferService.deleteByPrimaryKey(customerId);
+        return integer0+integer1+integer2+integer3;
     }
 }

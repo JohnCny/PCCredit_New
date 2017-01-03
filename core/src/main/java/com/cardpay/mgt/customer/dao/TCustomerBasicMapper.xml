@@ -89,4 +89,16 @@
         </where>
     </select>
 
+    <!--查询无进件记录的客户信息-->
+    <select id="selectDelete" parameterType="Map" resultMap="BaseResultMap">
+        SELECT basic.*
+        FROM
+        T_CUSTOMER_BASIC basic
+        LEFT JOIN
+        T_APPLICATION application on ( basic.id != application.CUSTOMER_ID)
+        WHERE
+        basic.id != application.CUSTOMER_ID
+        AND basic.CUSTOMER_MANAGER_ID = #{managerId}
+    </select>
+
 </mapper>

@@ -73,4 +73,18 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      * @return 客户列表
      */
     List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map);
+
+    /**
+     * 查询无进件记录的客户信息
+     * @param map 客户经理id
+     * @return 可删除的客户列表
+     */
+    List<TCustomerBasic> selectDelete(Map<String, Object> map);
+
+    /**
+     * 删除客户信息
+     * @param customerId 客户id
+     * @return 数据库变记录
+     */
+    Integer deleteCustomer(int customerId);
 }
