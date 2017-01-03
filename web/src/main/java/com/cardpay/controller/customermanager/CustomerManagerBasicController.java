@@ -7,6 +7,7 @@ import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.customermanager.level.service.CustomerManagerLevelService;
+import com.cardpay.mgt.user.enums.UserStatus;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +41,11 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @Autowired
     private CustomerManagerLevelService customerManagerLevelService;
 
+    private static final String PAGE_INDEX = "/customerManager/basic/index";
+    private static final String PAGE_EDIT = "/customerManager/basic/edit";
+    private static final String PAGE_NEW = "/customerManager/basic/new";
+
+
     /**
      * 前往客户经理列表
      *
@@ -46,10 +53,10 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      */
     @GetMapping("/index")
     @ApiOperation(value = "前往客户经理列表", notes = "前往客户经理列表", httpMethod = "GET")
-    public ModelAndView toList(){
+    public ModelAndView toList() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
-        modelAndView.setViewName("/customerManager/basic/index");
+        modelAndView.addObject("customerManagerLevel", customerManagerLevelService.getCustomerManagerLevel());
+        modelAndView.setViewName(PAGE_INDEX);
         return modelAndView;
     }
 
@@ -60,13 +67,13 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @ResponseBody
     @GetMapping(value = "/pageList")
     @ApiOperation(value = "获取客户经理列表", notes = "获取客户经理列表 levelId = -1 查询所有级别", httpMethod = "GET")
-    public DataTablePage pageList(){
+    public DataTablePage pageList() {
         TCustomerManager customerManager = customerManagerService.selectByUserId(ShiroKit.getUserId());
         Map<String, Object> map = new HashMap();
         //查看当前机构下的客户经理
-        map.put("organizationId",customerManager.getOrganizationId());
-        map.put("status",0);//TODO:等冉凯写枚举
-        return dataTablePage("selectBaseVoList",map);
+        map.put("organizationId", customerManager.getOrganizationId());
+        map.put("status", UserStatus.NORMAL.getStatus());
+        return dataTablePage("selectBaseVoList", map);
     }
 
     /**
@@ -76,27 +83,27 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      */
     @GetMapping(value = "/toAdd")
     @ApiOperation(value = "前往客户经理创建页面", notes = "前往客户经理创建页面", httpMethod = "GET")
-    public ModelAndView toAdd(){
+    public ModelAndView toAdd() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/customerManager/basic/new");
-        modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
+        modelAndView.setViewName(PAGE_NEW);
+        modelAndView.addObject("customerManagerLevel", customerManagerLevelService.getCustomerManagerLevel());
         return modelAndView;
     }
 
     /**
      * 创建客户经理
      *
-     * @param user 用户信息
+     * @param user            用户信息
      * @param customerManager 客户经理信息
      * @return 视图和数据
      */
     @PostMapping()
     @ApiOperation(value = "创建客户经理", notes = "创建客户经理", httpMethod = "POST")
     public ModelAndView add(@ApiParam("用户信息") @ModelAttribute User user,
-                            @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
+                            @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager) {
         ModelAndView modelAndView = new ModelAndView();
         customerManagerService.addCustomerManager(user, customerManager);
-        modelAndView.setViewName("/customerManager/basic/index");
+        modelAndView.setViewName(PAGE_INDEX);
         return modelAndView;
     }
 
@@ -107,18 +114,18 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      */
     @GetMapping(value = "/{userId}")
     @ApiOperation(value = "前往客户经理更新页面", notes = "前往客户经理更新页面", httpMethod = "GET")
-    public ModelAndView toUpdate(@PathVariable("userId") Integer userId){
+    public ModelAndView toUpdate(@PathVariable("userId") Integer userId) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/customerManager/basic/edit");
-        modelAndView.addObject("customerManager",customerManagerService.assembleEditPageData(userId));
-        modelAndView.addObject("customerManagerLevel",customerManagerLevelService.getCustomerManagerLevel());
+        modelAndView.setViewName(PAGE_EDIT);
+        modelAndView.addObject("customerManager", customerManagerService.assembleEditPageData(userId));
+        modelAndView.addObject("customerManagerLevel", customerManagerLevelService.getCustomerManagerLevel());
         return modelAndView;
     }
 
     /**
      * 更新客户经理
      *
-     * @param user 用户信息
+     * @param user            用户信息
      * @param customerManager 客户经理信息
      * @return 视图和数据
      */
@@ -126,7 +133,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @PutMapping()
     @ApiOperation(value = "更新客户经理", notes = "更新客户经理", httpMethod = "PUT")
     public ResultTo update(@ApiParam("用户信息") @ModelAttribute User user,
-                               @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager){
+                           @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager) {
         ResultTo resultTo = new ResultTo();
         user.setId(customerManager.getUserId());
         Integer result = customerManagerService.updateCustomerManager(user, customerManager, ShiroKit.getUser());
@@ -142,11 +149,11 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      */
     @ResponseBody
     @DeleteMapping(value = "/{userId}")
-    public ResultTo delete(@ApiParam("用户信息") @PathVariable("userId") Integer userId){
+    public ResultTo delete(@ApiParam("用户信息") @PathVariable("userId") Integer userId) {
         ResultTo resultTo = new ResultTo();
         User user = new User();
         user.setId(userId);
-        user.setStatus(1);//TODO:改为枚举 1锁定
+        user.setStatus(UserStatus.LOCK.getStatus());
         Integer result = userService.updateSelectiveByPrimaryKey(user);
         resultTo.setIsSuccess(result);
         return resultTo;
