@@ -113,8 +113,8 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
                 tCustomerIndustry.setCustomerId(tCustomerBasic.getId());
                 tCustomerIndustry.setIndustryId(industryId);
                 list.add(tCustomerIndustry);
-                tCustomerIndustryService.batchInsertFile(list);
             }
+            tCustomerIndustryService.batchInsertFile(list);
             return new ResultTo().setData(tCustomerBasic.getId());
         }
 
