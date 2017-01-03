@@ -45,6 +45,12 @@
             position: relative;
             top:1px;
         }
+        .manage{
+            margin-right: 5px;
+        }
+        .del{
+            margin-left: 5px;
+        }
     </style>
 </#macro>
 <#macro breadcrumb>
@@ -67,21 +73,21 @@
                     客户经理列表
                 </header>
 
-    <div class="search" style="width:95%">
-        <span>客户经理名称：<input type="text" class="short" name="userCname" id="userCname" ></span>
-        <span>工号：<input type="text" name="employeeNumber" id="employeeNumber"></span>
-        <span>级别：
-            <select name="levelId" id="levelId">
-                <option id="-1" value="-1">所有级别</option>
-                <#list customerManagerLevel as cml>
-                    <option id="${cml.id}" value="${cml.id}">${cml.value}</option>
-                </#list>
-            </select>
-        </span>
-        <input class="searchBtn" type="button" value="搜 索">
-    </div>
+                <div class="search" >
+                    <span>客户经理名称：<input type="text" class="short" name="userCname" id="userCname" ></span>
+                    <span>工号：<input type="text" name="employeeNumber" id="employeeNumber"></span>
+                    <span>级别：
+                        <select name="levelId" id="levelId">
+                            <option id="-1" value="-1">所有级别</option>
+                            <#list customerManagerLevel as cml>
+                                <option id="${cml.id}" value="${cml.id}">${cml.value}</option>
+                            </#list>
+                        </select>
+                    </span>
+                    <input class="searchBtn" type="button" value="搜 索">
+                </div>
            <div class="panel-body">
-            <div class="table-responsive" style="margin:50px auto; width:95%;">
+            <div class="table-responsive">
                 <table id="customerManagerList" class="table table-bordered" style="width: 100%" >
                     <thead>
                     <tr>
@@ -136,8 +142,8 @@
                 "mData" : "userId",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a class="editOne btn btn-info" href="/customerManager/'+data+'">管理</a>' +
-                        '<a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                    return  '<a class=" btn btn-info manage" href="/customerManager/'+data+'">管理</a>' +
+                        '<a class="btn btn-danger del" href="javaScript:;" data-id='+data+'>删除</a>';
                 }
             }];
 

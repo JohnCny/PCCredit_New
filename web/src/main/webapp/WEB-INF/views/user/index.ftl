@@ -3,11 +3,14 @@
 <#macro css>
     <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
     <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
-    <!--<link rel="stylesheet" href="/static/css/button.css"/>-->
     <link href="/static/css/zTree/metroStyle/metroStyle.css" rel="stylesheet">
 </#macro>
 <#macro style>
-
+    <style>
+        .reste,.locks{
+            margin: 0 5px 0;
+        }
+    </style>
 
 </#macro>
 <#macro breadcrumb>
@@ -24,58 +27,61 @@
 
 <#macro content>
 <div class="row">
-    <div class="col-sm-12">
 
-    <div class="col-xs-2">
+    <div class="col-md-3">
         <div class="report common list">
             <section class="panel">
                 <header class="panel-heading">
                     机构列表
                 </header>
-            <div class="treeBox">
-                <ul id="treeDemo" class="ztree"></ul>
-            </div>
+                <div class="treeBox">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
             </section>
         </div>
     </div>
-    <!--<div class="col-xs-1"></div>-->
 
+        <div class="col-md-9">
+            <section class="panel">
+                <header class="panel-heading">
+                    客户管理
+                </header>
+                <div class="panel-body">
+                    <div class="table-responsive">
 
-    <div class="col-xs-10">
-                <section class="panel">
-                    <header class="panel-heading">
-                        用户列表
-                    </header>
-                    <div class="panel-body">
-                         <div class="table-responsive">
-                             <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                <div class="row-fluid">
-                                  <div class="search">
-                                     <span>机构：<input type="text" class="form-control" aria-controls="dynamic-table" placeholder="请在左侧选择机构" readonly="readonly" disabled="disabled" name="orgId" id="orgId"></span>
+                        <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                            <div class="row-fluid">
+                                        <!--<div class="">-->
+                                         <!---->
+                                            <!--<ul id="treeDemo" class="ztree"></ul>-->
+                                        <!--</div>-->
+                                <div class="search">
+                                    <span>机构：<input type="text" class="form-control" aria-controls="dynamic-table" placeholder="请在左侧选择机构" readonly="readonly" disabled="disabled" name="orgId" id="orgId"></span>
                                     <span>用户名称：<input type="text" class="form-control" aria-controls="dynamic-table" name="username" id="username"></span>
                                     <span> 身份证：<input type="text" class="form-control" aria-controls="dynamic-table" name="idCardNumber" id="idCardNumber"></span>
                                     <input class="searchBtn" type="button" value="搜 索">
-                                 </div>
-                                     <table id="userList" class="table table-bordered table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>姓名</th>
-                                            <th>性别</th>
-                                            <th>联系方式</th>
-                                            <th>邮件</th>
-                                            <th>创建时间</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                     </table>
-                                    </div>
                                 </div>
+                                <table id="userList" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>性别</th>
+                                        <th>联系方式</th>
+                                        <th>邮件</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                </table>
                             </div>
-                         </div>
-                        </section>
+                        </div>
+                    </div>
                 </div>
-            </div>
-</div>
+            </section>
+        </div>
+    </div>
+
+
 </#macro>
 <#macro js>
     <script type="text/javascript" src="/static/js/jquery.ztree.all.js"></script>
@@ -149,12 +155,12 @@
                     var html = "";
                     html += '<a class="btn btn-info" style="padding: 5px 10px;" href="/user/'+ data +'/updateUser" data-id=' + data + '>编辑</a>'
                     if (!full.status) {
-                        html += '<button  class="btn btn-danger"  style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击锁定</button>';
+                        html += '<a  class="btn btn-danger locks"  style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击锁定</a>';
                     } else {
-                        html += '<button  class="btn btn-success" style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击解锁</button>';
+                        html += '<a  class="btn btn-default locks" style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击解锁</a>';
                     }
-                    html += '<button class="btn btn-warning" style="padding: 5px 10px;" data-id=' + data + '>重置密码</button>';
-                    html += '<button class="btn btn-success"  style="padding: 5px 10px;" data-id=' + data + '>角色管理</button>'
+                    html += '<a class="btn btn-warning reste" style="padding: 5px 10px;" data-id=' + data + '>重置密码</a>';
+                    html += '<a class="btn btn-success"  style="padding: 5px 10px;" data-id=' + data + '>角色管理</a>'
                     return html;
                 }
             }];
