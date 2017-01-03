@@ -1,107 +1,121 @@
 <#include "layout/base.html"/>
-
+<#assign title = "客户"/>
+<#macro css>
+</#macro>
 <#macro style>
     <style>
-        input,select{
-            margin-top: 10px;
-            width:70%
-        }
-        [v-cloak] {
-            display: none
-        }
-        .cus_content{
-            border: 1px solid #6F7691;
-            padding-bottom: 30px;
-            float: left;
-        }
-
-        .widclas{
-            width: 20%;
-            float: left;
-            height:80px;
-            margin-left: 10%;
-            margin-top: 50px;
-        }
-        @media screen and (max-width: 1300px){
-            .widclas{
-                width: 30%;
-                float: left;
-                height:80px;
-                margin-left: 10%;
-                margin-top: 50px;
-            }
-        }
-        .new_customer{
-            padding: 50px;
-        }
-        .create{
-            width: 100%;
-            min-width: 700px;
-            height: 30px;
-            background-color: #6F7691;
-            font-size: 16px;
-            line-height: 30px;
-            font-weight: bold;
-            padding-left: 8px;
-            color: #ffffff;
-        }
-        .contain{
-            margin: 50px 0 0 8.7%;
+        .dis{
+            margin-top: 20px;
         }
     </style>
 </#macro>
-<#macro css>
 
-</#macro>
 <#macro breadcrumb>
-
+    <h3>
+        客户管理
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">客户经理级别定义</a>
+        </li>
+        <li class="active"> ${customerManagerLevel.levelName} / <span>调整</span> </li>
+    </ul>
 </#macro>
 <#macro content>
 
-<form class="content">
-    <h1>调整</h1>
-    <h2>当前位置：客户管理 / 客户经理级别定义 / ${customerManagerLevel.levelName} / <span>调整</span></h2>
-    <div class="report common">
-        <h5>客户经理级别信息</h5>
-        <input type="hidden" name="id" id="id" value="${customerManagerLevel.id}">
-        <table>
-            <tr>
-                <td class="pull-right">级别名称：</td>
-                <td><input type="text" name="levelName" id="levelName" value="${customerManagerLevel.levelName}" disabled></td>
-                <td class="pull-right">对应额度：</td>
-                <td><input type="text" name="levelCredit" id="levelCredit" value="${customerManagerLevel.levelCredit}"></td>
-            </tr>
-            <tr>
-                <td class="pull-right">逾期容忍率：</td>
-                <td><input type="text" name="overdueTolerateRate" id="overdueTolerateRate" value="${customerManagerLevel.overdueTolerateRate}"></td>
-                <td class="pull-right">不良容忍率：</td>
-                <td><input type="text" name="badloanTolerateRate" id="badloanTolerateRate" value="${customerManagerLevel.badloanTolerateRate}"></td>
-            </tr>
-            <tr>
-                <td class="pull-right">贷后监控容忍量：</td>
-                <td><input type="text" name="postloanMonitorTolerateNum" id="postloanMonitorTolerateNum" value="${customerManagerLevel.postloanMonitorTolerateNum}"></td>
-                <td class="pull-right">该级别贷款最小额度：</td>
-                <td><input type="text" name="loanLimitMin" id="loanLimitMin" value="${customerManagerLevel.loanLimitMin}"></td>
-            </tr>
-            <tr>
-                <td class="pull-right">该级别贷款最小笔数：</td>
-                <td><input type="text" name="loanNumberMin" id="loanNumberMin" value="${customerManagerLevel.loanNumberMin}"></td>
-                <td class="pull-right">该级别最小逾期率：</td>
-                <td><input type="text" name="overdueRateMin" id="overdueRateMin" value="${customerManagerLevel.overdueRateMin}"></td>
-            </tr>
-            <tr>
-                <td class="pull-right">该级别最小不良率</td>
-                <td colspan="3"><input type="text" name="badloanRateMin" id="badloanRateMin" value="${customerManagerLevel.badloanRateMin}"></td>
-            </tr>
-        </table>
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    客户经理级别信息
+                </header>
+            <div class="portlet-body">
+
+                <form id="contenttable" action="">
+                    <div class="row dis">
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="levelName">级别名称</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="levelName" type="text" class="form-control distance" name="levelName" value="${customerManagerLevel.levelName}" disabled>
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="levelCredit">对应额度</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="levelCredit" type="text" class="form-control distance" name="levelCredit"  value="${customerManagerLevel.levelCredit}">
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="overdueTolerateRate">逾期容忍率</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="overdueTolerateRate" type="text" class="form-control distance" name="overdueTolerateRate"  value="${customerManagerLevel.overdueTolerateRate}">
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="badloanTolerateRate">不良容忍率</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="badloanTolerateRate" type="text" class="form-control distance" name="badloanTolerateRate"  value="${customerManagerLevel.badloanTolerateRate}">
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="postloanMonitorTolerateNum">贷后监控容忍量</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="postloanMonitorTolerateNum" type="text" class="form-control distance" name="postloanMonitorTolerateNum"  value="${customerManagerLevel.postloanMonitorTolerateNum}">
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="loanLimitMin">该级别贷款最小额度</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="loanLimitMin" type="text" class="form-control distance" name="loanLimitMin"  value="${customerManagerLevel.loanLimitMin}">
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="loanNumberMin">该级别贷款最小笔数</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="loanNumberMin" type="text" class="form-control distance" name="loanNumberMin"  value="${customerManagerLevel.loanNumberMin}">
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="overdueRateMin">该级别最小逾期率</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="overdueRateMin" type="text" class="form-control distance" name="overdueRateMin"  value="${customerManagerLevel.overdueRateMin}">
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label for="badloanRateMin">该级别最小不良率</label>
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input id="badloanRateMin" type="text" class="form-control distance" name="badloanRateMin"  value="${customerManagerLevel.badloanRateMin}">
+                                <div class="message"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12" style="margin-bottom: 20px;">
+                            <input class="btn btn-success" type="button" id="btn_submit" value="保存"/>
+                            <a href="/experts/list" type="reset" class="btn btn-default">取消</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            </section>
+        </div>
     </div>
-    <p class="button">
-        <input type="button" id="btn_submit" value="保存"/>
-        <input type="button" class="back" value="返回"/>
-    </p>
-</form>
-
-
 </#macro>
 <#macro script>
     <script>

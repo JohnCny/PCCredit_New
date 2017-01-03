@@ -43,36 +43,55 @@
     </style>
 </#macro>
 <#macro css>
-
+    <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
 </#macro>
 <#macro breadcrumb>
-
-    <h1>${title}</h1>
-    <h2>当前位置：客户经理管理 / <span class="active">${title}</span></h2>
+    <h3>
+        客户经理管理
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">当前位置：客户经理管理</a>
+        </li>
+        <li class="active"> 客户经理管理</li>
+    </ul>
 </#macro>
 <#macro content>
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    客户经理管理
+                </header>
 
-    <h5>客户经理列表</h5>
-    <div class="table-responsive" style="margin:50px auto; width:95%;">
-        <table id="customerManagerLevelList" class="table table-bordered" style="width: 100%" >
-            <thead>
-            <tr>
-                <th>级别名称	</th>
-                <th>对应额度	</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-        </table>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="customerManagerLevelList" class="table table-bordered" style="width: 100%" >
+                            <thead>
+                            <tr>
+                                <th>级别名称	</th>
+                                <th>对应额度	</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
-
-</#macro>
-
-<#macro script>
-
 </#macro>
 
 <#macro js>
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
+    <script src="/static/js/department.js" type="text/javascript"></script>
+    <script src="/static/js/moment.min.js" type="text/javascript"></script>
+</#macro>
 
+<#macro script>
     <script>
         $(function(){
 
@@ -93,7 +112,7 @@
                 "mData" : "id",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a class="editOne btn-info" href="/customerManagerLevel/'+data+'">管理</a>' +
+                    return  '<a class="btn btn-info" href="/customerManagerLevel/'+data+'">管理</a>' +
                             '<a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
                 }
             }];
@@ -109,5 +128,5 @@
         }());
 
     </script>
-
 </#macro>
+
