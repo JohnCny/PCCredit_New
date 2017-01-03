@@ -5,7 +5,6 @@ import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerEditVo;
 import com.cardpay.mgt.user.model.User;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -47,15 +46,6 @@ public interface CustomerManagerService extends BaseService<TCustomerManager> {
      * @return 编辑页面数据
      */
     TCustomerManagerEditVo assembleEditPageData(Integer userId);
-
-    /**
-     * 新增客户经理,插入权限用户等信息
-     *
-     * @param user            用户信息
-     * @param customerManager 客户经理信息
-     * @return 是否成功
-     */
-    Boolean addCustomerManager(User user, TCustomerManager customerManager);
 
     /**
      * 更新客户经理,插入权限用户等信息

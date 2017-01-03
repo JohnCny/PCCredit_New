@@ -2,13 +2,11 @@ package com.cardpay.mgt.customermanager.basic.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.util.ReflectUtil;
-import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerEditVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
-import com.cardpay.mgt.customermanager.level.service.CustomerManagerLevelService;
 import com.cardpay.mgt.menu.enums.RoleEnum;
 import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
 import com.cardpay.mgt.user.model.User;
@@ -69,20 +67,6 @@ public class CustomerManagerServiceImpl extends BaseServiceImpl<TCustomerManager
         //TODO:待需求确定系统建议规则
         customerManagerEditVo.setSystemLevel("系统建议你是傻吊");
         return customerManagerEditVo;
-    }
-
-    @Override
-    @Transactional
-    public Boolean addCustomerManager(User user, TCustomerManager customerManager) {
-        Integer userResult = userService.insert(user);
-        customerManager.setUserId(user.getId());
-        Integer managerResult = insert(customerManager);
-        UserRole userRole = new UserRole();
-        userRole.setRoleId(RoleEnum.MANAGER.getRoleId());
-        userRole.setUserId(user.getId());
-        Integer userRoleResult = userRoleService.insert(userRole);
-        Integer finalResult = userRoleResult+managerResult+userResult;
-        return finalResult==3?true:false;
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.cardpay.controller.log;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.log.model.TOperationLog;
-import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

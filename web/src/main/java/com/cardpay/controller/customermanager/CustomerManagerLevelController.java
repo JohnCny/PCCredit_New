@@ -31,22 +31,12 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
     @Autowired
     private CustomerManagerLevelService customerManagerLevelService;
 
-    private static final String PAGE_INDEX = "/customerManager/level/index";
-    private static final String PAGE_EDIT= "/customerManager/level/edit";
-    private static final String PAGE_NEW = "/customerManager/level/new";
-
-    /**
-     * 获取客户经理级别分页数据
-     *
-     * @return 分页数据
-     */
-    @ResponseBody
-    @GetMapping("/index")
-    @ApiOperation(value = "获取客户经理级别分页数据", notes = "获取客户经理级别分页数据",  httpMethod = "GET")
-    public ModelAndView toList(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(PAGE_INDEX);
-        return modelAndView;
+    @GetMapping("/all")
+    @ApiOperation(value = "获取客户经理级别列表", notes = "获取客户经理级别列表",  httpMethod = "GET")
+    public ResultTo All(){
+        ResultTo resultTo = new ResultTo();
+        resultTo.setData("customerManagerLevelList",customerManagerLevelService.getCustomerManagerLevel());
+        return resultTo;
     }
 
     /**
@@ -54,24 +44,10 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
      *
      * @return 分页数据
      */
-    @ResponseBody
     @GetMapping("/pageList")
     @ApiOperation(value = "获取客户经理级别分页数据", notes = "获取客户经理级别分页数据",  httpMethod = "GET")
     public DataTablePage pageList(){
         return dataTablePage();
-    }
-
-    /**
-     * 前往添加客户经理级别页面接口
-     *
-     * @return 页面
-     */
-    @GetMapping(value = "/toAdd")
-    @ApiOperation(value = "前往添加客户经理级别页面接口", notes = "前往添加客户经理级别页面",  httpMethod = "GET")
-    public ModelAndView toAdd(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(PAGE_NEW);
-        return modelAndView;
     }
 
     /**
@@ -99,7 +75,6 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
      * @param levelId 客户经理级别id
      * @return 删除结果
      */
-    @ResponseBody
     @DeleteMapping("/{levelId}")
     @ApiOperation(value = "删除客户经理级别接口", notes = "删除客户经理级别",  httpMethod = "DELETE")
     public ResultTo delete(@PathVariable("levelId") Integer levelId){
@@ -117,12 +92,11 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
      */
     @GetMapping(value = "/{levelId}")
     @ApiOperation(value = "前往更新客户经理级别接口", notes = "根据ID获取客户经理级别信息,前往更新客户经理级别",  httpMethod = "GET")
-    public ModelAndView toUpdate(@PathVariable("levelId") Integer levelId){
+    public ResultTo toUpdate(@PathVariable("levelId") Integer levelId){
         TCustomerManagerLevel customerManagerLevel = customerManagerLevelService.selectByPrimaryKey(levelId);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("customerManagerLevel",customerManagerLevel);
-        modelAndView.setViewName(PAGE_EDIT);
-        return modelAndView;
+        ResultTo resultTo = new ResultTo();
+        resultTo.setData("customerManagerLevel",customerManagerLevel);
+        return resultTo;
     }
 
     /**
