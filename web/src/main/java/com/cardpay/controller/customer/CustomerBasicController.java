@@ -60,9 +60,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @GetMapping("/idCardExist")
     @SystemControllerLog(description = "验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
-    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam int identityCard) {
+    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam long identityCard) {
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
-        return idCardExist ? new ResultTo().setData(idCardExist) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return new ResultTo().setData(idCardExist);
     }
 
     /**
@@ -91,6 +91,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
+        tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
         return count != 0 ? new ResultTo().setData(tCustomerBasic.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
@@ -182,25 +183,23 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "批量删除用户", notes = "改变用户状态将用户设为不可用", httpMethod = "DELETE")
     public ResultTo deleteCustomer(@ApiParam("客户id(,分割)") @PathVariable("id") String customerIds) {
         List<Integer> ids = new ArrayList<>();
-        String[] split = StringUtils.split(customerIds);
+        String[] split = customerIds.split(",");
         for (String id : split) {
             int customerId = Integer.parseInt(id);
             ids.add(customerId);
         }
 
-        Map<String, Object> map = new HashMap<String, Object> (){
-            {
-                put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
-                put("customerIds", ids);
-                put("managerId", ShiroKit.getUserId());
-            }
-        };
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
+        map.put("customerIds", ids);
+        map.put("managerId", ShiroKit.getUserId());
         int count = customerBasicService.updateStatus(map);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
      * 查看客户信息
+     *
      * @param customerId 客户id
      * @return 客户信息页面
      */

@@ -9,7 +9,6 @@ function baseTree(url, setting) {
         success: function (res) {
             zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, res.data);
             zTreeObj.expandAll(true);
-            $("#treeDemo").find("[id^=treeDemo_]").addClass("searchBtn")
         }
     });
 }

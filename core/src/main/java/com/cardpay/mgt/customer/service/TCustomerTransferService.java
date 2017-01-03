@@ -3,6 +3,7 @@ package com.cardpay.mgt.customer.service;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,8 +34,14 @@ public interface TCustomerTransferService extends BaseService<TCustomerTransfer>
      * 客户接收
      *
      * @param customerIds 客户id
-     * @param flag 标记 ("接收:1, 拒绝2")
      * @return 数据库变条数
      */
-    int accept(String customerIds, Integer flag);
+    int accept(String customerIds);
+
+    /**
+     * 根据科技经理ID查询移交信息
+     * @param customerId 客户经理Id
+     * @return 移交记录
+     */
+    List<TCustomerTransferVo> queryById(@Param("customerId") int customerId);
 }

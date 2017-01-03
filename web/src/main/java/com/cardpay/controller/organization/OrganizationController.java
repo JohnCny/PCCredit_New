@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,23 +40,6 @@ public class OrganizationController extends BaseController<TOrganization> {
     private static LogTemplate logger;
 
     /**
-     * 动态查询机构层级信息接口
-     *
-     * @param parentId 要查询的顶级层级ID
-     * @param level    查询层级信息数量
-     * @return 机构层级信息
-     */
-    @ResponseBody
-    @GetMapping("/movementOrganization")
-    @ApiOperation(value = "动态查询机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
-    public ResultTo changeQueryOrganization(@ApiParam(value = "要查询的顶级层级ID(默认最高级)")
-                                            @RequestParam(value = "parentId", defaultValue = "0") int parentId
-            , @ApiParam(value = "查询层级信息数量(默认1层)") @RequestParam(value = "level", defaultValue = "1") int level) {
-        List<TOrganizationVo> organization = tOrganizationService.queryOrganization(parentId, level);
-        return new ResultTo().setData(organization);
-    }
-
-    /**
      * 查询所有机构层级信息接口
      *
      * @param topId 顶级id
@@ -65,7 +49,9 @@ public class OrganizationController extends BaseController<TOrganization> {
     @GetMapping
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
-        List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("topId", topId);
+        List<TOrganizationVo> organization = tOrganizationService.queryAll(map);
         return new ResultTo().setData(organization);
     }
 
@@ -146,7 +132,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     @ResponseBody
     @ApiOperation(value = "机构分页信息", notes = "机构分页信息", httpMethod = "GET")
     public DataTablePage pageList() {
-        return dataTablePage();
+        return dataTablePage("queryAll");
     }
 
     /**

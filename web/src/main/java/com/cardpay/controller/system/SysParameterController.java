@@ -8,6 +8,7 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.system.model.TSysParameter;
+import com.cardpay.mgt.system.model.vo.TSysParameterVo;
 import com.cardpay.mgt.system.service.TSysParameterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -80,7 +81,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
     @SystemControllerLog(description = "获取所有系统参数配置")
     @ApiOperation(value = "获取所有系统参数配置", notes = "所有系统参数配置", httpMethod = "GET")
     public DataTablePage queryAll() {
-        return dataTablePage();
+        return dataTablePage("queryAll");
     }
 
     /**

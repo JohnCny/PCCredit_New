@@ -5,11 +5,13 @@ import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
+import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
-import org.apache.commons.collections.map.HashedMap;
-import org.apache.ibatis.annotations.Param;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     @Autowired
     private TCustomerTransferMapper tCustomerIndustryDao;
 
+    @Autowired
+    private TCustomerBasicService tCustomerBasicService;
+
     @Override
     public List<SelectModel> getTransferStatus() {
         List<SelectModel> selects = new ArrayList<>();
@@ -50,21 +55,27 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
 
     @Override
     @Transactional
-    public int accept(String customerIds, Integer flag) {
+    public synchronized int accept(String customerIds) {
         List<Integer> idList = new ArrayList<>();
+        Map<String, Object> map = new HashMap();
         String[] split = customerIds.split(",");
+
         for (String id : split) {
             int customerId = Integer.parseInt(id);
+            TCustomerBasic tCustomerBasic = new TCustomerBasic();
+            tCustomerBasic.setId(customerId);
+            tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
+            tCustomerBasicService.updateSelectiveByPrimaryKey(tCustomerBasic);
             idList.add(customerId);
         }
-        Map<String, Object> map = new HashMap();
-        if (null != flag && flag == 1) {
-            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
-            map.put("nowCustomerManager", ShiroKit.getUserId());
-        } else {
-            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
-        }
+        map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
+        map.put("nowCustomerManager", ShiroKit.getUserId());
         map.put("customerIds", idList);
         return tCustomerIndustryDao.accept(map);
+    }
+
+    @Override
+    public List<TCustomerTransferVo> queryById(int customerId) {
+        return tCustomerIndustryDao.queryById(customerId);
     }
 }
