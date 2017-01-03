@@ -25,6 +25,7 @@ public class TCustomerIndustry extends GenericEntity<Integer> {
     /**
      * 客户id
      */
+    @Id
     @Column(name = "CUSTOMER_ID")
     @ApiModelProperty(value="客户id",required = true)
     private Integer customerId;

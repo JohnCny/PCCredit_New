@@ -17,7 +17,6 @@ import com.cardpay.mgt.industry.service.IndustryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -92,19 +91,21 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
     /**
      * 新建客戶经理
-     *
      * @param tCustomerBasic 客户基本信息
-     * @return 新建的id
+     * @param industry  行业id
+     * @return 客户id
      */
     @ResponseBody
     @PostMapping
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic
-            , @ApiParam("行业id(,分割)") @RequestParam String industry) {
-        tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
+            , @ApiParam(value = "行业id(,分割)", required = true) @RequestParam String industry) {
+        Integer userId = ShiroKit.getUserId();
+        tCustomerBasic.setCustomerManagerId(userId);
+        tCustomerBasic.setCreateBy(userId);
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
-        if (count != 0) {
+        if (count != null && count != 0) {
             String[] split = industry.split(",");
             List<TCustomerIndustry> list = new ArrayList<>();
             for (String id : split) {
@@ -114,10 +115,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
                 tCustomerIndustry.setIndustryId(industryId);
                 list.add(tCustomerIndustry);
             }
-            tCustomerIndustryService.batchInsertFile(list);
-            return new ResultTo().setData(tCustomerBasic.getId());
+            int insert = tCustomerIndustryService.batchInsert(list);
+            return insert != 0 ? new ResultTo().setData(tCustomerBasic.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
         }
-
         return new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -174,8 +174,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     public ModelAndView returnUpdate(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
         ModelAndView modelAndView = new ModelAndView("/customer/update");
         TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
+        TCustomerIndustry tCustomerIndustry = new TCustomerIndustry();
+        tCustomerIndustry.setCustomerId(customerId);
+        List<TCustomerIndustry> tCustomerIndustryList = tCustomerIndustryService.select(tCustomerIndustry);
         modelAndView.addObject("dropDownList", selectInput());
         modelAndView.addObject("tCustomerBasic", tCustomerBasic);
+        modelAndView.addObject("industryList", tCustomerIndustryList);
         return modelAndView;
     }
 

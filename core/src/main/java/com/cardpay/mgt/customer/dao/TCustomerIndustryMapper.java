@@ -17,5 +17,5 @@ public interface TCustomerIndustryMapper extends BasicMapper<TCustomerIndustry> 
      * @param list 行业id,客户id
      * @return 数据库变记录
      */
-    int batchInsertFile(List<TCustomerIndustry> list);
+    int batchInsert(List<TCustomerIndustry> list);
 }

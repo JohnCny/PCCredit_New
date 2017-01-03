@@ -6,7 +6,7 @@
     <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId" />
   </resultMap>
 
-  <insert id="batchInsertFile"  parameterType="java.util.List">
+  <insert id="batchInsert"  parameterType="java.util.List">
     INSERT INTO T_CUSTOMER_INDUSTRY  (INDUSTRY_ID, CUSTOMER_ID)
     <foreach collection="list" item="item" index="index" open="(" close=")" separator="union">
       SELECT #{item.industryId,mode=IN,jdbcType=DECIMAL},
