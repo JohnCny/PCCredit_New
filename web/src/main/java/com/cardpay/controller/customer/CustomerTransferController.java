@@ -64,9 +64,8 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param reason      移交原因
      * @return 数据库变记录
      */
-    @ResponseBody
-    @SystemControllerLog(description = "客户移交确定按钮")
     @PutMapping
+    @SystemControllerLog(description = "客户移交确定按钮")
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "状态(默认为正常)") @RequestParam(defaultValue = "0") int status
@@ -92,7 +91,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         Map<String, Object> map = new HashMap();
         map.put("status", status);
         map.put("customerIds", customerIdList);
-        map.put("managerId", 0); //自己转移给自己
+        map.put("managerId", 0); //移交后將客戶经理ID置0
         int count = customerBasicService.updateStatus(map);
         logger.info("客户移交", "客户Id：" + customerIds + ",移交给了客户经理Id：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
@@ -104,7 +103,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param status 状态(默认为待确认)
      * @return 客户接收列表
      */
-    @ResponseBody
+
     @GetMapping("/queryTransfer")
     @SystemControllerLog(description = "查询客户接收列表")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
@@ -123,11 +122,9 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @GetMapping
     @SystemControllerLog(description = "查询客户经理所属客户(客户移交)")
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
-    public ModelAndView queryCustomer() {
-        ModelAndView modelAndView = new ModelAndView("customer/custransfer");
+    public ResultTo queryCustomer() {
         List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(ShiroKit.getUserId());
-        modelAndView.addObject("queryCustomer", tCustomerVos);
-        return modelAndView;
+        return new ResultTo().setData(tCustomerVos);
     }
 
     /**
@@ -138,23 +135,11 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      */
     @PutMapping("/accept")
     @SystemControllerLog(description = "客户接受/拒绝")
-    @ResponseBody
     @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
     public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds) {
         int count = customerTransferService.accept(customerIds);
         logger.info("客户接受/拒绝", "客户：" + customerIds + ",给了客户经理：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
-    }
-
-    /**
-     * 跳转客户接收页面
-     *
-     * @return 客户接收页面
-     */
-    @GetMapping("/accept")
-    @ApiOperation(value = "跳转客户接收页面", notes = "客户接收页面", httpMethod = "GET")
-    public ModelAndView returnAccept() {
-        return new ModelAndView("/customer/accept");
     }
 
     /**
@@ -177,7 +162,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerId 客户Id
      * @return 客户移交记录
      */
-    @ResponseBody
+
     @GetMapping("/transfer/{id}")
     @SystemControllerLog(description = "按id查询移交记录")
     @ApiOperation(value = "按id查询移交记录", notes = "按id查询移交记录 ", httpMethod = "GET")

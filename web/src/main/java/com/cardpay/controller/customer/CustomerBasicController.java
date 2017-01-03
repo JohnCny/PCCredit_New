@@ -12,18 +12,11 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
-import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
-import com.cardpay.mgt.customer.service.impl.TCustomerTransferServiceImpl;
-import com.cardpay.mgt.industry.model.TIndustry;
-import com.cardpay.mgt.industry.service.IndustryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,30 +29,20 @@ import java.util.Map;
  * @author chenkai
  */
 @Api(value = "/customerBasic", description = "客户基本信息")
-@Controller
+@RestController
 @RequestMapping("/customerBasic")
 public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @Autowired
     private TCustomerBasicService customerBasicService;
 
-    @Autowired //行业信息
-    private IndustryService industryService;
-
     @Autowired //客户行业信息
     private TCustomerIndustryService tCustomerIndustryService;
-
-    @Autowired //客户维护服务
-    private TCustomerMaintenanceService tCustomerMaintenanceService;
-
-    @Autowired //客户移交
-    private TCustomerTransferServiceImpl tCustomerTransferService;
 
     /**
      * 获取潜在客户列表
      *
      * @return 潜在客户列表
      */
-    @ResponseBody
     @GetMapping("/prospectiveCustomers")
     @SystemControllerLog(description = "获取潜在客户列表")
     @ApiOperation(value = "查询潜在客户列表", notes = "潜在客户列表", httpMethod = "GET")
@@ -74,7 +57,6 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @param identityCard 证件号码
      * @return true/false
      */
-    @ResponseBody
     @GetMapping("/idCardExist")
     @SystemControllerLog(description = "验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
@@ -89,7 +71,6 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @param tCustomerBasic 客户基本信息
      * @return 数据库变更数量
      */
-    @ResponseBody
     @PutMapping
     @SystemControllerLog(description = "更新客户基本信息")
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
@@ -105,7 +86,6 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @param industry       行业id
      * @return 客户id
      */
-    @ResponseBody
     @PostMapping
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
@@ -132,37 +112,10 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     }
 
     /**
-     * 跳转新建客户经理页面
-     *
-     * @return 客户经理新建页面
-     */
-    @GetMapping
-    @SystemControllerLog(description = "跳转新建客户经理页面")
-    @ApiOperation(value = "跳转客户经理新建页面", notes = "客户经理新建页面", httpMethod = "GET")
-    public ModelAndView returnNewCustomer() {
-        ModelAndView modelAndView = new ModelAndView("/customer/new");
-        modelAndView.addObject("dropDownList", selectInput());
-        return modelAndView;
-    }
-
-    /**
-     * 跳转查询客户页面
-     *
-     * @return 客户列表
-     */
-    @GetMapping("/index")
-    @SystemControllerLog(description = "跳转查询客户页面")
-    @ApiOperation(value = "跳转查询客户页面", notes = "查询客户页面", httpMethod = "GET")
-    public ModelAndView returnCustomerList() {
-        return new ModelAndView("customer/index");
-    }
-
-    /**
      * 按条件查询客户经理信息
      *
      * @return 客户信息
      */
-    @ResponseBody
     @GetMapping("/condition")
     @SystemControllerLog(description = "按条件查询客户经理信息")
     @ApiOperation(value = "按条件查询客户经理信息", notes = "查询客户经理信息", httpMethod = "GET")
@@ -173,55 +126,66 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     }
 
     /**
-     * 客户更新页面跳转
+     * 查询客户所属行业信息
      *
      * @param customerId 客户id
      * @return 更新页面
      */
-    @GetMapping("/{id}")
+    @GetMapping("/industries")
     @SystemControllerLog(description = "客户更新页面跳转")
-    @ApiOperation(value = "按id查询客户基本信息", notes = "查询客户经理信息 返回参数名称:tCustomerBasic", httpMethod = "GET")
-    public ModelAndView returnUpdate(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
-        ModelAndView modelAndView = new ModelAndView("/customer/update");
-        TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
+    @ApiOperation(value = "查询客户所属行业信息", notes = "查询客户所属行业信息", httpMethod = "GET")
+    public ResultTo returnUpdate(@ApiParam(value = "客户id", required = true) @RequestParam("id") int customerId) {
         TCustomerIndustry tCustomerIndustry = new TCustomerIndustry();
         tCustomerIndustry.setCustomerId(customerId);
         List<TCustomerIndustry> tCustomerIndustryList = tCustomerIndustryService.select(tCustomerIndustry);
-        modelAndView.addObject("dropDownList", selectInput());
-        modelAndView.addObject("tCustomerBasic", tCustomerBasic);
-        modelAndView.addObject("industryList", tCustomerIndustryList);
-        return modelAndView;
+        return new ResultTo().setData(tCustomerIndustryList);
     }
 
-
     /**
-     * 查询客户编辑页面下拉框信息
+     * 查询证件类型
      *
-     * @return 客户编辑页面下拉框信息
+     * @return 证件类型
      */
-    private Map<String, Object> selectInput() {
-        Map<String, Object> dropDownList = new HashMap<>();
+    @GetMapping("/cert")
+    @ApiOperation(value = "查询证件类型", notes = "查询证件类型", httpMethod = "GET")
+    public ResultTo cert() {
         List<SelectModel> cert = customerBasicService.getCert();
-        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
-        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
-        List<TIndustry> tIndustries = industryService.selectAll();
-        dropDownList.put("cert", cert);
-        dropDownList.put("educationDegree", educationDegree);
-        dropDownList.put("marriageStatus", marriageStatus);
-        dropDownList.put("industries", tIndustries);
-        return dropDownList;
+        return new ResultTo().setData(cert);
     }
 
     /**
-     * 批量删除用户
+     * 查询文化程度
+     *
+     * @return 查询文化程度
+     */
+    @GetMapping("/educationDegree")
+    @ApiOperation(value = "查询文化程度", notes = "查询文化程度", httpMethod = "GET")
+    public ResultTo educationDegree() {
+        List<SelectModel> educationDegree = customerBasicService.getEducationDegree();
+        return new ResultTo().setData(educationDegree);
+    }
+
+    /**
+     * 查询婚姻状况
+     *
+     * @return 查询婚姻状况
+     */
+    @GetMapping("/marriageStatus")
+    @ApiOperation(value = "查询婚姻状况", notes = "查询婚姻状况", httpMethod = "GET")
+    public ResultTo marriageStatus() {
+        List<SelectModel> marriageStatus = customerBasicService.getMarriageStatus();
+        return new ResultTo().setData(marriageStatus);
+    }
+
+    /**
+     * 设置不可以
      *
      * @param customerIds 客户id(,分割)
      * @return 删除
      */
-    @DeleteMapping("/{id}")
-    @ResponseBody
-    @SystemControllerLog(description = "批量删除用户")
-    @ApiOperation(value = "批量删除用户", notes = "改变用户状态将用户设为不可用", httpMethod = "DELETE")
+    @DeleteMapping("/del/{id}")
+    @SystemControllerLog(description = "设置不可以")
+    @ApiOperation(value = "设置不可以", notes = "改变用户状态将用户设为不可用", httpMethod = "DELETE")
     public ResultTo deleteCustomer(@ApiParam("客户id(,分割)") @PathVariable("id") String customerIds) {
         List<Integer> ids = new ArrayList<>();
         String[] split = customerIds.split(",");
@@ -229,7 +193,6 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
             int customerId = Integer.parseInt(id);
             ids.add(customerId);
         }
-
         Map<String, Object> map = new HashMap<>();
         map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
         map.put("customerIds", ids);
@@ -239,18 +202,16 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     }
 
     /**
-     * 查看客户信息
+     * 按id查询客户信息
      *
      * @param customerId 客户id
      * @return 客户信息页面
      */
-    @GetMapping("/customerInfo/{id}")
-    @ApiOperation(value = "查看客户信息", notes = "查看客户信息, 返回参数: tCustomerBasic", httpMethod = "GET")
-    public ModelAndView index(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
-        ModelAndView modelAndView = new ModelAndView("/customer/customerInfo");
+    @GetMapping("/{id}")
+    @ApiOperation(value = "按id查询客户信息", notes = "按id查询客户信息", httpMethod = "GET")
+    public ResultTo index(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
         TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
-        modelAndView.addObject("tCustomerBasic", tCustomerBasic);
-        return modelAndView;
+        return new ResultTo().setData(tCustomerBasic);
     }
 
     /**
@@ -258,7 +219,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      *
      * @return 可删除的客户经理信息
      */
-    @GetMapping("/all")
+    @GetMapping("/del")
     @ApiOperation(value = "查询可删除的客户经理", notes = "查询可删除的客户经理", httpMethod = "GET")
     public DataTablePage selectDelete() {
         Map<String, Object> map = new HashMap();
@@ -268,12 +229,14 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
     /**
      * 删除客户信息
+     *
      * @param customerId 客户id
      * @return 数据库变记录
      */
     @DeleteMapping("/{id}")
+    @SystemControllerLog(description = "删除客户经理信息")
     @ApiOperation(value = "删除客户经理信息", notes = "删除客户经理信息", httpMethod = "DELETE")
-    public ResultTo delete(@ApiParam(value = "客户经理id", required = true) @RequestParam int customerId) {
+    public ResultTo delete(@ApiParam(value = "客户经理id", required = true) @PathVariable int customerId) {
         Integer count = customerBasicService.deleteCustomer(customerId);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
