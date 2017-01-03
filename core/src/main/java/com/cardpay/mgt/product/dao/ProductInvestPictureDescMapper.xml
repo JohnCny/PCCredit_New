@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.product.dao.ProductInvestPictureDescMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.product.model.ProductInvestPictureDesc">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+        <result column="PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="pritureDescription"/>
+        <result column="IS_NEED" jdbcType="DECIMAL" property="isNeed"/>
+    </resultMap>
+
+
+    <!--批量插入产品调查图片信息-->
+    <insert id="batchInsertImg" parameterType="List">
+        INSERT INTO T_PRODUCT_INVEST_PICTURE_DESC (ID, PRODUCT_ID, PRITURE_DESCRIPTION, IS_NEED)
+        <foreach collection="list" item="item" index="index" open="(" close=")"
+                 separator="union">
+            SELECT #{item.id}, #{item.productId}, #{item.pritureDescription}, #{item.isNeed} FROM DUAL
+        </foreach>
+    </insert>
+</mapper>

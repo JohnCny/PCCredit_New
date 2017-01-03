@@ -1,8 +1,11 @@
 package com.cardpay.mgt.user.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.mgt.user.dao.UserOrganizationMapper;
 import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.service.UserOrganizationService;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,4 +16,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserOrganizationServiceImpl extends BaseServiceImpl<UserOrganization> implements UserOrganizationService {
+    @Autowired
+    private UserOrganizationMapper userOrganizationDao;
+
+    @Override
+    public int queryUserOrg(int organizationId) {
+        return userOrganizationDao.queryUserOrg(organizationId);
+    }
 }

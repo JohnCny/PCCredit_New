@@ -20,6 +20,59 @@
         <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
     </resultMap>
 
+    <resultMap id="BaseVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="name"/>
+        <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
+        <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
+        <result column="ORIGIN_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="originCustomerManager"/>
+        <result column="NOW_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="nowCustomerManager"/>
+        <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
+        <association property="oldManager" column="ORIGIN_CUSTOMER_MANAGER" select="oldManager"/>
+        <association property="nowCustomerManager" column="nowCustomerManager" select="newManager"/>
+    </resultMap>
+
+    <resultMap id="UserMap" type="com.cardpay.mgt.user.model.User">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+        <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="AGE" jdbcType="DECIMAL" property="age"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+        <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
+    </resultMap>
+    <!--原客户经理信息-->
+    <select id="oldManager" resultMap="UserMap">
+    SELECT * FROM
+    T_CUSTOMER_MANAGER manager, T_USER usr
+    WHERE manager.user_id= usr.id
+    AND MANAGER.id = #{oldManager}
+    </select>
+
+    <!--移交后客户经理信息-->
+    <select id="newManager" resultMap="UserMap">
+    SELECT * FROM
+    T_CUSTOMER_MANAGER manager, T_USER usr
+    WHERE manager.user_id= usr.id
+    AND MANAGER.id = #{newManager}
+    </select>
+
+    <!--查询移交记录返回vo信息-->
+    <select id="queryById" resultMap="BaseVo">
+        SELECT * FROM T_CUSTOMER_TRANSFER WHERE id = #{customerId}
+    </select>
+
     <!--查询客户接受列表-->
     <select id="queryTransfer" resultMap="BaseResultMapVo">
         SELECT basic.ID as customerId, basic.CERTIFICATE_NUMBER as certificateNumber,
@@ -27,7 +80,6 @@
         FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_TRANSFER transfer
         WHERE basic.id = transfer.id AND transfer.TRANSFER_STATUS = 0
         AND basic.CUSTOMER_STATUS != 3
-        AND basic.CUSTOMER_MANAGER_ID = #{managerId,jdbcType=DECIMAL}
     </select>
 
     <!--客户接收(批量更新)-->
@@ -35,10 +87,7 @@
         <foreach item="item" index="index" collection="customerIds" open="BEGIN" separator=";" close=";END;">
             UPDATE T_CUSTOMER_TRANSFER
             <set>
-                TRANSFER_STATUS = #{transferStatus}
-                <if test="nowCustomerManager!=null and nowCustomerManager!=''">
-                    , NOW_CUSTOMER_MANAGER = #{nowCustomerManager}
-                </if>
+                TRANSFER_STATUS = #{transferStatus}, NOW_CUSTOMER_MANAGER = #{nowCustomerManager}
             </set>
             where id = #{item}
         </foreach>

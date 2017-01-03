@@ -157,8 +157,9 @@
                                  <input type="button" class="back" value="返回"/>
                              </p>-->
                             <div class="col-xs-12 contain">
-                                <button id="btn_submit" class="btn btn-success submited">保存</button>
-                                <a href="#" type="reset" class="btn btn-default">返回</a>
+                                <!--<button id="btn_submit" class="btn btn-success submited">保存</button>-->
+                                <a href="javascript:void (0);" id="btn_submit" class="btn btn-success submited">保存</a>
+                                <a href="/role/rolePage" type="reset" class="btn btn-default">返回</a>
                             </div>
                         </form>
                     </div>
@@ -178,6 +179,7 @@
             var url = "/role/add";
             $(".submited").click(function () {
                 var data = $("#roleMes").serializeArray();
+                console.log(data);
                 $.ajax({
                     url: url,
                     data: data,
@@ -185,6 +187,7 @@
                     success: function (res) {
                         if (res.code == 200) {
                             alert("创建成功");
+                            location.href = "/role/rolePage"
                         }
                     }
                 })

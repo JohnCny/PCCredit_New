@@ -8,6 +8,7 @@ import com.cardpay.basic.base.mapper.BasicMapper;
  * @author rankai
  *         createTime 2016-12-2016/12/27 16:50
  */
+
 public interface UniquenessMapper extends BasicMapper<UniquenessModel> {
 
 }

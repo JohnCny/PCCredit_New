@@ -42,6 +42,7 @@ import static com.cardpay.mgt.menu.enums.RoleEnum.ADMIN;
  * 用户Service层实现
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
@@ -71,12 +72,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public Set<String> getUserAuthority(User user) {
         Set<String> set = new HashSet<>();
         List<UserAuthority> list = userMapper.selectByAuthority(user);
-        StringBuffer stringBuffer;
+        StringBuffer stringBuffer = new StringBuffer();
         for (UserAuthority userAuthority : list) {
-            stringBuffer = new StringBuffer();
             stringBuffer.append(userAuthority.getAuthorityName()).append(":").append(userAuthority.getResoucreName())
                     .append(":").append(userAuthority.getOperationName());
             set.add(stringBuffer.toString());
+            stringBuffer.delete(0, stringBuffer.length());
         }
         for (String str : set) {
             LogTemplate.debug(this.getClass(), "拥有的资源", str);

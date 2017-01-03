@@ -13,6 +13,7 @@ import java.util.List;
  * 用户角色关系Service层接实现
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 @Service
 public class UserRoleServiceImpl extends BaseServiceImpl<UserRole> implements UserRoleService {

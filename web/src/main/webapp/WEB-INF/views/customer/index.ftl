@@ -101,7 +101,7 @@
         $(function(){
 
             var url  = {
-                "urlNew" : "/customerBasic/new",
+                "urlNew" : "/customerBasic/",
                 "urlDel" : "/customerBasic/",
             }
             var QK_searchObj = {

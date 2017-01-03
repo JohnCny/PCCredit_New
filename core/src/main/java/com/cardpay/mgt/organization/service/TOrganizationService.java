@@ -7,6 +7,7 @@ import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 机构service层
@@ -30,9 +31,9 @@ public interface TOrganizationService extends BaseService<TOrganization> {
 
     /**
      * 查询所有机构信息
-     * @param parentId 父id
+     * @param map 父id
      * @return 机构信息
      */
-    List<TOrganizationVo> queryAll(int parentId);
+    List<TOrganizationVo> queryAll(Map<String, Object> map);
 
 }

@@ -26,7 +26,7 @@ public interface TCustomerBasicMapper extends BasicMapper<TCustomerBasic> {
      * @param idCard 身份证号码
      * @return 是否存在(大于0 存在, 等于0 不存在)
      */
-    Integer isIdCardExist(@Param("idCard") int idCard);
+    Integer isIdCardExist(@Param("idCard") long idCard);
 
     /**
      * 查询客户经理所属客户
