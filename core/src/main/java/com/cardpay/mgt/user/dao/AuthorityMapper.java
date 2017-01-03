@@ -23,6 +23,7 @@ public interface AuthorityMapper extends BasicMapper<Authority> {
 
     /**
      * 根据角色ID获得权限信息
+     *
      * @param roleId 角色ID
      * @return 权限集合
      */
@@ -35,6 +36,12 @@ public interface AuthorityMapper extends BasicMapper<Authority> {
      * @param menuId 菜单id
      * @return 权限集合
      */
-    List<Authority> selectMenuAuthorityByUser(@Param("userId")Integer userId,@Param("menuId") Integer menuId);
+    List<Authority> selectMenuAuthorityByUser(@Param("userId") Integer userId, @Param("menuId") Integer menuId);
 
+    /**
+     * 获取资源权限列表
+     *
+     * @return 取资源权限列表
+     */
+    List<Authority> selectAllByStatus();
 }

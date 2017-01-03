@@ -51,7 +51,7 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      * @param idCard 身份证号码
      * @return 是否存在(true:存在, false:不存在)
      */
-    boolean isIdCardExist(int idCard);
+    boolean isIdCardExist(long idCard);
 
     /**
      * 查询客户经理所属客户

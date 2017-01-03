@@ -1,5 +1,10 @@
 <#include "layout/base.html"/>
 <#assign title = "客户经理"/>
+<#macro css>
+    <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
+    <link rel="stylesheet" href="/static/css/button.css"/>
+</#macro>
 <#macro style>
     <style>
         .delete{
@@ -32,7 +37,7 @@
             background-color: #1f7acf;
         }
         #example tbody td,#example thead th{
-           text-align: center;
+            text-align: center;
             line-height: #1f7acf;
             box-sizing: border-box;
         }
@@ -40,54 +45,73 @@
             position: relative;
             top:1px;
         }
+        .manage{
+            margin-right: 5px;
+        }
+        .del{
+            margin-left: 5px;
+        }
     </style>
-</#macro>
-<#macro css>
-
 </#macro>
 <#macro breadcrumb>
 
-    <h1>${title}</h1>
-    <h2>当前位置：客户经理管理 / <span class="active">${title}</span></h2>
+    <h3>
+        客户经理管理
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">客户经理管理</a>
+        </li>
+        <li class="active"> 客户经理管理</li>
+    </ul>
 </#macro>
 <#macro content>
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    客户经理列表
+                </header>
 
-    <h5>客户经理列表</h5>
-    <div class="search" style="width:95%">
-        <span>客户经理名称：<input type="text" class="short" name="userCname" id="userCname" ></span>
-        <span>工号：<input type="text" name="employeeNumber" id="employeeNumber"></span>
-        <span>级别：
-            <select name="levelId" id="levelId">
-                <option id="-1" value="-1">所有级别</option>
-                <#list customerManagerLevel as cml>
-                    <option id="${cml.id}" value="${cml.id}">${cml.value}</option>
-                </#list>
-            </select>
-        </span>
-        <input class="searchBtn" type="button" value="搜 索">
+                <div class="search" >
+                    <span>客户经理名称：<input type="text" class="short" name="userCname" id="userCname" ></span>
+                    <span>工号：<input type="text" name="employeeNumber" id="employeeNumber"></span>
+                    <span>级别：
+                        <select name="levelId" id="levelId">
+                            <option id="-1" value="-1">所有级别</option>
+                            <#list customerManagerLevel as cml>
+                                <option id="${cml.id}" value="${cml.id}">${cml.value}</option>
+                            </#list>
+                        </select>
+                    </span>
+                    <input class="searchBtn" type="button" value="搜 索">
+                </div>
+           <div class="panel-body">
+            <div class="table-responsive">
+                <table id="customerManagerList" class="table table-bordered" style="width: 100%" >
+                    <thead>
+                    <tr>
+                        <th>客户经理</th>
+                        <th>工号</th>
+                        <th>当前级别	</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+           </div>
+            </section>
+        </div>
     </div>
-
-    <div class="table-responsive" style="margin:50px auto; width:95%;">
-        <table id="customerManagerList" class="table table-bordered" style="width: 100%" >
-            <thead>
-            <tr>
-                <th>客户经理</th>
-                <th>工号</th>
-                <th>当前级别	</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-        </table>
-    </div>
-
 </#macro>
-
-<#macro script>
-
-</#macro>
-
 <#macro js>
-
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
+    <script src="/static/js/department.js" type="text/javascript"></script>
+    <script src="/static/js/moment.min.js" type="text/javascript"></script>
+</#macro>
+<#macro script>
     <script>
         $(function(){
 
@@ -118,8 +142,8 @@
                 "mData" : "userId",
                 "sDefaultContent" : "",
                 "render" : function(data, type, full, meta) {
-                    return  '<a class="editOne btn-info" href="/customerManager/'+data+'">管理</a>' +
-                            '<a class="btn btn-danger deleteOne delete" href="javaScript:;" data-id='+data+'>删除</a>';
+                    return  '<a class=" btn btn-info manage" href="/customerManager/'+data+'">管理</a>' +
+                        '<a class="btn btn-danger del" href="javaScript:;" data-id='+data+'>删除</a>';
                 }
             }];
 
@@ -134,5 +158,4 @@
         }());
 
     </script>
-
 </#macro>

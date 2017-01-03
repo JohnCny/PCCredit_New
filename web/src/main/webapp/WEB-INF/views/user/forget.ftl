@@ -103,19 +103,19 @@
             <ul class="line_flow">
                 <li>
                     <div class="flow_index checked one">
-                        <img class="oneImg" src="../../../static/img/onecheck.png" alt="">
+                        <img class="oneImg" src="../../../static/images/onecheck.png" alt="">
                         <span>请输入用户名</span>
                     </div>
                 </li>
                 <li>
                     <div class="flow_index two">
-                        <img class="twoImg" src="../../../static/img/two.png" alt="">
+                        <img class="twoImg" src="../../../static/images/two.png" alt="">
                         <span>安全验证</span>
                     </div>
                 </li>
                 <li>
                     <div class="flow_index three">
-                        <img class="threeImg" src="../../../static/img/three.png" alt="">
+                        <img class="threeImg" src="../../../static/images/three.png" alt="">
                         <span>重置密码</span>
                     </div>
                 </li>
@@ -181,9 +181,9 @@
                                     $(".usernameputone").hide()
                                     $(".usernameputtwo").show();
                                     $(".one").removeClass("checked");
-                                    $(".oneImg").attr("src" , "../../../static/img/one.png");
+                                    $(".oneImg").attr("src" , "../../../static/images/one.png");
                                     $(".two").addClass("checked");
-                                    $(".twoImg").attr("src" , "../../../static/img/twocheck.png");
+                                    $(".twoImg").attr("src" , "../../../static/images/twocheck.png");
                                     $(".get").click(function () {
                                         var address = $(".address").val();
                                         if(address == ""){
@@ -217,8 +217,8 @@
                                                                                 $(".passwordChange").show();
                                                                                 $(".two").removeClass("checked");
                                                                                 $(".three").addClass("checked");
-                                                                                $(".twoImg").attr("src" , "../../../static/img/two.png");
-                                                                                $(".threeImg").attr("src" , "../../../static/img/threecheck.png");
+                                                                                $(".twoImg").attr("src" , "../../../static/images/two.png");
+                                                                                $(".threeImg").attr("src" , "../../../static/images/threecheck.png");
                                                                                 var datas = res.data;
                                                                                 console.log(datas);
                                                                                 $(".changepass").click(function () {

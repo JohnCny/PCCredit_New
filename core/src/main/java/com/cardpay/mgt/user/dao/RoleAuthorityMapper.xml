@@ -10,15 +10,12 @@
     </resultMap>
 
     <insert id="insertArray">
-        INSERT INTO T_USER_ROLE (ROLE_ID,USER_ID)
+        INSERT INTO T_ROLE_AUTHORITY (ROLE_ID,AUTHORITY_ID)
         <foreach collection="authorityIds" item="temp" index="index" open="(" close=")" separator="union">
             SELECT
-            <if test="temp != -1">
-                #{roleId,jdbcType=DECIMAL},
-                #{temp,jdbcType=DECIMAL}
-            </if>
+            #{roleId,jdbcType=DECIMAL},
+            #{temp,jdbcType=DECIMAL}
             FROM dual
         </foreach>
     </insert>
-
 </mapper>

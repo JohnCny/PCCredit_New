@@ -1,8 +1,14 @@
 <#include "layout/base.html"/>
 <#assign title = "用户管理"/>
+<#macro css>
+    <link rel="stylesheet" href="/static/css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/dataTables.tableTools.css"/>
+    <link href="/static/css/zTree/metroStyle/metroStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/radio.css">
+</#macro>
 <#macro style>
 <style>
-    input, select {
+    input, select,{
         border: 1px solid rgba(0, 0, 0, 0.2);
         height: 30px;
         border-radius: 5px
@@ -11,120 +17,219 @@
     table, table tr, table tr td {
         background-color: #fff
     }
+    .widclas {
+        width: 20%;
+        float: left;
+        height: 80px;
+        margin-left: 10%;
+        margin-top: 30px;
+    }
+    @media screen and (max-width: 1300px) {
+        .widclas {
+            width: 30%;
+            float: left;
+            height: 80px;
+            margin-left: 10%;
+            margin-top: 30px;
+        }
+    }
+    @media screen and (max-width: 980px) {
+        .widclas {
+            width: 80%;
+            float: left;
+            height: 80px;
+            margin-left: 10%;
+            margin-top: 30px;
+        }
+        .hideInput{display: block}
+    }
+    .ledd{
+        margin-left: 10%;
+        clear: both;
+    }
+    .contain{
+        margin-left: 9.3%;
+        margin-top: 30px;
+    }
 </style>
 </#macro>
-<#macro css>
 
-</#macro>
 <#macro breadcrumb>
-<h1>用户</h1>
-<h2>当前位置：用户管理 / <span class="active">用户</span></h2>
-
+    <h3>
+        新建用户
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#">当前位置：新建用户</a>
+        </li>
+        <li class="active"> 新建用户</li>
+    </ul>
 </#macro>
 <#macro content>
-<div class="row" style="background-color: #efefef;width: 100%;margin-left: 0">
-    <div class="col-xs-3" style="background-color: #fff ;border-radius: 5px;height: 705px">
-        <div class="report common list">
-            <h5>机构列表</h5>
-            <div class="treeBox" style="height: 581px;">
-                <ul id="treeDemo" class="ztree"></ul>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="col-md-3">
+                <div class="report common list">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            机构列表
+                        </header>
+                        <div class="treeBox">
+                            <ul id="treeDemo" class="ztree"></ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="col-xs-9">
+                <section class="panel">
+                    <header class="panel-heading">
+                        用户列表
+                    </header>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                <div class="row-fluid">
+                                    <form action="" id="userAdd">
+                                        <div class="widclas">
+                                            <label for="">姓名</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input  class="form-control" type="text" name="userCname"placeholder="请输入至少2-10位汉字">
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">登录名</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input  class="form-control" type="text" name="username"placeholder="请输入至少2-10位汉字">
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">员工工号</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input  class="form-control" type="text" name="employeeNumber" placeholder="请输入至少2-10位汉字">
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">电话</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input  class="form-control" type="text" name="phone" placeholder="请输入至少2-10位汉字">
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">年龄</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input  class="form-control" type="text" name="age" placeholder="请输入至少2-10位汉字">
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">性别</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <select name="sex" class="form-control">
+                                                    <option>-&#45;&#45;请选择-&#45;&#45;</option>
+                                                    <option value="1">男</option>
+                                                    <option value="2">女</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">邮箱</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input  class="form-control" type="text" name="email" placeholder="请输入至少2-10位汉字">
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">机构</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input class="form-control"  readonly="readonly" id="orgId" disabled="disabled" placeholder="请输入至少2-10位汉字">
+                                                <input type="hidden" id="orgIdHidden" name="orgId">
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">身份证</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <input  class="form-control" type="text"  name="idCardNumber" placeholder="请输入至少2-10位汉字">
+                                            </div>
+                                        </div>
+                                        <div class="widclas">
+                                            <label for="">用户类型</label>
+                                            <div class="input-icon right">
+                                                <i class="fa"></i>
+                                                <select name="userType" class="form-control">
+                                                    <option>-&#45;&#45;请选择-&#45;&#45;</option>
+                                                    <option value="1">系统用户</option>
+                                                    <option value="2">客户经理</option>
+                                                    <option value="3">部门主管</option>
+                                                    <option value="4">机构主管</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="ledd">
+                                            <label for="" style="">用户角色</label>
+                                            <#list roleAll as temp>
+                                                    <span class="hideInput">
+                                                        <input id="roleId" type="radio" name="roleId"value="${temp.id}">
+                                                        <label onclick="setRadio(this)"class="radio"  style="padding-left: 30px">${temp.roleNameZh}</label>
+                                                    </span>
+                                            </#list>
+                                        </div>
+
+
+
+                                        <div class="ledd">
+                                            <label for="" style="display: inline-block">用户状态</label>
+                                            <div class="input-icon right" style="display: inline-block">
+                                                <i class="fa"></i>
+                                                  <span class="hideInput">
+                                                      <input type="radio" name="status" value="0">
+                                                      <label onclick="setRadio(this)" class="radio" style="padding-left: 30px">正常</label>
+                                                  </span>
+                                                  <span class="hideInput">
+                                                       <input type="radio" name="status" value="1">
+                                                       <label onclick="setRadio(this)" class="radio" style="padding-left: 30px">锁定</label>
+                                                  </span>
+                                            </div>
+                                        </div>
+                                        <div class=" contain">
+                                            <button id="btn_submit" class="btn btn-success submit">保存
+                                            </button>
+                                            <a href="/user" type="reset" class="btn btn-default back" style=" border: 1px solid rgba(0, 0, 0, 0.2);">返回</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
-    <div class="col-xs-1"></div>
-    <div class="col-xs-8" style="background-color: #ffffff; border-radius: 5px">
-        <div class="report common" style="display:inline-block;width:100%">
-            <h5>填写用户信息</h5>
-            <form action="" id="userAdd">
-                <table>
-                    <tr>
-                        <td class="pull-right">姓名：</td>
-                        <td><input type="text" name="userCname"></td>
-                        <td class="pull-right">登录名：</td>
-                        <td><input type="text" name="username"></td>
-                    </tr>
-                    <tr>
-                        <td class="pull-right">员工工号：</td>
-                        <td><input type="text" name="employeeNumber"></td>
-                        <td class="pull-right">电话：</td>
-                        <td><input type="text" name="phone"></td>
-                    </tr>
-                    <tr>
-                        <td class="pull-right">年龄：</td>
-                        <td><input type="text" name="age"></td>
-                        <td class="pull-right">性别：</td>
-                        <td>
-                            <select name="sex">
-                                <option>---请选择---</option>
-                                <option value="1">男</option>
-                                <option value="2">女</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pull-right">邮箱：</td>
-                        <td><input type="text" name="email"></td>
-                        <td class="pull-right">机构：</td>
-                        <td>
-                            <input type="text" readonly="readonly" id="orgId" disabled="disabled">
-                            <input type="hidden" id="orgIdHidden" name="orgId">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pull-right">身份证：</td>
-                        <td><input type="text" name="idCardNumber"></td>
-                        <td class="pull-right">用户类型：</td>
-                        <td>
-                            <select name="userType">
-                                <option>---请选择---</option>
-                                <option value="1">系统用户</option>
-                                <option value="2">客户经理</option>
-                                <option value="3">部门主管</option>
-                                <option value="4">机构主管</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td class="pull-right">用户角色：</td>
-                        <td colspan="3">
-                            <#list roleAll as temp>
-                                <span class="hideInput"><input id="roleId" type="radio" name="roleId"
-                                                               value="${temp.id}"><label onclick="setRadio(this)"
-                                                                                         class="radio">${temp.roleNameZh}</label></span>
-                            </#list>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pull-right">用户状态：</td>
-                        <td colspan="3">
-                            <span class="hideInput"><input type="radio" name="status" value="0"><label
-                                    onclick="setRadio(this)" class="radio">正常</label></span>
-                            <span class="hideInput"><input type="radio" name="status" value="1"><label
-                                    onclick="setRadio(this)" class="radio">锁定</label></span>
-                        </td>
-                    </tr>
-                </table>
+</#macro>
 
-                <p class="button">
-                    <input type="button" value="保存" class="submit"/>
-                    <input type="button" class="back" value="返回"/>
-                </p>
-            </form>
-        </div>
-
-    </div>
-</div>
-
-
-
+<#macro js>
+    <script type="text/javascript" src="/static/js/jquery.ztree.all.js"></script>
+    <script type="text/javascript" src="/static/js/ztree-org.js"></script>
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/js/dataTables.tableTools.js" type="text/javascript"></script>
+    <script src="/static/js/department.js" type="text/javascript"></script>
+    <script src="/static/js/moment.min.js" type="text/javascript"></script>
 </#macro>
 
 <#macro script>
-<script type="text/javascript" src="/static/js/ztree-org.js"></script>
-</#macro>
-<#macro js>
 <script type="text/javascript">
     var urlMy = "/organization/orgAll";
     var setting = {

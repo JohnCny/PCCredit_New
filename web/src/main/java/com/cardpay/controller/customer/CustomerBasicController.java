@@ -60,9 +60,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @GetMapping("/idCardExist")
     @SystemControllerLog(description = "验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
-    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam int identityCard) {
+    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam long identityCard) {
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
-        return idCardExist ? new ResultTo().setData(idCardExist) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return new ResultTo().setData(idCardExist);
     }
 
     /**
@@ -91,6 +91,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @SystemControllerLog(description = "新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
+        tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
         return count != 0 ? new ResultTo().setData(tCustomerBasic.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

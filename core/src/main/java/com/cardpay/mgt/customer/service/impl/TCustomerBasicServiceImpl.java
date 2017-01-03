@@ -84,7 +84,7 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public boolean isIdCardExist(int idCard){
+    public boolean isIdCardExist(long idCard){
         return customerBasicDao.isIdCardExist(idCard) > 0 ? true : false;
     }
 
