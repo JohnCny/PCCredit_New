@@ -159,7 +159,7 @@
                     } else {
                         html += '<a  class="btn btn-default locks" style="padding: 5px 10px;" data-id=' + data + ' data-status=' + full.status + '>点击解锁</a>';
                     }
-                    html += '<a class="btn btn-warning reste" style="padding: 5px 10px;" data-id=' + data + '>重置密码</a>';
+                    html += '<a class="btn btn-warning reste resetBtn" style="padding: 5px 10px;" data-id=' + data + '>重置密码</a>';
                     html += '<a class="btn btn-success"  style="padding: 5px 10px;" data-id=' + data + '>角色管理</a>'
                     return html;
                 }

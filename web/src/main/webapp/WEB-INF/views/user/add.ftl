@@ -133,8 +133,8 @@
                                                 <i class="fa"></i>
                                                 <select name="sex" class="form-control">
                                                     <option>-&#45;&#45;请选择-&#45;&#45;</option>
-                                                    <option value="1">男</option>
-                                                    <option value="2">女</option>
+                                                    <option value="0">男</option>
+                                                    <option value="1">女</option>
                                                 </select>
                                             </div>
                                         </div>
