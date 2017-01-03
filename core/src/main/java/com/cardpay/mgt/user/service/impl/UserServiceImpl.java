@@ -12,6 +12,9 @@ import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.basic.util.VerifyCodeUtil;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
+import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
+import com.cardpay.mgt.menu.enums.RoleEnum;
 import com.cardpay.mgt.user.dao.RoleMapper;
 import com.cardpay.mgt.user.dao.UserMapper;
 import com.cardpay.mgt.user.dao.UserOrganizationMapper;
@@ -24,6 +27,7 @@ import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -31,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import static com.cardpay.mgt.menu.enums.RoleEnum.ADMIN;
 
 /**
  * 用户Service层实现
@@ -57,6 +63,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Autowired
     private MailSend mailSend;
+
+    @Autowired
+    private CustomerManagerService customerManagerService;
 
     @Override
     public Set<String> getUserAuthority(User user) {
@@ -167,6 +176,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
+    @Transactional
     public boolean addUser(User user, Integer orgId, Integer roleId) {
         user.setCreateTime(new Date());
         user.setCreateBy(ShiroKit.getUserId());
@@ -180,6 +190,16 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userRole.setRoleId(roleId);
         userRole.setUserId(user.getId());
         userRoleMapper.insertSelective(userRole);
+        switch (RoleEnum.getValueById(roleId)){
+            case ADMIN:
+                break;
+            case MANAGER:
+                TCustomerManager customerManager = new TCustomerManager();
+                customerManager.setUserId(user.getId());
+                customerManager.setOrganizationId(orgId);
+                customerManagerService.insert(customerManager);
+                break;
+        }
         return Boolean.TRUE;
     }
 
