@@ -12,7 +12,7 @@
 
 <#macro breadcrumb>
     <h3>
-        客户管理
+        客户经理级别管理
     </h3>
     <ul class="breadcrumb">
         <li>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="col-md-12 col-xs-12" style="margin-bottom: 20px;">
                             <input class="btn btn-success" type="button" id="btn_submit" value="保存"/>
-                            <input type="button"  class="btn btn-info" class="back" value="返回"/>
+                            <a href="/experts/list" type="reset" class="btn btn-default">取消</a>
                         </div>
                     </div>
 
@@ -122,14 +122,18 @@
         $(document).ready(function(){
             var url = "/customerManagerLevel";
             var Obj = {};
-            var arr = ["id","levelName","levelCredit","overdueTolerateRate","badloanTolerateRate","postloanMonitorTolerateNum"
+            var arr = ["levelName","levelCredit","overdueTolerateRate","badloanTolerateRate","postloanMonitorTolerateNum"
                 ,"loanLimitMin","loanNumberMin","overdueRateMin","badloanRateMin"];
-
+            var urlget = location.href;
+            var urlarr = urlget.split("/");
+            var length = urlarr.length
+            var ids = urlarr[length - 1];
             $("#btn_submit").click(function (e) {
                 e.preventDefault();
                 for(var i = 0; i < arr.length; i++){
                     Obj[arr[i]]=$("#"+arr[i]).val();
                 }
+                Obj["id"] = ids;
                 console.log(Obj);
                 $.ajax({
                     type:"put",

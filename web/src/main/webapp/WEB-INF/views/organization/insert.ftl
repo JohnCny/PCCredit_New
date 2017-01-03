@@ -72,7 +72,7 @@
                                     <label for="orgLogisticsId">后勤</label>
                                     <div class="input-icon right">
                                         <i class="fa"></i>
-                                        <input id="orgLogisticsId" type="text" class="form-control distance" name="orgLogisticsId">
+                                        <input id="orgLogisticsId" type="text" class="form-control distance" name="orgLogisticsId" placeholder="请输入数字">
                                         <div class="message"></div>
                                     </div>
                                 </div>
@@ -84,6 +84,9 @@
                     </div>
                 </section>
             </div>
+
+
+
         </div>
     </div>
 </#macro>

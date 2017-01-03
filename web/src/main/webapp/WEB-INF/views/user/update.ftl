@@ -206,22 +206,20 @@
     <div class="row">
         <div class="col-sm-12">
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-md-3">
                 <div class="report common list">
                     <section class="panel">
                         <header class="panel-heading">
                             用户编辑
                         </header>
-                        <div class="report common list">
-                            <div class="treeBox" style="height: 581px;">
+                        <div class="treeBox">
                             <ul id="treeDemo" class="ztree"></ul>
-                            </div>
                         </div>
                     </section>
                 </div>
             </div>
 
-            <div class="col-md-9 col-sm-12 col-xs-12">
+            <div class="col-xs-9">
                 <section class="panel">
                     <header class="panel-heading">
                         用户列表
@@ -272,8 +270,8 @@
                                             <div class="input-icon right">
                                                 <i class="fa"></i>
                                                 <select name="sex" class="form-control">
-                                                    <option value="1" <#if user.sex == 1>selected</#if>>男</option>
-                                                    <option value="2" <#if user.sex == 2>selected</#if>>女</option>
+                                                    <option value="0" <#if user.sex == 1>selected</#if>>男</option>
+                                                    <option value="1" <#if user.sex == 2>selected</#if>>女</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -318,18 +316,18 @@
                                         <div class="ledd">
                                             <label for="" style="">用户角色</label>
                                             <#list roleAll as temp>
-                                <span class="hideInput">
-                                <input id="roleId_${temp.id}" type="radio" data-id="${userRole.roleId}"
-                                       value="${temp.id}">
-                                <input type="hidden" id="roleHidden" name="dsaddsad">
-                                    <#if userRole.roleId == temp.id>
-                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
-                                               class="radio radio_a" style="padding-left: 30px">${temp.roleNameZh}</label>
-                                    <#else>
-                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
-                                               class="radio" style="padding-left: 30px">${temp.roleNameZh}</label>
-                                    </#if>
-                            </span>
+                                                <span class="hideInput">
+                                                <input id="roleId_${temp.id}" type="radio" data-id="${userRole.roleId}"
+                                                       value="${temp.id}">
+                                                <input type="hidden" id="roleHidden">
+                                                    <#if userRole.roleId == temp.id>
+                                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
+                                                               class="radio radio_a" style="padding-left: 30px">${temp.roleNameZh}</label>
+                                                    <#else>
+                                                        <label onclick="setRadio(this,'roleId_${temp.id}')"
+                                                               class="radio" style="padding-left: 30px">${temp.roleNameZh}</label>
+                                                    </#if>
+                                            </span>
                                             </#list>
                                         </div>
 
@@ -410,12 +408,14 @@
 
             }
         });
-
+</script>
+<script>
     function setRadio(obj, inputId) {//单选样式
         $(obj).parent().parent().find("input[type=radio]").attr("checked", false)
         $(obj).parent().parent().find("label").attr("class", "radio")
         $(obj).parent().find("input[type=radio]").attr("checked", true)
         $(obj).parent().find("label").attr("class", "radio radio_a")
+
         $("#roleHidden").attr("name", "roleId");
         var value = $("#" + inputId).data("id") + "," + $("#" + inputId).val();
         $("#roleHidden").attr("value", value);
@@ -426,10 +426,10 @@
         $(".submit").click(function (e) {
             e.preventDefault();
             var obj = $("#userAdd").serializeArray();
-            obj.push({"name": "roleId", "value": $("#roleId").val()});
+
             console.log(obj);
             $.ajax({
-                type: "post",
+                type: "put",
                 url: url,
                 data: obj,
                 success: function (res) {
