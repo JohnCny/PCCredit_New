@@ -1,20 +1,18 @@
-package com.cardpay.mgt.customer.model;
+package com.cardpay.mgt.customer.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.context.annotation.Lazy;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
 
 /**
- * 客户所属行业实体类
- * @author yanweichen
+ * 客户行业相关Vo
+ *
+ * @author chenkai
+ *         createTime 2017-01-2017/1/3 16:48
  */
-@Lazy
-@Table(name = "T_CUSTOMER_INDUSTRY")
-@ApiModel(value="客户行业信息表")
-public class TCustomerIndustry extends GenericEntity<Integer> {
+public class TCustomerIndustryVo extends GenericEntity<Integer> {
     /**
      * 行业id
      */
@@ -31,39 +29,32 @@ public class TCustomerIndustry extends GenericEntity<Integer> {
     private Integer customerId;
 
     /**
-     * 获取行业id
-     *
-     * @return INDUSTRY_ID - 行业id
+     * 行业名称
      */
+    private String  industryName;
+
     public Integer getIndustryId() {
         return industryId;
     }
 
-    /**
-     * 设置行业id
-     *
-     * @param industryId 行业id
-     */
     public void setIndustryId(Integer industryId) {
         this.industryId = industryId;
     }
 
-    /**
-     * 获取客户id
-     *
-     * @return CUSTOMER_ID - 客户id
-     */
     public Integer getCustomerId() {
         return customerId;
     }
 
-    /**
-     * 设置客户id
-     *
-     * @param customerId 客户id
-     */
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public String getIndustryName() {
+        return industryName;
+    }
+
+    public void setIndustryName(String industryName) {
+        this.industryName = industryName;
     }
 
     @Override

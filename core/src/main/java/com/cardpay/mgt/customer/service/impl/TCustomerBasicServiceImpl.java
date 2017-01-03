@@ -5,6 +5,7 @@ import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
@@ -126,4 +127,5 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
         Integer integer3 = tCustomerTransferService.deleteByPrimaryKey(customerId);
         return integer0+integer1+integer2+integer3;
     }
+
 }

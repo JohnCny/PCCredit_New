@@ -80,7 +80,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @param customerId 客户id
      * @return 客户维护信息列表
      */
-    @GetMapping("/{id}/list")
+    @GetMapping("/{id}")
     @SystemControllerLog(description = "按id查询客户维护列表")
     @ApiOperation(value = "按id查询客户维护列表", notes = "按id查询客户维护列表", httpMethod = "GET")
     public ResultTo returnUpdate(@PathVariable("id") int customerId) {

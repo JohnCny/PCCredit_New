@@ -28,7 +28,6 @@ public class TCustomerBasic extends GenericEntity<Integer> {
     @ApiModelProperty(value = "客户id(需要生成规则生成)", required = true)
     private Integer id;
 
-
     /**
      * 客户姓名
      */

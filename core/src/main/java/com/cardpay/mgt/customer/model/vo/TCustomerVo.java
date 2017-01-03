@@ -88,6 +88,6 @@ public class TCustomerVo extends GenericEntity<Integer> {
 
     @Override
     public Integer getPK() {
-        return null;
+        return customerId;
     }
 }

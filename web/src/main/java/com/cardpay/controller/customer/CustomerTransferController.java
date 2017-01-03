@@ -121,21 +121,21 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      */
     @GetMapping
     @SystemControllerLog(description = "查询客户经理所属客户(客户移交)")
-    @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 参数名称:queryCustomer, 类型: Map", httpMethod = "GET")
+    @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 ", httpMethod = "GET")
     public ResultTo queryCustomer() {
         List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(ShiroKit.getUserId());
         return new ResultTo().setData(tCustomerVos);
     }
 
     /**
-     * 客户接受/拒绝
+     * 客户接收
      *
      * @param customerIds 客户id (,分割)
      * @return 数据库变记录
      */
     @PutMapping("/accept")
-    @SystemControllerLog(description = "客户接受/拒绝")
-    @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
+    @SystemControllerLog(description = "客户接收")
+    @ApiOperation(value = "客户接收", notes = "客户接收", httpMethod = "PUT")
     public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds) {
         int count = customerTransferService.accept(customerIds);
         logger.info("客户接受/拒绝", "客户：" + customerIds + ",给了客户经理：" + ShiroKit.getUserId());
@@ -143,12 +143,12 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     }
 
     /**
-     * 查询单个客户移交记录
+     * 按id查询客户移交记录(返回分页)
      *
      * @param customerId 客户Id
      * @return 单个客户移交记录
      */
-    @GetMapping("/{id}")
+    @GetMapping("/transfer/{id}")
     @ApiOperation(value = "查看客户移交记录", notes = "查看客户移交记录", httpMethod = "GET")
     public DataTablePage queryAccept(@ApiParam("客户id") @PathVariable("id") int customerId) {
         Example example = new Example(TCustomerTransfer.class);
@@ -163,7 +163,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 客户移交记录
      */
 
-    @GetMapping("/transfer/{id}")
+    @GetMapping("/{id}")
     @SystemControllerLog(description = "按id查询移交记录")
     @ApiOperation(value = "按id查询移交记录", notes = "按id查询移交记录 ", httpMethod = "GET")
     public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {

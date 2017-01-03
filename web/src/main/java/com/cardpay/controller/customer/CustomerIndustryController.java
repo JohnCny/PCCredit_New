@@ -7,6 +7,7 @@ import com.cardpay.mgt.industry.model.TIndustry;
 import com.cardpay.mgt.industry.service.IndustryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  *         createTime 2017-01-2017/1/3 14:59
  */
 @RestController
+@RequestMapping("/customerIndustry")
 public class CustomerIndustryController extends BaseController<TCustomerIndustry> {
     @Autowired //行业信息
     private IndustryService industryService;

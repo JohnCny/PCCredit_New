@@ -3,6 +3,7 @@ package com.cardpay.mgt.customer.service;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import org.apache.ibatis.annotations.Param;
