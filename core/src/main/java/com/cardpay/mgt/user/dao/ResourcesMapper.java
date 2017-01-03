@@ -12,6 +12,7 @@ import java.util.List;
  * 资源Da层接口
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 public interface ResourcesMapper extends BasicMapper<Resources> {
 }

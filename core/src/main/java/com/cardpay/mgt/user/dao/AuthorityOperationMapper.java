@@ -11,6 +11,7 @@ import java.util.List;
  * 权限资源操作关系Dao层接口
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 public interface AuthorityOperationMapper extends BasicMapper<AuthorityOperation> {
 }

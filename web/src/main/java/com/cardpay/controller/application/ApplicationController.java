@@ -8,8 +8,8 @@ import com.cardpay.mgt.application.model.TApplication;
 import com.cardpay.mgt.application.service.TApplicationService;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
-import com.cardpay.mgt.product.model.TProduct;
-import com.cardpay.mgt.product.service.TProductService;
+import com.cardpay.mgt.product.model.Product;
+import com.cardpay.mgt.product.service.ProductService;
 import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -33,7 +33,7 @@ public class ApplicationController extends BaseController<TApplication> {
     private FileManager fileManager;
 
       @Autowired //产品
-      private TProductService tProductService;
+      private ProductService productService;
 
     @Autowired//客户经理
     private CustomerManagerService tManagerService;
@@ -44,7 +44,7 @@ public class ApplicationController extends BaseController<TApplication> {
     public ResultTo productNext(@ApiParam(value = "产品ID", required = true) @RequestParam("id") int productId) {
         User user = (User) ShiroKit.getPrincipal();
         TCustomerManager tCustomerManager = tManagerService.selectByUserId(userId);
-        TProduct tProduct =tProductService.selectByPrimaryKey(productId);
+        Product product = productService.selectByPrimaryKey(productId);
         return new ResultTo();
     }
 

@@ -6,6 +6,13 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.persistence.*;
 
+
+/**
+ * 登陆日志实体
+ *
+ * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
+ */
 @Table(name = "T_LOGIN_LOG")
 @ApiModel(value = "登陆日志")
 public class LoginLog {

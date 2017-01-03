@@ -32,6 +32,8 @@ public class OrganizationController extends BaseController<TOrganization> {
 
     private static final String ORGANIZATION_INSERT_PAGE = "/organization/insert";
 
+    private static final String ORGANIZATION_INDEX_PAGE = "/organization/index";
+
     @Autowired
     private TOrganizationService tOrganizationService;
 
@@ -122,8 +124,8 @@ public class OrganizationController extends BaseController<TOrganization> {
      */
     @GetMapping("/toAdd")
     @ApiOperation(value = "跳转机构管理主页", notes = "跳转机构管理主页", httpMethod = "GET")
-    public ModelAndView toAdd() {
-        return new ModelAndView(ORGANIZATION_INSERT_PAGE);
+    public String toAdd() {
+        return ORGANIZATION_INSERT_PAGE;
     }
 
     /**
@@ -133,8 +135,8 @@ public class OrganizationController extends BaseController<TOrganization> {
      */
     @GetMapping("/index")
     @ApiOperation(value = "跳转机构管理主页", notes = "跳转机构管理主页", httpMethod = "GET")
-    public ModelAndView index() {
-        return new ModelAndView(ORGANIZATION_INSERT_PAGE);
+    public String index() {
+        return ORGANIZATION_INDEX_PAGE;
     }
 
     /**
