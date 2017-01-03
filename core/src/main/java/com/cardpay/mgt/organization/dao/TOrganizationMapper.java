@@ -45,4 +45,11 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
      */
     List<TOrganizationVo> queryAll();
 
+    /**
+     * 查询此机构是否有子机构
+     * @param organizationId 机构id
+     * @return 资机构数量
+     */
+    int querySubsidiary(@Param("organizationId") int organizationId);
+
 }

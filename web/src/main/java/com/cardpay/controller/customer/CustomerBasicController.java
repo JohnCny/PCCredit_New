@@ -182,7 +182,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "批量删除用户", notes = "改变用户状态将用户设为不可用", httpMethod = "DELETE")
     public ResultTo deleteCustomer(@ApiParam("客户id(,分割)") @PathVariable("id") String customerIds) {
         List<Integer> ids = new ArrayList<>();
-        String[] split = StringUtils.split(customerIds);
+        String[] split = customerIds.split(",");
         for (String id : split) {
             int customerId = Integer.parseInt(id);
             ids.add(customerId);

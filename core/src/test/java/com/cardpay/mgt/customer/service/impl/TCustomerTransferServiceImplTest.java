@@ -1,11 +1,9 @@
 package com.cardpay.mgt.customer.service.impl;
 
 import com.cardpay.basic.common.constant.ConstantEnum;
-import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import org.apache.commons.collections.map.HashedMap;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -53,7 +51,7 @@ public class TCustomerTransferServiceImplTest {
         map.put("customerIds", idList);
         map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
         when(tCustomerTransferDao.accept(map)).thenReturn(1);
-        int accept = tCustomerTransferService.accept("1", 2);
+        int accept = tCustomerTransferService.accept("1");
         assertEquals(accept, 0);
     }
 }

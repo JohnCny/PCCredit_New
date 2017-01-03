@@ -73,7 +73,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             , @ApiParam(value = "移交原因", required = true) @RequestParam String reason) {
         List<Integer> customerIdList = new ArrayList<>();
         //添加客户移交记录
-        String[] split = StringUtils.split(customerIds);
+        String[] split = customerIds.split(",");
         for (String id : split) {
             Integer customerId = Integer.parseInt(id);
             TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
@@ -92,7 +92,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         Map<String, Object> map = new HashMap();
         map.put("status", status);
         map.put("customerIds", customerIdList);
-        map.put("managerId", ShiroKit.getUserId()); //自己转移给自己
+        map.put("managerId", 0); //自己转移给自己
         int count = customerBasicService.updateStatus(map);
         logger.info("客户移交", "客户Id：" + customerIds + ",移交给了客户经理Id：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
@@ -140,10 +140,9 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @SystemControllerLog(description = "客户接受/拒绝")
     @ResponseBody
     @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
-    public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
-                                    @ApiParam("接收:1, 拒绝2") @RequestParam Integer flag) {
-        int count = customerTransferService.accept(customerIds, flag);
-        logger.info("客户接受/拒绝", "客户：" + customerIds + "接受/拒绝" + flag + ",给了客户经理：" + ShiroKit.getUserId());
+    public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds) {
+        int count = customerTransferService.accept(customerIds);
+        logger.info("客户接受/拒绝", "客户：" + customerIds + ",给了客户经理：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 

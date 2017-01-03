@@ -8,4 +8,9 @@
     <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
   </resultMap>
+
+  <!--查询此机构是否含有用户-->
+  <select id="queryUserOrg">
+    SELECT count(1) FROM T_USER_ORGANIZATION WHERE ORGANIZATION_ID = #{organizationId}
+  </select>
 </mapper>
