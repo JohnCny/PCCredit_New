@@ -1,7 +1,7 @@
 package com.cardpay.mgt.industry.service;
 
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.industry.model.po.TIndustry;
+import com.cardpay.mgt.industry.model.TIndustry;
 
 /**
  * 行业信息类
