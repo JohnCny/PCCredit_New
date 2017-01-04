@@ -36,6 +36,9 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     @Autowired
     private TCustomerBasicService tCustomerBasicService;
 
+    @Autowired
+    private TCustomerTransferService tCustomerTransferService;
+
     @Override
     public List<SelectModel> getTransferStatus() {
         List<SelectModel> selects = new ArrayList<>();
@@ -55,23 +58,27 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
 
     @Override
     @Transactional
-    public synchronized int accept(String customerIds) {
-        List<Integer> idList = new ArrayList<>();
-        Map<String, Object> map = new HashMap();
-        String[] split = customerIds.split(",");
+    public int accept(String customerIds, Integer flag) {
+        TCustomerTransfer tCustomerTransfer = tCustomerTransferService.selectByPrimaryKey(customerIds);
+        if (tCustomerTransfer.getTransferStatus() == 0) { //查询客户是否为待接受状态
+            List<Integer> idList = new ArrayList<>();
+            String[] split = customerIds.split(",");
+            for (String id : split) {
+                int customerId = Integer.parseInt(id);
+                idList.add(customerId);
+            }
 
-        for (String id : split) {
-            int customerId = Integer.parseInt(id);
-            TCustomerBasic tCustomerBasic = new TCustomerBasic();
-            tCustomerBasic.setId(customerId);
-            tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
-            tCustomerBasicService.updateSelectiveByPrimaryKey(tCustomerBasic);
-            idList.add(customerId);
+            Map<String, Object> map = new HashMap();
+            if (null != flag && flag == 1) { //接受
+                map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
+                map.put("nowCustomerManager", ShiroKit.getUserId());
+            } else {  //拒绝
+                map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
+            }
+            map.put("customerIds", idList);
+            return tCustomerIndustryDao.accept(map);
         }
-        map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
-        map.put("nowCustomerManager", ShiroKit.getUserId());
-        map.put("customerIds", idList);
-        return tCustomerIndustryDao.accept(map);
+        return 0;
     }
 
     @Override

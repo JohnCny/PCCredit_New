@@ -3,13 +3,12 @@ package com.cardpay.mgt.customer.service.impl;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.customer.dao.TCustomerIndustryMapper;
 import com.cardpay.mgt.customer.model.TCustomerIndustry;
+import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -23,7 +22,12 @@ public class TCustomerIndustryServiceImpl extends BaseServiceImpl<TCustomerIndus
     private TCustomerIndustryMapper tCustomerIndustryDao;
 
     @Override
-    public int batchInsertFile(List<TCustomerIndustry> list) {
-        return tCustomerIndustryDao.batchInsertFile(list);
+    public int batchInsert(List<TCustomerIndustry> list) {
+        return tCustomerIndustryDao.batchInsert(list);
+    }
+
+    @Override
+    public List<TCustomerIndustryVo> queryById(int customerId) {
+        return tCustomerIndustryDao.queryById(customerId);
     }
 }

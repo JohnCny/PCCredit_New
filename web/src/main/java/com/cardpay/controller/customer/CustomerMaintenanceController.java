@@ -31,7 +31,7 @@ import java.util.Map;
  * @author chenkai
  */
 @Api(value = "/customerMaintenance", description = "客户维护")
-@Controller
+@RestController
 @RequestMapping("/customerMaintenance")
 public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance> {
     @Autowired
@@ -40,17 +40,13 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @Autowired //客户经理信息
     private CustomerManagerService customerManagerService;
 
-    @Autowired //客户Service
-    private TCustomerBasicService tCustomerBasicService;
-
     /**
      * 按条件查询客户维护信息
      *
      * @return 查询信息
      */
-    @ResponseBody
     @GetMapping("/condition")
-    @SystemControllerLog(description = "按条件查询客户维护信息")
+    @SystemControllerLog("按条件查询客户维护信息")
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public DataTablePage queryByCondition() {
         Map<String, Object> map = new HashMap<>();
@@ -65,8 +61,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 客户维护信息查询页面
      */
     @PostMapping
-    @ResponseBody
-    @SystemControllerLog(description = "新增维护记录")
+    @SystemControllerLog("新增维护记录")
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
     public ResultTo insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
         Integer userId = ShiroKit.getUserId();
@@ -79,70 +74,31 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     }
 
     /**
-     * 跳转查看客户维护信息页面
+     * 按id查询客户维护信息列表
      *
      * @param customerId 客户id
-     * @return 客户维护页面
+     * @return 客户维护信息列表
      */
     @GetMapping("/{id}")
-    @SystemControllerLog(description = "跳转查看客户维护信息页面")
-    @ApiOperation(value = "跳转查看客户维护信息页面", notes = "跳转查看客户维护信息页面, 返回参数名称:customerMaintenance", httpMethod = "GET")
-    public ModelAndView returnUpdate(@PathVariable("id") int customerId) {
-        ModelAndView modelAndView = new ModelAndView("/customer/maintenanceUpdate");
-        TCustomerMaintenance manager = new TCustomerMaintenance();
-        manager.setId(customerId);
-        List<TCustomerMaintenance> customerMaintenance = customerMaintenanceService.select(manager);
-        modelAndView.addObject("tCustomerMaintenance", customerMaintenance);
-        return modelAndView;
-    }
-
-    /**
-     * 跳转新增客户维护页面
-     *
-     * @param customerId 客户id
-     * @return 客户维护页面
-     */
-    @GetMapping
-    @SystemControllerLog(description = "跳转新增客户维护页面")
-    @ApiOperation(value = "跳转新增客户维护页面", notes = "跳转新增维护记录,返回参数名:tCustomerBasic", httpMethod = "GET")
-    public ModelAndView returnMaintenance(@ApiParam("客户id") @RequestParam int customerId) {
-        Map<String, List<SelectModel>> dropDownList = new HashMap<>();
-        List<SelectModel> maintenanceType = customerMaintenanceService.getMaintenanceType();
-
-        ModelAndView modelAndView = new ModelAndView("/customer/maintenanceNew");
-        TCustomerBasic tCustomerBasic = tCustomerBasicService.selectByPrimaryKey(customerId);
-
-        dropDownList.put("maintenanceType", maintenanceType);
-        modelAndView.addObject("dropDownList", dropDownList);
-        modelAndView.addObject("tCustomerBasic", tCustomerBasic);
-        return modelAndView;
-    }
-
-    /**
-     * 跳转新增维护列表页
-     *
-     * @return
-     */
-    @GetMapping("/index")
-    @ApiOperation(value = "跳转客户维护页面", notes = "客户维护列表页面", httpMethod = "GET")
-    public ModelAndView returnNew() {
-        return new ModelAndView("/customer/maintenance");
-    }
-
-    /**
-     * 按id查询客户维护信息
-     *
-     * @param customerId 客户Id
-     * @return 客户维护信息
-     */
-    @ResponseBody
-    @GetMapping("/maintenance/{id}")
-    @SystemControllerLog(description = "按id查询维护信息")
-    @ApiOperation(value = "按id查询维护信息", notes = "按id查询维护信息 ", httpMethod = "GET")
-    public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
+    @SystemControllerLog("按id查询客户维护列表")
+    @ApiOperation(value = "按id查询客户维护列表", notes = "按id查询客户维护列表", httpMethod = "GET")
+    public ResultTo returnUpdate(@PathVariable("id") int customerId) {
         TCustomerMaintenance manager = new TCustomerMaintenance();
         manager.setId(customerId);
         List<TCustomerMaintenance> customerMaintenance = customerMaintenanceService.select(manager);
         return new ResultTo().setData(customerMaintenance);
     }
+
+    /**
+     * 查询客户维护类型
+     *
+     * @return 查询客户维护类型
+     */
+    @GetMapping("/maintenanceType")
+    @ApiOperation(value = "查询客户维护类型", notes = "查询客户维护类型", httpMethod = "GET")
+    public ResultTo maintenanceType() {
+        List<SelectModel> maintenanceType = customerMaintenanceService.getMaintenanceType();
+        return new ResultTo().setData(maintenanceType);
+    }
+
 }

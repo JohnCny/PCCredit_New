@@ -3,6 +3,7 @@ package com.cardpay.mgt.customer.service;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import org.apache.ibatis.annotations.Param;
@@ -40,13 +41,6 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     List<SelectModel> getCustomerStatus();
 
     /**
-     * 获取潜在客户列表
-     * @param customerManagerId 客户经理id
-     * @return 潜在客户列表
-     */
-    List<TCustomerBasic> getProspectiveCustomers(Integer customerManagerId);
-
-    /**
      * 判断身份证号码是否已经存在
      * @param idCard 身份证号码
      * @return 是否存在(true:存在, false:不存在)
@@ -73,4 +67,18 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      * @return 客户列表
      */
     List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map);
+
+    /**
+     * 查询无进件记录的客户信息
+     * @param map 客户经理id
+     * @return 可删除的客户列表
+     */
+    List<TCustomerBasic> selectDelete(Map<String, Object> map);
+
+    /**
+     * 删除客户信息
+     * @param customerId 客户id
+     * @return 数据库变记录
+     */
+    Integer deleteCustomer(int customerId);
 }
