@@ -4,6 +4,7 @@ import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
 import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -31,4 +32,12 @@ public interface UserMapper extends BasicMapper<User> {
      * @return 用户列表
      */
     List<User> userPageList(Map<String, Object> map);
+
+    /**
+     * 根据用户ID查询用户信息以及用户机构和角色信息
+     *
+     * @param userId 用户ID
+     * @return 用户信息以及用户机构和角色信息
+     */
+    UserUpdateVo selectUserUpdateVo(Integer userId);
 }

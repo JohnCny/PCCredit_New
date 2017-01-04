@@ -1,5 +1,6 @@
 package com.cardpay.core.shiro.common;
 
+import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -15,7 +16,17 @@ public class ShiroKit {
     /**
      * 初始密码
      */
-    public static final String DEFAULT_PASSWORD = "321";
+    public static final String DEFAULT_PASSWORD = "123";
+
+    /**
+     * 登陆用户Session的Key
+     */
+    public static final String USER_SESSION_KEY = "userSession";
+
+    /**
+     * 登陆用户Session的Key
+     */
+    public static final String ROLE_SESSION_KEY = "roleSession";
 
     /**
      * 账号锁定
@@ -102,4 +113,12 @@ public class ShiroKit {
         return user == null ? null : user.getId();
     }
 
+    /**
+     * 获取当前登陆用户的角色信息
+     *
+     * @return 当前登陆用户的角色信息
+     */
+    public static Role getRole() {
+        return (Role) getSession().getAttribute(ROLE_SESSION_KEY);
+    }
 }

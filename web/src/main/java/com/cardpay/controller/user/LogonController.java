@@ -4,13 +4,19 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.mail.MailSend;
+import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.RequestUtil;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.log.enums.LogEnum;
 import com.cardpay.mgt.log.model.LoginLog;
 import com.cardpay.mgt.log.service.LoginLogService;
+import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.model.vo.RoleVo;
+import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,10 +37,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户登陆controller
@@ -42,14 +50,10 @@ import java.util.Date;
  * @author rankai
  * @create 2016-12-2016/12/21 10:22
  */
-@Controller
+@RestController
 @RequestMapping("/logon")
 @Api(value = "/logon", description = "用认证(登陆)")
 public class LogonController extends BaseController<User> {
-
-    private static final String SESSION_KEY = "user";
-
-    private static final String RETURN_LOGIN = "/home/login";
 
     @Autowired
     private UserService userService;
@@ -58,7 +62,10 @@ public class LogonController extends BaseController<User> {
     private LoginLogService loginLogService;
 
     @Autowired
-    private MailSend mailSend;
+    private RoleService roleService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     /**
      * 系统登陆入口
@@ -68,7 +75,6 @@ public class LogonController extends BaseController<User> {
      * @return 成功或失败
      */
     @PostMapping(value = "/login")
-    @ResponseBody
     @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
     public ResultTo login(@ApiParam(value = "登陆名") @RequestParam(value = "userName", required = false) String userName,
@@ -109,13 +115,22 @@ public class LogonController extends BaseController<User> {
         LogTemplate.info(this.getClass(), "登陆成功,账号:", userName);
         User user = ShiroKit.getUser();
         user.setPassword(null);
-        ShiroKit.getSession().setAttribute(SESSION_KEY, user);
+        ShiroKit.getSession().setAttribute(ShiroKit.USER_SESSION_KEY, user);
         LoginLog loginLog = loginLogBuilder.withLoginResult(LogEnum.SUCCESS.getValue()).build();
         loginLogService.insertSelective(loginLog);
         Date date = new Date();
         user.setLastLoginTime(date);
         userService.updateSelectiveByPrimaryKey(user);
-        return new ResultTo();
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getId());
+        UserRole selectUserOne = userRoleService.selectOne(userRole);
+        Role role = roleService.selectByPrimaryKey(selectUserOne.getRoleId());
+        RoleVo roleVo = null;
+        if (role.getRoleStatus() == 1) {
+            roleVo = DozerUtil.map(role, RoleVo.class);
+        }
+        ShiroKit.getSession().setAttribute(ShiroKit.ROLE_SESSION_KEY, role);
+        return new ResultTo().setData(roleVo);
     }
 
     /**
@@ -126,15 +141,16 @@ public class LogonController extends BaseController<User> {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
-    public String logout(HttpServletRequest request) {
+    public ResultTo logout(HttpServletRequest request) {
         User user = ShiroKit.getUser();
         LoginLog loginLog = LoginLog.LoginLogBuilder.get().withLoginAccount(user.getUsername())
                 .withLoginOperation(0).withLoginTime(new Date()).withLoginIp(RequestUtil.getRemoteHost(request))
                 .withLoginResult(LogEnum.SUCCESS.getValue()).build();
         loginLogService.insertSelective(loginLog);
-        ShiroKit.getSession().removeAttribute(SESSION_KEY);
+        ShiroKit.getSession().removeAttribute(ShiroKit.USER_SESSION_KEY);
+        ShiroKit.getSession().removeAttribute(ShiroKit.ROLE_SESSION_KEY);
         ShiroKit.getSubject().logout();
-        return RETURN_LOGIN;
+        return new ResultTo();
     }
 
 

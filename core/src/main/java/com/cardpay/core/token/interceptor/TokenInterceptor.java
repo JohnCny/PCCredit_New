@@ -6,6 +6,7 @@ import com.cardpay.core.token.common.TokenFactory;
 import com.cardpay.core.token.common.TokenKit;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserToken;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,11 +19,17 @@ import java.util.Date;
  * Token拦截器
  *
  * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String clientType = TokenKit.CLIENT_TYPE;
+        if (StringUtils.isBlank(request.getParameter(clientType))) {
+            LogTemplate.info(this.getClass(), "Message", "收到请求类型为WEB请求");
+            return true;
+        }
         String token = request.getParameter(TokenKit.TOKEN_KEY_NAME);
         TokenFactory tokenFactory = TokenFactory.get();
         Object tokenObject = tokenFactory.getRedisClient().get(token);
