@@ -49,7 +49,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 移交接收意见状态列表
      */
     @GetMapping("/transferStatusList")
-    @SystemControllerLog(description = "获取移交接收意见状态")
+    @SystemControllerLog("获取移交接收意见状态")
     @ApiOperation(value = "获取移交接收意见状态", notes = "移交接收意见状态", httpMethod = "GET")
     public ResultTo getTransferStatus() {
         List<SelectModel> transferStatus = customerTransferService.getTransferStatus();
@@ -65,7 +65,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 数据库变记录
      */
     @PutMapping
-    @SystemControllerLog(description = "客户移交确定按钮")
+    @SystemControllerLog("客户移交确定按钮")
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "状态(默认为正常)") @RequestParam(defaultValue = "0") int status
@@ -103,9 +103,8 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param status 状态(默认为待确认)
      * @return 客户接收列表
      */
-
     @GetMapping("/queryTransfer")
-    @SystemControllerLog(description = "查询客户接收列表")
+    @SystemControllerLog("查询客户接收列表")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
     public DataTablePage queryTransfer(@ApiParam("状态(默认为待确认)") @RequestParam(defaultValue = "0") int status) {
         Map<String, Object> map = new HashMap<>();
@@ -120,7 +119,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 客户id:客户名称
      */
     @GetMapping
-    @SystemControllerLog(description = "查询客户经理所属客户(客户移交)")
+    @SystemControllerLog("查询客户经理所属客户(客户移交)")
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 ", httpMethod = "GET")
     public ResultTo queryCustomer() {
         List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(ShiroKit.getUserId());
@@ -128,17 +127,18 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     }
 
     /**
-     * 客户接收
+     * 客户接受/拒绝
      *
      * @param customerIds 客户id (,分割)
      * @return 数据库变记录
      */
     @PutMapping("/accept")
-    @SystemControllerLog(description = "客户接收")
-    @ApiOperation(value = "客户接收", notes = "客户接收", httpMethod = "PUT")
-    public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds) {
-        int count = customerTransferService.accept(customerIds);
-        logger.info("客户接受/拒绝", "客户：" + customerIds + ",给了客户经理：" + ShiroKit.getUserId());
+    @SystemControllerLog(description = "客户接受/拒绝")
+    @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
+    public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
+                                    @ApiParam("接收:1, 拒绝2") @RequestParam Integer flag) {
+        int count = customerTransferService.accept(customerIds, flag);
+        logger.info("客户接受/拒绝", "客户：" + customerIds + "接受/拒绝" + flag + ",给了客户经理：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -149,6 +149,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @return 单个客户移交记录
      */
     @GetMapping("/transfer/{id}")
+    @SystemControllerLog("按id查询客户移交记录(返回分页)")
     @ApiOperation(value = "查看客户移交记录", notes = "查看客户移交记录", httpMethod = "GET")
     public DataTablePage queryAccept(@ApiParam("客户id") @PathVariable("id") int customerId) {
         Example example = new Example(TCustomerTransfer.class);
@@ -162,9 +163,8 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerId 客户Id
      * @return 客户移交记录
      */
-
     @GetMapping("/{id}")
-    @SystemControllerLog(description = "按id查询移交记录")
+    @SystemControllerLog("按id查询移交记录")
     @ApiOperation(value = "按id查询移交记录", notes = "按id查询移交记录 ", httpMethod = "GET")
     public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
         List<TCustomerTransferVo> tCustomerTransferVos = customerTransferService.queryById(customerId);

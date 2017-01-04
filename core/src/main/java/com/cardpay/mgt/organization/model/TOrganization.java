@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "T_ORGANIZATION")
 public class TOrganization extends GenericEntity<Integer>{
     /**
-     * id
+     * 机构id
      */
     @Id
     @Column(name = "ID")

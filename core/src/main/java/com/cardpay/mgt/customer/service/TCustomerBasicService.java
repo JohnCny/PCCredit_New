@@ -41,13 +41,6 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     List<SelectModel> getCustomerStatus();
 
     /**
-     * 获取潜在客户列表
-     * @param customerManagerId 客户经理id
-     * @return 潜在客户列表
-     */
-    List<TCustomerBasic> getProspectiveCustomers(Integer customerManagerId);
-
-    /**
      * 判断身份证号码是否已经存在
      * @param idCard 身份证号码
      * @return 是否存在(true:存在, false:不存在)

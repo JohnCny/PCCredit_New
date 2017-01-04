@@ -25,22 +25,6 @@
         <result column="CNAME" jdbcType="VARCHAR" property="name"/>
     </resultMap>
 
-    <!--潜在客户挖掘-->
-    <select id="getProspectiveCustomers" resultMap="BaseResultMap">
-        SELECT c.*
-        FROM t_customer_basic c, t_customer_industry t
-        where c.id = t.customer_id AND
-            t.industry_id IN (
-                SELECT a.industry_id
-                FROM
-                    (SELECT i.industry_id, COUNT(i.industry_id) c
-                    from t_customer_industry i
-                    GROUP BY i.industry_id
-                    ORDER BY c DESC ) a
-                where rownum BETWEEN 1 AND 5
-            )
-    </select>
-
     <!--查询身份证是否存在-->
     <select id="isIdCardExist" parameterType="Long" resultType="Integer">
         SELECT COUNT(1)

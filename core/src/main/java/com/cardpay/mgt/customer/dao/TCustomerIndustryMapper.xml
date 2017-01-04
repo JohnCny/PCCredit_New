@@ -13,22 +13,26 @@
     </resultMap>
 
     <!--批量添加客户行业信息-->
-    <insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="List">
         INSERT INTO T_CUSTOMER_INDUSTRY (INDUSTRY_ID, CUSTOMER_ID)
         <foreach collection="list" item="item" index="index" open="(" close=")" separator="union">
-            SELECT #{item.industryId,mode=IN,jdbcType=DECIMAL},
-            #{item.customerId,mode=IN,jdbcType=DECIMAL}
+            SELECT #{item.industryId,mode=IN,jdbcType=DECIMAL}, #{item.customerId,mode=IN,jdbcType=DECIMAL}
             FROM DUAL
         </foreach>
     </insert>
 
     <!--查询客户所属行业信息-->
     <select id="queryById" resultMap="BaseVo">
-    SELECT customer.INDUSTRY_ID as INDUSTRY_ID
-    , customer.CUSTOMER_ID as CUSTOMER_ID
-    , industry.INDUSTRY_NAME as INDUSTRY_NAME
+    SELECT customer.INDUSTRY_ID as INDUSTRY_ID, customer.CUSTOMER_ID as CUSTOMER_ID, industry.INDUSTRY_NAME as INDUSTRY_NAME
     FROM T_CUSTOMER_INDUSTRY customer, T_INDUSTRY industry
     WHERE customer.INDUSTRY_ID = industry.id
     AND customer.CUSTOMER_ID = #{customerId}
   </select>
+
+    <!--客户挖掘(不知道top5是什么标准)-->
+    <select id="">
+        SELECT * FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_INDUSTRY cusIndustaty, T_INDUSTRY industaty
+        WHERE BASIC.id=cusIndustaty.CUSTOMER_ID AND industaty.id = cusIndustaty.INDUSTRY_ID
+        AND basic.id = #{customerId}
+    </select>
 </mapper>

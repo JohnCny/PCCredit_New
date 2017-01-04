@@ -10,7 +10,6 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerIndustry;
-import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
 import io.swagger.annotations.Api;
@@ -40,26 +39,13 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     private TCustomerIndustryService tCustomerIndustryService;
 
     /**
-     * 获取潜在客户列表
-     *
-     * @return 潜在客户列表
-     */
-    @GetMapping("/prospective")
-    @SystemControllerLog(description = "获取潜在客户列表")
-    @ApiOperation(value = "查询潜在客户列表", notes = "潜在客户列表", httpMethod = "GET")
-    public ResultTo getProspectiveCustomers() {
-        List<TCustomerBasic> customerBasics = customerBasicService.getProspectiveCustomers(ShiroKit.getUserId());
-        return new ResultTo().setData(customerBasics);
-    }
-
-    /**
      * 验证证件号码是否已经存在
      *
      * @param identityCard 证件号码
      * @return true/false
      */
     @GetMapping("/idCardExist")
-    @SystemControllerLog(description = "验证证件号码是否已经存在")
+    @SystemControllerLog("验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
     public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam long identityCard) {
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
@@ -73,7 +59,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 数据库变更数量
      */
     @PutMapping
-    @SystemControllerLog(description = "更新客户基本信息")
+    @SystemControllerLog("更新客户基本信息")
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
         int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
@@ -88,7 +74,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 客户id
      */
     @PostMapping
-    @SystemControllerLog(description = "新建客戶经理")
+    @SystemControllerLog("新建客戶经理")
     @ApiOperation(value = "新建客戶", notes = "新建客戶经理", httpMethod = "POST")
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic
             , @ApiParam(value = "行业id(,分割)", required = true) @RequestParam String industry) {
@@ -118,26 +104,11 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 客户信息
      */
     @GetMapping("/condition")
-    @SystemControllerLog(description = "按条件查询客户信息")
     @ApiOperation(value = "按条件查询客户信息", notes = "按条件查询客户信息", httpMethod = "GET")
     public DataTablePage queryCondition() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerManagerId", ShiroKit.getUserId());
         return dataTablePage("queryCustomerByCondition", map);
-    }
-
-    /**
-     * 查询客户所属行业信息
-     *
-     * @param customerId 客户id
-     * @return 更新页面
-     */
-    @GetMapping("/industries")
-    @SystemControllerLog(description = "客户更新页面跳转")
-    @ApiOperation(value = "查询客户所属行业信息", notes = "查询客户所属行业信息", httpMethod = "GET")
-    public ResultTo returnUpdate(@ApiParam(value = "客户id", required = true) @RequestParam("customerId") int customerId) {
-        List<TCustomerIndustryVo> tCustomerIndustryVos = tCustomerIndustryService.queryById(customerId);
-        return new ResultTo().setData(tCustomerIndustryVos);
     }
 
     /**
@@ -197,7 +168,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 数据变更记录
      */
     @DeleteMapping("/del/{id}")
-    @SystemControllerLog(description = "用户禁用")
+    @SystemControllerLog("用户禁用")
     @ApiOperation(value = "批量禁用客户", notes = "批量禁用客户", httpMethod = "DELETE")
     public ResultTo deleteCustomer(@ApiParam("客户id(,分割)") @PathVariable("id") String customerIds) {
         List<Integer> ids = new ArrayList<>();
@@ -247,7 +218,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * @return 数据库变记录
      */
     @DeleteMapping("/{id}")
-    @SystemControllerLog(description = "删除客户经理信息")
+    @SystemControllerLog("删除客户经理信息")
     @ApiOperation(value = "删除客户经理信息", notes = "删除客户经理信息", httpMethod = "DELETE")
     public ResultTo delete(@ApiParam(value = "客户经理id", required = true) @PathVariable("id") int customerId) {
         Integer count = customerBasicService.deleteCustomer(customerId);

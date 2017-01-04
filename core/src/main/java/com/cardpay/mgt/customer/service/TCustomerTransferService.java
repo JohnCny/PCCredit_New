@@ -31,12 +31,13 @@ public interface TCustomerTransferService extends BaseService<TCustomerTransfer>
     List<TCustomerVo> queryTransfer(Map<String, Object> map);
 
     /**
-     * 客户接收
+     * 客户接收/拒绝
      *
      * @param customerIds 客户id
+     * @param flag 标记 ("接收:1, 拒绝2")
      * @return 数据库变条数
      */
-    int accept(String customerIds);
+    int accept(String customerIds, Integer flag);
 
     /**
      * 根据科技经理ID查询移交信息

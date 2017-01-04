@@ -89,11 +89,6 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public List<TCustomerBasic> getProspectiveCustomers(Integer customerManagerId){
-        return customerBasicDao.getProspectiveCustomers(customerManagerId);
-    }
-
-    @Override
     public boolean isIdCardExist(long idCard){
         return customerBasicDao.isIdCardExist(idCard) > 0 ? true : false;
     }

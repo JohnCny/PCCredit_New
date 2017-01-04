@@ -45,9 +45,8 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      *
      * @return 查询信息
      */
-   
     @GetMapping("/condition")
-    @SystemControllerLog(description = "按条件查询客户维护信息")
+    @SystemControllerLog("按条件查询客户维护信息")
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public DataTablePage queryByCondition() {
         Map<String, Object> map = new HashMap<>();
@@ -62,7 +61,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 客户维护信息查询页面
      */
     @PostMapping
-    @SystemControllerLog(description = "新增维护记录")
+    @SystemControllerLog("新增维护记录")
     @ApiOperation(value = "新增维护记录", notes = "新增维护记录", httpMethod = "POST")
     public ResultTo insert(@ModelAttribute TCustomerMaintenance tCustomerMaintenance) {
         Integer userId = ShiroKit.getUserId();
@@ -81,7 +80,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * @return 客户维护信息列表
      */
     @GetMapping("/{id}")
-    @SystemControllerLog(description = "按id查询客户维护列表")
+    @SystemControllerLog("按id查询客户维护列表")
     @ApiOperation(value = "按id查询客户维护列表", notes = "按id查询客户维护列表", httpMethod = "GET")
     public ResultTo returnUpdate(@PathVariable("id") int customerId) {
         TCustomerMaintenance manager = new TCustomerMaintenance();
