@@ -39,37 +39,6 @@
     <bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration"/>
     <bean class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
 
-    <!--配置默认进入页面-->
-    <!--<mvc:view-controller path="/" view-name="/api/user/nologin"/>-->
-
-    <!--设置默认的视图解析器 采用JSP-->
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <!-- 设置前缀，即视图所在的路径 -->
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <!-- 设置后缀，即视图的扩展名 -->
-        <property name="suffix" value=".jsp"/>
-        <property name="order" value="1"/>
-        <property name="contentType" value="text/html; charset=UTF-8"/>
-    </bean>
-
-    <!--设置视图解析器 采用freemarker-->
-    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="viewClass"
-                  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
-        <property name="contentType" value="text/html; charset=utf-8"/>
-        <!-- 设置前缀，即视图所在的路径 -->
-        <property name="suffix" value=".ftl"/>
-        <property name="order" value="0"/>
-        <property name="requestContextAttribute" value="rc"/>
-    </bean>
-
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/static/"></property>
-        <property name="suffix" value=".html"></property>
-        <property name="order" value="100"></property>
-    </bean>
-
     <!--国际化资源配置 开始-->
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -158,6 +127,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <!--<mvc:view-controller path="/" view-name="/logon/noLogin"/>-->
 
     <!--&lt;!&ndash; API 接口跨域配置&ndash;&gt;-->
     <!--<mvc:cors>-->

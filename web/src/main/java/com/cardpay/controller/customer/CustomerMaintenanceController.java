@@ -30,9 +30,9 @@ import java.util.Map;
  *
  * @author chenkai
  */
-@Api(value = "/customerMaintenance", description = "客户维护")
+@Api(value = "/api/customerMaintenance", description = "客户维护")
 @RestController
-@RequestMapping("/customerMaintenance")
+@RequestMapping("/api/customerMaintenance")
 public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance> {
     @Autowired
     private TCustomerMaintenanceService customerMaintenanceService;

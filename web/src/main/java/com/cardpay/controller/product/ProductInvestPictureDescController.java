@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
-@RequestMapping("/productPicture")
-@Api(value = "/productPicture", description = "产品调查图片")
+@RequestMapping("/api/productPicture")
+@Api(value = "/api/productPicture", description = "产品调查图片")
 public class ProductInvestPictureDescController extends BaseController<ProductInvestPictureDesc> {
 
 }

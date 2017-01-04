@@ -40,8 +40,8 @@ import java.util.Map;
  *         create 2016-12-2016/12/21 10:22
  */
 @RestController
-@RequestMapping("/user")
-@Api(value = "/user", description = "用户控制层")
+@RequestMapping("/api/user")
+@Api(value = "/api/user", description = "用户控制层")
 public class UserController extends BaseController<User> {
 
     @Autowired

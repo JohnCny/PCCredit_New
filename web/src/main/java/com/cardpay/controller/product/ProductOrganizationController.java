@@ -24,8 +24,8 @@ import java.util.Map;
  *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
-@RequestMapping("/productOrganization")
-@Api(value = "/productOrganization", description = "产品机构关联")
+@RequestMapping("/api/productOrganization")
+@Api(value = "/api/productOrganization", description = "产品机构关联")
 public class ProductOrganizationController extends BaseController<ProductOrganization> {
 
 }

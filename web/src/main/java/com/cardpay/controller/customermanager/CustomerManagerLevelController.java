@@ -23,9 +23,9 @@ import java.util.Map;
  *
  * @author yanweichen
  */
-@Api(value = "/customerManagerLevel", description = "客户经理级别")
+@Api(value = "/api/customerManagerLevel", description = "客户经理级别")
 @RestController
-@RequestMapping("/customerManagerLevel")
+@RequestMapping("/api/customerManagerLevel")
 public class CustomerManagerLevelController extends BaseController<TCustomerManagerLevel> {
 
     @Autowired

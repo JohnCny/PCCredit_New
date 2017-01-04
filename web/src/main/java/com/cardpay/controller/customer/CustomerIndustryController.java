@@ -25,7 +25,7 @@ import java.util.List;
  *         createTime 2017-01-2017/1/3 14:59
  */
 @RestController
-@RequestMapping("/customerIndustry")
+@RequestMapping("/api/customerIndustry")
 public class CustomerIndustryController extends BaseController<TCustomerIndustry> {
     @Autowired //行业信息
     private IndustryService industryService;
