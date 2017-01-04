@@ -2,6 +2,7 @@ package com.cardpay.controller.organization;
 
 import com.alibaba.fastjson.JSONArray;
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.datatable.DataTablePage;
@@ -27,14 +28,9 @@ import java.util.List;
  * @author chenkai on 2016/11/24.
  */
 @Api(value = "/organization", description = "机构")
-@Controller
+@RestController
 @RequestMapping("/organization")
 public class OrganizationController extends BaseController<TOrganization> {
-
-    private static final String ORGANIZATION_INSERT_PAGE = "/organization/insert";
-
-    private static final String ORGANIZATION_INDEX_PAGE = "/organization/index";
-
     @Autowired
     private TOrganizationService tOrganizationService;
 
@@ -47,7 +43,6 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @param topId 顶级id
      * @return 所有机构层级信息
      */
-    @ResponseBody
     @GetMapping
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
@@ -63,13 +58,13 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @param organizationId 层级id
      * @return 1成功, 0失败
      */
-    @ResponseBody
+    @SystemControllerLog("删除机构以及其资机构信息")
     @DeleteMapping("/{id}")
     @ApiOperation(value = "递归删除层级接口", notes = "删除机构以及其资机构信息", httpMethod = "DELETE")
-    public ResultTo deleteOrganization(@ApiParam(value = "层级id", required = true) @PathVariable("id") int organizationId) {
+    public ResultTo deleteOrganization(@ApiParam(value = "机构id", required = true) @PathVariable("id") int organizationId) {
         int flag = tOrganizationService.deleteOrganization(organizationId);
         logger.info(OrganizationController.class, "递归删除层级信息", "层级id:" + organizationId);
-        return new ResultTo().setData(flag);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -78,8 +73,8 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @param tOrganization 机构信息
      * @return 机构id
      */
-    @ResponseBody
     @PostMapping
+    @SystemControllerLog("新增机构")
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
     public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {
         tOrganization.setOrgParentId(0);
@@ -96,45 +91,10 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @return 机构列表
      */
     @GetMapping("/orgAll")
-    @ResponseBody
     @ApiOperation(value = "根据父ID获取机构列表", httpMethod = "GET", notes = "默认父ID为0")
     public ResultTo getAllForTree() {
         List<TOrganization> tOrganizations = tOrganizationService.selectAll();
         return new ResultTo().setData(tOrganizations);
-    }
-
-    /**
-     * 跳转机构管理主页
-     *
-     * @return 跳转机构管理主页
-     */
-    @GetMapping("/toAdd")
-    @ApiOperation(value = "跳转机构管理主页", notes = "跳转机构管理主页", httpMethod = "GET")
-    public String toAdd() {
-        return ORGANIZATION_INSERT_PAGE;
-    }
-
-    /**
-     * 跳转机构管理主页
-     *
-     * @return 跳转机构管理主页
-     */
-    @GetMapping("/index")
-    @ApiOperation(value = "跳转机构管理主页", notes = "跳转机构管理主页", httpMethod = "GET")
-    public String index() {
-        return ORGANIZATION_INDEX_PAGE;
-    }
-
-    /**
-     * 机构分页信息
-     *
-     * @return
-     */
-    @GetMapping("/pageList")
-    @ResponseBody
-    @ApiOperation(value = "机构分页信息", notes = "机构分页信息", httpMethod = "GET")
-    public DataTablePage pageList() {
-        return dataTablePage("queryAll");
     }
 
     /**
@@ -144,12 +104,11 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @return 机构信息
      */
     @GetMapping("/{id}")
+    @SystemControllerLog("按id查询机构信息")
     @ApiOperation(value = "按id查询机构信息", notes = "按id查询机构信息", httpMethod = "GET")
-    public ModelAndView queryById(@ApiParam(value = "机构id", required = true) @PathVariable("id") int organizationId) {
-        ModelAndView modelAndView = new ModelAndView("/organization/update");
+    public ResultTo queryById(@ApiParam(value = "机构id", required = true) @PathVariable("id") int organizationId) {
         TOrganization tOrganization = tOrganizationService.selectByPrimaryKey(organizationId);
-        modelAndView.addObject("tOrganization", tOrganization);
-        return modelAndView;
+        return new ResultTo().setData(tOrganization);
     }
 
     /**
@@ -159,7 +118,7 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @return 数据库变记录
      */
     @PutMapping
-    @ResponseBody
+    @SystemControllerLog("更新机构信息")
     @ApiOperation(value = "更新机构信息", notes = "更新机构信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {
         Integer count = tOrganizationService.updateSelectiveByPrimaryKey(tOrganization);
@@ -173,7 +132,7 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @return 数据库变记录
      */
     @PutMapping("/move")
-    @ResponseBody
+    @SystemControllerLog("拖拽更新机构层级信息")
     @ApiOperation(value = "更新机构信息", notes = "更新机构信息", httpMethod = "PUT")
     public ResultTo move(@ApiParam("机构信息") @RequestBody String organization) {
         List<TOrganization> tOrganizations = JSONArray.parseArray(organization, TOrganization.class);

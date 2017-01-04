@@ -29,7 +29,7 @@ public class IndustryController extends BaseController<TIndustry> {
      */
     @RequestMapping("/industryList")
     public ResultTo getIndustryInfo(){
-        Map<String,Object> map = new HashMap<String,Object>();
+        Map<String,Object> map = new HashMap<>();
         ResultTo resultTo = new ResultTo();
         map.put("industryList",industryService.getIndustryInfo());
         resultTo.setData(map);

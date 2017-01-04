@@ -41,19 +41,6 @@ public class TCustomerBasicServiceImplTest {
     private TCustomerBasicServiceImpl customerBasicService;
 
     @Test
-    public void getProspectiveCustomers() throws Exception {
-        List<TCustomerBasic> lists = new ArrayList<TCustomerBasic>() {
-            {
-                add(new TCustomerBasic());
-            }
-        };
-        when(customerBasicService.getProspectiveCustomers(1000)).thenReturn(lists);
-        List<TCustomerBasic> selects = customerBasicService.getProspectiveCustomers(1000);
-        assertEquals(selects.size(), 1);
-        Mockito.verify(customerBasicMapper).getProspectiveCustomers(1000);
-    }
-
-    @Test
     public void isIdCardExist() throws Exception {
         when(customerBasicMapper.isIdCardExist(1)).thenReturn(1);
         boolean idCardExist = customerBasicService.isIdCardExist(1);
