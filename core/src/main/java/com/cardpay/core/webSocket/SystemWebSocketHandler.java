@@ -26,7 +26,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
 
     private static final List<WebSocketSession> users;
 
-    private static final Map<Integer, WebSocketSession> webSocketSessions;
+    public static final Map<Integer, WebSocketSession> webSocketSessions;
 
     static {
         users = new ArrayList<>();
@@ -42,7 +42,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         //将客户信息添加到session,用于在线发送信息
         users.add(session);
-        Integer userId = (Integer) session.getAttributes().get(Constant.WEBSOCKET_USERID);
+        Integer userId = ShiroKit.getUserId();
         webSocketSessions.put(userId, session);//用户上线
     }
 
@@ -88,7 +88,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
      * @param message 消息内容
      */
     public static void sendMessageToUsers(String message) {
-        users.forEach(user->{
+        for (WebSocketSession user : users) {
             if(user.isOpen()){
                 try {
                     user.sendMessage(new TextMessage(message));
@@ -97,8 +97,7 @@ public class SystemWebSocketHandler extends TextWebSocketHandler {
                     e.printStackTrace();
                 }
             }
-        });
-
+        }
     }
 
     /**
