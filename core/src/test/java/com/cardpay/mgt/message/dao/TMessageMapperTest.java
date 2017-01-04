@@ -1,6 +1,6 @@
 package com.cardpay.mgt.message.dao;
 
-import com.cardpay.mgt.message.model.po.TMessage;
+import com.cardpay.mgt.message.model.TMessage;
 import com.cardpay.util.TestEnv;
 import org.junit.Ignore;
 import org.junit.Test;

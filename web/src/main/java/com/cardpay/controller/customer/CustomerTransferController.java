@@ -93,7 +93,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         Map<String, Object> map = new HashMap();
         map.put("status", status);
         map.put("customerIds", customerIdList);
-        map.put("managerId", managerId);
+        map.put("managerId", 0); //将客户经理id置0
         int count = customerBasicService.updateStatus(map);
         logger.info("客户移交", "客户Id：" + customerIds + ",移交给了客户经理Id：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
