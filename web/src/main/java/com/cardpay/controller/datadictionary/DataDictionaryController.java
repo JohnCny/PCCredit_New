@@ -27,6 +27,10 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
     @Autowired
     private TDataDictionaryService dataDictionaryService;
 
+    private static final String PAGE_NEW = "/datadictionary/add";
+    private static final String PAGE_EDIT = "/datadictionary/update";
+    private static final String PAGE_INDEX = "/datadictionary/index";
+
     /**
      * 获取数据字典分页数据
      *
@@ -48,7 +52,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
     @ApiOperation(value = "前往添加数据字典页面接口", notes = "前往添加数据字典页面", httpMethod = "GET")
     public ModelAndView toAdd() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/datadictionary/add");
+        modelAndView.setViewName(PAGE_NEW);
         return modelAndView;
     }
 
@@ -63,7 +67,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
     public ModelAndView add(@ApiParam("数据字典信息") @ModelAttribute TDataDictionary dataDictionary) {
         dataDictionaryService.insert(dataDictionary);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/datadictionary/index");
+        modelAndView.setViewName(PAGE_INDEX);
         return modelAndView;
     }
 
@@ -95,7 +99,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
         TDataDictionary dataDictionary = dataDictionaryService.selectByPrimaryKey(dataId);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("dataDictionary", dataDictionary);
-        modelAndView.setViewName("/datadictionary/update");
+        modelAndView.setViewName(PAGE_EDIT);
         return modelAndView;
     }
 
@@ -122,7 +126,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
     @GetMapping("index")
     @ApiOperation(value = "跳转数据字典页面", notes = "跳转数据字典页面", httpMethod = "GET")
     public ModelAndView index(@ModelAttribute TDataDictionary dataDictionary) {
-        return new ModelAndView("/datadictionary/index");
+        return new ModelAndView(PAGE_INDEX);
     }
 
 }
