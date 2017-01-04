@@ -62,6 +62,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerIds 客户id(,分割)
      * @param status      需要变更的状态
      * @param reason      移交原因
+     * @param managerId      客户经理ID
      * @return 数据库变记录
      */
     @PutMapping
@@ -69,7 +70,8 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "状态(默认为正常)") @RequestParam(defaultValue = "0") int status
-            , @ApiParam(value = "移交原因", required = true) @RequestParam String reason) {
+            , @ApiParam(value = "移交原因", required = true) @RequestParam String reason
+        , @ApiParam(value = "客户经理ID", required = true) @RequestParam int managerId) {
         List<Integer> customerIdList = new ArrayList<>();
         //添加客户移交记录
         String[] split = customerIds.split(",");
@@ -91,7 +93,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         Map<String, Object> map = new HashMap();
         map.put("status", status);
         map.put("customerIds", customerIdList);
-        map.put("managerId", 0); //移交后將客戶经理ID置0
+        map.put("managerId", managerId);
         int count = customerBasicService.updateStatus(map);
         logger.info("客户移交", "客户Id：" + customerIds + ",移交给了客户经理Id：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);

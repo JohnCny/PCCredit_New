@@ -44,5 +44,5 @@ public interface TCustomerTransferService extends BaseService<TCustomerTransfer>
      * @param customerId 客户经理Id
      * @return 移交记录
      */
-    List<TCustomerTransferVo> queryById(@Param("customerId") int customerId);
+    List<TCustomerTransferVo> queryById(int customerId);
 }
