@@ -128,7 +128,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     }
 
     /**
-     * 根据菜单名称分组
+     * 根据菜单权限名称分组
      *
      * @param tMenuAuthList 全部菜单
      * @return 分组后的菜单
@@ -180,17 +180,19 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     }
 
     @Override
-    public ResultTo updateMenu(TMenu menu, Integer userId) {
-        List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menu.getId());
-        boolean canDelete = isHaveAuth(authorities, UPDATE);
-        ResultTo resultTo = new ResultTo();
-        if (canDelete) {
-            tMenuMapper.updateByPrimaryKeySelective(menu);
-            return resultTo;
-        } else {
-            resultTo.setCode(ResultEnum.NO_PERMITTION.getValue());
-            return resultTo;
+    public boolean updateMenu(List<TMenu> menus, Integer userId) {
+        boolean result = false;
+        for (TMenu menu : menus) {
+            List<Authority> authorities = authorityMapper.selectMenuAuthorityByUser(userId, menu.getId());
+            boolean canDelete = isHaveAuth(authorities, UPDATE);
+            if (canDelete) {
+                int updateResult = tMenuMapper.updateByPrimaryKeySelective(menu);
+                result = updateResult==1;
+            } else {
+                return false;
+            }
         }
+        return result;
     }
 
     /**
