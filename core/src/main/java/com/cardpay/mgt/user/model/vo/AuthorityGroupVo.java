@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author rankai .
  */
-public class AuthorityGroup {
+public class AuthorityGroupVo {
     /**
      * 分组名
      */
@@ -17,7 +17,7 @@ public class AuthorityGroup {
     /**
      * 组操作集合
      */
-    private List<Authority> authorityList;
+    private List<AuthorityVo> authorityList;
 
     public String getGroupName() {
         return groupName;
@@ -27,11 +27,11 @@ public class AuthorityGroup {
         this.groupName = groupName;
     }
 
-    public List<Authority> getAuthorityList() {
+    public List<AuthorityVo> getAuthorityList() {
         return authorityList;
     }
 
-    public void setAuthorityList(List<Authority> authorityList) {
+    public void setAuthorityList(List<AuthorityVo> authorityList) {
         this.authorityList = authorityList;
     }
 }

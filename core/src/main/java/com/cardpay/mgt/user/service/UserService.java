@@ -3,6 +3,7 @@ package com.cardpay.mgt.user.service;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 
 import java.util.List;
 import java.util.Map;
@@ -44,30 +45,28 @@ public interface UserService extends BaseService<User> {
     /**
      * 发送验证码
      *
-     * @param userId  用户Id
      * @param address email或phone
      * @return 成功或失败
      */
-    ResultTo sendCode(Integer userId, String address);
+    ResultTo sendCode(String address);
 
     /**
      * 验证用户输入的验证码是否正确
      *
-     * @param address email或phone
-     * @param code    验证码
+     * @param userId 用户ID
+     * @param code   验证码
      * @return 成功或失败
      */
-    ResultTo checkedCode(String address, String code);
+    ResultTo checkedCode(Integer userId, String code);
 
     /**
      * 重置密码
      *
-     * @param userId      用户ID
      * @param checkedCode Api接口验证
      * @param password    密码
      * @return 成功或失败
      */
-    ResultTo resetPassword(Integer userId, String checkedCode, String password);
+    ResultTo resetPassword(String checkedCode, String password);
 
     /**
      * 增加用户
@@ -95,4 +94,12 @@ public interface UserService extends BaseService<User> {
      * @return 用户列表
      */
     List<User> userPageList(Map<String, Object> map);
+
+    /**
+     * 根据用户ID查询用户信息以及用户机构和角色信息
+     *
+     * @param userId 用户ID
+     * @return 用户信息以及用户机构和角色信息
+     */
+    UserUpdateVo selectUserUpdateVo(Integer userId);
 }

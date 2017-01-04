@@ -79,7 +79,7 @@ public class User extends GenericEntity<Integer> {
     private String userCname;
 
     /**
-     * 用户性别
+     * 用户性别(0:男1:女)
      */
     @Column(name = "SEX")
     @ApiModelProperty(value = "用户性别", required = true)

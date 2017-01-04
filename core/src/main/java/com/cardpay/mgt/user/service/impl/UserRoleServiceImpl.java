@@ -3,6 +3,7 @@ package com.cardpay.mgt.user.service.impl;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
