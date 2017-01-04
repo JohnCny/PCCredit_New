@@ -31,6 +31,24 @@
         <result column="OPERATION_NAME" jdbcType="VARCHAR" property="operationName"/>
     </resultMap>
 
+    <resultMap id="UserUpdateVoMap" type="com.cardpay.mgt.user.model.vo.UserUpdateVo">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId"/>
+        <result column="ORG_ID" jdbcType="DECIMAL" property="orgId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+        <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="AGE" jdbcType="DECIMAL" property="age"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+        <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+        <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
+    </resultMap>
+
     <select id="selectByAuthority" resultMap="UserAuthorityMap">
       SELECT
           TA.AUTHORITY_NAME AS AUTHORITY_NAME,
@@ -85,4 +103,35 @@
             TUO.ORGANIZATION_ID=#{orgId,jdbcType=VARCHAR}
         </if>
     </select>
+
+    <select id="selectUserUpdateVo" resultMap="UserUpdateVoMap">
+        SELECT
+            TU."ID",
+            TUR.ROLE_ID AS ROLE_ID,
+            "TO"."ID" AS ORG_ID,
+            "TO".ORG_NAME AS ORG_NAME,
+            TU.USERNAME,
+            TU.EMAIL,
+            TU.TEL,
+            TU.STATUS,
+            TU.USER_CNAME,
+            TU.SEX,
+            TU.AGE,
+            TU.PHONE,
+            TU.ID_CARD_NUMBER,
+            TU.EMPLOYEE_NUMBER,
+            TU.USER_TYPE
+        FROM
+            T_USER TU,
+            T_USER_ROLE TUR,
+            T_ORGANIZATION "TO",
+            T_USER_ORGANIZATION TUO
+        WHERE
+            TU."ID" = #{userId,jdbcType=DECIMAL}
+        AND TUR.USER_ID = TU."ID"
+        AND TUO.USER_ID = TU."ID"
+        AND TUO.ORGANIZATION_ID = "TO"."ID"
+    </select>
+
+
 </mapper>

@@ -24,10 +24,10 @@ import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
 import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -35,8 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-
-import static com.cardpay.mgt.menu.enums.RoleEnum.ADMIN;
 
 /**
  * 用户Service层实现
@@ -54,19 +52,19 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     private RoleMapper roleMapper;
 
     @Autowired
-    private RedisClient redisClient;
-
-    @Autowired
     private UserOrganizationMapper userOrganizationMapper;
 
     @Autowired
     private UserRoleMapper userRoleMapper;
 
     @Autowired
-    private MailSend mailSend;
+    private CustomerManagerService customerManagerService;
 
     @Autowired
-    private CustomerManagerService customerManagerService;
+    private RedisClient redisClient;
+
+    @Autowired
+    private MailSend mailSend;
 
     @Override
     public Set<String> getUserAuthority(User user) {
@@ -118,28 +116,28 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public ResultTo sendCode(Integer userId, String address) {
+    public ResultTo sendCode(String address) {
         if (Pattern.compile(Constant.REGEX_EMAIL).matcher(address).matches()) {
             LogTemplate.debug(this.getClass(), "message", "匹配到Email类型");
-            User user = userMapper.selectByPrimaryKey(userId);
+            User user = userMapper.selectOne(User.UserBuilder.get().withEmail(address).build());
             if (user != null && user.getEmail().equals(address)) {
                 String code = VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 6, null);
                 LogTemplate.debug(this.getClass(), "code", code);
-                redisClient.set(RedisKeyPrefixEnum.USER, user.getEmail(), code, Constant.TIME_OUT);
+                redisClient.set(RedisKeyPrefixEnum.USER, user.getId().toString(), code, Constant.TIME_OUT);
                 mailSend.send(user.getEmail(), code);
-                return new ResultTo().setData(user.getEmail());
+                return new ResultTo().setData("userId", user.getId()).setData("email", user.getEmail());
             }
             return new ResultTo(ResultEnum.BOUND_MAILBOX_ERROR);
         }
         if (Pattern.compile(Constant.REGEX_PHONE).matcher(address).matches()) {
             LogTemplate.debug(this.getClass(), "message", "匹配到Phone类型");
-            User user = userMapper.selectByPrimaryKey(userId);
+            User user = userMapper.selectOne(User.UserBuilder.get().withPhone(address).build());
             if (user != null && user.getTel().equals(address)) {
                 String code = VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_ONLY, 6, null);
                 LogTemplate.debug(this.getClass(), "code", code);
-                redisClient.set(RedisKeyPrefixEnum.USER, user.getEmail(), code, Constant.TIME_OUT);
+                redisClient.set(RedisKeyPrefixEnum.USER, user.getId().toString(), code, Constant.TIME_OUT);
                 //预留手机验证
-                return new ResultTo().setData(user.getTel());
+                return new ResultTo().setData("userId", user.getId()).setData("phone", user.getPhone());
             }
             return new ResultTo(ResultEnum.BOUND_PHONE_ERROR);
         }
@@ -147,14 +145,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public ResultTo checkedCode(String address, String code) {
-        Object object = redisClient.get(RedisKeyPrefixEnum.USER, address);
+    public ResultTo checkedCode(Integer userId, String code) {
+        Object object = redisClient.get(RedisKeyPrefixEnum.USER, userId.toString());
         if (object == null) {
             return new ResultTo(ResultEnum.CAPTCHA_TIMEOUT);
         }
         if (object.toString().equals(code)) {
             String checkedCode = VerifyCodeUtil.generateTextCode(VerifyCodeUtil.TYPE_NUM_LOWER, 16, null);
-            redisClient.set(RedisKeyPrefixEnum.USER, checkedCode, "checkedCode", Constant.API_TIMEOUT);
+            redisClient.set(RedisKeyPrefixEnum.USER, checkedCode, userId, Constant.API_TIMEOUT);
             LogTemplate.debug(this.getClass(), "checkedCode", checkedCode);
             return new ResultTo().setData(checkedCode);
         }
@@ -162,14 +160,15 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public ResultTo resetPassword(Integer userId, String checkedCode, String password) {
+    public ResultTo resetPassword(String checkedCode, String password) {
         Object object = redisClient.get(RedisKeyPrefixEnum.USER, checkedCode);
         if (object == null) {
             return new ResultTo(ResultEnum.API_TIMEOUT);
         }
         User user = new User();
-        user.setId(userId);
-        user.setPassword(PasswordUtil.encryptPassword(password));
+        user.setId((Integer) object);
+        user.setPassword(password);
+        PasswordUtil.encryptPassword(user);
         if (userMapper.updateByPrimaryKeySelective(user) <= 0) {
             return new ResultTo(ResultEnum.OPERATION_FAILED);
         }
@@ -177,7 +176,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    @Transactional
     public boolean addUser(User user, Integer orgId, Integer roleId) {
         user.setCreateTime(new Date());
         user.setCreateBy(ShiroKit.getUserId());
@@ -191,7 +189,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userRole.setRoleId(roleId);
         userRole.setUserId(user.getId());
         userRoleMapper.insertSelective(userRole);
-        switch (RoleEnum.getValueById(roleId)){
+        switch (RoleEnum.getValueById(roleId)) {
             case ADMIN:
                 break;
             case MANAGER:
@@ -231,5 +229,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Override
     public List<User> userPageList(Map<String, Object> map) {
         return userMapper.userPageList(map);
+    }
+
+    @Override
+    public UserUpdateVo selectUserUpdateVo(Integer userId) {
+        return userMapper.selectUserUpdateVo(userId);
     }
 }

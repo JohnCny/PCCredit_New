@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.security.PrivateKey;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -46,6 +47,10 @@ public class TokenKit {
      * apiTime的名称
      */
     public static final String API_TIME_NAME = "apiTime";
+    /**
+     * api客户端类型Key名称
+     */
+    public static final String CLIENT_TYPE = "clientType";
     /**
      * APP_KEY值
      */
@@ -210,5 +215,21 @@ class MapKeyComparator implements Comparator<String>, Serializable {
     public int compare(String str1, String str2) {
         return str1.compareTo(str2);
     }
+}
+
+enum ClientType {
+
+    WEB(1), ANDROID(2), IOS(3);
+
+    private Integer value;
+
+    ClientType(Integer value) {
+        this.value = value;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
 }
 

@@ -2,6 +2,7 @@ package com.cardpay.mgt.user.service;
 
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 
 /**
  * 用户角色关系Service层接口
