@@ -26,7 +26,7 @@
         <property name="sessionValidationInterval" value="1800000"/>  <!-- 相隔多久检查一次session的有效性 -->
         <property name="globalSessionTimeout" value="1800000"/>       <!-- session 有效时间为半小时 （毫秒单位）-->
         <!--<property name="sessionIdCookie.domain" value="http://192.168.1.133:81"/>-->
-        <property name="sessionIdCookie.name" value="shrioSessionId"/>
+        <property name="sessionIdCookie.name" value="shiroSessionId"/>
         <property name="sessionIdCookie.path" value="/"/>
     </bean>
 
