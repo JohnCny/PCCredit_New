@@ -2,16 +2,13 @@ package com.cardpay.mgt.customermanager.basic.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.util.ReflectUtil;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerEditVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
-import com.cardpay.mgt.menu.enums.RoleEnum;
 import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
-import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.model.UserRole;
-import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +31,6 @@ public class CustomerManagerServiceImpl extends BaseServiceImpl<TCustomerManager
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserRoleService userRoleService;
 
     @Override
     public List<TCustomerManagerEditVo> selectBaseVoList(Map<String, Object> map) {
@@ -71,20 +65,14 @@ public class CustomerManagerServiceImpl extends BaseServiceImpl<TCustomerManager
 
     @Override
     @Transactional
-    public Integer updateCustomerManager(User user, TCustomerManager customerManager,User modifyUser) {
-        int userResult = 0;
-        if(!ReflectUtil.checkBeanAllFiledIsNull(user,"id")){
-            userResult = userService.updateSelectiveByPrimaryKey(user);
-            CompareBeanUtil.compareBean(user, userService, "User", "用户模块", modifyUser);
-        }
+    public Integer updateCustomerManager(TCustomerManager customerManager) {
         int customerManagerResult = 0;
-        if(!ReflectUtil.checkBeanAllFiledIsNull(customerManager,"userId")){
+        if(!ReflectUtil.checkBeanAllFiledIsNull(customerManager)){
             customerManagerResult = updateSelectiveByPrimaryKey(customerManager);
-            CompareBeanUtil.compareBean(customerManager, this, "CustomerManager"
-                    , "客户经理模块", modifyUser);
+            CompareBeanUtil.compareBean(customerManager, this, "customerManager"
+                    , "客户经理模块", ShiroKit.getUser());
         }
-        int finalResult = customerManagerResult+userResult;
-        return finalResult==2?1:1;
+        return customerManagerResult;
     }
 
     /**

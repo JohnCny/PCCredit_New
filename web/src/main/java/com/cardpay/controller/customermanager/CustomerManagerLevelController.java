@@ -35,7 +35,7 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
     @ApiOperation(value = "获取客户经理级别列表", notes = "获取客户经理级别列表",  httpMethod = "GET")
     public ResultTo All(){
         ResultTo resultTo = new ResultTo();
-        resultTo.setData("customerManagerLevelList",customerManagerLevelService.getCustomerManagerLevel());
+        resultTo.setData(customerManagerLevelService.getCustomerManagerLevel());
         return resultTo;
     }
 
@@ -85,17 +85,17 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
     }
 
     /**
-     * 前往更新客户经理级别接口
+     * 根据id获取客户经理级别
      *
      * @param levelId 客户经理级别id
      * @return 页面和数据
      */
     @GetMapping(value = "/{levelId}")
     @ApiOperation(value = "前往更新客户经理级别接口", notes = "根据ID获取客户经理级别信息,前往更新客户经理级别",  httpMethod = "GET")
-    public ResultTo toUpdate(@PathVariable("levelId") Integer levelId){
+    public ResultTo get(@PathVariable("levelId") Integer levelId){
         TCustomerManagerLevel customerManagerLevel = customerManagerLevelService.selectByPrimaryKey(levelId);
         ResultTo resultTo = new ResultTo();
-        resultTo.setData("customerManagerLevel",customerManagerLevel);
+        resultTo.setData(customerManagerLevel);
         return resultTo;
     }
 

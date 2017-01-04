@@ -17,10 +17,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,30 +58,13 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     }
 
     /**
-     * 创建客户经理
-     *
-     * @param customerManager 客户经理信息
-     * @return 视图和数据
-     */
-    @PostMapping()
-    @ApiOperation(value = "创建客户经理", notes = "创建客户经理", httpMethod = "POST")
-    public ResultTo add(@ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager,BindingResult result) {
-        customerManagerService.insert(customerManager);
-        Map<String, String> map = new HashedMap();
-        if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
-            return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
-        }
-        return new ResultTo();
-    }
-
-    /**
-     * 前往客户经理更新页面
+     * 获得客户经理信息
      *
      * @return 页面
      */
     @GetMapping(value = "/{userId}")
-    @ApiOperation(value = "前往客户经理更新页面", notes = "前往客户经理更新页面", httpMethod = "GET")
-    public ResultTo toUpdate(@PathVariable("userId") Integer userId) {
+    @ApiOperation(value = "获得客户经理信息", notes = "获得客户经理信息", httpMethod = "GET")
+    public ResultTo get(@PathVariable("userId") Integer userId) {
         ResultTo resultTo = new ResultTo();
         resultTo.setDataMap("customerManager", customerManagerService.assembleEditPageData(userId));
         resultTo.setDataMap("customerManagerLevel", customerManagerLevelService.getCustomerManagerLevel());
@@ -93,18 +74,19 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     /**
      * 更新客户经理
      *
-     * @param user            用户信息
      * @param customerManager 客户经理信息
      * @return 视图和数据
      */
     @PutMapping()
     @ApiOperation(value = "更新客户经理", notes = "更新客户经理", httpMethod = "PUT")
-    public ResultTo update(@ApiParam("用户信息") @ModelAttribute User user,
-                           @ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager) {
+    public ResultTo update(@ApiParam("客户经理信息") @ModelAttribute TCustomerManager customerManager,BindingResult result) {
+        Map<String, String> map = new HashedMap();
+        if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
+            return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
+        }
         ResultTo resultTo = new ResultTo();
-        user.setId(customerManager.getUserId());
-        Integer result = customerManagerService.updateCustomerManager(user, customerManager, ShiroKit.getUser());
-        resultTo.setIsSuccess(result);
+        Integer updateResult = customerManagerService.updateCustomerManager(customerManager);
+        resultTo.setIsSuccess(updateResult);
         return resultTo;
     }
 

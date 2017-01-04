@@ -4,7 +4,6 @@ import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerEditVo;
-import com.cardpay.mgt.user.model.User;
 
 import java.util.List;
 import java.util.Map;
@@ -50,10 +49,8 @@ public interface CustomerManagerService extends BaseService<TCustomerManager> {
     /**
      * 更新客户经理,插入权限用户等信息
      *
-     * @param user            用户信息
      * @param customerManager 客户经理信息
-     * @param modifyUser      修改人
      * @return 是否成功
      */
-    Integer updateCustomerManager(User user, TCustomerManager customerManager, User modifyUser);
+    Integer updateCustomerManager(TCustomerManager customerManager);
 }
