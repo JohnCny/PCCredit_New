@@ -31,7 +31,8 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
      * @throws Exception 握手异常
      */
     @Override
-    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler
+            , Map<String, Object> attributes) throws Exception {
         logger.info(WebSocketHandshakeInterceptor.class, "", "websocket before handshake");
 
         if (request instanceof ServerHttpRequest){
@@ -40,7 +41,9 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
             if (session!=null){
                 Integer userId = ShiroKit.getUserId();
                 if (userId!=null){
-                     attributes.put(Constant.WEBSOCKET_USERID, userId);
+                    attributes.put(Constant.WEBSOCKET_USERID, userId);
+                } else {
+                    return false;
                 }
             }
         }

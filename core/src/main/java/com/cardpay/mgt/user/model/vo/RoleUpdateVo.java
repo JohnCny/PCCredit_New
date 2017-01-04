@@ -5,7 +5,7 @@ package com.cardpay.mgt.user.model.vo;
  *
  * @author rankai .
  */
-public class RoleUpatePage {
+public class RoleUpdateVo {
 
     private Integer authorityId;
 

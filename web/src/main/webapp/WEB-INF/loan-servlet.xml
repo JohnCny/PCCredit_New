@@ -138,12 +138,12 @@
 
     <!--拦截器异常处理配置-->
     <!--<bean id="handlerExceptionResolver"-->
-          <!--class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
-        <!--<property name="exceptionMappings">-->
-            <!--<props>-->
-                <!--<prop key="com.cardpay.common.exception.AuthorizationException">redirect:/login</prop>-->
-            <!--</props>-->
-        <!--</property>-->
+    <!--class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+    <!--<property name="exceptionMappings">-->
+    <!--<props>-->
+    <!--<prop key="com.cardpay.common.exception.AuthorizationException">redirect:/login</prop>-->
+    <!--</props>-->
+    <!--</property>-->
     <!--</bean>-->
 
     <!--解决spring json conversion bug-->
@@ -175,12 +175,12 @@
     <!-- Token拦截器 -->
 <!--    <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/api/*"/>
+            <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/api/logon"/>
             <bean class="com.cardpay.core.token.interceptor.TokenInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/api/*"/>
+            <mvc:mapping path="/**"/>
             <bean class="com.cardpay.core.token.interceptor.AppSinInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>-->

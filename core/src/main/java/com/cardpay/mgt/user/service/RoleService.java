@@ -3,15 +3,9 @@ package com.cardpay.mgt.user.service;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.Authority;
 import com.cardpay.mgt.user.model.Role;
-import com.cardpay.mgt.user.model.vo.AuthorityGroup;
+import com.cardpay.mgt.user.model.vo.AuthorityGroupVo;
 
 import java.util.List;
-
-/**
- * 角色Service层接口
- *
- * @author rankai
- */
 
 /**
  * 角色Service层接口
@@ -26,7 +20,7 @@ public interface RoleService extends BaseService<Role> {
      *
      * @return 权限分组信息
      */
-    List<AuthorityGroup> selectAuthorityGroup();
+    List<AuthorityGroupVo> selectAuthorityGroup();
 
     /**
      * 根据权限分组名获得权限操作
@@ -56,10 +50,27 @@ public interface RoleService extends BaseService<Role> {
     boolean insertRole(Role role, Integer[] authorityId);
 
     /**
-     * 根据角色ID获取权限分组信息
+     * 根据角色ID获取权限分组信息(增加数据)
      *
      * @param roleId 角色ID
      * @return 权限信息
      */
-    List<AuthorityGroup> selectRole(Integer roleId);
+    List<AuthorityGroupVo> selectRole(Integer roleId);
+
+    /**
+     * 根据角色ID获取权限分组信息(更新数据)
+     *
+     * @param roleId 角色ID
+     * @return 权限信息
+     */
+    List<AuthorityGroupVo> selectAuthority(Integer roleId);
+
+    /**
+     * 更新角色
+     *
+     * @param role         角色实体
+     * @param authorityIds 要更新的权限(旧权限ID,新权限ID),无权限权限为-1
+     * @return 成功失败
+     */
+    boolean updateAuthorityIds(Role role, String[] authorityIds);
 }

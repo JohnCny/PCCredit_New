@@ -8,7 +8,7 @@ import com.cardpay.mgt.user.model.Authority;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.model.vo.AuthorityGroup;
+import com.cardpay.mgt.user.model.vo.AuthorityGroupVo;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public class RoleServiceImplTest {
         authorities.add(authority);
         PowerMockito.when(authorityMapper.selectAuthorityGroup()).thenReturn(authorityGroups);
         PowerMockito.when(authorityMapper.selectAll()).thenReturn(authorities);
-        List<AuthorityGroup> list = roleService.selectAuthorityGroup();
+        List<AuthorityGroupVo> list = roleService.selectAuthorityGroup();
         Assert.assertEquals(list.get(0).getAuthorityList().get(0).getAuthorityDescription(), "测试");
 
     }
@@ -129,7 +129,7 @@ public class RoleServiceImplTest {
         authorities.add(authority);
         PowerMockito.when(authorityMapper.selectAuthorityGroup()).thenReturn(strs);
         PowerMockito.when(authorityMapper.selectByRoleId(1)).thenReturn(authorities);
-        List<AuthorityGroup> authorityGroups = roleService.selectRole(1);
+        List<AuthorityGroupVo> authorityGroups = roleService.selectRole(1);
         Assert.assertEquals(authorityGroups.get(0).getAuthorityList().get(0).getAuthorityDescription(), "测试");
     }
 

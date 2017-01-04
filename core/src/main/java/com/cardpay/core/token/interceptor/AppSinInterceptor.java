@@ -18,12 +18,16 @@ import java.util.Map;
 /**
  * AppSin拦截器
  *
- * @author rankai .
+ * @author rankai
+ *         createTime 2016-12-2016/12/23 14:40
  */
 public class AppSinInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (StringUtils.isBlank(request.getParameter(TokenKit.CLIENT_TYPE))) {
+            return true;
+        }
         String apiKeyName = TokenKit.API_KEY_NAME;
         String apiTimeName = TokenKit.API_TIME_NAME;
         String apiKey = request.getParameter(apiKeyName);

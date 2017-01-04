@@ -166,7 +166,7 @@
             ) ALL_MENU
         LEFT JOIN (
             SELECT
-                T_AUTHORITY."ID" AS IS_HAVE
+                 T_AUTHORITY."ID" AS IS_HAVE
             FROM
                 T_ROLE,
                 T_ROLE_AUTHORITY,
