@@ -7,6 +7,7 @@ import com.cardpay.mgt.file.service.TFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class TFileServiceImpl extends BaseServiceImpl<TFile> implements TFileSer
     private TFileMapper tFileDao;
 
     @Override
+    @Transactional
     public int batchInsertFile(List<TFile> list) {
         return tFileDao.batchInsertFile(list);
     }

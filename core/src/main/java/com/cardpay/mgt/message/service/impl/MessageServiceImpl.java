@@ -7,6 +7,7 @@ import com.cardpay.mgt.message.model.TMessage;
 import com.cardpay.mgt.message.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
     }
 
     @Override
+    @Transactional
     public int sendMessage(String title, String content, int userId, int type, int level) {
         TMessage tMessage = new TMessage();
         tMessage.setMsgTitle(title);
@@ -83,6 +85,7 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
     }
 
     @Override
+    @Transactional
     public void sendMessageAll(String title, String content, int type, int level) {
         List<TMessage> list = new ArrayList<>();
         for (Map.Entry<Integer, WebSocketSession> entity : webSocketSessions.entrySet()) {
@@ -122,6 +125,7 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
     }
 
     @Override
+    @Transactional
     public int setMessageIfRead(int messageId) {
         TMessage tMessage = new TMessage();
         tMessage.setId(messageId);

@@ -70,7 +70,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
         tCustomerMaintenance.setOperationId(userId);
         tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
         tCustomerMaintenance.setOperationTime(new Date());
-        Integer mark = customerMaintenanceService.insertSelective(tCustomerMaintenance);
+        Integer mark = customerMaintenanceService.insert(tCustomerMaintenance);
         return mark != 0 ? new ResultTo().setData(tCustomerMaintenance.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
