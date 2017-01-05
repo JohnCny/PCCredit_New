@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by chenkai on 2016/12/6.
  */
 @RestController
-@RequestMapping("/application")
-@Api(value = "/application", description = "进件")
+@RequestMapping("/api/application")
+@Api(value = "/api/application", description = "进件")
 public class ApplicationController extends BaseController<TApplication> {
     @Autowired //进件
     private TApplicationService tApplicationService;

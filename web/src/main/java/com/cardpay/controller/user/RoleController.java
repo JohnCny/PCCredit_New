@@ -34,8 +34,8 @@ import java.util.Map;
  *         create 2016-12-2016/12/21 10:22
  */
 @RestController
-@RequestMapping("/role")
-@Api(value = "/role", description = "角色信息控制层")
+@RequestMapping("/api/role")
+@Api(value = "/api/role", description = "角色信息控制层")
 public class RoleController extends BaseController<Role> {
 
     @Autowired

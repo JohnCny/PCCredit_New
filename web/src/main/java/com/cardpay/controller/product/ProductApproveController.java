@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
-@RequestMapping("/productApprove")
-@Api(value = "/productApprove", description = "产品审批流程")
+@RequestMapping("/api/productApprove")
+@Api(value = "/api/productApprove", description = "产品审批流程")
 public class ProductApproveController extends BaseController<ProductApprove> {
 
 }

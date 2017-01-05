@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @create 2016-12-2016/12/19 15:12
  */
 @Controller
-@RequestMapping("/index")
-@Api(value = "/index", description = "首页请求地址")
+@RequestMapping("/api/index")
+@Api(value = "/api/index", description = "首页请求地址")
 public class IndexController {
 
     private static final String ADMIN_INDEX_PAGE = "/dashboard/admin";

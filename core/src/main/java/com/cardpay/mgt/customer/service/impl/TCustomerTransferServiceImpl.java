@@ -11,6 +11,8 @@ import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
+import com.cardpay.mgt.message.dao.TMessageMapper;
+import com.cardpay.mgt.message.service.MessageService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -34,7 +36,10 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     private TCustomerTransferMapper tCustomerIndustryDao;
 
     @Autowired
-    private TCustomerBasicService tCustomerBasicService;
+    private MessageService messageService;
+
+    @Autowired
+    private TCustomerTransferService tCustomerTransferService;
 
     @Override
     public List<SelectModel> getTransferStatus() {
@@ -55,23 +60,40 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
 
     @Override
     @Transactional
-    public synchronized int accept(String customerIds) {
+    public synchronized int accept(String customerIds, Integer flag) {
         List<Integer> idList = new ArrayList<>();
-        Map<String, Object> map = new HashMap();
         String[] split = customerIds.split(",");
-
+        Integer userId = ShiroKit.getUserId();
+        String messageContent; //发送消息内容
         for (String id : split) {
             int customerId = Integer.parseInt(id);
-            TCustomerBasic tCustomerBasic = new TCustomerBasic();
-            tCustomerBasic.setId(customerId);
-            tCustomerBasic.setCustomerManagerId(ShiroKit.getUserId());
-            tCustomerBasicService.updateSelectiveByPrimaryKey(tCustomerBasic);
             idList.add(customerId);
         }
-        map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
-        map.put("nowCustomerManager", ShiroKit.getUserId());
+        Map<String, Object> map = new HashMap();
+        if (flag != null && flag == 1) { //接受
+            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
+            map.put("nowCustomerManager", userId);
+        } else {  //拒绝
+            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
+        }
         map.put("customerIds", idList);
-        return tCustomerIndustryDao.accept(map);
+        int accept = tCustomerIndustryDao.accept(map);
+
+        //消息推送
+        if (accept != 0) {
+            for (String id : split) {
+                int customerId = Integer.parseInt(id);
+                TCustomerTransfer tCustomerTransfer = tCustomerTransferService.selectByPrimaryKey(customerId);
+                if (flag != null && flag == 1) {
+                    messageContent = "客户经理:" + userId + ",接受了你的客户:" + customerId;
+                } else {
+                    messageContent = "客户经理:" + userId + ",拒绝了你的客户:" + customerId;
+                }
+                messageService.sendMessage("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
+                        , 0, 0);
+            }
+        }
+        return accept;
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
-@RequestMapping("/productType")
-@Api(value = "/productType", description = "产品类型")
+@RequestMapping("/api/productType")
+@Api(value = "/api/productType", description = "产品类型")
 public class ProductTypeController extends BaseController<ProductType> {
 }

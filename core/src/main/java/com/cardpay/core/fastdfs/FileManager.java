@@ -26,6 +26,7 @@ import java.util.List;
 
 /**
  * FastDFSFile文件上传下载通用类
+ *
  * @author chenkai
  */
 @Component
@@ -69,7 +70,7 @@ public class FileManager implements FileManagerConfig {
         try {
             uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), valuePairs);
             if (uploadResults.length > 0) {
-                String groupName  = uploadResults[0];
+                String groupName = uploadResults[0];
                 String remoteFileName = uploadResults[1];
                 return groupName + "," + remoteFileName;
             }
@@ -226,8 +227,8 @@ public class FileManager implements FileManagerConfig {
             metaList[3] = new NameValuePair("fileAuthor", FileManagerConfig.FILE_DEFAULT_AUTHOR);
             fileName = upload(fastDFSFile, metaList);
             //插入数据库t_file表
-            if (!fileName.isEmpty()) {
-                String[] split = StringUtils.split(fileName);
+            if (StringUtils.isNoneBlank(fileName)) {
+                String[] split = fileName.split(",");
                 String userId = String.valueOf(ShiroKit.getUserId());
                 TFile tFile = TFile.TFileBuilder.get()
                         .withId(1)

@@ -12,6 +12,7 @@ public class TIndustry extends GenericEntity<Integer> {
     /**
      * 行业id
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select INDUSTRY_SEQ.nextval from dual")
     @ApiModelProperty(value="行业id",required = true)

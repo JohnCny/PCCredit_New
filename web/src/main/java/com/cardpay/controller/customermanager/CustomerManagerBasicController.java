@@ -28,9 +28,9 @@ import java.util.Map;
  *
  * @author yanweichen
  */
-@Api(value = "/customerManager", description = "客户经理管理")
+@Api(value = "/api/customerManager", description = "客户经理管理")
 @RestController
-@RequestMapping("/customerManager")
+@RequestMapping("/api/customerManager")
 public class CustomerManagerBasicController extends BaseController<TCustomerManager> {
 
     @Autowired

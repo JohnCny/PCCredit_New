@@ -20,16 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @author yanwe 2016/12/21 14:10
  */
 @Controller
-@RequestMapping("/dataDictionary")
-@Api(value = "/dataDictionary", description = "数据字典")
+@RequestMapping("/api/dataDictionary")
+@Api(value = "/api/dataDictionary", description = "数据字典")
 public class DataDictionaryController extends BaseController<TDataDictionary> {
 
     @Autowired
     private TDataDictionaryService dataDictionaryService;
-
-    private static final String PAGE_NEW = "/datadictionary/add";
-    private static final String PAGE_EDIT = "/datadictionary/update";
-    private static final String PAGE_INDEX = "/datadictionary/index";
 
     /**
      * 获取数据字典分页数据
@@ -43,18 +39,6 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
         return dataTablePage();
     }
 
-    /**
-     * 前往添加数据字典页面接口
-     *
-     * @return 页面
-     */
-    @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
-    @ApiOperation(value = "前往添加数据字典页面接口", notes = "前往添加数据字典页面", httpMethod = "GET")
-    public ModelAndView toAdd() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(PAGE_NEW);
-        return modelAndView;
-    }
 
     /**
      * 添加数据字典接口
@@ -64,11 +48,9 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "添加数据字典接口", notes = "添加数据字典", httpMethod = "POST")
-    public ModelAndView add(@ApiParam("数据字典信息") @ModelAttribute TDataDictionary dataDictionary) {
-        dataDictionaryService.insert(dataDictionary);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(PAGE_INDEX);
-        return modelAndView;
+    public ResultTo add(@ApiParam("数据字典信息") @ModelAttribute TDataDictionary dataDictionary) {
+        Integer count = dataDictionaryService.insert(dataDictionary);
+        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -81,26 +63,21 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
     @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除数据字典接口", notes = "删除数据字典", httpMethod = "DELETE")
     public ResultTo delete(@RequestParam("dataId") Integer dataId) {
-        ResultTo resultTo = new ResultTo();
-        Integer result = dataDictionaryService.deleteByPrimaryKey(dataId);
-        resultTo.setIsSuccess(result);
-        return resultTo;
+        Integer count = dataDictionaryService.deleteByPrimaryKey(dataId);
+        return count !=0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
-     * 前往更新数据字典接口
+     * 按id查询数据字典信息
      *
      * @param dataId 数据字典id
      * @return 页面和数据
      */
     @GetMapping("/{id}")
     @ApiOperation(value = "前往更新数据字典接口", notes = "根据ID获取数据字典信息,前往更新数据字典", httpMethod = "GET")
-    public ModelAndView toUpdate(@PathVariable("id") Integer dataId) {
+    public ResultTo toUpdate(@PathVariable("id") Integer dataId) {
         TDataDictionary dataDictionary = dataDictionaryService.selectByPrimaryKey(dataId);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("dataDictionary", dataDictionary);
-        modelAndView.setViewName(PAGE_EDIT);
-        return modelAndView;
+        return new ResultTo().setData(dataDictionary);
     }
 
     /**
@@ -115,18 +92,6 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
     public ResultTo update(@ModelAttribute TDataDictionary dataDictionary) {
         Integer count = dataDictionaryService.updateSelectiveByPrimaryKey(dataDictionary);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
-    }
-
-    /**
-     * 跳转数据字典页面
-     *
-     * @param dataDictionary 数据字典信息
-     * @return 页面
-     */
-    @GetMapping("index")
-    @ApiOperation(value = "跳转数据字典页面", notes = "跳转数据字典页面", httpMethod = "GET")
-    public ModelAndView index(@ModelAttribute TDataDictionary dataDictionary) {
-        return new ModelAndView(PAGE_INDEX);
     }
 
 }

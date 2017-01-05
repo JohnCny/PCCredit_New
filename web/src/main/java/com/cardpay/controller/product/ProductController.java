@@ -29,8 +29,8 @@ import java.util.*;
  *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
-@RequestMapping("/product")
-@Api(value = "/product", description = "产品管理")
+@RequestMapping("/api/product")
+@Api(value = "/api/product", description = "产品管理")
 public class ProductController extends BaseController<Product> {
 
 

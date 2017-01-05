@@ -26,8 +26,11 @@ public enum RedisKeyPrefixEnum {
 	 * 消金模块
 	 */
 	CFS ("cfs_"),
-
+	/**
+	 * 菜单模块
+	 */
 	ROLE_MENU ("roleMenu_");
+
 
 	private final String prefix;
 	   

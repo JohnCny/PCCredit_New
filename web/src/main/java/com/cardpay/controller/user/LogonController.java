@@ -51,8 +51,8 @@ import java.util.List;
  * @create 2016-12-2016/12/21 10:22
  */
 @RestController
-@RequestMapping("/logon")
-@Api(value = "/logon", description = "用认证(登陆)")
+@RequestMapping("/api/logon")
+@Api(value = "/api/logon", description = "用认证(登陆)")
 public class LogonController extends BaseController<User> {
 
     @Autowired
@@ -162,5 +162,15 @@ public class LogonController extends BaseController<User> {
     @RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
     public ResultTo unauthorized() {
         return new ResultTo(ResultEnum.NO_PERMITTION);
+    }
+
+    /**
+     * 没有登陆提示
+     *
+     * @return 没有登陆提示消息
+     */
+    @RequestMapping(value = "/noLogin", method = RequestMethod.GET)
+    public ResultTo noLogin() {
+        return new ResultTo(ResultEnum.NO_LOGIN);
     }
 }
