@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
-@RequestMapping("/productRisk")
-@Api(value = "/productRisk", description = "产品贷后监控规则")
+@RequestMapping("/api/productRisk")
+@Api(value = "/api/productRisk", description = "产品贷后监控规则")
 public class ProductRiskRulesController extends BaseController<ProductRiskRules> {
 
 }

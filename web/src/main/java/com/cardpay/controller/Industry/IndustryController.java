@@ -16,9 +16,9 @@ import java.util.Map;
  * 行业信息controller
  * @author yanweichen
  */
-@Api(value = "/industry", description = "行业信息")
+@Api(value = "/api/industry", description = "行业信息")
 @RestController
-@RequestMapping("/industry")
+@RequestMapping("/api/industry")
 public class IndustryController extends BaseController<TIndustry> {
     @Autowired
     private IndustryService industryService;

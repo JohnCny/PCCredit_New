@@ -18,9 +18,9 @@ import java.util.List;
  *
  * @author chenkai .
  */
-@Api(value = "/files", description = "文件上传类")
+@Api(value = "/api/files", description = "文件上传类")
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/api/files")
 public class FilesController {
     @Autowired
     private FileManager fileManager;

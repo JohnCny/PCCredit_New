@@ -31,8 +31,8 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/loginLog")
-@Api(value = "/loginLog", description = "登陆日志日志操作")
+@RequestMapping("/api/loginLog")
+@Api(value = "/api/loginLog", description = "登陆日志日志操作")
 public class LoginLogController extends BaseController<LoginLog> {
 
     private final static String LOGIN_LOG_PAGE = "/log/loginLog";
