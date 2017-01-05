@@ -20,8 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author yanwe 2016/12/21 14:10
  */
 @Controller
-@RequestMapping("/dataDictionary")
-@Api(value = "/dataDictionary", description = "数据字典")
+@RequestMapping("/api/dataDictionary")
+@Api(value = "/api/dataDictionary", description = "数据字典")
 public class DataDictionaryController extends BaseController<TDataDictionary> {
 
     @Autowired

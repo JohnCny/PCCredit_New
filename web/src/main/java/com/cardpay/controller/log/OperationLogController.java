@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/operationLog")
-@Api(value = "/loginLog", description = "操作日志日志操作")
+@RequestMapping("/api/operationLog")
+@Api(value = "/api/loginLog", description = "操作日志日志操作")
 public class OperationLogController extends BaseController<TOperationLog> {
 
     /**

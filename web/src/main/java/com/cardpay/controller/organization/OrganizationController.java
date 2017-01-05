@@ -27,9 +27,9 @@ import java.util.List;
  *
  * @author chenkai on 2016/11/24.
  */
-@Api(value = "/organization", description = "机构")
+@Api(value = "/api/organization", description = "机构")
 @RestController
-@RequestMapping("/organization")
+@RequestMapping("/api/organization")
 public class OrganizationController extends BaseController<TOrganization> {
     @Autowired
     private TOrganizationService tOrganizationService;

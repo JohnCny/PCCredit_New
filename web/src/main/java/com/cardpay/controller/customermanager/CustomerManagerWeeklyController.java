@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author yanweichen
  */
-@Api(value = "/customerManagerWeekly", description = "客户经理周报")
+@Api(value = "/api/customerManagerWeekly", description = "客户经理周报")
 @RestController
-@RequestMapping("/customerManagerWeekly")
+@RequestMapping("/api/customerManagerWeekly")
 public class CustomerManagerWeeklyController extends BaseController<TCustomerManagerWeekly> {
 }

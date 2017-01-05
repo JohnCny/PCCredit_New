@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author chenkai
  */
-@Api(value = "/message", description = "消息")
+@Api(value = "/api/message", description = "消息")
 @RestController
-@RequestMapping("/message")
+@RequestMapping("/api/message")
 public class MessageController extends BaseController<TMessage> {
     @Autowired
     private MessageService messageService;

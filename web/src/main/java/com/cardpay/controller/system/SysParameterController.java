@@ -27,8 +27,8 @@ import java.util.Date;
  *         createTime 2016-12-2016/12/27 10:02
  */
 @RestController
-@RequestMapping("/system")
-@Api(value = "/system", description = "系统参数配置")
+@RequestMapping("/api/system")
+@Api(value = "/api/system", description = "系统参数配置")
 public class SysParameterController extends BaseController<TSysParameter> {
     @Autowired
     private TSysParameterService tSysParameterService;

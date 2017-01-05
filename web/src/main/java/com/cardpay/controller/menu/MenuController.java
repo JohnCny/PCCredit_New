@@ -29,8 +29,8 @@ import java.util.List;
  * @author yanwe 2016年12月21日09:11:29
  */
 @RestController
-@RequestMapping("/menu")
-@Api(value = "/menu", description = "菜单")
+@RequestMapping("/api/menu")
+@Api(value = "/api/menu", description = "菜单")
 public class MenuController {
 
     @Autowired

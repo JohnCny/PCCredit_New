@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
  * 参数controller
  * @author yanweichen
  */
-@Api(value = "/businessparam", description = "参数")
+@Api(value = "/api/businessparam", description = "参数")
 @RestController
-@RequestMapping("/businessparam")
+@RequestMapping("/api/businessparam")
 public class BusinessParamController extends BaseController<TBusinessParam> {
 }

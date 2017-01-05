@@ -30,9 +30,9 @@ import java.util.*;
  *
  * @author chenkai
  */
-@Api(value = "/customerTransfer", description = "客户移交")
+@Api(value = "/api/customerTransfer", description = "客户移交")
 @RestController
-@RequestMapping("/customerTransfer")
+@RequestMapping("/api/customerTransfer")
 public class CustomerTransferController extends BaseController<TCustomerTransfer> {
     @Autowired
     private TCustomerTransferService customerTransferService;
