@@ -11,13 +11,14 @@ import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
-import com.cardpay.mgt.message.dao.TMessageMapper;
 import com.cardpay.mgt.message.service.MessageService;
-import org.apache.commons.lang3.StringUtils;
+import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.dc.pr.PRError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,13 +34,16 @@ import java.util.Map;
 @Service
 public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTransfer> implements TCustomerTransferService {
     @Autowired
-    private TCustomerTransferMapper tCustomerIndustryDao;
+    private TCustomerTransferMapper tCustomerTransferDao;
 
     @Autowired
     private MessageService messageService;
 
     @Autowired
-    private TCustomerTransferService tCustomerTransferService;
+    private UserService userService;
+
+    @Autowired
+    private TCustomerBasicService tCustomerBasicService;
 
     @Override
     public List<SelectModel> getTransferStatus() {
@@ -55,21 +59,20 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
 
     @Override
     public List<TCustomerVo> queryTransfer(Map<String, Object> map) {
-        return tCustomerIndustryDao.queryTransfer(map);
+        return tCustomerTransferDao.queryTransfer(map);
     }
 
     @Override
     @Transactional
-    public synchronized int accept(String customerIds, Integer flag) {
+    public synchronized int accept(String customerIds, Integer flag, Integer userId) {
         List<Integer> customerIdList = new ArrayList<>();
         String[] split = customerIds.split(",");
-        Integer userId = ShiroKit.getUserId();
         String messageContent; //发送消息内容
         for (String id : split) {
             int customerId = Integer.parseInt(id);
             customerIdList.add(customerId);
         }
-        Map<String, Object> map = new HashMap();
+        HashMap<String, Object> map = new HashMap();
         if (flag != null && flag == 1) { //接受
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
             map.put("nowCustomerManager", userId);
@@ -77,17 +80,19 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
         }
         map.put("customerIds", customerIdList);
-        int mark = tCustomerIndustryDao.accept(map);
+        int mark = tCustomerTransferDao.accept(map);
 
         //消息推送
         if (mark != 0) {
             for (String id : split) {
                 int customerId = Integer.parseInt(id);
-                TCustomerTransfer tCustomerTransfer = tCustomerTransferService.selectByPrimaryKey(customerId);
+                User user = userService.selectByPrimaryKey(userId);
+                TCustomerBasic tCustomerBasic = tCustomerBasicService.selectByPrimaryKey(customerId);
+                TCustomerTransfer tCustomerTransfer = tCustomerTransferDao.selectByPrimaryKey(customerId);
                 if (flag != null && flag == 1) {
-                    messageContent = "客户经理:" + userId + ",接受了你的客户:" + customerId;
+                    messageContent = "客户经理:" + user.getUserCname() + ",接受了你的客户:" + tCustomerBasic.getCname();
                 } else {
-                    messageContent = "客户经理:" + userId + ",拒绝了你的客户:" + customerId;
+                    messageContent = "客户经理:" + user.getUserCname() + ",拒绝了你的客户:" + tCustomerBasic.getCname();
                 }
                 messageService.sendMessage("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
                         , 0, 0);
@@ -98,6 +103,6 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
 
     @Override
     public List<TCustomerTransferVo> queryById(int customerId) {
-        return tCustomerIndustryDao.queryById(customerId);
+        return tCustomerTransferDao.queryById(customerId);
     }
 }

@@ -17,10 +17,8 @@ import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.*;
@@ -85,7 +83,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             tCustomerTransfer.setTransferReason(reason);
             tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
             tCustomerTransfer.setTransferTime(new Date());
-            customerTransferService.insert(tCustomerTransfer);
+            customerTransferService.insertSelective(tCustomerTransfer);
             customerIdList.add(customerId);
         }
         Map<String, Object> map = new HashMap();
@@ -137,7 +135,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
     public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
                                     @ApiParam("接收:1, 拒绝2") @RequestParam Integer flag) {
-        int count = customerTransferService.accept(customerIds, flag);
+        int count = customerTransferService.accept(customerIds, flag, ShiroKit.getUserId());
         logger.info("客户接受/拒绝", "客户：" + customerIds + "接受/拒绝" + flag + ",给了客户经理：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
