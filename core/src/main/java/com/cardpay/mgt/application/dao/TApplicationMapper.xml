@@ -1,15 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.application.dao.TApplicationMapper">
-  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.model.TApplication">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <result column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId" />
-    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
-    <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId" />
-    <result column="APPLICATION_STATUS" jdbcType="DECIMAL" property="applicationStatus" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.model.TApplication">
+        <result column="id" jdbcType="DECIMAL" property="id"/>
+        <result column="customer_id" jdbcType="DECIMAL" property="customerId"/>
+        <result column="product_id" jdbcType="DECIMAL" property="productId"/>
+        <result column="repulse_reason" jdbcType="VARCHAR" property="repulseReason"/>
+        <result column="application_status" jdbcType="DECIMAL" property="applicationStatus"/>
+        <result column="apply_amount" jdbcType="DECIMAL" property="applyAmount"/>
+        <result column="approve_amount" jdbcType="DECIMAL" property="approveAmount"/>
+        <result column="apply_reason" jdbcType="VARCHAR" property="applyReason"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="customer_manager_id" jdbcType="DECIMAL" property="customerManagerId"/>
+    </resultMap>
+
+    <!--进件Vo类-->
+    <resultMap id="BaseVo" type="com.cardpay.mgt.application.model.vo.TApplicationVo">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+        <result column="application_status" jdbcType="DECIMAL" property="applicationStatus"/>
+        <result column="apply_amount" jdbcType="DECIMAL" property="applyAmount"/>
+        <result column="approve_amount" jdbcType="DECIMAL" property="approveAmount"/>
+        <result column="apply_reason" jdbcType="VARCHAR" property="applyReason"/>
+        <association property="product" select="queryProduct" column="PRODUCT_ID"/>
+        <association property="customer" select="queryCustomer" column="CUSTOMER_ID"/>
+    </resultMap>
+
+    <!--查询进件相关产品信息-->
+    <select id="queryProduct" resultType="com.cardpay.mgt.product.model.Product">
+      SELECT * FROM T_PRODUCT WHERE id = #{productId}
+    </select>
+
+    <!--查询进件相关客户信息-->
+    <select id="queryCustomer" resultType="com.cardpay.mgt.customer.model.TCustomerBasic">
+      SELECT * FROM T_CUSTOMER_BASIC WHERE id =#{customerId}
+    </select>
+
+    <!--按客户经理Id查询进件信息-->
+    <select id="queryByManagerId" resultMap="BaseVo">
+      SELECT * FROM T_APPLICATION WHERE customerManagerId = #{managerId}
+    </select>
+
+    <!--按进件id查询进件信息-->
+    <select id="queryByApplication" resultMap="BaseVo">
+      SELECT * FROM T_APPLICATION WHERE id = #{applicationId}
+    </select>
+
 </mapper>
