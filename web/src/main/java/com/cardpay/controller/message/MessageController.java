@@ -76,5 +76,4 @@ public class MessageController extends BaseController<TMessage> {
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
-
 }

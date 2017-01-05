@@ -18,10 +18,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 客户controller
@@ -81,7 +78,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         Integer userId = ShiroKit.getUserId();
         tCustomerBasic.setCustomerManagerId(userId);
         tCustomerBasic.setCreateBy(userId);
-        Integer count = customerBasicService.insertSelective(tCustomerBasic);
+        tCustomerBasic.setModifyTime(new Date());
+        tCustomerBasic.setModifyBy(userId);
+        Integer count = customerBasicService.insert(tCustomerBasic);
         if (count != null && count != 0) {
             String[] split = industry.split(",");
             List<TCustomerIndustry> list = new ArrayList<>();

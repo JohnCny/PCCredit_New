@@ -62,7 +62,6 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerIds 客户id(,分割)
      * @param status      需要变更的状态
      * @param reason      移交原因
-     * @param managerId      客户经理ID
      * @return 数据库变记录
      */
     @PutMapping
@@ -70,8 +69,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "状态(默认为正常)") @RequestParam(defaultValue = "0") int status
-            , @ApiParam(value = "移交原因", required = true) @RequestParam String reason
-        , @ApiParam(value = "客户经理ID", required = true) @RequestParam int managerId) {
+            , @ApiParam(value = "移交原因", required = true) @RequestParam String reason) {
         List<Integer> customerIdList = new ArrayList<>();
         //添加客户移交记录
         String[] split = customerIds.split(",");
@@ -87,7 +85,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             tCustomerTransfer.setTransferReason(reason);
             tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
             tCustomerTransfer.setTransferTime(new Date());
-            customerTransferService.insertSelective(tCustomerTransfer);
+            customerTransferService.insert(tCustomerTransfer);
             customerIdList.add(customerId);
         }
         Map<String, Object> map = new HashMap();

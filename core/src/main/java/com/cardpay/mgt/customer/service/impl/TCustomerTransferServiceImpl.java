@@ -61,13 +61,13 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     @Override
     @Transactional
     public synchronized int accept(String customerIds, Integer flag) {
-        List<Integer> idList = new ArrayList<>();
+        List<Integer> customerIdList = new ArrayList<>();
         String[] split = customerIds.split(",");
         Integer userId = ShiroKit.getUserId();
         String messageContent; //发送消息内容
         for (String id : split) {
             int customerId = Integer.parseInt(id);
-            idList.add(customerId);
+            customerIdList.add(customerId);
         }
         Map<String, Object> map = new HashMap();
         if (flag != null && flag == 1) { //接受
@@ -76,11 +76,11 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
         } else {  //拒绝
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
         }
-        map.put("customerIds", idList);
-        int accept = tCustomerIndustryDao.accept(map);
+        map.put("customerIds", customerIdList);
+        int mark = tCustomerIndustryDao.accept(map);
 
         //消息推送
-        if (accept != 0) {
+        if (mark != 0) {
             for (String id : split) {
                 int customerId = Integer.parseInt(id);
                 TCustomerTransfer tCustomerTransfer = tCustomerTransferService.selectByPrimaryKey(customerId);
@@ -93,7 +93,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
                         , 0, 0);
             }
         }
-        return accept;
+        return mark;
     }
 
     @Override
