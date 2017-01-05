@@ -3,6 +3,7 @@ package com.cardpay.controller.customer;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -58,7 +59,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      * 新增维护记录
      *
      * @param tCustomerMaintenance 维护信息
-     * @return 客户维护信息查询页面
+     * @return 维护记录Id
      */
     @PostMapping
     @SystemControllerLog("新增维护记录")
@@ -69,8 +70,8 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
         tCustomerMaintenance.setOperationId(userId);
         tCustomerMaintenance.setOperationName(tCustomerManagerBaseVo.getUser().getUserCname());
         tCustomerMaintenance.setOperationTime(new Date());
-        customerMaintenanceService.insertSelective(tCustomerMaintenance);
-        return new ResultTo().setData(tCustomerMaintenance.getId());
+        Integer mark = customerMaintenanceService.insertSelective(tCustomerMaintenance);
+        return mark != 0 ? new ResultTo().setData(tCustomerMaintenance.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
