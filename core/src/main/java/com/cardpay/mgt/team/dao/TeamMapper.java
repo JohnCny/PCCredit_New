@@ -24,4 +24,18 @@ public interface TeamMapper extends BasicMapper<Team> {
      * @return
      */
     List<TeamVo> queryAll();
+
+    /**
+     * 递归删除团队信息
+     * @param teamId
+     * @return
+     */
+    int deleteTeam(@Param("teamId") Integer teamId);
+
+    /**
+     * 查询团队是否有子团队
+     * @param teamId
+     * @return
+     */
+    int querySubsidiary(@Param("teamId") Integer teamId);
 }

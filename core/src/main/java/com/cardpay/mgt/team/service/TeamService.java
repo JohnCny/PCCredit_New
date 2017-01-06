@@ -30,4 +30,11 @@ public interface TeamService extends BaseService<Team> {
      */
     List<UserTeamVo> queryTeam(Integer teamId);
 
+    /**
+     * 递归删除团队信息
+     * @param teamId
+     * @return
+     */
+    int deleteTeam(Integer teamId);
+
 }

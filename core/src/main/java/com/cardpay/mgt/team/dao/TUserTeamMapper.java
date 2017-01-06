@@ -17,4 +17,11 @@ public interface TUserTeamMapper extends BasicMapper<TUserTeam> {
      * @return 数据库变记录
      */
     int batchInsert (Map<String, Object> map);
+
+    /**
+     * 批量更新团队,成员信息
+     * @param map 用户,团队id
+     * @return 数据库变记录
+     */
+    int batchUpdate(Map<String, Object> map);
 }

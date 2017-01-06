@@ -34,4 +34,14 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     public List<UserTeamVo> queryTeam(Integer teamId) {
         return teamDao.queryTeam(teamId);
     }
+
+    @Override
+    public int deleteTeam(Integer teamId) {
+        List<UserTeamVo> userTeamVos = teamDao.queryTeam(teamId);
+        int count = teamDao.querySubsidiary(teamId);
+        if (count > 0 && userTeamVos.size() > 0) {
+            return 0;
+        }
+        return teamDao.deleteTeam(teamId);
+    }
 }

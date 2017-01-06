@@ -19,4 +19,5 @@ public interface TUserTeamService extends BaseService<TUserTeam> {
      * @return 数据库变记录
      */
     int batchInsert (int teamId, String userIds);
+
 }

@@ -9,13 +9,6 @@ import javax.persistence.*;
 @Table(name = "T_USER_TEAM")
 @ApiModel(value="用户团队表")
 public class TUserTeam extends GenericEntity<Integer> {
-    /**
-     * 用户id
-     */
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select 你的序列名.nextval from dual")
-    @ApiModelProperty(value="用户id",required = true)
-    private Integer id;
 
     /**
      * 团队id
@@ -31,23 +24,6 @@ public class TUserTeam extends GenericEntity<Integer> {
     @ApiModelProperty(value="用户id",required = true)
     private Integer userId;
 
-    /**
-     * 获取用户id
-     *
-     * @return ID - 用户id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * 设置用户id
-     *
-     * @param id 用户id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     /**
      * 获取团队id
@@ -87,6 +63,6 @@ public class TUserTeam extends GenericEntity<Integer> {
 
     @Override
     public Integer getPK() {
-        return id;
+        return null;
     }
 }
