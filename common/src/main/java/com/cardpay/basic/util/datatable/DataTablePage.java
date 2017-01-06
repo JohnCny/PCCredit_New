@@ -2,6 +2,7 @@ package com.cardpay.basic.util.datatable;
 
 import com.alibaba.fastjson.JSON;
 import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -14,6 +15,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * DataTable工具类
@@ -28,6 +30,8 @@ public class DataTablePage {
 
     private long recordsTotal; // 数据总记录数
     private long recordsFiltered; // 过滤数据总记录数
+
+    private int code;//状态码
 
     private List<Object> data;
 
@@ -124,6 +128,7 @@ public class DataTablePage {
         PageInfo pageInfo = new PageInfo(this.data);
         setRecordsTotal(pageInfo.getTotal());
         setRecordsFiltered(pageInfo.getTotal());
+        setCode(ResultEnum.SUCCESS.getValue());
     }
 
     private Map<String, Object> removeNull(Map<String, Object> map) {
@@ -177,5 +182,13 @@ public class DataTablePage {
 
     public void setRecordsFiltered(long recordsFiltered) {
         this.recordsFiltered = recordsFiltered;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }
