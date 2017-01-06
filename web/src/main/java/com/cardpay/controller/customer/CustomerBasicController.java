@@ -5,6 +5,7 @@ import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.util.IDcardUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -45,6 +46,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @SystemControllerLog("验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
     public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam long identityCard) {
+        if (!IDcardUtil.verify(String.valueOf(identityCard))) {
+            return new ResultTo(ResultEnum.ID_CARD_ERROR);
+        }
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
         return new ResultTo().setData(idCardExist);
     }

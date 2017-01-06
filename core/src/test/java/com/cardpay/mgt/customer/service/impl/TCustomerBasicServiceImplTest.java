@@ -2,8 +2,10 @@ package com.cardpay.mgt.customer.service.impl;
 
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
+import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,14 +30,17 @@ import static org.powermock.api.mockito.PowerMockito.when;
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest({TCustomerBasicService.class})
 public class TCustomerBasicServiceImplTest {
-
-    @Test
-    public void queryCustomerByCondition() throws Exception {
-
-    }
-
     @Mock
     private TCustomerBasicMapper customerBasicMapper;
+
+    @Mock
+    private TCustomerMaintenanceServiceImpl tCustomerMaintenanceService;
+
+    @Mock
+    private TCustomerTransferServiceImpl tCustomerTransferService;
+
+    @Mock
+    private TCustomerIndustryServiceImpl tCustomerIndustryService;
 
     @InjectMocks
     private TCustomerBasicServiceImpl customerBasicService;
@@ -64,5 +69,26 @@ public class TCustomerBasicServiceImplTest {
         when(customerBasicMapper.updateStatus(map)).thenReturn(1);
         int i = customerBasicService.updateStatus(map);
         assertEquals(i, 1);
+    }
+
+    @Test
+    public void deleteCustomer() throws Exception {
+        when(customerBasicMapper.deleteByPrimaryKey(1)).thenReturn(1);
+        when(tCustomerIndustryService.deleteByPrimaryKey(1)).thenReturn(1);
+        when(tCustomerMaintenanceService.deleteByPrimaryKey(1)).thenReturn(1);
+        when(tCustomerTransferService.deleteByPrimaryKey(1)).thenReturn(1);
+        int integer = customerBasicService.deleteCustomer(1);
+        assertEquals(integer, 4);
+    }
+
+    @Test
+    public void queryCustomerByCondition() throws Exception {
+        Map<String, Object> map = new HashedMap();
+        map.put("customerIds", 1);
+        List<TCustomerBasic> list = new ArrayList<>();
+        list.add(new TCustomerBasic());
+        when(customerBasicMapper.queryCustomerByCondition(map)).thenReturn(list);
+        List<TCustomerBasic> list1 = customerBasicService.queryCustomerByCondition(map);
+        assertEquals(list1, list);
     }
 }

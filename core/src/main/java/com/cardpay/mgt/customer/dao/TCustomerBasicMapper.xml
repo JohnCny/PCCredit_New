@@ -77,9 +77,7 @@
     <select id="selectDelete" parameterType="Map" resultMap="BaseResultMap">
         SELECT basic.*
         FROM
-        T_CUSTOMER_BASIC basic
-        LEFT JOIN
-        T_APPLICATION application on ( basic.id != application.CUSTOMER_ID)
+        T_CUSTOMER_BASIC basic,T_APPLICATION application
         WHERE
         basic.id != application.CUSTOMER_ID
         AND basic.CUSTOMER_MANAGER_ID = #{managerId}

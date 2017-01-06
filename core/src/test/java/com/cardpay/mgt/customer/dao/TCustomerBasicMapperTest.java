@@ -25,13 +25,6 @@ public class TCustomerBasicMapperTest extends TestEnv {
     private TCustomerBasicMapper tCustomerBasicMapper;
 
     @Test
-    @Ignore
-    //TODO :未确定需求
-    public void getProspectiveCustomers() throws Exception {
-
-    }
-
-    @Test
     public void queryCustomer() throws Exception {
         List<TCustomerTransferVo> tCustomerTransferVos = tCustomerBasicMapper.queryCustomer(1);
         assertTrue(tCustomerTransferVos.size() > 0);
@@ -62,5 +55,15 @@ public class TCustomerBasicMapperTest extends TestEnv {
         map.put("customerManagerId", 4);
         List<TCustomerBasic> tCustomerBasics = tCustomerBasicMapper.queryCustomerByCondition(map);
         assertTrue(tCustomerBasics.size() > 0);
+    }
+
+    @Test
+    @Ignore
+    //todo :数据库不同步
+    public void selectDelete() throws Exception {
+        Map<String, Object> map = new HashedMap();
+        map.put("managerId", 4);
+        List<TCustomerBasic> list = tCustomerBasicMapper.selectDelete(map);
+        assertTrue(list.size() > 0);
     }
 }
