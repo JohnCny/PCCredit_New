@@ -29,7 +29,7 @@ public class ProductApprove extends GenericEntity<Integer> {
      */
     @Column(name = "PRODUCT_ID")
     @ApiModelProperty(value = "产品id", required = true)
-    private String productId;
+    private Integer productId;
 
     /**
      * 节点类型(0 起始节点 1 中间节点 2 结束节点)
@@ -131,7 +131,7 @@ public class ProductApprove extends GenericEntity<Integer> {
      *
      * @return PRODUCT_ID - 产品id
      */
-    public String getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
@@ -140,7 +140,7 @@ public class ProductApprove extends GenericEntity<Integer> {
      *
      * @param productId 产品id
      */
-    public void setProductId(String productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 
@@ -345,5 +345,112 @@ public class ProductApprove extends GenericEntity<Integer> {
     @Override
     public Integer getPK() {
         return id;
+    }
+
+
+    public static final class ProductApproveBuilder {
+        private Integer id;
+        private Integer productId;
+        private Integer nodeType;
+        private String nodeName;
+        private Integer preNodeId;
+        private Integer nextNodeId;
+        private String approveRoles;
+        private Integer isRandomDivision;
+        private Integer isLoanMeeting;
+        private Integer isLoanLimit;
+        private Long loanLimit;
+        private Integer isReviewNode;
+        private Integer loanMeetingType;
+
+        private ProductApproveBuilder() {
+        }
+
+        public static ProductApproveBuilder get() {
+            return new ProductApproveBuilder();
+        }
+
+        public ProductApproveBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public ProductApproveBuilder withProductId(Integer productId) {
+            this.productId = productId;
+            return this;
+        }
+
+        public ProductApproveBuilder withNodeType(Integer nodeType) {
+            this.nodeType = nodeType;
+            return this;
+        }
+
+        public ProductApproveBuilder withNodeName(String nodeName) {
+            this.nodeName = nodeName;
+            return this;
+        }
+
+        public ProductApproveBuilder withPreNodeId(Integer preNodeId) {
+            this.preNodeId = preNodeId;
+            return this;
+        }
+
+        public ProductApproveBuilder withNextNodeId(Integer nextNodeId) {
+            this.nextNodeId = nextNodeId;
+            return this;
+        }
+
+        public ProductApproveBuilder withApproveRoles(String approveRoles) {
+            this.approveRoles = approveRoles;
+            return this;
+        }
+
+        public ProductApproveBuilder withIsRandomDivision(Integer isRandomDivision) {
+            this.isRandomDivision = isRandomDivision;
+            return this;
+        }
+
+        public ProductApproveBuilder withIsLoanMeeting(Integer isLoanMeeting) {
+            this.isLoanMeeting = isLoanMeeting;
+            return this;
+        }
+
+        public ProductApproveBuilder withIsLoanLimit(Integer isLoanLimit) {
+            this.isLoanLimit = isLoanLimit;
+            return this;
+        }
+
+        public ProductApproveBuilder withLoanLimit(Long loanLimit) {
+            this.loanLimit = loanLimit;
+            return this;
+        }
+
+        public ProductApproveBuilder withIsReviewNode(Integer isReviewNode) {
+            this.isReviewNode = isReviewNode;
+            return this;
+        }
+
+        public ProductApproveBuilder withLoanMeetingType(Integer loanMeetingType) {
+            this.loanMeetingType = loanMeetingType;
+            return this;
+        }
+
+        public ProductApprove build() {
+            ProductApprove productApprove = new ProductApprove();
+            productApprove.setId(id);
+            productApprove.setProductId(productId);
+            productApprove.setNodeType(nodeType);
+            productApprove.setNodeName(nodeName);
+            productApprove.setPreNodeId(preNodeId);
+            productApprove.setNextNodeId(nextNodeId);
+            productApprove.setApproveRoles(approveRoles);
+            productApprove.setIsRandomDivision(isRandomDivision);
+            productApprove.setIsLoanMeeting(isLoanMeeting);
+            productApprove.setIsLoanLimit(isLoanLimit);
+            productApprove.setLoanLimit(loanLimit);
+            productApprove.setIsReviewNode(isReviewNode);
+            productApprove.setLoanMeetingType(loanMeetingType);
+            return productApprove;
+        }
     }
 }
