@@ -2,12 +2,15 @@ package com.cardpay.mgt.menu.enums;
 
 /**
  * 角色ID枚举
- * @author  yanweichen
+ *
+ * @author yanweichen
  */
 public enum RoleEnum {
 
+    SUPERS("super", 1),
     ADMIN("admin", 2),
-    MANAGER("manager", 3);
+    MANAGER("manager", 3),
+    EXPERT("expert", 4);
 
     RoleEnum(String roleName, Integer roleId) {
         this.roleName = roleName;

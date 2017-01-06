@@ -39,8 +39,8 @@
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="unauthorizedUrl" value="/logon/unauthorized"/>
-        <property name="loginUrl" value="/logon/noLogin"/>
+        <property name="unauthorizedUrl" value="/api/logon/unauthorized"/>
+        <property name="loginUrl" value="/api/logon/noLogin"/>
         <property name="filterChainDefinitions">
             <value>
                 /upload/** = anon

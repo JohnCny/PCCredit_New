@@ -14,7 +14,7 @@ public class ProducerService {
 	/**
 	 * rabbitMq消息模板类
 	 */
-	@Autowired
+//	@Autowired
 	private AmqpTemplate amqpTemplate;
 
 	/**
