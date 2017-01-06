@@ -1,22 +1,16 @@
 package com.cardpay.controller.application;
 
+
 import com.cardpay.basic.base.model.ResultTo;
-import com.cardpay.controller.base.BaseController;
-import com.cardpay.core.fastdfs.FileManager;
-import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.application.model.TApplication;
-import com.cardpay.mgt.application.service.TApplicationService;
-import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
-import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
-import com.cardpay.mgt.product.model.Product;
-import com.cardpay.mgt.product.service.ProductService;
-import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.application.balancecross.dao.TTemplateGroupMapper;
+import com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossGroup;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 进件Controller类
@@ -25,28 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/application")
 @Api(value = "/api/application", description = "进件")
-public class ApplicationController extends BaseController<TApplication> {
-    @Autowired //进件
-    private TApplicationService tApplicationService;
+public class ApplicationController{
 
     @Autowired
-    private FileManager fileManager;
+    private TTemplateGroupMapper templateGroupMapper;
 
-      @Autowired //产品
-      private ProductService productService;
-
-    @Autowired//客户经理
-    private CustomerManagerService tManagerService;
-
-    private Integer userId = ShiroKit.getUserId();
-
-    @RequestMapping
-    public ResultTo productNext(@ApiParam(value = "产品ID", required = true) @RequestParam("id") int productId) {
-        User user = (User) ShiroKit.getPrincipal();
-        TCustomerManager tCustomerManager = tManagerService.selectByUserId(userId);
-        Product product = productService.selectByPrimaryKey(productId);
-        return new ResultTo();
+    @GetMapping("/tree")
+    public ResultTo selectTree(){
+        ResultTo resultTo = new ResultTo();
+        List<BalanceCrossGroup> balanceCrossGroups = templateGroupMapper.selectBalanceCross(2, 1);
+        resultTo.setData(balanceCrossGroups);
+        return resultTo;
     }
-
-
 }

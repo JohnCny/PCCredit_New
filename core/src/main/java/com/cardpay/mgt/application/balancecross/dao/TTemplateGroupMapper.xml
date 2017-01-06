@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.balancecross.dao.TTemplateGroupMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.balancecross.model.TTemplateGroup">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="GROUP_ID" jdbcType="DECIMAL" property="groupId" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="GROUP_PARENT_ID" jdbcType="DECIMAL" property="groupParentId" />
+    <result column="GROUP_DESCRIPTION" jdbcType="VARCHAR" property="groupDescription" />
+    <result column="IS_GROUP_MENU" jdbcType="DECIMAL" property="isGroupMenu" />
+  </resultMap>
+
+  <resultMap id="BalanceCross" type="com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossGroup">
+    <result column="GROUP_ID" jdbcType="DECIMAL" property="groupId" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="GROUP_PARENT_ID" jdbcType="DECIMAL" property="groupParentId" />
+    <result column="GROUP_DESCRIPTION" jdbcType="VARCHAR" property="groupDescription" />
+    <result column="IS_GROUP_MENU" jdbcType="DECIMAL" property="isGroupMenu" />
+    <collection property="balanceCrossChildren" column="GROUP_ID" select="selectGroup"/>
+    <collection property="balanceCrossVars" column="{applicationId=APPLICATION_ID,groupId=GROUP_ID}" select="selectVarEntrance"/>
+  </resultMap>
+
+  <resultMap id="BalanceCrossVar" type="com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossVar">
+    <id column="BALANCE_CROSS_VAR_ID" jdbcType="DECIMAL" property="balanceCrossVarId" />
+    <result column="BALANCE_CROSS_VAR_NAME" jdbcType="VARCHAR" property="balanceCrossVarName" />
+    <result column="BALANCE_CROSS_VAR_PARENT_ID" jdbcType="DECIMAL" property="balanceCrossVarParentId" />
+    <result column="BALANCE_CROSS_VAR_ORDER" jdbcType="DECIMAL" property="balanceCrossVarOrder" />
+    <result column="BALANCE_CROSS_VAR_TYPE" jdbcType="DECIMAL" property="balanceCrossVarType" />
+    <result column="BALANCE_CROSS_VAR_WEIGHT" jdbcType="VARCHAR" property="balanceCrossVarWeight" />
+    <result column="BALANCE_CROSS_VAR_VALUE_TYPE" jdbcType="DECIMAL" property="balanceCrossVarValueType" />
+    <result column="BALANCE_CROSS_VARGROUP_ID" jdbcType="DECIMAL" property="balanceCrossVargroupId" />
+    <result column="BALANCE_CROSS_VARIS_HAS_CHILD" jdbcType="DECIMAL" property="balanceCrossVarisHasChild" />
+    <result column="BALANCE_CROSS_VARIS_COMPUTE" jdbcType="DECIMAL" property="balanceCrossVarisCompute" />
+    <result column="BALANCE_CROSS_VAR_VALUE" jdbcType="VARCHAR" property="balanceCrossVarValue" />
+    <collection property="balanceCrossVars" column="BALANCE_CROSS_VAR_ID" select="selectVar"/>
+    <collection property="balanceCrossExtras" column="BALANCE_CROSS_VAR_ID" select="selectExtra"/>
+    <collection property="balanceCrossOptions" column="BALANCE_CROSS_VAR_ID" select="selectOption"/>
+  </resultMap>
+
+  <!--Group入口-->
+  <select id="selectBalanceCross" resultMap="BalanceCross">
+    SELECT
+        TG.*,#{applicationId} APPLICATION_ID
+    FROM
+        T_APPLICATION_TEMPLATE_GROUP ATG,
+        T_TEMPLATE_GROUP TG
+    WHERE
+        ATG. GROUP_ID = TG. GROUP_ID
+    AND ATG.TEMPLATE_ID = #{templateId}
+  </select>
+
+  <!--Var入口-->
+  <select id="selectVarEntrance" resultMap="BalanceCrossVar">
+    SELECT
+        BCV.*,ABV.BALANCE_CROSS_VAR_VALUE
+    FROM
+        T_BANLANCE_CROSS_VAR BCV,
+        T_APPLICATION_BALANCECROSS_VAR ABV
+    WHERE
+        BCV.BALANCE_CROSS_VAR_ID = ABV.BALANCE_CROSS_VAR_ID
+    AND BCV.BALANCE_CROSS_VARGROUP_ID = #{groupId}
+    AND ABV.APPLICATION_ID = #{applicationId}
+  </select>
+
+  <!--查询Group层级-->
+  <select id="selectGroup" resultMap="BalanceCross">
+    SELECT * FROM T_TEMPLATE_GROUP WHERE GROUP_PARENT_ID = #{GROUP_ID}
+  </select>
+
+  <!--查询Var层级-->
+  <select id="selectVar" resultMap="BalanceCrossVar">
+    SELECT * FROM T_BANLANCE_CROSS_VAR WHERE BALANCE_CROSS_VAR_PARENT_ID = #{BALANCE_CROSS_VAR_ID}
+  </select>
+
+  <!--查询Extra-->
+  <select id="selectExtra" resultType="com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossExtra">
+    SELECT * FROM T_BANLANCE_CROSS_VAR WHERE BALANCE_CROSS_VAR_ID = #{BALANCE_CROSS_VAR_ID}
+  </select>
+
+  <!--查询Option-->
+  <select id="selectOption" resultType="com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossOption">
+    SELECT * FROM T_BALANCE_CROSS_VAR_OPTION WHERE BALANCE_CROSS_VAR_ID = #{BALANCE_CROSS_VAR_ID}
+  </select>
+</mapper>
