@@ -3,7 +3,6 @@ package com.cardpay.mgt.customer.service.impl;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
-import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.dc.pr.PRError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
