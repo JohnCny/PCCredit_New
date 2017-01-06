@@ -136,9 +136,11 @@ public class OrganizationController extends BaseController<TOrganization> {
     @ApiOperation(value = "更新机构信息", notes = "更新机构信息", httpMethod = "PUT")
     public ResultTo move(@ApiParam("机构信息") @RequestBody String organization) {
         List<TOrganization> tOrganizations = JSONArray.parseArray(organization, TOrganization.class);
+        int flag = 0;
         for (TOrganization tOrganization : tOrganizations) {
-            tOrganizationService.updateSelectiveByPrimaryKey(tOrganization);
+            flag = tOrganizationService.updateSelectiveByPrimaryKey(tOrganization);
+            flag++;
         }
-        return new ResultTo();
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 }

@@ -13,7 +13,9 @@ public class Team extends GenericEntity<Integer>{
     /**
      * 团队id
      */
+    @Id
     @Column(name = "team_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select TEAM_SEQ.nextval from dual")
     @ApiModelProperty(value="团队id",required = true)
     private Integer teamId;
 

@@ -1,18 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.team.dao.TeamMapper">
-  <resultMap id="BaseResultMap" type="com.cardpay.mgt.team.model.Team">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <result column="team_id" jdbcType="DECIMAL" property="teamId" />
-    <result column="team_name" jdbcType="VARCHAR" property="teamName" />
-    <result column="team_description" jdbcType="VARCHAR" property="teamDescription" />
-    <result column="team_leader_id" jdbcType="DECIMAL" property="teamLeaderId" />
-    <result column="team_leader_cname" jdbcType="VARCHAR" property="teamLeaderCname" />
-    <result column="team_parent_id" jdbcType="DECIMAL" property="teamParentId" />
-    <result column="create_by" jdbcType="DECIMAL" property="createBy" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="is_menu_type" jdbcType="DECIMAL" property="isMenuType" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.team.model.Team">
+        <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId"/>
+        <result column="TEAM_NAME" jdbcType="VARCHAR" property="teamName"/>
+        <result column="TEAM_DESCRIPTION" jdbcType="VARCHAR" property="teamDescription"/>
+        <result column="TEAM_LEADER_ID" jdbcType="DECIMAL" property="teamLeaderId"/>
+        <result column="TEAM_LEADER_CNAME" jdbcType="VARCHAR" property="teamLeaderCname"/>
+        <result column="TEAM_PARENT_ID" jdbcType="DECIMAL" property="teamParentId"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="IS_MENU_TYPE" jdbcType="DECIMAL" property="isMenuType"/>
+    </resultMap>
+
+    <resultMap id="BaseVo" type="com.cardpay.mgt.team.model.vo.TeamVo">
+        <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId"/>
+        <result column="TEAM_NAME" jdbcType="VARCHAR" property="teamName"/>
+        <result column="TEAM_DESCRIPTION" jdbcType="VARCHAR" property="teamDescription"/>
+        <result column="TEAM_LEADER_ID" jdbcType="DECIMAL" property="teamLeaderId"/>
+        <result column="TEAM_LEADER_CNAME" jdbcType="VARCHAR" property="teamLeaderCname"/>
+        <result column="TEAM_PARENT_ID" jdbcType="DECIMAL" property="teamParentId"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="IS_MENU_TYPE" jdbcType="DECIMAL" property="isMenuType"/>
+        <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+        <collection property="teamList" select="queryTeamList" column="TEAM_ID"/>
+    </resultMap>
+
+    <resultMap id="BaseMapVo" type="com.cardpay.mgt.team.model.vo.UserTeamVo">
+        <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+        <collection property="userList" select="queryUserList" column="USER_ID"/>
+    </resultMap>
+
+    <!--查询子团队信息-->
+    <select id="queryTeamList" resultMap="BaseVo">
+   SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+  </select>
+
+    <!--查询所有团队信息-->
+    <select id="queryAll" resultMap="BaseVo">
+        SELECT * FROM T_TEAM
+    </select>
+
+    <!--查询用户信息-->
+    <select id="queryUserList" resultType="com.cardpay.mgt.user.model.User">
+        SELECT * FROM T_USER WHERE id = #{userId}
+    </select>
+
+    <!--查询所有团队信息-->
+    <select id="queryTeam" resultMap="BaseMapVo">
+        SELECT usrTeam.* FROM T_TEAM team, T_USER_TEAM usrTeam, T_USER usr
+        WHERE
+        TEAM.TEAM_ID = usrTeam.TEAM_ID
+        AND usrTeam.USER_ID = usr.id
+        AND team.TEAM_ID = #{teamId}
+    </select>
 </mapper>
