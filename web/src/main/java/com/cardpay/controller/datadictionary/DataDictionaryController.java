@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author yanwe 2016/12/21 14:10
  */
-@Controller
+@RestController
 @RequestMapping("/api/dataDictionary")
 @Api(value = "/api/dataDictionary", description = "数据字典")
 public class DataDictionaryController extends BaseController<TDataDictionary> {
@@ -32,7 +32,6 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
      *
      * @return 分页数据
      */
-    @ResponseBody
     @RequestMapping(value = "/pageList", method = RequestMethod.GET)
     @ApiOperation(value = "获取数据字典分页数据", notes = "获取数据字典分页数据", httpMethod = "GET")
     public DataTablePage pageList() {
@@ -59,7 +58,6 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
      * @param dataId 数据字典id
      * @return 删除结果
      */
-    @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除数据字典接口", notes = "删除数据字典", httpMethod = "DELETE")
     public ResultTo delete(@RequestParam("dataId") Integer dataId) {
@@ -86,7 +84,6 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
      * @param dataDictionary 数据字典信息
      * @return 数据库变记录
      */
-    @ResponseBody
     @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "更新数据字典接口", notes = "根据ID更新数据字典信息", httpMethod = "PUT")
     public ResultTo update(@ModelAttribute TDataDictionary dataDictionary) {

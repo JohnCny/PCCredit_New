@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.team.dao.TUserTeamMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.team.model.TUserTeam">
+    <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId" />
+    <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
+  </resultMap>
+
+  <!--批量添加团队,成员关联信息-->
+  <insert id="batchInsert" parameterType="Map">
+    INSERT INTO T_USER_TEAM (TEAM_ID, USER_ID)
+    <foreach collection="map" open="(" close=")" index="index" item="item" separator="union">
+      SELECT #{teamId}, #{userId} FROM DUAL
+    </foreach>
+  </insert>
+
+  <!--批量更新团队客户关联信息-->
+  <update id="batchUpdate" parameterType="Map">
+    <foreach collection="map" open="BEGIN" close=";END;" item="item" index="index" separator=";">
+      UPDATE T_USER_TEAM
+      <set>
+        TEAM_ID = #{teamId}, USER_ID = #{userId}
+      </set>
+      WHERE TEAM_ID = #{teamId}
+    </foreach>
+  </update>
+
+</mapper>

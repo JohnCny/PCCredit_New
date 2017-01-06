@@ -2,6 +2,7 @@ package com.cardpay.basic.util.datatable;
 
 import com.alibaba.fastjson.JSON;
 import com.cardpay.basic.base.service.BaseService;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -14,6 +15,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * DataTable工具类
@@ -28,6 +30,8 @@ public class DataTablePage {
 
     private long recordsTotal; // 数据总记录数
     private long recordsFiltered; // 过滤数据总记录数
+
+    private int code;//状态码
 
     private List<Object> data;
 
@@ -73,7 +77,22 @@ public class DataTablePage {
         }
     }
 
-    private void DataTablePage(String methodName, BaseService baseService, HttpServletRequest request, Class clazz, Example example, Map<String, Object> parameterMap) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    /**
+     *  分页方法
+     * @param methodName 方法名称
+     * @param baseService service名称
+     * @param request 请求
+     * @param clazz 类类型
+     * @param example   通用的Example查询对象
+     * @param parameterMap 参数列表
+     * @throws NoSuchMethodException 方法没找到
+     * @throws InvocationTargetException 反射异常
+     * @throws IllegalAccessException 反射异常
+     * @throws InstantiationException 实例化异常
+     */
+    private void DataTablePage(String methodName, BaseService baseService, HttpServletRequest request
+            , Class clazz, Example example, Map<String, Object> parameterMap) throws NoSuchMethodException
+            , InvocationTargetException, IllegalAccessException, InstantiationException {
         String start = request.getParameter("start");
         String length = request.getParameter("length");
         String search = request.getParameter("search");
@@ -82,7 +101,7 @@ public class DataTablePage {
         this.start = start != null ? Integer.parseInt(start) : this.start;
         this.length = length != null ? Integer.parseInt(length) : this.length;
         String finalOrder = null;
-        if (StringUtils.isNotBlank(order)) {
+        if (StringUtils.isNotBlank(order)) {  //是否按照规则排序
             Map<String, String> map = JSON.parseObject(order, Map.class);
             if (null != map) {
                 for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -93,7 +112,7 @@ public class DataTablePage {
         }
 
         Map<String, Object> map = JSON.parseObject(search, Map.class);
-        if (StringUtils.isNotBlank(methodName)) {
+        if (StringUtils.isNotBlank(methodName)) { //是否制定方法名称,若没有则执行默认的查询方法
             if (null != parameterMap) {
                 if (null != map) {
                     map.putAll(parameterMap);
@@ -124,8 +143,14 @@ public class DataTablePage {
         PageInfo pageInfo = new PageInfo(this.data);
         setRecordsTotal(pageInfo.getTotal());
         setRecordsFiltered(pageInfo.getTotal());
+        setCode(ResultEnum.SUCCESS.getValue());
     }
 
+    /**
+     * 移除map中空字段
+     * @param map 参数map
+     * @return 没有空字段的map
+     */
     private Map<String, Object> removeNull(Map<String, Object> map) {
         Map<String, Object> newMap = new HashMap();
         if (map != null) {
@@ -177,5 +202,13 @@ public class DataTablePage {
 
     public void setRecordsFiltered(long recordsFiltered) {
         this.recordsFiltered = recordsFiltered;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }
