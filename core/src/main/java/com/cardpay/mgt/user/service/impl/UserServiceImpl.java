@@ -179,6 +179,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public boolean addUser(User user, Integer orgId, Integer roleId) {
         user.setCreateTime(new Date());
         user.setCreateBy(ShiroKit.getUserId());
+
+//        user.setEmployeeNumber();
+
         user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
         userMapper.insertSelective(user);
         UserOrganization userOrganization = new UserOrganization();
@@ -235,4 +238,5 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public UserUpdateVo selectUserUpdateVo(Integer userId) {
         return userMapper.selectUserUpdateVo(userId);
     }
+
 }

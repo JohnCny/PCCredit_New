@@ -114,9 +114,8 @@ public class UserController extends BaseController<User> {
      */
     @PostMapping
     @ApiOperation(value = "增加用实现", httpMethod = "POST")
-    public ResultTo addUser(@ApiParam("user对象") User user, BindingResult result,
-                            @ApiParam(value = "机构ID") @RequestParam("orgId") Integer orgId,
-                            @ApiParam(value = "角色ID") @RequestParam("roleId") Integer roleId) {
+    public ResultTo addUser(User user, BindingResult result, @RequestParam("orgId") Integer orgId,
+                            @RequestParam("roleId") Integer roleId) {
         if (orgId == null || roleId == null) {
             LogTemplate.info(this.getClass(), "orgId", orgId);
             LogTemplate.info(this.getClass(), "roleId", roleId);
@@ -274,7 +273,7 @@ public class UserController extends BaseController<User> {
             return new ResultTo(ResultEnum.ID_CARD_ERROR);
         }
         User selectUser = userService.selectOne(user);
-        return new ResultTo().setData(selectUser == null ? null : user.getId());
+        return new ResultTo().setData(selectUser == null ? null : selectUser.getId());
     }
 
     /**
@@ -290,7 +289,7 @@ public class UserController extends BaseController<User> {
         User user = new User();
         user.setPhone(phone);
         User selectUser = userService.selectOne(user);
-        return new ResultTo().setData(selectUser == null ? null : user.getId());
+        return new ResultTo().setData(selectUser == null ? null : selectUser.getId());
     }
 
     /**
@@ -306,6 +305,6 @@ public class UserController extends BaseController<User> {
         User user = new User();
         user.setEmail(email);
         User selectUser = userService.selectOne(user);
-        return new ResultTo().setData(selectUser == null ? null : user.getId());
+        return new ResultTo().setData(selectUser == null ? null : selectUser.getId());
     }
 }
