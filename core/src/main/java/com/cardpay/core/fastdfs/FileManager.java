@@ -190,7 +190,19 @@ public class FileManager implements FileManagerConfig {
      * @return 文件信息
      */
     public String upLoad(MultipartFile file) {
-        return upLoadCore(file);
+        String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+        return upLoadCore(file, ext);
+    }
+
+    /**
+     * 单文件上传
+     *
+     * @param file 上传文件
+     * @return 文件信息
+     */
+    public String upLoadExt(MultipartFile file) {
+        String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+        return upLoadCore(file, ext) + "," + ext;
     }
 
     /**
@@ -201,8 +213,10 @@ public class FileManager implements FileManagerConfig {
      */
     public List<String> upLoad(MultipartFile[] files) {
         List<String> list = new ArrayList<>();
+        String ext;
         for (MultipartFile file : files) {
-            String upLoadCore = upLoadCore(file);
+            ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+            String upLoadCore = upLoadCore(file, ext);
             list.add(upLoadCore);
         }
         return list;
@@ -214,10 +228,9 @@ public class FileManager implements FileManagerConfig {
      * @param file 文件
      * @return fastDfs返回值
      */
-    private String upLoadCore(MultipartFile file) {
+    private String upLoadCore(MultipartFile file, String ext) {
         String fileName = null;
         List<TFile> tFiles = new ArrayList<>();
-        String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
         try {
             FastDFSFile fastDFSFile = new FastDFSFile(file.getBytes(), ext);
             NameValuePair[] metaList = new NameValuePair[4];
@@ -250,5 +263,6 @@ public class FileManager implements FileManagerConfig {
         }
         return fileName;
     }
-
 }
+
+

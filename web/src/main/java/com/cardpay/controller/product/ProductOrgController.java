@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
-@RequestMapping("/api/productOrganization")
-@Api(value = "/api/productOrganization", description = "产品机构关联")
-public class ProductOrganizationController extends BaseController<ProductOrganization> {
+@RequestMapping("/api/productOrg")
+@Api(value = "/api/productOrg", description = "产品机构关联")
+public class ProductOrgController extends BaseController<ProductOrganization> {
 
 
 }

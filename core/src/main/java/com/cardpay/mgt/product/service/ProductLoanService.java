@@ -9,5 +9,5 @@ import com.cardpay.mgt.product.model.ProductLoanMonitorRules;
  * @author rankai
  *         createTime 2016-12-2016/12/23 14:40
  */
-public interface ProductLoanMonitorRulesService extends BaseService<ProductLoanMonitorRules> {
+public interface ProductLoanService extends BaseService<ProductLoanMonitorRules> {
 }

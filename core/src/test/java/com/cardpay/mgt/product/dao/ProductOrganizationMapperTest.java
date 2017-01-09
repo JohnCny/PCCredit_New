@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  */
 public class ProductOrganizationMapperTest extends TestEnv {
     @Autowired
-    private ProductOrganizationMapper tProductOrganizationDao;
+    private ProductOrgMapper tProductOrganizationDao;
 
     @Test
     public void batchInsert() throws Exception {

@@ -2,7 +2,7 @@ package com.cardpay.mgt.product.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.product.model.ProductLoanMonitorRules;
-import com.cardpay.mgt.product.service.ProductLoanMonitorRulesService;
+import com.cardpay.mgt.product.service.ProductLoanService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Service;
  *         createTime 2016-12-2016/12/23 14:40
  */
 @Service
-public class ProductLoanMonitorRulesServiceImpl extends BaseServiceImpl<ProductLoanMonitorRules> implements ProductLoanMonitorRulesService {
+public class ProductLoanServiceImpl extends BaseServiceImpl<ProductLoanMonitorRules> implements ProductLoanService {
 }

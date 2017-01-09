@@ -1,8 +1,7 @@
 package com.cardpay.mgt.product.service.impl;
 
-import com.cardpay.mgt.product.dao.ProductOrganizationMapper;
+import com.cardpay.mgt.product.dao.ProductOrgMapper;
 import com.cardpay.mgt.product.model.vo.ProductOrganizationVo;
-import org.apache.commons.collections.map.HashedMap;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +12,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 /**
@@ -23,13 +20,13 @@ import static org.mockito.Mockito.when;
  * Created by chenkai on 2016/12/8.
  */
 @RunWith(MockitoJUnitRunner.class)
-@PrepareForTest({ProductOrganizationServiceImpl.class})
-public class ProductOrganizationServiceImplTest {
+@PrepareForTest({ProductOrgServiceImpl.class})
+public class ProductOrgServiceImplTest {
     @Mock
-    private ProductOrganizationMapper tProductOrganizationDao;
+    private ProductOrgMapper tProductOrganizationDao;
 
     @InjectMocks
-    private ProductOrganizationServiceImpl tProductOrganizationService;
+    private ProductOrgServiceImpl tProductOrganizationService;
 
     @Test
     public void batchInsert() throws Exception {

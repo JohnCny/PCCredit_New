@@ -13,6 +13,6 @@ import java.util.Map;
  * @author rankai
  *         createTime 2016-12-2016/12/23 14:40
  */
-public interface ProductOrganizationService extends BaseService<ProductOrganization> {
+public interface ProductOrgService extends BaseService<ProductOrganization> {
 
 }

@@ -16,6 +16,8 @@ import javax.persistence.*;
 @Table(name = "T_PRODUCT_ORGANIZATION")
 @ApiModel(value = "产品机构信息对应表")
 public class ProductOrganization extends GenericEntity<Integer> {
+
+    @Id
     @Column(name = "PRODUCT_ID")
     @ApiModelProperty(value = "null", required = true)
     private Integer productId;

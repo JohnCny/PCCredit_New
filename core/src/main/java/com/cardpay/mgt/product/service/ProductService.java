@@ -22,4 +22,16 @@ public interface ProductService extends BaseService<Product> {
      * @return 产品ID
      */
     Integer addProduct(Product product, MultipartFile productImg, String orgStr, ExplainList explainList);
+
+
+    /**
+     * 更新产品信息
+     *
+     * @param product     产品实体
+     * @param productImg  产品图片
+     * @param orgStr      产品准入机构字符(机构间用','隔开)
+     * @param explainList 图片说明集合
+     * @return 产品ID
+     */
+    boolean updateProduct(Product product, MultipartFile productImg, String orgStr, ExplainList explainList);
 }

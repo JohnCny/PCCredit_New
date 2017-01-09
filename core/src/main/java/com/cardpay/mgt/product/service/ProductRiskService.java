@@ -9,5 +9,5 @@ import com.cardpay.mgt.product.model.ProductRiskRules;
  * @author rankai
  *         createTime 2016-12-2016/12/23 14:40
  */
-public interface ProductRiskRulesService extends BaseService<ProductRiskRules> {
+public interface ProductRiskService extends BaseService<ProductRiskRules> {
 }

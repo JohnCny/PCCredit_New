@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  */
 public class ProductInvestPictureDescMapperTest extends TestEnv{
     @Autowired
-    private ProductInvestPictureDescMapper tProductInvestPictureDescDao;
+    private ProductDescMapper tProductInvestPictureDescDao;
 
     @Test
     public void batchInsert() throws Exception {
