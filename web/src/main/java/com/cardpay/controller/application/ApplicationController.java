@@ -2,6 +2,7 @@ package com.cardpay.controller.application;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.balancecross.dao.TTemplateGroupMapper;
@@ -9,12 +10,15 @@ import com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossGroup;
 import com.cardpay.mgt.application.model.TApplication;
 import com.cardpay.mgt.application.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.service.TApplicationService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.cardpay.controller.application.enums.ApplicationStatus.*;
 
@@ -103,9 +107,10 @@ public class ApplicationController extends BaseController<TApplication> {
      * @return 进件列表
      */
     @GetMapping
-    public ResultTo queryByManagerId() {
-        List<TApplicationVo> tApplicationVos = tApplicationService.queryByManagerId(ShiroKit.getUserId());
-        return new ResultTo().setData(tApplicationVos);
+    public DataTablePage queryByManagerId() {
+        Map<String, Object> map = new HashMap();
+        map.put("managerId", ShiroKit.getUserId());
+        return dataTablePage("queryByManagerId", map);
     }
 
     /**

@@ -28,6 +28,7 @@ public class TApplicationVo extends GenericEntity<Integer> {
      */
     private Integer productId;
 
+
     /**
      * 进件申请金额
      */

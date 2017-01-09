@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 进件基本信息Service实现类
@@ -77,8 +78,8 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
     }
 
     @Override
-    public List<TApplicationVo> queryByManagerId(int managerId) {
-        return tApplicationDao.queryByManagerId(managerId);
+    public List<TApplicationVo> queryByManagerId(Map<String, Object> map) {
+        return tApplicationDao.queryByManagerId(map);
     }
 
     @Override
