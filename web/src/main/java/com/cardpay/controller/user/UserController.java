@@ -13,23 +13,12 @@ import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.RoleService;
 import com.cardpay.mgt.user.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -55,8 +44,8 @@ public class UserController extends BaseController<User> {
      *
      * @return 分页后的数据
      */
-    @GetMapping("/pageList")
-    @ApiOperation(value = "用户分页数据", httpMethod = "GET")
+    @PostMapping("/pageList")
+    @ApiOperation(value = "用户分页数据", httpMethod = "POST")
     public DataTablePage pageList() {
         return dataTablePage("userPageList");
     }
