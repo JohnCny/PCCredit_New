@@ -18,14 +18,13 @@ public interface ProductApproveService extends BaseService<ProductApprove> {
      * @param productId 产品ID
      * @return 新增审批页面所需数据
      */
-    Map<String, Object> getApprove(Integer productId);
+    Map<String, Object> getApprove(Integer productId, Integer approveId);
 
     /**
      * 增加产品审批
      *
      * @param productApprove ProductApprove实体对象
-     * @param productId      产品ID
      * @return 产品ID
      */
-    void addApprove(ProductApprove productApprove, Integer productId);
+    void addApprove(ProductApprove productApprove);
 }

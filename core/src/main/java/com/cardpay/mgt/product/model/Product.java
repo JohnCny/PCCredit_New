@@ -650,4 +650,35 @@ public class Product extends GenericEntity<Integer> {
     public Integer getPK() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", productLimitMax=" + productLimitMax +
+                ", productLimitMin=" + productLimitMin +
+                ", productInterestMax=" + productInterestMax +
+                ", productInterestMin=" + productInterestMin +
+                ", productState=" + productState +
+                ", productType=" + productType +
+                ", productDescription='" + productDescription + '\'' +
+                ", productPictureUrl='" + productPictureUrl + '\'' +
+                ", productLoanPeriod=" + productLoanPeriod +
+                ", productRepaymentMode=" + productRepaymentMode +
+                ", productApplyTemplateId=" + productApplyTemplateId +
+                ", productSendProductNumber='" + productSendProductNumber + '\'' +
+                ", productHouseholdLevelLimit=" + productHouseholdLevelLimit +
+                ", productCreditLevelLimit='" + productCreditLevelLimit + '\'' +
+                ", productAgeMaxLimit=" + productAgeMaxLimit +
+                ", productAgeMinLimit=" + productAgeMinLimit +
+                ", productIndustryLimit='" + productIndustryLimit + '\'' +
+                ", productMarriageLimit=" + productMarriageLimit +
+                ", customerManagerLevelId=" + customerManagerLevelId +
+                ", createTime=" + createTime +
+                ", createBy=" + createBy +
+                ", modifyTime=" + modifyTime +
+                ", modifyBy=" + modifyBy +
+                '}';
+    }
 }

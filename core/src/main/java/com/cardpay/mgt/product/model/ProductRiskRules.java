@@ -20,6 +20,7 @@ public class ProductRiskRules extends GenericEntity<Integer> {
     /**
      * 产品风险规则id
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCRISK_RULES_SEQ.nextval from dual")
     @ApiModelProperty(value = "产品风险规则id", required = true)

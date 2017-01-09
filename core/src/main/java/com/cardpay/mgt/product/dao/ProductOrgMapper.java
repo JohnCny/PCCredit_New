@@ -13,14 +13,7 @@ import java.util.Map;
  * @author rankai
  *         createTime 2016-12-2016/12/23 14:40
  */
-public interface ProductOrganizationMapper extends BasicMapper<ProductOrganization> {
-    /**
-     * 批量插入
-     *
-     * @param map
-     * @return 插入个数
-     */
-    int batchInsertOrg(Map<String, Object> map);
+public interface ProductOrgMapper extends BasicMapper<ProductOrganization> {
 
     /**
      * 批量删除
@@ -33,9 +26,16 @@ public interface ProductOrganizationMapper extends BasicMapper<ProductOrganizati
     /**
      * 查询产品相关机构信息
      *
-     * @param productId
+     * @param productId 产品ID
      * @return 查询产品相关机构信息Po类
      */
     List<ProductOrganizationVo> queryProductOrg(int productId);
 
+    /**
+     * 批量插入产品机构
+     *
+     * @param productId  产品ID
+     * @param productIds 机构ID数组
+     */
+    void batchInsertOrg(Integer productId, String[] productIds);
 }

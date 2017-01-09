@@ -55,7 +55,7 @@ public class UserController extends BaseController<User> {
      *
      * @return 分页后的数据
      */
-    @GetMapping("/pageList")
+    @PostMapping("/pageList")
     @ApiOperation(value = "用户分页数据", httpMethod = "GET")
     public DataTablePage pageList() {
         return dataTablePage("userPageList");

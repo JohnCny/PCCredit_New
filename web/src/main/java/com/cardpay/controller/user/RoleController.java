@@ -46,8 +46,8 @@ public class RoleController extends BaseController<Role> {
      *
      * @return 角色分页数据
      */
-    @GetMapping("/pageList")
-    @ApiOperation(value = "获取角色分页数据", httpMethod = "GET")
+    @PostMapping("/pageList")
+    @ApiOperation(value = "获取角色分页数据", httpMethod = "POST")
     public DataTablePage pageList() {
         return dataTablePage();
     }

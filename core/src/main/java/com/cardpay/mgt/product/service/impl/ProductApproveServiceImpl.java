@@ -10,7 +10,6 @@ import com.cardpay.mgt.user.model.Role;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.Map;
@@ -31,27 +30,37 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
     private RoleMapper roleMapper;
 
     @Override
-    public Map<String, Object> getApprove(Integer productId) {
+    public Map<String, Object> getApprove(Integer productId, Integer approveId) {
         List<Role> roles = roleMapper.select(Role.RoleBuilder.get().withRoleStatus(1).build());
         ProductApprove.ProductApproveBuilder productApproveBuilder = ProductApprove
                 .ProductApproveBuilder.get().withProductId(productId);
-        List<ProductApprove> selectApprove = productApproveMapper.select(productApproveBuilder.build());
-        boolean haveStart = Boolean.TRUE;
-        for (ProductApprove productApprove : selectApprove) {
-            if (productApprove.getNodeType() == 0) {
-                haveStart = Boolean.FALSE;
-                break;
-            }
-        }
         Map<String, Object> map = new HashedMap();
+        if (approveId == null) {
+            List<ProductApprove> selectApprove = productApproveMapper.select(productApproveBuilder.build());
+            boolean haveStart = Boolean.TRUE;
+            boolean haveNext = Boolean.FALSE;
+            for (ProductApprove productApprove : selectApprove) {
+                if (productApprove.getNodeType() == 0) {
+                    haveStart = Boolean.FALSE;
+                    continue;
+                }
+                if (productApprove.getNodeType() == 2) {
+                    haveNext = Boolean.TRUE;
+                }
+            }
+            map.put("haveStart", haveStart);
+            map.put("haveNext", haveNext);
+        } else {
+            ProductApprove productApprove = productApproveMapper.selectByPrimaryKey(approveId);
+            map.put("productApprove", productApprove);
+        }
         map.put("productId", productId);
         map.put("roles", roles);
-        map.put("haveStart", haveStart);
         return map;
     }
 
     @Override
-    public void addApprove(ProductApprove productApprove, Integer productId) {
+    public void addApprove(ProductApprove productApprove) {
         LogTemplate.info(this.getClass(), "nodeType", productApprove.getNodeType());
         LogTemplate.info(this.getClass(), "preNodeId", productApprove.getPreNodeId());
         if (productApprove.getNodeType() == 0) {
@@ -62,28 +71,38 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
             ProductApprove preOneProductApprove = productApproveMapper.selectByPrimaryKey(productApprove.getPreNodeId());
 
             if (preOneProductApprove.getNextNodeId() != null) {
-                productApprove.setNextNodeId(preOneProductApprove.getNextNodeId());
+                Integer nextNodeId = preOneProductApprove.getNextNodeId();
+                ProductApprove approve = productApproveMapper.selectByPrimaryKey(nextNodeId);
+                if (approve != null) {
+                    productApprove.setNextNodeId(preOneProductApprove.getNextNodeId());
+                } else {
+                    productApprove.setNextNodeId(0);
+                }
             } else {
                 productApprove.setNextNodeId(0);
             }
             productApproveMapper.insertSelective(productApprove);
 
-            preOneProductApprove.setNextNodeId(productApprove.getId());
-            productApproveMapper.updateByPrimaryKeySelective(preOneProductApprove);
-
             if (preOneProductApprove.getNextNodeId() != null) {
                 ProductApprove nextOneProductApprove = productApproveMapper.selectByPrimaryKey(preOneProductApprove.getNextNodeId());
-                nextOneProductApprove.setPreNodeId(productApprove.getPreNodeId());
-                productApproveMapper.updateByPrimaryKeySelective(nextOneProductApprove);
+                if (nextOneProductApprove != null) {
+                    nextOneProductApprove.setPreNodeId(productApprove.getId());
+                    productApproveMapper.updateByPrimaryKeySelective(nextOneProductApprove);
+                }
             }
+
+            preOneProductApprove.setNextNodeId(productApprove.getId());
+            productApproveMapper.updateByPrimaryKeySelective(preOneProductApprove);
         }
         if (productApprove.getNodeType() == 2) {
             ProductApprove approve = productApproveMapper
-                    .selectOne(ProductApprove.ProductApproveBuilder.get()
-                            .withProductId(productId).withNextNodeId(0).build());
+                    .selectOne(ProductApprove.ProductApproveBuilder.get().withNextNodeId(0).build());
+
             productApprove.setPreNodeId(approve.getId());
             productApprove.setNextNodeId(-1);
             productApproveMapper.insertSelective(productApprove);
+            approve.setNextNodeId(productApprove.getId());
+            productApproveMapper.updateByPrimaryKeySelective(approve);
         }
     }
 }

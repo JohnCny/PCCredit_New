@@ -1,11 +1,12 @@
 package com.cardpay.mgt.product.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.product.dao.ProductInvestPictureDescMapper;
+import com.cardpay.mgt.product.dao.ProductDescMapper;
 import com.cardpay.mgt.product.dao.ProductMapper;
-import com.cardpay.mgt.product.dao.ProductOrganizationMapper;
+import com.cardpay.mgt.product.dao.ProductOrgMapper;
 import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.ProductInvestPictureDesc;
 import com.cardpay.mgt.product.model.ProductOrganization;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 产品管理服务层实现
@@ -34,10 +36,10 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     private FileManager fileManager;
 
     @Autowired
-    private ProductOrganizationMapper productOrganizationMapper;
+    private ProductOrgMapper productOrgMapper;
 
     @Autowired
-    private ProductInvestPictureDescMapper productInvestPictureDescMapper;
+    private ProductDescMapper productDescMapper;
 
     @Override
     @Transactional
@@ -46,23 +48,41 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         product.setCreateTime(new Date());
         product.setProductState(2);//状态:创建中
         if (productImg != null) {
-            product.setProductPictureUrl(fileManager.upLoad(productImg));
+            product.setProductPictureUrl(fileManager.upLoadExt(productImg));
         }
         int productCount = productMapper.insertSelective(product);
         if (productCount > 0) {
-            String[] split = orgStr.split(",");
-            for (String orgId : split) {
-                ProductOrganization productOrganization = new ProductOrganization();
-                productOrganization.setProductId(product.getId());
-                productOrganization.setOraganizationId(Integer.parseInt(orgId));
-                productOrganizationMapper.insertSelective(productOrganization);
-            }
+            String[] orgIds = orgStr.split(",");
+            productOrgMapper.batchInsertOrg(product.getId(), orgIds);
         }
         if (explainList != null && explainList.getList() != null) {
             for (ProductInvestPictureDesc productInvestPictureDesc : explainList.getList()) {
-                productInvestPictureDescMapper.insertSelective(productInvestPictureDesc);
+                productDescMapper.insertSelective(productInvestPictureDesc);
             }
         }
         return product.getId();
+    }
+
+    @Override
+    public boolean update(Product product, MultipartFile productImg, String orgStr, ExplainList explainList) {
+        LogTemplate.debug(this.getClass(), "product", product);
+        LogTemplate.debug(this.getClass(), "orgStr", orgStr);
+        if (productImg != null) {
+            Product productOne = productMapper.selectByPrimaryKey(product.getId());
+            String[] split = productOne.getProductPictureUrl().split(",");
+            fileManager.deleteFile(split[0], split[1]);
+            product.setProductPictureUrl(fileManager.upLoadExt(productImg));
+        }
+        if (orgStr != null && orgStr.length() > 0) {
+            ProductOrganization productOrganization = new ProductOrganization();
+            productOrganization.setProductId(product.getId());
+            productOrgMapper.delete(productOrganization);
+            String[] orgIds = orgStr.split(",");
+            productOrgMapper.batchInsertOrg(product.getId(), orgIds);
+        }
+        for (ProductInvestPictureDesc productInvestPictureDesc : explainList.getList()) {
+            productDescMapper.updateByPrimaryKeySelective(productInvestPictureDesc);
+        }
+        return productMapper.updateByPrimaryKeySelective(product) > 0;
     }
 }
