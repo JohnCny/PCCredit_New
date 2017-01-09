@@ -109,7 +109,7 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
     @Override
     public void updateApprove(ProductApprove productApprove) {
         if (productApprove.getNodeType() != 0 && productApprove.getNodeType() != 2) {
-            productApprove.setPreNodeId();
+//            productApprove.setPreNodeId();
         }
     }
 }
