@@ -45,8 +45,8 @@ public class LoginLogController extends BaseController<LoginLog> {
      *
      * @return 日志分页列表数据
      */
-    @PostMapping("/pageList")
-    @ApiOperation(value = "获取日志分页列表数据", httpMethod = "POST")
+    @RequestMapping("/pageList")
+    @ApiOperation(value = "获取日志分页列表数据")
     public DataTablePage loginLog(WebRequest request) {
         return dataTablePage(loginLogService.pageList(request));
     }

@@ -33,5 +33,5 @@ public interface ProductService extends BaseService<Product> {
      * @param explainList 图片说明集合
      * @return 产品ID
      */
-    boolean update(Product product, MultipartFile productImg, String orgStr, ExplainList explainList);
+    boolean updateProduct(Product product, MultipartFile productImg, String orgStr, ExplainList explainList);
 }

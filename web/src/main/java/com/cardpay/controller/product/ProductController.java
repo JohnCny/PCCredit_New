@@ -51,8 +51,8 @@ public class ProductController extends BaseController<Product> {
      *
      * @return 产品分页数据
      */
-    @PostMapping("/pageList")
-    @ApiOperation(value = "产品分页数据", httpMethod = "POST")
+    @RequestMapping("/pageList")
+    @ApiOperation(value = "产品分页数据")
     public DataTablePage pageList() {
         return dataTablePage();
     }
@@ -116,7 +116,7 @@ public class ProductController extends BaseController<Product> {
         if (ErrorMessageUtil.setValidErrorMessage(map, productError)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
-        if (productService.update(product, productImg, orgStr, explainList)) {
+        if (productService.updateProduct(product, productImg, orgStr, explainList)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);

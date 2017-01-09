@@ -55,8 +55,8 @@ public class UserController extends BaseController<User> {
      *
      * @return 分页后的数据
      */
-    @PostMapping("/pageList")
-    @ApiOperation(value = "用户分页数据", httpMethod = "GET")
+    @RequestMapping("/pageList")
+    @ApiOperation(value = "用户分页数据")
     public DataTablePage pageList() {
         return dataTablePage("userPageList");
     }
@@ -249,7 +249,7 @@ public class UserController extends BaseController<User> {
      * @param password    密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/anon/resetPassword/", method = RequestMethod.POST, params = "checkedCode")
+    @PostMapping(value = "/anon/resetPassword/", params = "checkedCode")
     @ApiOperation(value = "重置密码", httpMethod = "POST")
     public ResultTo resetPassword(@RequestParam("checkedCode") String checkedCode, @RequestParam("password") String password) {
         LogTemplate.debug(this.getClass(), "checkedCode", checkedCode);

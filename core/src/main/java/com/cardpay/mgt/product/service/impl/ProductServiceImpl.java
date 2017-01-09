@@ -64,7 +64,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     }
 
     @Override
-    public boolean update(Product product, MultipartFile productImg, String orgStr, ExplainList explainList) {
+    public boolean updateProduct(Product product, MultipartFile productImg, String orgStr, ExplainList explainList) {
         LogTemplate.debug(this.getClass(), "product", product);
         LogTemplate.debug(this.getClass(), "orgStr", orgStr);
         if (productImg != null) {

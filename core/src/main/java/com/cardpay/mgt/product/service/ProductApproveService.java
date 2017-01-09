@@ -24,7 +24,11 @@ public interface ProductApproveService extends BaseService<ProductApprove> {
      * 增加产品审批
      *
      * @param productApprove ProductApprove实体对象
-     * @return 产品ID
      */
     void addApprove(ProductApprove productApprove);
+
+    /**
+     * @param productApprove ProductApprove实体对象
+     */
+    void updateApprove(ProductApprove productApprove);
 }
