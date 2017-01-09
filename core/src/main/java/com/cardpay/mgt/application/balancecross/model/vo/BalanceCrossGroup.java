@@ -11,6 +11,11 @@ import java.util.List;
 public class BalanceCrossGroup {
 
     /**
+     * 进件id
+     */
+    private Integer applicationId;
+
+    /**
      * 模板组id
      */
     private Integer groupId;
@@ -44,6 +49,14 @@ public class BalanceCrossGroup {
      * var
      */
     private List<BalanceCrossVar> balanceCrossVars;
+
+    public Integer getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(Integer applicationId) {
+        this.applicationId = applicationId;
+    }
 
     public Integer getGroupId() {
         return groupId;

@@ -68,14 +68,14 @@ public class Product extends GenericEntity<Integer> {
      */
     @Column(name = "PRODUCT_STATE")
     @ApiModelProperty(value = "产品状态(0 正常, 1 关闭，2 创建中)", required = true)
-    private Short productState;
+    private Integer productState;
 
     /**
      * 产品类型(0 传统小微，1 循环贷)
      */
     @Column(name = "PRODUCT_TYPE")
     @ApiModelProperty(value = "产品类型(0 传统小微，1 循环贷)", required = true)
-    private Short productType;
+    private Integer productType;
 
     /**
      * 产品介绍
@@ -103,7 +103,7 @@ public class Product extends GenericEntity<Integer> {
      */
     @Column(name = "PRODUCT_REPAYMENT_MODE")
     @ApiModelProperty(value = "还款方式（0 等额本金、1 等额本息、2  到期还本）", required = true)
-    private Short productRepaymentMode;
+    private Integer productRepaymentMode;
 
     /**
      * 申请表模板（选择系统中已有的申请表模板，选填，默认有个产品申请模板用于进件申请）
@@ -124,7 +124,7 @@ public class Product extends GenericEntity<Integer> {
      */
     @Column(name = "PRODUCT_HOUSEHOLD_LEVEL_LIMIT")
     @ApiModelProperty(value = "户籍门槛（0 本地、1  外地、2  无限制）", required = true)
-    private Short productHouseholdLevelLimit;
+    private Integer productHouseholdLevelLimit;
 
     /**
      * 征信门槛（1 无信用记录、2 信用良好、有少量逾期、当前有逾期，可多选）
@@ -138,14 +138,14 @@ public class Product extends GenericEntity<Integer> {
      */
     @Column(name = "PRODUCT_AGE_MAX_LIMIT")
     @ApiModelProperty(value = "产品年龄上限", required = true)
-    private Short productAgeMaxLimit;
+    private Integer productAgeMaxLimit;
 
     /**
      * 产品年龄下限
      */
     @Column(name = "PRODUCT_AGE_MIN_LIMIT")
     @ApiModelProperty(value = "产品年龄下限", required = true)
-    private Short productAgeMinLimit;
+    private Integer productAgeMinLimit;
 
     /**
      * 产品准入行业限制(下拉选择，可多选）
@@ -159,7 +159,7 @@ public class Product extends GenericEntity<Integer> {
      */
     @Column(name = "PRODUCT_MARRIAGE_LIMIT")
     @ApiModelProperty(value = "产品准入是否已婚(0 未婚，1 已婚)", required = true)
-    private Short productMarriageLimit;
+    private Integer productMarriageLimit;
 
     /**
      * 准入最低客户经理级别id
@@ -309,7 +309,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @return PRODUCT_STATE - 产品状态(0 正常, 1 关闭，2 创建中)
      */
-    public Short getProductState() {
+    public Integer getProductState() {
         return productState;
     }
 
@@ -318,7 +318,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @param productState 产品状态(0 正常, 1 关闭，2 创建中)
      */
-    public void setProductState(Short productState) {
+    public void setProductState(Integer productState) {
         this.productState = productState;
     }
 
@@ -327,7 +327,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @return PRODUCT_TYPE - 产品类型(0 传统小微，1 循环贷)
      */
-    public Short getProductType() {
+    public Integer getProductType() {
         return productType;
     }
 
@@ -336,7 +336,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @param productType 产品类型(0 传统小微，1 循环贷)
      */
-    public void setProductType(Short productType) {
+    public void setProductType(Integer productType) {
         this.productType = productType;
     }
 
@@ -364,8 +364,7 @@ public class Product extends GenericEntity<Integer> {
      * @return PRODUCT_PICTURE_URL - 产品图片地址
      */
     public String getProductPictureUrl() {
-        String[] split = productPictureUrl.split(",");
-        return split[0] + "/" + split[1];
+        return this.productPictureUrl;
     }
 
     /**
@@ -400,7 +399,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @return PRODUCT_REPAYMENT_MODE - 还款方式（0 等额本金、1 等额本息、2  到期还本）
      */
-    public Short getProductRepaymentMode() {
+    public Integer getProductRepaymentMode() {
         return productRepaymentMode;
     }
 
@@ -409,7 +408,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @param productRepaymentMode 还款方式（0 等额本金、1 等额本息、2  到期还本）
      */
-    public void setProductRepaymentMode(Short productRepaymentMode) {
+    public void setProductRepaymentMode(Integer productRepaymentMode) {
         this.productRepaymentMode = productRepaymentMode;
     }
 
@@ -454,7 +453,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @return PRODUCT_HOUSEHOLD_LEVEL_LIMIT - 户籍门槛（0 本地、1  外地、2  无限制）
      */
-    public Short getProductHouseholdLevelLimit() {
+    public Integer getProductHouseholdLevelLimit() {
         return productHouseholdLevelLimit;
     }
 
@@ -463,7 +462,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @param productHouseholdLevelLimit 户籍门槛（0 本地、1  外地、2  无限制）
      */
-    public void setProductHouseholdLevelLimit(Short productHouseholdLevelLimit) {
+    public void setProductHouseholdLevelLimit(Integer productHouseholdLevelLimit) {
         this.productHouseholdLevelLimit = productHouseholdLevelLimit;
     }
 
@@ -490,7 +489,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @return PRODUCT_AGE_MAX_LIMIT - 产品年龄上限
      */
-    public Short getProductAgeMaxLimit() {
+    public Integer getProductAgeMaxLimit() {
         return productAgeMaxLimit;
     }
 
@@ -499,7 +498,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @param productAgeMaxLimit 产品年龄上限
      */
-    public void setProductAgeMaxLimit(Short productAgeMaxLimit) {
+    public void setProductAgeMaxLimit(Integer productAgeMaxLimit) {
         this.productAgeMaxLimit = productAgeMaxLimit;
     }
 
@@ -508,7 +507,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @return PRODUCT_AGE_MIN_LIMIT - 产品年龄下限
      */
-    public Short getProductAgeMinLimit() {
+    public Integer getProductAgeMinLimit() {
         return productAgeMinLimit;
     }
 
@@ -517,7 +516,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @param productAgeMinLimit 产品年龄下限
      */
-    public void setProductAgeMinLimit(Short productAgeMinLimit) {
+    public void setProductAgeMinLimit(Integer productAgeMinLimit) {
         this.productAgeMinLimit = productAgeMinLimit;
     }
 
@@ -544,7 +543,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @return PRODUCT_MARRIAGE_LIMIT - 产品准入是否已婚(0 未婚，1 已婚)
      */
-    public Short getProductMarriageLimit() {
+    public Integer getProductMarriageLimit() {
         return productMarriageLimit;
     }
 
@@ -553,7 +552,7 @@ public class Product extends GenericEntity<Integer> {
      *
      * @param productMarriageLimit 产品准入是否已婚(0 未婚，1 已婚)
      */
-    public void setProductMarriageLimit(Short productMarriageLimit) {
+    public void setProductMarriageLimit(Integer productMarriageLimit) {
         this.productMarriageLimit = productMarriageLimit;
     }
 

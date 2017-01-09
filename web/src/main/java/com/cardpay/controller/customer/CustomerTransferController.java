@@ -17,10 +17,8 @@ import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.*;
@@ -62,7 +60,6 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerIds 客户id(,分割)
      * @param status      需要变更的状态
      * @param reason      移交原因
-     * @param managerId      客户经理ID
      * @return 数据库变记录
      */
     @PutMapping
@@ -70,8 +67,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "状态(默认为正常)") @RequestParam(defaultValue = "0") int status
-            , @ApiParam(value = "移交原因", required = true) @RequestParam String reason
-        , @ApiParam(value = "客户经理ID", required = true) @RequestParam int managerId) {
+            , @ApiParam(value = "移交原因", required = true) @RequestParam String reason) {
         List<Integer> customerIdList = new ArrayList<>();
         //添加客户移交记录
         String[] split = customerIds.split(",");
@@ -139,7 +135,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
     public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
                                     @ApiParam("接收:1, 拒绝2") @RequestParam Integer flag) {
-        int count = customerTransferService.accept(customerIds, flag);
+        int count = customerTransferService.accept(customerIds, flag, ShiroKit.getUserId());
         logger.info("客户接受/拒绝", "客户：" + customerIds + "接受/拒绝" + flag + ",给了客户经理：" + ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

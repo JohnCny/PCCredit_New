@@ -1,6 +1,10 @@
 package com.cardpay.mgt.application.balancecross.model.vo;
 
 
+import com.cardpay.mgt.application.balancecross.model.TApplicationBalancecrossExt;
+import com.cardpay.mgt.application.balancecross.model.TApplicationBalancecrossVar;
+import com.cardpay.mgt.application.balancecross.model.TBalanceCrossVarOption;
+
 import java.util.List;
 
 /**
@@ -11,6 +15,10 @@ import java.util.List;
  */
 public class BalanceCrossVar {
 
+    /**
+     * 进件Id
+     */
+    private Integer applicationId;
     /**
      * 资产负债和交叉检验模板id
      */
@@ -74,12 +82,20 @@ public class BalanceCrossVar {
     /**
      * extras
      */
-    private List<BalanceCrossExtra> balanceCrossExtras;
+    private List<TApplicationBalancecrossExt> balanceCrossExtras;
 
     /**
      * options
      */
-    private List<BalanceCrossOption> balanceCrossOptions;
+    private List<TBalanceCrossVarOption> balanceCrossOptions;
+
+    public Integer getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(Integer applicationId) {
+        this.applicationId = applicationId;
+    }
 
     public Integer getBalanceCrossVarId() {
         return balanceCrossVarId;
@@ -177,19 +193,19 @@ public class BalanceCrossVar {
         this.balanceCrossVars = balanceCrossVars;
     }
 
-    public List<BalanceCrossExtra> getBalanceCrossExtras() {
+    public List<TApplicationBalancecrossExt> getBalanceCrossExtras() {
         return balanceCrossExtras;
     }
 
-    public void setBalanceCrossExtras(List<BalanceCrossExtra> balanceCrossExtras) {
+    public void setBalanceCrossExtras(List<TApplicationBalancecrossExt> balanceCrossExtras) {
         this.balanceCrossExtras = balanceCrossExtras;
     }
 
-    public List<BalanceCrossOption> getBalanceCrossOptions() {
+    public List<TBalanceCrossVarOption> getBalanceCrossOptions() {
         return balanceCrossOptions;
     }
 
-    public void setBalanceCrossOptions(List<BalanceCrossOption> balanceCrossOptions) {
+    public void setBalanceCrossOptions(List<TBalanceCrossVarOption> balanceCrossOptions) {
         this.balanceCrossOptions = balanceCrossOptions;
     }
 }

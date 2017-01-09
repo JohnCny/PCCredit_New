@@ -19,7 +19,6 @@ public class TOrganization extends GenericEntity<Integer>{
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select ORGANIZATION_SEQ.nextval from dual")
     @ApiModelProperty(value = "机构Id", required = true)
-    @OrderBy(value = "desc")
     private Integer id;
 
     /**

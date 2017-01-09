@@ -6,7 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author chenkai
  */
 public class CustomerTransferControllerTest extends TestEnv {
+
     private User user = User.UserBuilder.get().withId(1).build();
 
     @Test
@@ -29,7 +30,12 @@ public class CustomerTransferControllerTest extends TestEnv {
     @Test
     @Ignore
     public void changeCustomer() throws Exception {
-
+        mockMvc.perform(put("/api/customerTransfer")
+                .param("customerIds", "1,2")
+                .param("status", "0")
+                .param("reason", "test"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
     }
 
     @Test
