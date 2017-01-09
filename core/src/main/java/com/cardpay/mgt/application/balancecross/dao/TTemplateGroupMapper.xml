@@ -25,7 +25,8 @@
 
   <resultMap id="BalanceCrossVar" type="com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossVar">
     <id column="BALANCE_CROSS_VAR_ID" jdbcType="DECIMAL" property="balanceCrossVarId" />
-    <result column="APPLICATION_ID" jdbcType="VARCHAR" property="balanceCrossVarName" />
+    <result column="APPLICATION_ID" jdbcType="VARCHAR" property="applicationId" />
+    <result column="BALANCE_CROSS_OPTION_ID" jdbcType="VARCHAR" property="applicationId" />
     <result column="BALANCE_CROSS_VAR_NAME" jdbcType="VARCHAR" property="balanceCrossVarName" />
     <result column="BALANCE_CROSS_VAR_PARENT_ID" jdbcType="DECIMAL" property="balanceCrossVarParentId" />
     <result column="BALANCE_CROSS_VAR_ORDER" jdbcType="DECIMAL" property="balanceCrossVarOrder" />
@@ -80,7 +81,7 @@
     SELECT * FROM
       (
         SELECT
-            BCV.*,ABV.BALANCE_CROSS_VAR_VALUE,#{applicationId} APPLICATION_ID
+            BCV.*,ABV.BALANCE_CROSS_VAR_VALUE,ABV.BALANCE_CROSS_OPTION_ID,#{applicationId} APPLICATION_ID
         FROM
             T_BANLANCE_CROSS_VAR BCV
             LEFT JOIN
@@ -103,7 +104,7 @@
   <!--查询Var层级-->
   <select id="selectVar" resultMap="BalanceCrossVar">
     SELECT
-        BCV.*,ABV.BALANCE_CROSS_VAR_VALUE,#{applicationId} APPLICATION_ID
+        BCV.*,ABV.BALANCE_CROSS_VAR_VALUE,ABV.BALANCE_CROSS_OPTION_ID,#{applicationId} APPLICATION_ID
     FROM
         T_BANLANCE_CROSS_VAR BCV
         LEFT JOIN

@@ -19,6 +19,11 @@ public class BalanceCrossVar {
      * 进件Id
      */
     private Integer applicationId;
+
+    /**
+     * 选项id
+     */
+    private Integer optionId;
     /**
      * 资产负债和交叉检验模板id
      */
@@ -88,6 +93,14 @@ public class BalanceCrossVar {
      * options
      */
     private List<TBalanceCrossVarOption> balanceCrossOptions;
+
+    public Integer getOptionId() {
+        return optionId;
+    }
+
+    public void setOptionId(Integer optionId) {
+        this.optionId = optionId;
+    }
 
     public Integer getApplicationId() {
         return applicationId;
