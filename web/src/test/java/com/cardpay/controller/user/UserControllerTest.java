@@ -3,6 +3,7 @@ package com.cardpay.controller.user;
 import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.util.TestEnv;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -18,6 +19,7 @@ public class UserControllerTest extends TestEnv {
     private RedisClient redisClient;
 
     @Test
+    @Ignore
     public void pageList() throws Exception {
 
         String search = "{\"username\":\"rankai\"}";
@@ -44,6 +46,7 @@ public class UserControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void updatePassword() throws Exception {
         mockMvc.perform(post("/user/updatePassword")
                 .param("oldPassword", "123").param("newPassword", "321"))
@@ -53,6 +56,7 @@ public class UserControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void isHaveLoginName() throws Exception {
         mockMvc.perform(get("/user/resetPassword/rankai"))
                 .andExpect(status().isOk())
@@ -61,6 +65,7 @@ public class UserControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void sendCode() throws Exception {
         mockMvc.perform(post("/user/resetPassword/sendCode")
                 .param("userId", "1").param("address", "rankai@qkjr.com.cn"))
@@ -82,6 +87,7 @@ public class UserControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void checkedCode() throws Exception {
         redisClient.set(RedisKeyPrefixEnum.USER, "rankai@qkjr.com.cn", "123456", 5);
         mockMvc.perform(post("/user/resetPassword/checkedCode")
@@ -104,6 +110,7 @@ public class UserControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void resetPassword() throws Exception {
         redisClient.set(RedisKeyPrefixEnum.USER, "aaaaaaaaaaaaaaaa", "checkedCode", 5);
         mockMvc.perform(post("/user/resetPassword/aaaaaaaaaaaaaaaa")

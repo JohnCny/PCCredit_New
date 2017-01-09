@@ -33,6 +33,7 @@ public class CustomerBasicControllerTest extends TestEnv {
 
 
     @Test
+    @Ignore
     public void deleteCustomer() throws Exception {
         setUser(user);
         mockMvc.perform(delete("/customerBasic/1")
