@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cardpay.mgt.application.basic.ApplicationIPCBasicMapper">
+<mapper namespace="com.cardpay.mgt.application.basic.dao.ApplicationIPCBasicMapper">
 
   <!--初始化资产负债和交叉检验类型进件模版-->
   <insert id="initBalanceCrossTemplate">
