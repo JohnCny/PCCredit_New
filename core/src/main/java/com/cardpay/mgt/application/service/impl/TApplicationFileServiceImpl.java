@@ -1,6 +1,5 @@
 package com.cardpay.mgt.application.service.impl;
 
-import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.context.ContextProperty;
 import com.cardpay.mgt.application.dao.TApplicationFileMapper;
