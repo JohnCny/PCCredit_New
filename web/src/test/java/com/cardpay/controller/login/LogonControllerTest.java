@@ -1,6 +1,7 @@
 package com.cardpay.controller.login;
 
 import com.cardpay.util.TestEnv;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
@@ -12,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LogonControllerTest extends TestEnv {
 
     @Test
+    @Ignore
     public void login() throws Exception {
 
         mockMvc.perform(post("/logon/login")
@@ -28,6 +30,7 @@ public class LogonControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void unauthorized() throws Exception {
         mockMvc.perform(get("/logon/unauthorized"))
                 .andExpect(status().isOk())

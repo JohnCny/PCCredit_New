@@ -1,6 +1,7 @@
 package com.cardpay.controller.product;
 
 import com.cardpay.util.TestEnv;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -14,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class ProductOrganizationControllerTest extends TestEnv {
     @Test
+    @Ignore
     public void queryProductOrganization() throws Exception {
         mockMvc.perform(get("/productOrganization/").param("productId", "1")
                 .param("orgIds", "2,3,4"))
@@ -22,6 +24,7 @@ public class ProductOrganizationControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void insertProductOrganization() throws Exception {
         mockMvc.perform(post("/productOrganization/").param("productId", "2")
                 .param("orgIds", "2,3,4"))
@@ -30,6 +33,7 @@ public class ProductOrganizationControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void deleteProductOrganization() throws Exception {
         mockMvc.perform(delete("/productOrganization/").param("productId", "2")
                 .param("orgIds", "2,3,4"))
