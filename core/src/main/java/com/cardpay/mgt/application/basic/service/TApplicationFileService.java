@@ -1,7 +1,7 @@
-package com.cardpay.mgt.application.service;
+package com.cardpay.mgt.application.basic.service;
 
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.application.model.TApplicationFile;
+import com.cardpay.mgt.application.basic.model.TApplicationFile;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

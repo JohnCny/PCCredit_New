@@ -1,10 +1,10 @@
-package com.cardpay.mgt.application.service.impl;
+package com.cardpay.mgt.application.basic.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.context.ContextProperty;
 import com.cardpay.mgt.application.dao.TApplicationFileMapper;
-import com.cardpay.mgt.application.model.TApplicationFile;
-import com.cardpay.mgt.application.service.TApplicationFileService;
+import com.cardpay.mgt.application.basic.model.TApplicationFile;
+import com.cardpay.mgt.application.basic.service.TApplicationFileService;
 import com.cardpay.mgt.file.model.TFile;
 import com.cardpay.mgt.file.service.TFileService;
 import org.springframework.beans.factory.annotation.Autowired;

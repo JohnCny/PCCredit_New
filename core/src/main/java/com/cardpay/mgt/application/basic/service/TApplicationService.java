@@ -1,9 +1,8 @@
-package com.cardpay.mgt.application.service;
+package com.cardpay.mgt.application.basic.service;
 
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.application.model.TApplication;
-import com.cardpay.mgt.application.model.vo.TApplicationVo;
-import org.apache.ibatis.annotations.Param;
+import com.cardpay.mgt.application.basic.model.TApplication;
+import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 
 import java.util.List;
 import java.util.Map;

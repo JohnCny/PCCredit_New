@@ -1,7 +1,7 @@
-package com.cardpay.mgt.application.dao;
+package com.cardpay.mgt.application.basic.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.mgt.application.model.TApplicationInvestPicture;
+import com.cardpay.mgt.application.basic.model.TApplicationInvestPicture;
 import org.apache.ibatis.annotations.Param;
 
 /**
