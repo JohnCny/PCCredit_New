@@ -1,11 +1,12 @@
-package com.cardpay.mgt.application.dao;
+package com.cardpay.mgt.application.basic.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.mgt.application.model.TApplication;
-import com.cardpay.mgt.application.model.vo.TApplicationVo;
+import com.cardpay.mgt.application.basic.model.TApplication;
+import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 进件基本信息表Mapper
@@ -13,10 +14,10 @@ import java.util.List;
 public interface TApplicationMapper extends BasicMapper<TApplication> {
     /**
      * 按客户经理Id查询进件信息
-     * @param managerId 客户经理Id
+     * @param map 客户经理Id
      * @return 进件Vo列表
      */
-    List<TApplicationVo> queryByManagerId(@Param("managerId") int managerId);
+    List<TApplicationVo> queryByManagerId(Map<String, Object> map);
 
     /**
      * 按进件Id查询进件信息

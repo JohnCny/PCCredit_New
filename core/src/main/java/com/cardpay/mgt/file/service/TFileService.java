@@ -2,6 +2,7 @@ package com.cardpay.mgt.file.service;
 
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.file.model.TFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,4 +18,12 @@ public interface TFileService extends BaseService<TFile>{
      * @return 数据库变更数量
      */
     int batchInsertFile(List<TFile> list);
+
+
+    /**
+     * 上传文件返回文件信息
+     * @param files 文件
+     * @return 文件信息
+     */
+    List<TFile> uploads(MultipartFile[] files);
 }

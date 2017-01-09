@@ -1,10 +1,10 @@
-package com.cardpay.mgt.application.service.impl;
+package com.cardpay.mgt.application.basic.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
-import com.cardpay.mgt.application.dao.TApplicationMapper;
-import com.cardpay.mgt.application.model.TApplication;
-import com.cardpay.mgt.application.model.vo.TApplicationVo;
-import com.cardpay.mgt.application.service.TApplicationService;
+import com.cardpay.mgt.application.basic.dao.TApplicationMapper;
+import com.cardpay.mgt.application.basic.model.TApplication;
+import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
+import com.cardpay.mgt.application.basic.service.TApplicationService;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.product.model.Product;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 进件基本信息Service实现类
@@ -76,8 +77,8 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
     }
 
     @Override
-    public List<TApplicationVo> queryByManagerId(int managerId) {
-        return tApplicationDao.queryByManagerId(managerId);
+    public List<TApplicationVo> queryByManagerId(Map<String, Object> map) {
+        return tApplicationDao.queryByManagerId(map);
     }
 
     @Override

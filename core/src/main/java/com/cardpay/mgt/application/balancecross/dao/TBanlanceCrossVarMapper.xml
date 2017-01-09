@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.balancecross.dao.TBanlanceCrossVarMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.balancecross.model.TBanlanceCrossVar">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="BALANCE_CROSS_VAR_ID" jdbcType="DECIMAL" property="balanceCrossVarId" />
+    <result column="BALANCE_CROSS_VAR_NAME" jdbcType="VARCHAR" property="balanceCrossVarName" />
+    <result column="BALANCE_CROSS_VAR_PARENT_ID" jdbcType="DECIMAL" property="balanceCrossVarParentId" />
+    <result column="BALANCE_CROSS_VAR_ORDER" jdbcType="DECIMAL" property="balanceCrossVarOrder" />
+    <result column="BALANCE_CROSS_VAR_TYPE" jdbcType="DECIMAL" property="balanceCrossVarType" />
+    <result column="BALANCE_CROSS_VAR_WEIGHT" jdbcType="VARCHAR" property="balanceCrossVarWeight" />
+    <result column="BALANCE_CROSS_VAR_VALUE_TYPE" jdbcType="DECIMAL" property="balanceCrossVarValueType" />
+    <result column="BALANCE_CROSS_VARGROUP_ID" jdbcType="DECIMAL" property="balanceCrossVargroupId" />
+    <result column="BALANCE_CROSS_VARIS_HAS_CHILD" jdbcType="DECIMAL" property="balanceCrossVarisHasChild" />
+    <result column="BALANCE_CROSS_VARIS_COMPUTE" jdbcType="DECIMAL" property="balanceCrossVarisCompute" />
+  </resultMap>
+</mapper>

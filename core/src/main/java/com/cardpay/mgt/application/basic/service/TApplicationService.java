@@ -1,11 +1,11 @@
-package com.cardpay.mgt.application.service;
+package com.cardpay.mgt.application.basic.service;
 
 import com.cardpay.basic.base.service.BaseService;
-import com.cardpay.mgt.application.model.TApplication;
-import com.cardpay.mgt.application.model.vo.TApplicationVo;
-import org.apache.ibatis.annotations.Param;
+import com.cardpay.mgt.application.basic.model.TApplication;
+import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 进价基本信息Service
@@ -34,10 +34,10 @@ public interface TApplicationService extends BaseService<TApplication> {
     /**
      * 按客户经理Id查询进件信息
      *
-     * @param managerId 客户经理Id
+     * @param map 客户经理Id
      * @return 进件Vo列表
      */
-    List<TApplicationVo> queryByManagerId(int managerId);
+    List<TApplicationVo> queryByManagerId(Map<String, Object> map);
 
     /**
      * 按进件Id查询进件信息

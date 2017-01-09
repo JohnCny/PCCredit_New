@@ -1,4 +1,4 @@
-package com.cardpay.mgt.application.model.vo;
+package com.cardpay.mgt.application.basic.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
@@ -27,6 +27,7 @@ public class TApplicationVo extends GenericEntity<Integer> {
      * 产品id
      */
     private Integer productId;
+
 
     /**
      * 进件申请金额
