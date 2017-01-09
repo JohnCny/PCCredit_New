@@ -2,7 +2,7 @@ package com.cardpay.mgt.application.basic.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.context.ContextProperty;
-import com.cardpay.mgt.application.dao.TApplicationFileMapper;
+import com.cardpay.mgt.application.basic.dao.TApplicationFileMapper;
 import com.cardpay.mgt.application.basic.model.TApplicationFile;
 import com.cardpay.mgt.application.basic.service.TApplicationFileService;
 import com.cardpay.mgt.file.model.TFile;
