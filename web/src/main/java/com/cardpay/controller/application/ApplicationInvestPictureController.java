@@ -2,8 +2,8 @@ package com.cardpay.controller.application;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
-import com.cardpay.mgt.application.model.TApplicationInvestPicture;
-import com.cardpay.mgt.application.service.TApplicationInvestPictureService;
+import com.cardpay.mgt.application.basic.model.TApplicationInvestPicture;
+import com.cardpay.mgt.application.basic.service.TApplicationInvestPictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
