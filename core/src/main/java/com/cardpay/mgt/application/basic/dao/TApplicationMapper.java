@@ -1,8 +1,8 @@
-package com.cardpay.mgt.application.dao;
+package com.cardpay.mgt.application.basic.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
-import com.cardpay.mgt.application.model.TApplication;
-import com.cardpay.mgt.application.model.vo.TApplicationVo;
+import com.cardpay.mgt.application.basic.model.TApplication;
+import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

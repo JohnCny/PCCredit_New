@@ -1,4 +1,4 @@
-package com.cardpay.mgt.application.model;
+package com.cardpay.mgt.application.basic.model;
 
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
