@@ -27,10 +27,10 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRole> implements Us
         UserRole newUserRole = userRoleMapper.selectOne(userRole);
         if (newUserRole == null) {
             int count = userRoleMapper.insertSelective(userRole);
-            return count >= 0 ? Boolean.TRUE : Boolean.FALSE;
+            return count > 0 ? Boolean.TRUE : Boolean.FALSE;
         } else {
             int count = userRoleMapper.delete(userRole);
-            return count >= 0 ? Boolean.TRUE : Boolean.FALSE;
+            return count > 0 ? Boolean.TRUE : Boolean.FALSE;
         }
     }
 }

@@ -30,4 +30,9 @@ public class TCustomerIndustryServiceImpl extends BaseServiceImpl<TCustomerIndus
     public List<TCustomerIndustryVo> queryById(int customerId) {
         return tCustomerIndustryDao.queryById(customerId);
     }
+
+    @Override
+    public int batchUpdate(List<TCustomerIndustry> list) {
+        return tCustomerIndustryDao.batchUpdate(list);
+    }
 }
