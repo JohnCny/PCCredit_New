@@ -77,6 +77,12 @@
         </property>
     </bean>
 
+    <!-- 支持上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="314572800"/><!-- 300M -->
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="resolveLazily" value="true"></property>
+    </bean>
 
     <!--拦截器异常处理配置-->
     <!--<bean id="handlerExceptionResolver"-->

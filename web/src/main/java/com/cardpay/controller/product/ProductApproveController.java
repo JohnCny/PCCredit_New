@@ -15,9 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -27,7 +29,7 @@ import java.util.Map;
  * @author rankai
  *         createTime 2016-12-2016/12/23 14:40
  */
-@Controller
+@RestController
 @RequestMapping("/api/productApprove")
 @Api(value = "/api/productApprove", description = "产品审批流程")
 public class ProductApproveController extends BaseController<ProductApprove> {
@@ -66,9 +68,9 @@ public class ProductApproveController extends BaseController<ProductApprove> {
      * @param productError   BindingResult
      * @return 产品ID
      */
-    @PostMapping()
+    @PostMapping
     @ApiOperation(value = "增加产品审批", httpMethod = "POST")
-    public ResultTo add(ProductApprove productApprove, BindingResult productError) {
+    public ResultTo addProductApprove(ProductApprove productApprove, BindingResult productError) {
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, productError)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
@@ -84,15 +86,14 @@ public class ProductApproveController extends BaseController<ProductApprove> {
      * @param productError   BindingResult
      * @return 产品ID
      */
-    @PostMapping()
-    @ApiOperation(value = "增加产品审批", httpMethod = "POST")
-    public ResultTo update(ProductApprove productApprove, BindingResult productError) {
+    @PutMapping
+    @ApiOperation(value = "增加产品审批", httpMethod = "PUT")
+    public ResultTo updateProductApprove(ProductApprove productApprove, BindingResult productError) {
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, productError)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
         productApproveService.updateApprove(productApprove);
-        return new ResultTo().setData(productApprove.getProductId());
+        return new ResultTo();
     }
-
 }
