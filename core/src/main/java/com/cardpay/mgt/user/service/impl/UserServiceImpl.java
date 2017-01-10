@@ -191,7 +191,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setCreateBy(ShiroKit.getUserId());
         String code;
         while (true) {
-            code = VerifyCodeUtil.generateTextCode(0, 6, null);
+            code = VerifyCodeUtil.generateTextCode(0, 8, null);
             if (userMapper.selectOne(User.UserBuilder.get().withEmployeeNumber(code).build()) == null) {
                 user.setEmployeeNumber(code);
                 break;
