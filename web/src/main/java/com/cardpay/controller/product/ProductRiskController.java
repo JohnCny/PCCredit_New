@@ -25,7 +25,6 @@ import java.util.Map;
  * 产品贷后监控规则Controller
  *
  * @author rankai
- *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
 @RequestMapping("/api/productRisk")

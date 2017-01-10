@@ -73,5 +73,4 @@ public interface TMenuService extends BaseService<TMenu> {
      * 更新菜单缓存
      */
     void updateMenuCache();
-
 }

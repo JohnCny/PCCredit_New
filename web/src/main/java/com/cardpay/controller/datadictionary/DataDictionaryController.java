@@ -10,14 +10,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 数据字典Controller
  *
- * @author yanwe 2016/12/21 14:10
+ * @author yanwe
  */
 @RestController
 @RequestMapping("/api/dataDictionary")
@@ -32,7 +30,7 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
      *
      * @return 分页数据
      */
-    @RequestMapping(value = "/pageList", method = RequestMethod.GET)
+    @RequestMapping(value = "/pageList", method = RequestMethod.POST)
     @ApiOperation(value = "获取数据字典分页数据", notes = "获取数据字典分页数据", httpMethod = "GET")
     public DataTablePage pageList() {
         return dataTablePage();

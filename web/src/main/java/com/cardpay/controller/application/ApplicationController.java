@@ -21,10 +21,8 @@ import java.util.Map;
 import static com.cardpay.controller.application.enums.ApplicationStatus.*;
 
 /**
- * ${DESCRIPTION}
- *
+ * 进件管理
  * @author chenkai
- *         createTime 2017-01-2017/1/5 15:38
  */
 
 @RestController

@@ -13,16 +13,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LogonControllerTest extends TestEnv {
 
     @Test
-    @Ignore
     public void login() throws Exception {
 
-        mockMvc.perform(post("/logon/login")
+        mockMvc.perform(post("/api/logon/login")
                 .param("userName", "rankai"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(5018))
                 .andDo(MockMvcResultHandlers.print());
 
-        mockMvc.perform(post("/logon/login")
+        mockMvc.perform(post("/api/logon/login")
                 .param("userName", "rankai").param("password", "123"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200))
@@ -30,9 +29,8 @@ public class LogonControllerTest extends TestEnv {
     }
 
     @Test
-    @Ignore
     public void unauthorized() throws Exception {
-        mockMvc.perform(get("/logon/unauthorized"))
+        mockMvc.perform(get("/api/logon/unauthorized"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(5012))
                 .andDo(MockMvcResultHandlers.print());
