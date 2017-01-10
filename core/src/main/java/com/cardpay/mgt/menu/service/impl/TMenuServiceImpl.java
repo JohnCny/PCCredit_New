@@ -54,7 +54,6 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     private static final String DELETE = "Delete";
     private static final String UPDATE = "Update";
     private static final String ADD = "Add";
-
     private static final int TOP_ID = 0;
 
     @Override
@@ -134,9 +133,6 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
      * @return 分组后的菜单
      */
     private Map<String, List<TMenuAuth>> getGroupByAuthName(List<TMenuAuth> tMenuAuthList) {
-        //java8
-//        Map<String, List<TMenuAuth>> menuAuthMap = tMenuAuthList.stream().collect(Collectors.groupingBy(TMenuAuth::getMenuName));
-        //java7
         //菜单按名称分组
         Map<String, List<TMenuAuth>> menuAuthMap = new HashMap<>();
         for (TMenuAuth tMenuAuth : tMenuAuthList) {
