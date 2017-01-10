@@ -54,7 +54,6 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     private static final String DELETE = "Delete";
     private static final String UPDATE = "Update";
     private static final String ADD = "Add";
-
     private static final int TOP_ID = 0;
 
     @Override
@@ -134,9 +133,6 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
      * @return 分组后的菜单
      */
     private Map<String, List<TMenuAuth>> getGroupByAuthName(List<TMenuAuth> tMenuAuthList) {
-        //java8
-//        Map<String, List<TMenuAuth>> menuAuthMap = tMenuAuthList.stream().collect(Collectors.groupingBy(TMenuAuth::getMenuName));
-        //java7
         //菜单按名称分组
         Map<String, List<TMenuAuth>> menuAuthMap = new HashMap<>();
         for (TMenuAuth tMenuAuth : tMenuAuthList) {
@@ -203,9 +199,6 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
      * @return 是否有权限
      */
     private boolean isHaveAuth(List<Authority> authorities, String auth) {
-        //java8
-//        boolean canDelete = authorities.stream().anyMatch(authority -> authority.getAuthorityName().split(":")[1].equals(auth));
-        //java7
         boolean canDelete = false;
         for (Authority authority : authorities) {
             canDelete = authority.getAuthorityName().split(":")[1].equals(auth);
@@ -216,12 +209,17 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
         return canDelete;
     }
 
+    /**
+     * 更新菜单缓存
+     */
     @Override
     public void updateMenuCache() {
         for (RoleEnum roleEnum : RoleEnum.values()) {
+            String menuString = JSON.toJSONString(tMenuMapper.selectMenuListByRoleAll(roleEnum.getRoleId()));
+            LogTemplate.info("菜单初始化,"+"菜单角色:"+roleEnum.getRoleName(),menuString);
             redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,roleEnum.getRoleName()
-                    ,JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(roleEnum.getRoleId()))));
+                    ,menuString);
         }
-        LogTemplate.info("菜单","初始化了菜单");
+        LogTemplate.info("菜单初始化完毕",null);
     }
 }
