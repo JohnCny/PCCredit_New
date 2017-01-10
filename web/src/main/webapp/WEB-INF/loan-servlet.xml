@@ -36,6 +36,7 @@
     <mvc:default-servlet-handler/>
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
     <bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration"/>
     <bean class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
 
