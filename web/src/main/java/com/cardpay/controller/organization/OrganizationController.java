@@ -5,18 +5,16 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -25,7 +23,7 @@ import java.util.List;
 /**
  * 机构Controller类
  *
- * @author chenkai on 2016/11/24.
+ * @author chenkai
  */
 @Api(value = "/api/organization", description = "机构")
 @RestController

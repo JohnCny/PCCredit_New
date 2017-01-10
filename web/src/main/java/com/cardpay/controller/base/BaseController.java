@@ -2,37 +2,26 @@ package com.cardpay.controller.base;
 
 import com.cardpay.basic.base.controller.BasicController;
 import com.cardpay.basic.base.model.GenericEntity;
-import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.modeifyhistory.util.CompareBeanUtil;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang3.StringUtils;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
-import springfox.documentation.annotations.ApiIgnore;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * 用户控制层
  *
  * @author rankai
- *         create 2016-12-2016/12/21 10:22
  */
 public class BaseController<T> extends BasicController {
 
@@ -82,7 +71,48 @@ public class BaseController<T> extends BasicController {
         return updateResult;
     }
 
-//    /**
+
+
+
+    protected DataTablePage dataTablePage(String methodName, Map<String, Object> map) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return new DataTablePage(methodName, baseService, request, map);
+    }
+
+    protected DataTablePage dataTablePage(String methodName) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return new DataTablePage(methodName, baseService, request);
+    }
+
+    /**
+     * 分页封装
+     *
+     * @return 分页数据
+     */
+    protected DataTablePage dataTablePage() {
+        Example example = null;
+        return dataTablePage(example);
+    }
+
+    /**
+     * 分页封装
+     *
+     * @param example 自定义方法名
+     * @return 分页数据
+     */
+    protected DataTablePage dataTablePage(Example example) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Class<T> entityClass = null;
+        Type genericSuperclass = getClass().getGenericSuperclass();
+        if (genericSuperclass instanceof ParameterizedType) {
+            Type[] types = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
+            entityClass = (Class<T>) types[0];
+        }
+        return new DataTablePage(baseService, request, entityClass, example);
+    }
+
+//-----------------根据实际情况选择需要的接口------------------------
+    //    /**
 //     * 根据实体中的属性值进行查询，查询条件使用等号
 //     *
 //     * @param record   实体对象
@@ -515,45 +545,6 @@ public class BaseController<T> extends BasicController {
 //        return modelAndView;
 //    }
 
-
-    protected DataTablePage dataTablePage(String methodName, Map<String, Object> map) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        return new DataTablePage(methodName, baseService, request, map);
-    }
-
-    protected DataTablePage dataTablePage(String methodName) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        return new DataTablePage(methodName, baseService, request);
-    }
-
-    /**
-     * 分页封装
-     *
-     * @return 分页数据
-     */
-    protected DataTablePage dataTablePage() {
-        Example example = null;
-        return dataTablePage(example);
-    }
-
-    /**
-     * 分页封装
-     *
-     * @param example 自定义方法名
-     * @return 分页数据
-     */
-    protected DataTablePage dataTablePage(Example example) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Class<T> entityClass = null;
-        Type genericSuperclass = getClass().getGenericSuperclass();
-        if (genericSuperclass instanceof ParameterizedType) {
-            Type[] types = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
-            entityClass = (Class<T>) types[0];
-        }
-        return new DataTablePage(baseService, request, entityClass, example);
-    }
-
-//-----------------根据实际情况选择需要的接口------------------------
 //    /**
 //     * 根据实体属性和RowBounds进行分页查询，以开始行数start为参数
 //     * @param record 实体

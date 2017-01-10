@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 产品机构关联Controller
  *
  * @author rankai
- *         createTime 2016-12-2016/12/23 14:40
  */
 @Controller
 @RequestMapping("/api/productOrg")

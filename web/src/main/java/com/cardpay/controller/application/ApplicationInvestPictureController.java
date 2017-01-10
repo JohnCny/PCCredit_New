@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
  * 调查图片表Controller
  *
  * @author chenkai
- *         createTime 2017-01-2017/1/9 11:38
  */
 @RestController
 @RequestMapping("/api/applicationInvestPicture")
