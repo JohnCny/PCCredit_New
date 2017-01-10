@@ -18,6 +18,7 @@ public class CustomerMaintenanceControllerTest extends TestEnv {
     private User user = User.UserBuilder.get().withId(1).build();
 
     @Test
+    @Ignore
     public void insert() throws Exception {
         setUser(user);
         mockMvc.perform(post("/api/customerMaintenance")

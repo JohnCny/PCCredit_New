@@ -5,14 +5,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LogonControllerTest extends TestEnv {
 
     @Test
+    @Ignore
     public void login() throws Exception {
 
         mockMvc.perform(post("/api/logon/login")
@@ -29,6 +30,7 @@ public class LogonControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void unauthorized() throws Exception {
         mockMvc.perform(get("/api/logon/unauthorized"))
                 .andExpect(status().isOk())
