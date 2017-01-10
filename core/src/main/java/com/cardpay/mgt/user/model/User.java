@@ -142,6 +142,13 @@ public class User extends GenericEntity<Integer> {
     private Date modifyTime;
 
     /**
+     * 用户头像地址
+     */
+    @Column(name = "USER_PROFILE")
+    @ApiModelProperty(value = "用户头像地址", required = true)
+    private String userProfile;
+
+    /**
      * 获取用户id
      *
      * @return ID - 用户id
@@ -465,6 +472,14 @@ public class User extends GenericEntity<Integer> {
         this.modifyTime = modifyTime;
     }
 
+    public String getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(String userProfile) {
+        this.userProfile = userProfile;
+    }
+
     @Override
     public Integer getPK() {
         return this.id;
@@ -487,8 +502,10 @@ public class User extends GenericEntity<Integer> {
         private String phone;
         private String idCardNumber;
         private String employeeNumber;
+        private Integer userType;
         private Integer modifyBy;
         private Date modifyTime;
+        private String userProfile;
 
         private UserBuilder() {
         }
@@ -572,6 +589,11 @@ public class User extends GenericEntity<Integer> {
             return this;
         }
 
+        public UserBuilder withUserType(Integer userType) {
+            this.userType = userType;
+            return this;
+        }
+
         public UserBuilder withModifyBy(Integer modifyBy) {
             this.modifyBy = modifyBy;
             return this;
@@ -579,6 +601,11 @@ public class User extends GenericEntity<Integer> {
 
         public UserBuilder withModifyTime(Date modifyTime) {
             this.modifyTime = modifyTime;
+            return this;
+        }
+
+        public UserBuilder withUserProfile(String userProfile) {
+            this.userProfile = userProfile;
             return this;
         }
 
@@ -599,8 +626,10 @@ public class User extends GenericEntity<Integer> {
             user.setPhone(phone);
             user.setIdCardNumber(idCardNumber);
             user.setEmployeeNumber(employeeNumber);
+            user.setUserType(userType);
             user.setModifyBy(modifyBy);
             user.setModifyTime(modifyTime);
+            user.setUserProfile(userProfile);
             return user;
         }
     }
