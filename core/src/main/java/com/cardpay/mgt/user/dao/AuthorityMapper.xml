@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.user.dao.AuthorityMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.Authority">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="AUTHORITY_NAME" jdbcType="VARCHAR" property="authorityName"/>
+        <result column="AUTHORITY_DESCRIPTION" jdbcType="VARCHAR" property="authorityDescription"/>
+        <result column="AUTHORITY_STATUS" jdbcType="DECIMAL" property="authorityStatus"/>
+        <result column="AUTHORITY_NAME_ZH" jdbcType="VARCHAR" property="authorityNameZh"/>
+    </resultMap>
+
+    <select id="selectAuthorityGroup" resultType="String">
+        SELECT
+            TA.AUTHORITY_DESCRIPTION
+        FROM
+            T_AUTHORITY TA,T_AUTHORITY_OPERATION TAO
+        WHERE
+            TA.AUTHORITY_DESCRIPTION IS NOT NULL
+            AND
+            TAO.AUTHORITY_ID = TA."ID"
+        GROUP BY
+            TA.AUTHORITY_DESCRIPTION
+    </select>
+
+    <select id="selectByRoleId" resultMap="BaseResultMap">
+        SELECT
+            TA.*
+        FROM
+            T_ROLE_AUTHORITY TRA,
+            T_AUTHORITY TA
+        WHERE
+            TRA.ROLE_ID=#{roleId}
+        AND
+            TRA.AUTHORITY_ID=TA.ID
+    </select>
+
+    <!--根据菜单ID和用户查询权限-->
+    <select id="selectMenuAuthorityByUser" resultMap="BaseResultMap">
+        SELECT
+        T_AUTHORITY.*
+        FROM
+        T_USER,
+        T_USER_ROLE,
+        T_ROLE_AUTHORITY,
+        T_MENU,
+        T_AUTHORITY_MENU,
+        T_AUTHORITY
+        WHERE
+        T_USER. ID = T_USER_ROLE.USER_ID
+        AND T_USER_ROLE.ROLE_ID = T_ROLE_AUTHORITY.ROLE_ID
+        AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY. ID
+        AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
+        AND T_MENU. ID = T_AUTHORITY_MENU.MENU_ID
+        AND T_USER. ID = #{userId}
+        AND T_MENU. ID = #{menuId}
+    </select>
+
+    <select id="selectAllByStatus" resultMap="BaseResultMap">
+        SELECT DISTINCT
+            TA.*
+        FROM
+            T_AUTHORITY TA,
+            T_AUTHORITY_OPERATION TAO
+        WHERE
+            TA.AUTHORITY_DESCRIPTION IS NOT NULL
+        AND TAO.AUTHORITY_ID = TA."ID"
+        AND TA.AUTHORITY_STATUS = 1
+    </select>
+</mapper>

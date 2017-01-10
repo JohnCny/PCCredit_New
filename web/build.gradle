@@ -1,0 +1,49 @@
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.akhikhl.gretty'
+//apply plugin: 'org.sonarqube'
+
+//引入版本管理
+apply from: "$rootDir/gradle/versionManage.gradle"
+
+//设置web目录
+project.webAppDirName = 'src/main/webapp'
+
+//定义war包
+war {
+    baseName = 'loan'
+    from '/src/main/webapp'                           // adds a file-set to the root of the archive
+    webInf { from '/src/main/webapp/WEB-INF/' }     // adds a file-set to the WEB-INF dir.
+    classpath fileTree('lib')                           // adds a file-set to the WEB-INF/lib dir.
+}
+
+//gretty配置
+gretty {
+    port = 80
+    contextPath = '/'
+    servletContainer = 'tomcat8'
+    scanInterval = 3
+    inplaceMode = "hard"
+}
+
+//gradle wrapper命令去更新wrapper文件
+task wrapper(type:Wrapper) {
+    gradleVersion = '2.13'
+    distributionPath = 'gradle-dists'
+}
+
+//添加依赖文件
+dependencies {
+    compile project(':common')
+    compile project(':core')
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+}
+
+//设置编码
+[compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+
+
+
+
+
