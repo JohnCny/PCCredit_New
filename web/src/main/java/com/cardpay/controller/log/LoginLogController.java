@@ -29,7 +29,6 @@ import java.util.Map;
  * 日志controller
  *
  * @author rankai
- * @create 2016-12-2016/12/21 10:22
  */
 
 @RestController

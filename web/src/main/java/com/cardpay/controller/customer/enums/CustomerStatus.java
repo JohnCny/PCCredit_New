@@ -11,7 +11,6 @@ public enum CustomerStatus {
     HIGH_RISK("高风险", 1),
     BLACKLIST("黑名单",2),
     FORBIDDEN("禁用", 3);
-
     private int value;
     private String key;
 

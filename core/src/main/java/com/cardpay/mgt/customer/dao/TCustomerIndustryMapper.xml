@@ -35,4 +35,13 @@
         WHERE BASIC.id=cusIndustaty.CUSTOMER_ID AND industaty.id = cusIndustaty.INDUSTRY_ID
         AND basic.id = #{customerId}
     </select>
+
+    <!--批量更新-->
+    <update id="batchUpdate">
+        <foreach collection="list" separator=";" item="item" index="index" close=";END;" open="BEGIN">
+            UPDATE T_CUSTOMER_INDUSTRY
+            SET INDUSTRY_ID = #{item.industryId}
+            WHERE CUSTOMER_ID = #{item.customerId}
+        </foreach>
+    </update>
 </mapper>

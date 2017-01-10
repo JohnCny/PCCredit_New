@@ -24,7 +24,6 @@ import java.util.*;
  * 产品管理Controller
  *
  * @author rankai
- *         createTime 2016-12-2016/12/23 14:40
  */
 @RestController
 @RequestMapping("/api/product")

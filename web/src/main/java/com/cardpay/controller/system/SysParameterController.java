@@ -8,15 +8,12 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.system.model.TSysParameter;
-import com.cardpay.mgt.system.model.vo.TSysParameterVo;
 import com.cardpay.mgt.system.service.TSysParameterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 
@@ -24,7 +21,6 @@ import java.util.Date;
  * 系统参数配置Controller
  *
  * @author chenkai
- *         createTime 2016-12-2016/12/27 10:02
  */
 @RestController
 @RequestMapping("/api/system")
@@ -54,7 +50,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
      *
      * @return 所有系统参数配置.
      */
-    @GetMapping
+    @RequestMapping
     @SystemControllerLog(description = "获取所有系统参数配置")
     @ApiOperation(value = "获取所有系统参数配置", notes = "所有系统参数配置", httpMethod = "GET")
     public DataTablePage queryAll() {

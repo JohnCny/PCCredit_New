@@ -9,6 +9,8 @@ import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.AuthorityGroupVo;
+import com.cardpay.mgt.user.model.vo.AuthorityVo;
+import com.cardpay.mgt.user.service.RoleService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,18 +52,27 @@ public class RoleServiceImplTest {
 
     @Test
     public void selectAuthorityGroup() throws Exception {
-      /*  List<String> authorityGroups = new ArrayList<>();
-        authorityGroups.add("测试");
+        List<String> authorityGroups = new ArrayList<>();
+        authorityGroups.add("test");
         List<Authority> authorities = new ArrayList<>();
         Authority authority = new Authority();
-        authority.setId(1);
-        authority.setAuthorityDescription("测试");
+        authority.setAuthorityDescription("test");
         authorities.add(authority);
+        List<AuthorityGroupVo> authorityGroupVoList = new ArrayList<>();
+        List<AuthorityVo> authorityVoList = new ArrayList<>();
+        AuthorityVo authorityVo = new AuthorityVo();
+        authorityVo.setAuthorityNameZh("测试123");
+        authorityVoList.add(authorityVo);
+        AuthorityGroupVo authorityGroupVo = new AuthorityGroupVo();
+        authorityGroupVo.setGroupName("测试321");
+        authorityGroupVo.setAuthorityList(authorityVoList);
+        authorityGroupVoList.add(authorityGroupVo);
         PowerMockito.when(authorityMapper.selectAuthorityGroup()).thenReturn(authorityGroups);
-        PowerMockito.when(authorityMapper.selectAll()).thenReturn(authorities);
+        PowerMockito.when(authorityMapper.selectAllByStatus()).thenReturn(authorities);
+        RoleServiceImpl spy = PowerMockito.spy(new RoleServiceImpl());
+        PowerMockito.doReturn(authorityGroupVoList).when(spy, "getGroup", authorityGroups, authorities);
         List<AuthorityGroupVo> list = roleService.selectAuthorityGroup();
-        Assert.assertEquals(list.get(0).getAuthorityList().get(0).getAuthorityDescription(), "测试");
-*/
+        Assert.assertTrue(list.size() > 0);
     }
 
     @Test
@@ -120,17 +131,67 @@ public class RoleServiceImplTest {
 
     @Test
     public void selectRole() throws Exception {
-       /* List<String> strs = new ArrayList<>();
-        strs.add("测试");
+        List<String> authorityGroups = new ArrayList<>();
+        authorityGroups.add("test");
         List<Authority> authorities = new ArrayList<>();
         Authority authority = new Authority();
-        authority.setId(1);
-        authority.setAuthorityDescription("测试");
+        authority.setAuthorityDescription("test");
         authorities.add(authority);
-        PowerMockito.when(authorityMapper.selectAuthorityGroup()).thenReturn(strs);
+        List<AuthorityGroupVo> authorityGroupVoList = new ArrayList<>();
+        List<AuthorityVo> authorityVoList = new ArrayList<>();
+        AuthorityVo authorityVo = new AuthorityVo();
+        authorityVo.setAuthorityNameZh("测试123");
+        authorityVoList.add(authorityVo);
+        AuthorityGroupVo authorityGroupVo = new AuthorityGroupVo();
+        authorityGroupVo.setGroupName("测试321");
+        authorityGroupVo.setAuthorityList(authorityVoList);
+        authorityGroupVoList.add(authorityGroupVo);
+        PowerMockito.when(authorityMapper.selectAuthorityGroup()).thenReturn(authorityGroups);
         PowerMockito.when(authorityMapper.selectByRoleId(1)).thenReturn(authorities);
-        List<AuthorityGroupVo> authorityGroups = roleService.selectRole(1);
-        Assert.assertEquals(authorityGroups.get(0).getAuthorityList().get(0).getAuthorityDescription(), "测试");*/
+        RoleServiceImpl spy = PowerMockito.spy(new RoleServiceImpl());
+        PowerMockito.doReturn(authorityGroupVoList).when(spy, "getGroup", authorityGroups, authorities);
+        List<AuthorityGroupVo> authorityGroupVos = roleService.selectRole(1);
+        Assert.assertTrue(authorityGroupVos.size() > 0);
+    }
+
+    @Test
+    public void selectAuthority() throws Exception {
+        List<String> authorityGroups = new ArrayList<>();
+        authorityGroups.add("test");
+        List<Authority> authorities = new ArrayList<>();
+        Authority authority = new Authority();
+        authority.setAuthorityDescription("test");
+        authorities.add(authority);
+        List<AuthorityGroupVo> authorityGroupVoList = new ArrayList<>();
+        List<AuthorityVo> authorityVoList = new ArrayList<>();
+        AuthorityVo authorityVo = new AuthorityVo();
+        authorityVo.setAuthorityNameZh("测试123");
+        authorityVoList.add(authorityVo);
+        AuthorityGroupVo authorityGroupVo = new AuthorityGroupVo();
+        authorityGroupVo.setGroupName("测试321");
+        authorityGroupVo.setAuthorityList(authorityVoList);
+        authorityGroupVoList.add(authorityGroupVo);
+        PowerMockito.when(authorityMapper.selectAuthorityGroup()).thenReturn(authorityGroups);
+        PowerMockito.when(authorityMapper.selectByRoleId(1)).thenReturn(authorities);
+        RoleServiceImpl spy = PowerMockito.spy(new RoleServiceImpl());
+        PowerMockito.doReturn(authorityGroupVoList).when(spy, "getGroup", authorityGroups, authorities);
+        RoleAuthority mock = PowerMockito.mock(RoleAuthority.class);
+        PowerMockito.whenNew(RoleAuthority.class).withAnyArguments().thenReturn(mock);
+        List<AuthorityGroupVo> authorityGroupVos = roleService.selectRole(1);
+        Assert.assertTrue(authorityGroupVos.size() > 0);
+    }
+
+    @Test
+    public void updateAuthorityIds() throws Exception {
+        String[] str = new String[]{"1,2", "3,-1"};
+        PowerMockito.when(roleMapper.updateByPrimaryKeySelective(role)).thenReturn(0);
+        boolean flag;
+        flag = roleService.updateAuthorityIds(role, str);
+        Assert.assertFalse(flag);
+
+        PowerMockito.when(roleMapper.updateByPrimaryKeySelective(role)).thenReturn(1);
+        flag = roleService.updateAuthorityIds(role, str);
+        Assert.assertTrue(flag);
     }
 
 }
