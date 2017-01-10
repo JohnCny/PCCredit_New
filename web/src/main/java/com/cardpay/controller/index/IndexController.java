@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * BaseLogin控制层
  *
  * @author rankai
- * @create 2016-12-2016/12/19 15:12
  */
 @Controller
 @RequestMapping("/api/index")

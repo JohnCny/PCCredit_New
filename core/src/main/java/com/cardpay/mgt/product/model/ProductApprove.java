@@ -454,4 +454,23 @@ public class ProductApprove extends GenericEntity<Integer> {
             return productApprove;
         }
     }
+
+    @Override
+    public String toString() {
+        return "ProductApprove{" +
+                "id=" + id +
+                ", productId=" + productId +
+                ", nodeType=" + nodeType +
+                ", nodeName='" + nodeName + '\'' +
+                ", preNodeId=" + preNodeId +
+                ", nextNodeId=" + nextNodeId +
+                ", approveRoles='" + approveRoles + '\'' +
+                ", isRandomDivision=" + isRandomDivision +
+                ", isLoanMeeting=" + isLoanMeeting +
+                ", isLoanLimit=" + isLoanLimit +
+                ", loanLimit=" + loanLimit +
+                ", isReviewNode=" + isReviewNode +
+                ", loanMeetingType=" + loanMeetingType +
+                '}';
+    }
 }

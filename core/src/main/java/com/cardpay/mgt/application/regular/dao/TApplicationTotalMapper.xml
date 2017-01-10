@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.regular.dao.TApplicationTotalMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.regular.model.TApplicationTotal">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="FIXED_ASSERT_TOTAL_ID" jdbcType="DECIMAL" property="fixedAssertTotalId" />
+    <result column="FIXED_ASSERT_TOTAL_VALUE" jdbcType="DECIMAL" property="fixedAssertTotalValue" />
+    <result column="FIXED_ASSERT_DEPRECIATE_VALUE" jdbcType="DECIMAL" property="fixedAssertDepreciateValue" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+    <result column="RECEIVE_TOTAL_VALUE" jdbcType="DECIMAL" property="receiveTotalValue" />
+    <result column="PAYABLE_TOTAL_VALUE" jdbcType="DECIMAL" property="payableTotalValue" />
+    <result column="STOCK_TOTAL" jdbcType="DECIMAL" property="stockTotal" />
+    <result column="STOCK_TOTAL_VALUE" jdbcType="DECIMAL" property="stockTotalValue" />
+  </resultMap>
+</mapper>

@@ -36,6 +36,7 @@
     <mvc:default-servlet-handler/>
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
     <bean class="springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration"/>
     <bean class="com.cardpay.basic.common.swagger.SwaggerConfig"/>
 
@@ -77,6 +78,12 @@
         </property>
     </bean>
 
+    <!-- 支持上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="314572800"/><!-- 300M -->
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="resolveLazily" value="true"></property>
+    </bean>
 
     <!--拦截器异常处理配置-->
     <!--<bean id="handlerExceptionResolver"-->

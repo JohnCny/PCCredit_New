@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -26,7 +27,6 @@ import java.util.Map;
  * 用户控制层
  *
  * @author rankai
- *         create 2016-12-2016/12/21 10:22
  */
 @RestController
 @RequestMapping("/api/user")
@@ -143,7 +143,7 @@ public class UserController extends BaseController<User> {
     @PutMapping
     @ApiOperation(value = "编辑用户实现", httpMethod = "PUT")
     public ResultTo updateUser(User user, BindingResult result, @RequestParam(value = "orgId", required = false) String orgId,
-                               @RequestParam(value = "roleId", required = false) String roleId) {
+                               @RequestParam(value = "roleId", required = false) String roleId, MultipartFile file) {
         LogTemplate.debug(this.getClass(), "orgId", orgId);
         LogTemplate.debug(this.getClass(), "roleId", roleId);
         Map<String, String> map = new HashedMap();
@@ -163,7 +163,7 @@ public class UserController extends BaseController<User> {
                 return new ResultTo(ResultEnum.PARAM_ERROR);
             }
         }
-        if (userService.updateUser(user, orgIds, roleIds)) {
+        if (userService.updateUser(user, orgIds, roleIds, file)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);

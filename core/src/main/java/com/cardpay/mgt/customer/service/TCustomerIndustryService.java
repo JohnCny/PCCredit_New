@@ -15,6 +15,7 @@ public interface TCustomerIndustryService extends BaseService<TCustomerIndustry>
 
     /**
      * 批量添加行业信息
+     *
      * @param list 行业id,客户id
      * @return 数据库变记录
      */
@@ -23,8 +24,17 @@ public interface TCustomerIndustryService extends BaseService<TCustomerIndustry>
 
     /**
      * 查询客户所属行业信息
+     *
      * @param customerId 客户id
      * @return 客户所属行业信息
      */
     List<TCustomerIndustryVo> queryById(int customerId);
+
+    /**
+     * 批量更新
+     *
+     * @param list 参数
+     * @return 数据库变记录
+     */
+    int batchUpdate(List<TCustomerIndustry> list);
 }

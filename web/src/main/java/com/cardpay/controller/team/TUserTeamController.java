@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  * 团队用户Controller
  *
  * @author chenkai
- *         createTime 2017-01-2017/1/6 10:58
  */
 @RestController
 @RequestMapping("/api/userTeam")

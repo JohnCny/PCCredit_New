@@ -4,7 +4,6 @@ package com.cardpay.controller.application.enums;
  * 进件状态枚举类
  *
  * @author chenkai
- *         createTime 2017-01-2017/1/5 16:48
  */
 public enum ApplicationStatus {
     /**

@@ -48,8 +48,8 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
                     haveNext = Boolean.TRUE;
                 }
             }
-            map.put("haveStart", haveStart);
-            map.put("haveNext", haveNext);
+            map.put("haveStart", haveStart);//是否有开始节点
+            map.put("haveNext", haveNext);//是否有结束节点
         } else {
             ProductApprove productApprove = productApproveMapper.selectByPrimaryKey(approveId);
             map.put("productApprove", productApprove);
@@ -63,10 +63,12 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
     public void addApprove(ProductApprove productApprove) {
         LogTemplate.info(this.getClass(), "nodeType", productApprove.getNodeType());
         LogTemplate.info(this.getClass(), "preNodeId", productApprove.getPreNodeId());
+        //开始节点
         if (productApprove.getNodeType() == 0) {
             productApprove.setPreNodeId(-1);
             productApproveMapper.insertSelective(productApprove);
         }
+        //中间节点
         if (productApprove.getNodeType() == 1) {
             ProductApprove preOneProductApprove = productApproveMapper.selectByPrimaryKey(productApprove.getPreNodeId());
 
@@ -90,14 +92,13 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
                     productApproveMapper.updateByPrimaryKeySelective(nextOneProductApprove);
                 }
             }
-
             preOneProductApprove.setNextNodeId(productApprove.getId());
             productApproveMapper.updateByPrimaryKeySelective(preOneProductApprove);
         }
+        //结束节点
         if (productApprove.getNodeType() == 2) {
             ProductApprove approve = productApproveMapper
                     .selectOne(ProductApprove.ProductApproveBuilder.get().withNextNodeId(0).build());
-
             productApprove.setPreNodeId(approve.getId());
             productApprove.setNextNodeId(-1);
             productApproveMapper.insertSelective(productApprove);
@@ -108,8 +109,28 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
 
     @Override
     public void updateApprove(ProductApprove productApprove) {
+        LogTemplate.debug(this.getClass(), "productApprove", productApprove);
         if (productApprove.getNodeType() != 0 && productApprove.getNodeType() != 2) {
-//            productApprove.setPreNodeId();
+            ProductApprove oldApprove = productApproveMapper.selectByPrimaryKey(productApprove.getId());
+            if (!oldApprove.getPreNodeId().equals(productApprove.getPreNodeId())) {
+                //新增位置
+                ProductApprove newApprovePreNode = productApproveMapper.selectByPrimaryKey(productApprove.getPreNodeId());
+                ProductApprove newApproveNextNode = productApproveMapper.selectByPrimaryKey(newApprovePreNode.getNextNodeId());
+                productApprove.setNextNodeId(newApprovePreNode.getNextNodeId());
+                newApprovePreNode.setNextNodeId(productApprove.getId());
+                productApproveMapper.updateByPrimaryKeySelective(newApprovePreNode);
+                newApproveNextNode.setPreNodeId(productApprove.getId());
+                productApproveMapper.updateByPrimaryKeySelective(newApproveNextNode);
+
+                //原位置
+                ProductApprove oldApprovePreNode = productApproveMapper.selectByPrimaryKey(oldApprove.getPreNodeId());
+                ProductApprove oldApproveNextNode = productApproveMapper.selectByPrimaryKey(oldApprove.getNextNodeId());
+                oldApprovePreNode.setNextNodeId(oldApproveNextNode.getId());
+                productApproveMapper.updateByPrimaryKeySelective(oldApprovePreNode);
+                oldApproveNextNode.setPreNodeId(oldApprovePreNode.getId());
+                productApproveMapper.updateByPrimaryKeySelective(oldApproveNextNode);
+            }
         }
+        productApproveMapper.updateByPrimaryKeySelective(productApprove);
     }
 }
