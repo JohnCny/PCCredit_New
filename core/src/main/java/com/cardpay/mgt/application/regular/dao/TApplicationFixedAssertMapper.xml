@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.balancecross.dao.TApplicationFixedAssertMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.regular.model.TApplicationFixedAssert">
+        <id column="FIXED_ASSERT_ID" jdbcType="DECIMAL" property="fixedAssertId"/>
+        <result column="FIXED_ASSERT_NAME" jdbcType="VARCHAR" property="fixedAssertName"/>
+        <result column="FIXED_ASSERT_BUY_TIME" jdbcType="TIMESTAMP" property="fixedAssertBuyTime"/>
+        <result column="FIXED_ASSERT_ORIGIN_PRICE" jdbcType="DECIMAL" property="fixedAssertOriginPrice"/>
+        <result column="FIXED_ASSERT_DEPRECIATE" jdbcType="DECIMAL" property="fixedAssertDepreciate"/>
+        <result column="FIXED_ASSERT_COUNT" jdbcType="DECIMAL" property="fixedAssertCount"/>
+        <result column="FIXED_ASSERT_TOTAL_VALUE" jdbcType="DECIMAL" property="fixedAssertTotalValue"/>
+        <result column="FIXED_ASSERT_DEPRECIATE_VALUE" jdbcType="DECIMAL" property="fixedAssertDepreciateValue"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="FIXED_ASSERT_TYPE" jdbcType="DECIMAL" property="fixedAssertType"/>
+    </resultMap>
+
+    <resultMap id="BaseVo" type="com.cardpay.mgt.application.regular.model.vo.TApplicationFixedAssertVo">
+        <id column="FIXED_ASSERT_ID" jdbcType="DECIMAL" property="fixedAssertId"/>
+        <result column="FIXED_ASSERT_NAME" jdbcType="VARCHAR" property="fixedAssertName"/>
+        <result column="FIXED_ASSERT_BUY_TIME" jdbcType="TIMESTAMP" property="fixedAssertBuyTime"/>
+        <result column="FIXED_ASSERT_ORIGIN_PRICE" jdbcType="DECIMAL" property="fixedAssertOriginPrice"/>
+        <result column="FIXED_ASSERT_DEPRECIATE" jdbcType="DECIMAL" property="fixedAssertDepreciate"/>
+        <result column="FIXED_ASSERT_COUNT" jdbcType="DECIMAL" property="fixedAssertCount"/>
+        <result column="FIXED_ASSERT_TOTAL_VALUE" jdbcType="DECIMAL" property="fixedAssertTotalValue"/>
+        <result column="FIXED_ASSERT_DEPRECIATE_VALUE" jdbcType="DECIMAL" property="fixedAssertDepreciateValue"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="FIXED_ASSERT_TYPE" jdbcType="DECIMAL" property="fixedAssertType"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="totalValue"/>
+        <result column="FIXED_ASSERT_TYPE" jdbcType="DECIMAL" property="depreciateValue"/>
+    </resultMap>
+
+    <!--根据进件id查询固定资产信息-->
+    <select id="queryByApplicationId" resultMap="BaseVo" parameterType="Map">
+        SELECT fixed.*, total.APPLICATION_ID AS totalValue, total.FIXED_ASSERT_TYPE AS depreciateValue
+        FROM T_APPLICATION_TOTAL total, T_APPLICATION_FIXED_ASSERT fixed
+        WHERE total.APPLICATION_ID = fixed.APPLICATION_ID
+        AND  fixed.APPLICATION_ID = #{applicationId}
+    </select>
+</mapper>
