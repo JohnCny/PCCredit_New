@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.modeifyhistory.dao.TModifyHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.modeifyhistory.model.TModifyHistory">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="MODULE_NAME" jdbcType="VARCHAR" property="moduleName" />
+    <result column="MODULE_NAME_ZH" jdbcType="VARCHAR" property="moduleNameZh" />
+    <result column="PROPERTY_NAME" jdbcType="VARCHAR" property="propertyName" />
+    <result column="PROPERTY_NAME_ZH" jdbcType="VARCHAR" property="propertyNameZh" />
+    <result column="BEFORE_VALUE" jdbcType="VARCHAR" property="beforeValue" />
+    <result column="AFTER_VALUE" jdbcType="VARCHAR" property="afterValue" />
+    <result column="MODIFY_AT" jdbcType="TIMESTAMP" property="modifyAt" />
+    <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy" />
+  </resultMap>
+
+  <!-- 批量插入-->
+  <insert id="batchInsert" parameterType="java.util.List">
+    INSERT INTO T_MODIFY_HISTORY(ID, MODULE_NAME, MODULE_NAME_ZH, PROPERTY_NAME, PROPERTY_NAME_ZH, BEFORE_VALUE, AFTER_VALUE
+    , MODIFY_AT, MODIFY_BY)
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator="union">
+      SELECT #{item.id,mode=IN,jdbcType=DECIMAL}
+      , #{item.moduleName,mode=IN, jdbcType=VARCHAR}
+      , #{item.moduleNameZh,mode=IN, jdbcType=VARCHAR}
+      , #{item.propertyName, mode=IN,jdbcType=VARCHAR}
+      , #{item.propertyNameZh, mode=IN,jdbcType=VARCHAR}
+      , #{item.beforeValue,mode=IN, jdbcType=TIMESTAMP}
+      , #{item.afterValue,mode=IN, jdbcType=VARCHAR}
+      , #{item.modifyAt, mode=IN,jdbcType=TIMESTAMP}
+      , #{item.modifyBy,mode=IN, jdbcType=DECIMAL} FROM dual
+    </foreach>
+  </insert>
+</mapper>

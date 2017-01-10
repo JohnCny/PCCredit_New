@@ -1,0 +1,234 @@
+group 'com.cardpay'
+version '1.0-SNAPSHOT'
+apply plugin: 'java'
+apply plugin: 'war'
+
+//全局project属性
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    //build
+    buildscript {
+        repositories {
+            maven {
+                url "http://maven.aliyun.com/nexus/content/groups/public/"
+            }
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
+            mavenCentral()
+            jcenter()
+        }
+        dependencies {
+            classpath "org.akhikhl.gretty:gretty:1.2.4"
+            classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1-rc1"
+        }
+    }
+
+    //定义JVM版本
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        flatDir {
+            dirs "$rootProject.projectDir/libs"
+        }
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+//        maven {
+//            name "nexus"
+//            url "http://192.168.1.116:8081/repository/qkjr/"
+//      }
+        jcenter()
+        mavenCentral()
+    }
+
+}
+
+//子project属性
+subprojects {
+//    apply plugin: 'checkstyle'
+//    apply plugin: 'findbugs'
+
+    //引入依赖文件路径
+    apply from: "$rootDir/gradle/dependency.gradle"
+
+    //设置编码
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    //将mybatis的mapper.xml文件同时打包
+    jar {
+        from('src/main/java') {
+            include 'src/main/java/com/cardpay/business/**/dao/*mapper.xml'
+        }
+    }
+
+    //定义包路径
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+            //用于收录java目录中的资源文件
+            resources {
+                srcDirs = ['src/main/resources', 'src/main/java']
+            }
+        }
+    }
+
+    //编写创建工程目录task -可以执行gradle create-dirs创建目录(不要随便执行)
+    task "create-dirs" << {
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    }
+
+    dependencies {
+        compile(
+                //spring
+                libraries."spring-core",
+                libraries."spring-context",
+                libraries."spring-context-support",
+                libraries."spring-expression",
+                libraries."spring-beans",
+                libraries."spring-context",
+                libraries."spring-tx",
+                libraries."spring-web",
+                libraries."spring-oxm",
+                libraries."javax-servlet",
+                libraries."spring-webmvc",
+                libraries."spring-aop",
+                libraries."spring-jdbc",
+
+                //aop
+                libraries."aspectjweaver",
+                libraries."aspectjrt",
+
+                //spring  redis
+                libraries."spring-data-jpa",
+                libraries."spring-data-redis",
+                libraries."jedis",
+
+                //shrio
+                libraries."shiro-core",
+                libraries."shiro-web",
+                libraries."shiro-ehcache",
+                libraries."shiro-spring",
+
+                //logback slf4j
+                libraries."jcl-over-slf4j",
+                libraries."logback-core",
+                libraries."logback-classic",
+                libraries."logback-ext-spring",
+
+                //common
+                libraries."commons-io",
+                libraries."commons-fileupload",
+                libraries."commons-lang3",
+                libraries."commons-codec",
+                libraries."bcprov",
+
+                //durid
+                libraries."druid",
+
+                //json-path
+                libraries."json-path",
+                libraries."gson",
+
+                //guava google工具类集合
+                libraries."guava",
+
+                //mybatis
+                libraries."mybatis",
+                libraries."mybatis-spring",
+                libraries."mysql-connector-java",
+                libraries."oracle-connector-java",
+
+                //通用mapper
+                libraries."mysql-connector",
+                libraries."tk.mybatis",
+
+                //分页插件
+                libraries."pagehelper",
+
+                //Dozer-spring
+                libraries."dozer",
+                libraries."dozer-spring",
+
+                //spring-fox
+                libraries."springfox-swagger2",
+                libraries."springfox-swagger-ui",
+                libraries."springfox-data-rest",
+                libraries."springfox-bean-validators",
+                libraries."springfox-staticdocs",
+                libraries."springfox-petstore",
+
+                //freemarker
+                libraries."freemarker",
+                libraries."shiro-freemarker-tags",
+
+                //验证码
+                libraries."kaptcha",
+
+                //httpclient
+                libraries."httpclient",
+                libraries."httpcore",
+
+                //rabbitmq
+                libraries."amqp-client",
+                libraries."spring-rabbit",
+                libraries."spring-integration-amqp",
+
+                //aspect
+                libraries."aspectjweaver",
+                libraries."aspectjrt",
+
+                //webSocket
+                libraries."spring-websocket",
+
+                //excel poi
+                libraries."poi",
+
+                //fastdfs
+                libraries."fastdfs",
+
+                //pdf
+                libraries."pdfbox",
+
+                libraries."hibernate-validator",
+
+                //servlet和jstl
+                libraries."jstl",
+                libraries."javax-servlet",
+
+                //grpc
+                libraries."grpc-netty",
+                libraries."grpc-protobuf",
+                libraries."grpc-stub",
+
+        )
+        testCompile(
+                libraries."junit",
+                libraries."spring-test",
+                libraries."mockito-core",
+                libraries."powermock-module-junit4",
+                libraries."powermock-api-mockito",
+                libraries."spring-mock",
+                libraries."unitils-core",
+                libraries."unitils-spring",
+                libraries."tomcat-embed-websocket",
+                libraries."h2",
+        )
+    }
+}
+
+//定义依赖关系
+dependencies {
+    compile project(':common')
+    compile project(':core')
+    compile project(':web')
+}
+
+//默认任务为gradle tomcatRun
+defaultTasks 'tomcatRun'

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.basic.dao.ApplicationIPCBasicMapper">
+
+  <!--初始化资产负债和交叉检验类型进件模版-->
+  <insert id="initBalanceCrossTemplate">
+    INSERT INTO T_APPLICATION_BALANCECROSS_VAR (
+      T_APPLICATION_BALANCECROSS_VAR.BALANCE_CORSS_VAR_ID,
+      T_APPLICATION_BALANCECROSS_VAR.APPLICATION_ID
+    ) SELECT
+      TBCV.BALANCE_CROSS_VAR_ID,
+      #{application} APPLICATION_ID
+    FROM
+      T_APPLICATION_TEMPLATE_GROUP TATG,
+      T_BANLANCE_CROSS_VAR TBCV
+    WHERE
+      TATG. GROUP_ID = TBCV.BALANCE_CROSS_VARGROUP_ID
+    AND TATG.TEMPLATE_ID = #{templateId}
+  </insert>
+
+</mapper>

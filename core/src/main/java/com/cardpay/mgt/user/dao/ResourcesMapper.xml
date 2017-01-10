@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.user.dao.ResourcesMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.Resources">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="RESOUCRE_NAME" jdbcType="VARCHAR" property="resoucreName"/>
+        <result column="RESOUCRE_NAME_ZH" jdbcType="VARCHAR" property="resoucreNameZh"/>
+        <result column="RESOUCRE_DESCRIPTION" jdbcType="VARCHAR" property="resoucreDescription"/>
+        <result column="RESOUCRE_TYPE" jdbcType="DECIMAL" property="resoucreType"/>
+    </resultMap>
+</mapper>

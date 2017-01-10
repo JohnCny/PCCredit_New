@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- shrio缓存管理器,提供了AuthorizationInfo信息的缓存。-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
+    <!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录数据源-->
+    <bean id="shiroRealm" class="com.cardpay.core.shiro.realm.ShiroRealm"/>
+
+    <!-- Shiro默认会使用Servlet容器的Session,可通过sessionMode属性来指定使用Shiro原生Session -->
+    <!-- 即<property name="sessionMode" value="native"/>,详细说明见官方文档 -->
+    <!-- 设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="realm" ref="shiroRealm"/>
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+    <!-- 会话ID生成器 -->
+    <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionValidationInterval" value="1800000"/>  <!-- 相隔多久检查一次session的有效性 -->
+        <property name="globalSessionTimeout" value="1800000"/>       <!-- session 有效时间为半小时 （毫秒单位）-->
+        <!--<property name="sessionIdCookie.domain" value="http://192.168.1.133:81"/>-->
+        <property name="sessionIdCookie.name" value="shiroSessionId"/>
+        <property name="sessionIdCookie.path" value="/"/>
+    </bean>
+
+    <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
+        <property name="arguments" ref="securityManager"/>
+    </bean>
+
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="unauthorizedUrl" value="/api/logon/unauthorized"/>
+        <property name="loginUrl" value="/api/logon/noLogin"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /upload/** = anon
+                /static/** = anon
+                /js/** = anon
+                /css/** = anon
+                /img/** = anon
+                /assets/** = anon
+                /api/kaptcha = anon
+                /api/logon/** = anon
+                /api/menu/refresh/** = anon
+                /**/anon/** = anon
+                /swagger-ui.html = anon
+                /webjars/** = anon
+                /swagger-resources/** = anon
+                /v2/** = anon
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+    <!--Shiro权限注解配置-->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <!-- Shiro生命周期处理器-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+</beans>

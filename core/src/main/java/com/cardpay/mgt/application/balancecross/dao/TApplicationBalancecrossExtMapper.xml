@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.balancecross.dao.TApplicationBalancecrossExtMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.balancecross.model.TApplicationBalancecrossExt">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="BALANCE_CROSS_VAR_EXTRA_ID" jdbcType="DECIMAL" property="balanceCrossVarExtraId" />
+    <result column="BALANCE_CROSS_VAR_ID" jdbcType="DECIMAL" property="balanceCrossVarId" />
+    <result column="BALANCE_CROSS_EXTRA_NAME" jdbcType="VARCHAR" property="balanceCrossExtraName" />
+    <result column="BALANCE_CROSS_EXTRA_VALUE" jdbcType="VARCHAR" property="balanceCrossExtraValue" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+  </resultMap>
+</mapper>
