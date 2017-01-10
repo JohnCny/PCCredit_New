@@ -54,7 +54,7 @@ public class SysParameterController extends BaseController<TSysParameter> {
      *
      * @return 所有系统参数配置.
      */
-    @GetMapping
+    @RequestMapping
     @SystemControllerLog(description = "获取所有系统参数配置")
     @ApiOperation(value = "获取所有系统参数配置", notes = "所有系统参数配置", httpMethod = "GET")
     public DataTablePage queryAll() {
