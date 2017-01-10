@@ -9,16 +9,11 @@ import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.model.UserRole;
-import com.cardpay.mgt.user.service.RoleService;
-import com.cardpay.mgt.user.service.UserRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -117,7 +112,8 @@ public class MenuController {
      */
     @GetMapping("/checkedMenu")
     @ApiOperation(value = "记录选中菜单", notes = "记录选中菜单",  httpMethod = "GET")
-    public ResultTo setCheckedMenu(HttpSession session,@ApiParam(value = "菜单id", required = true)
+    public ResultTo setCheckedMenu(HttpSession session,
+                                            @ApiParam(value = "菜单id", required = true)
                                             @RequestParam("menuId") Integer menuId){
         session.setAttribute(ShiroKit.getUserId().toString(),menuId);
         return new ResultTo();

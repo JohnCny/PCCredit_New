@@ -22,7 +22,6 @@ import java.util.List;
  * 团队Controller
  *
  * @author chenkai
- *         createTime 2017-01-2017/1/6 9:33
  */
 @RestController
 @RequestMapping("/api/team")

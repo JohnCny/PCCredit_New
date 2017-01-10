@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 参数controller
+ * 参数管理controller
  * @author yanweichen
  */
 @Api(value = "/api/businessparam", description = "参数")

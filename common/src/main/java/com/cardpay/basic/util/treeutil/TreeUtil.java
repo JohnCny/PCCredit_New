@@ -1,5 +1,6 @@
 package com.cardpay.basic.util.treeutil;
 
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ListSortUtil;
 import com.cardpay.basic.util.ReflectUtil;
 import com.cardpay.basic.util.treeutil.annotation.TreeChild;
@@ -53,6 +54,7 @@ public class TreeUtil<T> {
      */
     public List<T> getChildNodesByParentId(List<T> sourceList, Object parentId) {
         if (sourceList == null || sourceList.isEmpty() || parentId == null) {
+            LogTemplate.info("sourceList="+sourceList+",parentId="+parentId,"菜单获取子节点");
             throw new IllegalArgumentException("sourceList is Null or Empty or parentId is Null");
         }
         if(order && sourceList!=null && !sourceList.isEmpty()){
