@@ -2,8 +2,12 @@ package com.cardpay.mgt.application.regular.service;
 
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.application.regular.model.TApplicationReceive;
+import com.cardpay.mgt.application.regular.model.vo.TApplicationPayableVo;
+import com.cardpay.mgt.application.regular.model.vo.TApplicationReceiveVo;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 应收预付表Service
@@ -18,7 +22,7 @@ public interface TApplicationReceiveService extends BaseService<TApplicationRece
      * @param receiveTotalValue 应收预付总计
      * @return 数据变记录
      */
-    int insertFixedAssert(TApplicationReceive applicationReceive, BigDecimal receiveTotalValue);
+    int insertReceive(TApplicationReceive applicationReceive, BigDecimal receiveTotalValue);
 
     /**
      * 更新应收预付表更新总计信息
@@ -26,7 +30,7 @@ public interface TApplicationReceiveService extends BaseService<TApplicationRece
      * @param receiveTotalValue 应收预付总计
      * @return 数据变记录
      */
-    int updateFixedAssert(TApplicationReceive applicationReceive, BigDecimal receiveTotalValue);
+    int updateReceive(TApplicationReceive applicationReceive, BigDecimal receiveTotalValue);
 
     /**
      *  删除应收预付更新总计
@@ -34,5 +38,12 @@ public interface TApplicationReceiveService extends BaseService<TApplicationRece
      * @param receiveTotalValue 应收预付总计
      * @return 数据变记录
      */
-    int deleteFixedAssert(int receiveId, BigDecimal receiveTotalValue);
+    int deleteReceive(int receiveId, BigDecimal receiveTotalValue);
+
+    /**
+     * 根据进件id查询应收预付表信息
+     * @param map 进件id
+     * @return 应收预付表信息
+     */
+    List<TApplicationReceiveVo> queryByApplicationId(Map<String, Object> map);
 }

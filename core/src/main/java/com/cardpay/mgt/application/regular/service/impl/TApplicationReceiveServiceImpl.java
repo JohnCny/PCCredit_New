@@ -1,14 +1,18 @@
 package com.cardpay.mgt.application.regular.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.mgt.application.regular.dao.TApplicationReceiveMapper;
 import com.cardpay.mgt.application.regular.model.TApplicationReceive;
 import com.cardpay.mgt.application.regular.model.TApplicationTotal;
+import com.cardpay.mgt.application.regular.model.vo.TApplicationReceiveVo;
 import com.cardpay.mgt.application.regular.service.TApplicationReceiveService;
 import com.cardpay.mgt.application.regular.service.TApplicationTotalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 应收预付表Service实现类
@@ -19,7 +23,7 @@ import java.math.BigDecimal;
 @Service
 public class TApplicationReceiveServiceImpl extends BaseServiceImpl<TApplicationReceive> implements TApplicationReceiveService {
     @Autowired
-    private TApplicationReceiveService tApplicationReceiveService;
+    private TApplicationReceiveMapper tApplicationReceiveDao;
     /**
      * 总计表
      */
@@ -28,30 +32,35 @@ public class TApplicationReceiveServiceImpl extends BaseServiceImpl<TApplication
 
 
     @Override
-    public int insertFixedAssert(TApplicationReceive applicationReceive, BigDecimal receiveTotalValue) {
+    public int insertReceive(TApplicationReceive applicationReceive, BigDecimal receiveTotalValue) {
         TApplicationTotal tApplicationTotal = new TApplicationTotal();
         tApplicationTotal.setApplicationId(applicationReceive.getApplicationId());
         tApplicationTotal.setReceiveTotalValue(receiveTotalValue);
         tApplicationTotalService.updateSelectiveByPrimaryKey(tApplicationTotal);
-        return tApplicationReceiveService.insert(applicationReceive);
+        return tApplicationReceiveDao.insert(applicationReceive);
     }
 
     @Override
-    public int updateFixedAssert(TApplicationReceive applicationReceive, BigDecimal receiveTotalValue) {
+    public int updateReceive(TApplicationReceive applicationReceive, BigDecimal receiveTotalValue) {
         TApplicationTotal tApplicationTotal = new TApplicationTotal();
         tApplicationTotal.setApplicationId(applicationReceive.getApplicationId());
         tApplicationTotal.setReceiveTotalValue(receiveTotalValue);
         tApplicationTotalService.updateSelectiveByPrimaryKey(tApplicationTotal);
-        return tApplicationReceiveService.updateSelectiveByPrimaryKey(applicationReceive);
+        return tApplicationReceiveDao.updateByPrimaryKeySelective(applicationReceive);
     }
 
     @Override
-    public int deleteFixedAssert(int receiveId, BigDecimal receiveTotalValue) {
-        TApplicationReceive tApplicationReceive = tApplicationReceiveService.selectByPrimaryKey(receiveId);
+    public int deleteReceive(int receiveId, BigDecimal receiveTotalValue) {
+        TApplicationReceive tApplicationReceive = tApplicationReceiveDao.selectByPrimaryKey(receiveId);
         TApplicationTotal tApplicationTotal = new TApplicationTotal();
         tApplicationTotal.setApplicationId(tApplicationReceive.getApplicationId());
         tApplicationTotal.setReceiveTotalValue(receiveTotalValue);
         tApplicationTotalService.updateSelectiveByPrimaryKey(tApplicationTotal);
-        return tApplicationReceiveService.deleteByPrimaryKey(receiveId);
+        return tApplicationReceiveDao.deleteByPrimaryKey(receiveId);
+    }
+
+    @Override
+    public List<TApplicationReceiveVo> queryByApplicationId(Map<String, Object> map) {
+        return tApplicationReceiveDao.queryByApplicationId(map);
     }
 }

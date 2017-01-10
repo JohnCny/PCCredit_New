@@ -21,7 +21,7 @@ public interface TApplicationPayableService extends BaseService<TApplicationPaya
      * @param payableTotalValue 应付预收总计
      * @return 数据变记录
      */
-    int insertFixedAssert(TApplicationPayable applicationPayable, BigDecimal payableTotalValue);
+    int insertPayable(TApplicationPayable applicationPayable, BigDecimal payableTotalValue);
 
     /**
      * 更新应付预收表更新总计信息
@@ -29,7 +29,7 @@ public interface TApplicationPayableService extends BaseService<TApplicationPaya
      * @param payableTotalValue 应付预收总计
      * @return 数据变记录
      */
-    int updateFixedAssert(TApplicationPayable applicationPayable, BigDecimal payableTotalValue);
+    int updatePayable(TApplicationPayable applicationPayable, BigDecimal payableTotalValue);
 
     /**
      *  删除应付预收更新总计
@@ -37,7 +37,7 @@ public interface TApplicationPayableService extends BaseService<TApplicationPaya
      * @param payableTotalValue 应付预收总计
      * @return 数据变记录
      */
-    int deleteFixedAssert(int payableId, BigDecimal payableTotalValue);
+    int deletePayable(int payableId, BigDecimal payableTotalValue);
 
     /**
      * 根据进件id查询应付预收表信息

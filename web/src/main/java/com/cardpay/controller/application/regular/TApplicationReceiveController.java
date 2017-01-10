@@ -37,7 +37,7 @@ public class TApplicationReceiveController extends BaseController<TApplicationRe
      */
     @PostMapping
     public ResultTo insert(TApplicationReceive applicationPayable, BigDecimal fixedAssertTotalValue) {
-        int flag = tApplicationReceiveService.insertFixedAssert(applicationPayable, fixedAssertTotalValue);
+        int flag = tApplicationReceiveService.insertReceive(applicationPayable, fixedAssertTotalValue);
         return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -50,7 +50,7 @@ public class TApplicationReceiveController extends BaseController<TApplicationRe
      */
     @PostMapping
     public ResultTo update(TApplicationReceive applicationPayable, BigDecimal fixedAssertTotalValue) {
-        int flag = tApplicationReceiveService.updateFixedAssert(applicationPayable, fixedAssertTotalValue);
+        int flag = tApplicationReceiveService.updateReceive(applicationPayable, fixedAssertTotalValue);
         return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -63,7 +63,7 @@ public class TApplicationReceiveController extends BaseController<TApplicationRe
      */
     @DeleteMapping
     public ResultTo delete(int receiveId, BigDecimal fixedAssertTotalValue) {
-        int flag = tApplicationReceiveService.deleteFixedAssert(receiveId, fixedAssertTotalValue);
+        int flag = tApplicationReceiveService.deleteReceive(receiveId, fixedAssertTotalValue);
         return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 

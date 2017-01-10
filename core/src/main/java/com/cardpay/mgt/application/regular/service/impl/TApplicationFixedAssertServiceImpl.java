@@ -53,7 +53,6 @@ public class TApplicationFixedAssertServiceImpl extends BaseServiceImpl<TApplica
         tApplicationTotal.setFixedAssertTotalValue(fixedAssertTotalValue);
         tApplicationTotal.setFixedAssertDepreciateValue(fixedAssertDepreciateValue);
         tApplicationTotalService.updateSelectiveByPrimaryKey(tApplicationTotal);
-
         return tApplicationFixedAssertDao.updateByPrimaryKeySelective(tApplicationFixedAssert);
     }
 

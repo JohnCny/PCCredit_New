@@ -1,6 +1,7 @@
 package com.cardpay.mgt.application.regular.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.mgt.application.regular.dao.TApplicationPayableMapper;
 import com.cardpay.mgt.application.regular.model.TApplicationPayable;
 import com.cardpay.mgt.application.regular.model.TApplicationTotal;
 import com.cardpay.mgt.application.regular.model.vo.TApplicationPayableVo;
@@ -22,7 +23,7 @@ import java.util.Map;
 @Service
 public class TApplicationPayableServiceImpl extends BaseServiceImpl<TApplicationPayable> implements TApplicationPayableService {
     @Autowired
-    private TApplicationPayableService tApplicationPayableService;
+    private TApplicationPayableMapper tApplicationPayableDao;
 
     /**
      * 总计表
@@ -31,35 +32,35 @@ public class TApplicationPayableServiceImpl extends BaseServiceImpl<TApplication
     private TApplicationTotalService tApplicationTotalService;
 
     @Override
-    public int insertFixedAssert(TApplicationPayable applicationPayable, BigDecimal payableTotalValue) {
+    public int insertPayable(TApplicationPayable applicationPayable, BigDecimal payableTotalValue) {
         TApplicationTotal tApplicationTotal = new TApplicationTotal();
         tApplicationTotal.setApplicationId(applicationPayable.getApplicationId());
         tApplicationTotal.setPayableTotalValue(payableTotalValue);
         tApplicationTotalService.updateSelectiveByPrimaryKey(tApplicationTotal);
-        return tApplicationPayableService.insert(applicationPayable);
+        return tApplicationPayableDao.insert(applicationPayable);
     }
 
     @Override
-    public int updateFixedAssert(TApplicationPayable applicationPayable, BigDecimal payableTotalValue) {
+    public int updatePayable(TApplicationPayable applicationPayable, BigDecimal payableTotalValue) {
         TApplicationTotal tApplicationTotal = new TApplicationTotal();
         tApplicationTotal.setApplicationId(applicationPayable.getApplicationId());
         tApplicationTotal.setPayableTotalValue(payableTotalValue);
         tApplicationTotalService.updateSelectiveByPrimaryKey(tApplicationTotal);
-        return tApplicationPayableService.updateSelectiveByPrimaryKey(applicationPayable);
+        return tApplicationPayableDao.updateByPrimaryKeySelective(applicationPayable);
     }
 
     @Override
-    public int deleteFixedAssert(int payableId, BigDecimal payableTotalValue) {
-        TApplicationPayable tApplicationPayable = tApplicationPayableService.selectByPrimaryKey(payableId);
+    public int deletePayable(int payableId, BigDecimal payableTotalValue) {
+        TApplicationPayable tApplicationPayable = tApplicationPayableDao.selectByPrimaryKey(payableId);
         TApplicationTotal tApplicationTotal = new TApplicationTotal();
         tApplicationTotal.setApplicationId(tApplicationPayable.getApplicationId());
         tApplicationTotal.setPayableTotalValue(payableTotalValue);
         tApplicationTotalService.updateSelectiveByPrimaryKey(tApplicationTotal);
-        return tApplicationPayableService.deleteByPrimaryKey(payableId);
+        return tApplicationPayableDao.deleteByPrimaryKey(payableId);
     }
 
     @Override
     public List<TApplicationPayableVo> queryByApplicationId(Map<String, Object> map) {
-        return tApplicationPayableService.queryByApplicationId(map);
+        return tApplicationPayableDao.queryByApplicationId(map);
     }
 }

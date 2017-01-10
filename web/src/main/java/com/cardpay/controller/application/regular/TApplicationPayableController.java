@@ -37,7 +37,7 @@ public class TApplicationPayableController extends BaseController<TApplicationPa
      */
     @PostMapping
     public ResultTo insert(TApplicationPayable applicationPayable, BigDecimal fixedAssertTotalValue) {
-        int flag = tApplicationPayableService.insertFixedAssert(applicationPayable, fixedAssertTotalValue);
+        int flag = tApplicationPayableService.insertPayable(applicationPayable, fixedAssertTotalValue);
         return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -50,7 +50,7 @@ public class TApplicationPayableController extends BaseController<TApplicationPa
      */
     @PostMapping
     public ResultTo update(TApplicationPayable applicationPayable, BigDecimal fixedAssertTotalValue) {
-        int flag = tApplicationPayableService.updateFixedAssert(applicationPayable, fixedAssertTotalValue);
+        int flag = tApplicationPayableService.updatePayable(applicationPayable, fixedAssertTotalValue);
         return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -63,7 +63,7 @@ public class TApplicationPayableController extends BaseController<TApplicationPa
      */
     @DeleteMapping
     public ResultTo delete(int fixedAssertTotalId, BigDecimal fixedAssertTotalValue) {
-        int flag = tApplicationPayableService.deleteFixedAssert(fixedAssertTotalId, fixedAssertTotalValue);
+        int flag = tApplicationPayableService.deletePayable(fixedAssertTotalId, fixedAssertTotalValue);
         return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
