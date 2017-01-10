@@ -28,6 +28,7 @@ public class ProductInvestPictureDesc extends GenericEntity<Integer> {
     /**
      * 产品调查图片说明id
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRO_INVESPIC_DESC_SEQ.nextval from dual")
     @ApiModelProperty(value = "产品调查图片说明id", required = true)

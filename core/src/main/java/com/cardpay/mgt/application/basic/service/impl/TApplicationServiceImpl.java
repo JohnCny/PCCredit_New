@@ -9,7 +9,7 @@ import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.ProductOrganization;
-import com.cardpay.mgt.product.service.ProductOrganizationService;
+import com.cardpay.mgt.product.service.ProductOrgService;
 import com.cardpay.mgt.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
      * 产品准入机构关联表
      */
     @Autowired
-    private ProductOrganizationService productOrganizationService;
+    private ProductOrgService productOrgService;
 
     /**
      * 产品Service
@@ -64,7 +64,7 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
         TCustomerManager tCustomerManager = customerMangerService.selectByUserId(managerId);
         ProductOrganization productOrganization = new ProductOrganization();
         productOrganization.setProductId(productId);
-        List<ProductOrganization> productOrganizationList = productOrganizationService.select(productOrganization);
+        List<ProductOrganization> productOrganizationList = productOrgService.select(productOrganization);
         for (ProductOrganization organization : productOrganizationList) {
             if (!organization.getOraganizationId().equals(tCustomerManager.getOrganizationId())) {
                 return false;

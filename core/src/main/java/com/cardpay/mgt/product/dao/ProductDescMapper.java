@@ -11,7 +11,7 @@ import java.util.List;
  * @author rankai
  *         createTime 2016-12-2016/12/23 14:40
  */
-public interface ProductInvestPictureDescMapper extends BasicMapper<ProductInvestPictureDesc> {
+public interface ProductDescMapper extends BasicMapper<ProductInvestPictureDesc> {
 
     /**
      * 批量插入
