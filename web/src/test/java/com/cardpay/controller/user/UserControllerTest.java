@@ -127,6 +127,7 @@ public class UserControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void isIdCard() throws Exception {
         mockMvc.perform(post("/user/isIdCard")
                 .param("isIdCard", "431381198809122734"))
