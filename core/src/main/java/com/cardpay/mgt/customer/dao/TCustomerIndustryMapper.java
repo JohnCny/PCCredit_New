@@ -28,4 +28,11 @@ public interface TCustomerIndustryMapper extends BasicMapper<TCustomerIndustry> 
      * @return 客户所属行业信息
      */
     List<TCustomerIndustryVo> queryById(@Param("customerId") int customerId);
+
+    /**
+     * 批量更新
+     * @param list 参数
+     * @return 数据库变记录
+     */
+    int batchUpdate(List<TCustomerIndustry> list);
 }

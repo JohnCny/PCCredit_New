@@ -15,6 +15,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TApplicationTotalServiceImpl extends BaseServiceImpl<TApplicationTotal> implements TApplicationTotalService {
-    @Autowired
-    private TApplicationTotalMapper tApplicationTotalDao;
 }

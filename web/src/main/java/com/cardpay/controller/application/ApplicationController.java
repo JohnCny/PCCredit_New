@@ -43,11 +43,11 @@ public class ApplicationController extends BaseController<TApplication> {
      * 根据模板查询ipc财务报表
      *
      * @param applicationId 进件Id
-     * @param templateId 模板Id
+     * @param templateId    模板Id
      * @return
      */
     @GetMapping("/ipc/{applicationId}/{templateId}")
-    public ResultTo selectIPC(@PathVariable("applicationId") Integer applicationId,@PathVariable("templateId") Integer templateId){
+    public ResultTo selectIPC(@PathVariable("applicationId") Integer applicationId, @PathVariable("templateId") Integer templateId) {
         ResultTo resultTo = new ResultTo();
         List<BalanceCrossGroup> balanceCrossGroups = templateGroupMapper.selectBalanceCross(applicationId, templateId);
         resultTo.setData(balanceCrossGroups);

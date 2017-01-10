@@ -64,9 +64,23 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @PutMapping
     @SystemControllerLog("更新客户基本信息")
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
-    public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic) {
-        int count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
-        return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic
+            , @RequestParam String industry) {
+        Integer count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
+        if (count != null && count != 0) {
+            String[] split = industry.split(",");
+            List<TCustomerIndustry> list = new ArrayList<>();
+            for (String id : split) {
+                int industryId = Integer.parseInt(id);
+                TCustomerIndustry tCustomerIndustry = new TCustomerIndustry();
+                tCustomerIndustry.setIndustryId(industryId);
+                tCustomerIndustry.setCustomerId(tCustomerBasic.getId());
+                list.add(tCustomerIndustry);
+            }
+            int batchUpdate = tCustomerIndustryService.batchUpdate(list);
+            return batchUpdate != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        }
+        return new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -119,6 +133,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
     /**
      * 查询证件类型/文化程度/婚姻状况信息
+     *
      * @return 证件类型/文化程度/婚姻状况信息
      */
     @GetMapping("/allStatus")
