@@ -98,12 +98,11 @@ public class UserServiceImplTest {
 
     @Test
     public void updatePassword() throws Exception {
-        user.setPassword("e576017f5da64e43703b420dac217cb4");
         PowerMockito.mockStatic(ShiroKit.class);
-        PowerMockito.when(ShiroKit.getPrincipal()).thenReturn(user);
+        PowerMockito.when(ShiroKit.getUserId()).thenReturn(1);
         User mockUser = PowerMockito.mock(User.class);
-        PowerMockito.whenNew(User.class).withAnyArguments().thenReturn(mockUser);
-        PowerMockito.when(userMapper.updateByPrimaryKeySelective(mockUser)).thenReturn(1);
+        mockUser.setPassword("e576017f5da64e43703b420dac217cb4");
+        PowerMockito.when(userMapper.selectByPrimaryKey(1)).thenReturn(mockUser);
         ResultTo resultTo;
 
         resultTo = userService.updatePassword("321", "321");
@@ -120,16 +119,16 @@ public class UserServiceImplTest {
     @Test
     public void sendCode() throws Exception {
 
-/*        PowerMockito.when(userMapper.selectByPrimaryKey(1)).thenReturn(user);
+        PowerMockito.when(userMapper.selectByPrimaryKey(1)).thenReturn(user);
         ResultTo resultTo;
-        resultTo = userService.sendCode(1, "rankai@qkjr.com.cn");
+        resultTo = userService.sendCode("rankai@qkjr.com.cn");
         Assert.assertEquals(resultTo.getCode(), 200);
 
-        resultTo = userService.sendCode(1, "mayuan@qkjr.com.cn");
+        resultTo = userService.sendCode("mayuan@qkjr.com.cn");
         Assert.assertEquals(resultTo.getCode(), 5014);
 
-        resultTo = userService.sendCode(1, "mayuan");
-        Assert.assertEquals(resultTo.getCode(), 5013);*/
+        resultTo = userService.sendCode("mayuan");
+        Assert.assertEquals(resultTo.getCode(), 5013);
     }
 
     @Test
