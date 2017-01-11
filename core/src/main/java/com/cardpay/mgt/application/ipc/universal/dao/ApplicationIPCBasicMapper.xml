@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cardpay.mgt.application.basic.dao.ApplicationIPCBasicMapper">
+<mapper namespace="com.cardpay.mgt.application.ipc.universal.dao.ApplicationIPCBasicMapper">
 
-  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.ipc.universal.model.TTemplateGroup">
+  <resultMap id="GroupResultMap" type="com.cardpay.mgt.application.ipc.universal.model.TTemplateGroup">
     <result column="GROUP_ID" jdbcType="DECIMAL" property="groupId" />
     <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
     <result column="GROUP_PARENT_ID" jdbcType="DECIMAL" property="groupParentId" />
