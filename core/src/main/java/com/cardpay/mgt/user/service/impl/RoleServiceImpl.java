@@ -64,10 +64,10 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
         roleAuthority.setRoleId(roleId);
         roleAuthority.setAuthorityId(oldAuthorityId);
         int count = -1;
-        if (oldAuthorityId == newAuthorityId) {
+        if (oldAuthorityId != null && oldAuthorityId.equals(newAuthorityId)) {
             return Boolean.TRUE;
         }
-        if (oldAuthorityId > 0) {
+        if (oldAuthorityId != null && oldAuthorityId > 0) {
             if (newAuthorityId > 0) {
                 //更新操作
                 LogTemplate.debug(this.getClass(), "message", "角色权限更新操作");
@@ -82,7 +82,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
                 count = roleAuthorityMapper.delete(roleAuthority);
             }
         } else {
-            if (newAuthorityId > 0) {
+            if (oldAuthorityId != null && newAuthorityId > 0) {
                 //增加操作
                 LogTemplate.debug(this.getClass(), "message", "角色权限增加操作");
                 roleAuthority.setAuthorityId(newAuthorityId);
@@ -138,7 +138,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
             List<AuthorityVo> authorityList = authorityGroupVo.getAuthorityList();
             for (AuthorityVo authorityVo : authorityList) {
                 for (RoleAuthority _roleAuthority : roleAuthorities) {
-                    if (_roleAuthority.getAuthorityId() == authorityVo.getId()) {
+                    if (_roleAuthority.getAuthorityId().equals(authorityVo.getId())) {
                         authorityVo.setSelected(true);
                         break;
                     }

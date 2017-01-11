@@ -197,12 +197,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
                 break;
             }
         }
-        user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
         if (user.getSex() == 1) {
             user.setUserProfile(WOMAN_PROFILE);
         } else {
             user.setUserProfile(MAN_PROFILE);
         }
+        user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
         userMapper.insertSelective(user);
         UserOrganization userOrganization = new UserOrganization();
         userOrganization.setUserId(user.getId());
@@ -212,15 +212,20 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userRole.setRoleId(roleId);
         userRole.setUserId(user.getId());
         userRoleMapper.insertSelective(userRole);
-        switch (RoleEnum.getValueById(roleId)) {
-            case ADMIN:
-                break;
-            case MANAGER:
-                TCustomerManager customerManager = new TCustomerManager();
-                customerManager.setUserId(user.getId());
-                customerManager.setOrganizationId(orgId);
-                customerManagerService.insert(customerManager);
-                break;
+        RoleEnum roleEnum = RoleEnum.getValueById(roleId);
+        if (roleEnum != null) {
+            switch (roleEnum) {
+                case ADMIN:
+                    break;
+                case MANAGER:
+                    TCustomerManager customerManager = new TCustomerManager();
+                    customerManager.setUserId(user.getId());
+                    customerManager.setOrganizationId(orgId);
+                    customerManagerService.insert(customerManager);
+                    break;
+                default:
+                    break;
+            }
         }
         return Boolean.TRUE;
     }

@@ -61,7 +61,7 @@ public class ProductController extends BaseController<Product> {
      *
      * @return 增加产品信息页面数据
      */
-    @GetMapping()
+    @GetMapping
     @ApiOperation(value = "增加产品信息页面数据", httpMethod = "GET")
     public ResultTo information(@RequestParam(value = "productId", required = false) Integer productId) {
         Map<String, Object> map = new HashedMap();
@@ -85,7 +85,7 @@ public class ProductController extends BaseController<Product> {
      * @param explainList  图片说明集合
      * @return 产品ID
      */
-    @PostMapping()
+    @PostMapping
     @ApiOperation(value = "增加产品信息", httpMethod = "POST")
     public ResultTo add(Product product, BindingResult productError, MultipartFile productImg,
                         String orgStr, ExplainList explainList) {
