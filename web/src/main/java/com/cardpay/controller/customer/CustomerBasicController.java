@@ -98,6 +98,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         Integer userId = ShiroKit.getUserId();
         tCustomerBasic.setCustomerManagerId(userId);
         tCustomerBasic.setCreateBy(userId);
+        tCustomerBasic.setCreateTime(new Date());
         tCustomerBasic.setModifyTime(new Date());
         tCustomerBasic.setModifyBy(userId);
         tCustomerBasic.setCustomerStatus(ORDINARY.getValue());

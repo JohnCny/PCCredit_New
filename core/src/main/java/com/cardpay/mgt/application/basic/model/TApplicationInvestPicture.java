@@ -15,6 +15,7 @@ public class TApplicationInvestPicture extends GenericEntity<Integer>{
     @Id
     @Column(name = "INVEST_PICTURE_ID")
     @ApiModelProperty(value="进件调查图片id",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_INVEST_PICTURE_SEQ.nextval from dual")
     private Integer investPictureId;
 
     /**

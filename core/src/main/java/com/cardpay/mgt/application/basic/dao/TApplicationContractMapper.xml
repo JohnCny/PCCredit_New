@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.basic.dao.TApplicationContractMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplicationContract">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="CONTRACT_ID" jdbcType="DECIMAL" property="contractId" />
+    <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname" />
+    <result column="CUSTOMER_CARD_NUMBER" jdbcType="VARCHAR" property="customerCardNumber" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="APPROVE_AMOUNT" jdbcType="DECIMAL" property="approveAmount" />
+    <result column="APPROVE_RATE" jdbcType="DECIMAL" property="approveRate" />
+    <result column="LOAN_START_TIME" jdbcType="TIMESTAMP" property="loanStartTime" />
+    <result column="LOAN_END_TIME" jdbcType="TIMESTAMP" property="loanEndTime" />
+    <result column="CONTRACT_NUMBER" jdbcType="VARCHAR" property="contractNumber" />
+    <result column="LOAN_ACCOUNT" jdbcType="VARCHAR" property="loanAccount" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+  </resultMap>
+</mapper>

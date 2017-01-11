@@ -16,6 +16,7 @@ public class TApplicationTotal extends GenericEntity<Integer>{
     @Id
     @Column(name = "FIXED_ASSERT_TOTAL_ID")
     @ApiModelProperty(value="固定资产清单id",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_TOTAL_SEQ.nextval from dual")
     private Integer fixedAssertTotalId;
 
     /**
