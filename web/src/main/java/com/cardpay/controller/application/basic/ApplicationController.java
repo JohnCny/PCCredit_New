@@ -5,23 +5,19 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.application.balancecross.dao.TTemplateGroupMapper1;
-import com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossGroup;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
-import com.cardpay.mgt.organization.service.TOrganizationService;
-import com.cardpay.mgt.team.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static com.cardpay.controller.application.enums.ApplicationStatus.*;
+import static com.cardpay.mgt.application.enums.ApplicationStatus.APP_UNFINISHED;
+
 
 /**
  * 进件管理
@@ -37,24 +33,6 @@ public class ApplicationController extends BaseController<TApplication> {
      */
     @Autowired
     private TApplicationService tApplicationService;
-
-    @Autowired
-    private TTemplateGroupMapper1 templateGroupMapper;
-
-    /**
-     * 根据模板查询ipc财务报表
-     *
-     * @param applicationId 进件Id
-     * @param templateId    模板Id
-     * @return
-     */
-    @GetMapping("/ipc/{applicationId}/{templateId}")
-    public ResultTo selectIPC(@PathVariable("applicationId") Integer applicationId, @PathVariable("templateId") Integer templateId) {
-        ResultTo resultTo = new ResultTo();
-        List<BalanceCrossGroup> balanceCrossGroups = templateGroupMapper.selectBalanceCross(applicationId, templateId);
-        resultTo.setData(balanceCrossGroups);
-        return resultTo;
-    }
 
     /**
      * 查询此产品是否可进行进件申请
