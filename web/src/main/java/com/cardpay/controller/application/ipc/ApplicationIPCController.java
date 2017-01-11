@@ -1,6 +1,7 @@
 package com.cardpay.controller.application.ipc;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
 import com.cardpay.mgt.application.ipc.basic.service.ApplicationIPCBasicService;
 import com.cardpay.mgt.application.ipc.normal.model.vo.TemplateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,26 @@ public class ApplicationIPCController {
      * @param templateId    模板Id
      * @return
      */
-    @GetMapping("/{applicationId}/{templateId}")
-    public ResultTo selectIPC(@PathVariable("applicationId") Integer applicationId, @PathVariable("templateId") Integer templateId) {
+    @GetMapping("/{applicationId}/{templateType}/{templateId}")
+    public ResultTo selectIPC(@PathVariable("applicationId") Integer applicationId
+            , @PathVariable("templateType") Integer templateType, @PathVariable("templateId") Integer templateId) {
         ResultTo resultTo = new ResultTo();
-        List<TemplateGroup> balanceCrossGroups = applicationIPCBasicService.selectGroupEntrance(applicationId, templateId);
-        resultTo.setData(balanceCrossGroups);
+        Object template = applicationIPCBasicService.selectGroupEntrance(applicationId, templateId, templateType);
+        resultTo.setData(template);
+        return resultTo;
+    }
+
+    /**
+     * 根据模板查询ipc财务报表
+     *
+     * @param applicationId 进件Id
+     * @return
+     */
+    @GetMapping("/menu/{applicationId}")
+    public ResultTo selectIPCMenu(@PathVariable("applicationId") Integer applicationId) {
+        ResultTo resultTo = new ResultTo();
+        List<IPCMenu> ipcMenus = applicationIPCBasicService.selectIPCMenu(applicationId);
+        resultTo.setData(ipcMenus);
         return resultTo;
     }
 }

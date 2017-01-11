@@ -53,6 +53,31 @@ public class TTemplateGroup {
     private String groupMenuUrl;
 
     /**
+     * 进件菜单顺序
+     */
+    @Column(name = "GROUP_MENU_ORDER")
+    @ApiModelProperty(value="进件菜单顺序",required = true)
+    private String groupMenuOrder;
+
+    /**
+     * 获取进件菜单顺序
+     *
+     * @return groupMenuOrder - 进件菜单顺序
+     */
+    public String getGroupMenuOrder() {
+        return groupMenuOrder;
+    }
+
+    /**
+     * 设置进件菜单顺序
+     *
+     * @param groupMenuOrder 进件菜单顺序
+     */
+    public void setGroupMenuOrder(String groupMenuOrder) {
+        this.groupMenuOrder = groupMenuOrder;
+    }
+
+    /**
      * 获取模板组id
      *
      * @return GROUP_ID - 模板组id

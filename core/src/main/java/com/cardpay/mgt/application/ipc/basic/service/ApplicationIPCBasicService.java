@@ -1,6 +1,6 @@
 package com.cardpay.mgt.application.ipc.basic.service;
 
-import com.cardpay.mgt.application.ipc.normal.model.vo.TemplateGroup;
+import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
 
 import java.util.List;
 
@@ -28,6 +28,13 @@ public interface ApplicationIPCBasicService{
      * @param templateId 模板Id
      * @return 模板树
      */
-    List<TemplateGroup> selectGroupEntrance(Integer applicationId, Integer templateId);
+    Object selectGroupEntrance(Integer applicationId, Integer templateId,Integer templateType);
 
+    /**
+     * IPC 菜单
+     *
+     * @param applicationId 进件Id
+     * @return 菜单
+     */
+    List<IPCMenu> selectIPCMenu(Integer applicationId);
 }

@@ -1,6 +1,7 @@
 package com.cardpay.mgt.application.ipc.basic.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
+import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
 import com.cardpay.mgt.application.ipc.normal.model.TTemplateGroup;
 import com.cardpay.mgt.application.ipc.normal.model.vo.TemplateGroup;
 import org.apache.ibatis.annotations.Param;
@@ -32,4 +33,13 @@ public interface ApplicationIPCBasicMapper extends BasicMapper<TTemplateGroup>{
      * @return 模板树
      */
     List<TemplateGroup> selectGroupEntrance(@Param("applicationId") Integer applicationId, @Param("templateId") Integer templateId);
+
+
+    /**
+     * IPC 菜单
+     *
+     * @param applicationId 进件Id
+     * @return 菜单
+     */
+    List<IPCMenu> selectIPCMenu(@Param("applicationId") Integer applicationId);
 }

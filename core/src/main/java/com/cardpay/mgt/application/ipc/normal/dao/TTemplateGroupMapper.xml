@@ -11,5 +11,6 @@
     <result column="GROUP_DESCRIPTION" jdbcType="VARCHAR" property="groupDescription" />
     <result column="IS_GROUP_MENU" jdbcType="DECIMAL" property="isGroupMenu" />
     <result column="GROUP_MENU_URL" jdbcType="VARCHAR" property="groupMenuUrl" />
+    <result column="GROUP_MENU_ORDER" jdbcType="VARCHAR" property="groupMenuOrder" />
   </resultMap>
 </mapper>

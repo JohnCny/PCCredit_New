@@ -49,6 +49,6 @@ public enum RoleEnum {
             default:
                 break;
         }
-        return null;
+        throw new IllegalArgumentException("未找到对应角色枚举");
     }
 }
