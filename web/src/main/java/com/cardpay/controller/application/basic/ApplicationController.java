@@ -10,8 +10,6 @@ import com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossGroup;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
-import com.cardpay.mgt.organization.service.TOrganizationService;
-import com.cardpay.mgt.team.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
