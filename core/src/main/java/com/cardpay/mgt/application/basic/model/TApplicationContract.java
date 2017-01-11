@@ -17,6 +17,7 @@ public class TApplicationContract extends GenericEntity<Integer>{
     @Id
     @Column(name = "CONTRACT_ID")
     @ApiModelProperty(value="客户签约信息id",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_CONTRACT_SEQ.nextval from dual")
     private Integer contractId;
 
     /**

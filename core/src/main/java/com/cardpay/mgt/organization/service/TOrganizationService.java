@@ -36,4 +36,19 @@ public interface TOrganizationService extends BaseService<TOrganization> {
      */
     List<TOrganizationVo> queryAll(Map<String, Object> map);
 
+    /**
+     *  查询此用户所负责的机构信息
+     * @param userId 用户id
+     * @return 机构列表
+     */
+    List<TOrganization>queryIfOrgPrincipal(int userId);
+
+    /**
+     * 查询此用户是否是此机构的负责人
+     * @param directorId 负责人id
+     * @param orgId 机构id
+     * @return true/false
+     */
+    boolean selectIfOrgPrincipal(int directorId, int orgId);
+
 }

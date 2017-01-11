@@ -5,6 +5,7 @@ import com.cardpay.mgt.team.dao.TUserTeamMapper;
 import com.cardpay.mgt.team.model.TUserTeam;
 import com.cardpay.mgt.team.service.TUserTeamService;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,10 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
         map.put("teamId", teamId);
         map.put("userId", userIdList);
         return tUserTeamDao.batchInsert(map);
+    }
+
+    @Override
+    public List<TUserTeam> queryTeamByAppId(int applicationId) {
+        return tUserTeamDao.queryTeamByAppId(applicationId);
     }
 }

@@ -2,7 +2,9 @@ package com.cardpay.mgt.team.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.util.treeutil.TreeUtil;
+import com.cardpay.mgt.team.dao.TUserTeamMapper;
 import com.cardpay.mgt.team.dao.TeamMapper;
+import com.cardpay.mgt.team.model.TUserTeam;
 import com.cardpay.mgt.team.model.Team;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
@@ -10,6 +12,7 @@ import com.cardpay.mgt.team.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +26,9 @@ import java.util.Map;
 public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamService {
     @Autowired
     private TeamMapper teamDao;
+
+    @Autowired
+    private TUserTeamMapper tUserTeamDao;
 
     @Override
     public List<TeamVo> queryAll(Map<String, Integer> map) {
@@ -43,5 +49,34 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
             return 0;
         }
         return teamDao.deleteTeam(teamId);
+    }
+
+    @Override
+    public List<Team> queryIfTeamPrincipal(int userId) {
+        List<Team> teamList = new ArrayList<>();
+        //查询此用户属于那些团队
+        List<TUserTeam> tUserTeams = tUserTeamDao.queryByUserId(userId);
+        for (TUserTeam userTeam : tUserTeams) {
+            Team team = new Team();
+            team.setTeamId(userTeam.getTeamId());
+            Team oneTeam = teamDao.selectOne(team);
+            //查询是否为此团队负责人
+            int flag = teamDao.selectIfTeamPrincipal(oneTeam.getTeamLeaderId(), userId);
+            if (flag > 0) {
+                teamList.add(oneTeam);
+            }
+        }
+        return teamList;
+    }
+
+    @Override
+    public List<Team> querySonTeamById(int teamId) {
+        return teamDao.querySonTeamById(teamId);
+    }
+
+    @Override
+    public boolean selectIfTeamPrincipal(int userId, int teamId) {
+        int mark = teamDao.selectIfTeamPrincipal(userId, teamId);
+        return mark > 0 ? true : false;
     }
 }
