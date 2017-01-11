@@ -89,6 +89,7 @@ public class CustomerBasicControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void returnNewCustomer() throws Exception {
 
     }

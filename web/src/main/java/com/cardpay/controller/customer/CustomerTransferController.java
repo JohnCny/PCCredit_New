@@ -101,7 +101,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param status 状态(默认为待确认)
      * @return 客户接收列表
      */
-    @GetMapping("/queryTransfer")
+    @RequestMapping("/queryTransfer")
     @SystemControllerLog("查询客户接收列表")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
     public DataTablePage queryTransfer(@ApiParam("状态(默认为待确认)") @RequestParam(defaultValue = "0") int status) {
@@ -146,7 +146,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerId 客户Id
      * @return 单个客户移交记录
      */
-    @GetMapping("/transfer/{id}")
+    @RequestMapping("/transfer/{id}")
     @SystemControllerLog("按id查询客户移交记录(返回分页)")
     @ApiOperation(value = "查看客户移交记录", notes = "查看客户移交记录", httpMethod = "GET")
     public DataTablePage queryAccept(@ApiParam("客户id") @PathVariable("id") int customerId) {
