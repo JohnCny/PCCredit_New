@@ -41,7 +41,7 @@ public class CustomerBasicControllerTest extends TestEnv {
     }
 
     @Test
-   
+    @Ignore
     public void returnUpdate() throws Exception {
         mockMvc.perform(get("/api/customerBasic/1"))
                 .andExpect(status().isOk())
