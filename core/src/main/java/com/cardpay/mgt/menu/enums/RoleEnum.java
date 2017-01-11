@@ -38,10 +38,14 @@ public enum RoleEnum {
 
     public static RoleEnum getValueById(Integer id) {
         switch (id) {
+            case 1:
+                return SUPERS;
             case 2:
                 return ADMIN;
             case 3:
                 return MANAGER;
+            case 4:
+                return EXPERT;
             default:
                 break;
         }
