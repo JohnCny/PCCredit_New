@@ -41,7 +41,7 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      *
      * @return 查询信息
      */
-    @GetMapping("/condition")
+    @RequestMapping("/condition")
     @SystemControllerLog("按条件查询客户维护信息")
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public DataTablePage queryByCondition() {

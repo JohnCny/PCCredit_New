@@ -1,4 +1,4 @@
-package com.cardpay.mgt.application.basic.dao;
+package com.cardpay.mgt.application.ipc.universal.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.application.balancecross.model.TTemplateGroup;
@@ -18,5 +18,5 @@ public interface ApplicationIPCBasicMapper extends BasicMapper<TTemplateGroup> {
      * @param templateId 模版Id
      * @return 影响数量
      */
-    Integer initBalanceCrossTemplate(Integer applicationId,Integer templateId);
+    Integer initBalanceCrossTemplate(Integer applicationId, Integer templateId);
 }

@@ -36,7 +36,7 @@ public class TApplicationFixedAssertController extends BaseController<TApplicati
     @PostMapping
     public ResultTo insert(TApplicationFixedAssert tApplicationFixedAssert, BigDecimal fixedAssertTotalValue, BigDecimal fixedAssertDepreciateValue) {
         int flag = tApplicationFixedAssertService.insertFixedAssert(tApplicationFixedAssert, fixedAssertTotalValue, fixedAssertDepreciateValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -50,21 +50,21 @@ public class TApplicationFixedAssertController extends BaseController<TApplicati
     @PutMapping
     public ResultTo update(TApplicationFixedAssert tApplicationFixedAssert, BigDecimal fixedAssertTotalValue, BigDecimal fixedAssertDepreciateValue) {
         int flag = tApplicationFixedAssertService.updateFixedAssert(tApplicationFixedAssert, fixedAssertTotalValue, fixedAssertDepreciateValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
      * 删除固定资产更新总计
      *
-     * @param fixedAssertTotalId         固定资产清单
+     * @param fixedAssertTotalId         固定资产id
      * @param fixedAssertTotalValue      总价值
      * @param fixedAssertDepreciateValue 折旧后价值
      * @return 数据变记录
      */
-    @DeleteMapping
-    public ResultTo delete(int fixedAssertTotalId, BigDecimal fixedAssertTotalValue, BigDecimal fixedAssertDepreciateValue) {
+    @DeleteMapping("/{id}")
+    public ResultTo delete(@PathVariable("id") int fixedAssertTotalId, BigDecimal fixedAssertTotalValue, BigDecimal fixedAssertDepreciateValue) {
         int flag = tApplicationFixedAssertService.deleteFixedAssert(fixedAssertTotalId, fixedAssertTotalValue, fixedAssertDepreciateValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -73,7 +73,7 @@ public class TApplicationFixedAssertController extends BaseController<TApplicati
      * @param applicationId 进件ID
      * @return 分页信息
      */
-    @RequestMapping
+    @RequestMapping("/pageList")
     public DataTablePage queryByApplicationId(int applicationId) {
         Map<String, Object> map = new HashMap();
         map.put("applicationId", applicationId);

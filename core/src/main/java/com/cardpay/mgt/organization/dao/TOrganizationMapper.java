@@ -53,4 +53,12 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
      */
     int querySubsidiary(@Param("organizationId") int organizationId);
 
+    /**
+     * 查询此用户是否是此机构的负责人
+     * @param directorId 负责人id
+     * @param orgId 机构id
+     * @return 是否为负责人
+     */
+    int selectIfOrgPrincipal(@Param("directorId")int directorId,@Param("orgId") int orgId);
+
 }

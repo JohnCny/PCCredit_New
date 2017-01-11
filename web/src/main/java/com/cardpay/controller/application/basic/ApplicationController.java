@@ -1,18 +1,21 @@
-package com.cardpay.controller.application;
+package com.cardpay.controller.application.basic;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.application.balancecross.dao.TTemplateGroupMapper;
+import com.cardpay.mgt.application.balancecross.dao.TTemplateGroupMapper1;
 import com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossGroup;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
+import com.cardpay.mgt.organization.service.TOrganizationService;
+import com.cardpay.mgt.team.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +25,7 @@ import static com.cardpay.controller.application.enums.ApplicationStatus.*;
 
 /**
  * 进件管理
+ *
  * @author chenkai
  */
 
@@ -35,7 +39,7 @@ public class ApplicationController extends BaseController<TApplication> {
     private TApplicationService tApplicationService;
 
     @Autowired
-    private TTemplateGroupMapper templateGroupMapper;
+    private TTemplateGroupMapper1 templateGroupMapper;
 
     /**
      * 根据模板查询ipc财务报表
@@ -102,11 +106,31 @@ public class ApplicationController extends BaseController<TApplication> {
      *
      * @return 进件列表
      */
-    @GetMapping
-    public DataTablePage queryByManagerId() {
+    @RequestMapping("/pageList")
+    public DataTablePage queryByManagerId(HttpServletRequest request) {
+        Integer userId = ShiroKit.getUserId();
         Map<String, Object> map = new HashMap();
-        map.put("managerId", ShiroKit.getUserId());
-        return dataTablePage("queryByManagerId", map);
+        if (ShiroKit.hasRole("manager")) {
+            map.put("managerId", userId);
+            return dataTablePage("queryByManagerId", map);
+        }
+        //团队负责人
+        Integer teamId = (Integer) request.getAttribute("teamId");
+        if (teamId != null && teamId != 0) {
+            if (tApplicationService.userIfTeamBoss(userId, teamId)) {
+                //按团队Id查询进件信息
+                return dataTablePage("queryAppByTeamId", map);
+            }
+        }
+        //团队负责人
+        Integer orgId = (Integer) request.getAttribute("orgId");
+        if (orgId != null && orgId != 0) {
+            if (tApplicationService.userIfOrgBoss(userId, teamId)) {
+                //按机构id查询进件信息
+                return dataTablePage("queryAppByOrgId", map);
+            }
+        }
+        return null;
     }
 
     /**

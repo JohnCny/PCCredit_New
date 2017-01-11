@@ -35,7 +35,7 @@ public class TApplicationReceiveController extends BaseController<TApplicationRe
     @PostMapping
     public ResultTo insert(TApplicationReceive applicationPayable, BigDecimal fixedAssertTotalValue) {
         int flag = tApplicationReceiveService.insertReceive(applicationPayable, fixedAssertTotalValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -48,7 +48,7 @@ public class TApplicationReceiveController extends BaseController<TApplicationRe
     @PutMapping
     public ResultTo update(TApplicationReceive applicationPayable, BigDecimal fixedAssertTotalValue) {
         int flag = tApplicationReceiveService.updateReceive(applicationPayable, fixedAssertTotalValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -58,10 +58,10 @@ public class TApplicationReceiveController extends BaseController<TApplicationRe
      * @param fixedAssertTotalValue 应收预付合计
      * @return 数据变记录
      */
-    @DeleteMapping
-    public ResultTo delete(int receiveId, BigDecimal fixedAssertTotalValue) {
+    @DeleteMapping("/{id}")
+    public ResultTo delete(@PathVariable("id") int receiveId, BigDecimal fixedAssertTotalValue) {
         int flag = tApplicationReceiveService.deleteReceive(receiveId, fixedAssertTotalValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -70,7 +70,7 @@ public class TApplicationReceiveController extends BaseController<TApplicationRe
      * @param applicationId 进件ID
      * @return 分页信息
      */
-    @RequestMapping
+    @RequestMapping("/pageList")
     public DataTablePage queryByApplicationId(int applicationId) {
         Map<String, Object> map = new HashMap();
         map.put("applicationId", applicationId);

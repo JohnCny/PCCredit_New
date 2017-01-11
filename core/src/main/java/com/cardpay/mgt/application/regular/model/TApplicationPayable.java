@@ -17,6 +17,7 @@ public class TApplicationPayable extends GenericEntity<Integer>{
     @Id
     @Column(name = "PAYABLE_ID")
     @ApiModelProperty(value="应付预收id",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_PAYABLE_SEQ.nextval from dual")
     private Integer payableId;
 
     /**

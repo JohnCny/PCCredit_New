@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.ipc.universal.dao.TTemplateVarMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.ipc.universal.model.TTemplateVar">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="TEMPLATE_VAR_ID" jdbcType="DECIMAL" property="templateVarId" />
+    <result column="TEMPLATE_VAR_NAME" jdbcType="VARCHAR" property="templateVarName" />
+    <result column="TEMPLATE_VAR_PARENT_ID" jdbcType="DECIMAL" property="templateVarParentId" />
+    <result column="TEMPLATE_VAR_ORDER" jdbcType="DECIMAL" property="templateVarOrder" />
+    <result column="TEMPLATE_VAR_INPUT_TYPE" jdbcType="DECIMAL" property="templateVarInputType" />
+    <result column="TEMPLATE_VAR_WEIGHT" jdbcType="VARCHAR" property="templateVarWeight" />
+    <result column="TEMPLATE_VAR_GROUP_ID" jdbcType="DECIMAL" property="templateVarGroupId" />
+    <result column="TEMPLATE_VAR_IS_HAS_CHILD" jdbcType="DECIMAL" property="templateVarIsHasChild" />
+    <result column="TEMPLATE_VAR_IS_COMPUTE" jdbcType="DECIMAL" property="templateVarIsCompute" />
+  </resultMap>
+</mapper>

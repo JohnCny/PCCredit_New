@@ -98,6 +98,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         Integer userId = ShiroKit.getUserId();
         tCustomerBasic.setCustomerManagerId(userId);
         tCustomerBasic.setCreateBy(userId);
+        tCustomerBasic.setCreateTime(new Date());
         tCustomerBasic.setModifyTime(new Date());
         tCustomerBasic.setModifyBy(userId);
         tCustomerBasic.setCustomerStatus(ORDINARY.getValue());
@@ -123,7 +124,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      *
      * @return 客户信息
      */
-    @GetMapping("/condition")
+    @RequestMapping("/condition")
     @ApiOperation(value = "按条件查询客户信息", notes = "按条件查询客户信息", httpMethod = "GET")
     public DataTablePage queryCondition() {
         Map<String, Object> map = new HashMap<>();
@@ -224,7 +225,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      *
      * @return 可删除的客户经理信息
      */
-    @GetMapping("/del")
+    @RequestMapping("/del")
     @ApiOperation(value = "查询可删除的客户经理", notes = "查询可删除的客户经理", httpMethod = "GET")
     public DataTablePage selectDelete() {
         Map<String, Object> map = new HashMap();

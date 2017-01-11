@@ -35,7 +35,7 @@ public class TApplicationPayableController extends BaseController<TApplicationPa
     @PostMapping
     public ResultTo insert(TApplicationPayable applicationPayable, BigDecimal fixedAssertTotalValue) {
         int flag = tApplicationPayableService.insertPayable(applicationPayable, fixedAssertTotalValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -48,7 +48,7 @@ public class TApplicationPayableController extends BaseController<TApplicationPa
     @PutMapping
     public ResultTo update(TApplicationPayable applicationPayable, BigDecimal fixedAssertTotalValue) {
         int flag = tApplicationPayableService.updatePayable(applicationPayable, fixedAssertTotalValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -58,10 +58,10 @@ public class TApplicationPayableController extends BaseController<TApplicationPa
      * @param fixedAssertTotalValue 应付预收合计
      * @return 数据变记录
      */
-    @DeleteMapping
-    public ResultTo delete(int fixedAssertTotalId, BigDecimal fixedAssertTotalValue) {
+    @DeleteMapping("/{id}")
+    public ResultTo delete(@PathVariable("id") int fixedAssertTotalId, BigDecimal fixedAssertTotalValue) {
         int flag = tApplicationPayableService.deletePayable(fixedAssertTotalId, fixedAssertTotalValue);
-        return flag != 0 ? new ResultTo().setData(false) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
@@ -70,7 +70,7 @@ public class TApplicationPayableController extends BaseController<TApplicationPa
      * @param applicationId 进件ID
      * @return 分页信息
      */
-    @RequestMapping
+    @RequestMapping("/pageList")
     public DataTablePage queryByApplicationId(int applicationId) {
         Map<String, Object> map = new HashMap();
         map.put("applicationId", applicationId);

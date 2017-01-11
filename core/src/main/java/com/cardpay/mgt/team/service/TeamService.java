@@ -37,4 +37,26 @@ public interface TeamService extends BaseService<Team> {
      */
     int deleteTeam(Integer teamId);
 
+    /**
+     * 查询此用户负责的团队信息
+     * @param userId 用户id
+     * @return 负责机构信信息
+     */
+    List<Team> queryIfTeamPrincipal(int userId);
+
+    /**
+     * 按团队id查询子团队
+     * @param teamId 团队id
+     * @return 子团队
+     */
+    List<Team>querySonTeamById(int teamId);
+
+    /**
+     * 查询此用户是否是此团队的负责人
+     * @param userId 负责人id
+     * @param teamId 机构id
+     * @return 数量
+     */
+    boolean selectIfTeamPrincipal(int userId, int teamId);
+
 }

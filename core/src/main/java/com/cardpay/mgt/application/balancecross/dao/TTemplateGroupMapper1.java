@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface TTemplateGroupMapper extends BasicMapper<TTemplateGroup> {
+public interface TTemplateGroupMapper1 extends BasicMapper<TTemplateGroup> {
 
     /**
      * 根据模板和进件id查询树

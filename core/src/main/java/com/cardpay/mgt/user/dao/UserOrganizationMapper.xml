@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.user.dao.UserOrganizationMapper">
     <resultMap id="BaseResultMap" type="com.cardpay.mgt.user.model.UserOrganization">
-        <!--
-          WARNING - @mbg.generated
-        -->
         <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
         <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
     </resultMap>
@@ -13,4 +10,23 @@
     <select id="queryUserOrg">
     SELECT count(1) FROM T_USER_ORGANIZATION WHERE ORGANIZATION_ID = #{organizationId}
   </select>
+
+    <!--按用户id查询关联机构信息-->
+    <select id="queryByUserId" resultMap="BaseResultMap">
+        SELECT * FROM T_USER_ORGANIZATION WHERE USER_ID = #{userId}
+    </select>
+
+    <!--按进件Id查询所属机构信息-->
+    <select id="queryOrgByAppId" resultMap="BaseResultMap">
+        SELECT ORGANIZATION.*
+        FROM
+        T_USER_ORGANIZATION ORGANIZATION ,
+        T_USER USR,
+        T_CUSTOMER_MANAGER MANAGER,
+        T_APPLICATION APPLICATION
+        WHERE ORGANIZATION.USER_ID = USR.ID
+        AND USR.ID = MANAGER.USER_ID
+        AND MANAGER.ID = APPLICATION.CUSTOMER_MANAGER_ID
+        AND USR.ID = #{applicationId}
+    </select>
 </mapper>
