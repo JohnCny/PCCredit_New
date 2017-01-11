@@ -79,6 +79,7 @@ public class CustomerBasicControllerTest extends TestEnv {
 
 
     @Test
+    @Ignore
     public void newCustomer() throws Exception {
         mockMvc.perform(post("/api/customerBasic")
                 .param("cname","测试")
@@ -88,6 +89,7 @@ public class CustomerBasicControllerTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void returnNewCustomer() throws Exception {
 
     }
