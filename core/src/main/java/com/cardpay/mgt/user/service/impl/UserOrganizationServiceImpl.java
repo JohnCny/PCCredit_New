@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 用户机构关联接口实现
  *
@@ -22,5 +24,10 @@ public class UserOrganizationServiceImpl extends BaseServiceImpl<UserOrganizatio
     @Override
     public int queryUserOrg(int organizationId) {
         return userOrganizationDao.queryUserOrg(organizationId);
+    }
+
+    @Override
+    public List<UserOrganization> queryOrgByAppId(int applicationId) {
+        return userOrganizationDao.queryOrgByAppId(applicationId);
     }
 }

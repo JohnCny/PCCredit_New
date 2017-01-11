@@ -6,5 +6,4 @@
     <result column="AUTHORITY_ID" jdbcType="DECIMAL" property="authorityId" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
   </resultMap>
-
 </mapper>

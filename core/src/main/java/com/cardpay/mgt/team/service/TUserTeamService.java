@@ -2,7 +2,9 @@ package com.cardpay.mgt.team.service;
 
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.team.model.TUserTeam;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,5 +21,12 @@ public interface TUserTeamService extends BaseService<TUserTeam> {
      * @return 数据库变记录
      */
     int batchInsert (int teamId, String userIds);
+
+    /**
+     * 按进件Id查询所属团队信息
+     * @param applicationId 进件id
+     * @return 用户团队信息
+     */
+    List<TUserTeam> queryTeamByAppId(int applicationId);
 
 }

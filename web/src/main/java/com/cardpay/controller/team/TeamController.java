@@ -141,4 +141,27 @@ public class TeamController extends BaseController<Team> {
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
+    /**
+     * 查询子团队信息
+     *
+     * @param teamId 团队id
+     * @return 团队信息
+     */
+    @GetMapping("/{id}")
+    public ResultTo querySonTeam(@PathVariable("id") int teamId) {
+        List<Team> teamList = teamService.querySonTeamById(teamId);
+        return new ResultTo().setData(teamList);
+    }
+
+    /**
+     * 查询此用户负责的团队信息
+     *
+     * @return 团队信息
+     */
+    @GetMapping("/principalTeam")
+    public ResultTo bossTeam() {
+        List<Team> teamList = teamService.queryIfTeamPrincipal(ShiroKit.getUserId());
+        return new ResultTo().setData(teamList);
+    }
+
 }
