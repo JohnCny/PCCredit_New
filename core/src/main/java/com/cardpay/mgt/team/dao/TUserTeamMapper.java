@@ -2,7 +2,9 @@ package com.cardpay.mgt.team.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.team.model.TUserTeam;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,4 +26,18 @@ public interface TUserTeamMapper extends BasicMapper<TUserTeam> {
      * @return 数据库变记录
      */
     int batchUpdate(Map<String, Object> map);
+
+    /**
+     * 按用户id查询关联团队id
+     * @param userId 用户id
+     * @return 团队id
+     */
+    List<TUserTeam> queryByUserId(@Param("userId") int userId);
+
+    /**
+     * 按进件Id查询所属团队信息
+     * @param applicationId 进件id
+     * @return 用户团队信息
+     */
+    List<TUserTeam> queryTeamByAppId(@Param("applicationId") int applicationId);
 }

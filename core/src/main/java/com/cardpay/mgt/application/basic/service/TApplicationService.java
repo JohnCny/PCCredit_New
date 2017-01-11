@@ -46,4 +46,34 @@ public interface TApplicationService extends BaseService<TApplication> {
      * @return 进件Vo类
      */
     TApplicationVo queryByApplication(int applicationId);
+
+    /**
+     * 按机构id查询进件信息
+     * @param map 机构id
+     * @return 进件信息
+     */
+    List<TApplicationVo> queryAppByOrgId(Map<String, Object> map);
+
+    /**
+     * 按团队Id查询进件信息
+     * @param map 团队id
+     * @return 进件信息
+     */
+    List<TApplicationVo> queryAppByTeamId(Map<String, Object> map);
+
+    /**
+     * 此用是否属于此团队的负责人
+     * @param teamId 团队id
+     * @param userId 用户id
+     * @return true/false
+     */
+    boolean userIfTeamBoss(int teamId, int userId);
+
+    /**
+     * 此用是否属于此机构的负责人
+     * @param orgId 机构id
+     * @param userId 用户id
+     * @return true/false
+     */
+    boolean userIfOrgBoss(int orgId, int userId);
 }

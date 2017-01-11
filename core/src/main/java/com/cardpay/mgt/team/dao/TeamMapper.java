@@ -38,4 +38,19 @@ public interface TeamMapper extends BasicMapper<Team> {
      * @return
      */
     int querySubsidiary(@Param("teamId") Integer teamId);
+
+    /**
+     * 查询此用户是否是此团队的负责人
+     * @param principalId 负责人id
+     * @param teamId 机构id
+     * @return 数量
+     */
+    int selectIfTeamPrincipal(@Param("principalId")int principalId,@Param("teamId") int teamId);
+
+    /**
+     * 按团队id查询子团队
+     * @param teamId 团队id
+     * @return 子团队
+     */
+    List<Team>querySonTeamById(@Param("teamId") int teamId);
 }
