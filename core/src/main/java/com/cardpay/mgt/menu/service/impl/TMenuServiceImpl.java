@@ -215,7 +215,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     @Override
     public void updateMenuCache() {
         for (RoleEnum roleEnum : RoleEnum.values()) {
-            String menuString = JSON.toJSONString(tMenuMapper.selectMenuListByRoleAll(roleEnum.getRoleId()));
+            String menuString = JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(roleEnum.getRoleId())));
             LogTemplate.info("菜单初始化,"+"菜单角色:"+roleEnum.getRoleName(),menuString);
             redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,roleEnum.getRoleName()
                     ,menuString);

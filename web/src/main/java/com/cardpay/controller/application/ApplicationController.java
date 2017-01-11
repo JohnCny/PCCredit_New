@@ -5,7 +5,7 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.application.balancecross.dao.TTemplateGroupMapper;
+import com.cardpay.mgt.application.balancecross.dao.TTemplateGroupMapper1;
 import com.cardpay.mgt.application.balancecross.model.vo.BalanceCrossGroup;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
@@ -35,7 +35,7 @@ public class ApplicationController extends BaseController<TApplication> {
     private TApplicationService tApplicationService;
 
     @Autowired
-    private TTemplateGroupMapper templateGroupMapper;
+    private TTemplateGroupMapper1 templateGroupMapper;
 
     /**
      * 根据模板查询ipc财务报表
@@ -102,7 +102,7 @@ public class ApplicationController extends BaseController<TApplication> {
      *
      * @return 进件列表
      */
-    @GetMapping
+    @RequestMapping("/pageList")
     public DataTablePage queryByManagerId() {
         Map<String, Object> map = new HashMap();
         map.put("managerId", ShiroKit.getUserId());
