@@ -102,7 +102,7 @@ public class ApplicationController extends BaseController<TApplication> {
      *
      * @return 进件列表
      */
-    @GetMapping
+    @RequestMapping("/pageList")
     public DataTablePage queryByManagerId() {
         Map<String, Object> map = new HashMap();
         map.put("managerId", ShiroKit.getUserId());
