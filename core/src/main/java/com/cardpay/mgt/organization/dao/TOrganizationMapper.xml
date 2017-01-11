@@ -65,4 +65,10 @@
         SELECT id FROM T_ORGANIZATION WHERE id = #{organizationId}
         )
     </select>
+
+    <!--查询此用户是否是此机构的负责人-->
+    <select id="selectIfOrgPrincipal">
+        SELECT COUNT(1) FROM T_ORGANIZATION WHERE ORG_DIRECTOR_ID = #{directorId}
+        AND ID = #{orgId}
+    </select>
 </mapper>

@@ -58,8 +58,8 @@ public class TApplicationReceiveController extends BaseController<TApplicationRe
      * @param fixedAssertTotalValue 应收预付合计
      * @return 数据变记录
      */
-    @DeleteMapping
-    public ResultTo delete(int receiveId, BigDecimal fixedAssertTotalValue) {
+    @DeleteMapping("/{id}")
+    public ResultTo delete(@PathVariable("id") int receiveId, BigDecimal fixedAssertTotalValue) {
         int flag = tApplicationReceiveService.deleteReceive(receiveId, fixedAssertTotalValue);
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

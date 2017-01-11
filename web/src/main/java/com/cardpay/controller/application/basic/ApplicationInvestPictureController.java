@@ -1,4 +1,4 @@
-package com.cardpay.controller.application;
+package com.cardpay.controller.application.basic;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;

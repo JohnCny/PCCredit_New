@@ -4,6 +4,8 @@ import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.UserOrganization;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 用户和机构关联接口
  *
@@ -18,4 +20,11 @@ public interface UserOrganizationService extends BaseService<UserOrganization> {
      * @return 用户数量
      */
     int queryUserOrg(int organizationId);
+
+    /**
+     * 按进件Id查询所属机构信息
+     * @param applicationId 进件id
+     * @return 用户机构信息
+     */
+    List<UserOrganization> queryOrgByAppId(int applicationId);
 }

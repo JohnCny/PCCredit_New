@@ -25,4 +25,18 @@ public interface TApplicationMapper extends BasicMapper<TApplication> {
      * @return 进件Vo类
      */
     TApplicationVo queryByApplication(@Param("applicationId") int applicationId);
+
+    /**
+     * 按机构id查询进件信息
+     * @param map 机构id
+     * @return 进件信息
+     */
+    List<TApplicationVo> queryAppByOrgId(Map<String, Object> map);
+
+    /**
+     * 按团队Id查询进件信息
+     * @param map 团队id
+     * @return 进件信息
+     */
+    List<TApplicationVo> queryAppByTeamId(Map<String, Object> map);
 }

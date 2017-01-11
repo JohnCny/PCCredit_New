@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.basic.dao.TApplicationStockMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplicationStock">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="STOCK_ID" jdbcType="DECIMAL" property="stockId" />
+    <result column="STOCK_NAME" jdbcType="VARCHAR" property="stockName" />
+    <result column="STOCK_COUNT" jdbcType="DECIMAL" property="stockCount" />
+    <result column="STOCK_PRICE" jdbcType="DECIMAL" property="stockPrice" />
+    <result column="STOCK_TOTAL_VALUE" jdbcType="DECIMAL" property="stockTotalValue" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+  </resultMap>
+</mapper>

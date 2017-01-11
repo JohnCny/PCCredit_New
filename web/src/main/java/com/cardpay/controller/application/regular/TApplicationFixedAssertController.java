@@ -61,8 +61,8 @@ public class TApplicationFixedAssertController extends BaseController<TApplicati
      * @param fixedAssertDepreciateValue 折旧后价值
      * @return 数据变记录
      */
-    @DeleteMapping
-    public ResultTo delete(int fixedAssertTotalId, BigDecimal fixedAssertTotalValue, BigDecimal fixedAssertDepreciateValue) {
+    @DeleteMapping("/{id}")
+    public ResultTo delete(@PathVariable("id") int fixedAssertTotalId, BigDecimal fixedAssertTotalValue, BigDecimal fixedAssertDepreciateValue) {
         int flag = tApplicationFixedAssertService.deleteFixedAssert(fixedAssertTotalId, fixedAssertTotalValue, fixedAssertDepreciateValue);
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

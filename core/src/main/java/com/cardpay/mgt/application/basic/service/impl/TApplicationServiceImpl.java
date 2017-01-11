@@ -1,19 +1,26 @@
 package com.cardpay.mgt.application.basic.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.basic.dao.TApplicationMapper;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
+import com.cardpay.mgt.organization.model.TOrganization;
+import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.ProductOrganization;
 import com.cardpay.mgt.product.service.ProductOrgService;
 import com.cardpay.mgt.product.service.ProductService;
+import com.cardpay.mgt.team.service.TeamService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +55,17 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
      */
     @Autowired
     private ProductService productService;
+
+    /**
+     * 团队service
+     */
+    @Autowired
+    private TeamService teamService;
+
+    /**
+     * 机构service
+     */
+    private TOrganizationService tOrganizationService;
 
     @Override
     public boolean queryCustomerIfHaveProduct(int customerId, int productId) {
@@ -84,5 +102,31 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
     @Override
     public TApplicationVo queryByApplication(int applicationId) {
         return tApplicationDao.queryByApplication(applicationId);
+    }
+
+    @Override
+    public List<TApplicationVo> queryAppByOrgId(Map<String, Object> map) {
+        return tApplicationDao.queryAppByOrgId(map);
+    }
+
+    @Override
+    public List<TApplicationVo> queryAppByTeamId(Map<String, Object> map) {
+        return tApplicationDao.queryAppByTeamId(map);
+    }
+
+    @Override
+    public boolean userIfTeamBoss(int teamId, int userId) {
+        if (teamService.selectIfTeamPrincipal(userId, teamId)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean userIfOrgBoss(int orgId, int userId) {
+        if (tOrganizationService.selectIfOrgPrincipal(orgId, userId)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -65,7 +65,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     public synchronized int accept(String customerIds, Integer flag, Integer userId) {
         List<Integer> customerIdList = new ArrayList<>();
         String[] split = customerIds.split(",");
-        String messageContent; //发送消息内容
+
         for (String id : split) {
             int customerId = Integer.parseInt(id);
             customerIdList.add(customerId);
@@ -81,6 +81,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
         int mark = tCustomerTransferDao.accept(map);
 
         //消息推送
+   /*     String messageContent; //发送消息内容
         if (mark != 0) {
             for (String id : split) {
                 int customerId = Integer.parseInt(id);
@@ -95,7 +96,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
                 messageService.sendMessage("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
                         , 0, 0);
             }
-        }
+        }*/
         return mark;
     }
 

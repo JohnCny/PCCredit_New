@@ -68,4 +68,15 @@
         SELECT TEAM_ID FROM T_TEAM WHERE TEAM_ID = #{teamId}
         )
     </select>
+
+    <!--查询此用户是否是此团队的负责人-->
+    <select id="selectIfTeamPrincipal" >
+        SELECT COUNT(1) FROM T_TEAM WHERE TEAM_LEADER_ID = #{principalId}
+        AND TEAM_ID = #{teamId}
+    </select>
+
+    <!--按团队id查询子团队-->
+    <select id="querySonTeamById" resultMap="BaseResultMap">
+    SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+    </select>
 </mapper>
