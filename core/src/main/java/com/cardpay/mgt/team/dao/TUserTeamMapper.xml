@@ -25,4 +25,23 @@
     </foreach>
   </update>
 
+  <!--按用户id查询关联团队id-->
+  <select id="queryByUserId" resultMap="BaseResultMap">
+    SELECT * FROM T_USER_TEAM WHERE USER_ID = #{userId}
+  </select>
+
+  <!--按进件Id查询所属团队信息-->
+  <select id="queryTeamByAppId" resultMap="BaseResultMap">
+    SELECT UTEAM.*
+    FROM
+    T_USER_TEAM UTEAM,
+    T_USER USR,
+    T_CUSTOMER_MANAGER MANAGER,
+    T_APPLICATION APPLICATION
+    WHERE UTEAM.USER_ID = USR.ID
+    AND USR.ID = MANAGER.USER_ID
+    AND MANAGER.ID = APPLICATION.CUSTOMER_MANAGER_ID
+    AND APPLICATION.ID = #{applicationId}
+  </select>
+
 </mapper>

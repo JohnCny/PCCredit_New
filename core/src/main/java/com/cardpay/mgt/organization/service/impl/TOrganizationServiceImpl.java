@@ -7,13 +7,17 @@ import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import com.cardpay.mgt.organization.service.TOrganizationService;
+import com.cardpay.mgt.team.model.TUserTeam;
+import com.cardpay.mgt.team.model.Team;
 import com.cardpay.mgt.user.dao.UserOrganizationMapper;
+import com.cardpay.mgt.user.model.UserOrganization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,5 +54,29 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     public List<TOrganizationVo> queryAll(Map<String, Object> map) {
         TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
         return tree.getChildNodesByParentId(tOrganizationDao.queryAll(), map.get("topId"));
+    }
+
+    @Override
+    public List<TOrganization> queryIfOrgPrincipal(int userId) {
+        List<TOrganization> teamList = new ArrayList<>();
+        //查询此用户属于那些机构
+        List<UserOrganization> userOrganizations = userOrganizationDao.queryByUserId(userId);
+        for (UserOrganization userOrganization : userOrganizations) {
+            TOrganization tOrganization = new TOrganization();
+            tOrganization.setId(userOrganization.getOrganizationId());
+            TOrganization organization = tOrganizationDao.selectOne(tOrganization);
+            //查询是否为此机构负责人
+            int flag = tOrganizationDao.selectIfOrgPrincipal(organization.getOrgDirectorId(), userId);
+            if (flag > 0) {
+                teamList.add(tOrganization);
+            }
+        }
+        return teamList;
+    }
+
+    @Override
+    public boolean selectIfOrgPrincipal(int directorId, int orgId) {
+        int mark = tOrganizationDao.selectIfOrgPrincipal(directorId, orgId);
+        return mark > 0 ? true : false;
     }
 }

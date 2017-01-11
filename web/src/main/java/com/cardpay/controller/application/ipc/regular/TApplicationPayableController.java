@@ -58,8 +58,8 @@ public class TApplicationPayableController extends BaseController<TApplicationPa
      * @param fixedAssertTotalValue 应付预收合计
      * @return 数据变记录
      */
-    @DeleteMapping
-    public ResultTo delete(int fixedAssertTotalId, BigDecimal fixedAssertTotalValue) {
+    @DeleteMapping("/{id}")
+    public ResultTo delete(@PathVariable("id") int fixedAssertTotalId, BigDecimal fixedAssertTotalValue) {
         int flag = tApplicationPayableService.deletePayable(fixedAssertTotalId, fixedAssertTotalValue);
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

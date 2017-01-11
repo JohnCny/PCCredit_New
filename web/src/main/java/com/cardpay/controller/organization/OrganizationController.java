@@ -10,6 +10,7 @@ import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
+import com.cardpay.mgt.team.model.Team;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -140,5 +141,16 @@ public class OrganizationController extends BaseController<TOrganization> {
             flag++;
         }
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
+
+    /**
+     * 查询此用户负责的机构信息
+     *
+     * @return 机构信息
+     */
+    @GetMapping("/principalOrganization")
+    public ResultTo bossTeam() {
+        List<TOrganization> organizationList = tOrganizationService.queryIfOrgPrincipal(ShiroKit.getUserId());
+        return new ResultTo().setData(organizationList);
     }
 }

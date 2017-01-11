@@ -17,6 +17,7 @@ public class TApplicationFixedAssert extends GenericEntity<Integer> {
     @Id
     @Column(name = "FIXED_ASSERT_ID")
     @ApiModelProperty(value="固定资产id",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_FIXED_ASSERT_SEQ.nextval from dual")
     private Integer fixedAssertId;
 
     /**

@@ -8,19 +8,20 @@ import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
-import com.cardpay.mgt.application.ipc.basic.service.ApplicationIPCBasicService;
-import com.cardpay.mgt.application.ipc.normal.model.vo.TemplateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.cardpay.mgt.application.enums.ApplicationStatus.*;
+import static com.cardpay.mgt.application.enums.ApplicationStatus.APP_UNFINISHED;
+
 
 /**
  * 进件管理
+ *
  * @author chenkai
  */
 
@@ -84,10 +85,30 @@ public class ApplicationController extends BaseController<TApplication> {
      * @return 进件列表
      */
     @RequestMapping("/pageList")
-    public DataTablePage queryByManagerId() {
+    public DataTablePage queryByManagerId(HttpServletRequest request) {
+        Integer userId = ShiroKit.getUserId();
         Map<String, Object> map = new HashMap();
-        map.put("managerId", ShiroKit.getUserId());
-        return dataTablePage("queryByManagerId", map);
+        if (ShiroKit.hasRole("manager")) {
+            map.put("managerId", userId);
+            return dataTablePage("queryByManagerId", map);
+        }
+        //团队负责人
+        Integer teamId = (Integer) request.getAttribute("teamId");
+        if (teamId != null && teamId != 0) {
+            if (tApplicationService.userIfTeamBoss(userId, teamId)) {
+                //按团队Id查询进件信息
+                return dataTablePage("queryAppByTeamId", map);
+            }
+        }
+        //团队负责人
+        Integer orgId = (Integer) request.getAttribute("orgId");
+        if (orgId != null && orgId != 0) {
+            if (tApplicationService.userIfOrgBoss(userId, teamId)) {
+                //按机构id查询进件信息
+                return dataTablePage("queryAppByOrgId", map);
+            }
+        }
+        return null;
     }
 
     /**

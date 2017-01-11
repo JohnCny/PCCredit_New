@@ -9,6 +9,7 @@ import com.cardpay.mgt.file.model.TFile;
 import com.cardpay.mgt.file.service.TFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class TApplicationFileServiceImpl extends BaseServiceImpl<TApplicationFil
     private TFileService tFileService;
 
     @Override
+    @Transactional
     public int insertFile(MultipartFile[] files, TApplicationFile tApplicationFile) {
         List<TFile> fileList = tFileService.uploads(files);
         int flag = 0;

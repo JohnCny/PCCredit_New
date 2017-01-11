@@ -17,6 +17,7 @@ public class TApplicationReceive extends GenericEntity<Integer>{
     @Id
     @Column(name = "RECEIVE_ID")
     @ApiModelProperty(value="应收预付id",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_RECEIVE_SEQ.nextval from dual")
     private Integer receiveId;
 
     /**
