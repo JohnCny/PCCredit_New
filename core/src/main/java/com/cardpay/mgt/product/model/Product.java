@@ -197,6 +197,13 @@ public class Product extends GenericEntity<Integer> {
     private Integer modifyBy;
 
     /**
+     *
+     */
+    @Column(name = "PRODUCT_GROUP_ID")
+    @ApiModelProperty(value = "产品组表id", required = true)
+    private Integer productGroupId;
+
+    /**
      * 获取产品id
      *
      * @return ID - 产品id
@@ -646,8 +653,245 @@ public class Product extends GenericEntity<Integer> {
         this.modifyBy = modifyBy;
     }
 
+    public Integer getProductGroupId() {
+        return productGroupId;
+    }
+
+    public void setProductGroupId(Integer productGroupId) {
+        this.productGroupId = productGroupId;
+    }
+
+
     @Override
     public Integer getPK() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", productLimitMax=" + productLimitMax +
+                ", productLimitMin=" + productLimitMin +
+                ", productInterestMax=" + productInterestMax +
+                ", productInterestMin=" + productInterestMin +
+                ", productState=" + productState +
+                ", productType=" + productType +
+                ", productDescription='" + productDescription + '\'' +
+                ", productPictureUrl='" + productPictureUrl + '\'' +
+                ", productLoanPeriod=" + productLoanPeriod +
+                ", productRepaymentMode=" + productRepaymentMode +
+                ", productApplyTemplateId=" + productApplyTemplateId +
+                ", productSendProductNumber='" + productSendProductNumber + '\'' +
+                ", productHouseholdLevelLimit=" + productHouseholdLevelLimit +
+                ", productCreditLevelLimit='" + productCreditLevelLimit + '\'' +
+                ", productAgeMaxLimit=" + productAgeMaxLimit +
+                ", productAgeMinLimit=" + productAgeMinLimit +
+                ", productIndustryLimit='" + productIndustryLimit + '\'' +
+                ", productMarriageLimit=" + productMarriageLimit +
+                ", customerManagerLevelId=" + customerManagerLevelId +
+                ", createTime=" + createTime +
+                ", createBy=" + createBy +
+                ", modifyTime=" + modifyTime +
+                ", modifyBy=" + modifyBy +
+                '}';
+    }
+
+    public static final class ProductBuilder {
+        private Integer id;
+        private String productName;
+        private BigDecimal productLimitMax;
+        private BigDecimal productLimitMin;
+        private BigDecimal productInterestMax;
+        private BigDecimal productInterestMin;
+        private Integer productState;
+        private Integer productType;
+        private String productDescription;
+        private String productPictureUrl;
+        private Integer productLoanPeriod;
+        private Integer productRepaymentMode;
+        private Integer productApplyTemplateId;
+        private String productSendProductNumber;
+        private Integer productHouseholdLevelLimit;
+        private String productCreditLevelLimit;
+        private Integer productAgeMaxLimit;
+        private Integer productAgeMinLimit;
+        private String productIndustryLimit;
+        private Integer productMarriageLimit;
+        private Integer customerManagerLevelId;
+        private Date createTime;
+        private Integer createBy;
+        private Date modifyTime;
+        private Integer modifyBy;
+        private Integer productGroupId;
+
+        private ProductBuilder() {
+        }
+
+        public static ProductBuilder get() {
+            return new ProductBuilder();
+        }
+
+        public ProductBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public ProductBuilder withProductName(String productName) {
+            this.productName = productName;
+            return this;
+        }
+
+        public ProductBuilder withProductLimitMax(BigDecimal productLimitMax) {
+            this.productLimitMax = productLimitMax;
+            return this;
+        }
+
+        public ProductBuilder withProductLimitMin(BigDecimal productLimitMin) {
+            this.productLimitMin = productLimitMin;
+            return this;
+        }
+
+        public ProductBuilder withProductInterestMax(BigDecimal productInterestMax) {
+            this.productInterestMax = productInterestMax;
+            return this;
+        }
+
+        public ProductBuilder withProductInterestMin(BigDecimal productInterestMin) {
+            this.productInterestMin = productInterestMin;
+            return this;
+        }
+
+        public ProductBuilder withProductState(Integer productState) {
+            this.productState = productState;
+            return this;
+        }
+
+        public ProductBuilder withProductType(Integer productType) {
+            this.productType = productType;
+            return this;
+        }
+
+        public ProductBuilder withProductDescription(String productDescription) {
+            this.productDescription = productDescription;
+            return this;
+        }
+
+        public ProductBuilder withProductPictureUrl(String productPictureUrl) {
+            this.productPictureUrl = productPictureUrl;
+            return this;
+        }
+
+        public ProductBuilder withProductLoanPeriod(Integer productLoanPeriod) {
+            this.productLoanPeriod = productLoanPeriod;
+            return this;
+        }
+
+        public ProductBuilder withProductRepaymentMode(Integer productRepaymentMode) {
+            this.productRepaymentMode = productRepaymentMode;
+            return this;
+        }
+
+        public ProductBuilder withProductApplyTemplateId(Integer productApplyTemplateId) {
+            this.productApplyTemplateId = productApplyTemplateId;
+            return this;
+        }
+
+        public ProductBuilder withProductSendProductNumber(String productSendProductNumber) {
+            this.productSendProductNumber = productSendProductNumber;
+            return this;
+        }
+
+        public ProductBuilder withProductHouseholdLevelLimit(Integer productHouseholdLevelLimit) {
+            this.productHouseholdLevelLimit = productHouseholdLevelLimit;
+            return this;
+        }
+
+        public ProductBuilder withProductCreditLevelLimit(String productCreditLevelLimit) {
+            this.productCreditLevelLimit = productCreditLevelLimit;
+            return this;
+        }
+
+        public ProductBuilder withProductAgeMaxLimit(Integer productAgeMaxLimit) {
+            this.productAgeMaxLimit = productAgeMaxLimit;
+            return this;
+        }
+
+        public ProductBuilder withProductAgeMinLimit(Integer productAgeMinLimit) {
+            this.productAgeMinLimit = productAgeMinLimit;
+            return this;
+        }
+
+        public ProductBuilder withProductIndustryLimit(String productIndustryLimit) {
+            this.productIndustryLimit = productIndustryLimit;
+            return this;
+        }
+
+        public ProductBuilder withProductMarriageLimit(Integer productMarriageLimit) {
+            this.productMarriageLimit = productMarriageLimit;
+            return this;
+        }
+
+        public ProductBuilder withCustomerManagerLevelId(Integer customerManagerLevelId) {
+            this.customerManagerLevelId = customerManagerLevelId;
+            return this;
+        }
+
+        public ProductBuilder withCreateTime(Date createTime) {
+            this.createTime = createTime;
+            return this;
+        }
+
+        public ProductBuilder withCreateBy(Integer createBy) {
+            this.createBy = createBy;
+            return this;
+        }
+
+        public ProductBuilder withModifyTime(Date modifyTime) {
+            this.modifyTime = modifyTime;
+            return this;
+        }
+
+        public ProductBuilder withModifyBy(Integer modifyBy) {
+            this.modifyBy = modifyBy;
+            return this;
+        }
+
+        public ProductBuilder withProductGroupId(Integer productGroupId) {
+            this.productGroupId = productGroupId;
+            return this;
+        }
+
+        public Product build() {
+            Product product = new Product();
+            product.setId(id);
+            product.setProductName(productName);
+            product.setProductLimitMax(productLimitMax);
+            product.setProductLimitMin(productLimitMin);
+            product.setProductInterestMax(productInterestMax);
+            product.setProductInterestMin(productInterestMin);
+            product.setProductState(productState);
+            product.setProductType(productType);
+            product.setProductDescription(productDescription);
+            product.setProductPictureUrl(productPictureUrl);
+            product.setProductLoanPeriod(productLoanPeriod);
+            product.setProductRepaymentMode(productRepaymentMode);
+            product.setProductApplyTemplateId(productApplyTemplateId);
+            product.setProductSendProductNumber(productSendProductNumber);
+            product.setProductHouseholdLevelLimit(productHouseholdLevelLimit);
+            product.setProductCreditLevelLimit(productCreditLevelLimit);
+            product.setProductAgeMaxLimit(productAgeMaxLimit);
+            product.setProductAgeMinLimit(productAgeMinLimit);
+            product.setProductIndustryLimit(productIndustryLimit);
+            product.setProductMarriageLimit(productMarriageLimit);
+            product.setCustomerManagerLevelId(customerManagerLevelId);
+            product.setCreateTime(createTime);
+            product.setCreateBy(createBy);
+            product.setModifyTime(modifyTime);
+            product.setModifyBy(modifyBy);
+            product.setProductGroupId(productGroupId);
+            return product;
+        }
     }
 }

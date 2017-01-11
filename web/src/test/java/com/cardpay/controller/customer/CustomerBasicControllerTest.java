@@ -5,10 +5,8 @@ import com.cardpay.util.TestEnv;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /**
@@ -36,7 +34,7 @@ public class CustomerBasicControllerTest extends TestEnv {
     @Ignore
     public void deleteCustomer() throws Exception {
         setUser(user);
-        mockMvc.perform(delete("/customerBasic/1")
+        mockMvc.perform(delete("/api/customerBasic/del/1")
                 .param("customerIds", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
@@ -45,7 +43,7 @@ public class CustomerBasicControllerTest extends TestEnv {
     @Test
     @Ignore
     public void returnUpdate() throws Exception {
-        mockMvc.perform(get("/customerBasic/1"))
+        mockMvc.perform(get("/api/customerBasic/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
@@ -53,7 +51,7 @@ public class CustomerBasicControllerTest extends TestEnv {
     @Test
     @Ignore
     public void update() throws Exception {
-        mockMvc.perform(put("/customerBasic/")
+        mockMvc.perform(put("/api/customerBasic/")
                 .param("id", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
@@ -62,33 +60,18 @@ public class CustomerBasicControllerTest extends TestEnv {
     @Test
     @Ignore
     public void queryCustomer() throws Exception {
-        mockMvc.perform(put("/customerBasic/customer")
+        setUser(user);
+        mockMvc.perform(put("/api/customerBasic/condition")
                 .param("id", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
 
-    @Test
-    @Ignore
-    public void changeCustomer() throws Exception {
-        mockMvc.perform(put("/customerBasic/customerStatus")
-                .param("id", "1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
-
-    @Test
-    @Ignore
-    public void getProspectiveCustomers() throws Exception {
-        mockMvc.perform(get("/customerBasic/prospectiveCustomers"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.code").value(200));
-    }
 
     @Test
     @Ignore
     public void validate() throws Exception {
-        mockMvc.perform(get("/customerBasic/idCardExist")
+        mockMvc.perform(get("/api/customerBasic/idCardExist")
                 .param("identityCard", "123456"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
@@ -96,8 +79,13 @@ public class CustomerBasicControllerTest extends TestEnv {
 
 
     @Test
+    @Ignore
     public void newCustomer() throws Exception {
-
+        mockMvc.perform(post("/api/customerBasic")
+                .param("cname","测试")
+                .param("industry", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200));
     }
 
     @Test

@@ -78,26 +78,27 @@ public class DataTablePage {
     }
 
     /**
-     *  分页方法
-     * @param methodName 方法名称
-     * @param baseService service名称
-     * @param request 请求
-     * @param clazz 类类型
-     * @param example   通用的Example查询对象
+     * 分页方法
+     *
+     * @param methodName   方法名称
+     * @param baseService  service名称
+     * @param request      请求
+     * @param clazz        类类型
+     * @param example      通用的Example查询对象
      * @param parameterMap 参数列表
-     * @throws NoSuchMethodException 方法没找到
+     * @throws NoSuchMethodException     方法没找到
      * @throws InvocationTargetException 反射异常
-     * @throws IllegalAccessException 反射异常
-     * @throws InstantiationException 实例化异常
+     * @throws IllegalAccessException    反射异常
+     * @throws InstantiationException    实例化异常
      */
     private void DataTablePage(String methodName, BaseService baseService, HttpServletRequest request
             , Class clazz, Example example, Map<String, Object> parameterMap) throws NoSuchMethodException
             , InvocationTargetException, IllegalAccessException, InstantiationException {
-        String start = request.getParameter("start");
-        String length = request.getParameter("length");
-        String search = request.getParameter("search");
-        String order = request.getParameter("order");
-        LogTemplate.info(this.getClass(), "message(BasePage)", "[start:" + start + "][length" + length + "][search" + search + "][order" + order + "]");
+        String start = request.getParameter("pageStart");
+        String length = request.getParameter("pageLength");
+        String search = request.getParameter("pageSearch");
+        String order = request.getParameter("pageOrder");
+        LogTemplate.info(this.getClass(), "message(BasePage)", "[pageStart:" + start + "][pageLength" + length + "][pageSearch" + search + "][pageOrder" + order + "]");
         this.start = start != null ? Integer.parseInt(start) : this.start;
         this.length = length != null ? Integer.parseInt(length) : this.length;
         String finalOrder = null;
@@ -148,6 +149,7 @@ public class DataTablePage {
 
     /**
      * 移除map中空字段
+     *
      * @param map 参数map
      * @return 没有空字段的map
      */

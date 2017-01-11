@@ -10,6 +10,7 @@ import com.cardpay.basic.mail.MailSend;
 import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.basic.util.VerifyCodeUtil;
+import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
@@ -28,6 +29,7 @@ import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -44,6 +46,10 @@ import java.util.regex.Pattern;
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
+
+    private static final String MAN_PROFILE = "/static/image/man.png";
+
+    private static final String WOMAN_PROFILE = "/static/image/woman.png";
 
     @Autowired
     private UserMapper userMapper;
@@ -65,6 +71,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Autowired
     private MailSend mailSend;
+
+    @Autowired
+    private FileManager fileManager;
 
     @Override
     public Set<String> getUserAuthority(User user) {
@@ -98,9 +107,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public ResultTo updatePassword(String oldPassword, String newPassword) {
-        User user = (User) ShiroKit.getPrincipal();
-        Integer userId = user.getId();
-        if (!user.getPassword().equals(PasswordUtil.encryptPassword(oldPassword))) {
+        Integer userId = ShiroKit.getUserId();
+        User user = userMapper.selectByPrimaryKey(userId);
+        LogTemplate.debug(this.getClass(), "userPassword", user.getPassword());
+        if (!PasswordUtil.encryptPassword(oldPassword).equals(user.getPassword())) {
             LogTemplate.debug(this.getClass(), "oldPassword(数据库)", user.getPassword());
             LogTemplate.debug(this.getClass(), "oldPassword(传入)", PasswordUtil.encryptPassword(oldPassword));
             return new ResultTo(ResultEnum.OLD_PASSWORD_ERROR);
@@ -179,10 +189,20 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public boolean addUser(User user, Integer orgId, Integer roleId) {
         user.setCreateTime(new Date());
         user.setCreateBy(ShiroKit.getUserId());
-
-//        user.setEmployeeNumber();
-
+        String code;
+        while (true) {
+            code = VerifyCodeUtil.generateTextCode(0, 8, null);
+            if (userMapper.selectOne(User.UserBuilder.get().withEmployeeNumber(code).build()) == null) {
+                user.setEmployeeNumber(code);
+                break;
+            }
+        }
         user.setPassword(PasswordUtil.encryptPassword(ShiroKit.DEFAULT_PASSWORD));
+        if (user.getSex() == 1) {
+            user.setUserProfile(WOMAN_PROFILE);
+        } else {
+            user.setUserProfile(MAN_PROFILE);
+        }
         userMapper.insertSelective(user);
         UserOrganization userOrganization = new UserOrganization();
         userOrganization.setUserId(user.getId());
@@ -206,9 +226,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public boolean updateUser(User user, String[] orgIds, String[] roleIds) {
+    public boolean updateUser(User user, String[] orgIds, String[] roleIds, MultipartFile file) {
         user.setModifyBy(ShiroKit.getUserId());
         user.setModifyTime(new Date());
+        if (file != null) {
+            user.setUserProfile(fileManager.upLoadExt(file));
+        }
         userMapper.updateByPrimaryKeySelective(user);
         if (orgIds.length != 0) {
             UserOrganization userOrganization = new UserOrganization();

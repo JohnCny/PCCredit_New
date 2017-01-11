@@ -12,8 +12,8 @@ project.webAppDirName = 'src/main/webapp'
 //定义war包
 war {
     baseName = 'loan'
-    from '/src/main/webapp'                             // adds a file-set to the root of the archive
-    webInf { from '/src/main/webapp/WEB-INF/' }         // adds a file-set to the WEB-INF dir.
+    from '/src/main/webapp'                           // adds a file-set to the root of the archive
+    webInf { from '/src/main/webapp/WEB-INF/' }     // adds a file-set to the WEB-INF dir.
     classpath fileTree('lib')                           // adds a file-set to the WEB-INF/lib dir.
 }
 

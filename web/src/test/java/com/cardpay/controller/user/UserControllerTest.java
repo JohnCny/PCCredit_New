@@ -126,4 +126,14 @@ public class UserControllerTest extends TestEnv {
                 .andDo(MockMvcResultHandlers.print());
     }
 
+    @Test
+    @Ignore
+    public void isIdCard() throws Exception {
+        mockMvc.perform(post("/user/isIdCard")
+                .param("isIdCard", "431381198809122734"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
 }

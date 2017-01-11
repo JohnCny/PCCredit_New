@@ -19,6 +19,7 @@ public class ProductApprove extends GenericEntity<Integer> {
     /**
      * 审批节点id
      */
+    @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCAPPROVE_SEQ.nextval from dual")
     @ApiModelProperty(value = "审批节点id", required = true)
@@ -452,5 +453,24 @@ public class ProductApprove extends GenericEntity<Integer> {
             productApprove.setLoanMeetingType(loanMeetingType);
             return productApprove;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ProductApprove{" +
+                "id=" + id +
+                ", productId=" + productId +
+                ", nodeType=" + nodeType +
+                ", nodeName='" + nodeName + '\'' +
+                ", preNodeId=" + preNodeId +
+                ", nextNodeId=" + nextNodeId +
+                ", approveRoles='" + approveRoles + '\'' +
+                ", isRandomDivision=" + isRandomDivision +
+                ", isLoanMeeting=" + isLoanMeeting +
+                ", isLoanLimit=" + isLoanLimit +
+                ", loanLimit=" + loanLimit +
+                ", isReviewNode=" + isReviewNode +
+                ", loanMeetingType=" + loanMeetingType +
+                '}';
     }
 }

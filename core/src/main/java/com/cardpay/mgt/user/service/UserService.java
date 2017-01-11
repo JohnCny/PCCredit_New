@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -83,9 +84,10 @@ public interface UserService extends BaseService<User> {
      * @param user    User对象
      * @param orgIds  机构ID(组成结构:旧ID,新ID)
      * @param roleIds 角色ID(组成结构:旧ID,新ID)
+     * @param file    角色ID(组成结构:旧ID,新ID)
      * @return 成功或失败
      */
-    boolean updateUser(User user, String[] orgIds, String[] roleIds);
+    boolean updateUser(User user, String[] orgIds, String[] roleIds, MultipartFile file);
 
     /**
      * 带搜索的用户分页,自定义SQL(此处是反射应用,没有显示调用)

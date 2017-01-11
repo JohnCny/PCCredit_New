@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  * 操作日志controller
  *
  * @author yanweichen
- * @create 2016-12-2016/12/21 10:22
  */
 
 @RestController

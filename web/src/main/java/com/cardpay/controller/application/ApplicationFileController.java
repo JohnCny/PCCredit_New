@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
  * 进件文件上传表
  *
  * @author chenkai
- *         createTime 2017-01-2017/1/9 10:27
  */
 @RestController
 @RequestMapping("/api/applicationFile")

@@ -22,7 +22,6 @@ import java.util.List;
  * 客户行业相关
  *
  * @author chenkai
- *         createTime 2017-01-2017/1/3 14:59
  */
 @RestController
 @RequestMapping("/api/customerIndustry")

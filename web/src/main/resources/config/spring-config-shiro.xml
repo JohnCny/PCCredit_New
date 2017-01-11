@@ -43,14 +43,11 @@
         <property name="loginUrl" value="/api/logon/noLogin"/>
         <property name="filterChainDefinitions">
             <value>
-                /upload/** = anon
                 /static/** = anon
-                /js/** = anon
-                /css/** = anon
-                /img/** = anon
                 /assets/** = anon
                 /api/kaptcha = anon
                 /api/logon/** = anon
+                /api/menu/refresh/** = anon
                 /**/anon/** = anon
                 /swagger-ui.html = anon
                 /webjars/** = anon

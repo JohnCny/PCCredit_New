@@ -13,23 +13,13 @@ import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.RoleService;
 import com.cardpay.mgt.user.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -37,7 +27,6 @@ import java.util.Map;
  * 用户控制层
  *
  * @author rankai
- *         create 2016-12-2016/12/21 10:22
  */
 @RestController
 @RequestMapping("/api/user")
@@ -55,8 +44,8 @@ public class UserController extends BaseController<User> {
      *
      * @return 分页后的数据
      */
-    @GetMapping("/pageList")
-    @ApiOperation(value = "用户分页数据", httpMethod = "GET")
+    @PostMapping("/pageList")
+    @ApiOperation(value = "用户分页数据", httpMethod = "POST")
     public DataTablePage pageList() {
         return dataTablePage("userPageList");
     }
@@ -154,7 +143,7 @@ public class UserController extends BaseController<User> {
     @PutMapping
     @ApiOperation(value = "编辑用户实现", httpMethod = "PUT")
     public ResultTo updateUser(User user, BindingResult result, @RequestParam(value = "orgId", required = false) String orgId,
-                               @RequestParam(value = "roleId", required = false) String roleId) {
+                               @RequestParam(value = "roleId", required = false) String roleId, MultipartFile file) {
         LogTemplate.debug(this.getClass(), "orgId", orgId);
         LogTemplate.debug(this.getClass(), "roleId", roleId);
         Map<String, String> map = new HashedMap();
@@ -174,7 +163,7 @@ public class UserController extends BaseController<User> {
                 return new ResultTo(ResultEnum.PARAM_ERROR);
             }
         }
-        if (userService.updateUser(user, orgIds, roleIds)) {
+        if (userService.updateUser(user, orgIds, roleIds, file)) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
@@ -249,7 +238,7 @@ public class UserController extends BaseController<User> {
      * @param password    密码
      * @return 成功或失败
      */
-    @RequestMapping(value = "/anon/resetPassword/", method = RequestMethod.POST, params = "checkedCode")
+    @PostMapping(value = "/anon/resetPassword/", params = "checkedCode")
     @ApiOperation(value = "重置密码", httpMethod = "POST")
     public ResultTo resetPassword(@RequestParam("checkedCode") String checkedCode, @RequestParam("password") String password) {
         LogTemplate.debug(this.getClass(), "checkedCode", checkedCode);

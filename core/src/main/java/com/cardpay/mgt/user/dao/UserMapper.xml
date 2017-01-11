@@ -87,7 +87,11 @@
   </select>
 
     <select id="userPageList" resultMap="BaseResultMap">
-        SELECT * FROM T_USER TU,T_USER_ORGANIZATION TUO WHERE 1=1
+        SELECT * FROM T_USER TU
+        <if test="orgId != null">
+        ,T_USER_ORGANIZATION TUO
+        </if>
+        WHERE 1=1
         <if test="username !=null">
             AND
             TU.USERNAME=#{username,jdbcType=VARCHAR}

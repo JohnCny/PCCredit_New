@@ -23,13 +23,6 @@
     <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>
     <task:scheduler id="qbScheduler" pool-size="10"/>
 
-    <!-- 支持上传文件 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="314572800"/><!-- 300M -->
-        <property name="defaultEncoding" value="utf-8"></property>
-        <property name="resolveLazily" value="true"></property>
-    </bean>
-
     <!--bean操作工具类-->
     <bean class="com.cardpay.basic.util.BeanFactoryUtil"/>
 
