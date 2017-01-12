@@ -46,7 +46,7 @@
     <!--查询客户经理所属客户-->
     <select id="queryCustomer" resultMap="BaseResultMapVo">
         SELECT customer.id id, customer.cname name FROM T_CUSTOMER_BASIC customer, T_CUSTOMER_MANAGER manager
-        WHERE manager.id = customer.CUSTOMER_MANAGER_ID AND customer.CUSTOMER_STATUS !=3
+        WHERE manager.id = customer.CUSTOMER_MANAGER_ID AND customer.CUSTOMER_STATUS !=6
         AND manager.id = #{managerId}
     </select>
 
@@ -78,8 +78,9 @@
             SELECT ORGANIZATION_ID
             FROM T_CUSTOMER_MANAGER
             WHERE
-            USER_ID = #{customerManagerId}
+            ID = #{customerManagerId}
             )
+            AND manager.id = #{customerManagerId}
             AND basic.CUSTOMER_STATUS != 5
             <if test="cname!=null and cname!=''">
                 AND basic.cname LIKE CONCAT(CONCAT('%',#{cname}),'%')

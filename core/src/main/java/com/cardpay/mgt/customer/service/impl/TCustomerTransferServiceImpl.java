@@ -56,10 +56,11 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     private MessageService messageService;
 
     /**
-     * 客户经理信息
+     * 客户信息
      */
     @Autowired
-    private CustomerManagerService customerManagerService;
+    private TCustomerBasicService customerBasicService;
+
 
     @Override
     public List<SelectModel> getTransferStatus() {
@@ -83,7 +84,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     public synchronized int accept(String customerIds, Integer flag, int userId) {
         HashMap<String, Object> map = new HashMap();
         Map<String, Object> stringObjectMap = new HashMap();
-        TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
+        Integer managerId = customerBasicService.getManagerId(userId);
         List<Integer> customerIdList = new ArrayList<>();
         String[] split = customerIds.split(",");
         for (String id : split) {
@@ -93,7 +94,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
         //客户经理接受此客户
         if (flag != null && flag == 1) {
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
-            stringObjectMap.put("managerId", tCustomerManagerBaseVo.getManagerId());
+            stringObjectMap.put("managerId",managerId);
             //客户经理拒绝此客户
         } else {
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
@@ -102,7 +103,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
         int mark = tCustomerTransferDao.accept(map);
         //接受/拒绝成功后回复客户状态
         if (mark != 0) {
-            stringObjectMap.put("status", 0);
+            stringObjectMap.put("status", ConstantEnum.CustomerStatus.STATUS0.getVal());
             stringObjectMap.put("customerIds", customerIdList);
             int status = tCustomerBasicService.updateStatus(stringObjectMap);
             //消息推送
