@@ -18,12 +18,23 @@
         <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
         <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
         <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
+        <association property="ifDel" select="ifDelete" column="ID"/>
     </resultMap>
 
     <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
         <result column="ID" jdbcType="VARCHAR" property="id"/>
         <result column="CNAME" jdbcType="VARCHAR" property="name"/>
     </resultMap>
+
+    <!--查询此客户是否可以删除-->
+    <select id="ifDelete" resultType="Integer">
+        SELECT count(1)
+        FROM
+        T_CUSTOMER_BASIC basic,T_APPLICATION application
+        WHERE
+        basic.id = application.CUSTOMER_ID
+        AND application.CUSTOMER_ID = #{id}
+    </select>
 
     <!--查询身份证是否存在-->
     <select id="isIdCardExist" parameterType="String" resultType="Integer">
