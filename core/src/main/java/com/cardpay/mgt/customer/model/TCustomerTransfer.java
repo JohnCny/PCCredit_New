@@ -22,6 +22,7 @@ public class TCustomerTransfer extends GenericEntity<Integer>{
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value="客户id(需要生成规则生成)",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_TRANSFER_SEQ.nextval from dual")
     private Integer id;
 
     /**
@@ -74,18 +75,32 @@ public class TCustomerTransfer extends GenericEntity<Integer>{
     private Date transferTime;
 
     /**
-     * 获取客户id(需要生成规则生成)
+     * 客户id
+     */
+    @Column(name = "CUSTOMER_ID")
+    private int customerId;
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    /**
+     * 获取id
      *
-     * @return ID - 客户id(需要生成规则生成)
+     * @return ID - id
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * 设置客户id(需要生成规则生成)
+     * 设置id
      *
-     * @param id 客户id(需要生成规则生成)
+     * @param id id
      */
     public void setId(Integer id) {
         this.id = id;

@@ -25,7 +25,6 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.*;
 
-import static com.cardpay.controller.customer.enums.CustomerStatus.*;
 
 /**
  * 客户移交controller
@@ -43,11 +42,6 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      */
     @Autowired
     private TCustomerBasicService customerBasicService;
-    /**
-     * 客户经理信息
-     */
-    @Autowired
-    private CustomerManagerService customerManagerService;
 
     /**
      * 获取移交接收意见状态
@@ -84,12 +78,13 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             TCustomerBasic tCustomerBasic = customerBasicService.selectByPrimaryKey(customerId);
             TCustomerTransfer tCustomerTransfer = new TCustomerTransfer();
             tCustomerTransfer.setTransferTime(new Date());
-            tCustomerTransfer.setId(customerId);
+            tCustomerTransfer.setCustomerId(customerId);
             tCustomerTransfer.setCustomerCname(tCustomerBasic.getCname());
             tCustomerTransfer.setCustomerCertificateNumber(tCustomerBasic.getCertificateNumber());
             tCustomerTransfer.setOriginCustomerManager(tCustomerBasic.getCustomerManagerId());
             tCustomerTransfer.setTransferReason(reason);
-            tCustomerTransfer.setNowCustomerManager(managerId);
+            Integer customerBasicServiceManagerId = customerBasicService.getManagerId(managerId);
+            tCustomerTransfer.setNowCustomerManager(customerBasicServiceManagerId);
             tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
             tCustomerTransfer.setTransferTime(new Date());
             customerTransferService.insertSelective(tCustomerTransfer);
@@ -97,7 +92,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         }
         Map<String, Object> map = new HashMap();
         map.put("customerIds", customerIdList);
-        map.put("status", TRANSFER.getValue());
+        map.put("status", ConstantEnum.CustomerStatus.STATUS6.getVal());
         int count = customerBasicService.updateStatus(map);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
@@ -113,9 +108,9 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
     public DataTablePage queryTransfer(@ApiParam("状态(默认为待确认)") @RequestParam(defaultValue = "0") int status) {
         Map<String, Object> map = new HashMap<>();
-        TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(ShiroKit.getUserId());
+        Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
         map.put("status", status);
-        map.put("managerId", tCustomerManagerBaseVo.getManagerId());
+        map.put("managerId", managerId);
         return dataTablePage("queryTransfer", map);
     }
 
@@ -128,7 +123,9 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @SystemControllerLog("查询客户经理所属客户(客户移交)")
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 ", httpMethod = "GET")
     public ResultTo queryCustomer() {
-        List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(ShiroKit.getUserId());
+        Integer userId = ShiroKit.getUserId();
+        Integer managerId = customerBasicService.getManagerId(userId);
+        List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(managerId);
         return new ResultTo().setData(tCustomerVos);
     }
 
@@ -143,8 +140,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户接收", notes = "客户接收/拒绝按钮", httpMethod = "PUT")
     public ResultTo customerReceive(@ApiParam("客户id(,分割)") @RequestParam String customerIds,
                                     @ApiParam("接收:1, 拒绝2") @RequestParam Integer flag) {
-        Integer userId = ShiroKit.getUserId();
-        int count = customerTransferService.accept(customerIds, flag, userId);
+        int count = customerTransferService.accept(customerIds, flag, ShiroKit.getUserId());
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 

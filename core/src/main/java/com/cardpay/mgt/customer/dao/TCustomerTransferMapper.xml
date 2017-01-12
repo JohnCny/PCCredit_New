@@ -10,6 +10,7 @@
         <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
         <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
         <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
+        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
     </resultMap>
 
     <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerVo">
@@ -55,7 +56,7 @@
         T_CUSTOMER_BASIC basic
         WHERE basic.CUSTOMER_STATUS = 6
         AND basic.id = transfer.id
-        AND transfer.id = #{customerId}
+        AND transfer.CUSTOMER_ID = #{customerId}
     </select>
 
     <!--查询客户接受列表-->
@@ -64,7 +65,7 @@
         basic.CNAME as cname, transfer.TRANSFER_REASON as transferReason, transfer.TRANSFER_STATUS as transferStatus
         FROM T_CUSTOMER_BASIC basic,
         T_CUSTOMER_TRANSFER transfer
-        WHERE basic.id = transfer.id
+        WHERE basic.id = transfer.CUSTOMER_ID
         AND transfer.TRANSFER_STATUS = 0
         AND basic.CUSTOMER_STATUS != 5
         AND transfer.NOW_CUSTOMER_MANAGER = #{managerId,jdbcType=DECIMAL}
@@ -77,7 +78,7 @@
             <set>
                 TRANSFER_STATUS = #{transferStatus}
             </set>
-            where id = #{item}
+            where CUSTOMER_ID = #{item}
         </foreach>
     </update>
 
