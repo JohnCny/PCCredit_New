@@ -37,7 +37,7 @@
             (
             SELECT ORGANIZATION_ID FROM T_CUSTOMER_MANAGER WHERE USER_ID = #{customerManagerId}
             )
-            AND basic.CUSTOMER_STATUS = 0
+            AND basic.CUSTOMER_STATUS != 3
             <if test="cname!=null and cname!=''">
                 AND basic.cname LIKE CONCAT (CONCAT('%',#{cname}),'%')
             </if>

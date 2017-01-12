@@ -47,7 +47,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @GetMapping("/idCardExist")
     @SystemControllerLog("验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
-    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam long identityCard) {
+    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam String identityCard) {
         if (!IDcardUtil.verify(String.valueOf(identityCard))) {
             return new ResultTo(ResultEnum.ID_CARD_ERROR);
         }
@@ -66,7 +66,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic
             , @RequestParam String industry) {
-        Integer count = updateAndCompareBean(tCustomerBasic, "customerBasic", "客户基本信息");
+        tCustomerBasic.setModifyTime(new Date());
+        tCustomerBasic.setModifyBy(ShiroKit.getUserId());
+        Integer count =customerBasicService.updateSelectiveByPrimaryKey(tCustomerBasic);
         if (count != null && count != 0) {
             String[] split = industry.split(",");
             List<TCustomerIndustry> list = new ArrayList<>();

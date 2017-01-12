@@ -26,7 +26,7 @@
     </resultMap>
 
     <!--查询身份证是否存在-->
-    <select id="isIdCardExist" parameterType="Long" resultType="Integer">
+    <select id="isIdCardExist" parameterType="String" resultType="Integer">
         SELECT COUNT(1)
         FROM t_customer_basic basic
         WHERE basic.CERTIFICATE_NUMBER = #{idCard}
