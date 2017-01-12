@@ -46,7 +46,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      * 客户经理列表
      * levelId = -1 查询所有级别
      */
-    @GetMapping(value = "/pageList")
+    @RequestMapping("/pageList")
     @ApiOperation(value = "获取客户经理列表", notes = "获取客户经理列表 levelId = -1 查询所有级别", httpMethod = "GET")
     public DataTablePage pageList() {
         TCustomerManager customerManager = customerManagerService.selectByUserId(ShiroKit.getUserId());
@@ -62,7 +62,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      *
      * @return 页面
      */
-    @GetMapping(value = "/{userId}")
+    @GetMapping("/{userId}")
     @ApiOperation(value = "获得客户经理信息", notes = "获得客户经理信息", httpMethod = "GET")
     public ResultTo get(@PathVariable("userId") Integer userId) {
         ResultTo resultTo = new ResultTo();
@@ -96,7 +96,7 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
      * @param userId 用户id
      * @return 删除结果
      */
-    @DeleteMapping(value = "/{userId}")
+    @DeleteMapping("/{userId}")
     @ApiOperation(value = "删除客户经理(封号)", notes = "删除客户经理(封号)", httpMethod = "DELETE")
     public ResultTo delete(@ApiParam("用户信息") @PathVariable("userId") Integer userId) {
         ResultTo resultTo = new ResultTo();

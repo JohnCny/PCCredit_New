@@ -125,7 +125,7 @@ public class FileManager implements FileManagerConfig {
         } catch (MyException e) {
             e.printStackTrace();
         }
-        return new ByteArrayInputStream(content);
+        return content == null ? null : new ByteArrayInputStream(content);
     }
 
     /**

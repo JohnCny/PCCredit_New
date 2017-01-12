@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -25,7 +26,7 @@ import java.util.Map;
  *
  * @author rankai
  */
-@Controller
+@RestController
 @RequestMapping("/api/productLoan")
 @Api(value = "/api/productLoan", description = "产品贷后监控规则")
 public class ProductLoanController extends BaseController<ProductLoanMonitorRules> {
@@ -39,7 +40,7 @@ public class ProductLoanController extends BaseController<ProductLoanMonitorRule
      * @param productId 产品ID
      * @return 产品贷后页面数据
      */
-    @RequestMapping(value = "/{productId}/loan", method = RequestMethod.GET)
+    @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     @ApiOperation(value = "增加产品贷后页面数据", httpMethod = "GET")
     public ResultTo loan(@PathVariable("productId") Integer productId) {
         return new ResultTo();
@@ -53,7 +54,7 @@ public class ProductLoanController extends BaseController<ProductLoanMonitorRule
      * @param productId               产品ID
      * @return 成功或失败
      */
-    @PostMapping(value = "/loan")
+    @PostMapping
     @ApiOperation(value = "增加产品贷后", httpMethod = "POST")
     public ResultTo loan(ProductLoanMonitorRules productLoanMonitorRules, BindingResult result,
                          @RequestParam("productId") Integer productId) {
