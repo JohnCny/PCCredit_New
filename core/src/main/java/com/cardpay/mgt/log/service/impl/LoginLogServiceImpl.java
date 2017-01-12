@@ -29,8 +29,8 @@ public class LoginLogServiceImpl extends BaseServiceImpl<LoginLog> implements Lo
 
     @Override
     public Example pageList(WebRequest request) {
-        String search = request.getParameter("search");
-        String order = request.getParameter("order");
+        String search = request.getParameter("pageSearch");
+        String order = request.getParameter("pageOrder");
         Example example = new Example(LoginLog.class);
         if (StringUtils.isNotBlank(order)) {
             String finalOrder = "";

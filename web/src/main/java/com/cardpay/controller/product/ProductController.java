@@ -12,6 +12,8 @@ import com.cardpay.mgt.product.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +63,7 @@ public class ProductController extends BaseController<Product> {
      *
      * @return 增加产品信息页面数据
      */
-    @GetMapping()
+    @GetMapping
     @ApiOperation(value = "增加产品信息页面数据", httpMethod = "GET")
     public ResultTo information(@RequestParam(value = "productId", required = false) Integer productId) {
         Map<String, Object> map = new HashedMap();
@@ -85,13 +87,17 @@ public class ProductController extends BaseController<Product> {
      * @param explainList  图片说明集合
      * @return 产品ID
      */
-    @PostMapping()
+    @PostMapping
     @ApiOperation(value = "增加产品信息", httpMethod = "POST")
-    public ResultTo add(Product product, BindingResult productError, MultipartFile productImg,
+    public ResultTo add(Product product, BindingResult productError,
+                        @RequestParam(value = "productImg", required = false) MultipartFile productImg,
                         String orgStr, ExplainList explainList) {
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, productError)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
+        }
+        if (StringUtils.isBlank(orgStr) || explainList == null) {
+            return new ResultTo(ResultEnum.PARAM_ERROR);
         }
         Integer productId = productService.addProduct(product, productImg, orgStr, explainList);
         return new ResultTo().setData(productId);

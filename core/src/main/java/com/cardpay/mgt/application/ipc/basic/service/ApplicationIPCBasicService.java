@@ -16,16 +16,16 @@ public interface ApplicationIPCBasicService{
      * 初始化进件模版
      *
      * @param applicationId 进件Id
-     * @param templateId 模版Id
      * @return 影响数量
      */
-    Integer initNormalTemplate(Integer applicationId, Integer templateId);
+    Integer initTemplate(Integer applicationId);
 
     /**
      * 根据模板和进件id查询树
      *
      * @param applicationId 进件Id
      * @param templateId 模板Id
+     * @param templateType 模板类型
      * @return 模板树
      */
     Object selectGroupEntrance(Integer applicationId, Integer templateId,Integer templateType);
