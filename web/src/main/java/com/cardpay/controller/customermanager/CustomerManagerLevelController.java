@@ -1,9 +1,13 @@
 package com.cardpay.controller.customermanager;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
+import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.customermanager.level.model.TCustomerManagerLevel;
 import com.cardpay.mgt.customermanager.level.service.CustomerManagerLevelService;
 import com.cardpay.mgt.datadictionary.model.TDataDictionary;
@@ -30,6 +34,9 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
 
     @Autowired
     private CustomerManagerLevelService customerManagerLevelService;
+
+    @Autowired
+    private CustomerManagerService customerManagerService;
 
     @GetMapping("/all")
     @ApiOperation(value = "获取客户经理级别列表", notes = "获取客户经理级别列表",  httpMethod = "GET")
@@ -79,6 +86,14 @@ public class CustomerManagerLevelController extends BaseController<TCustomerMana
     @ApiOperation(value = "删除客户经理级别接口", notes = "删除客户经理级别",  httpMethod = "DELETE")
     public ResultTo delete(@PathVariable("levelId") Integer levelId){
         ResultTo resultTo = new ResultTo();
+        TCustomerManager customerManager = new TCustomerManager();
+        customerManager.setLevelId(levelId);
+        //该级别下如果有客户经理则不能删除
+        Integer count = customerManagerService.selectCount(customerManager);
+        if(count > 0){
+            resultTo.setMsg(ResultEnum.OPERATION_FAILED.getValue(),"该级别下含有客户经理,无法删除");
+            return resultTo;
+        }
         Integer result = customerManagerLevelService.deleteByPrimaryKey(levelId);
         resultTo.setIsSuccess(result);
         return resultTo;
