@@ -51,8 +51,8 @@ public class TeamController extends BaseController<Team> {
     /**
      * 查询团队信息（包含成员信息）
      *
-     * @param topId
-     * @return
+     * @param topId 层级id(默认顶级)
+     * @return 团队信息包含成员信息）
      */
     @GetMapping
     public ResultTo queryAll(@RequestParam(defaultValue = "0") int topId) {
@@ -72,8 +72,8 @@ public class TeamController extends BaseController<Team> {
     /**
      * 查询团队信息（不包含成员信息）
      *
-     * @param topId
-     * @return
+     * @param topId 层级id(默认顶级)
+     * @return 团队信息（不包含成员信息）
      */
     @GetMapping("/all")
     public ResultTo queryTeam(@RequestParam(defaultValue = "0") int topId) {
