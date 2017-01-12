@@ -22,6 +22,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/files")
 public class FilesController {
+    /**
+     * 文件上传类
+     */
     @Autowired
     private FileManager fileManager;
 
