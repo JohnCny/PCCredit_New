@@ -221,7 +221,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
                     TCustomerManager customerManager = new TCustomerManager();
                     customerManager.setUserId(user.getId());
                     customerManager.setOrganizationId(orgId);
-                    customerManagerService.insert(customerManager);
+                    customerManagerService.insertSelective(customerManager);
                     break;
                 default:
                     break;
