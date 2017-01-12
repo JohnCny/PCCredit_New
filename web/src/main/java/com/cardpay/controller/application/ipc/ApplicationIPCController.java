@@ -3,6 +3,10 @@ package com.cardpay.controller.application.ipc;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
 import com.cardpay.mgt.application.ipc.basic.service.ApplicationIPCBasicService;
+import com.cardpay.mgt.application.ipc.cashflowprofit.model.TApplicationCashProfitExt;
+import com.cardpay.mgt.application.ipc.cashflowprofit.model.TApplicationCashProfitVar;
+import com.cardpay.mgt.application.ipc.cashflowprofit.service.ApplicationCashProfitExtService;
+import com.cardpay.mgt.application.ipc.cashflowprofit.service.ApplicationCashProfitVarService;
 import com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplateVar;
 import com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplateVarExt;
 import com.cardpay.mgt.application.ipc.normal.model.vo.TemplateGroup;
@@ -14,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 进件IPCController
+ * 进件IPC Controller
  *
  * @author yanwe
  *         createTime 2017-01-2017/1/11 15:54
@@ -31,6 +35,12 @@ public class ApplicationIPCController {
 
     @Autowired
     private ApplicationTemplateVarExtService applicationTemplateVarExtService;
+
+    @Autowired
+    private ApplicationCashProfitVarService applicationCashProfitVarService;
+
+    @Autowired
+    private ApplicationCashProfitExtService applicationCashProfitExtService;
     /**
      * 根据模板查询ipc财务报表
      *
@@ -64,7 +74,7 @@ public class ApplicationIPCController {
     /**
      * 更新一般模板var
      *
-     * @param tApplicationTemplateVar
+     * @param tApplicationTemplateVar 一般类型模板bean
      * @return
      */
     @PutMapping("/normal")
@@ -78,7 +88,7 @@ public class ApplicationIPCController {
     /**
      * 添加一般模板额外值
      *
-     * @param tApplicationTemplateVarExt
+     * @param tApplicationTemplateVarExt 一般类型模板额外值bean
      * @return
      */
     @PostMapping("/normalExt")
@@ -92,13 +102,55 @@ public class ApplicationIPCController {
     /**
      * 更新一般模板额外值
      *
-     * @param tApplicationTemplateVarExt
-     * @return
+     * @param tApplicationTemplateVarExt 一般类型模板额外值bean
+     * @return 更新结果
      */
     @PutMapping("/normalExt")
     public ResultTo updateNormalVarExt(TApplicationTemplateVarExt tApplicationTemplateVarExt){
         ResultTo resultTo = new ResultTo();
         Integer result = applicationTemplateVarExtService.insertSelective(tApplicationTemplateVarExt);
+        resultTo.setIsSuccess(result);
+        return resultTo;
+    }
+
+    /**
+     * 更新现金流类型模板var
+     *
+     * @param applicationCashProfitVar 现金流模板类型varBean
+     * @return 更新结果
+     */
+    @PutMapping("/cashProfitExt")
+    public ResultTo updateCashProfitVar(TApplicationCashProfitVar applicationCashProfitVar){
+        ResultTo resultTo = new ResultTo();
+        Integer result = applicationCashProfitVarService.updateSelectiveByPrimaryKey(applicationCashProfitVar);
+        resultTo.setIsSuccess(result);
+        return resultTo;
+    }
+
+    /**
+     * 添加现金流类型模板varExt
+     *
+     * @param applicationCashProfitExt 现金流模板类型var额外值Bean
+     * @return 添加结果
+     */
+    @PostMapping("/cashProfitExt")
+    public ResultTo addCashProfitVarExt(TApplicationCashProfitExt applicationCashProfitExt){
+        ResultTo resultTo = new ResultTo();
+        Integer result = applicationCashProfitExtService.insertSelective(applicationCashProfitExt);
+        resultTo.setIsSuccess(result);
+        return resultTo;
+    }
+
+    /**
+     * 更新现金流类型模板var
+     *
+     * @param applicationCashProfitExt 现金流模板类型var额外值Bean
+     * @return 更新结果
+     */
+    @PutMapping("/cashProfit")
+    public ResultTo updateCashProfitVarExt(TApplicationCashProfitExt applicationCashProfitExt){
+        ResultTo resultTo = new ResultTo();
+        Integer result = applicationCashProfitExtService.updateSelectiveByPrimaryKey(applicationCashProfitExt);
         resultTo.setIsSuccess(result);
         return resultTo;
     }

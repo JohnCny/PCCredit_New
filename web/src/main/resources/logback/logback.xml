@@ -11,7 +11,7 @@
 	<contextName>pccimsLogBack</contextName>
 
 	<!-- 定义日志文件 输入位置 -->
-	<property name="log_dir" value="../webapps/PCCIMS-2.2/log/" />
+	<property name="log_dir" value="../loan/logs/" />
 
 	<!-- 日志最大的历史 30天 -->
 	<property name="maxHistory" value="30" />
@@ -50,6 +50,7 @@
 			<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"> 
 			<fileNamePattern>${log_dir}/%d{yyyy-MM-dd}/.log.zip</fileNamePattern> <minIndex>1</minIndex> 
 			<maxIndex>3</maxIndex> </rollingPolicy> -->
+
 		<!-- 查看当前活动文件的大小，如果超过指定大小会告知RollingFileAppender 触发当前活动文件滚动 <triggeringPolicy 
 			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"> <maxFileSize>5MB</maxFileSize> 
 			</triggeringPolicy> -->
