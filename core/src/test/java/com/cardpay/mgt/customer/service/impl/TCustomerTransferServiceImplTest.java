@@ -80,7 +80,7 @@ public class TCustomerTransferServiceImplTest {
         when(tCustomerTransferDao.selectByPrimaryKey(1)).thenReturn(tCustomerTransfer);
         messageService.sendMessage("客户移交结果", "test", tCustomerTransfer.getOriginCustomerManager()
                 , 0, 0);
-        int accept = tCustomerTransferService.accept("1", 1, 1);
+        int accept = tCustomerTransferService.accept("1", 1, );
         assertEquals(accept, -1);
     }
 }

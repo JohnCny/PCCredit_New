@@ -56,6 +56,26 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     }
 
     /**
+     * 客户行业关系
+     *
+     * @param customerId 客户id
+     * @param industry 行业id
+     * @return 关系列表
+     */
+    private List<TCustomerIndustry> customerIndustry(int customerId, String industry) {
+        List<TCustomerIndustry> list = new ArrayList<>();
+        String[] split = industry.split(",");
+        for (String id : split) {
+            int industryId = Integer.parseInt(id);
+            TCustomerIndustry tCustomerIndustry = new TCustomerIndustry();
+            tCustomerIndustry.setIndustryId(industryId);
+            tCustomerIndustry.setCustomerId(customerId);
+            list.add(tCustomerIndustry);
+        }
+        return list;
+    }
+
+    /**
      * 更新客户基本信息
      *
      * @param tCustomerBasic 客户基本信息
@@ -68,22 +88,15 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
             , @RequestParam String industry) {
         tCustomerBasic.setModifyTime(new Date());
         tCustomerBasic.setModifyBy(ShiroKit.getUserId());
-        Integer count =customerBasicService.updateSelectiveByPrimaryKey(tCustomerBasic);
+        Integer count = customerBasicService.updateSelectiveByPrimaryKey(tCustomerBasic);
         if (count != null && count != 0) {
-            String[] split = industry.split(",");
-            List<TCustomerIndustry> list = new ArrayList<>();
-            for (String id : split) {
-                int industryId = Integer.parseInt(id);
-                TCustomerIndustry tCustomerIndustry = new TCustomerIndustry();
-                tCustomerIndustry.setIndustryId(industryId);
-                tCustomerIndustry.setCustomerId(tCustomerBasic.getId());
-                list.add(tCustomerIndustry);
-            }
+            List<TCustomerIndustry> list = customerIndustry(tCustomerBasic.getId(), industry);
             int batchUpdate = tCustomerIndustryService.batchUpdate(list);
             return batchUpdate != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
         }
         return new ResultTo(ResultEnum.SERVICE_ERROR);
     }
+
 
     /**
      * 新建客戶经理
@@ -101,20 +114,12 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         tCustomerBasic.setCustomerManagerId(userId);
         tCustomerBasic.setCreateBy(userId);
         tCustomerBasic.setCreateTime(new Date());
-        tCustomerBasic.setModifyTime(new Date());
         tCustomerBasic.setModifyBy(userId);
+        tCustomerBasic.setModifyTime(new Date());
         tCustomerBasic.setCustomerStatus(ORDINARY.getValue());
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
         if (count != null && count != 0) {
-            String[] split = industry.split(",");
-            List<TCustomerIndustry> list = new ArrayList<>();
-            for (String id : split) {
-                int industryId = Integer.parseInt(id);
-                TCustomerIndustry tCustomerIndustry = new TCustomerIndustry();
-                tCustomerIndustry.setCustomerId(tCustomerBasic.getId());
-                tCustomerIndustry.setIndustryId(industryId);
-                list.add(tCustomerIndustry);
-            }
+            List<TCustomerIndustry> list = customerIndustry(tCustomerBasic.getId(), industry);
             int insert = tCustomerIndustryService.batchInsert(list);
             return insert != 0 ? new ResultTo().setData(tCustomerBasic.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
         }

@@ -10,6 +10,8 @@ import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
+import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.message.service.MessageService;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.service.UserService;
@@ -35,13 +37,19 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     private TCustomerTransferMapper tCustomerTransferDao;
 
     @Autowired
-    private MessageService messageService;
+    private TCustomerBasicService tCustomerBasicService;
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private TCustomerBasicService tCustomerBasicService;
+    private MessageService messageService;
+
+    /**
+     * 客户经理信息
+     */
+    @Autowired
+    private CustomerManagerService customerManagerService;
 
     @Override
     public List<SelectModel> getTransferStatus() {
@@ -62,42 +70,53 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
 
     @Override
     @Transactional
-    public synchronized int accept(String customerIds, Integer flag, Integer userId) {
+    public synchronized int accept(String customerIds, Integer flag, int userId) {
+        TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
         List<Integer> customerIdList = new ArrayList<>();
         String[] split = customerIds.split(",");
-
         for (String id : split) {
             int customerId = Integer.parseInt(id);
             customerIdList.add(customerId);
         }
         HashMap<String, Object> map = new HashMap();
-        if (flag != null && flag == 1) { //接受
+        Map<String, Object> stringObjectMap = new HashMap();
+        //接受
+        if (flag != null && flag == 1) {
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
-            map.put("nowCustomerManager", userId);
-        } else {  //拒绝
+            stringObjectMap.put("managerId", tCustomerManagerBaseVo.getManagerId());
+            //拒绝
+        } else {
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
         }
         map.put("customerIds", customerIdList);
         int mark = tCustomerTransferDao.accept(map);
-
-        //消息推送
-   /*     String messageContent; //发送消息内容
+        //接受/拒绝成功后回复客户状态
         if (mark != 0) {
-            for (String id : split) {
-                int customerId = Integer.parseInt(id);
-                User user = userService.selectByPrimaryKey(userId);
-                TCustomerBasic tCustomerBasic = tCustomerBasicService.selectByPrimaryKey(customerId);
-                TCustomerTransfer tCustomerTransfer = tCustomerTransferDao.selectByPrimaryKey(customerId);
-                if (flag != null && flag == 1) {
-                    messageContent = "客户经理:" + user.getUserCname() + ",接受了你的客户:" + tCustomerBasic.getCname();
-                } else {
-                    messageContent = "客户经理:" + user.getUserCname() + ",拒绝了你的客户:" + tCustomerBasic.getCname();
+            stringObjectMap.put("status", 0);
+            stringObjectMap.put("customerIds", customerIdList);
+            int status = tCustomerBasicService.updateStatus(stringObjectMap);
+        /*    if (status != 0) {
+                //消息推送
+                String messageContent; //发送消息内容
+                if (mark != 0) {
+                    for (String id : split) {
+                        int customerId = Integer.parseInt(id);
+                        User user = userService.selectByPrimaryKey(userId);
+                        TCustomerBasic tCustomerBasic = tCustomerBasicService.selectByPrimaryKey(customerId);
+                        TCustomerTransfer tCustomerTransfer = tCustomerTransferDao.selectByPrimaryKey(customerId);
+                        if (flag != null && flag == 1) {
+                            messageContent = "客户经理:" + user.getUserCname() + ",接受了你的客户:" + tCustomerBasic.getCname();
+                        } else {
+                            messageContent = "客户经理:" + user.getUserCname() + ",拒绝了你的客户:" + tCustomerBasic.getCname();
+                        }
+                        messageService.sendMessage("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
+                                , 0, 0);
+                    }
                 }
-                messageService.sendMessage("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
-                        , 0, 0);
-            }
-        }*/
-        return mark;
+            }*/
+            return status;
+        }
+        return 0;
     }
 
     @Override

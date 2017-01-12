@@ -130,7 +130,7 @@ public class TCustomerBasic extends GenericEntity<Integer> {
      * 客户状态(0正常，1 高风险用户 2 黑名单用户 3 禁用客户)
      */
     @Column(name = "CUSTOMER_STATUS")
-    @ApiModelProperty(value = "客户状态(0正常，1 高风险用户 2 黑名单用户 3 禁用客户)", required = true)
+    @ApiModelProperty(value = "(0正常，1 高风险用户  2 黑名单用户  3 高风险转黑名单审核  4 黑名单转出  5 禁用客户  6 客户移交中)", required = true)
     private Integer customerStatus;
 
     /**
