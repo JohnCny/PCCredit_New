@@ -16,7 +16,7 @@
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
     <result column="MANAGER_STATUS" jdbcType="DECIMAL" property="managerStatus" />
-    <association property="user" select="selectUser" column="USER_ID"/>
+    <association property="user" select="selectUser" column="USER_ID" />
   </resultMap>
 
   <resultMap id="UserMap" type="com.cardpay.mgt.user.model.User">
@@ -58,7 +58,7 @@
     AND USR.ID = CM.USER_ID
     AND USR.STATUS = #{status,jdbcType=DECIMAL}
     <if test="organizationId != null">
-      AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+      AND CM.ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
     </if>
     <if test="userCname != null">
       AND USR.USER_CNAME LIKE CONCAT(CONCAT('%',#{userCname}),'%')
