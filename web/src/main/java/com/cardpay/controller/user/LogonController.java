@@ -57,9 +57,8 @@ public class LogonController extends BaseController<User> {
      */
     @PostMapping(value = "/login")
     @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
-    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
-    public ResultTo login(@ApiParam(value = "登陆名") @RequestParam(value = "userName", required = false) String userName,
-                          @ApiParam(value = "登陆密码") @RequestParam(value = "password", required = false) String password,
+    public ResultTo login(@RequestParam(value = "userName", required = false) String userName,
+                          @RequestParam(value = "password", required = false) String password,
                           HttpServletRequest request) {
         LogTemplate.debug(this.getClass(), "userName", userName);
         LogTemplate.debug(this.getClass(), "password", password);
@@ -119,9 +118,8 @@ public class LogonController extends BaseController<User> {
      *
      * @return 登陆页面
      */
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping(value = "/logout")
     @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
-    @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常")})
     public ResultTo logout(HttpServletRequest request) {
         User user = ShiroKit.getUser();
         LoginLog loginLog = LoginLog.LoginLogBuilder.get().withLoginAccount(user.getUsername())
@@ -140,7 +138,7 @@ public class LogonController extends BaseController<User> {
      *
      * @return 无权限提示消息
      */
-    @RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
+    @GetMapping(value = "/unauthorized")
     public ResultTo unauthorized() {
         return new ResultTo(ResultEnum.NO_PERMITTION);
     }
@@ -150,7 +148,7 @@ public class LogonController extends BaseController<User> {
      *
      * @return 没有登陆提示消息
      */
-    @RequestMapping(value = "/noLogin", method = RequestMethod.GET)
+    @GetMapping(value = "/noLogin")
     public ResultTo noLogin() {
         return new ResultTo(ResultEnum.NO_LOGIN);
     }

@@ -30,7 +30,6 @@ public class TaskAnnotation {
         LogTemplate.debug(this.getClass(), "message", "清理过期USERTOKEN开始");
         long startTime = new Date().getTime();
         List<UserToken> userTokens = userTokenService.selectAll();
-        List<Integer> list = new ArrayList<>();
         for (UserToken userToken : userTokens) {
             long time = userToken.getExpirationTime().getTime();
             long nowTime = new Date().getTime();

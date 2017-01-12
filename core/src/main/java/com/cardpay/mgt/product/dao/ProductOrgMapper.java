@@ -3,6 +3,7 @@ package com.cardpay.mgt.product.dao;
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.product.model.ProductOrganization;
 import com.cardpay.mgt.product.model.vo.ProductOrganizationVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -34,8 +35,8 @@ public interface ProductOrgMapper extends BasicMapper<ProductOrganization> {
     /**
      * 批量插入产品机构
      *
-     * @param productId  产品ID
-     * @param productIds 机构ID数组
+     * @param productId 产品ID
+     * @param orgIds    机构ID数组
      */
-    void batchInsertOrg(Integer productId, String[] productIds);
+    void batchInsertOrg(@Param("productId") Integer productId, @Param("orgIds") String[] orgIds);
 }
