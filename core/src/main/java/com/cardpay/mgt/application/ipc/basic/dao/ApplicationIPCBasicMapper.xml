@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.ipc.basic.dao.ApplicationIPCBasicMapper">
+
+  <resultMap id="GroupResultMap" type="com.cardpay.mgt.application.ipc.normal.model.vo.TemplateGroup">
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+    <result column="GROUP_ID" jdbcType="DECIMAL" property="groupId" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="GROUP_PARENT_ID" jdbcType="DECIMAL" property="groupParentId" />
+    <result column="GROUP_DESCRIPTION" jdbcType="VARCHAR" property="groupDescription" />
+    <result column="IS_GROUP_MENU" jdbcType="DECIMAL" property="isGroupMenu" />
+    <result column="GROUP_MENU_URL" jdbcType="VARCHAR" property="groupMenuUrl" />
+    <collection property="groups" column="{applicationId=APPLICATION_ID,groupId=GROUP_ID}" select="selectGroup"/>
+    <collection property="vars" column="{applicationId=APPLICATION_ID,groupId=GROUP_ID}" select="selectVarEntrance"/>
+  </resultMap>
+
+  <resultMap id="VarResultMap" type="com.cardpay.mgt.application.ipc.normal.model.vo.TemplateVar">
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+    <result column="BALANCE_CROSS_OPTION_ID" jdbcType="VARCHAR" property="optionId" />
+    <result column="TEMPLATE_VAR_ID" jdbcType="DECIMAL" property="templateVarId" />
+    <result column="TEMPLATE_VAR_NAME" jdbcType="VARCHAR" property="templateVarName" />
+    <result column="TEMPLATE_VAR_PARENT_ID" jdbcType="DECIMAL" property="templateVarParentId" />
+    <result column="TEMPLATE_VAR_ORDER" jdbcType="DECIMAL" property="templateVarOrder" />
+    <result column="TEMPLATE_VAR_INPUT_TYPE" jdbcType="DECIMAL" property="templateVarInputType" />
+    <result column="TEMPLATE_VAR_WEIGHT" jdbcType="VARCHAR" property="templateVarWeight" />
+    <result column="TEMPLATE_VAR_GROUP_ID" jdbcType="DECIMAL" property="templateVarGroupId" />
+    <result column="TEMPLATE_VAR_IS_HAS_CHILD" jdbcType="DECIMAL" property="templateVarIsHasChild" />
+    <result column="TEMPLATE_VAR_IS_COMPUTE" jdbcType="DECIMAL" property="templateVarIsCompute" />
+    <collection property="vars" column="{applicationId=APPLICATION_ID,pid=TEMPLATE_VAR_ID}" select="selectVar"/>
+    <collection property="extras" column="{applicationId=APPLICATION_ID,vid=TEMPLATE_VAR_ID}" select="selectExtra"/>
+    <collection property="options" column="TEMPLATE_VAR_ID" select="selectOption"/>
+  </resultMap>
+
+  <resultMap id="OptionResultMap" type="com.cardpay.mgt.application.ipc.normal.model.TTemplateVarOption">
+    <result column="TEMPLATE_VAR_OPTION_ID" jdbcType="DECIMAL" property="templateVarOptionId" />
+    <result column="TEMPLATE_VAR_ID" jdbcType="DECIMAL" property="templateVarId" />
+    <result column="TEMPLATE_VAR_OPTION_NAME" jdbcType="VARCHAR" property="templateVarOptionName" />
+    <result column="TEMPLATE_VAR_OPTION_VALUE" jdbcType="VARCHAR" property="templateVarOptionValue" />
+    <result column="TEMPLATE_VAR_VALUE_TYPE" jdbcType="DECIMAL" property="templateVarValueType" />
+    <result column="TEMPLATE_VAR_OPTION_DESC" jdbcType="VARCHAR" property="templateVarOptionDesc" />
+  </resultMap>
+
+  <resultMap id="ExtraResultMap" type="com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplateVarExt">
+    <result column="EXTRA_VAR_ID" jdbcType="DECIMAL" property="extraVarId" />
+    <result column="TEMPLATE_VAR_ID" jdbcType="DECIMAL" property="templateVarId" />
+    <result column="TEMPLATE_VAR_EXTRA_NAME" jdbcType="VARCHAR" property="templateVarExtraName" />
+    <result column="TEMPLATE_VAR_EXTRA_VALUE" jdbcType="VARCHAR" property="templateVarExtraValue" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+  </resultMap>
+
+  <!--总入口-->
+  <!--Group入口-->
+  <select id="selectGroupEntrance" resultMap="GroupResultMap">
+    SELECT
+      *
+    FROM
+      (
+        SELECT
+          TG.*,#{applicationId} APPLICATION_ID
+        FROM
+          T_APPLICATION_TEMPLATE_GROUP ATG,
+          T_TEMPLATE_GROUP TG
+        WHERE
+          ATG. GROUP_ID = TG. GROUP_ID
+          AND ATG.TEMPLATE_ID = #{templateId}
+      ) T
+    WHERE
+    T.GROUP_PARENT_ID = 0
+  </select>
+
+  <!--Var入口-->
+  <select id="selectVarEntrance" resultMap="VarResultMap">
+    SELECT
+	 *
+    FROM
+        (
+            SELECT
+                TV.*, ATV.TEMPLATE_VAR_VALUE,
+                ATV.TEMPLATE_OPTION_ID,
+                #{applicationId} APPLICATION_ID
+            FROM
+                T_TEMPLATE_VAR TV
+            LEFT JOIN T_APPLICATION_TEMPLATE_VAR ATV ON TV.TEMPLATE_VAR_ID = ATV.TEMPLATE_VAR_ID
+            AND ATV.APPLICATION_ID = #{applicationId}
+            WHERE
+                TV.TEMPLATE_VAR_GROUP_ID = #{groupId}
+        ) T
+    WHERE
+	T.TEMPLATE_VAR_PARENT_ID = 0
+  </select>
+
+  <!--查询Group层级-->
+  <select id="selectGroup" resultMap="GroupResultMap">
+    SELECT T_TEMPLATE_GROUP.*,#{applicationId} APPLICATION_ID FROM T_TEMPLATE_GROUP WHERE GROUP_PARENT_ID = #{groupId}
+  </select>
+
+  <!--查询Var层级-->
+  <select id="selectVar" resultMap="VarResultMap">
+    SELECT
+        TV.*, ATV.TEMPLATE_VAR_VALUE,
+        ATV.TEMPLATE_OPTION_ID,
+        #{applicationId} APPLICATION_ID
+    FROM
+        T_TEMPLATE_VAR TV
+    LEFT JOIN T_APPLICATION_TEMPLATE_VAR ATV ON TV.TEMPLATE_VAR_ID = ATV.TEMPLATE_VAR_ID
+    AND ATV.APPLICATION_ID = #{applicationId}
+    WHERE
+        TV.TEMPLATE_VAR_PARENT_ID = #{pid}
+  </select>
+
+  <!--查询Extra-->
+  <select id="selectExtra" resultMap="ExtraResultMap">
+    SELECT
+      *
+    FROM
+      T_APPLICATION_TEMPLATE_VAR_EXT
+    WHERE
+      TEMPLATE_VAR_ID = #{vid}
+      AND APPLICATION_ID = #{applicationId}
+  </select>
+
+  <!--查询Option-->
+  <select id="selectOption" resultMap="OptionResultMap">
+    SELECT
+      *
+    FROM
+      T_TEMPLATE_VAR_OPTION
+    WHERE
+      TEMPLATE_VAR_ID = #{TEMPLATE_VAR_ID}
+  </select>
+
+  <resultMap id="MenuResultMap" type="com.cardpay.mgt.application.ipc.basic.model.IPCMenu">
+    <result column="GROUP_ID" jdbcType="DECIMAL" property="menuId" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="GROUP_PARENT_ID" jdbcType="DECIMAL" property="menuParentId" />
+    <result column="GROUP_MENU_URL" jdbcType="VARCHAR" property="menuURL" />
+    <result column="GROUP_MENU_ORDER" jdbcType="VARCHAR" property="menuOrder" />
+    <result column="TEMPLATE_ID" jdbcType="VARCHAR" property="templateId" />
+    <result column="TEMPLATE_TYPE" jdbcType="VARCHAR" property="templateType" />
+  </resultMap>
+
+  <!--根据进件查询IPC菜单-->
+  <select id="selectIPCMenu" resultMap="MenuResultMap">
+    SELECT
+        TG.*,
+        AT.TEMPLATE_ID,
+        AT.TEMPLATE_TYPE
+    FROM
+        T_APPLICATION_TEMPLATE AT,
+        T_APPLICATION_TEMPLATE_GROUP ATG,
+        T_TEMPLATE_GROUP TG,
+        T_PRODUCT_TEMPLATE PT,
+        T_PRODUCT PRO,
+        T_APPLICATION APP
+    WHERE
+        APP.PRODUCT_ID = PRO.ID
+    AND	AT.TEMPLATE_ID = ATG.TEMPLATE_ID
+    AND	ATG. GROUP_ID = TG. GROUP_ID
+    AND ATG.TEMPLATE_ID = PT.TEMPLATE_ID
+    AND TG.IS_GROUP_MENU = 1
+    AND AT.IS_NEED_GENERATE = 1
+    AND APP.ID = #{applicationId}
+  </select>
+
+  <!--初始化一般IPC模版-->
+  <insert id="initNormalTemplate">
+    INSERT INTO T_APPLICATION_TEMPLATE_VAR (
+        T_APPLICATION_TEMPLATE_VAR.TEMPLATE_VAR_ID,
+        T_APPLICATION_TEMPLATE_VAR.APPLICATION_ID
+    ) SELECT
+          TV.TEMPLATE_VAR_ID,
+          #{applicationId} APPLICATION_ID
+      FROM
+          T_APPLICATION_TEMPLATE AT,
+          T_APPLICATION_TEMPLATE_GROUP ATG,
+          T_TEMPLATE_GROUP TG,
+          T_PRODUCT_TEMPLATE PT,
+          T_PRODUCT PRO,
+          T_APPLICATION APP,
+          T_TEMPLATE_VAR TV
+      WHERE
+              ATG.GROUP_ID = TV.TEMPLATE_VAR_GROUP_ID
+      AND APP.PRODUCT_ID = PRO. ID
+      AND AT .TEMPLATE_ID = ATG.TEMPLATE_ID
+      AND ATG. GROUP_ID = TG. GROUP_ID
+      AND ATG.TEMPLATE_ID = PT.TEMPLATE_ID
+      AND AT .IS_NEED_GENERATE = 1
+      AND AT .TEMPLATE_TYPE = 1
+      AND APP. ID = #{templateId}
+  </insert>
+
+</mapper>
