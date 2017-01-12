@@ -20,20 +20,18 @@ public interface ApplicationIPCBasicMapper extends BasicMapper<TTemplateGroup>{
      * 初始化进件模版
      *
      * @param applicationId 进件Id
-     * @param templateId 模版Id
+     * @param templateType 模版类型
      * @return 影响数量
      */
-    Integer initNormalTemplate(Integer applicationId, Integer templateId);
+    Integer initNormalTemplate(@Param("applicationId") Integer applicationId,@Param("templateType") Integer templateType);
+
 
     /**
-     * 根据模板和进件id查询树
-     *
-     * @param applicationId 进件Id
-     * @param templateId 模板Id
-     * @return 模板树
+     * 查询该进件的模板类型
+     * @param applicationId 进件id
+     * @return
      */
-    List<TemplateGroup> selectGroupEntrance(@Param("applicationId") Integer applicationId, @Param("templateId") Integer templateId);
-
+    List<Integer> selectTemplateTypeByApplicationId(@Param("applicationId") Integer applicationId);
 
     /**
      * IPC 菜单
