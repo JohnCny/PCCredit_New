@@ -34,10 +34,10 @@ public interface TCustomerTransferService extends BaseService<TCustomerTransfer>
      *
      * @param customerIds 客户id
      * @param flag 标记 ("接收:1, 拒绝2")
-     * @param userId 当前登录用户id
+     * @param userId 用户id
      * @return 数据库变条数
      */
-    int accept(String customerIds, Integer flag, Integer userId);
+    int accept(String customerIds, Integer flag, int userId);
 
     /**
      * 根据科技经理ID查询移交信息

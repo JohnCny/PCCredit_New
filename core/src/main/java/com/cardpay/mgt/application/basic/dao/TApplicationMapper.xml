@@ -59,7 +59,7 @@
 
     <!--按进件id查询进件信息-->
     <select id="queryByApplication" resultMap="BaseVo">
-      SELECT * FROM T_APPLICATION WHERE  id = #{applicationId}
+      SELECT * FROM T_APPLICATION WHERE id = #{applicationId}
     </select>
 
     <!--按机构id查询进件信息-->

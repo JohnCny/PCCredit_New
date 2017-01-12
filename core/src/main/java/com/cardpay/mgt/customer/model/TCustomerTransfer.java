@@ -22,7 +22,6 @@ public class TCustomerTransfer extends GenericEntity<Integer>{
     @Id
     @Column(name = "ID")
     @ApiModelProperty(value="客户id(需要生成规则生成)",required = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_TRANSFER_SEQ.nextval from dual")
     private Integer id;
 
     /**
