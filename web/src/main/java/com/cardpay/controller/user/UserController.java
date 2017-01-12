@@ -142,8 +142,11 @@ public class UserController extends BaseController<User> {
      */
     @PutMapping
     @ApiOperation(value = "编辑用户实现", httpMethod = "PUT")
-    public ResultTo updateUser(User user, BindingResult result, @RequestParam(value = "orgId", required = false) String orgId,
-                               @RequestParam(value = "roleId", required = false) String roleId, MultipartFile file) {
+    public ResultTo updateUser(User user, BindingResult result,
+                               @RequestParam(value = "orgId", required = false) String orgId,
+                               @RequestParam(value = "roleId", required = false) String roleId,
+                               @RequestPart(value = "file", required = false) MultipartFile file) {
+        LogTemplate.debug(this.getClass(), "file", file);
         LogTemplate.debug(this.getClass(), "orgId", orgId);
         LogTemplate.debug(this.getClass(), "roleId", roleId);
         Map<String, String> map = new HashedMap();

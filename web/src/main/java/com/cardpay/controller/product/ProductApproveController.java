@@ -80,14 +80,14 @@ public class ProductApproveController extends BaseController<ProductApprove> {
     }
 
     /**
-     * 增加产品审批
+     * 编辑产品审批
      *
      * @param productApprove ProductApprove实体对象
      * @param productError   BindingResult
      * @return 产品ID
      */
     @PutMapping
-    @ApiOperation(value = "增加产品审批", httpMethod = "PUT")
+    @ApiOperation(value = "编辑产品审批", httpMethod = "PUT")
     public ResultTo updateProductApprove(ProductApprove productApprove, BindingResult productError) {
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, productError)) {

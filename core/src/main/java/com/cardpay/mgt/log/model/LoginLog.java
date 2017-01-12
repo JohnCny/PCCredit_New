@@ -44,7 +44,7 @@ public class LoginLog {
     private Date loginTime;
 
     /**
-     * 结果
+     * 结果()
      */
     @Column(name = "LOGIN_RESULT")
     @ApiModelProperty(value = "结果", required = true)

@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -26,9 +27,9 @@ import java.util.Map;
  *
  * @author rankai
  */
-@Controller
+@RestController
 @RequestMapping("/api/productRisk")
-@Api(value = "/api/productRisk", description = "产品贷后监控规则")
+@Api(value = "/api/productRisk", description = "产品风险属性")
 public class ProductRiskController extends BaseController<ProductRiskRules> {
 
     @Autowired
@@ -45,8 +46,8 @@ public class ProductRiskController extends BaseController<ProductRiskRules> {
      * @param productId        产品ID
      * @return 成功或失败
      */
-    @PostMapping(value = "/risk")
-    @ApiOperation(value = "增加产品贷后", httpMethod = "POST")
+    @PostMapping
+    @ApiOperation(value = "增加产品风险属性", httpMethod = "POST")
     public ResultTo risk(ProductRiskRules productRiskRules, BindingResult result,
                          @RequestParam("productId") Integer productId) {
         Map<String, String> map = new HashedMap();
