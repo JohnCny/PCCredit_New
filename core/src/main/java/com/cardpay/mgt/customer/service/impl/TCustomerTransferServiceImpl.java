@@ -33,15 +33,25 @@ import java.util.Map;
 @Lazy
 @Service
 public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTransfer> implements TCustomerTransferService {
+    /**
+     * 移交信息
+     */
     @Autowired
     private TCustomerTransferMapper tCustomerTransferDao;
-
+    /**
+     * 客户信息
+     */
     @Autowired
     private TCustomerBasicService tCustomerBasicService;
-
+    /**
+     * 用户信息
+     */
     @Autowired
     private UserService userService;
 
+    /**
+     * 消息推送
+     */
     @Autowired
     private MessageService messageService;
 
@@ -71,6 +81,8 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     @Override
     @Transactional
     public synchronized int accept(String customerIds, Integer flag, int userId) {
+        HashMap<String, Object> map = new HashMap();
+        Map<String, Object> stringObjectMap = new HashMap();
         TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
         List<Integer> customerIdList = new ArrayList<>();
         String[] split = customerIds.split(",");
@@ -78,13 +90,11 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
             int customerId = Integer.parseInt(id);
             customerIdList.add(customerId);
         }
-        HashMap<String, Object> map = new HashMap();
-        Map<String, Object> stringObjectMap = new HashMap();
-        //接受
+        //客户经理接受此客户
         if (flag != null && flag == 1) {
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
             stringObjectMap.put("managerId", tCustomerManagerBaseVo.getManagerId());
-            //拒绝
+            //客户经理拒绝此客户
         } else {
             map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
         }
@@ -95,8 +105,8 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
             stringObjectMap.put("status", 0);
             stringObjectMap.put("customerIds", customerIdList);
             int status = tCustomerBasicService.updateStatus(stringObjectMap);
-        /*    if (status != 0) {
-                //消息推送
+            //消息推送
+        /*
                 String messageContent; //发送消息内容
                 if (mark != 0) {
                     for (String id : split) {
@@ -112,7 +122,6 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
                         messageService.sendMessage("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
                                 , 0, 0);
                     }
-                }
             }*/
             return status;
         }

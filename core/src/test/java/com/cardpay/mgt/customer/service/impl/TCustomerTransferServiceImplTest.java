@@ -4,6 +4,9 @@ import com.cardpay.mgt.customer.dao.TCustomerTransferMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
+import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
+import com.cardpay.mgt.customermanager.basic.service.impl.CustomerManagerServiceImpl;
 import com.cardpay.mgt.message.service.impl.MessageServiceImpl;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.service.impl.UserServiceImpl;
@@ -45,6 +48,9 @@ public class TCustomerTransferServiceImplTest {
     @Mock
     private TCustomerBasicServiceImpl tCustomerBasicService;
 
+    @Mock
+    private CustomerManagerServiceImpl customerManagerService;
+
     @InjectMocks
     private TCustomerTransferServiceImpl tCustomerTransferService;
 
@@ -73,14 +79,18 @@ public class TCustomerTransferServiceImplTest {
         user.setUserCname("1");
         TCustomerBasic tCustomerBasic = new TCustomerBasic();
         tCustomerBasic.setCname("1");
+        TCustomerManagerBaseVo tCustomerManagerBaseVo = new TCustomerManagerBaseVo();
+        tCustomerManagerBaseVo.setManagerId(1);
         whenNew(HashMap.class).withNoArguments().thenReturn(map);
+        when(customerManagerService.selectBaseVoByUserId(1)).thenReturn(tCustomerManagerBaseVo);
         when(tCustomerTransferDao.accept(map)).thenReturn(-1);
         when(userService.selectByPrimaryKey(1)).thenReturn(user);
         when(tCustomerBasicService.selectByPrimaryKey(1)).thenReturn(tCustomerBasic);
         when(tCustomerTransferDao.selectByPrimaryKey(1)).thenReturn(tCustomerTransfer);
+        when(tCustomerBasicService.updateStatus(map)).thenReturn(1);
         messageService.sendMessage("客户移交结果", "test", tCustomerTransfer.getOriginCustomerManager()
                 , 0, 0);
-        int accept = tCustomerTransferService.accept("1", 1, );
-        assertEquals(accept, -1);
+        int accept = tCustomerTransferService.accept("1", 1, 1);
+        assertEquals(accept, 1);
     }
 }
