@@ -14,7 +14,7 @@ public class TApplicationCashProfitVar {
      */
     @Column(name = "APPLICATION_CASH_PROFIT_VAR_ID")
     @ApiModelProperty(value="进件模板利润现金值id",required = true)
-    private BigDecimal applicationCashProfitVarId;
+    private Integer applicationCashProfitVarId;
 
     /**
      * 利润现金模板值id
@@ -147,7 +147,7 @@ public class TApplicationCashProfitVar {
      *
      * @return APPLICATION_CASH_PROFIT_VAR_ID - 进件模板利润现金值id
      */
-    public BigDecimal getApplicationCashProfitVarId() {
+    public Integer getApplicationCashProfitVarId() {
         return applicationCashProfitVarId;
     }
 
@@ -156,7 +156,7 @@ public class TApplicationCashProfitVar {
      *
      * @param applicationCashProfitVarId 进件模板利润现金值id
      */
-    public void setApplicationCashProfitVarId(BigDecimal applicationCashProfitVarId) {
+    public void setApplicationCashProfitVarId(Integer applicationCashProfitVarId) {
         this.applicationCashProfitVarId = applicationCashProfitVarId;
     }
 
