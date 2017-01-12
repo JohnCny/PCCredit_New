@@ -15,7 +15,7 @@ public enum LogEnum {
 
     private int value; // 自定义数据域，private为了封装
 
-    private LogEnum(int val) {
+    LogEnum(int val) {
         this.value = val;
     }
 
