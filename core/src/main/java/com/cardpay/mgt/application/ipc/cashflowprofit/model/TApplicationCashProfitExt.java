@@ -12,9 +12,11 @@ public class TApplicationCashProfitExt {
     /**
      * 进件利润现金额外值id
      */
+    @Id
     @Column(name = "CASH_PROFIT_VAR_EXTRA_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APP_TEMPLATE_CASH_VAR_EXT_SEQ.NEXTVAL from dual")
     @ApiModelProperty(value="进件利润现金额外值id",required = true)
-    private BigDecimal cashProfitVarExtraId;
+    private Integer cashProfitVarExtraId;
 
     /**
      * 进件利润现金值id
@@ -147,7 +149,7 @@ public class TApplicationCashProfitExt {
      *
      * @return CASH_PROFIT_VAR_EXTRA_ID - 进件利润现金额外值id
      */
-    public BigDecimal getCashProfitVarExtraId() {
+    public Integer getCashProfitVarExtraId() {
         return cashProfitVarExtraId;
     }
 
@@ -156,7 +158,7 @@ public class TApplicationCashProfitExt {
      *
      * @param cashProfitVarExtraId 进件利润现金额外值id
      */
-    public void setCashProfitVarExtraId(BigDecimal cashProfitVarExtraId) {
+    public void setCashProfitVarExtraId(Integer cashProfitVarExtraId) {
         this.cashProfitVarExtraId = cashProfitVarExtraId;
     }
 
