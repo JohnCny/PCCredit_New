@@ -47,6 +47,9 @@ public class ProductController extends BaseController<Product> {
     @Autowired
     private IndustryService industryService;
 
+    @Autowired
+    private ProductApproveService productApproveService;
+
     /**
      * 获取产品分页数据
      *
