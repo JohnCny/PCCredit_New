@@ -25,6 +25,8 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.*;
 
+import static com.cardpay.basic.common.constant.CustomerStatusEnum.*;
+
 
 /**
  * 客户移交controller
@@ -92,7 +94,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
         }
         Map<String, Object> map = new HashMap();
         map.put("customerIds", customerIdList);
-        map.put("status", ConstantEnum.CustomerStatus.STATUS6.getVal());
+        map.put("status", TRANSFER.getValue());
         int count = customerBasicService.updateStatus(map);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
