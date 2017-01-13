@@ -32,7 +32,7 @@ public class ApplicationFileController extends BaseController<TApplicationFile> 
      * @return 数据库变更记录
      */
     @PostMapping
-    public ResultTo upLoads(@RequestPart MultipartFile[] files, TApplicationFile tApplicationFile) {
+    public ResultTo upLoads(@RequestPart MultipartFile[] files, @ModelAttribute TApplicationFile tApplicationFile) {
         int flag = tApplicationFileService.insertFile(files, tApplicationFile);
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

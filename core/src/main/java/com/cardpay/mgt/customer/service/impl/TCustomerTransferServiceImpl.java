@@ -61,7 +61,6 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     @Autowired
     private TCustomerBasicService customerBasicService;
 
-
     @Override
     public List<SelectModel> getTransferStatus() {
         List<SelectModel> selects = new ArrayList<>();
@@ -81,7 +80,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
 
     @Override
     @Transactional
-    public synchronized int accept(String customerIds, Integer flag, int userId) {
+    public int accept(String customerIds, Integer flag, int userId) {
         HashMap<String, Object> map = new HashMap();
         Map<String, Object> stringObjectMap = new HashMap();
         Integer managerId = customerBasicService.getManagerId(userId);
