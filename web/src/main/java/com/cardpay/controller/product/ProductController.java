@@ -6,20 +6,28 @@ import com.cardpay.basic.util.ErrorMessageUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.industry.service.IndustryService;
-import com.cardpay.mgt.product.model.*;
+import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.vo.ExplainList;
-import com.cardpay.mgt.product.service.*;
+import com.cardpay.mgt.product.service.ProductApproveService;
+import com.cardpay.mgt.product.service.ProductDescService;
+import com.cardpay.mgt.product.service.ProductOrgService;
+import com.cardpay.mgt.product.service.ProductService;
+import com.cardpay.mgt.product.service.ProductTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.Map;
 
 
 /**
