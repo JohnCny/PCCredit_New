@@ -18,6 +18,7 @@
         <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
         <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
         <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
+        <association property="ifDel" select="ifDelete" column="ID"/>
     </resultMap>
 
     <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
@@ -25,8 +26,18 @@
         <result column="CNAME" jdbcType="VARCHAR" property="name"/>
     </resultMap>
 
+    <!--查询此客户是否可以删除-->
+    <select id="ifDelete" resultType="Integer">
+        SELECT count(1)
+        FROM
+        T_CUSTOMER_BASIC basic,T_APPLICATION application
+        WHERE
+        basic.id = application.CUSTOMER_ID
+        AND application.CUSTOMER_ID = #{id}
+    </select>
+
     <!--查询身份证是否存在-->
-    <select id="isIdCardExist" parameterType="Long" resultType="Integer">
+    <select id="isIdCardExist" parameterType="String" resultType="Integer">
         SELECT COUNT(1)
         FROM t_customer_basic basic
         WHERE basic.CERTIFICATE_NUMBER = #{idCard}
@@ -35,7 +46,7 @@
     <!--查询客户经理所属客户-->
     <select id="queryCustomer" resultMap="BaseResultMapVo">
         SELECT customer.id id, customer.cname name FROM T_CUSTOMER_BASIC customer, T_CUSTOMER_MANAGER manager
-        WHERE manager.id = customer.CUSTOMER_MANAGER_ID AND customer.CUSTOMER_STATUS !=3
+        WHERE manager.id = customer.CUSTOMER_MANAGER_ID AND customer.CUSTOMER_STATUS !=6
         AND manager.id = #{managerId}
     </select>
 
@@ -44,7 +55,13 @@
         <foreach item="item" index="index" collection="customerIds" open="BEGIN" separator=";" close=";END;">
             UPDATE T_CUSTOMER_BASIC
             <set>
-                CUSTOMER_STATUS = #{status}, CUSTOMER_MANAGER_ID = #{managerId}
+                id = id
+                <if test="managerId!=null">
+                     ,CUSTOMER_MANAGER_ID = #{managerId}
+                </if>
+                <if test="status!=null">
+                      ,CUSTOMER_STATUS = #{status}
+                </if>
             </set>
             where id = #{item}
         </foreach>
@@ -61,9 +78,10 @@
             SELECT ORGANIZATION_ID
             FROM T_CUSTOMER_MANAGER
             WHERE
-            USER_ID = #{customerManagerId}
+            ID = #{customerManagerId}
             )
-            AND basic.CUSTOMER_STATUS != 3
+            AND manager.id = #{customerManagerId}
+            AND basic.CUSTOMER_STATUS != 5
             <if test="cname!=null and cname!=''">
                 AND basic.cname LIKE CONCAT(CONCAT('%',#{cname}),'%')
             </if>

@@ -6,6 +6,7 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     List<SelectModel> getMarriageStatus();
 
     /**
-     * 获取客户状态
+     * 获取客户状态 分页
      * @return 客户状态列表
      */
     List<SelectModel> getCustomerStatus();
@@ -45,7 +46,7 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      * @param idCard 身份证号码
      * @return 是否存在(true:存在, false:不存在)
      */
-    boolean isIdCardExist(long idCard);
+    boolean isIdCardExist(String idCard);
 
     /**
      * 查询客户经理所属客户
@@ -69,7 +70,7 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     List<TCustomerBasic> queryCustomerByCondition(Map<String, Object> map);
 
     /**
-     * 查询无进件记录的客户信息
+     * 查询无进件记录的客户信息 分页
      * @param map 客户经理id
      * @return 可删除的客户列表
      */
@@ -81,4 +82,11 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      * @return 数据库变记录
      */
     Integer deleteCustomer(int customerId);
+
+    /**
+     * 获取客户经理id
+     * @param userId
+     * @return
+     */
+    Integer getManagerId(int userId);
 }

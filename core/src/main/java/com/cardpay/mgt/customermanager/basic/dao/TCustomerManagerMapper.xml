@@ -16,7 +16,7 @@
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
     <result column="MANAGER_STATUS" jdbcType="DECIMAL" property="managerStatus" />
-    <association property="user" select="selectUser" column="USER_ID"/>
+    <association property="user" select="selectUser" column="USER_ID" />
   </resultMap>
 
   <resultMap id="UserMap" type="com.cardpay.mgt.user.model.User">
@@ -51,14 +51,14 @@
   <!--查询客户经理BaseVo列表-->
   <select id="selectBaseVoList" resultMap="BaseVoMap">
     SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
-      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG,T_USER USR
+      FROM T_ORGANIZATION ORG,T_USER USR,
+    T_CUSTOMER_MANAGER CM LEFT JOIN T_CUSTOMER_MANAGER_LEVEL CML ON CM.LEVEL_ID = CML.ID
     WHERE
-        CM.LEVEL_ID = CML.ID
-    AND ORG.ID = CM.ORGANIZATION_ID
+        ORG.ID = CM.ORGANIZATION_ID
     AND USR.ID = CM.USER_ID
     AND USR.STATUS = #{status,jdbcType=DECIMAL}
     <if test="organizationId != null">
-      AND ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+      AND CM.ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
     </if>
     <if test="userCname != null">
       AND USR.USER_CNAME LIKE CONCAT(CONCAT('%',#{userCname}),'%')
@@ -74,10 +74,10 @@
   <!--根据UserID查询客户经理BaseVo-->
   <select id="selectBaseVoByUserId" resultMap="BaseVoMap">
     SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME
-      FROM T_CUSTOMER_MANAGER CM,T_CUSTOMER_MANAGER_LEVEL CML,T_ORGANIZATION ORG
+      FROM T_ORGANIZATION ORG,
+      T_CUSTOMER_MANAGER CM LEFT JOIN T_CUSTOMER_MANAGER_LEVEL CML ON CM.LEVEL_ID = CML.ID
     WHERE
-          CM.LEVEL_ID = CML.ID
-      AND ORG.ID = CM.ORGANIZATION_ID
+          ORG.ID = CM.ORGANIZATION_ID
       AND CM.USER_ID = #{userId,jdbcType=DECIMAL}
   </select>
 

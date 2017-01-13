@@ -26,10 +26,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/customerIndustry")
 public class CustomerIndustryController extends BaseController<TCustomerIndustry> {
-    @Autowired //行业信息
+    /**
+     * 行业信息
+     */
+    @Autowired
     private IndustryService industryService;
 
-    @Autowired //客户行业信息
+    /**
+     * 客户行业信息
+     */
+    @Autowired
     private TCustomerIndustryService tCustomerIndustryService;
 
     /**

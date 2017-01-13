@@ -10,6 +10,7 @@ import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,29 @@ import java.util.Map;
 public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> implements TCustomerBasicService {
     @Autowired
     private TCustomerBasicMapper customerBasicDao;
-
-    @Autowired //客户行业信息
+    /**
+     * 客户行业信息
+     */
+    @Autowired
     private TCustomerIndustryService tCustomerIndustryService;
 
-    @Autowired //客户维护服务
+    /**
+     * 客户维护服务
+     */
+    @Autowired
     private TCustomerMaintenanceService tCustomerMaintenanceService;
 
-    @Autowired //客户移交
+    /**
+     * 客户移交
+     */
+    @Autowired
     private TCustomerTransferServiceImpl tCustomerTransferService;
+
+    /**
+     * 客户经理信息
+     */
+    @Autowired
+    private CustomerManagerService customerManagerService;
 
     @Override
     public List<SelectModel> getCert() {
@@ -89,7 +104,7 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public boolean isIdCardExist(long idCard){
+    public boolean isIdCardExist(String idCard){
         return customerBasicDao.isIdCardExist(idCard) > 0 ? true : false;
     }
 
@@ -121,6 +136,12 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
         Integer integer2 = tCustomerMaintenanceService.deleteByPrimaryKey(customerId);
         Integer integer3 = tCustomerTransferService.deleteByPrimaryKey(customerId);
         return integer0+integer1+integer2+integer3;
+    }
+
+    @Override
+    public Integer getManagerId(int userId) {
+        TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
+        return tCustomerManagerBaseVo.getManagerId();
     }
 
 }
