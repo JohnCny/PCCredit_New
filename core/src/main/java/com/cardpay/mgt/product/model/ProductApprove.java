@@ -21,7 +21,7 @@ public class ProductApprove extends GenericEntity<Integer> {
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCAPPROVE_SEQ.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCT_APPROVE_SEQ.nextval from dual")
     @ApiModelProperty(value = "审批节点id", required = true)
     private Integer id;
 

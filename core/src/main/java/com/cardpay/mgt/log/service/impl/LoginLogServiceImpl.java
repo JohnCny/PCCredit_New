@@ -2,6 +2,7 @@ package com.cardpay.mgt.log.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.util.datatable.DataTableCode;
 import com.cardpay.mgt.log.model.LoginLog;
 import com.cardpay.mgt.log.service.LoginLogService;
 import org.apache.commons.lang3.StringUtils;
@@ -21,16 +22,23 @@ import java.util.Map;
 @Service
 public class LoginLogServiceImpl extends BaseServiceImpl<LoginLog> implements LoginLogService {
 
+    /**
+     * 搜索参数loginAccount
+     */
     private static final String PAGELIST_PRAM_LOGINACCOUNT = "loginAccount";
-
+    /**
+     * 搜索参数loginOperation
+     */
     private static final String PAGELIST_PRAM_LOGINOPERATION = "loginOperation";
-
+    /**
+     * 搜索参数loginTime
+     */
     private static final String PAGELIST_PRAM_LOGINTIME = "loginTime";
 
     @Override
     public Example pageList(WebRequest request) {
-        String search = request.getParameter("pageSearch");
-        String order = request.getParameter("pageOrder");
+        String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
+        String order = request.getParameter(DataTableCode.PAGE_ORDER_NAME);
         Example example = new Example(LoginLog.class);
         if (StringUtils.isNotBlank(order)) {
             String finalOrder = "";
