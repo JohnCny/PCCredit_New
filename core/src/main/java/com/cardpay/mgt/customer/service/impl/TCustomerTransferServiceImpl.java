@@ -106,23 +106,21 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
             stringObjectMap.put("customerIds", customerIdList);
             int status = tCustomerBasicService.updateStatus(stringObjectMap);
             //消息推送
-        /*
+
                 String messageContent; //发送消息内容
-                if (mark != 0) {
                     for (String id : split) {
                         int customerId = Integer.parseInt(id);
                         User user = userService.selectByPrimaryKey(userId);
                         TCustomerBasic tCustomerBasic = tCustomerBasicService.selectByPrimaryKey(customerId);
-                        TCustomerTransfer tCustomerTransfer = tCustomerTransferDao.selectByPrimaryKey(customerId);
+                        TCustomerTransfer tCustomerTransfer = tCustomerTransferDao.selectByPrimaryKey(mark);
                         if (flag != null && flag == 1) {
                             messageContent = "客户经理:" + user.getUserCname() + ",接受了你的客户:" + tCustomerBasic.getCname();
                         } else {
                             messageContent = "客户经理:" + user.getUserCname() + ",拒绝了你的客户:" + tCustomerBasic.getCname();
                         }
-                        messageService.sendMessage("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
-                                , 0, 0);
+                        messageService.messagePush("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
+                                , 0, 0, 0);
                     }
-            }*/
             return status;
         }
         return 0;
