@@ -13,6 +13,8 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
+import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
+import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-import static com.cardpay.controller.customer.enums.CustomerStatus.ORDINARY;
 
 /**
  * 客户controller
@@ -32,10 +33,16 @@ import static com.cardpay.controller.customer.enums.CustomerStatus.ORDINARY;
 @RestController
 @RequestMapping("/api/customerBasic")
 public class CustomerBasicController extends BaseController<TCustomerBasic> {
+    /**
+     * 客户信息
+     */
     @Autowired
     private TCustomerBasicService customerBasicService;
 
-    @Autowired //客户行业信息
+    /**
+     * 客户行业信息
+     */
+    @Autowired
     private TCustomerIndustryService tCustomerIndustryService;
 
     /**
@@ -86,8 +93,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "更新客户基本信息", notes = "更新客户基本信息", httpMethod = "PUT")
     public ResultTo update(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic
             , @RequestParam String industry) {
+        Integer userId = ShiroKit.getUserId();
         tCustomerBasic.setModifyTime(new Date());
-        tCustomerBasic.setModifyBy(ShiroKit.getUserId());
+        tCustomerBasic.setModifyBy(userId);
         Integer count = customerBasicService.updateSelectiveByPrimaryKey(tCustomerBasic);
         if (count != null && count != 0) {
             List<TCustomerIndustry> list = customerIndustry(tCustomerBasic.getId(), industry);
@@ -111,12 +119,13 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     public ResultTo newCustomer(@ApiParam(value = "客户基本信息", required = true) @ModelAttribute TCustomerBasic tCustomerBasic
             , @ApiParam(value = "行业id(,分割)", required = true) @RequestParam String industry) {
         Integer userId = ShiroKit.getUserId();
-        tCustomerBasic.setCustomerManagerId(userId);
+        Integer managerId = customerBasicService.getManagerId(userId);
+        tCustomerBasic.setCustomerManagerId(managerId);
         tCustomerBasic.setCreateBy(userId);
         tCustomerBasic.setCreateTime(new Date());
         tCustomerBasic.setModifyBy(userId);
         tCustomerBasic.setModifyTime(new Date());
-        tCustomerBasic.setCustomerStatus(ORDINARY.getValue());
+        tCustomerBasic.setCustomerStatus(ConstantEnum.CustomerStatus.STATUS0.getVal());
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
         if (count != null && count != 0) {
             List<TCustomerIndustry> list = customerIndustry(tCustomerBasic.getId(), industry);
@@ -135,7 +144,8 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "按条件查询客户信息", notes = "按条件查询客户信息", httpMethod = "GET")
     public DataTablePage queryCondition() {
         Map<String, Object> map = new HashMap<>();
-        map.put("customerManagerId", ShiroKit.getUserId());
+        Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
+        map.put("customerManagerId", managerId);
         return dataTablePage("queryCustomerByCondition", map);
     }
 
@@ -207,9 +217,10 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
             ids.add(customerId);
         }
         Map<String, Object> map = new HashMap<>();
+        Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
         map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
         map.put("customerIds", ids);
-        map.put("managerId", ShiroKit.getUserId());
+        map.put("managerId", managerId);
         int count = customerBasicService.updateStatus(map);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
@@ -236,7 +247,8 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @ApiOperation(value = "查询可删除的客户经理", notes = "查询可删除的客户经理", httpMethod = "GET")
     public DataTablePage selectDelete() {
         Map<String, Object> map = new HashMap();
-        map.put("managerId", ShiroKit.getUserId());
+        Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
+        map.put("managerId", managerId);
         return dataTablePage("selectDelete", map);
     }
 
@@ -253,4 +265,5 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         Integer count = customerBasicService.deleteCustomer(customerId);
         return count != 0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
+
 }

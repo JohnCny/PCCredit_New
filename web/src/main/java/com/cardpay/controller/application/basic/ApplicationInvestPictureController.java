@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/applicationInvestPicture")
 public class ApplicationInvestPictureController {
+    /**
+     * 进件调查图
+     */
     @Autowired
     private TApplicationInvestPictureService tApplicationInvestPictureService;
 

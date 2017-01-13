@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/applicationContract")
 public class TApplicationContractController extends BaseController<TApplicationContract> {
+    /**
+     * 客户签约信息
+     */
     @Autowired
     private TApplicationContractService tApplicationContractService;
 

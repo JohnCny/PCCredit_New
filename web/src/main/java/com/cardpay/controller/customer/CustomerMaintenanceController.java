@@ -8,6 +8,7 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customer.model.TCustomerMaintenance;
+import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
@@ -30,11 +31,22 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/customerMaintenance")
 public class CustomerMaintenanceController extends BaseController<TCustomerMaintenance> {
+    /**
+     * 客户维护
+     */
     @Autowired
     private TCustomerMaintenanceService customerMaintenanceService;
 
-    @Autowired //客户经理信息
+    /**
+     * 客户经理信息
+     */
+    @Autowired
     private CustomerManagerService customerManagerService;
+    /**
+     * 客户信息
+     */
+    @Autowired
+    private TCustomerBasicService customerBasicService;
 
     /**
      * 按条件查询客户维护信息
@@ -46,7 +58,8 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public DataTablePage queryByCondition() {
         Map<String, Object> map = new HashMap<>();
-        map.put("customerManagerId", ShiroKit.getUserId());
+        Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
+        map.put("customerManagerId", managerId);
         return dataTablePage("queryCustomerByCondition", map);
     }
 

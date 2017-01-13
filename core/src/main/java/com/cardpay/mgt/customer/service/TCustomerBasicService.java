@@ -6,6 +6,7 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -81,4 +82,11 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      * @return 数据库变记录
      */
     Integer deleteCustomer(int customerId);
+
+    /**
+     * 获取客户经理id
+     * @param userId
+     * @return
+     */
+    Integer getManagerId(int userId);
 }

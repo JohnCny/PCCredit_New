@@ -18,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/applicationFile")
 public class ApplicationFileController extends BaseController<TApplicationFile> {
+    /**
+     * 进件文件上传
+     */
     @Autowired
     private TApplicationFileService tApplicationFileService;
 
