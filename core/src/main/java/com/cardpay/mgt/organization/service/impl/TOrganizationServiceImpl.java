@@ -79,4 +79,9 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
         int mark = tOrganizationDao.selectIfOrgPrincipal(directorId, orgId);
         return mark > 0 ? true : false;
     }
+
+    @Override
+    public List<TOrganization> pageList(Map<String, Object> map) {
+        return tOrganizationDao.pageList(map);
+    }
 }

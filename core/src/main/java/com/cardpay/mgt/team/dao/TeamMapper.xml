@@ -96,7 +96,7 @@
 
     <!--递归删除团队信息-->
     <delete id="deleteTeam">
-    DELETE FROM T_TEAM WHERE TEAM_ID in (
+    DELETE FROM T_TEAM WHERE TEAM_ID IN (
     SELECT TEAM_ID FROM T_TEAM CONNECT BY PRIOR TEAM_ID = TEAM_PARENT_ID START WITH TEAM_ID = #{teamId} )
     </delete>
 

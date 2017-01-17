@@ -61,4 +61,11 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
      */
     int selectIfOrgPrincipal(@Param("directorId")int directorId,@Param("orgId") int orgId);
 
+    /**
+     * 机构分页信息
+     * @param map 机构id
+     * @return 机构信息
+     */
+    List<TOrganization> pageList(Map<String, Object> map);
+
 }

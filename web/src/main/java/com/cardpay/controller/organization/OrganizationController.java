@@ -60,10 +60,10 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @return 机构列表
      */
     @PostMapping("/pageList")
-    public DataTablePage pageList(int topId) {
+    public DataTablePage pageList(@RequestParam(defaultValue = "0") int topId) {
         Map<String, Object> map = new HashMap<>();
         map.put("topId", topId);
-        return dataTablePage("queryAll", map);
+        return dataTablePage("pageList", map);
     }
 
     /**

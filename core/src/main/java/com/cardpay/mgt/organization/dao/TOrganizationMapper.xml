@@ -55,7 +55,7 @@
 
     <!--递归删除机构信息-->
     <delete id="deleteOrganization">
-    DELETE FROM T_ORGANIZATION WHERE ID in (
+    DELETE FROM T_ORGANIZATION WHERE ID IN (
     SELECT ID FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{id} )
     </delete>
 
@@ -70,5 +70,16 @@
     <select id="selectIfOrgPrincipal">
         SELECT COUNT(1) FROM T_ORGANIZATION WHERE ORG_DIRECTOR_ID = #{directorId}
         AND ID = #{orgId}
+    </select>
+
+    <!--机构分页信息-->
+    <select id="pageList" parameterType="Map">
+        SELECT * FROM T_ORGANIZATION
+         <where>
+             ORG_PARENT_ID = #{topId}
+             <if test="">
+                 AND ORG_NAME LIKE CONCAT(CONCAT('%',#{orgName}),'%')
+             </if>
+         </where>
     </select>
 </mapper>
