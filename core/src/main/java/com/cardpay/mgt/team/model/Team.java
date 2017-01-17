@@ -8,72 +8,86 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "T_TEAM")
-@ApiModel(value="团队表")
-public class Team extends GenericEntity<Integer>{
+@ApiModel(value = "团队表")
+public class Team extends GenericEntity<Integer> {
     /**
      * 团队id
      */
     @Id
     @Column(name = "team_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select TEAM_SEQ.nextval from dual")
-    @ApiModelProperty(value="团队id",required = true)
+    @ApiModelProperty(value = "团队id", required = true)
     private Integer teamId;
 
     /**
      * 团队名称
      */
     @Column(name = "team_name")
-    @ApiModelProperty(value="团队名称",required = true)
+    @ApiModelProperty(value = "团队名称", required = true)
     private String teamName;
 
     /**
      * 团队描述
      */
     @Column(name = "team_description")
-    @ApiModelProperty(value="团队描述",required = true)
+    @ApiModelProperty(value = "团队描述", required = true)
     private String teamDescription;
 
     /**
      * 团队负责人id
      */
     @Column(name = "team_leader_id")
-    @ApiModelProperty(value="团队负责人id",required = true)
+    @ApiModelProperty(value = "团队负责人id", required = true)
     private Integer teamLeaderId;
 
     /**
      * 团队负责人姓名
      */
     @Column(name = "team_leader_cname")
-    @ApiModelProperty(value="团队负责人姓名",required = true)
+    @ApiModelProperty(value = "团队负责人姓名", required = true)
     private String teamLeaderCname;
 
     /**
      * 父团队id(顶级默认为0)
      */
     @Column(name = "team_parent_id")
-    @ApiModelProperty(value="父团队id(顶级默认为0)",required = true)
+    @ApiModelProperty(value = "父团队id(顶级默认为0)", required = true)
     private Integer teamParentId;
 
     /**
      * 创建人id
      */
     @Column(name = "create_by")
-    @ApiModelProperty(value="创建人id",required = true)
+    @ApiModelProperty(value = "创建人id", required = true)
     private Integer createBy;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
-    @ApiModelProperty(value="创建时间",required = true)
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 是否机构类团队
      */
     @Column(name = "is_menu_type")
-    @ApiModelProperty(value="是否机构类团队",required = true)
+    @ApiModelProperty(value = "是否机构类团队", required = true)
     private Short isMenuType;
+
+    /**
+     * 团队所属机构
+     */
+    @Column(name = "oganization_id")
+    private Integer oganizationId;
+
+    public Integer getOganizationId() {
+        return oganizationId;
+    }
+
+    public void setOganizationId(Integer oganizationId) {
+        this.oganizationId = oganizationId;
+    }
 
     /**
      * 获取团队id

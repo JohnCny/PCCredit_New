@@ -88,8 +88,8 @@ public class TCustomerTransferServiceImplTest {
         when(tCustomerBasicService.selectByPrimaryKey(1)).thenReturn(tCustomerBasic);
         when(tCustomerTransferDao.selectByPrimaryKey(1)).thenReturn(tCustomerTransfer);
         when(tCustomerBasicService.updateStatus(map)).thenReturn(1);
-        messageService.sendMessage("客户移交结果", "test", tCustomerTransfer.getOriginCustomerManager()
-                , 0, 0);
+        /*messageService.sendMessage("客户移交结果", "test", tCustomerTransfer.getOriginCustomerManager()
+                , 0, 0, 1);*/
         int accept = tCustomerTransferService.accept("1", 1, 1);
         assertEquals(accept, 1);
     }

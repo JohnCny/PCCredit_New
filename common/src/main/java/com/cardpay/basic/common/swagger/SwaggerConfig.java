@@ -34,6 +34,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableWebMvc //非springboot框架需要引入此注解
 @ComponentScan(basePackages = {"com.cardpay"})//指定扫描controller路径
 public class SwaggerConfig {
+  /*
     /**
      * 扫描路径
      */

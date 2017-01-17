@@ -35,10 +35,9 @@ public class TApplicationFileServiceImpl extends BaseServiceImpl<TApplicationFil
         int flag = 0;
         String serverPort = (String) ContextProperty.getContextProperty("tracker_server");
         for (TFile file : fileList) {
-            tApplicationFile.setFileName(file.getFileName());
             tApplicationFile.setFileType(file.getImageType());
             tApplicationFile.setFileUrl(serverPort + "/" + file.getGroupName() + "/"+ file.getFastName());
-            flag = tApplicationFileDao.insert(tApplicationFile);
+            flag = tApplicationFileDao.insertSelective(tApplicationFile);
             flag++;
         }
         return flag;

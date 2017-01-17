@@ -13,8 +13,6 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
-import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
-import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -22,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+
+import static com.cardpay.basic.common.constant.CustomerStatusEnum.*;
 
 
 /**
@@ -218,7 +218,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         }
         Map<String, Object> map = new HashMap<>();
         Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
-        map.put("status", ConstantEnum.CustomerStatus.STATUS3.getVal());
+        map.put("status", FORBIDDEN.getValue());
         map.put("customerIds", ids);
         map.put("managerId", managerId);
         int count = customerBasicService.updateStatus(map);
