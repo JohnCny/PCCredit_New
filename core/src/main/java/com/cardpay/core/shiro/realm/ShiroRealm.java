@@ -19,6 +19,7 @@ import java.util.Set;
 
 /**
  * 自定义ShiroReale,用户授权,权限加载处理类
+ *
  * @author rankai .
  */
 public class ShiroRealm extends AuthorizingRealm {
@@ -52,9 +53,10 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         User user = (User) ShiroKit.getPrincipal();
+        Integer orgId = ShiroKit.getOrgId();
         //获取角色集合和权限列表集合
         Set<String> userRole = ShiroFactory.get().getUserService().getUserRole(user);
-        Set<String> userAuthority = ShiroFactory.get().getUserService().getUserAuthority(user);
+        Set<String> userAuthority = ShiroFactory.get().getUserService().getUserAuthority(user.getId(), orgId);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(userRole);
         authorizationInfo.setStringPermissions(userAuthority);

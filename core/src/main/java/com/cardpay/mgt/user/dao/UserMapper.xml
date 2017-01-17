@@ -49,47 +49,30 @@
         <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
     </resultMap>
 
-    <select id="selectByAuthority" resultMap="UserAuthorityMap">
-      SELECT
-          TA.AUTHORITY_NAME AS AUTHORITY_NAME,
-          TRS.RESOUCRE_NAME AS RESOUCRE_NAME,
-          TON.OPERATION_NAME AS OPERATION_NAME
-      FROM
-          T_USER TU,
-          T_ROLE TR,
-          T_ROLE_AUTHORITY TRA,
-          T_AUTHORITY TA,
-          T_AUTHORITY_OPERATION TAO,
-          T_AUTHORITY_RESOURCES TAR,
-          T_OPERATION TON,
-          T_RESOURCES TRS,
-          T_USER_ROLE TUR
-      WHERE
-        TU.ID=#{id}
-      AND
-        TU.ID=TUR.USER_ID
-      AND
-        TUR.ROLE_ID=TR.ID
-      AND
-        TR.ROLE_STATUS=1
-      AND
-        TUR.ROLE_ID=TRA.ROLE_ID
-      AND
-        TRA.AUTHORITY_ID=TA.ID
-      AND
-        TRA.AUTHORITY_ID=TAO.AUTHORITY_ID
-      AND
-        TAO.OPERATION_ID=TON.ID
-      AND
-        TRA.AUTHORITY_ID=TAR.AUTHORITY_ID
-      AND
-        TAR.RESOURCE_ID=TRS.ID
-  </select>
+    <select id="selectByAuthority" resultType="List">
+        SELECT
+            TA.AUTHORITY_NAME
+        FROM
+            T_USER TU,
+            T_USER_ROLE TUR,
+            T_ROLE TR,
+            T_ROLE_AUTHORITY TRA,
+            T_AUTHORITY TA
+        WHERE
+            TU."ID" = 2
+        AND TR.ORGANIZATION_ID = 1
+        AND TUR.USER_ID = TU."ID"
+        AND TUR.ROLE_ID = TR."ID"
+        AND TRA.ROLE_ID = TR."ID"
+        AND TA."ID" = TRA.AUTHORITY_ID
+        AND TR.ROLE_STATUS = 1
+        AND TA.AUTHORITY_STATUS = 1
+     </select>
 
     <select id="userPageList" resultMap="BaseResultMap">
         SELECT * FROM T_USER TU
         <if test="orgId != null">
-        ,T_USER_ORGANIZATION TUO
+            ,T_USER_ORGANIZATION TUO
         </if>
         WHERE 1=1
         <if test="username !=null">
