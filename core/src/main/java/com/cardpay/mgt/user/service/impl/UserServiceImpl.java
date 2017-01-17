@@ -76,33 +76,15 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     private FileManager fileManager;
 
     @Override
-    public Set<String> getUserAuthority(User user) {
-        Set<String> set = new HashSet<>();
-        List<UserAuthority> list = userMapper.selectByAuthority(user);
-        StringBuffer stringBuffer = new StringBuffer();
-        for (UserAuthority userAuthority : list) {
-            stringBuffer.append(userAuthority.getAuthorityName()).append(":").append(userAuthority.getResoucreName())
-                    .append(":").append(userAuthority.getOperationName());
-            set.add(stringBuffer.toString());
-            stringBuffer.delete(0, stringBuffer.length());
-        }
-        for (String str : set) {
-            LogTemplate.debug(this.getClass(), "拥有的资源", str);
-        }
-        return set;
+    public Set<String> getUserAuthority(Integer userId, Integer orgId) {
+        List<String> list = userMapper.selectByAuthority(userId, orgId);
+        return new HashSet<>(list);
     }
 
     @Override
-    public Set<String> getUserRole(User user) {
-        List<Role> roles = roleMapper.selectByUser(user);
-        Set<String> set = new HashSet<>();
-        for (Role role : roles) {
-            set.add(role.getRoleName());
-        }
-        for (String str : set) {
-            LogTemplate.debug(this.getClass(), "拥有的角色", str);
-        }
-        return set;
+    public Set<String> getUserRole(Integer userId, Integer orgId) {
+        List<String> roles = roleMapper.selectByUser(userId, orgId);
+        return new HashSet<>(roles);
     }
 
     @Override

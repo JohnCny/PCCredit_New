@@ -20,10 +20,11 @@ public interface UserMapper extends BasicMapper<User> {
     /**
      * 根据用户ID获取用户权限信息
      *
-     * @param user 用户对象
+     * @param userId 用户ID
+     * @param orgId  用户机构ID
      * @return 资源权限集合
      */
-    List<UserAuthority> selectByAuthority(User user);
+    List<String> selectByAuthority(Integer userId, Integer orgId);
 
     /**
      * 带搜索的用户分页,自定义SQL(此处是反射应用,没有显示调用)

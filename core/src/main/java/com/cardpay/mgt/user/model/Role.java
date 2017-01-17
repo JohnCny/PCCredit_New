@@ -66,6 +66,18 @@ public class Role {
     private Integer createBy;
 
     /**
+     * 机构ID
+     */
+    @Column(name = "ORGANIZATION_ID")
+    private Integer organizationId;
+
+    /**
+     * 角色类型1:超级管理员2:管理员3:客户经理4:专家
+     */
+    @Column(name = "ROLE_TYPE")
+    private Integer roleType;
+
+    /**
      * 获取id
      *
      * @return ID - id
@@ -191,6 +203,22 @@ public class Role {
         this.createBy = createBy;
     }
 
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public Integer getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(Integer roleType) {
+        this.roleType = roleType;
+    }
+
 
     public static final class RoleBuilder {
         private Integer id;
@@ -200,6 +228,8 @@ public class Role {
         private String roleNameZh;
         private Date createTime;
         private Integer createBy;
+        private Integer organizationId;
+        private Integer roleType;
 
         private RoleBuilder() {
         }
@@ -243,6 +273,16 @@ public class Role {
             return this;
         }
 
+        public RoleBuilder withOrganizationId(Integer organizationId) {
+            this.organizationId = organizationId;
+            return this;
+        }
+
+        public RoleBuilder withRoleType(Integer roleType) {
+            this.roleType = roleType;
+            return this;
+        }
+
         public Role build() {
             Role role = new Role();
             role.setId(id);
@@ -252,6 +292,8 @@ public class Role {
             role.setRoleNameZh(roleNameZh);
             role.setCreateTime(createTime);
             role.setCreateBy(createBy);
+            role.setOrganizationId(organizationId);
+            role.setRoleType(roleType);
             return role;
         }
     }

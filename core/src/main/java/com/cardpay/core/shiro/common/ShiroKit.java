@@ -1,10 +1,14 @@
 package com.cardpay.core.shiro.common;
 
+import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserOrganization;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+
+import java.util.List;
 
 /**
  * Shiro综合工具类
@@ -22,6 +26,11 @@ public class ShiroKit {
      * 登陆用户Session的Key
      */
     public static final String USER_SESSION_KEY = "userSession";
+
+    /**
+     * 用户登陆的ORG_Session
+     */
+    public static final String ORG_SESSION_KEY = "orgSession";
 
     /**
      * 登陆用户Session的Key
@@ -120,5 +129,38 @@ public class ShiroKit {
      */
     public static Role getRole() {
         return (Role) getSession().getAttribute(ROLE_SESSION_KEY);
+    }
+
+    /**
+     * 获取当前用户所选机构
+     *
+     * @return 当前用户所选机构
+     */
+    public static TOrganization getOrg() {
+        Object object = getSession().getAttribute(ORG_SESSION_KEY);
+        if (object == null) {
+            ShiroFactory shiroFactory = ShiroFactory.get();
+            UserOrganization userOrganization = new UserOrganization();
+            userOrganization.setUserId(getUserId());
+            userOrganization.setIsDefault(1);
+            UserOrganization selectOne = shiroFactory.getUserOrganizationService().selectOne(userOrganization);
+            if (selectOne != null) {
+                TOrganization tOrganization = shiroFactory.getOrganizationService().selectByPrimaryKey(selectOne.getOrganizationId());
+                getSession().setAttribute(ORG_SESSION_KEY, tOrganization);
+                return tOrganization;
+            }
+            return null;
+        }
+        return (TOrganization) object;
+    }
+
+    /**
+     * 获取当前用户所选机构ID
+     *
+     * @return 前用户所选机构ID
+     */
+    public static Integer getOrgId() {
+        TOrganization org = getOrg();
+        return org == null ? null : org.getId();
     }
 }

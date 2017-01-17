@@ -135,7 +135,7 @@ public class RoleController extends BaseController<Role> {
      * @param newAuthorityId 新权限ID
      * @return 成功或失败
      */
-    @RequestMapping(method = RequestMethod.GET, params = {"roleId", "old", "new"})
+    @GetMapping(params = {"roleId", "old", "new"})
     @ApiOperation(value = "获取权限组", httpMethod = "GET")
     public ResultTo update(@RequestParam(value = "roleId") Integer roleId,
                            @RequestParam(value = "old", defaultValue = "-1") Integer oldAuthorityId,

@@ -14,7 +14,7 @@
         <result column="CREATE_BY" jdbcType="TIMESTAMP" property="createBy"/>
     </resultMap>
 
-    <select id="selectByUser" resultMap="BaseResultMap">
+    <select id="selectByUser" resultType="List">
         SELECT
             TR.ROLE_NAME AS ROLE_NAME
         FROM
@@ -22,13 +22,15 @@
             T_USER_ROLE TUR,
             T_ROLE TR
         WHERE
-            TU.ID=#{id}
+            TU.ID=#{userId}
         AND
             TU.ID=TUR.USER_ID
         AND
             TUR.ROLE_ID=TR.ID
         AND
             TR.ROLE_STATUS=1
+        AND
+            TR.ORGANIZATION_ID=#{orgId}
     </select>
 
 </mapper>

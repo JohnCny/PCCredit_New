@@ -21,18 +21,20 @@ public interface UserService extends BaseService<User> {
     /**
      * 获取用户的资源权限
      *
-     * @param user User对象
+     * @param userId 用户ID
+     * @param userId 机构ID
      * @return 用户的资源集合
      */
-    Set<String> getUserAuthority(User user);
+    Set<String> getUserAuthority(Integer userId, Integer orgId);
 
     /**
      * 获取用户的角色权限
      *
-     * @param user User对象
+     * @param userId 用户ID
+     * @param orgId  机构ID
      * @return 用户的角色资源集合
      */
-    Set<String> getUserRole(User user);
+    Set<String> getUserRole(Integer userId, Integer orgId);
 
     /**
      * 用户修改密码
