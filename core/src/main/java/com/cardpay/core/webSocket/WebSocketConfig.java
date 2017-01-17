@@ -11,7 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 /**
- * WebSocket配置类
+ * WebSocket配置类.
  * @author johnmyiqn
  */
 @Configuration
