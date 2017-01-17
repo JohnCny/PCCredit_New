@@ -10,7 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import java.io.IOException;
 
 /**
- * 容器启动之后执行初始化程序(例如刷新缓存等需要初始化功能）
+ * 容器启动之后执行初始化程序(例如刷新缓存等需要初始化功能）.
  *
  * @author johnmyiqn
  */
@@ -29,7 +29,7 @@ public class BeanPostProcessor implements ApplicationListener<ContextRefreshedEv
             if (event.getApplicationContext().getParent() == null) {//root application context 没有parent，他就是老大.
                 //需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
                 //初始化菜单缓存
-                tMenuService.updateMenuCache();
+//                tMenuService.updateMenuCache();
                 //启动gRPC服务监听
                 new Thread() {
                     @Override

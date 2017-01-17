@@ -11,18 +11,15 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 用户Service层接口
+ * 用户Service层接口.
  *
  * @author rankai
- *         createTime 2016-12-2016/12/23 14:40
  */
 public interface UserService extends BaseService<User> {
-
     /**
-     * 获取用户的资源权限
      *
-     * @param userId 用户ID
-     * @param userId 机构ID
+     * @param userId 用户id
+     * @param orgId 机构id
      * @return 用户的资源集合
      */
     Set<String> getUserAuthority(Integer userId, Integer orgId);
@@ -72,11 +69,12 @@ public interface UserService extends BaseService<User> {
     ResultTo resetPassword(String checkedCode, String password);
 
     /**
-     * 增加用户
      *
-     * @param user  User对象
-     * @param orgId 机构ID
+     * @param user User对象
+     * @param orgId 机构id
+     * @param roleId 角色id
      * @return 成功或失败
+     * @throws RuntimeExceptin 运行时错误
      */
     boolean addUser(User user, Integer orgId, Integer roleId) throws RuntimeException;
 
