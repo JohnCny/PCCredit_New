@@ -55,7 +55,7 @@ public class ShiroRealm extends AuthorizingRealm {
         User user = (User) ShiroKit.getPrincipal();
         Integer orgId = ShiroKit.getOrgId();
         //获取角色集合和权限列表集合
-        Set<String> userRole = ShiroFactory.get().getUserService().getUserRole(user);
+        Set<String> userRole = ShiroFactory.get().getUserService().getUserRole(user.getId(), orgId);
         Set<String> userAuthority = ShiroFactory.get().getUserService().getUserAuthority(user.getId(), orgId);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(userRole);
