@@ -45,24 +45,31 @@
         <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
         <result column="ORG_LEVEL" jdbcType="DECIMAL" property="orgLevel"/>
         <result column="ORG_PARENT_ID" jdbcType="DECIMAL" property="orgParentId"/>
-        <collection property="organizationList" column="ID" select="queryPaterOrganization"/>
-        <collection property="teamList" select="queryTeamListTwo" column="TEAM_ID"/>
+        <collection property="orgList" column="ID" select="queryPaterOrganization"/>
+        <collection property="teamList" select="queryTeamListTwo" column="ID"/>
+        <collection property="orgTeamList" select="queryOrgTeamList" column="TEAM_ID"/>
     </resultMap>
 
-    <!--递归查询子团队信息-->
-    <select id="queryTeamListTwo" resultMap="orgTeamVo">
-        SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+    <!--查询机构信息-->
+    <select id="queryOrganization" resultMap="orgTeamVo">
+        SELECT * FROM T_ORGANIZATION
     </select>
 
     <!--递归查询机构层级列表信息-->
     <select id="queryPaterOrganization" resultMap="orgTeamVo">
-        SELECT * FROM T_ORGANIZATION_VIEW WHERE ORG_PARENT_ID = #{orgId}
+        SELECT * FROM T_ORGANIZATION WHERE ORG_PARENT_ID = #{orgId}
     </select>
 
-    <!--查询所有机构信息-->
-    <select id="queryOrganization" resultMap="orgTeamVo">
-        SELECT * FROM T_ORGANIZATION where id = #{orgId}
+    <!--查询机构下的团队信息-->
+    <select id="queryTeamListTwo" resultMap="orgTeamVo">
+        SELECT * FROM T_TEAM WHERE OGANIZATION_ID = #{orgId}
     </select>
+
+    <!--递归查询子团队信息-->
+    <select id="queryOrgTeamList" resultMap="orgTeamVo">
+        SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+    </select>
+
 
     <!--以上为机构团队信息,测试用-->
 

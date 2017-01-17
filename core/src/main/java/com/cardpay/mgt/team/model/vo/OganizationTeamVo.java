@@ -65,6 +65,20 @@ public class OganizationTeamVo extends GenericEntity<Integer> {
      */
     private List<Team> teamList;
 
+    /**
+     * 机构下的团队List
+     */
+    private List<OganizationTeamVo> orgTeamList;
+
+
+    public List<OganizationTeamVo> getOrgTeamList() {
+        return orgTeamList;
+    }
+
+    public void setOrgTeamList(List<OganizationTeamVo> orgTeamList) {
+        this.orgTeamList = orgTeamList;
+    }
+
     public Integer getTeamId() {
         return teamId;
     }

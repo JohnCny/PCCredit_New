@@ -108,7 +108,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
             customerMap.put("customerIds", customerIdList);
             int status = tCustomerBasicService.updateStatus(customerMap);
             //消息推送
-                String messageContent;
+              /*  String messageContent;
                     for (String id : split) {
                         int customerId = Integer.parseInt(id);
                         User user = userService.selectByPrimaryKey(userId);
@@ -128,7 +128,7 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
                         }
                         messageService.messagePush("客户移交结果", messageContent, acceptCustomerId
                                 , 0, 0, 0);
-                    }
+                    }*/
             return status;
         }
         return 0;
