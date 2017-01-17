@@ -1,7 +1,7 @@
 package com.cardpay.basic.common.constant;
 
 /**
- * ${DESCRIPTION}
+ * 客户状态
  *
  * @author chenkai
  *         createTime 2017-01-2017/1/13 15:12

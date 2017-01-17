@@ -11,8 +11,10 @@
         <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="IS_MENU_TYPE" jdbcType="DECIMAL" property="isMenuType"/>
+        <result column="OGANIZATION_ID" jdbcType="DECIMAL" property="oganizationId"/>
     </resultMap>
 
+    <!--团队Vo-->
     <resultMap id="BaseVo" type="com.cardpay.mgt.team.model.vo.TeamVo">
         <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId"/>
         <result column="TEAM_NAME" jdbcType="VARCHAR" property="teamName"/>
@@ -27,15 +29,47 @@
         <collection property="teamList" select="queryTeamList" column="TEAM_ID"/>
     </resultMap>
 
+    <!--用户团队Vo-->
     <resultMap id="BaseMapVo" type="com.cardpay.mgt.team.model.vo.UserTeamVo">
         <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
         <collection property="userList" select="queryUserList" column="USER_ID"/>
     </resultMap>
 
+    <!--机构团队Vo-->
+    <resultMap id="orgTeamVo" type="com.cardpay.mgt.team.model.vo.OganizationTeamVo">
+        <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId"/>
+        <result column="TEAM_NAME" jdbcType="VARCHAR" property="teamName"/>
+        <result column="OGANIZATION_ID" jdbcType="DECIMAL" property="oganizationId"/>
+        <result column="TEAM_PARENT_ID" jdbcType="DECIMAL" property="teamParentId"/>
+        <result column="ID" jdbcType="DECIMAL" property="orgId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="ORG_LEVEL" jdbcType="DECIMAL" property="orgLevel"/>
+        <result column="ORG_PARENT_ID" jdbcType="DECIMAL" property="orgParentId"/>
+        <collection property="organizationList" column="ID" select="queryPaterOrganization"/>
+        <collection property="teamList" select="queryTeamListTwo" column="TEAM_ID"/>
+    </resultMap>
+
+    <!--递归查询子团队信息-->
+    <select id="queryTeamListTwo" resultMap="orgTeamVo">
+        SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+    </select>
+
+    <!--递归查询机构层级列表信息-->
+    <select id="queryPaterOrganization" resultMap="orgTeamVo">
+        SELECT * FROM T_ORGANIZATION_VIEW WHERE ORG_PARENT_ID = #{orgId}
+    </select>
+
+    <!--查询所有机构信息-->
+    <select id="queryOrganization" resultMap="orgTeamVo">
+        SELECT * FROM T_ORGANIZATION where id = #{orgId}
+    </select>
+
+    <!--以上为机构团队信息,测试用-->
+
     <!--查询子团队信息-->
     <select id="queryTeamList" resultMap="BaseVo">
    SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
-  </select>
+    </select>
 
     <!--查询所有团队信息-->
     <select id="queryAll" resultMap="BaseVo">
