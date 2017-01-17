@@ -153,9 +153,11 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
         if (roleMapper.updateByPrimaryKeySelective(role) <= 0) {
             return Boolean.FALSE;
         }
-        for (String str : authorityIds) {
-            String[] split = str.split(",");
-            update(role.getId(), Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+        if (authorityIds != null) {
+            for (String str : authorityIds) {
+                String[] split = str.split(",");
+                update(role.getId(), Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+            }
         }
         return true;
     }
