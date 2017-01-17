@@ -24,7 +24,7 @@ public class Product extends GenericEntity<Integer> {
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCSEQ.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCT_SEQ.nextval from dual")
     @ApiModelProperty(value = "产品id", required = true)
     private Integer id;
 

@@ -12,6 +12,7 @@ public class TApplicationCashProfitVar {
     /**
      * 进件模板利润现金值id
      */
+    @Id
     @Column(name = "APPLICATION_CASH_PROFIT_VAR_ID")
     @ApiModelProperty(value="进件模板利润现金值id",required = true)
     private Integer applicationCashProfitVarId;

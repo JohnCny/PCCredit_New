@@ -13,6 +13,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -95,5 +96,18 @@ public class ProductApproveController extends BaseController<ProductApprove> {
         }
         productApproveService.updateApprove(productApprove);
         return new ResultTo();
+    }
+
+    /**
+     * 根据产品ID或的审批流程集合
+     *
+     * @param productId 产品ID
+     * @return 批流程集合
+     */
+    @GetMapping(params = "productId")
+    public ResultTo getApprove(@RequestParam("productId") Integer productId) {
+        ProductApprove productApprove = new ProductApprove();
+        productApprove.setProductId(productId);
+        return new ResultTo().setData(productApproveService.select(productApprove));
     }
 }

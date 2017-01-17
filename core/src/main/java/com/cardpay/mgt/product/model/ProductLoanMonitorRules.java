@@ -21,7 +21,7 @@ public class ProductLoanMonitorRules extends GenericEntity<Integer> {
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select T_PRODUCT_LOAN_MONITOR_RULES.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCT_LOAN_MONITOR_RULES_SEQ.nextval from dual")
     @ApiModelProperty(value = "贷后监控id", required = true)
     private Integer id;
 
