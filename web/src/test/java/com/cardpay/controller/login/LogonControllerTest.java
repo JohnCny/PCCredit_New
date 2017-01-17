@@ -11,11 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LogonControllerTest extends TestEnv {
-
     @Test
     @Ignore
     public void login() throws Exception {
-
         mockMvc.perform(post("/api/logon/login")
                 .param("userName", "rankai"))
                 .andExpect(status().isOk())
@@ -37,5 +35,4 @@ public class LogonControllerTest extends TestEnv {
                 .andExpect(jsonPath("$.code").value(5012))
                 .andDo(MockMvcResultHandlers.print());
     }
-
 }

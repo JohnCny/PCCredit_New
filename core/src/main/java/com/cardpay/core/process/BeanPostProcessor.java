@@ -10,7 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import java.io.IOException;
 
 /**
- * 容器启动之后执行初始化程序(例如刷新缓存等需要初始化功能）
+ * 容器启动之后执行初始化程序(例如刷新缓存等需要初始化功能）.
  *
  * @author johnmyiqn
  */
