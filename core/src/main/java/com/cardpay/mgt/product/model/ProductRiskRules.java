@@ -22,7 +22,7 @@ public class ProductRiskRules extends GenericEntity<Integer> {
      */
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCRISK_RULES_SEQ.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCT_RISK_RULES_SEQ.nextval from dual")
     @ApiModelProperty(value = "产品风险规则id", required = true)
     private Integer id;
 
@@ -74,6 +74,11 @@ public class ProductRiskRules extends GenericEntity<Integer> {
     @Column(name = "INDUSTRY_BADLOAN_WARNING_LIMIT")
     @ApiModelProperty(value = "行业不良率高于%多少则预警，用小数表示", required = true)
     private BigDecimal industryBadloanWarningLimit;
+
+
+    @Column(name = "REJECTION_RATE")
+    @ApiModelProperty(value = "行业拒件%多少则预警，用小数表示", required = true)
+    private BigDecimal rejectionRate;
 
     /**
      * 获取产品风险规则id
@@ -217,6 +222,14 @@ public class ProductRiskRules extends GenericEntity<Integer> {
      */
     public void setIndustryBadloanWarningLimit(BigDecimal industryBadloanWarningLimit) {
         this.industryBadloanWarningLimit = industryBadloanWarningLimit;
+    }
+
+    public BigDecimal getRejectionRate() {
+        return rejectionRate;
+    }
+
+    public void setRejectionRate(BigDecimal rejectionRate) {
+        this.rejectionRate = rejectionRate;
     }
 
     @Override

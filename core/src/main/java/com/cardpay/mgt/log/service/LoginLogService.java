@@ -17,7 +17,7 @@ public interface LoginLogService extends BaseService<LoginLog> {
      * 自定义分页查询
      *
      * @param request WebRequest对象
-     * @return
+     * @return Example实例
      */
     Example pageList(WebRequest request);
 }
