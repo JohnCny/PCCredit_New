@@ -24,10 +24,10 @@
 
     <!--查询客户所属行业信息-->
     <select id="queryById" resultMap="BaseVo">
-    SELECT customer.INDUSTRY_ID as INDUSTRY_ID, customer.CUSTOMER_ID as CUSTOMER_ID, industry.INDUSTRY_NAME as INDUSTRY_NAME
-    FROM T_CUSTOMER_INDUSTRY customer, T_INDUSTRY industry
-    WHERE customer.INDUSTRY_ID = industry.id
-    AND customer.CUSTOMER_ID = #{customerId}
+        SELECT customer.INDUSTRY_ID AS INDUSTRY_ID, customer.CUSTOMER_ID AS CUSTOMER_ID, industry.INDUSTRY_NAME AS INDUSTRY_NAME
+        FROM T_CUSTOMER_INDUSTRY customer, T_INDUSTRY industry
+        WHERE customer.INDUSTRY_ID = industry.id
+        AND customer.CUSTOMER_ID = #{customerId}
   </select>
 
     <!--客户挖掘(不知道top5是什么标准)-->
