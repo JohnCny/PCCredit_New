@@ -69,7 +69,7 @@
         FROM
         T_CUSTOMER_BASIC basic, T_CUSTOMER_TRANSFER transfer
         WHERE basic.id = transfer.CUSTOMER_ID
-        AND transfer.TRANSFER_STATUS = 0
+        AND transfer.TRANSFER_STATUS = ${@com.cardpay.basic.common.constant.CustomerStatusEnum@ORDINARY.getValue()}
         AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
         AND transfer.NOW_CUSTOMER_MANAGER = #{managerId,jdbcType=DECIMAL}
     </select>
