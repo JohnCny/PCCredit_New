@@ -1,6 +1,7 @@
 package com.cardpay.core.fastdfs;
 
 
+import com.cardpay.core.fastdfs.pool.ConnectionPool;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.file.model.TFile;
 import com.cardpay.mgt.file.service.TFileService;
@@ -33,29 +34,23 @@ import java.util.List;
 public class FileManager implements FileManagerConfig {
     @Autowired
     private TFileService tFileService;
+    @Autowired
+    private ConnectionPool connectionPool;
 
-    private static TrackerClient trackerClient;
-    private static StorageClient storageClient;
-    private static TrackerServer trackerServer;
     private static StorageServer storageServer;
 
-    static {
-        try {
-            // TODO: 2016/11/29 此处config路径加载临时解决方案
-            /*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                    .getRequest();
-            String classPath = request.getServletContext().getRealPath("/WEB-INF/config");
-            String dfsClientConfigFilePath = classPath + File.separator + CLIENT_CONFIG_FILE;*/
-            String classPath = new File(FileManager.class.getResource("/").getFile()).getCanonicalPath();
-            String fastDfsClientConfigFilePath = classPath + "../../../\\resources\\main" + File.separator + CLIENT_CONFIG_FILE;
-            ClientGlobal.init(fastDfsClientConfigFilePath);
+    private static TrackerServer trackerServer;
 
-            trackerClient = new TrackerClient();
-            trackerServer = trackerClient.getConnection();
-            storageClient = new StorageClient(trackerServer, storageServer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    /**
+     * 初始化fastDfs连接池
+     *
+     * @return storageClient
+     * @throws Exception 异常信息
+     */
+    private StorageClient1 into() throws Exception {
+         trackerServer = connectionPool.checkout();
+        StorageClient1 storageClient1 = new StorageClient1(trackerServer, storageServer);
+        return storageClient1;
     }
 
     /**
@@ -65,18 +60,20 @@ public class FileManager implements FileManagerConfig {
      * @param valuePairs 文件分卷信息
      * @return 文件路径
      */
-    private static String upload(FastDFSFile file, NameValuePair[] valuePairs) {
-        String[] uploadResults;
+    private String upload(FastDFSFile file, NameValuePair[] valuePairs) {
         try {
+            StorageClient1 storageClient = into();
+            String[] uploadResults;
             uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), valuePairs);
             if (uploadResults.length > 0) {
                 String groupName = uploadResults[0];
                 String remoteFileName = uploadResults[1];
                 return groupName + "," + remoteFileName;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            connectionPool.checkin(trackerServer);
         }
         return null;
     }
@@ -93,6 +90,7 @@ public class FileManager implements FileManagerConfig {
         HttpHeaders headers = new HttpHeaders();
         byte[] content = null;
         try {
+            StorageClient1 storageClient = into();
             content = storageClient.download_file(groupName, remoteFileName);
             if (content.length > 0) {
                 updateFile(remoteFileName);
@@ -102,6 +100,8 @@ public class FileManager implements FileManagerConfig {
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            connectionPool.checkin(trackerServer);
         }
         return new ResponseEntity<>(content, headers, HttpStatus.CREATED);
     }
@@ -116,6 +116,7 @@ public class FileManager implements FileManagerConfig {
     public InputStream downLoadToFile(String groupName, String remoteFileName) {
         byte[] content = null;
         try {
+            StorageClient1 storageClient = into();
             content = storageClient.download_file(groupName, remoteFileName);
             if (content.length > 0) {
                 updateFile(remoteFileName);
@@ -124,6 +125,10 @@ public class FileManager implements FileManagerConfig {
             e.printStackTrace();
         } catch (MyException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connectionPool.checkin(trackerServer);
         }
         return content == null ? null : new ByteArrayInputStream(content);
     }
@@ -152,6 +157,7 @@ public class FileManager implements FileManagerConfig {
      */
     public int deleteFile(String groupName, String remoteFileName) {
         try {
+            StorageClient1 storageClient = into();
             TFile tFile = new TFile();
             tFile.setFastName(remoteFileName);
             Integer flag = tFileService.delete(tFile);
@@ -160,6 +166,10 @@ public class FileManager implements FileManagerConfig {
             e.printStackTrace();
         } catch (MyException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connectionPool.checkin(trackerServer);
         }
         return 0;
     }
@@ -171,14 +181,19 @@ public class FileManager implements FileManagerConfig {
      * @param remoteFileName 文件名称
      * @return FileInfo
      */
-    public static FileInfo queryFile(String groupName, String remoteFileName) {
+    public FileInfo queryFile(String groupName, String remoteFileName) {
         FileInfo fileInfo = null;
         try {
+            StorageClient1 storageClient = into();
             fileInfo = storageClient.query_file_info(groupName, remoteFileName);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (MyException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connectionPool.checkin(trackerServer);
         }
         return fileInfo;
     }

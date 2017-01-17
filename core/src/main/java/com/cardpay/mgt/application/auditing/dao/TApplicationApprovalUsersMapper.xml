@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.auditing.dao.TApplicationApprovalUsersMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.auditing.model.TApplicationApprovalUsers">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="REVIEW_ID" jdbcType="DECIMAL" property="reviewId" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+    <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+</mapper>

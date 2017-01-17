@@ -7,6 +7,7 @@ import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class TCustomerIndustryServiceImpl extends BaseServiceImpl<TCustomerIndus
     private TCustomerIndustryMapper tCustomerIndustryDao;
 
     @Override
+    @Transactional
     public int batchInsert(List<TCustomerIndustry> list) {
         return tCustomerIndustryDao.batchInsert(list);
     }
@@ -32,6 +34,7 @@ public class TCustomerIndustryServiceImpl extends BaseServiceImpl<TCustomerIndus
     }
 
     @Override
+    @Transactional
     public int batchUpdate(List<TCustomerIndustry> list) {
         return tCustomerIndustryDao.batchUpdate(list);
     }
