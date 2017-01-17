@@ -4,7 +4,6 @@ package com.cardpay.mgt.application.ipc.cashflowprofit.model.vo;
 import com.cardpay.mgt.application.ipc.cashflowprofit.model.TApplicationCashProfitExt;
 import com.cardpay.mgt.application.ipc.normal.model.TTemplateVarOption;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class CashProfitTemplateVar {
@@ -30,39 +29,70 @@ public class CashProfitTemplateVar {
     private List<TApplicationCashProfitExt> extras;
 
     /**
+     * 进件模板值id
+     */
+    private Integer templateVarId;
+
+    /**
+     * 进件模板值名称
+     */
+    private String templateVarName;
+
+    /**
+     * 进件模板值父节点id
+     */
+    private Integer templateVarParentId;
+
+    /**
+     * 进件模板值节点顺序
+     */
+    private Integer templateVarOrder;
+
+    /**
+     * 进件模板值输入类型(0 input 输入框 1 select 单选 2 check 多选3 datapicker 时间 4 mutilSelect 多选 5 text 文字 6 range区间)
+     */
+    private Integer templateVarInputType;
+
+    /**
+     * 进件模板值节点权重
+     */
+    private String templateVarWeight;
+
+    /**
+     * 进件模板值组id
+     */
+    private Integer templateVarGroupId;
+
+    /**
+     * 进件模板值是否包含用户自定义子项(0 包含 1 包含)
+     */
+    private Integer templateVarIsHasChild;
+
+    /**
+     * 进件模板值是否是进件计算项(0 否 1 是)
+     */
+    private Integer templateVarIsCompute;
+
+    /**
+     * application_var 主键
      * 进件模板利润现金值id
      */
-    private BigDecimal applicationCashProfitVarId;
-
-    /**
-     * 利润现金模板值id
-     */
-    private Integer cashProfitVarId;
-
-    /**
-     * 建议模板值value
-     */
-    private String cashProfitVarValue;
-
-    /**
-     * 建议选项值id
-     */
-    private Integer cashProfitOptionId;
+    private Integer applicationCashProfitVarId;
 
     /**
      * 第一个月
      */
-    private BigDecimal varMonthOne;
+    private Integer varMonthOne;
 
     /**
      * 第二个月
      */
-    private BigDecimal varMonthTwo;
+    private Integer varMonthTwo;
 
     /**
      * 第三个月
      */
-    private BigDecimal varMonthThree;
+    private Integer varMonthThree;
 
     /**
      * 第四个月
@@ -82,42 +112,42 @@ public class CashProfitTemplateVar {
     /**
      * 第七个月
      */
-    private BigDecimal varMonthSeven;
+    private Integer varMonthSeven;
 
     /**
      * 第八个月
      */
-    private BigDecimal varMonthEight;
+    private Integer varMonthEight;
 
     /**
      * 第九个月
      */
-    private BigDecimal varMonthNine;
+    private Integer varMonthNine;
 
     /**
      * 第十个月
      */
-    private BigDecimal varMonthTen;
+    private Integer varMonthTen;
 
     /**
      * 第十一个月
      */
-    private BigDecimal varMonthEleven;
+    private Integer varMonthEleven;
 
     /**
      * 第十二个月
      */
-    private BigDecimal varMonthTwelve;
+    private Integer varMonthTwelve;
 
     /**
      * 总计
      */
-    private BigDecimal varCrossValidateAll;
+    private Integer varCrossValidateAll;
 
     /**
      * 月平均
      */
-    private BigDecimal varCrossValidateMonthAvg;
+    private Integer varCrossValidateMonthAvg;
 
     /**
      * 进件id
@@ -156,12 +186,84 @@ public class CashProfitTemplateVar {
         this.extras = extras;
     }
 
+    public Integer getTemplateVarId() {
+        return templateVarId;
+    }
+
+    public void setTemplateVarId(Integer templateVarId) {
+        this.templateVarId = templateVarId;
+    }
+
+    public String getTemplateVarName() {
+        return templateVarName;
+    }
+
+    public void setTemplateVarName(String templateVarName) {
+        this.templateVarName = templateVarName;
+    }
+
+    public Integer getTemplateVarParentId() {
+        return templateVarParentId;
+    }
+
+    public void setTemplateVarParentId(Integer templateVarParentId) {
+        this.templateVarParentId = templateVarParentId;
+    }
+
+    public Integer getTemplateVarOrder() {
+        return templateVarOrder;
+    }
+
+    public void setTemplateVarOrder(Integer templateVarOrder) {
+        this.templateVarOrder = templateVarOrder;
+    }
+
+    public Integer getTemplateVarInputType() {
+        return templateVarInputType;
+    }
+
+    public void setTemplateVarInputType(Integer templateVarInputType) {
+        this.templateVarInputType = templateVarInputType;
+    }
+
+    public String getTemplateVarWeight() {
+        return templateVarWeight;
+    }
+
+    public void setTemplateVarWeight(String templateVarWeight) {
+        this.templateVarWeight = templateVarWeight;
+    }
+
+    public Integer getTemplateVarGroupId() {
+        return templateVarGroupId;
+    }
+
+    public void setTemplateVarGroupId(Integer templateVarGroupId) {
+        this.templateVarGroupId = templateVarGroupId;
+    }
+
+    public Integer getTemplateVarIsHasChild() {
+        return templateVarIsHasChild;
+    }
+
+    public void setTemplateVarIsHasChild(Integer templateVarIsHasChild) {
+        this.templateVarIsHasChild = templateVarIsHasChild;
+    }
+
+    public Integer getTemplateVarIsCompute() {
+        return templateVarIsCompute;
+    }
+
+    public void setTemplateVarIsCompute(Integer templateVarIsCompute) {
+        this.templateVarIsCompute = templateVarIsCompute;
+    }
+
     /**
      * 获取进件模板利润现金值id
      *
      * @return APPLICATION_CASH_PROFIT_VAR_ID - 进件模板利润现金值id
      */
-    public BigDecimal getApplicationCashProfitVarId() {
+    public Integer getApplicationCashProfitVarId() {
         return applicationCashProfitVarId;
     }
 
@@ -170,62 +272,8 @@ public class CashProfitTemplateVar {
      *
      * @param applicationCashProfitVarId 进件模板利润现金值id
      */
-    public void setApplicationCashProfitVarId(BigDecimal applicationCashProfitVarId) {
+    public void setApplicationCashProfitVarId(Integer applicationCashProfitVarId) {
         this.applicationCashProfitVarId = applicationCashProfitVarId;
-    }
-
-    /**
-     * 获取利润现金模板值id
-     *
-     * @return CASH_PROFIT_VAR_ID - 利润现金模板值id
-     */
-    public Integer getCashProfitVarId() {
-        return cashProfitVarId;
-    }
-
-    /**
-     * 设置利润现金模板值id
-     *
-     * @param cashProfitVarId 利润现金模板值id
-     */
-    public void setCashProfitVarId(Integer cashProfitVarId) {
-        this.cashProfitVarId = cashProfitVarId;
-    }
-
-    /**
-     * 获取建议模板值value
-     *
-     * @return CASH_PROFIT_VAR_VALUE - 建议模板值value
-     */
-    public String getCashProfitVarValue() {
-        return cashProfitVarValue;
-    }
-
-    /**
-     * 设置建议模板值value
-     *
-     * @param cashProfitVarValue 建议模板值value
-     */
-    public void setCashProfitVarValue(String cashProfitVarValue) {
-        this.cashProfitVarValue = cashProfitVarValue;
-    }
-
-    /**
-     * 获取建议选项值id
-     *
-     * @return CASH_PROFIT_OPTION_ID - 建议选项值id
-     */
-    public Integer getCashProfitOptionId() {
-        return cashProfitOptionId;
-    }
-
-    /**
-     * 设置建议选项值id
-     *
-     * @param cashProfitOptionId 建议选项值id
-     */
-    public void setCashProfitOptionId(Integer cashProfitOptionId) {
-        this.cashProfitOptionId = cashProfitOptionId;
     }
 
     /**
@@ -233,7 +281,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_ONE - 第一个月
      */
-    public BigDecimal getVarMonthOne() {
+    public Integer getVarMonthOne() {
         return varMonthOne;
     }
 
@@ -242,7 +290,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthOne 第一个月
      */
-    public void setVarMonthOne(BigDecimal varMonthOne) {
+    public void setVarMonthOne(Integer varMonthOne) {
         this.varMonthOne = varMonthOne;
     }
 
@@ -251,7 +299,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_TWO - 第二个月
      */
-    public BigDecimal getVarMonthTwo() {
+    public Integer getVarMonthTwo() {
         return varMonthTwo;
     }
 
@@ -260,7 +308,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthTwo 第二个月
      */
-    public void setVarMonthTwo(BigDecimal varMonthTwo) {
+    public void setVarMonthTwo(Integer varMonthTwo) {
         this.varMonthTwo = varMonthTwo;
     }
 
@@ -269,7 +317,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_THREE - 第三个月
      */
-    public BigDecimal getVarMonthThree() {
+    public Integer getVarMonthThree() {
         return varMonthThree;
     }
 
@@ -278,7 +326,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthThree 第三个月
      */
-    public void setVarMonthThree(BigDecimal varMonthThree) {
+    public void setVarMonthThree(Integer varMonthThree) {
         this.varMonthThree = varMonthThree;
     }
 
@@ -341,7 +389,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_SEVEN - 第七个月
      */
-    public BigDecimal getVarMonthSeven() {
+    public Integer getVarMonthSeven() {
         return varMonthSeven;
     }
 
@@ -350,7 +398,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthSeven 第七个月
      */
-    public void setVarMonthSeven(BigDecimal varMonthSeven) {
+    public void setVarMonthSeven(Integer varMonthSeven) {
         this.varMonthSeven = varMonthSeven;
     }
 
@@ -359,7 +407,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_EIGHT - 第八个月
      */
-    public BigDecimal getVarMonthEight() {
+    public Integer getVarMonthEight() {
         return varMonthEight;
     }
 
@@ -368,7 +416,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthEight 第八个月
      */
-    public void setVarMonthEight(BigDecimal varMonthEight) {
+    public void setVarMonthEight(Integer varMonthEight) {
         this.varMonthEight = varMonthEight;
     }
 
@@ -377,7 +425,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_NINE - 第九个月
      */
-    public BigDecimal getVarMonthNine() {
+    public Integer getVarMonthNine() {
         return varMonthNine;
     }
 
@@ -386,7 +434,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthNine 第九个月
      */
-    public void setVarMonthNine(BigDecimal varMonthNine) {
+    public void setVarMonthNine(Integer varMonthNine) {
         this.varMonthNine = varMonthNine;
     }
 
@@ -395,7 +443,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_TEN - 第十个月
      */
-    public BigDecimal getVarMonthTen() {
+    public Integer getVarMonthTen() {
         return varMonthTen;
     }
 
@@ -404,7 +452,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthTen 第十个月
      */
-    public void setVarMonthTen(BigDecimal varMonthTen) {
+    public void setVarMonthTen(Integer varMonthTen) {
         this.varMonthTen = varMonthTen;
     }
 
@@ -413,7 +461,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_ELEVEN - 第十一个月
      */
-    public BigDecimal getVarMonthEleven() {
+    public Integer getVarMonthEleven() {
         return varMonthEleven;
     }
 
@@ -422,7 +470,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthEleven 第十一个月
      */
-    public void setVarMonthEleven(BigDecimal varMonthEleven) {
+    public void setVarMonthEleven(Integer varMonthEleven) {
         this.varMonthEleven = varMonthEleven;
     }
 
@@ -431,7 +479,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_MONTH_TWELVE - 第十二个月
      */
-    public BigDecimal getVarMonthTwelve() {
+    public Integer getVarMonthTwelve() {
         return varMonthTwelve;
     }
 
@@ -440,7 +488,7 @@ public class CashProfitTemplateVar {
      *
      * @param varMonthTwelve 第十二个月
      */
-    public void setVarMonthTwelve(BigDecimal varMonthTwelve) {
+    public void setVarMonthTwelve(Integer varMonthTwelve) {
         this.varMonthTwelve = varMonthTwelve;
     }
 
@@ -449,7 +497,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_CROSS_VALIDATE_ALL - 总计
      */
-    public BigDecimal getVarCrossValidateAll() {
+    public Integer getVarCrossValidateAll() {
         return varCrossValidateAll;
     }
 
@@ -458,7 +506,7 @@ public class CashProfitTemplateVar {
      *
      * @param varCrossValidateAll 总计
      */
-    public void setVarCrossValidateAll(BigDecimal varCrossValidateAll) {
+    public void setVarCrossValidateAll(Integer varCrossValidateAll) {
         this.varCrossValidateAll = varCrossValidateAll;
     }
 
@@ -467,7 +515,7 @@ public class CashProfitTemplateVar {
      *
      * @return VAR_CROSS_VALIDATE_MONTH_AVG - 月平均
      */
-    public BigDecimal getVarCrossValidateMonthAvg() {
+    public Integer getVarCrossValidateMonthAvg() {
         return varCrossValidateMonthAvg;
     }
 
@@ -476,7 +524,7 @@ public class CashProfitTemplateVar {
      *
      * @param varCrossValidateMonthAvg 月平均
      */
-    public void setVarCrossValidateMonthAvg(BigDecimal varCrossValidateMonthAvg) {
+    public void setVarCrossValidateMonthAvg(Integer varCrossValidateMonthAvg) {
         this.varCrossValidateMonthAvg = varCrossValidateMonthAvg;
     }
 

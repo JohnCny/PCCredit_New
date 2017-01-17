@@ -2,6 +2,7 @@ package com.cardpay.mgt.team.service;
 
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.team.model.Team;
+import com.cardpay.mgt.team.model.vo.OganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import org.apache.ibatis.annotations.Param;
@@ -58,5 +59,11 @@ public interface TeamService extends BaseService<Team> {
      * @return 数量
      */
     boolean selectIfTeamPrincipal(int userId, int teamId);
+
+    /**
+     * 查询所有机构团队信息
+     * @return 机构团队信息
+     */
+    List<OganizationTeamVo> queryOrganization();
 
 }

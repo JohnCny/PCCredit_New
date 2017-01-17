@@ -41,6 +41,13 @@ public class ApplicationIPCController {
 
     @Autowired
     private ApplicationCashProfitExtService applicationCashProfitExtService;
+
+    @GetMapping("/test")
+    public ResultTo test(){
+        applicationIPCBasicService.initTemplate(2);
+        return new ResultTo();
+    }
+
     /**
      * 根据模板查询ipc财务报表
      *
@@ -48,11 +55,11 @@ public class ApplicationIPCController {
      * @param templateId    模板Id
      * @return
      */
-    @GetMapping("/{applicationId}/{templateType}/{templateId}")
+    @GetMapping("/{applicationId}/{templateId}")
     public ResultTo selectIPC(@PathVariable("applicationId") Integer applicationId
-            , @PathVariable("templateType") Integer templateType, @PathVariable("templateId") Integer templateId) {
+            , @PathVariable("templateId") Integer templateId) {
         ResultTo resultTo = new ResultTo();
-        Object template = applicationIPCBasicService.selectGroupEntrance(applicationId, templateId, templateType);
+        Object template = applicationIPCBasicService.selectGroupEntrance(applicationId, templateId);
         resultTo.setData(template);
         return resultTo;
     }
@@ -114,12 +121,26 @@ public class ApplicationIPCController {
     }
 
     /**
+     * 删除一般模板额外值
+     *
+     * @param tApplicationTemplateVarExt 一般类型模板额外值bean
+     * @return 更新结果
+     */
+    @DeleteMapping("/normalExt")
+    public ResultTo deleteNormalVarExt(TApplicationTemplateVarExt tApplicationTemplateVarExt){
+        ResultTo resultTo = new ResultTo();
+        Integer result = applicationTemplateVarExtService.delete(tApplicationTemplateVarExt);
+        resultTo.setIsSuccess(result);
+        return resultTo;
+    }
+
+    /**
      * 更新现金流类型模板var
      *
      * @param applicationCashProfitVar 现金流模板类型varBean
      * @return 更新结果
      */
-    @PutMapping("/cashProfitExt")
+    @PutMapping("/cashProfit")
     public ResultTo updateCashProfitVar(TApplicationCashProfitVar applicationCashProfitVar){
         ResultTo resultTo = new ResultTo();
         Integer result = applicationCashProfitVarService.updateSelectiveByPrimaryKey(applicationCashProfitVar);
@@ -142,15 +163,29 @@ public class ApplicationIPCController {
     }
 
     /**
-     * 更新现金流类型模板var
+     * 更新现金流类型模板varExt
      *
      * @param applicationCashProfitExt 现金流模板类型var额外值Bean
      * @return 更新结果
      */
-    @PutMapping("/cashProfit")
+    @PutMapping("/cashProfitExt")
     public ResultTo updateCashProfitVarExt(TApplicationCashProfitExt applicationCashProfitExt){
         ResultTo resultTo = new ResultTo();
         Integer result = applicationCashProfitExtService.updateSelectiveByPrimaryKey(applicationCashProfitExt);
+        resultTo.setIsSuccess(result);
+        return resultTo;
+    }
+
+    /**
+     * 删除现金流类型模板varExt
+     *
+     * @param applicationCashProfitExt 现金流模板类型var额外值Bean
+     * @return 删除结果
+     */
+    @DeleteMapping("/cashProfitExt")
+    public ResultTo deleteCashProfitVarExt(TApplicationCashProfitExt applicationCashProfitExt){
+        ResultTo resultTo = new ResultTo();
+        Integer result = applicationCashProfitExtService.delete(applicationCashProfitExt);
         resultTo.setIsSuccess(result);
         return resultTo;
     }

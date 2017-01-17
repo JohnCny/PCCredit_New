@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.cardpay.basic.common.constant.CustomerStatusEnum.ORDINARY;
+
 /**
  * 客户移交实现类
  *
@@ -61,7 +63,6 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
     @Autowired
     private TCustomerBasicService customerBasicService;
 
-
     @Override
     public List<SelectModel> getTransferStatus() {
         List<SelectModel> selects = new ArrayList<>();
@@ -81,9 +82,9 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
 
     @Override
     @Transactional
-    public synchronized int accept(String customerIds, Integer flag, int userId) {
-        HashMap<String, Object> map = new HashMap();
-        Map<String, Object> stringObjectMap = new HashMap();
+    public int accept(String customerIds, Integer flag, int userId) {
+        HashMap<String, Object> transferMap = new HashMap();
+        Map<String, Object> customerMap = new HashMap();
         Integer managerId = customerBasicService.getManagerId(userId);
         List<Integer> customerIdList = new ArrayList<>();
         String[] split = customerIds.split(",");
@@ -93,37 +94,41 @@ public class TCustomerTransferServiceImpl extends BaseServiceImpl<TCustomerTrans
         }
         //客户经理接受此客户
         if (flag != null && flag == 1) {
-            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
-            stringObjectMap.put("managerId",managerId);
+            transferMap.put("transferStatus", ConstantEnum.TransferStatus.STATUS1.getVal());
+            customerMap.put("managerId",managerId);
             //客户经理拒绝此客户
         } else {
-            map.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
+            transferMap.put("transferStatus", ConstantEnum.TransferStatus.STATUS2.getVal());
         }
-        map.put("customerIds", customerIdList);
-        int mark = tCustomerTransferDao.accept(map);
+        transferMap.put("customerIds", customerIdList);
+        int mark = tCustomerTransferDao.accept(transferMap);
         //接受/拒绝成功后回复客户状态
         if (mark != 0) {
-            stringObjectMap.put("status", ConstantEnum.CustomerStatus.STATUS0.getVal());
-            stringObjectMap.put("customerIds", customerIdList);
-            int status = tCustomerBasicService.updateStatus(stringObjectMap);
+            customerMap.put("status", ORDINARY.getValue());
+            customerMap.put("customerIds", customerIdList);
+            int status = tCustomerBasicService.updateStatus(customerMap);
             //消息推送
-        /*
-                String messageContent; //发送消息内容
-                if (mark != 0) {
+              /*  String messageContent;
                     for (String id : split) {
                         int customerId = Integer.parseInt(id);
                         User user = userService.selectByPrimaryKey(userId);
                         TCustomerBasic tCustomerBasic = tCustomerBasicService.selectByPrimaryKey(customerId);
-                        TCustomerTransfer tCustomerTransfer = tCustomerTransferDao.selectByPrimaryKey(customerId);
+                        TCustomerTransfer transfer = new TCustomerTransfer();
+                        transfer.setCustomerId(customerId);
+                        List<TCustomerTransfer> customerTransferList = tCustomerTransferDao.select(transfer);
+                        int acceptCustomerId = 0;
+                        for (TCustomerTransfer tCustomerTransfer : customerTransferList) {
+                            acceptCustomerId = tCustomerTransfer.getOriginCustomerManager();
+                            continue;
+                        }
                         if (flag != null && flag == 1) {
                             messageContent = "客户经理:" + user.getUserCname() + ",接受了你的客户:" + tCustomerBasic.getCname();
                         } else {
                             messageContent = "客户经理:" + user.getUserCname() + ",拒绝了你的客户:" + tCustomerBasic.getCname();
                         }
-                        messageService.sendMessage("客户移交结果", messageContent, tCustomerTransfer.getOriginCustomerManager()
-                                , 0, 0);
-                    }
-            }*/
+                        messageService.messagePush("客户移交结果", messageContent, acceptCustomerId
+                                , 0, 0, 0);
+                    }*/
             return status;
         }
         return 0;

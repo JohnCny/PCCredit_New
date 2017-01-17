@@ -14,8 +14,8 @@ public class TApplicationFile extends GenericEntity<Integer>{
      */
     @Id
     @Column(name = "FILE_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATIONFILE_SEQ.nextval from dual")
     @ApiModelProperty(value="进件征信报告id",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_FILE_SEQ.nextval from dual")
     private Integer fileId;
 
     /**

@@ -6,7 +6,7 @@ import com.cardpay.mgt.user.model.User;
 import java.util.List;
 
 /**
- * ${DESCRIPTION}
+ * 用户团队vo
  *
  * @author chenkai
  *         createTime 2017-01-2017/1/6 12:08

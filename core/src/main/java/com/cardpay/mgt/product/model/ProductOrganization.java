@@ -19,6 +19,7 @@ public class ProductOrganization extends GenericEntity<Integer> {
 
     @Id
     @Column(name = "PRODUCT_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select PRODUCT_ORGANIZATION_SEQ.nextval from dual")
     @ApiModelProperty(value = "null", required = true)
     private Integer productId;
 

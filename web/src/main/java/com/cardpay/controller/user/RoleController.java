@@ -15,6 +15,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -113,7 +114,8 @@ public class RoleController extends BaseController<Role> {
      */
     @PutMapping
     @ApiOperation(value = "更新角色信息", httpMethod = "PUT")
-    public ResultTo update(Role role, BindingResult result, String authorityIds[]) {
+    public ResultTo update(@ModelAttribute Role role, BindingResult result,
+                           @RequestParam(required = false) String[] authorityIds) {
         Map<String, String> map = new HashMap<>();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             LogTemplate.info(this.getClass(), "message", "更新角色参数有误");
@@ -133,7 +135,7 @@ public class RoleController extends BaseController<Role> {
      * @param newAuthorityId 新权限ID
      * @return 成功或失败
      */
-    @RequestMapping(method = RequestMethod.GET, params = {"roleId", "old", "new"})
+    @GetMapping(params = {"roleId", "old", "new"})
     @ApiOperation(value = "获取权限组", httpMethod = "GET")
     public ResultTo update(@RequestParam(value = "roleId") Integer roleId,
                            @RequestParam(value = "old", defaultValue = "-1") Integer oldAuthorityId,

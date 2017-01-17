@@ -24,6 +24,12 @@ public class UserOrganization extends GenericEntity<Integer> {
     private Integer organizationId;
 
     /**
+     * 是否为默认机构
+     */
+    @Column(name = "IS_DEFAULT")
+    private Integer isDefault;
+
+    /**
      * @return USER_ID
      */
     public Integer getUserId() {
@@ -51,8 +57,18 @@ public class UserOrganization extends GenericEntity<Integer> {
         this.organizationId = organizationId;
     }
 
+    public Integer getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(Integer isDefault) {
+        this.isDefault = isDefault;
+    }
+
     @Override
     public Integer getPK() {
         return null;
     }
+
+
 }

@@ -6,6 +6,7 @@ import com.cardpay.mgt.team.dao.TUserTeamMapper;
 import com.cardpay.mgt.team.dao.TeamMapper;
 import com.cardpay.mgt.team.model.TUserTeam;
 import com.cardpay.mgt.team.model.Team;
+import com.cardpay.mgt.team.model.vo.OganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TeamService;
@@ -78,5 +79,10 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     public boolean selectIfTeamPrincipal(int userId, int teamId) {
         int mark = teamDao.selectIfTeamPrincipal(userId, teamId);
         return mark > 0 ? true : false;
+    }
+
+    @Override
+    public List<OganizationTeamVo> queryOrganization() {
+        return teamDao.queryOrganization();
     }
 }

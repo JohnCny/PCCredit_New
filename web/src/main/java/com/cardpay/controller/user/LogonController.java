@@ -7,17 +7,23 @@ import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.RequestUtil;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.core.shiro.enums.ShiroEnum;
 import com.cardpay.mgt.log.enums.LogEnum;
 import com.cardpay.mgt.log.model.LoginLog;
 import com.cardpay.mgt.log.service.LoginLogService;
+import com.cardpay.mgt.organization.model.TOrganization;
+import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.model.vo.RoleVo;
 import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserRoleService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.*;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 用户登陆controller
@@ -47,6 +54,12 @@ public class LogonController extends BaseController<User> {
 
     @Autowired
     private UserRoleService userRoleService;
+
+    @Autowired
+    private UserOrganizationService userOrganizationService;
+
+    @Autowired
+    private TOrganizationService organizationService;
 
     /**
      * 系统登陆入口
@@ -93,24 +106,37 @@ public class LogonController extends BaseController<User> {
             return new ResultTo(ResultEnum.DISABLED_ACCOUNT);
         }
         LogTemplate.info(this.getClass(), "登陆成功,账号:", userName);
+
+        Map<String, Object> map = new HashedMap();
+
         User user = ShiroKit.getUser();
-        user.setPassword(null);
         ShiroKit.getSession().setAttribute(ShiroKit.USER_SESSION_KEY, user);
-        LoginLog loginLog = loginLogBuilder.withLoginResult(LogEnum.SUCCESS.getValue()).build();
-        loginLogService.insertSelective(loginLog);
-        Date date = new Date();
-        user.setLastLoginTime(date);
-        userService.updateSelectiveByPrimaryKey(user);
+        user.setPassword(null);
+        map.put("user", user);
+
+        UserOrganization userOrganization = new UserOrganization();
+        userOrganization.setUserId(user.getId());
+        userOrganization.setIsDefault(1);
+        UserOrganization selectOne = userOrganizationService.selectOne(userOrganization);
+        TOrganization organization = organizationService.selectByPrimaryKey(selectOne.getOrganizationId());
+        ShiroKit.getSession().setAttribute(ShiroKit.ORG_SESSION_KEY, organization);
+        map.put("org", organization);
+
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getId());
         UserRole selectUserOne = userRoleService.selectOne(userRole);
         Role role = roleService.selectByPrimaryKey(selectUserOne.getRoleId());
-        RoleVo roleVo = null;
-        if (role.getRoleStatus() == 1) {
-            roleVo = DozerUtil.map(role, RoleVo.class);
-        }
         ShiroKit.getSession().setAttribute(ShiroKit.ROLE_SESSION_KEY, role);
-        return new ResultTo().setData(roleVo);
+        map.put("roleType", role.getRoleStatus() == 1 ? role.getRoleType() : null);
+
+        LoginLog loginLog = loginLogBuilder.withLoginResult(LogEnum.SUCCESS.getValue()).build();
+        loginLogService.insertSelective(loginLog);
+
+        Date date = new Date();
+        user.setLastLoginTime(date);
+        userService.updateSelectiveByPrimaryKey(user);
+
+        return new ResultTo().setData(map);
     }
 
     /**
@@ -152,4 +178,17 @@ public class LogonController extends BaseController<User> {
     public ResultTo noLogin() {
         return new ResultTo(ResultEnum.NO_LOGIN);
     }
+
+    /**
+     * 登陆选择机构信息
+     *
+     * @return
+     */
+    @RequestMapping("/{orgId}")
+    public ResultTo loginOrg(@PathVariable("orgId") Integer orgId) {
+        TOrganization organization = organizationService.selectByPrimaryKey(orgId);
+        ShiroKit.getSession().setAttribute(ShiroKit.ORG_SESSION_KEY, organization);
+        return new ResultTo();
+    }
+
 }

@@ -2,9 +2,11 @@ package com.cardpay.mgt.team.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.team.model.Team;
+import com.cardpay.mgt.team.model.vo.OganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -53,4 +55,10 @@ public interface TeamMapper extends BasicMapper<Team> {
      * @return 子团队
      */
     List<Team>querySonTeamById(@Param("teamId") int teamId);
+
+    /**
+     * 查询所有机构团队信息
+     * @return 机构团队信息
+     */
+    List<OganizationTeamVo> queryOrganization();
 }
