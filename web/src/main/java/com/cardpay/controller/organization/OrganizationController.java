@@ -76,7 +76,6 @@ public class OrganizationController extends BaseController<TOrganization> {
     @SystemControllerLog("新增机构")
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
     public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {
-        tOrganization.setOrgParentId(0);
         tOrganization.setCreateBy(ShiroKit.getUserId());
         tOrganization.setCreateTime(new Date());
         tOrganizationService.insertSelective(tOrganization);

@@ -58,7 +58,8 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         if (!IDcardUtil.verify(String.valueOf(identityCard))) {
             return new ResultTo(ResultEnum.ID_CARD_ERROR);
         }
-        boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
+        //TODO :冉凯没提交机构
+        boolean idCardExist = customerBasicService.isIdCardExist(identityCard, 1);
         return new ResultTo().setData(idCardExist);
     }
 

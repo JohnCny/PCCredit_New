@@ -6,6 +6,7 @@
         <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
     </resultMap>
 
+    <!--客户行业相关Vo-->
     <resultMap id="BaseVo" type="com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo">
         <result column="INDUSTRY_ID" jdbcType="DECIMAL" property="industryId"/>
         <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>

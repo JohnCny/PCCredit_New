@@ -12,7 +12,7 @@ import java.util.List;
  * @author chenkai
  *         createTime 2017-01-2017/1/17 10:13
  */
-public class OganizationTeamVo extends GenericEntity<Integer> {
+public class OrganizationTeamVo extends GenericEntity<Integer> {
     /**
      * 团队id
      */
@@ -31,7 +31,7 @@ public class OganizationTeamVo extends GenericEntity<Integer> {
     /**
      * 团队所属机构id
      */
-    private Integer oganizationId;
+    private Integer organizationId;
 
     //----------机构--------------
 
@@ -58,7 +58,7 @@ public class OganizationTeamVo extends GenericEntity<Integer> {
     /**
      * 机构list
      */
-    private List<OganizationTeamVo> orgList;
+    private List<OrganizationTeamVo> orgList;
 
     /**
      * 团队List
@@ -68,14 +68,14 @@ public class OganizationTeamVo extends GenericEntity<Integer> {
     /**
      * 机构下的团队List
      */
-    private List<OganizationTeamVo> orgTeamList;
+    private List<OrganizationTeamVo> orgTeamList;
 
 
-    public List<OganizationTeamVo> getOrgTeamList() {
+    public List<OrganizationTeamVo> getOrgTeamList() {
         return orgTeamList;
     }
 
-    public void setOrgTeamList(List<OganizationTeamVo> orgTeamList) {
+    public void setOrgTeamList(List<OrganizationTeamVo> orgTeamList) {
         this.orgTeamList = orgTeamList;
     }
 
@@ -103,12 +103,12 @@ public class OganizationTeamVo extends GenericEntity<Integer> {
         this.teamParentId = teamParentId;
     }
 
-    public Integer getOganizationId() {
-        return oganizationId;
+    public Integer getOrganizationId() {
+        return organizationId;
     }
 
-    public void setOganizationId(Integer oganizationId) {
-        this.oganizationId = oganizationId;
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
     }
 
     public Integer getOrgId() {
@@ -143,11 +143,11 @@ public class OganizationTeamVo extends GenericEntity<Integer> {
         this.orgParentId = orgParentId;
     }
 
-    public List<OganizationTeamVo> getOrgList() {
+    public List<OrganizationTeamVo> getOrgList() {
         return orgList;
     }
 
-    public void setOrgList(List<OganizationTeamVo> orgList) {
+    public void setOrgList(List<OrganizationTeamVo> orgList) {
         this.orgList = orgList;
     }
 
@@ -161,6 +161,6 @@ public class OganizationTeamVo extends GenericEntity<Integer> {
 
     @Override
     public Integer getPK() {
-        return null;
+        return teamId;
     }
 }

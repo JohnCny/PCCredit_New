@@ -6,14 +6,12 @@ import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerTransfer;
-import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerIndustryService;
 import com.cardpay.mgt.customer.service.TCustomerMaintenanceService;
 import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -105,8 +103,8 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public boolean isIdCardExist(String idCard){
-        return customerBasicDao.isIdCardExist(idCard) > 0 ? true : false;
+    public boolean isIdCardExist(String idCard, Integer organizationId){
+        return customerBasicDao.isIdCardExist(idCard, organizationId) > 0 ? true : false;
     }
 
     @Override

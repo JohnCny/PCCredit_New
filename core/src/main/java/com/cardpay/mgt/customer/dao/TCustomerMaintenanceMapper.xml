@@ -11,6 +11,7 @@
         <result column="OPERATION_TIME" jdbcType="TIMESTAMP" property="operationTime"/>
     </resultMap>
 
+    <!--客户维护信息Vo-->
     <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerMaintenanceVo">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
         <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="certificateNumber"/>

@@ -78,15 +78,15 @@ public class Team extends GenericEntity<Integer> {
     /**
      * 团队所属机构
      */
-    @Column(name = "oganization_id")
-    private Integer oganizationId;
+    @Column(name = "ORGANIZATION_ID")
+    private Integer organizationId;
 
-    public Integer getOganizationId() {
-        return oganizationId;
+    public Integer getOrganizationId() {
+        return organizationId;
     }
 
-    public void setOganizationId(Integer oganizationId) {
-        this.oganizationId = oganizationId;
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
     }
 
     /**

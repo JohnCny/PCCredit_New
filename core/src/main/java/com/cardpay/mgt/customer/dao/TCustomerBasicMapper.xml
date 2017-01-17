@@ -18,9 +18,11 @@
         <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
         <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
         <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
+        <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
         <association property="ifDel" select="ifDelete" column="ID"/>
     </resultMap>
 
+    <!--客户移交Vo-->
     <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
         <result column="ID" jdbcType="VARCHAR" property="id"/>
         <result column="CNAME" jdbcType="VARCHAR" property="name"/>
@@ -37,10 +39,11 @@
     </select>
 
     <!--查询身份证是否存在-->
-    <select id="isIdCardExist" parameterType="String" resultType="Integer">
+    <select id="isIdCardExist" resultType="Integer">
         SELECT COUNT(1)
-        FROM t_customer_basic basic
-        WHERE basic.CERTIFICATE_NUMBER = #{idCard}
+        FROM t_customer_basic
+        WHERE CERTIFICATE_NUMBER = #{idCard}
+        AND ORGANIZATION_ID = #{organizationId}
     </select>
 
     <!--查询客户经理所属客户-->
@@ -58,10 +61,10 @@
             <set>
                 id = id
                 <if test="managerId!=null">
-                     ,CUSTOMER_MANAGER_ID = #{managerId}
+                    ,CUSTOMER_MANAGER_ID = #{managerId}
                 </if>
                 <if test="status!=null">
-                      ,CUSTOMER_STATUS = #{status}
+                    ,CUSTOMER_STATUS = #{status}
                 </if>
             </set>
             where id = #{item}

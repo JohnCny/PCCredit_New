@@ -13,6 +13,7 @@
         <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
     </resultMap>
 
+    <!--客户信息Vo-->
     <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerVo">
         <result column="ID" jdbcType="DECIMAL" property="customerId"/>
         <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="cname"/>
@@ -21,6 +22,7 @@
         <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
     </resultMap>
 
+    <!--客户移交Vo-->
     <resultMap id="BaseVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
         <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="name"/>
