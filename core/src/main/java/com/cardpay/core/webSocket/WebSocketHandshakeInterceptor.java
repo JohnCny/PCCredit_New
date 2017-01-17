@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
- * websocket 握手协议实现类
+ * websocket 握手协议实现类.
  * @author johnmyiqn
  */
 public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
