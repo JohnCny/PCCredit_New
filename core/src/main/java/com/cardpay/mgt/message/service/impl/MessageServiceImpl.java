@@ -66,9 +66,16 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
         return tMessageDao.getMessageByState(userId, mark);
     }
 
-    @Override
-    @Transactional
-    public int sendMessage(String title, String content, int userId, int type, int level) {
+    /**
+     * 给指定用户发送消息
+     * @param title 消息标题
+     * @param content 消息内容
+     * @param userId 消息所属用户id
+     * @param type 消息类型(0 业务消息，1 非业务消息)
+     * @param level 消息级别(0 正常消息，2 警告消息，3 错误消息)
+     * @return 消息id
+     */
+    private int sendMessage(String title, String content, int userId, int type, int level) {
         TMessage tMessage = new TMessage();
         tMessage.setMsgTitle(title);
         tMessage.setMsgContent(content);
@@ -84,9 +91,15 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
         return tMessage.getId();
     }
 
-    @Override
+    /**
+     * 给在线消息()
+     * @param title 消息标题
+     * @param content 消息内容
+     * @param type 消息类型(0 业务消息，1 非业务消息)
+     * @param level 消息级别(0 正常消息，2 警告消息，3 错误消息)
+     */
     @Transactional
-    public void sendMessageAll(String title, String content, int type, int level) {
+    private void sendMessageAll(String title, String content, int type, int level) {
         List<TMessage> list = new ArrayList<>();
         for (Map.Entry<Integer, WebSocketSession> entity : webSocketSessions.entrySet()) {
             Integer id = entity.getKey();
@@ -115,6 +128,7 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
      * @param isBroadcast 是否为推送消息
      * @return 消息String类型
      */
+    @Transactional
     private String messageJsonToString(Integer messageId, String title, String content, int isBroadcast) {
         JSONObject jsonMessage = new JSONObject();
         jsonMessage.put("messageId", messageId);
@@ -141,5 +155,16 @@ public class MessageServiceImpl extends BaseServiceImpl<TMessage> implements Mes
         return tMessageDao.selectAll();
     }
 
-
+    @Override
+    @Transactional
+    public int messagePush(String title, String content, int userId, int type, int level, int broadcast) {
+        //非广播消息
+        if (broadcast == 0) {
+            int messageId = sendMessage(title, content, userId, type, level);
+            return messageId;
+        }
+        //广播消息
+        sendMessageAll(title, content, type, level);
+        return 0;
+    }
 }

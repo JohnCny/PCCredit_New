@@ -25,10 +25,9 @@ public interface ApplicationIPCBasicService{
      *
      * @param applicationId 进件Id
      * @param templateId 模板Id
-     * @param templateType 模板类型
      * @return 模板树
      */
-    Object selectGroupEntrance(Integer applicationId, Integer templateId,Integer templateType);
+    Object selectGroupEntrance(Integer applicationId, Integer templateId);
 
     /**
      * IPC 菜单

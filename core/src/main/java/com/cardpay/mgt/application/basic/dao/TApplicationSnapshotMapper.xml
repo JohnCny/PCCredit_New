@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.basic.dao.TApplicationSnapshotMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplicationSnapshot">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+    <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId" />
+    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId" />
+    <result column="T_APPLICATION_SNAPSHOT" jdbcType="VARCHAR" property="tApplicationSnapshot" />
+  </resultMap>
+</mapper>

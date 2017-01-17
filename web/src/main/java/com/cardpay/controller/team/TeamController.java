@@ -7,6 +7,7 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.team.model.TUserTeam;
 import com.cardpay.mgt.team.model.Team;
+import com.cardpay.mgt.team.model.vo.OganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TUserTeamService;
@@ -162,6 +163,16 @@ public class TeamController extends BaseController<Team> {
     public ResultTo bossTeam() {
         List<Team> teamList = teamService.queryIfTeamPrincipal(ShiroKit.getUserId());
         return new ResultTo().setData(teamList);
+    }
+
+    /**
+     * 查询所有机构团队信息
+     * @return 机构团队信息
+     */
+    @GetMapping("/orgTeam")
+    public ResultTo orgTeam(){
+        List<OganizationTeamVo> teamVos = teamService.queryOrganization();
+        return new ResultTo().setData(teamVos);
     }
 
 }

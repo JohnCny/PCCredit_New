@@ -5,6 +5,7 @@ import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
+import com.cardpay.mgt.customer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
@@ -130,11 +131,14 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
+    @Transactional
     public Integer deleteCustomer(int customerId) {
         Integer integer0 = customerBasicDao.deleteByPrimaryKey(customerId);
         Integer integer1 = tCustomerIndustryService.deleteByPrimaryKey(customerId);
         Integer integer2 = tCustomerMaintenanceService.deleteByPrimaryKey(customerId);
-        Integer integer3 = tCustomerTransferService.deleteByPrimaryKey(customerId);
+        TCustomerTransfer transfer = new TCustomerTransfer();
+        transfer.setCustomerId(customerId);
+        Integer integer3 = tCustomerTransferService.delete(transfer);
         return integer0+integer1+integer2+integer3;
     }
 

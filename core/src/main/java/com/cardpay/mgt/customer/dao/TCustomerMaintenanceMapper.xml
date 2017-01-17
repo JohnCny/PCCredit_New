@@ -37,7 +37,7 @@
             (
             SELECT ORGANIZATION_ID FROM T_CUSTOMER_MANAGER WHERE ID = #{customerManagerId}
             )
-            AND basic.CUSTOMER_STATUS != 5
+            AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
             AND manager.id = #{customerManagerId}
             <if test="cname!=null and cname!=''">
                 AND basic.cname LIKE CONCAT (CONCAT('%',#{cname}),'%')

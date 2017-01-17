@@ -94,10 +94,10 @@ public class DataTablePage {
     private void DataTablePage(String methodName, BaseService baseService, HttpServletRequest request
             , Class clazz, Example example, Map<String, Object> parameterMap) throws NoSuchMethodException
             , InvocationTargetException, IllegalAccessException, InstantiationException {
-        String start = request.getParameter("pageStart");
-        String length = request.getParameter("pageLength");
-        String search = request.getParameter("pageSearch");
-        String order = request.getParameter("pageOrder");
+        String start = request.getParameter(DataTableCode.PAGE_START_NAME);
+        String length = request.getParameter(DataTableCode.PAGE_LENGTH_NAME);
+        String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
+        String order = request.getParameter(DataTableCode.PAGE_ORDER_NAME);
         LogTemplate.info(this.getClass(), "message(BasePage)", "[pageStart:" + start + "][pageLength" + length + "][pageSearch" + search + "][pageOrder" + order + "]");
         this.start = start != null ? Integer.parseInt(start) : this.start;
         this.length = length != null ? Integer.parseInt(length) : this.length;
