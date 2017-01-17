@@ -15,11 +15,17 @@
   </resultMap>
 
   <resultMap id="VarResultMap" type="com.cardpay.mgt.application.ipc.cashflowprofit.model.vo.CashProfitTemplateVar">
+    <result column="TEMPLATE_VAR_ID" jdbcType="DECIMAL" property="templateVarId" />
+    <result column="TEMPLATE_VAR_NAME" jdbcType="VARCHAR" property="templateVarName" />
+    <result column="TEMPLATE_VAR_PARENT_ID" jdbcType="DECIMAL" property="templateVarParentId" />
+    <result column="TEMPLATE_VAR_ORDER" jdbcType="DECIMAL" property="templateVarOrder" />
+    <result column="TEMPLATE_VAR_INPUT_TYPE" jdbcType="DECIMAL" property="templateVarInputType" />
+    <result column="TEMPLATE_VAR_WEIGHT" jdbcType="VARCHAR" property="templateVarWeight" />
+    <result column="TEMPLATE_VAR_GROUP_ID" jdbcType="DECIMAL" property="templateVarGroupId" />
+    <result column="TEMPLATE_VAR_IS_HAS_CHILD" jdbcType="DECIMAL" property="templateVarIsHasChild" />
+    <result column="TEMPLATE_VAR_IS_COMPUTE" jdbcType="DECIMAL" property="templateVarIsCompute" />
     <result column="CASH_PROFIT_OPTION_ID" jdbcType="VARCHAR" property="optionId" />
     <result column="APPLICATION_CASH_PROFIT_VAR_ID" jdbcType="DECIMAL" property="applicationCashProfitVarId" />
-    <result column="CASH_PROFIT_VAR_ID" jdbcType="DECIMAL" property="cashProfitVarId" />
-    <result column="CASH_PROFIT_VAR_VALUE" jdbcType="VARCHAR" property="cashProfitVarValue" />
-    <result column="CASH_PROFIT_OPTION_ID" jdbcType="DECIMAL" property="cashProfitOptionId" />
     <result column="VAR_MONTH_ONE" jdbcType="DECIMAL" property="varMonthOne" />
     <result column="VAR_MONTH_TWO" jdbcType="DECIMAL" property="varMonthTwo" />
     <result column="VAR_MONTH_THREE" jdbcType="DECIMAL" property="varMonthThree" />
@@ -98,8 +104,7 @@
     FROM
     (
       SELECT
-          TV.*,ACV.*,
-          #{applicationId} APPLICATION_ID
+          TV.*,ACV.*
       FROM
           T_TEMPLATE_VAR TV
       LEFT JOIN T_APPLICATION_CASHPROFIT_VAR ACV ON TV.TEMPLATE_VAR_ID = ACV.CASH_PROFIT_VAR_ID
@@ -125,8 +130,7 @@
   <!--查询Var层级-->
   <select id="selectVar" resultMap="VarResultMap">
     SELECT
-        TV.*,ACV.*,
-        #{applicationId} APPLICATION_ID
+        TV.*,ACV.*
     FROM
         T_TEMPLATE_VAR TV
     LEFT JOIN T_APPLICATION_CASHPROFIT_VAR ACV ON TV.TEMPLATE_VAR_ID = ACV.CASH_PROFIT_VAR_ID

@@ -46,7 +46,8 @@
     <!--查询客户经理所属客户-->
     <select id="queryCustomer" resultMap="BaseResultMapVo">
         SELECT customer.id id, customer.cname name FROM T_CUSTOMER_BASIC customer, T_CUSTOMER_MANAGER manager
-        WHERE manager.id = customer.CUSTOMER_MANAGER_ID AND customer.CUSTOMER_STATUS !=6
+        WHERE manager.id = customer.CUSTOMER_MANAGER_ID
+        AND customer.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@TRANSFER.getValue()}
         AND manager.id = #{managerId}
     </select>
 
@@ -81,7 +82,7 @@
             ID = #{customerManagerId}
             )
             AND manager.id = #{customerManagerId}
-            AND basic.CUSTOMER_STATUS != 5
+            AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
             <if test="cname!=null and cname!=''">
                 AND basic.cname LIKE CONCAT(CONCAT('%',#{cname}),'%')
             </if>

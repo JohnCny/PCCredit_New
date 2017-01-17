@@ -30,12 +30,13 @@
     AND	AT.TEMPLATE_ID = ATG.TEMPLATE_ID
     AND	ATG. GROUP_ID = TG. GROUP_ID
     AND ATG.TEMPLATE_ID = PT.TEMPLATE_ID
-    AND TG.IS_GROUP_MENU = 1
-    AND AT.IS_NEED_GENERATE = 1
+    AND TG.IS_GROUP_MENU = ${@com.cardpay.mgt.application.enums.IPCConstant@IS_GROUP_MENU}
+    AND AT.IS_NEED_GENERATE = ${@com.cardpay.mgt.application.enums.IPCConstant@IS_NEED_GENERATE}
     AND APP.ID = #{applicationId}
   </select>
 
-  <select id="selectTemplateTypeByApplicationId">
+  <!--查询进件对于的模板类型-->
+  <select id="selectTemplateTypeByApplicationId" resultType="Integer">
     SELECT
         AT .TEMPLATE_TYPE
     FROM
@@ -52,13 +53,13 @@
   <!--初始化一般IPC模版-->
   <insert id="initNormalTemplate">
   <choose>
-      <when test="templateType == 1">
+      <when test="templateType == @com.cardpay.mgt.application.enums.TemplateTypeEnum@NORMAL.getTemplateId()">
           INSERT INTO T_APPLICATION_TEMPLATE_VAR (
           T_APPLICATION_TEMPLATE_VAR.TEMPLATE_VAR_ID,
           T_APPLICATION_TEMPLATE_VAR.APPLICATION_ID
           )
       </when>
-      <when test="templateType == 2">
+      <when test="templateType == @com.cardpay.mgt.application.enums.TemplateTypeEnum@CASHFLOW_PROFIT.getTemplateId()">
           INSERT INTO T_APPLICATION_CASHPROFIT_VAR (
           T_APPLICATION_CASHPROFIT_VAR.CASH_PROFIT_VAR_ID,
           T_APPLICATION_CASHPROFIT_VAR.APPLICATION_ID
@@ -84,7 +85,7 @@
       AND AT .TEMPLATE_ID = ATG.TEMPLATE_ID
       AND ATG. GROUP_ID = TG. GROUP_ID
       AND ATG.TEMPLATE_ID = PT.TEMPLATE_ID
-      AND AT .IS_NEED_GENERATE = 1
+      AND AT .IS_NEED_GENERATE = ${@com.cardpay.mgt.application.enums.IPCConstant@IS_NEED_GENERATE}
       AND AT .TEMPLATE_TYPE = #{templateType}
       AND APP. ID = #{applicationId}
   </insert>
