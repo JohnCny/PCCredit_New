@@ -133,6 +133,10 @@ ext.libraries = [
         "grpc-protobuf":"io.grpc:grpc-protobuf:$grpcVersion",
         "grpc-stub":"io.grpc:grpc-stub:$grpcVersion",
 
+        //jasperReport
+        "jasperreports":"net.sf.jasperreports:jasperreports:5.5.1",
+        "groovy-all":"org.codehaus.groovy:groovy-all:2.2.2",
+
 
         //单元测试
         "junit":"junit:junit:4.12",

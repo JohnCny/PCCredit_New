@@ -2,8 +2,6 @@
 .idea/
 .bpmn/
 .gradle/
-.idea/
-.bpmn/
 .out/
 .metadata/
 classes/

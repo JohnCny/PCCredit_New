@@ -207,6 +207,10 @@ subprojects {
                 libraries."grpc-protobuf",
                 libraries."grpc-stub",
 
+                //jasperReport
+                libraries."jasperreports",
+                libraries."groovy-all",
+
         )
         testCompile(
                 libraries."junit",

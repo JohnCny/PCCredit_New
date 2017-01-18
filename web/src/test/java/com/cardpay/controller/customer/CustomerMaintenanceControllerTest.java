@@ -42,5 +42,4 @@ public class CustomerMaintenanceControllerTest extends TestEnv {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(200));
     }
-
 }
