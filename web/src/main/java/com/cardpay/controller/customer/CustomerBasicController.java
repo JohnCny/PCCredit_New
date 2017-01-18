@@ -58,7 +58,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         if (!IDcardUtil.verify(String.valueOf(identityCard))) {
             return new ResultTo(ResultEnum.ID_CARD_ERROR);
         }
-        boolean idCardExist = customerBasicService.isIdCardExist(identityCard);
+        boolean idCardExist = customerBasicService.isIdCardExist(identityCard, ShiroKit.getOrgId());
         return new ResultTo().setData(idCardExist);
     }
 

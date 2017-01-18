@@ -6,7 +6,7 @@ import com.cardpay.mgt.team.dao.TUserTeamMapper;
 import com.cardpay.mgt.team.dao.TeamMapper;
 import com.cardpay.mgt.team.model.TUserTeam;
 import com.cardpay.mgt.team.model.Team;
-import com.cardpay.mgt.team.model.vo.OganizationTeamVo;
+import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TeamService;
@@ -82,7 +82,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     }
 
     @Override
-    public List<OganizationTeamVo> queryOrganization() {
+    public List<OrganizationTeamVo> queryOrganization() {
         return teamDao.queryOrganization();
     }
 }

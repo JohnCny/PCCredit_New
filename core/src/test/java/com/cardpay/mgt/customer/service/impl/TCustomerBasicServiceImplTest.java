@@ -2,16 +2,13 @@ package com.cardpay.mgt.customer.service.impl;
 
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
-import com.cardpay.mgt.customer.service.TCustomerTransferService;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
@@ -47,7 +44,7 @@ public class TCustomerBasicServiceImplTest {
 
     @Test
     public void isIdCardExist() throws Exception {
-        when(customerBasicMapper.isIdCardExist("1")).thenReturn(1);
+        when(customerBasicMapper.isIdCardExist("1", )).thenReturn(1);
         boolean idCardExist = customerBasicService.isIdCardExist("1");
         assertTrue(idCardExist);
     }

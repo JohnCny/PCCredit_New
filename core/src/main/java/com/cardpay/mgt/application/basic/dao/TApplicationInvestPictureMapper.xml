@@ -11,14 +11,23 @@
 
     <!--统计进件表中图片上传个数-->
     <select id="queryApplicationFileNext" resultType="Integer">
-    SELECT COUNT (DISTINCT (PRODUCT_INVEST_PICTURE_IDD))
-    FROM T_APPLICATION_INVEST_PICTURE WHERE APPLICATION_ID = #{applicationId}
+        SELECT COUNT (DISTINCT (PRODUCT_INVEST_PICTURE_IDD))
+        FROM
+        T_APPLICATION_INVEST_PICTURE
+        WHERE
+        APPLICATION_ID = #{applicationId}
   </select>
 
     <!--统计产品表中图片上传个数-->
     <select id="queryProductFileNext" resultType="Integer">
-    SELECT COUNT(1) FROM T_PRODUCT_INVEST_PICTURE_DESC WHERE IS_NEED = 0 AND PRODUCT_ID =
-    (SELECT PRODUCT_ID FROM T_APPLICATION_INVEST_PICTURE WHERE APPLICATION_ID = #{applicationId})
+        SELECT COUNT(1) FROM T_PRODUCT_INVEST_PICTURE_DESC
+        WHERE IS_NEED = 0
+        AND PRODUCT_ID =
+        (
+        SELECT PRODUCT_ID
+        FROM T_APPLICATION_INVEST_PICTURE
+        WHERE APPLICATION_ID = #{applicationId}
+        )
   </select>
 
 </mapper>

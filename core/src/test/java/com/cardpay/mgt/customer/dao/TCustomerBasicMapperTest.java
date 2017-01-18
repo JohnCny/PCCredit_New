@@ -32,7 +32,7 @@ public class TCustomerBasicMapperTest extends TestEnv {
 
     @Test
     public void isIdCardExist() throws Exception {
-        Integer idCardExist = tCustomerBasicMapper.isIdCardExist("11");
+        Integer idCardExist = tCustomerBasicMapper.isIdCardExist("11", );
         assertTrue(idCardExist > 0);
     }
 
