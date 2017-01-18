@@ -63,7 +63,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     public DataTablePage pageList(@RequestParam(defaultValue = "0") int topId) {
         Map<String, Object> map = new HashMap<>();
         map.put("topId", topId);
-        return dataTablePage("pageList", map);
+        return dataTablePage("queryAll", map);
     }
 
     /**

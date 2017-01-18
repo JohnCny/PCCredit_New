@@ -51,11 +51,4 @@ public interface TOrganizationService extends BaseService<TOrganization> {
      */
     boolean selectIfOrgPrincipal(int directorId, int orgId);
 
-    /**
-     * 机构分页信息
-     * @param map 机构id
-     * @return 机构信息
-     */
-    List<TOrganization> pageList(Map<String, Object> map);
-
 }

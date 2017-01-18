@@ -44,7 +44,7 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
      *
      * @return TOrganizationVo类
      */
-    List<TOrganizationVo> queryAll();
+    List<TOrganizationVo> queryAll(Map<String, Object> map);
 
     /**
      * 查询此机构是否有子机构
@@ -60,12 +60,5 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
      * @return 是否为负责人
      */
     int selectIfOrgPrincipal(@Param("directorId")int directorId,@Param("orgId") int orgId);
-
-    /**
-     * 机构分页信息
-     * @param map 机构id
-     * @return 机构信息
-     */
-    List<TOrganization> pageList(Map<String, Object> map);
 
 }

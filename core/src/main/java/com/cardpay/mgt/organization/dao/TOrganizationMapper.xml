@@ -44,8 +44,17 @@
     </select>
 
     <!--查询所有机构信息-->
-    <select id="queryAll" resultMap="BaseResultMapVo">
+    <select id="queryAll" resultMap="BaseResultMapVo" parameterType="Map">
         SELECT * FROM T_ORGANIZATION
+        <where>
+            1=1
+            <if test="orgName !=null and orgName !=''">
+               AND ORG_PARENT_ID LIKE CONCAT(CONCAT('%',#{orgName}),'%')
+            </if>
+            <if test="topId !=null ">
+              AND  ORG_PARENT_ID = #{topId}
+            </if>
+        </where>
     </select>
 
     <!--递归查询机构层级列表信息-->
@@ -72,14 +81,4 @@
         AND ID = #{orgId}
     </select>
 
-    <!--机构分页信息-->
-    <select id="pageList" parameterType="Map">
-        SELECT * FROM T_ORGANIZATION
-         <where>
-             ORG_PARENT_ID = #{topId}
-             <if test="">
-                 AND ORG_NAME LIKE CONCAT(CONCAT('%',#{orgName}),'%')
-             </if>
-         </where>
-    </select>
 </mapper>

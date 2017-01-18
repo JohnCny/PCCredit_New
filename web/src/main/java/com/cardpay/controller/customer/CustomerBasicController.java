@@ -49,18 +49,16 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
      * 验证证件号码是否已经存在
      *
      * @param identityCard 证件号码
-     * @param organizationId 机构id
      * @return true/false
      */
     @GetMapping("/idCardExist")
     @SystemControllerLog("验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
-    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam String identityCard,
-                             Integer organizationId) {
+    public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam String identityCard) {
         if (!IDcardUtil.verify(String.valueOf(identityCard))) {
             return new ResultTo(ResultEnum.ID_CARD_ERROR);
         }
-        boolean idCardExist = customerBasicService.isIdCardExist(identityCard, organizationId);
+        boolean idCardExist = customerBasicService.isIdCardExist(identityCard, ShiroKit.getOrgId());
         return new ResultTo().setData(idCardExist);
     }
 
