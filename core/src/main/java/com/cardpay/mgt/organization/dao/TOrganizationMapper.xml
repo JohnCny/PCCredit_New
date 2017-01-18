@@ -44,18 +44,27 @@
     </select>
 
     <!--查询所有机构信息-->
-    <select id="queryAll" resultMap="BaseResultMapVo">
+    <select id="queryAll" resultMap="BaseResultMapVo" parameterType="Map">
         SELECT * FROM T_ORGANIZATION
+        <where>
+            1=1
+            <if test="orgName !=null and orgName !=''">
+               AND ORG_PARENT_ID LIKE CONCAT(CONCAT('%',#{orgName}),'%')
+            </if>
+            <if test="topId !=null ">
+              AND  ORG_PARENT_ID = #{topId}
+            </if>
+        </where>
     </select>
 
     <!--递归查询机构层级列表信息-->
     <select id="queryOrganization" resultMap="BaseResultMapVo">
-    SELECT * FROM T_ORGANIZATION_VIEW WHERE ORG_PARENT_ID = #{id}
+    SELECT * FROM T_ORGANIZATION WHERE ORG_PARENT_ID = #{id}
     </select>
 
     <!--递归删除机构信息-->
     <delete id="deleteOrganization">
-    DELETE FROM T_ORGANIZATION WHERE ID in (
+    DELETE FROM T_ORGANIZATION WHERE ID IN (
     SELECT ID FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{id} )
     </delete>
 
@@ -71,4 +80,5 @@
         SELECT COUNT(1) FROM T_ORGANIZATION WHERE ORG_DIRECTOR_ID = #{directorId}
         AND ID = #{orgId}
     </select>
+
 </mapper>

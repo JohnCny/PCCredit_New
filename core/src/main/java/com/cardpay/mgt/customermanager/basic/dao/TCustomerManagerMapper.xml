@@ -10,13 +10,13 @@
   </resultMap>
 
   <resultMap id="BaseVoMap" type="com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo">
-    <result column="ID" jdbcType="DECIMAL" property="managerId" />
+    <result column="MANAGER_ID" jdbcType="DECIMAL" property="managerId" />
     <result column="LEVEL_ID" jdbcType="DECIMAL" property="levelId" />
     <result column="LEVEL_NAME" jdbcType="VARCHAR" property="levelName" />
     <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
     <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
     <result column="MANAGER_STATUS" jdbcType="DECIMAL" property="managerStatus" />
-    <association property="user" javaType="com.cardpay.mgt.user.model.User">
+    <association property="user" javaType="com.cardpay.mgt.user.model.User" >
       <result column="ID" jdbcType="DECIMAL" property="id"/>
       <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
       <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
@@ -39,7 +39,8 @@
   </resultMap>
   <!--查询客户经理BaseVo列表-->
   <select id="selectBaseVoList" resultMap="BaseVoMap">
-    SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME,USR.*
+    SELECT CM.ID AS MANAGER_ID, CM.LEVEL_ID, CM.USER_ID, CM.MANAGER_STATUS
+    , CML.LEVEL_NAME,ORG.ORG_NAME,USR.*
       FROM T_ORGANIZATION ORG,T_USER USR,
     T_CUSTOMER_MANAGER CM LEFT JOIN T_CUSTOMER_MANAGER_LEVEL CML ON CM.LEVEL_ID = CML.ID
     WHERE
@@ -62,7 +63,8 @@
 
   <!--根据UserID查询客户经理BaseVo-->
   <select id="selectBaseVoByUserId" resultMap="BaseVoMap">
-    SELECT CM.*,CML.LEVEL_NAME,ORG.ORG_NAME,USR.*
+    SELECT CM.ID AS MANAGER_ID, CM.LEVEL_ID, CM.USER_ID, CM.MANAGER_STATUS
+    , CML.LEVEL_NAME,ORG.ORG_NAME,USR.*
       FROM T_ORGANIZATION ORG,T_USER USR,
       T_CUSTOMER_MANAGER CM LEFT JOIN T_CUSTOMER_MANAGER_LEVEL CML ON CM.LEVEL_ID = CML.ID
     WHERE

@@ -44,9 +44,10 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     /**
      * 判断身份证号码是否已经存在
      * @param idCard 身份证号码
+     * @param organizationId 机构id
      * @return 是否存在(true:存在, false:不存在)
      */
-    boolean isIdCardExist(String idCard);
+    boolean isIdCardExist(String idCard, Integer organizationId);
 
     /**
      * 查询客户经理所属客户

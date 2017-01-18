@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * 客户签约信息Controller
  *
@@ -43,7 +45,8 @@ public class TApplicationContractController extends BaseController<TApplicationC
      */
     @PostMapping
     public ResultTo insert(TApplicationContract contract) {
-        Integer mark = tApplicationContractService.insert(contract);
+        contract.setCreateTime(new Date());
+        Integer mark = tApplicationContractService.insertSelective(contract);
         return mark != 0 ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 }

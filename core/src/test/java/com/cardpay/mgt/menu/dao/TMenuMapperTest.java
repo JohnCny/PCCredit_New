@@ -18,7 +18,7 @@ public class TMenuMapperTest extends TestEnv{
     @Autowired
     private TMenuMapper tMenuMapper;
 
-    @Test
+/*    @Test
     public void selectMenuList() throws Exception {
         List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByUserAll(2);
         assertTrue(tMenuVos.size() > 0);
@@ -28,7 +28,7 @@ public class TMenuMapperTest extends TestEnv{
     public void createMenuView() throws Exception {
         List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByUserLevel(0,3,2);
         assertTrue(tMenuVos.size() > 0);
-    }
+    }*/
 
     @Test
     public void recursionDelete() throws Exception {

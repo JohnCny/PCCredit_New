@@ -26,7 +26,6 @@ public class TMenuVo extends GenericEntity<Integer>{
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select MENU_SEQ.nextval from dual")
     @ApiModelProperty(value = "菜单id", required = true)
-    @TreeId
     private Integer id;
 
     /**
@@ -99,6 +98,35 @@ public class TMenuVo extends GenericEntity<Integer>{
     @ApiModelProperty(value = "子菜单", required = true)
     @TreeChild
     private List<TMenuVo> menuLists;
+
+    /**
+     * 机构id
+     */
+    @ApiModelProperty(value = "机构id", required = true)
+    private Integer organizationId;
+
+    /**
+     * 菜单模版id
+     */
+    @ApiModelProperty(value = "菜单模版id", required = true)
+    @TreeId
+    private Integer menuTemplateId;
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public Integer getMenuTemplateId() {
+        return menuTemplateId;
+    }
+
+    public void setMenuTemplateId(Integer menuTemplateId) {
+        this.menuTemplateId = menuTemplateId;
+    }
 
     /**
      * 获取子菜单

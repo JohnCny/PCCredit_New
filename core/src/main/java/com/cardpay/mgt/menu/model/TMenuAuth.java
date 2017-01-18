@@ -107,6 +107,34 @@ public class TMenuAuth extends GenericEntity<Integer>{
     private Integer isHaveAuth;
 
     /**
+     * 菜单模版id
+     */
+    @ApiModelProperty(value = "菜单模版id", required = true)
+    private Integer menuTemplateId;
+
+    /**
+     * 机构id
+     */
+    @ApiModelProperty(value = "机构id", required = true)
+    private Integer organizationId;
+
+    public Integer getMenuTemplateId() {
+        return menuTemplateId;
+    }
+
+    public void setMenuTemplateId(Integer menuTemplateId) {
+        this.menuTemplateId = menuTemplateId;
+    }
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    /**
      * 获取权限中文名称
      *
      * @return 权限中文名称

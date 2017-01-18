@@ -1,7 +1,9 @@
 package com.cardpay.mgt.organization.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.treeutil.TreeUtil;
+import com.cardpay.mgt.menu.exception.EndRecursionException;
 import com.cardpay.mgt.organization.dao.TOrganizationMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
@@ -37,13 +39,6 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public List<TOrganizationVo> queryOrganization(int parentId, int levels) {
-        tOrganizationDao.createOrganizationView(parentId, levels);
-        return tOrganizationDao.queryOrganization(parentId);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Override
     public int deleteOrganization(int organizationId) {
         int number = tOrganizationDao.querySubsidiary(organizationId);
         int count = userOrganizationDao.queryUserOrg(organizationId);
@@ -52,8 +47,8 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
 
     @Override
     public List<TOrganizationVo> queryAll(Map<String, Object> map) {
-        TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
-        return tree.getChildNodesByParentId(tOrganizationDao.queryAll(), map.get("topId"));
+        List<TOrganizationVo> tOrganizationVos = tOrganizationDao.queryAll(map);
+        return tOrganizationVos;
     }
 
     @Override
@@ -78,5 +73,41 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     public boolean selectIfOrgPrincipal(int directorId, int orgId) {
         int mark = tOrganizationDao.selectIfOrgPrincipal(directorId, orgId);
         return mark > 0 ? true : false;
+    }
+
+    @Override
+    public Integer getTopOrgId(Integer orgId) {
+        try {
+            recursionOrgTopId(selectAll(),orgId);
+        } catch (EndRecursionException e) {
+            try {
+                Integer topId = Integer.parseInt(e.getMessage());
+                return topId;
+            } catch (NumberFormatException e1) {
+                e.printStackTrace();
+                LogTemplate.error(e,"机构",e.getMessage());
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 递归查询topId
+     *
+     * @param organizations 全部机构
+     * @param orgId 需要查询的机构Id
+     * @throws EndRecursionException 退出
+     */
+    private void recursionOrgTopId(List<TOrganization> organizations, Integer orgId) throws EndRecursionException {
+        for (TOrganization organization : organizations) {
+            if(organization.getId().equals(orgId)){
+                if(organization.getOrgParentId().equals(0)){
+                    throw new EndRecursionException(organization.getId().toString());
+                } else {
+                    recursionOrgTopId(organizations,organization.getOrgParentId());
+                }
+            }
+        }
+        throw new EndRecursionException("未找到顶级机构id");
     }
 }

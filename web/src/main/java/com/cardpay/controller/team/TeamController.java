@@ -7,7 +7,7 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.team.model.TUserTeam;
 import com.cardpay.mgt.team.model.Team;
-import com.cardpay.mgt.team.model.vo.OganizationTeamVo;
+import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TUserTeamService;
@@ -171,7 +171,7 @@ public class TeamController extends BaseController<Team> {
      */
     @GetMapping("/orgTeam")
     public ResultTo orgTeam(){
-        List<OganizationTeamVo> teamVos = teamService.queryOrganization();
+        List<OrganizationTeamVo> teamVos = teamService.queryOrganization();
         return new ResultTo().setData(teamVos);
     }
 

@@ -11,7 +11,7 @@
         <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="IS_MENU_TYPE" jdbcType="DECIMAL" property="isMenuType"/>
-        <result column="OGANIZATION_ID" jdbcType="DECIMAL" property="oganizationId"/>
+        <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
     </resultMap>
 
     <!--团队Vo-->
@@ -36,10 +36,10 @@
     </resultMap>
 
     <!--机构团队Vo-->
-    <resultMap id="orgTeamVo" type="com.cardpay.mgt.team.model.vo.OganizationTeamVo">
+    <resultMap id="orgTeamVo" type="com.cardpay.mgt.team.model.vo.OrganizationTeamVo">
         <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId"/>
         <result column="TEAM_NAME" jdbcType="VARCHAR" property="teamName"/>
-        <result column="OGANIZATION_ID" jdbcType="DECIMAL" property="oganizationId"/>
+        <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
         <result column="TEAM_PARENT_ID" jdbcType="DECIMAL" property="teamParentId"/>
         <result column="ID" jdbcType="DECIMAL" property="orgId"/>
         <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
@@ -62,16 +62,13 @@
 
     <!--查询机构下的团队信息-->
     <select id="queryTeamListTwo" resultMap="orgTeamVo">
-        SELECT * FROM T_TEAM WHERE OGANIZATION_ID = #{orgId}
+        SELECT * FROM T_TEAM WHERE ORGANIZATION_ID = #{orgId}
     </select>
 
     <!--递归查询子团队信息-->
     <select id="queryOrgTeamList" resultMap="orgTeamVo">
         SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
     </select>
-
-
-    <!--以上为机构团队信息,测试用-->
 
     <!--查询子团队信息-->
     <select id="queryTeamList" resultMap="BaseVo">
@@ -99,7 +96,7 @@
 
     <!--递归删除团队信息-->
     <delete id="deleteTeam">
-    DELETE FROM T_TEAM WHERE TEAM_ID in (
+    DELETE FROM T_TEAM WHERE TEAM_ID IN (
     SELECT TEAM_ID FROM T_TEAM CONNECT BY PRIOR TEAM_ID = TEAM_PARENT_ID START WITH TEAM_ID = #{teamId} )
     </delete>
 
