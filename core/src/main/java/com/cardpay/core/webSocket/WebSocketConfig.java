@@ -17,14 +17,17 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @Configuration
 @EnableWebMvc
 @EnableWebSocket
-public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
-
+public class WebSocketConfig extends WebMvcConfigurerAdapter
+        implements WebSocketConfigurer {
+    /**
+     * 测试
+     */
     @Autowired
-    SystemWebSocketHandler systemWebSocketHandler;
+    private SystemWebSocketHandler systemWebSocketHandler;
 
     @Override //用来注册websocket server实现类，第二个参数是访问websocket的地址
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(systemWebSocketHandler,"/webSocketServer").addInterceptors(new WebSocketHandshakeInterceptor());
+    public void registerWebSocketHandlers(final WebSocketHandlerRegistry registry) {
+        registry.addHandler(systemWebSocketHandler, "/webSocketServer").addInterceptors(new WebSocketHandshakeInterceptor());
 
         //这个是使用Sockjs的注册方法
         registry.addHandler(systemWebSocketHandler, "/sockjs/webSocketServer").addInterceptors(new WebSocketHandshakeInterceptor())
