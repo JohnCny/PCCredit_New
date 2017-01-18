@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.menu.dao.TAuthorityMenuMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.menu.model.TAuthorityMenu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="AUTHORITY_ID" jdbcType="DECIMAL" property="authorityId" />
+    <result column="MENU_ID" jdbcType="DECIMAL" property="menuId" />
+  </resultMap>
+</mapper>

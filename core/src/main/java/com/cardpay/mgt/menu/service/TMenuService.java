@@ -16,6 +16,13 @@ import java.util.List;
 public interface TMenuService extends BaseService<TMenu> {
 
     /**
+     * 初始化菜单
+     *
+     * @param orgId  机构id
+     */
+    void initMenu(Integer orgId);
+
+    /**
      * 查询菜单列表(有限层级)
      *
      * @param topId  顶级id

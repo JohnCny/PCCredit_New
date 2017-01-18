@@ -11,17 +11,23 @@ import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.treeutil.TreeUtil;
+import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.menu.dao.TMenuAuthorityTemplateMapper;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
-import com.cardpay.mgt.menu.enums.RoleEnum;
+import com.cardpay.mgt.menu.model.TAuthorityMenu;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuAuth;
+import com.cardpay.mgt.menu.model.TMenuAuthorityTemplate;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.model.Authority;
+import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.service.RoleService;
 import com.cardpay.mgt.user.service.UserRoleService;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +54,12 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     private UserRoleService userRoleService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private TMenuAuthorityTemplateMapper menuAuthorityTemplateMapper;
+
+    @Autowired
     private RedisClient redisClient;
 
     private static final String SELECT = "Select";
@@ -55,6 +67,46 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     private static final String UPDATE = "Update";
     private static final String ADD = "Add";
     private static final int TOP_ID = 0;
+
+    @Override
+    public void initMenu(Integer orgId) {
+        TMenu criteria = new TMenu();
+        criteria.setOrganizationId(orgId);
+        List<TMenu> isHaveMenu = tMenuMapper.select(criteria);
+        if(!isHaveMenu.isEmpty()){
+            LogTemplate.warn(null,"菜单初始化错误","机构："+orgId+"已存在菜单");
+            return;
+        }
+
+        tMenuMapper.initMenu(ShiroKit.getUserId(),orgId);
+        List<TMenu> menus = tMenuMapper.select(criteria);
+        List<TMenuAuthorityTemplate> tMenuAuthorityTemplates = menuAuthorityTemplateMapper.selectAll();
+        List<TAuthorityMenu> tAuthorityMenus = new ArrayList<>();
+
+        Map<Integer, List<TMenuAuthorityTemplate>> menuAuthTemplateMap = new HashMap<>();
+        for (TMenuAuthorityTemplate tMenuAuthorityTemplate : tMenuAuthorityTemplates) {
+            if (menuAuthTemplateMap.containsKey(tMenuAuthorityTemplate.getMenuTemplateId())) {
+                menuAuthTemplateMap.get(tMenuAuthorityTemplate.getMenuTemplateId()).add(tMenuAuthorityTemplate);
+            } else {
+                menuAuthTemplateMap.put(tMenuAuthorityTemplate.getMenuTemplateId(), new ArrayList<>());
+                menuAuthTemplateMap.get(tMenuAuthorityTemplate.getMenuTemplateId()).add(tMenuAuthorityTemplate);
+            }
+        }
+
+        for (TMenu menu : menus) {
+            for (Map.Entry<Integer,List<TMenuAuthorityTemplate>> map : menuAuthTemplateMap.entrySet()) {
+                if(menu.getId().equals(map.getKey())){
+                    List<TMenuAuthorityTemplate> authIds = map.getValue();
+                    for (TMenuAuthorityTemplate authId : authIds) {
+                        TAuthorityMenu tAuthorityMenu = new TAuthorityMenu();
+                        tAuthorityMenu.setMenuId(map.getKey());
+                        tAuthorityMenu.setAuthorityId(authId.getAuthorityId());
+                        tAuthorityMenus.add(tAuthorityMenu);
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public List<TMenuVo> selectMenuListByLevel(int topId, int level, int userId) {
@@ -68,7 +120,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
         UserRole criteria = new UserRole();
         criteria.setUserId(userId);
         UserRole userRole = userRoleService.selectOne(criteria);
-        Object menuJson = redisClient.get(RedisKeyPrefixEnum.ROLE_MENU, RoleEnum.getValueById(userRole.getRoleId()).getRoleName());
+        Object menuJson = redisClient.get(RedisKeyPrefixEnum.ROLE_MENU, userRole.getRoleId().toString());
         return JSON.parseArray(menuJson.toString());
     }
 
@@ -214,10 +266,13 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
      */
     @Override
     public void updateMenuCache() {
-        for (RoleEnum roleEnum : RoleEnum.values()) {
-            String menuString = JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(roleEnum.getRoleId())));
-            LogTemplate.info("菜单初始化,"+"菜单角色:"+roleEnum.getRoleName(),menuString);
-            redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,roleEnum.getRoleName()
+        Role criteria = new Role();
+        criteria.setOrganizationId(ShiroKit.getOrgId());
+        List<Role> roles = roleService.select(criteria);
+        for (Role role : roles) {
+            String menuString = JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(role.getId())));
+            LogTemplate.info("菜单初始化,"+"菜单角色:"+role.getRoleName(),menuString);
+            redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,role.getId().toString()
                     ,menuString);
         }
         LogTemplate.info("菜单初始化完毕",null);
