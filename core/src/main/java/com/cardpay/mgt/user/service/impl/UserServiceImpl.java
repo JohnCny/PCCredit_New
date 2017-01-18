@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
  * 用户Service层实现
  *
  * @author rankai
- *         createTime 2016-12-2016/12/23 14:40
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
