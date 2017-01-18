@@ -5,9 +5,12 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.menu.exception.EndRecursionException;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
 import com.cardpay.mgt.menu.service.TMenuService;
+import com.cardpay.mgt.organization.model.TOrganization;
+import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -132,10 +135,4 @@ public class MenuController {
         return resultTo;
     }
 
-    @GetMapping("init")
-    public ResultTo initMenu(Integer orgId){
-        ResultTo resultTo = new ResultTo();
-        tMenuService.initMenu(orgId);
-        return resultTo;
-    }
 }

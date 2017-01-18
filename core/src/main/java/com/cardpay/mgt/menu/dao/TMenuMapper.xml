@@ -96,18 +96,23 @@
         FROM
             (
                 SELECT
-                    T_MENU.*, T_AUTHORITY.AUTHORITY_NAME,T_AUTHORITY.AUTHORITY_NAME_ZH,T_AUTHORITY."ID" AS AUTH_ID
+                    T_MENU.*, T_AUTHORITY.AUTHORITY_NAME,
+                    T_AUTHORITY.AUTHORITY_NAME_ZH,
+                    T_AUTHORITY."ID" AS AUTH_ID
                 FROM
+                    T_ROLE,
                     T_MENU,
                     T_AUTHORITY,
                     T_AUTHORITY_MENU
                 WHERE
                     T_MENU."ID" = T_AUTHORITY_MENU.MENU_ID
                 AND T_AUTHORITY."ID" = T_AUTHORITY_MENU.AUTHORITY_ID
+                AND T_MENU.ORGANIZATION_ID = T_ROLE.ORGANIZATION_ID
+                AND T_ROLE. ID = #{roleId}
             ) ALL_MENU
         LEFT JOIN (
             SELECT
-                 T_AUTHORITY."ID" AS IS_HAVE
+                T_AUTHORITY."ID" AS IS_HAVE
             FROM
                 T_ROLE,
                 T_ROLE_AUTHORITY,
@@ -115,10 +120,11 @@
                 T_AUTHORITY_MENU,
                 T_AUTHORITY
             WHERE
-                    T_ROLE. ID = T_ROLE_AUTHORITY.ROLE_ID
+                T_ROLE. ID = T_ROLE_AUTHORITY.ROLE_ID
             AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY. ID
             AND T_ROLE_AUTHORITY.AUTHORITY_ID = T_AUTHORITY_MENU.AUTHORITY_ID
             AND T_MENU. ID = T_AUTHORITY_MENU.MENU_ID
+            AND T_MENU.ORGANIZATION_ID = T_ROLE.ORGANIZATION_ID
             AND T_ROLE. ID = #{roleId}
         ) USER_MENU ON ALL_MENU.AUTH_ID = USER_MENU.IS_HAVE
     </select>
