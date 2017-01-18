@@ -46,18 +46,6 @@ public class ApplicationController extends BaseController<TApplication> {
         return new ResultTo().setData(flag);
     }
 
-    /**
-     * 查询此客户是否申请过此产品
-     *
-     * @param customerId 客户Id
-     * @param productId  产品Id
-     * @return true/false
-     */
-    @GetMapping("/ifCustomer")
-    public ResultTo queryCustomerIfHaveProduct(int productId, int customerId) {
-        boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
-        return new ResultTo().setData(flag);
-    }
 
     /**
      * 新建进件
@@ -68,15 +56,19 @@ public class ApplicationController extends BaseController<TApplication> {
      */
     @PostMapping
     public ResultTo insertApplication(int productId, int customerId) {
-        Integer managerId = ShiroKit.getUserId();
-        TApplication tApplication = new TApplication();
-        tApplication.setCreateTime(new Date());
-        tApplication.setProductId(productId);
-        tApplication.setCustomerId(customerId);
-        tApplication.setCustomerManagerId(managerId);
-        tApplication.setApplicationStatus(APP_UNFINISHED.getValue());
-        Integer integer = tApplicationService.insertSelective(tApplication);
-        return integer != 0 ? new ResultTo().setData(tApplication.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
+        if (flag){
+            Integer managerId = ShiroKit.getUserId();
+            TApplication tApplication = new TApplication();
+            tApplication.setCreateTime(new Date());
+            tApplication.setProductId(productId);
+            tApplication.setCustomerId(customerId);
+            tApplication.setCustomerManagerId(managerId);
+            tApplication.setApplicationStatus(APP_UNFINISHED.getValue());
+            Integer integer = tApplicationService.insertSelective(tApplication);
+            return integer != 0 ? new ResultTo().setData(tApplication.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        }
+        return new ResultTo().setData(flag);
     }
 
     /**
@@ -100,7 +92,7 @@ public class ApplicationController extends BaseController<TApplication> {
                 return dataTablePage("queryAppByTeamId", map);
             }
         }
-        //团队负责人
+        //机构负责人
         Integer orgId = (Integer) request.getAttribute("orgId");
         if (orgId != null && orgId != 0) {
             if (tApplicationService.userIfOrgBoss(userId, teamId)) {
