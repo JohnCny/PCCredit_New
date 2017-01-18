@@ -133,9 +133,9 @@ public class MenuController {
     }
 
     @GetMapping("init")
-    public ResultTo initMenu(){
+    public ResultTo initMenu(Integer orgId){
         ResultTo resultTo = new ResultTo();
-        tMenuService.initMenu(1);
+        tMenuService.initMenu(orgId);
         return resultTo;
     }
 }

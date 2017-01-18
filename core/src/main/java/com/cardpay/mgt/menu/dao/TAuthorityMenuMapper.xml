@@ -8,4 +8,12 @@
     <result column="AUTHORITY_ID" jdbcType="DECIMAL" property="authorityId" />
     <result column="MENU_ID" jdbcType="DECIMAL" property="menuId" />
   </resultMap>
+  
+  <insert id="batchInsert">
+    INSERT INTO T_AUTHORITY_MENU (AUTHORITY_ID, MENU_ID)
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator="union">
+      SELECT #{item.authorityId,mode=IN,jdbcType=DECIMAL}, #{item.menuId,mode=IN,jdbcType=DECIMAL}
+      FROM DUAL
+    </foreach>
+  </insert>
 </mapper>

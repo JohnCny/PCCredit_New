@@ -15,16 +15,6 @@ import java.util.List;
 public interface TMenuMapper extends BasicMapper<TMenu> {
 
     /**
-     * 根据用户Id查询菜单列表(有限层级)
-     *
-     * @param parentId 顶级id
-     * @param level 深度
-     * @param userId 用户id
-     * @return 菜单列表
-     */
-    List<TMenuVo> selectMenuListByUserLevel(@Param("parentId") int parentId, @Param("level") Integer level, @Param("userId") Integer userId);
-
-    /**
      * 根据角色Id查询菜单列表
      *
      * @param roleId 角色id

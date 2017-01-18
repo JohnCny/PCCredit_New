@@ -12,6 +12,7 @@ import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.menu.dao.TAuthorityMenuMapper;
 import com.cardpay.mgt.menu.dao.TMenuAuthorityTemplateMapper;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
 import com.cardpay.mgt.menu.model.TAuthorityMenu;
@@ -49,6 +50,9 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
     @Autowired
     private AuthorityMapper authorityMapper;
+
+    @Autowired
+    private TAuthorityMenuMapper authorityMenuMapper;
 
     @Autowired
     private UserRoleService userRoleService;
@@ -95,23 +99,18 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
 
         for (TMenu menu : menus) {
             for (Map.Entry<Integer,List<TMenuAuthorityTemplate>> map : menuAuthTemplateMap.entrySet()) {
-                if(menu.getId().equals(map.getKey())){
+                if(menu.getMenuTemplateId().equals(map.getKey())){
                     List<TMenuAuthorityTemplate> authIds = map.getValue();
                     for (TMenuAuthorityTemplate authId : authIds) {
                         TAuthorityMenu tAuthorityMenu = new TAuthorityMenu();
-                        tAuthorityMenu.setMenuId(map.getKey());
+                        tAuthorityMenu.setMenuId(menu.getId());
                         tAuthorityMenu.setAuthorityId(authId.getAuthorityId());
                         tAuthorityMenus.add(tAuthorityMenu);
                     }
                 }
             }
         }
-    }
-
-    @Override
-    public List<TMenuVo> selectMenuListByLevel(int topId, int level, int userId) {
-        List<TMenuVo> menuVoList = tMenuMapper.selectMenuListByUserLevel(topId, level, userId);
-        return convertMenu2Tree(menuVoList);
+        authorityMenuMapper.batchInsert(tAuthorityMenus);
     }
 
     @Override
