@@ -5,6 +5,7 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.core.shiro.enums.ShiroEnum;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
@@ -57,7 +58,7 @@ public class ApplicationController extends BaseController<TApplication> {
     @PostMapping
     public ResultTo insertApplication(int productId, int customerId) {
         boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
-        if (flag){
+        if (flag) {
             Integer managerId = ShiroKit.getUserId();
             TApplication tApplication = new TApplication();
             tApplication.setCreateTime(new Date());
@@ -81,7 +82,8 @@ public class ApplicationController extends BaseController<TApplication> {
     public DataTablePage queryByManagerId(HttpServletRequest request) {
         Integer userId = ShiroKit.getUserId();
         Map<String, Object> map = new HashMap();
-        if (ShiroKit.hasRole("manager")) {
+
+        if (ShiroEnum.MANAGER.getValue().equals(ShiroKit.getRole().getRoleType())) {
             map.put("managerId", userId);
             return dataTablePage("queryByManagerId", map);
         }

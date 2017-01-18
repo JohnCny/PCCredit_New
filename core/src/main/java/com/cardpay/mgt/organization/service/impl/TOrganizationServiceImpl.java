@@ -46,9 +46,13 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     }
 
     @Override
-    public List<TOrganizationVo> queryAll(Map<String, Object> map) {
-        List<TOrganizationVo> tOrganizationVos = tOrganizationDao.queryAll(map);
-        return tOrganizationVos;
+    public List<TOrganizationVo> queryAll(int topId) {
+        TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
+        List<TOrganizationVo> tOrganizationVos = tOrganizationDao.queryAll();
+        if (!tOrganizationVos.isEmpty()) {
+            return tree.getChildNodesByParentId(tOrganizationVos, topId);
+        }
+        return new ArrayList<>();
     }
 
     @Override
@@ -89,6 +93,11 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
             }
         }
         return null;
+    }
+
+    @Override
+    public List<TOrganization> selectOrganization(Map<String, Object> map) {
+        return tOrganizationDao.selectOrganization(map);
     }
 
     /**
