@@ -11,6 +11,7 @@
         <result column="OPERATION_TIME" jdbcType="TIMESTAMP" property="operationTime"/>
     </resultMap>
 
+    <!--客户维护信息Vo-->
     <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerMaintenanceVo">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
         <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="certificateNumber"/>
@@ -27,15 +28,18 @@
 
     <!--按条件查询客户维护信息-->
     <select id="queryCustomerByCondition" resultMap="BaseResultMapVo">
-        SELECT basic.id as id, basic.CERTIFICATE_NUMBER AS certificateNumber, basic.tel as tel
-        , maintenance.CUSTOMER_CNAME as cname, maintenance.OPERATION_ID as operationId
-        FROM T_CUSTOMER_BASIC basic, T_CUSTOMER_MANAGER manager, T_CUSTOMER_MAINTENANCE maintenance
+        SELECT basic.id AS id, basic.CERTIFICATE_NUMBER AS certificateNumber, basic.tel AS tel
+        , maintenance.CUSTOMER_CNAME AS cname, maintenance.OPERATION_ID AS operationId
+        FROM
+        T_CUSTOMER_BASIC basic, T_CUSTOMER_MANAGER manager, T_CUSTOMER_MAINTENANCE maintenance
         <where>
             basic.CUSTOMER_MANAGER_ID = MANAGER.id
             AND maintenance.id = basic.id
             AND MANAGER.ORGANIZATION_ID =
             (
-            SELECT ORGANIZATION_ID FROM T_CUSTOMER_MANAGER WHERE ID = #{customerManagerId}
+            SELECT ORGANIZATION_ID
+            FROM T_CUSTOMER_MANAGER
+            WHERE ID = #{customerManagerId}
             )
             AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
             AND manager.id = #{customerManagerId}

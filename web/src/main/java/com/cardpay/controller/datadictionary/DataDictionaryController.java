@@ -56,9 +56,8 @@ public class DataDictionaryController extends BaseController<TDataDictionary> {
      * @param dataId 数据字典id
      * @return 删除结果
      */
-    @RequestMapping(method = RequestMethod.DELETE)
-    @ApiOperation(value = "删除数据字典接口", notes = "删除数据字典", httpMethod = "DELETE")
-    public ResultTo delete(@RequestParam("dataId") Integer dataId) {
+    @DeleteMapping("/{dataId}")
+    public ResultTo delete(@PathVariable("dataId") Integer dataId) {
         Integer count = dataDictionaryService.deleteByPrimaryKey(dataId);
         return count !=0 ? new ResultTo().setData(count) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

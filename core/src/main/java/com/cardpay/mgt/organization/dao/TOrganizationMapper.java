@@ -44,7 +44,7 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
      *
      * @return TOrganizationVo类
      */
-    List<TOrganizationVo> queryAll();
+    List<TOrganizationVo> queryAll(Map<String, Object> map);
 
     /**
      * 查询此机构是否有子机构
