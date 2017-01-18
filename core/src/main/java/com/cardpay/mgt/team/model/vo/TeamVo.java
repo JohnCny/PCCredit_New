@@ -68,10 +68,24 @@ public class TeamVo extends GenericEntity<Integer> {
     private Short isMenuType;
 
     /**
+     * 负责人信息
+     */
+    private User Leader;
+
+    /**
      * 子团队信息
      */
     @TreeChild
     private List<TeamVo> teamList;
+
+
+    public User getLeader() {
+        return Leader;
+    }
+
+    public void setLeader(User leader) {
+        Leader = leader;
+    }
 
     /**
      *客户机构关联信息

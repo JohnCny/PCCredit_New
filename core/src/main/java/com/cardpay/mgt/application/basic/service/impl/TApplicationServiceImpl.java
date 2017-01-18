@@ -65,6 +65,7 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
     /**
      * 机构service
      */
+    @Autowired
     private TOrganizationService tOrganizationService;
 
     @Override
@@ -124,9 +125,6 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
 
     @Override
     public boolean userIfOrgBoss(int orgId, int userId) {
-        if (tOrganizationService.selectIfOrgPrincipal(orgId, userId)) {
-            return true;
-        }
-        return false;
+        return tOrganizationService.selectIfOrgPrincipal(orgId, userId) ? true : false;
     }
 }

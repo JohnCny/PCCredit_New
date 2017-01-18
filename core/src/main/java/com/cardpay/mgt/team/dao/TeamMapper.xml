@@ -11,7 +11,7 @@
         <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="IS_MENU_TYPE" jdbcType="DECIMAL" property="isMenuType"/>
-        <result column="OGANIZATION_ID" jdbcType="DECIMAL" property="oganizationId"/>
+        <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
     </resultMap>
 
     <!--团队Vo-->
@@ -26,6 +26,7 @@
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="IS_MENU_TYPE" jdbcType="DECIMAL" property="isMenuType"/>
         <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+        <association property="Leader" select="queryLeader" column="TEAM_LEADER_ID"/>
         <collection property="teamList" select="queryTeamList" column="TEAM_ID"/>
     </resultMap>
 
@@ -36,10 +37,10 @@
     </resultMap>
 
     <!--机构团队Vo-->
-    <resultMap id="orgTeamVo" type="com.cardpay.mgt.team.model.vo.OganizationTeamVo">
+    <resultMap id="orgTeamVo" type="com.cardpay.mgt.team.model.vo.OrganizationTeamVo">
         <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId"/>
         <result column="TEAM_NAME" jdbcType="VARCHAR" property="teamName"/>
-        <result column="OGANIZATION_ID" jdbcType="DECIMAL" property="oganizationId"/>
+        <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
         <result column="TEAM_PARENT_ID" jdbcType="DECIMAL" property="teamParentId"/>
         <result column="ID" jdbcType="DECIMAL" property="orgId"/>
         <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
@@ -62,7 +63,7 @@
 
     <!--查询机构下的团队信息-->
     <select id="queryTeamListTwo" resultMap="orgTeamVo">
-        SELECT * FROM T_TEAM WHERE OGANIZATION_ID = #{orgId}
+        SELECT * FROM T_TEAM WHERE ORGANIZATION_ID = #{orgId}
     </select>
 
     <!--递归查询子团队信息-->
@@ -70,17 +71,24 @@
         SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
     </select>
 
+    <!--以上为机构团队信息(暂时弃用)-->
 
-    <!--以上为机构团队信息,测试用-->
+
+    <!--查询团队负责人信息-->
+    <select id="queryLeader" resultType="com.cardpay.mgt.user.model.User">
+        SELECT * FROM T_USER WHERE id = #{teamLeaderId}
+    </select>
 
     <!--查询子团队信息-->
     <select id="queryTeamList" resultMap="BaseVo">
    SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+   AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
     </select>
 
     <!--查询所有团队信息-->
-    <select id="queryAll" resultMap="BaseVo">
-        SELECT * FROM T_TEAM
+    <select id="queryAll" parameterType="Map" resultMap="BaseVo">
+        SELECT * FROM T_TEAM WHERE IS_MENU_TYPE = 0
+        AND ORGANIZATION_ID = #{organizationId}
     </select>
 
     <!--查询用户信息-->
@@ -95,11 +103,12 @@
         TEAM.TEAM_ID = usrTeam.TEAM_ID
         AND usrTeam.USER_ID = usr.id
         AND team.TEAM_ID = #{teamId}
+        AND team.ORGANIZATION_ID = #{organizationId}
     </select>
 
     <!--递归删除团队信息-->
     <delete id="deleteTeam">
-    DELETE FROM T_TEAM WHERE TEAM_ID in (
+    DELETE FROM T_TEAM WHERE TEAM_ID IN (
     SELECT TEAM_ID FROM T_TEAM CONNECT BY PRIOR TEAM_ID = TEAM_PARENT_ID START WITH TEAM_ID = #{teamId} )
     </delete>
 
@@ -119,5 +128,6 @@
     <!--按团队id查询子团队-->
     <select id="querySonTeamById" resultMap="BaseResultMap">
     SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+    AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
     </select>
 </mapper>

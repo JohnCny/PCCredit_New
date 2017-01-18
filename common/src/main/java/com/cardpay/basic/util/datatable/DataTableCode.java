@@ -15,5 +15,4 @@ public class DataTableCode {
     public static final String PAGE_SEARCH_NAME = "pageSearch";
 
     public static final String PAGE_ORDER_NAME = "pageOrder";
-
 }

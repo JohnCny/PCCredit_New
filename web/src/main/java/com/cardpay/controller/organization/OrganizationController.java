@@ -5,21 +5,28 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.team.model.Team;
+import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 机构Controller类
@@ -36,6 +43,15 @@ public class OrganizationController extends BaseController<TOrganization> {
     @Autowired
     private static LogTemplate logger;
 
+    @Autowired
+    private UserService userService;
+
+    /**
+     *菜单
+     */
+    @Autowired
+    private TMenuService tMenuService;
+
     /**
      * 查询所有机构层级信息接口
      *
@@ -45,10 +61,20 @@ public class OrganizationController extends BaseController<TOrganization> {
     @GetMapping
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("topId", topId);
-        List<TOrganizationVo> organization = tOrganizationService.queryAll(map);
+        List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
         return new ResultTo().setData(organization);
+    }
+
+    /**
+     * 机构分页信息
+     *
+     * @return 机构列表
+     */
+    @PostMapping("/pageList")
+    public DataTablePage pageList(@RequestParam(defaultValue = "0") int topId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("topId", topId);
+        return dataTablePage("selectOrganization", map);
     }
 
     /**
@@ -75,12 +101,20 @@ public class OrganizationController extends BaseController<TOrganization> {
     @PostMapping
     @SystemControllerLog("新增机构")
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
-    public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {
-        tOrganization.setOrgParentId(0);
+    public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization
+    , String account) {
+
         tOrganization.setCreateBy(ShiroKit.getUserId());
         tOrganization.setCreateTime(new Date());
         tOrganizationService.insertSelective(tOrganization);
         logger.info(OrganizationController.class, "新增机构", "机构id:" + tOrganization.getId());
+        int orgParentId = tOrganization.getOrgParentId();
+        if (orgParentId == 0){
+            User user = new User();
+            user.setUsername(account);
+            userService.addUserByOrg(user, tOrganization.getId());
+            tMenuService.initMenu(tOrganization.getId());
+        }
         return new ResultTo().setData(tOrganization.getId());
     }
 
@@ -90,7 +124,6 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @return 机构列表
      */
     @GetMapping("/orgAll")
-    @ApiOperation(value = "根据父ID获取机构列表", httpMethod = "GET", notes = "默认父ID为0")
     public ResultTo getAllForTree() {
         List<TOrganization> tOrganizations = tOrganizationService.selectAll();
         return new ResultTo().setData(tOrganizations);
@@ -153,4 +186,5 @@ public class OrganizationController extends BaseController<TOrganization> {
         List<TOrganization> organizationList = tOrganizationService.queryIfOrgPrincipal(ShiroKit.getUserId());
         return new ResultTo().setData(organizationList);
     }
+
 }

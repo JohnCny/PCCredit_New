@@ -15,21 +15,6 @@ import java.util.Map;
  * @author chenkai
  */
 public interface TOrganizationMapper extends BasicMapper<TOrganization> {
-    /**
-     * 动态创建机构表临时视图
-     *
-     * @param id     父级id
-     * @param levels 显示层级数量
-     */
-    void createOrganizationView(@Param("id") int id, @Param("levels") int levels);
-
-    /**
-     * 递归查询机构层级信息
-     *
-     * @param id 父级id
-     * @return 机构层级信息
-     */
-    List<TOrganizationVo> queryOrganization(@Param("id") int id);
 
     /**
      * 递归删除机构信息
@@ -41,10 +26,16 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
 
     /**
      * 查询所有机构信息
-     *
-     * @return TOrganizationVo类
+     * @return 机构信息
      */
     List<TOrganizationVo> queryAll();
+
+    /**
+     * 查询所有机构信息
+     * @param map 参数
+     * @return 机构信息
+     */
+    List<TOrganization> selectOrganization(Map<String, Object> map);
 
     /**
      * 查询此机构是否有子机构

@@ -88,6 +88,36 @@ public class TMenu extends GenericEntity<Integer>{
     private Date createTime;
 
     /**
+     * 机构id
+     */
+    @Column(name = "ORGANIZATION_ID")
+    @ApiModelProperty(value = "机构id", required = true)
+    private Integer organizationId;
+
+    /**
+     * 菜单模版id
+     */
+    @Column(name = "MENU_TEMPLATE_ID")
+    @ApiModelProperty(value = "菜单模版id", required = true)
+    private Integer menuTemplateId;
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public Integer getMenuTemplateId() {
+        return menuTemplateId;
+    }
+
+    public void setMenuTemplateId(Integer menuTemplateId) {
+        this.menuTemplateId = menuTemplateId;
+    }
+
+    /**
      * 获取菜单id
      *
      * @return ID - 菜单id

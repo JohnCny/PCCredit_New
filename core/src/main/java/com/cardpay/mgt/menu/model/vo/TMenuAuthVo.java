@@ -25,7 +25,6 @@ public class TMenuAuthVo extends GenericEntity<Integer> {
      * 菜单id
      */
     @ApiModelProperty(value = "菜单id", required = true)
-    @TreeId
     private Integer id;
 
     /**
@@ -107,6 +106,35 @@ public class TMenuAuthVo extends GenericEntity<Integer> {
      */
     @ApiModelProperty(value = "权限Id", required = true)
     private Integer seeAuthId;
+
+    /**
+     * 机构id
+     */
+    @ApiModelProperty(value = "机构id", required = true)
+    private Integer organizationId;
+
+    /**
+     * 菜单模版id
+     */
+    @ApiModelProperty(value = "菜单模版id", required = true)
+    @TreeId
+    private Integer menuTemplateId;
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public Integer getMenuTemplateId() {
+        return menuTemplateId;
+    }
+
+    public void setMenuTemplateId(Integer menuTemplateId) {
+        this.menuTemplateId = menuTemplateId;
+    }
 
     /**
      * 获取权限Id

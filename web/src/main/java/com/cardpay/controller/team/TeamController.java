@@ -7,7 +7,7 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.team.model.TUserTeam;
 import com.cardpay.mgt.team.model.Team;
-import com.cardpay.mgt.team.model.vo.OganizationTeamVo;
+import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TUserTeamService;
@@ -43,9 +43,9 @@ public class TeamController extends BaseController<Team> {
      * @return 团队层级信息
      */
     private List<TeamVo> queryAllTeam(int topId) {
-        HashMap<String, Integer> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("topId", topId);
-        List<TeamVo> teamVoList = teamService.queryAll(map);
+        List<TeamVo> teamVoList = teamService.queryAll(map, ShiroKit.getOrgId());
         return teamVoList;
     }
 
@@ -55,15 +55,16 @@ public class TeamController extends BaseController<Team> {
      * @param topId 层级id(默认顶级)
      * @return 团队信息包含成员信息）
      */
-    @GetMapping
+    @GetMapping("/all")
     public ResultTo queryAll(@RequestParam(defaultValue = "0") int topId) {
+        Integer orgId = ShiroKit.getOrgId();
         List<TeamVo> teamVoList = queryAllTeam(topId);
         for (TeamVo teamVo : teamVoList) {
-            List<UserTeamVo> userTeamVos = teamService.queryTeam(teamVo.getTeamId());
+            List<UserTeamVo> userTeamVos = teamService.queryTeam(teamVo.getTeamId(), orgId);
             teamVo.setUserTeamList(userTeamVos);
             List<TeamVo> teamList = teamVo.getTeamList();
             for (TeamVo team : teamList) {
-                List<UserTeamVo> userTeamVoList = teamService.queryTeam(team.getTeamId());
+                List<UserTeamVo> userTeamVoList = teamService.queryTeam(team.getTeamId(), orgId);
                 team.setUserTeamList(userTeamVoList);
             }
         }
@@ -76,7 +77,7 @@ public class TeamController extends BaseController<Team> {
      * @param topId 层级id(默认顶级)
      * @return 团队信息（不包含成员信息）
      */
-    @GetMapping("/all")
+    @GetMapping
     public ResultTo queryTeam(@RequestParam(defaultValue = "0") int topId) {
         List<TeamVo> teamVoList = queryAllTeam(topId);
         return new ResultTo().setData(teamVoList);
@@ -138,7 +139,7 @@ public class TeamController extends BaseController<Team> {
      */
     @DeleteMapping("/{id}")
     public ResultTo delete(@PathVariable("id") int teamId) {
-        int flag = teamService.deleteTeam(teamId);
+        int flag = teamService.deleteTeam(teamId, ShiroKit.getOrgId());
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -171,7 +172,7 @@ public class TeamController extends BaseController<Team> {
      */
     @GetMapping("/orgTeam")
     public ResultTo orgTeam(){
-        List<OganizationTeamVo> teamVos = teamService.queryOrganization();
+        List<OrganizationTeamVo> teamVos = teamService.queryOrganization();
         return new ResultTo().setData(teamVos);
     }
 

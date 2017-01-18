@@ -5,6 +5,7 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.core.shiro.enums.ShiroEnum;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
@@ -47,19 +48,6 @@ public class ApplicationController extends BaseController<TApplication> {
     }
 
     /**
-     * 查询此客户是否申请过此产品
-     *
-     * @param customerId 客户Id
-     * @param productId  产品Id
-     * @return true/false
-     */
-    @GetMapping("/ifCustomer")
-    public ResultTo queryCustomerIfHaveProduct(int productId, int customerId) {
-        boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
-        return new ResultTo().setData(flag);
-    }
-
-    /**
      * 新建进件
      *
      * @param productId  产品id
@@ -68,15 +56,19 @@ public class ApplicationController extends BaseController<TApplication> {
      */
     @PostMapping
     public ResultTo insertApplication(int productId, int customerId) {
-        Integer managerId = ShiroKit.getUserId();
-        TApplication tApplication = new TApplication();
-        tApplication.setCreateTime(new Date());
-        tApplication.setProductId(productId);
-        tApplication.setCustomerId(customerId);
-        tApplication.setCustomerManagerId(managerId);
-        tApplication.setApplicationStatus(APP_UNFINISHED.getValue());
-        Integer integer = tApplicationService.insertSelective(tApplication);
-        return integer != 0 ? new ResultTo().setData(tApplication.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
+        if (flag) {
+            Integer managerId = ShiroKit.getUserId();
+            TApplication tApplication = new TApplication();
+            tApplication.setCreateTime(new Date());
+            tApplication.setProductId(productId);
+            tApplication.setCustomerId(customerId);
+            tApplication.setCustomerManagerId(managerId);
+            tApplication.setApplicationStatus(APP_UNFINISHED.getValue());
+            Integer integer = tApplicationService.insertSelective(tApplication);
+            return integer != 0 ? new ResultTo().setData(tApplication.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        }
+        return new ResultTo().setData(flag);
     }
 
     /**
@@ -88,7 +80,8 @@ public class ApplicationController extends BaseController<TApplication> {
     public DataTablePage queryByManagerId(final HttpServletRequest request) {
         Integer userId = ShiroKit.getUserId();
         Map<String, Object> map = new HashMap();
-        if (ShiroKit.hasRole("manager")) {
+
+        if (ShiroEnum.MANAGER.getValue().equals(ShiroKit.getRole().getRoleType())) {
             map.put("managerId", userId);
             return dataTablePage("queryByManagerId", map);
         }
@@ -100,7 +93,7 @@ public class ApplicationController extends BaseController<TApplication> {
                 return dataTablePage("queryAppByTeamId", map);
             }
         }
-        //团队负责人
+        //机构负责人
         Integer orgId = (Integer) request.getAttribute("orgId");
         if (orgId != null && orgId != 0) {
             if (tApplicationService.userIfOrgBoss(userId, teamId)) {

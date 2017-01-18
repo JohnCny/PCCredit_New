@@ -14,13 +14,6 @@ import java.util.Map;
  * @author chenkai on 2016/11/24.
  */
 public interface TOrganizationService extends BaseService<TOrganization> {
-    /**
-     *  递归查询机构层级信息
-     * @param parentId 父级id
-     * @param levels 查询的层级数量
-     * @return 机构层级信息
-     */
-    List<TOrganizationVo> queryOrganization(int parentId, int levels);
 
     /**
      *  递归删除机构信息
@@ -31,10 +24,10 @@ public interface TOrganizationService extends BaseService<TOrganization> {
 
     /**
      * 查询所有机构信息
-     * @param map 父id
+     * @param topId 父id
      * @return 机构信息
      */
-    List<TOrganizationVo> queryAll(Map<String, Object> map);
+    List<TOrganizationVo> queryAll(int topId);
 
     /**
      *  查询此用户所负责的机构信息
@@ -50,5 +43,20 @@ public interface TOrganizationService extends BaseService<TOrganization> {
      * @return true/false
      */
     boolean selectIfOrgPrincipal(int directorId, int orgId);
+
+    /**
+     * 根据机构id 获得顶级机构id
+     *
+     * @param orgId 机构id
+     * @return topId
+     */
+    Integer getTopOrgId(Integer orgId);
+
+    /**
+     * 查询所有机构信息
+     * @param map 参数
+     * @return 机构信息
+     */
+    List<TOrganization> selectOrganization(Map<String, Object> map);
 
 }
