@@ -16,6 +16,7 @@ import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.AuthorityGroupVo;
 import com.cardpay.mgt.user.model.vo.AuthorityVo;
 import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.service.UserService;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,9 +44,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
 
     @Autowired
     private RoleAuthorityMapper roleAuthorityMapper;
-
-    @Autowired
-    private TOrganizationMapper organizationMapper;
 
     @Override
     public List<AuthorityGroupVo> selectAuthorityGroup() {

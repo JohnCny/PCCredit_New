@@ -22,7 +22,7 @@ public interface UserService extends BaseService<User> {
      * 获取用户的资源权限
      *
      * @param userId 用户ID
-     * @param orgId 机构ID
+     * @param orgId  机构ID
      * @return 用户的资源集合
      */
     Set<String> getUserAuthority(Integer userId, Integer orgId);
@@ -106,4 +106,13 @@ public interface UserService extends BaseService<User> {
      * @return 用户信息以及用户机构和角色信息
      */
     UserUpdateVo selectUserUpdateVo(Integer userId);
+
+    /**
+     * 增加顶级机构增加用户
+     *
+     * @param user  用户
+     * @param orgId 机构ID
+     * @return 成功或失败
+     */
+    boolean addUserByOrg(User user, Integer orgId);
 }
