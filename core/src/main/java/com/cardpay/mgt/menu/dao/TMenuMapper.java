@@ -15,25 +15,6 @@ import java.util.List;
 public interface TMenuMapper extends BasicMapper<TMenu> {
 
     /**
-     * 根据用户Id查询菜单列表(有限层级)
-     *
-     * @param parentId 顶级id
-     * @param level 深度
-     * @param userId 用户id
-     * @return 菜单列表
-     */
-    List<TMenuVo> selectMenuListByUserLevel(@Param("parentId") int parentId, @Param("level") Integer level, @Param("userId") Integer userId);
-
-    /**
-     * 根据用户Id查询菜单列表(无限层级)
-     *
-     * @param userId 用户id
-     * @return 菜单列表
-     */
-    List<TMenuVo> selectMenuListByUserAll(@Param("userId") Integer userId);
-
-
-    /**
      * 根据角色Id查询菜单列表
      *
      * @param roleId 角色id
@@ -57,4 +38,12 @@ public interface TMenuMapper extends BasicMapper<TMenu> {
      */
     Integer recursionDelete(@Param("id") Integer id);
 
+    /**
+     * 初始化机构菜单
+     *
+     * @param userId 操作人
+     * @param orgId 机构id
+     * @return 初始化结果
+     */
+    Integer initMenu(@Param("userId") Integer userId,@Param("orgId") Integer orgId);
 }

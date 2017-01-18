@@ -131,4 +131,11 @@ public class MenuController {
         tMenuService.updateMenuCache();
         return resultTo;
     }
+
+    @GetMapping("init")
+    public ResultTo initMenu(Integer orgId){
+        ResultTo resultTo = new ResultTo();
+        tMenuService.initMenu(orgId);
+        return resultTo;
+    }
 }

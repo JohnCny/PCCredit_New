@@ -1,7 +1,7 @@
 package com.cardpay.mgt.menu.enums;
 
 /**
- * 角色ID枚举
+ * 角色类型枚举
  *
  * @author yanweichen
  */

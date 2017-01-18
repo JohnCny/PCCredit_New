@@ -6,7 +6,6 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.mgt.menu.dao.TMenuMapper;
-import com.cardpay.mgt.menu.enums.RoleEnum;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuAuth;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
@@ -132,7 +131,7 @@ public class TMenuServiceImplTest {
         userRole.setRoleId(2);
         whenNew(UserRole.class).withNoArguments().thenReturn(criteria);
         when(userRoleService.selectOne(criteria)).thenReturn(userRole);
-        when(redisClient.get(RedisKeyPrefixEnum.ROLE_MENU, RoleEnum.getValueById(userRole.getRoleId()).getRoleName()))
+        when(redisClient.get(RedisKeyPrefixEnum.ROLE_MENU, userRole.getRoleId().toString()))
                 .thenReturn(JSON.toJSONString(tMenuVos));
         JSONArray tMenuVoList = tMenuService.selectMenuListByAll(2);
         assertTrue(tMenuVoList.size() > 0);
