@@ -167,11 +167,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
         return true;
     }
 
-    @Override
-    public List<Role> getRoleByTopOrg() {
-        return organizationMapper.;
-    }
-
     private List<AuthorityGroupVo> getGroup(List<String> authorityGroups, List<Authority> authorities) {
         List<AuthorityGroupVo> list = new ArrayList<>();
         for (String name : authorityGroups) {

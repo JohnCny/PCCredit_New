@@ -73,11 +73,4 @@ public interface RoleService extends BaseService<Role> {
      * @return 成功失败
      */
     boolean updateAuthorityIds(Role role, String[] authorityIds);
-
-    /**
-     * 获取当前登陆用户的机构的顶级机构下的角色信息
-     *
-     * @return 当前登陆用户的机构的顶级机构下的角色信息
-     */
-    List<Role> getRoleByTopOrg();
 }

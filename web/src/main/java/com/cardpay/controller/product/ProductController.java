@@ -6,6 +6,7 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ErrorMessageUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.industry.service.IndustryService;
 import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.ProductInvestPictureDesc;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Map;
 
@@ -66,6 +68,8 @@ public class ProductController extends BaseController<Product> {
     @RequestMapping("/pageList")
     @ApiOperation(value = "产品分页数据")
     public DataTablePage pageList() {
+        Example example = new Example(Product.class);
+        example.createCriteria().andEqualTo("organizationId", ShiroKit.getOrgId());
         return dataTablePage();
     }
 

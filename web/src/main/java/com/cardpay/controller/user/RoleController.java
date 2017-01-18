@@ -7,6 +7,7 @@ import com.cardpay.basic.util.ErrorMessageUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.core.shiro.enums.ShiroEnum;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.model.Role;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -51,7 +53,12 @@ public class RoleController extends BaseController<Role> {
     @RequestMapping("/pageList")
     @ApiOperation(value = "获取角色分页数据")
     public DataTablePage pageList() {
-        return dataTablePage();
+        if (ShiroEnum.ADMIN.getValue().equals(ShiroKit.getRole().getRoleType())) {
+            return dataTablePage();
+        }
+        Example example = new Example(Role.class);
+        example.createCriteria().andEqualTo("organizationId", ShiroKit.getTopOrgId());
+        return dataTablePage(example);
     }
 
     /**
@@ -154,6 +161,9 @@ public class RoleController extends BaseController<Role> {
      */
     @GetMapping
     public ResultTo getTopOrg() {
-        return new ResultTo().setData(roleService.getRoleByTopOrg());
+        Role role = new Role();
+        role.setRoleStatus(1);
+        role.setOrganizationId(ShiroKit.getTopOrgId());
+        return new ResultTo().setData(roleService.select(role));
     }
 }

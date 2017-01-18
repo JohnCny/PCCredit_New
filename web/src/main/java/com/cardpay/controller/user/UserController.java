@@ -92,6 +92,7 @@ public class UserController extends BaseController<User> {
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     public ResultTo addUserPage() {
         Role role = new Role();
+        role.setOrganizationId(ShiroKit.getTopOrgId());
         role.setOrganizationId(ShiroKit.getOrgId());
         return new ResultTo().setData(roleService.select(role));
     }
