@@ -204,6 +204,12 @@ public class Product extends GenericEntity<Integer> {
     private Integer productGroupId;
 
     /**
+     * 所属机构
+     */
+    @Column(name = "ORGANIZATION_ID")
+    private Integer organizationId;
+
+    /**
      * 获取产品id
      *
      * @return ID - 产品id
@@ -363,6 +369,14 @@ public class Product extends GenericEntity<Integer> {
      */
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
+    }
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
     }
 
     /**
@@ -698,6 +712,7 @@ public class Product extends GenericEntity<Integer> {
                 '}';
     }
 
+
     public static final class ProductBuilder {
         private Integer id;
         private String productName;
@@ -725,6 +740,7 @@ public class Product extends GenericEntity<Integer> {
         private Date modifyTime;
         private Integer modifyBy;
         private Integer productGroupId;
+        private Integer organizationId;
 
         private ProductBuilder() {
         }
@@ -863,6 +879,11 @@ public class Product extends GenericEntity<Integer> {
             return this;
         }
 
+        public ProductBuilder withOrganizationId(Integer organizationId) {
+            this.organizationId = organizationId;
+            return this;
+        }
+
         public Product build() {
             Product product = new Product();
             product.setId(id);
@@ -891,6 +912,7 @@ public class Product extends GenericEntity<Integer> {
             product.setModifyTime(modifyTime);
             product.setModifyBy(modifyBy);
             product.setProductGroupId(productGroupId);
+            product.setOrganizationId(organizationId);
             return product;
         }
     }

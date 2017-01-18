@@ -6,10 +6,14 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.impl.execchain.TunnelRefusedException;
+import org.apache.shiro.SecurityUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Null;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -113,6 +117,7 @@ public class DataTablePage {
         }
 
         Map<String, Object> map = JSON.parseObject(search, Map.class);
+
         if (StringUtils.isNotBlank(methodName)) { //是否制定方法名称,若没有则执行默认的查询方法
             if (null != parameterMap) {
                 if (null != map) {
@@ -213,4 +218,5 @@ public class DataTablePage {
     public void setCode(int code) {
         this.code = code;
     }
+
 }

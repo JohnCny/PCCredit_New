@@ -7,7 +7,7 @@
         -->
         <result column="ID" jdbcType="DECIMAL" property="id"/>
         <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
-        <result column="PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="pritureDescription"/>
+        <result column="PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="investPritureDescription"/>
         <result column="IS_NEED" jdbcType="DECIMAL" property="isNeed"/>
     </resultMap>
 
@@ -17,7 +17,7 @@
         INSERT INTO T_PRODUCT_INVEST_PICTURE_DESC (ID, PRODUCT_ID, PRITURE_DESCRIPTION, IS_NEED)
         <foreach collection="list" item="item" index="index" open="(" close=")"
                  separator="union">
-            SELECT #{item.id}, #{item.productId}, #{item.pritureDescription}, #{item.isNeed} FROM DUAL
+            SELECT #{item.id}, #{item.productId}, #{item.investPritureDescription}, #{item.isNeed} FROM DUAL
         </foreach>
     </insert>
 </mapper>

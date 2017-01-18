@@ -5,6 +5,7 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.basic.util.RequestUtil;
+import com.cardpay.basic.util.datatable.DataTableCode;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.core.shiro.enums.ShiroEnum;
@@ -26,6 +27,8 @@ import io.swagger.annotations.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -121,6 +124,8 @@ public class LogonController extends BaseController<User> {
         TOrganization organization = organizationService.selectByPrimaryKey(selectOne.getOrganizationId());
         ShiroKit.getSession().setAttribute(ShiroKit.ORG_SESSION_KEY, organization);
         map.put("org", organization);
+        Integer topOrgId = organizationService.getTopOrgId(organization.getId());
+        ShiroKit.getSession().setAttribute(ShiroKit.TOP_ORG_SESSION_KEY, topOrgId);
 
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getId());
@@ -145,7 +150,6 @@ public class LogonController extends BaseController<User> {
      * @return 登陆页面
      */
     @GetMapping(value = "/logout")
-    @ApiOperation(value = "用户登陆", notes = "用户登陆POST请求", httpMethod = "POST")
     public ResultTo logout(HttpServletRequest request) {
         User user = ShiroKit.getUser();
         LoginLog loginLog = LoginLog.LoginLogBuilder.get().withLoginAccount(user.getUsername())
@@ -154,6 +158,8 @@ public class LogonController extends BaseController<User> {
         loginLogService.insertSelective(loginLog);
         ShiroKit.getSession().removeAttribute(ShiroKit.USER_SESSION_KEY);
         ShiroKit.getSession().removeAttribute(ShiroKit.ROLE_SESSION_KEY);
+        ShiroKit.getSession().removeAttribute(ShiroKit.TOP_ORG_SESSION_KEY);
+        ShiroKit.getSession().removeAttribute(ShiroKit.ORG_SESSION_KEY);
         ShiroKit.getSubject().logout();
         return new ResultTo();
     }
@@ -184,10 +190,12 @@ public class LogonController extends BaseController<User> {
      *
      * @return
      */
-    @RequestMapping("/{orgId}")
-    public ResultTo loginOrg(@PathVariable("orgId") Integer orgId) {
+    @GetMapping(params = "orgId")
+    public ResultTo loginOrg(@RequestParam("orgId") Integer orgId) {
         TOrganization organization = organizationService.selectByPrimaryKey(orgId);
         ShiroKit.getSession().setAttribute(ShiroKit.ORG_SESSION_KEY, organization);
+        Integer topOrgId = organizationService.getTopOrgId(organization.getId());
+        ShiroKit.getSession().setAttribute(ShiroKit.TOP_ORG_SESSION_KEY, topOrgId);
         return new ResultTo();
     }
 
