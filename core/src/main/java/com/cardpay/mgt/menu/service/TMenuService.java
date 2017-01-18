@@ -16,14 +16,11 @@ import java.util.List;
 public interface TMenuService extends BaseService<TMenu> {
 
     /**
-     * 查询菜单列表(有限层级)
+     * 初始化菜单
      *
-     * @param topId  顶级id
-     * @param level  查询深度
-     * @param userId 用户id
-     * @return 菜单列表
+     * @param orgId  机构id
      */
-    List<TMenuVo> selectMenuListByLevel(int topId, int level, int userId);
+    void initMenu(Integer orgId);
 
     /**
      * 查询菜单列表(无限层级)
