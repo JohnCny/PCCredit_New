@@ -7,6 +7,8 @@ import com.cardpay.basic.util.ErrorMessageUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.organization.model.TOrganization;
+import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.service.RoleService;
 import io.swagger.annotations.Api;
@@ -142,5 +144,16 @@ public class RoleController extends BaseController<Role> {
                            @RequestParam(value = "new", defaultValue = "-1") Integer newAuthorityId) {
         roleService.update(roleId, oldAuthorityId, newAuthorityId);
         return new ResultTo();
+    }
+
+
+    /**
+     * 获取当前登陆用户的机构的顶级机构下的角色信息
+     *
+     * @return 当前登陆用户的机构的顶级机构下的角色信息
+     */
+    @GetMapping
+    public ResultTo getTopOrg() {
+        return new ResultTo().setData(roleService.getRoleByTopOrg());
     }
 }

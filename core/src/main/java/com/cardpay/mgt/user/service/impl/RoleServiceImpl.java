@@ -4,6 +4,8 @@ import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.DozerUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.organization.dao.TOrganizationMapper;
+import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.dao.RoleAuthorityMapper;
 import com.cardpay.mgt.user.dao.RoleMapper;
@@ -41,6 +43,9 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
 
     @Autowired
     private RoleAuthorityMapper roleAuthorityMapper;
+
+    @Autowired
+    private TOrganizationMapper organizationMapper;
 
     @Override
     public List<AuthorityGroupVo> selectAuthorityGroup() {
@@ -160,6 +165,11 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
             }
         }
         return true;
+    }
+
+    @Override
+    public List<Role> getRoleByTopOrg() {
+        return organizationMapper.;
     }
 
     private List<AuthorityGroupVo> getGroup(List<String> authorityGroups, List<Authority> authorities) {

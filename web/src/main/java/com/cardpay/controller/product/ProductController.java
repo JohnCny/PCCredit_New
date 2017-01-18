@@ -2,11 +2,14 @@ package com.cardpay.controller.product;
 
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ErrorMessageUtil;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.mgt.industry.service.IndustryService;
 import com.cardpay.mgt.product.model.Product;
+import com.cardpay.mgt.product.model.ProductInvestPictureDesc;
+import com.cardpay.mgt.product.model.ProductOrganization;
 import com.cardpay.mgt.product.model.vo.ExplainList;
 import com.cardpay.mgt.product.service.ProductApproveService;
 import com.cardpay.mgt.product.service.ProductDescService;
@@ -55,9 +58,6 @@ public class ProductController extends BaseController<Product> {
     @Autowired
     private IndustryService industryService;
 
-    @Autowired
-    private ProductApproveService productApproveService;
-
     /**
      * 获取产品分页数据
      *
@@ -77,11 +77,16 @@ public class ProductController extends BaseController<Product> {
     @GetMapping
     @ApiOperation(value = "增加产品信息页面数据", httpMethod = "GET")
     public ResultTo information(@RequestParam(value = "productId", required = false) Integer productId) {
+        LogTemplate.debug(this.getClass(), "productId", productId);
         Map<String, Object> map = new HashedMap();
         if (productId != null) {
             map.put("product", productService.selectByPrimaryKey(productId));
-            map.put("productOrg", productOrgService.selectByPrimaryKey(productId));
-            map.put("productDesc", productDescService.selectByPrimaryKey(productId));
+            ProductOrganization productOrganization = new ProductOrganization();
+            productOrganization.setProductId(productId);
+            map.put("productOrg", productOrgService.select(productOrganization));
+            ProductInvestPictureDesc productInvestPictureDesc = new ProductInvestPictureDesc();
+            productInvestPictureDesc.setProductId(productId);
+            map.put("productDesc", productDescService.select(productInvestPictureDesc));
         }
         map.put("industry", industryService.selectAll());
         map.put("productTypes", productTypeService.selectAll());
