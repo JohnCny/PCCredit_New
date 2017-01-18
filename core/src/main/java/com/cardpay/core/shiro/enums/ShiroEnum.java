@@ -21,4 +21,20 @@ public enum ShiroEnum {
     public Integer getValue() {
         return value;
     }
+
+    public static ShiroEnum getEnumById(Integer value) {
+        switch (value) {
+            case 1:
+                return SUPER;
+            case 2:
+                return ADMIN;
+            case 3:
+                return MANAGER;
+            case 4:
+                return EXPERT;
+            default:
+                break;
+        }
+        throw new IllegalArgumentException("未找到对应角色枚举");
+    }
 }

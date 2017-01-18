@@ -13,7 +13,9 @@ import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.team.model.Team;
+import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -40,6 +42,9 @@ public class OrganizationController extends BaseController<TOrganization> {
 
     @Autowired
     private static LogTemplate logger;
+
+    @Autowired
+    private UserService userService;
 
     /**
      *菜单
@@ -96,7 +101,8 @@ public class OrganizationController extends BaseController<TOrganization> {
     @PostMapping
     @SystemControllerLog("新增机构")
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
-    public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization) {
+    public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization
+    , String account) {
 
         tOrganization.setCreateBy(ShiroKit.getUserId());
         tOrganization.setCreateTime(new Date());
@@ -104,7 +110,10 @@ public class OrganizationController extends BaseController<TOrganization> {
         logger.info(OrganizationController.class, "新增机构", "机构id:" + tOrganization.getId());
         int orgParentId = tOrganization.getOrgParentId();
         if (orgParentId == 0){
-            tMenuService.initMenu(orgParentId);
+            User user = new User();
+            user.setUsername(account);
+            userService.addUserByOrg(user, tOrganization.getId());
+            tMenuService.initMenu(tOrganization.getId());
         }
         return new ResultTo().setData(tOrganization.getId());
     }
@@ -177,4 +186,5 @@ public class OrganizationController extends BaseController<TOrganization> {
         List<TOrganization> organizationList = tOrganizationService.queryIfOrgPrincipal(ShiroKit.getUserId());
         return new ResultTo().setData(organizationList);
     }
+
 }

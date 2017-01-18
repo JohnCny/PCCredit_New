@@ -3,6 +3,7 @@ package com.cardpay.mgt.user.service;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.Authority;
 import com.cardpay.mgt.user.model.Role;
+import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.AuthorityGroupVo;
 
 import java.util.List;
@@ -73,4 +74,5 @@ public interface RoleService extends BaseService<Role> {
      * @return 成功失败
      */
     boolean updateAuthorityIds(Role role, String[] authorityIds);
+
 }

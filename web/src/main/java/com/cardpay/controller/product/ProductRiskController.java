@@ -15,7 +15,9 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,6 +61,37 @@ public class ProductRiskController extends BaseController<ProductRiskRules> {
         Product product = productService.selectByPrimaryKey(productId);
         product.setProductState(1);
         productService.updateSelectiveByPrimaryKey(product);
+        return new ResultTo();
+    }
+
+    /**
+     * 根据产品ID获取风险属性数据
+     *
+     * @param productId 产品ID
+     * @return 风险属性数据
+     */
+    @GetMapping(params = "productId")
+    public ResultTo riskGet(@RequestParam("productId") Integer productId) {
+        ProductRiskRules productRisk = new ProductRiskRules();
+        productRisk.setProductId(productId);
+        return new ResultTo().setData(productRiskService.selectOne(productRisk));
+    }
+
+    /**
+     * 编辑产品风险属性
+     *
+     * @param productRiskRules ProductRiskRules
+     * @param result           BindingResult
+     * @return 成功或失败
+     */
+    @PutMapping
+    @ApiOperation(value = "编辑产品风险属性", httpMethod = "PUT")
+    public ResultTo riskUpdate(ProductRiskRules productRiskRules, BindingResult result) {
+        Map<String, String> map = new HashedMap();
+        if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
+            return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
+        }
+        productRiskService.updateSelectiveByPrimaryKey(productRiskRules);
         return new ResultTo();
     }
 }
