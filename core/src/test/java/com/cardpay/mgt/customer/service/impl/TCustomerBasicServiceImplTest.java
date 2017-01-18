@@ -44,8 +44,8 @@ public class TCustomerBasicServiceImplTest {
 
     @Test
     public void isIdCardExist() throws Exception {
-        when(customerBasicMapper.isIdCardExist("1", )).thenReturn(1);
-        boolean idCardExist = customerBasicService.isIdCardExist("1");
+        when(customerBasicMapper.isIdCardExist("1", 1)).thenReturn(1);
+        boolean idCardExist = customerBasicService.isIdCardExist("1", 1);
         assertTrue(idCardExist);
     }
 
