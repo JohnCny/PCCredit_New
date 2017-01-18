@@ -104,7 +104,6 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @return 机构列表
      */
     @GetMapping("/orgAll")
-    @ApiOperation(value = "根据父ID获取机构列表", httpMethod = "GET", notes = "默认父ID为0")
     public ResultTo getAllForTree() {
         List<TOrganization> tOrganizations = tOrganizationService.selectAll();
         return new ResultTo().setData(tOrganizations);

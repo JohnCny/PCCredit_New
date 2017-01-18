@@ -32,19 +32,6 @@ public class TOrganizationServiceImplTest {
     @InjectMocks
     private TOrganizationServiceImpl tOrganizationService;
 
-
-    @Test
-    public void queryOrganization() throws Exception {
-        List<TOrganizationVo> list = new ArrayList<>();
-        TOrganizationVo tOrganizationVo = new TOrganizationVo();
-        list.add(tOrganizationVo);
-        when(tOrganizationDao.queryOrganization(1)).thenReturn(list);
-        List<TOrganizationVo> tOrganizationVos = tOrganizationService.queryOrganization(1, 3);
-        assertTrue(tOrganizationVos.size() > 0);
-        verify(tOrganizationDao).createOrganizationView(1, 3);
-
-    }
-
     @Test
     public void deleteOrganization() throws Exception {
 //        when(tOrganizationDao.deleteOrganization(1)).thenReturn(1);

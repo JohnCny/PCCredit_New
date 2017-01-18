@@ -66,7 +66,8 @@ public class ApplicationController extends BaseController<TApplication> {
             tApplication.setCustomerManagerId(managerId);
             tApplication.setApplicationStatus(APP_UNFINISHED.getValue());
             Integer integer = tApplicationService.insertSelective(tApplication);
-            return integer != 0 ? new ResultTo().setData(tApplication.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
+            return integer != 0 ? new ResultTo().setDataMap("applicationId", tApplication.getId())
+                    .setDataMap("customerId", customerId) : new ResultTo(ResultEnum.SERVICE_ERROR);
         }
         return new ResultTo().setData(flag);
     }

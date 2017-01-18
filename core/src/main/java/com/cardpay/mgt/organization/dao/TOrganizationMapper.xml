@@ -59,7 +59,7 @@
 
     <!--递归查询机构层级列表信息-->
     <select id="queryOrganization" resultMap="BaseResultMapVo">
-    SELECT * FROM T_ORGANIZATION_VIEW WHERE ORG_PARENT_ID = #{id}
+    SELECT * FROM T_ORGANIZATION WHERE ORG_PARENT_ID = #{id}
     </select>
 
     <!--递归删除机构信息-->
