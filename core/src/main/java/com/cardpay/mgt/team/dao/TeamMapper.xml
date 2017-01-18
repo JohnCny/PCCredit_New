@@ -82,11 +82,13 @@
     <!--查询子团队信息-->
     <select id="queryTeamList" resultMap="BaseVo">
    SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+   AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
     </select>
 
     <!--查询所有团队信息-->
     <select id="queryAll" parameterType="Map" resultMap="BaseVo">
-        SELECT * FROM T_TEAM WHERE ORGANIZATION_ID = #{organizationId}
+        SELECT * FROM T_TEAM WHERE IS_MENU_TYPE = 0
+        AND ORGANIZATION_ID = #{organizationId}
     </select>
 
     <!--查询用户信息-->
@@ -126,5 +128,6 @@
     <!--按团队id查询子团队-->
     <select id="querySonTeamById" resultMap="BaseResultMap">
     SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+    AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
     </select>
 </mapper>
