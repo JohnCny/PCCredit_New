@@ -48,9 +48,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     @GetMapping
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("topId", topId);
-        List<TOrganizationVo> organization = tOrganizationService.queryAll(map);
+        List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
         return new ResultTo().setData(organization);
     }
 
@@ -63,7 +61,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     public DataTablePage pageList(@RequestParam(defaultValue = "0") int topId) {
         Map<String, Object> map = new HashMap<>();
         map.put("topId", topId);
-        return dataTablePage("queryAll", map);
+        return dataTablePage("selectOrganization", map);
     }
 
     /**

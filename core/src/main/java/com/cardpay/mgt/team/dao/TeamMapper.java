@@ -8,6 +8,7 @@ import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 团队表Mapper
@@ -18,13 +19,13 @@ public interface TeamMapper extends BasicMapper<Team> {
      * 按id查询团队下的用用户
      * @return 信息列表
      */
-    List<UserTeamVo> queryTeam(@Param("teamId") Integer teamId);
+    List<UserTeamVo> queryTeam(@Param("teamId") int teamId, @Param("organizationId") int organizationId);
 
     /**
      * 查询团队层级信息
      * @return
      */
-    List<TeamVo> queryAll();
+    List<TeamVo> queryAll(Map<String, Object> map);
 
     /**
      * 递归删除团队信息
