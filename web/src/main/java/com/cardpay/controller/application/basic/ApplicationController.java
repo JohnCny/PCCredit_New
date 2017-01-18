@@ -81,11 +81,11 @@ public class ApplicationController extends BaseController<TApplication> {
 
     /**
      * 查询客户经理下的所有进件
-     *
+     * @param request
      * @return 进件列表
      */
     @RequestMapping("/pageList")
-    public DataTablePage queryByManagerId(HttpServletRequest request) {
+    public DataTablePage queryByManagerId(final HttpServletRequest request) {
         Integer userId = ShiroKit.getUserId();
         Map<String, Object> map = new HashMap();
         if (ShiroKit.hasRole("manager")) {
