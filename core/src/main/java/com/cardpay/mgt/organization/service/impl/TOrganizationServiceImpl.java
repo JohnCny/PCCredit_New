@@ -37,13 +37,6 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public List<TOrganizationVo> queryOrganization(int parentId, int levels) {
-        tOrganizationDao.createOrganizationView(parentId, levels);
-        return tOrganizationDao.queryOrganization(parentId);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Override
     public int deleteOrganization(int organizationId) {
         int number = tOrganizationDao.querySubsidiary(organizationId);
         int count = userOrganizationDao.queryUserOrg(organizationId);
@@ -52,12 +45,8 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
 
     @Override
     public List<TOrganizationVo> queryAll(Map<String, Object> map) {
-        TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
         List<TOrganizationVo> tOrganizationVos = tOrganizationDao.queryAll(map);
-        if (!tOrganizationVos.isEmpty()) {
-            return tree.getChildNodesByParentId(tOrganizationDao.queryAll(map), map.get("topId"));
-        }
-        return new ArrayList<>();
+        return tOrganizationVos;
     }
 
     @Override
