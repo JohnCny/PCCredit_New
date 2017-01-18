@@ -20,15 +20,15 @@ import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuAuth;
 import com.cardpay.mgt.menu.model.TMenuAuthorityTemplate;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
-import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
+import com.cardpay.mgt.organization.model.TOrganization;
+import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.model.Authority;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.service.RoleService;
 import com.cardpay.mgt.user.service.UserRoleService;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +64,9 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     private TMenuAuthorityTemplateMapper menuAuthorityTemplateMapper;
 
     @Autowired
+    private TOrganizationService organizationService;
+
+    @Autowired
     private RedisClient redisClient;
 
     private static final String SELECT = "Select";
@@ -87,6 +90,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
         List<TMenuAuthorityTemplate> tMenuAuthorityTemplates = menuAuthorityTemplateMapper.selectAll();
         List<TAuthorityMenu> tAuthorityMenus = new ArrayList<>();
 
+        //根据菜单模版id分组
         Map<Integer, List<TMenuAuthorityTemplate>> menuAuthTemplateMap = new HashMap<>();
         for (TMenuAuthorityTemplate tMenuAuthorityTemplate : tMenuAuthorityTemplates) {
             if (menuAuthTemplateMap.containsKey(tMenuAuthorityTemplate.getMenuTemplateId())) {
@@ -97,6 +101,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
             }
         }
 
+        //插入菜单权限信息
         for (TMenu menu : menus) {
             for (Map.Entry<Integer,List<TMenuAuthorityTemplate>> map : menuAuthTemplateMap.entrySet()) {
                 if(menu.getMenuTemplateId().equals(map.getKey())){
@@ -261,13 +266,11 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     }
 
     /**
-     * 更新菜单缓存
+     * 刷新菜单缓存（初始化菜单）
      */
     @Override
     public void updateMenuCache() {
-        Role criteria = new Role();
-        criteria.setOrganizationId(ShiroKit.getOrgId());
-        List<Role> roles = roleService.select(criteria);
+        List<Role> roles = roleService.selectAll();
         for (Role role : roles) {
             String menuString = JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(role.getId())));
             LogTemplate.info("菜单初始化,"+"菜单角色:"+role.getRoleName(),menuString);

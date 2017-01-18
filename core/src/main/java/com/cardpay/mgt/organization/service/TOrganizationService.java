@@ -51,4 +51,12 @@ public interface TOrganizationService extends BaseService<TOrganization> {
      */
     boolean selectIfOrgPrincipal(int directorId, int orgId);
 
+    /**
+     * 根据机构id 获得顶级机构id
+     *
+     * @param orgId 机构id
+     * @return topId
+     */
+    Integer getTopOrgId(Integer orgId);
+
 }
