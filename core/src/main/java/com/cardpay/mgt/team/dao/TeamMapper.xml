@@ -26,6 +26,7 @@
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="IS_MENU_TYPE" jdbcType="DECIMAL" property="isMenuType"/>
         <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+        <association property="Leader" select="queryLeader" column="TEAM_LEADER_ID"/>
         <collection property="teamList" select="queryTeamList" column="TEAM_ID"/>
     </resultMap>
 
@@ -70,14 +71,22 @@
         SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
     </select>
 
+    <!--以上为机构团队信息(暂时弃用)-->
+
+
+    <!--查询团队负责人信息-->
+    <select id="queryLeader" resultType="com.cardpay.mgt.user.model.User">
+        SELECT * FROM T_USER WHERE id = #{teamLeaderId}
+    </select>
+
     <!--查询子团队信息-->
     <select id="queryTeamList" resultMap="BaseVo">
    SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
     </select>
 
     <!--查询所有团队信息-->
-    <select id="queryAll" resultMap="BaseVo">
-        SELECT * FROM T_TEAM
+    <select id="queryAll" parameterType="Map" resultMap="BaseVo">
+        SELECT * FROM T_TEAM WHERE ORGANIZATION_ID = #{organizationId}
     </select>
 
     <!--查询用户信息-->
@@ -92,6 +101,7 @@
         TEAM.TEAM_ID = usrTeam.TEAM_ID
         AND usrTeam.USER_ID = usr.id
         AND team.TEAM_ID = #{teamId}
+        AND team.ORGANIZATION_ID = #{organizationId}
     </select>
 
     <!--递归删除团队信息-->

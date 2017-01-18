@@ -5,6 +5,7 @@ import com.cardpay.mgt.team.model.Team;
 import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -19,23 +20,27 @@ public interface TeamService extends BaseService<Team> {
 
     /**
      * 查询所有团队信息
-     * @param map 参数
-     * @return 团队层级信息
+     * @param map 参数信息
+     * @param organizationId 机构id
+     * @return 团队信息
      */
-    List<TeamVo> queryAll(Map<String, Integer> map);
+    List<TeamVo> queryAll(Map<String, Object> map, int organizationId);
 
     /**
      * 按id查询团队下的用用户
-     * @return 信息列表
+     * @param teamId  团队id
+     * @param organizationId 机构id
+     * @return 机构信息
      */
-    List<UserTeamVo> queryTeam(Integer teamId);
+    List<UserTeamVo> queryTeam(int teamId, int organizationId);
 
     /**
      * 递归删除团队信息
-     * @param teamId
-     * @return
+     * @param teamId 团队id
+     * @param organizationId 机构id
+     * @return 数据库变记录
      */
-    int deleteTeam(Integer teamId);
+    int deleteTeam(Integer teamId, int organizationId);
 
     /**
      * 查询此用户负责的团队信息
