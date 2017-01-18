@@ -241,6 +241,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public List<User> userPageList(Map<String, Object> map) {
+        map.put("orgId", ShiroKit.getOrgId());
         return userMapper.userPageList(map);
     }
 

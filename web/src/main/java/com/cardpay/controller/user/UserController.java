@@ -9,6 +9,7 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.RoleService;
@@ -90,7 +91,9 @@ public class UserController extends BaseController<User> {
     @GetMapping(value = "/add")
     @ApiResponses(value = {@ApiResponse(code = 405, message = "请求类型异常"), @ApiResponse(code = 500, message = "服务器异常")})
     public ResultTo addUserPage() {
-        return new ResultTo().setData(roleService.selectAll());
+        Role role = new Role();
+        role.setOrganizationId(ShiroKit.getOrgId());
+        return new ResultTo().setData(roleService.select(role));
     }
 
     /**

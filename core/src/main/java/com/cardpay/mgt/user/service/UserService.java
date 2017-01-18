@@ -22,7 +22,7 @@ public interface UserService extends BaseService<User> {
      * 获取用户的资源权限
      *
      * @param userId 用户ID
-     * @param userId 机构ID
+     * @param orgId 机构ID
      * @return 用户的资源集合
      */
     Set<String> getUserAuthority(Integer userId, Integer orgId);

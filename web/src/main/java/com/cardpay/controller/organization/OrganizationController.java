@@ -153,4 +153,17 @@ public class OrganizationController extends BaseController<TOrganization> {
         List<TOrganization> organizationList = tOrganizationService.queryIfOrgPrincipal(ShiroKit.getUserId());
         return new ResultTo().setData(organizationList);
     }
+
+    /**
+     * 获取当前登陆用户下的机构信息(带层级)
+     *
+     * @return 当前登陆用户下的机构信息(带层级)
+     */
+    @GetMapping("/queryOrganizationByUser")
+    public ResultTo queryOrganizationByUser() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("topId", ShiroKit.getOrgId());
+        List<TOrganizationVo> organization = tOrganizationService.queryAll(map);
+        return new ResultTo().setData(organization);
+    }
 }
