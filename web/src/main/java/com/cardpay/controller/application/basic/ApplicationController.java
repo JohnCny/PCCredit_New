@@ -51,8 +51,8 @@ public class ApplicationController extends BaseController<TApplication> {
      */
     @GetMapping("/ifProduct/{productId}")
     public ResultTo queryProductIfOk(@PathVariable int productId) {
-        boolean flag = tApplicationService.queryProductIfOk(ShiroKit.getUserId(), productId);
-        return new ResultTo().setData(flag);
+        Map<String, Object> map = tApplicationService.queryProductIfOk(ShiroKit.getUserId(), productId);
+        return new ResultTo().setData(map);
     }
 
     /**
