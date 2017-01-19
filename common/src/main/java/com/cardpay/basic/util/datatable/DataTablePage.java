@@ -6,14 +6,10 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.impl.execchain.TunnelRefusedException;
-import org.apache.shiro.SecurityUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Null;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -144,10 +140,10 @@ public class DataTablePage {
                     }
                 }
             }
-
+            data = (List<Object>) baseService.pageList(example, this.start, this.length);
         }
         PageInfo pageInfo = new PageInfo(this.data);
-        setRecordsTotal(pageInfo.getTotal()); data = (List<Object>) baseService.pageList(example, this.start, this.length);
+        setRecordsTotal(pageInfo.getTotal());
         setRecordsFiltered(pageInfo.getTotal());
         setCode(ResultEnum.SUCCESS.getValue());
     }
