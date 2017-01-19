@@ -51,6 +51,28 @@
         <collection property="orgTeamList" select="queryOrgTeamList" column="TEAM_ID"/>
     </resultMap>
 
+    <!--用户信息-->
+    <resultMap id="userMap" type="com.cardpay.mgt.user.model.User">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+        <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="AGE" jdbcType="DECIMAL" property="age"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+        <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
+    </resultMap>
+
     <!--查询机构信息-->
     <select id="queryOrganization" resultMap="orgTeamVo">
         SELECT * FROM T_ORGANIZATION
@@ -132,7 +154,7 @@
     </select>
 
     <!--按团队所属用户信-->
-    <select id="queryTeamInUser" parameterType="Map" resultType="com.cardpay.mgt.user.model.User">
+    <select id="queryTeamInUser" parameterType="Map" resultMap="userMap">
         SELECT DISTINCT usr.*
         FROM
         T_USER usr,
@@ -147,8 +169,8 @@
             <if test="teamId !=null and teamId!=''">
                 AND team.TEAM_ID = #{teamId}
             </if>
-            <if test="userName!=null and userName!=''">
-                AND USER_CNAME LIKE CONCAT (CONCAT('%', #{userName}), '%')
+            <if test="userCname!=null and userCname!=''">
+                AND USER_CNAME LIKE CONCAT (CONCAT('%', #{userCname}), '%')
             </if>
         </where>
     </select>
