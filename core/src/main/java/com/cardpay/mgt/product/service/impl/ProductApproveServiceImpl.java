@@ -2,6 +2,7 @@ package com.cardpay.mgt.product.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.product.dao.ProductApproveMapper;
 import com.cardpay.mgt.product.model.ProductApprove;
 import com.cardpay.mgt.product.service.ProductApproveService;
@@ -31,7 +32,8 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
 
     @Override
     public Map<String, Object> getApprove(Integer productId, Integer approveId) {
-        List<Role> roles = roleMapper.select(Role.RoleBuilder.get().withRoleStatus(1).build());
+        List<Role> roles = roleMapper.select(Role.RoleBuilder.get()
+                .withOrganizationId(ShiroKit.getOrgId()).withRoleStatus(1).build());
         ProductApprove.ProductApproveBuilder productApproveBuilder = ProductApprove
                 .ProductApproveBuilder.get().withProductId(productId);
         Map<String, Object> map = new HashedMap();
@@ -110,8 +112,8 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
     @Override
     public void updateApprove(ProductApprove productApprove) {
         LogTemplate.debug(this.getClass(), "productApprove", productApprove);
-        if (productApprove.getNodeType() != 0 && productApprove.getNodeType() != 2) {
-            ProductApprove oldApprove = productApproveMapper.selectByPrimaryKey(productApprove.getId());
+        ProductApprove oldApprove = productApproveMapper.selectByPrimaryKey(productApprove.getId());
+        if (oldApprove.getNodeType() != 0 && oldApprove.getNodeType() != 2) {
             if (!oldApprove.getPreNodeId().equals(productApprove.getPreNodeId())) {
                 //新增位置
                 ProductApprove newApprovePreNode = productApproveMapper.selectByPrimaryKey(productApprove.getPreNodeId());
@@ -132,5 +134,24 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
             }
         }
         productApproveMapper.updateByPrimaryKeySelective(productApprove);
+    }
+
+    @Override
+    public List<ProductApprove> selectAllByProductId(Integer productId) {
+        ProductApprove productApprove = new ProductApprove();
+        productApprove.setProductId(productId);
+        List<ProductApprove> productApproves = productApproveMapper.select(productApprove);
+        for (ProductApprove _productApprove : productApproves) {
+            if (_productApprove.getNextNodeId() == -1) {
+                productApproves.remove(_productApprove);
+                break;
+            }
+        }
+        return productApproves;
+    }
+
+    @Override
+    public boolean deleteApprove(Integer approveId) {
+        return false;
     }
 }
