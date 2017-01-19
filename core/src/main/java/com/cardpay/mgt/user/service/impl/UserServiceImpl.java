@@ -13,18 +13,27 @@ import com.cardpay.basic.util.VerifyCodeUtil;
 import com.cardpay.core.fastdfs.FileManager;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.core.shiro.enums.ShiroEnum;
 import com.cardpay.mgt.customermanager.basic.model.TCustomerManager;
 import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import com.cardpay.mgt.menu.enums.RoleEnum;
+import com.cardpay.mgt.organization.dao.TOrganizationMapper;
+import com.cardpay.mgt.organization.model.TOrganization;
+import com.cardpay.mgt.user.dao.AuthorityMapper;
+import com.cardpay.mgt.user.dao.RoleAuthorityMapper;
 import com.cardpay.mgt.user.dao.RoleMapper;
 import com.cardpay.mgt.user.dao.UserMapper;
 import com.cardpay.mgt.user.dao.UserOrganizationMapper;
 import com.cardpay.mgt.user.dao.UserRoleMapper;
+import com.cardpay.mgt.user.model.Authority;
+import com.cardpay.mgt.user.model.Role;
+import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.UserService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,6 +80,15 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Autowired
     private FileManager fileManager;
+
+    @Autowired
+    private TOrganizationMapper organizationMapper;
+
+    @Autowired
+    private AuthorityMapper authorityMapper;
+
+    @Autowired
+    private RoleAuthorityMapper roleAuthorityMapper;
 
     @Override
     public Set<String> getUserAuthority(Integer userId, Integer orgId) {
@@ -191,20 +209,23 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userRole.setRoleId(roleId);
         userRole.setUserId(user.getId());
         userRoleMapper.insertSelective(userRole);
-        RoleEnum roleEnum = RoleEnum.getValueById(roleId);
-        if (roleEnum != null) {
-            switch (roleEnum) {
-                case ADMIN:
-                    break;
-                case MANAGER:
-                    TCustomerManager customerManager = new TCustomerManager();
-                    customerManager.setUserId(user.getId());
-                    customerManager.setOrganizationId(orgId);
-                    customerManagerService.insertSelective(customerManager);
-                    break;
-                default:
-                    break;
-            }
+        Role role = roleMapper.selectByPrimaryKey(roleId);
+        ShiroEnum roleEnum = ShiroEnum.getEnumById(role.getRoleType());
+        switch (roleEnum) {
+            case ADMIN:
+                break;
+            case MANAGER:
+                TCustomerManager customerManager = new TCustomerManager();
+                customerManager.setUserId(user.getId());
+                customerManager.setOrganizationId(orgId);
+                customerManagerService.insertSelective(customerManager);
+                break;
+            case EXPERT:
+                break;
+            case SUPER:
+                break;
+            default:
+                break;
         }
         return Boolean.TRUE;
     }
@@ -238,6 +259,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public List<User> userPageList(Map<String, Object> map) {
+        map.put("orgId", ShiroKit.getOrgId());
         return userMapper.userPageList(map);
     }
 
@@ -245,5 +267,28 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public UserUpdateVo selectUserUpdateVo(Integer userId) {
         return userMapper.selectUserUpdateVo(userId);
     }
+
+    @Override
+    public boolean addUserByOrg(User user, Integer orgId) {
+        TOrganization organization = organizationMapper.selectByPrimaryKey(orgId);
+        if (organization.getOrgParentId() == 0) {
+            Role role = new Role();
+            role.setRoleName("admin");
+            role.setOrganizationId(orgId);
+            role.setCreateBy(ShiroKit.getUserId());
+            role.setRoleStatus(1);
+            role.setRoleDescription("默认创建的admin角色");
+            role.setRoleNameZh("机构管理员");
+            roleMapper.insertSelective(role);
+            List<Authority> authorities = authorityMapper.selectAll();
+            Map<String, Object> map = new HashedMap();
+            map.put("authorityIds", authorities);
+            map.put("roleId", role.getId());
+            roleAuthorityMapper.insertArray(map);
+            addUser(user, orgId, role.getId());
+        }
+        return true;
+    }
+
 
 }

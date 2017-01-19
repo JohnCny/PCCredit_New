@@ -12,8 +12,10 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,4 +69,35 @@ public class ProductLoanController extends BaseController<ProductLoanMonitorRule
         return new ResultTo();
     }
 
+    /**
+     * 编辑页面所需要的数据
+     *
+     * @param productId 产品ID
+     * @return 产品贷后页面数据
+     */
+    @GetMapping(params = "productId")
+    @ApiOperation(value = "增加产品贷后页面数据", httpMethod = "GET")
+    public ResultTo updateGet(@RequestParam("productId") Integer productId) {
+        ProductLoanMonitorRules productLoanMonitorRules = new ProductLoanMonitorRules();
+        productLoanMonitorRules.setProductId(productId);
+        return new ResultTo().setData(productLoanService.selectOne(productLoanMonitorRules));
+    }
+
+    /**
+     * 编辑产品贷后
+     *
+     * @param productLoanMonitorRules ProductLoanMonitorRules
+     * @param result                  BindingResult
+     * @return 成功或失败
+     */
+    @PutMapping
+    @ApiOperation(value = "编辑产品贷后", httpMethod = "PUT")
+    public ResultTo update(ProductLoanMonitorRules productLoanMonitorRules, BindingResult result) {
+        Map<String, String> map = new HashedMap();
+        if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
+            return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
+        }
+        productLoanService.updateSelectiveByPrimaryKey(productLoanMonitorRules);
+        return new ResultTo();
+    }
 }

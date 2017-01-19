@@ -5,9 +5,11 @@ import com.cardpay.mgt.team.model.Team;
 import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
+import com.cardpay.mgt.user.model.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 团队表Mapper
@@ -18,13 +20,13 @@ public interface TeamMapper extends BasicMapper<Team> {
      * 按id查询团队下的用用户
      * @return 信息列表
      */
-    List<UserTeamVo> queryTeam(@Param("teamId") Integer teamId);
+    List<UserTeamVo> queryTeam(@Param("teamId") int teamId, @Param("organizationId") int organizationId);
 
     /**
      * 查询团队层级信息
      * @return
      */
-    List<TeamVo> queryAll();
+    List<TeamVo> queryAll(Map<String, Object> map);
 
     /**
      * 递归删除团队信息
@@ -60,4 +62,11 @@ public interface TeamMapper extends BasicMapper<Team> {
      * @return 机构团队信息
      */
     List<OrganizationTeamVo> queryOrganization();
+
+    /**
+     * 按团队所属用户信息系
+     * @param map 参数
+     * @return 用户信息
+     */
+    List<User> queryTeamInUser(Map<String, Object> map);
 }

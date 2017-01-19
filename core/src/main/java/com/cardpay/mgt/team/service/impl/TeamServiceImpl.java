@@ -2,6 +2,7 @@ package com.cardpay.mgt.team.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.util.treeutil.TreeUtil;
+import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.team.dao.TUserTeamMapper;
 import com.cardpay.mgt.team.dao.TeamMapper;
 import com.cardpay.mgt.team.model.TUserTeam;
@@ -10,6 +11,7 @@ import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TeamService;
+import com.cardpay.mgt.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,20 +33,26 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     @Autowired
     private TUserTeamMapper tUserTeamDao;
 
+    @Autowired
+    private TOrganizationService tOrganizationService;
+
     @Override
-    public List<TeamVo> queryAll(Map<String, Integer> map) {
-        TreeUtil<TeamVo> tree = new TreeUtil<>();
-        return tree.getChildNodesByParentId(teamDao.queryAll(), map.get("topId"));
+    public List<TeamVo> queryAll(Map<String, Object> map, int organizationId) {
+        Integer topOrgId = tOrganizationService.getTopOrgId(organizationId);
+        map.put("organizationId", topOrgId);
+        List<TeamVo> teamVos = teamDao.queryAll(map);
+        return teamVos;
     }
 
     @Override
-    public List<UserTeamVo> queryTeam(Integer teamId) {
-        return teamDao.queryTeam(teamId);
+    public List<UserTeamVo> queryTeam(int teamId, int organizationId) {
+        Integer topOrgId = tOrganizationService.getTopOrgId(organizationId);
+        return teamDao.queryTeam(teamId, topOrgId);
     }
 
     @Override
-    public int deleteTeam(Integer teamId) {
-        List<UserTeamVo> userTeamVos = teamDao.queryTeam(teamId);
+    public int deleteTeam(Integer teamId, int organizationId) {
+        List<UserTeamVo> userTeamVos = teamDao.queryTeam(teamId, organizationId);
         int count = teamDao.querySubsidiary(teamId);
         if (count > 0 && userTeamVos.size() > 0) {
             return 0;
@@ -84,5 +92,10 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     @Override
     public List<OrganizationTeamVo> queryOrganization() {
         return teamDao.queryOrganization();
+    }
+
+    @Override
+    public List<User> queryTeamInUser(Map<String, Object> map) {
+        return teamDao.queryTeamInUser(map);
     }
 }

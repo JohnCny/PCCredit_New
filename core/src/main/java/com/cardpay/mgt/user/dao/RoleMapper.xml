@@ -14,7 +14,7 @@
         <result column="CREATE_BY" jdbcType="TIMESTAMP" property="createBy"/>
     </resultMap>
 
-    <select id="selectByUser" resultType="List">
+    <select id="selectByUser" resultType="String">
         SELECT
             TR.ROLE_NAME AS ROLE_NAME
         FROM

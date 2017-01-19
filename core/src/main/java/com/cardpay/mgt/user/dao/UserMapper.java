@@ -5,6 +5,7 @@ import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserAuthority;
 import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface UserMapper extends BasicMapper<User> {
      * @param orgId  用户机构ID
      * @return 资源权限集合
      */
-    List<String> selectByAuthority(Integer userId, Integer orgId);
+    List<String> selectByAuthority(@Param("userId") Integer userId, @Param("orgId") Integer orgId);
 
     /**
      * 带搜索的用户分页,自定义SQL(此处是反射应用,没有显示调用)

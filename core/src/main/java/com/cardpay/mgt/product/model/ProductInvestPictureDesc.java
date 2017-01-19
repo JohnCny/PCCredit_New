@@ -3,8 +3,6 @@ package com.cardpay.mgt.product.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.models.auth.In;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 
@@ -44,9 +42,9 @@ public class ProductInvestPictureDesc extends GenericEntity<Integer> {
     /**
      * 产品调查图片说明
      */
-    @Column(name = "PRITURE_DESCRIPTION")
+    @Column(name = "INVEST_PRITURE_DESCRIPTION")
     @ApiModelProperty(value = "产品调查图片说明", required = true)
-    private String pritureDescription;
+    private String investPritureDescription;
 
     /**
      * 产品调查说明是否必须
@@ -96,17 +94,17 @@ public class ProductInvestPictureDesc extends GenericEntity<Integer> {
      *
      * @return PRITURE_DESCRIPTION - 产品调查图片说明
      */
-    public String getPritureDescription() {
-        return pritureDescription;
+    public String getInvestPritureDescription() {
+        return investPritureDescription;
     }
 
     /**
      * 设置产品调查图片说明
      *
-     * @param pritureDescription 产品调查图片说明
+     * @param investPritureDescription 产品调查图片说明
      */
-    public void setPritureDescription(String pritureDescription) {
-        this.pritureDescription = pritureDescription;
+    public void setInvestPritureDescription(String investPritureDescription) {
+        this.investPritureDescription = investPritureDescription;
     }
 
     /**

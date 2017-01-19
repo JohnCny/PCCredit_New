@@ -65,6 +65,7 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
     /**
      * 机构service
      */
+    @Autowired
     private TOrganizationService tOrganizationService;
 
     @Override
@@ -77,7 +78,8 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
     }
 
     @Override
-    public boolean queryProductIfOk(int managerId, int productId) {
+    public Map<String, Object> queryProductIfOk(int managerId, int productId) {
+        Map<String, Object> map = new HashMap<>();
         Product product = productService.selectByPrimaryKey(productId);
         TCustomerManager tCustomerManager = customerMangerService.selectByUserId(managerId);
         ProductOrganization productOrganization = new ProductOrganization();
@@ -85,13 +87,17 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
         List<ProductOrganization> productOrganizationList = productOrgService.select(productOrganization);
         for (ProductOrganization organization : productOrganizationList) {
             if (!organization.getOraganizationId().equals(tCustomerManager.getOrganizationId())) {
-                return false;
+                map.put("status", false);
+                map.put("message", "您所属机构不在此产品准入机构中");
             }
         }
         if (tCustomerManager.getLevelId() > product.getCustomerManagerLevelId()) {
-            return true;
+            map.put("status", false);
+            map.put("message", "您的级别无法申请此产品");
+        }else {
+            map.put("status", true);
         }
-        return false;
+        return map;
     }
 
     @Override
@@ -124,9 +130,6 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
 
     @Override
     public boolean userIfOrgBoss(int orgId, int userId) {
-        if (tOrganizationService.selectIfOrgPrincipal(orgId, userId)) {
-            return true;
-        }
-        return false;
+        return tOrganizationService.selectIfOrgPrincipal(orgId, userId) ? true : false;
     }
 }

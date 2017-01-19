@@ -49,7 +49,7 @@
         <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
     </resultMap>
 
-    <select id="selectByAuthority" resultType="List">
+    <select id="selectByAuthority" resultType="String">
         SELECT
             TA.AUTHORITY_NAME
         FROM
@@ -59,8 +59,8 @@
             T_ROLE_AUTHORITY TRA,
             T_AUTHORITY TA
         WHERE
-            TU."ID" = 2
-        AND TR.ORGANIZATION_ID = 1
+            TU."ID" = #{userId}
+        AND TR.ORGANIZATION_ID = #{orgId}
         AND TUR.USER_ID = TU."ID"
         AND TUR.ROLE_ID = TR."ID"
         AND TRA.ROLE_ID = TR."ID"
@@ -83,12 +83,10 @@
             AND
             TU.ID_CARD_NUMBER=#{idCardNumber,jdbcType=VARCHAR}
         </if>
-        <if test="orgId != null">
-            AND
-            TU.ID=TUO.USER_ID
-            AND
-            TUO.ORGANIZATION_ID=#{orgId,jdbcType=VARCHAR}
-        </if>
+        AND
+        TU.ID=TUO.USER_ID
+        AND
+        TUO.ORGANIZATION_ID=#{orgId,jdbcType=VARCHAR}
     </select>
 
     <select id="selectUserUpdateVo" resultMap="UserUpdateVoMap">

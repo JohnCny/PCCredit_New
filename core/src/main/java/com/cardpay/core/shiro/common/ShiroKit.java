@@ -38,6 +38,11 @@ public class ShiroKit {
     public static final String ROLE_SESSION_KEY = "roleSession";
 
     /**
+     * 用户登陆的ORG_Session(顶级)
+     */
+    public static final String TOP_ORG_SESSION_KEY = "topOrgSession";
+
+    /**
      * 账号锁定
      */
     public static final int LOCKED_ACCOUNT = 1;
@@ -162,5 +167,14 @@ public class ShiroKit {
     public static Integer getOrgId() {
         TOrganization org = getOrg();
         return org == null ? null : org.getId();
+    }
+
+    /**
+     * 获取当前登陆用户的顶级机构ID
+     *
+     * @return
+     */
+    public static Integer getTopOrgId() {
+        return (Integer) getSession().getAttribute(TOP_ORG_SESSION_KEY);
     }
 }
