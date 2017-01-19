@@ -11,6 +11,7 @@ import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TeamService;
+import com.cardpay.mgt.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,5 +92,10 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     @Override
     public List<OrganizationTeamVo> queryOrganization() {
         return teamDao.queryOrganization();
+    }
+
+    @Override
+    public List<User> queryTeamInUser(Map<String, Object> map) {
+        return teamDao.queryTeamInUser(map);
     }
 }

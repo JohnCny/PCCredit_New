@@ -10,7 +10,15 @@ public enum ShiroEnum {
     SUPER(1),
     ADMIN(2),
     MANAGER(3),
-    EXPERT(4);
+    EXPERT(4),
+    /**
+     * 机构负责人
+     */
+    ORG_CHARGE(5),
+    /**
+     * 团队负责人
+     */
+    TEAM_CHARGE(6);
 
     private Integer value;
 
@@ -32,6 +40,10 @@ public enum ShiroEnum {
                 return MANAGER;
             case 4:
                 return EXPERT;
+            case 5:
+                return ORG_CHARGE;
+            case 6:
+                return TEAM_CHARGE;
             default:
                 break;
         }
