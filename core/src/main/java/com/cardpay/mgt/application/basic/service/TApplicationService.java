@@ -29,7 +29,7 @@ public interface TApplicationService extends BaseService<TApplication> {
      *
      * @return
      */
-    boolean queryProductIfOk(int managerId, int productId);
+    Map<String, Object> queryProductIfOk(int managerId, int productId);
 
     /**
      * 按客户经理Id查询进件信息

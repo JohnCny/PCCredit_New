@@ -9,10 +9,12 @@ import com.cardpay.core.shiro.enums.ShiroEnum;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.model.vo.TApplicationVo;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
+import com.cardpay.mgt.application.ipc.basic.service.ApplicationIPCBasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,13 +38,19 @@ public class ApplicationController extends BaseController<TApplication> {
     private TApplicationService tApplicationService;
 
     /**
+     * ipc模板
+     */
+    @Autowired
+    private ApplicationIPCBasicService applicationIPCBasicService;
+
+    /**
      * 查询此产品是否可进行进件申请
      *
      * @param productId 产品Id
      * @return true/false
      */
-    @GetMapping("/ifProduct")
-    public ResultTo queryProductIfOk(int productId) {
+    @GetMapping("/ifProduct/{productId}")
+    public ResultTo queryProductIfOk(@PathVariable int productId) {
         boolean flag = tApplicationService.queryProductIfOk(ShiroKit.getUserId(), productId);
         return new ResultTo().setData(flag);
     }
@@ -54,8 +62,8 @@ public class ApplicationController extends BaseController<TApplication> {
      * @param customerId 客户id
      * @return 进件Id
      */
-    @PostMapping
-    public ResultTo insertApplication(int productId, int customerId) {
+    @PostMapping("/{productId}/{customerId}")
+    public ResultTo insertApplication(@PathVariable int productId, @PathVariable int customerId) {
         boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
         if (flag) {
             Integer managerId = ShiroKit.getUserId();
@@ -65,8 +73,9 @@ public class ApplicationController extends BaseController<TApplication> {
             tApplication.setCustomerId(customerId);
             tApplication.setCustomerManagerId(managerId);
             tApplication.setApplicationStatus(APP_UNFINISHED.getValue());
-            Integer integer = tApplicationService.insertSelective(tApplication);
-            return integer != 0 ? new ResultTo().setData(tApplication.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
+            tApplicationService.insertSelective(tApplication);
+            Integer mark = applicationIPCBasicService.initTemplate(tApplication.getId());
+            return mark != 0 ? new ResultTo().setData(tApplication.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
         }
         return new ResultTo().setData(flag);
     }

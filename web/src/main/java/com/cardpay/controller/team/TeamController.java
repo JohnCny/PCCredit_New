@@ -3,6 +3,7 @@ package com.cardpay.controller.team;
 import com.alibaba.fastjson.JSONArray;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.team.model.TUserTeam;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 团队Controller
@@ -174,6 +176,19 @@ public class TeamController extends BaseController<Team> {
     public ResultTo orgTeam(){
         List<OrganizationTeamVo> teamVos = teamService.queryOrganization();
         return new ResultTo().setData(teamVos);
+    }
+
+    /**
+     * 查询团队下的用户信息
+     * @param teamId 团队id
+     * @return 用户信息
+     */
+    @RequestMapping("/pageList")
+    public DataTablePage pageList(@RequestParam(defaultValue = "0") int teamId){
+        Map<String, Object> map = new HashMap<>();
+        map.put("teamId", teamId);
+        map.put("orgId", ShiroKit.getOrgId());
+        return dataTablePage("queryTeamInUser", map);
     }
 
 }
