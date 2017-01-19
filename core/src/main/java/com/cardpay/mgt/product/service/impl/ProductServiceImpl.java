@@ -80,8 +80,10 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
             String[] orgIds = orgStr.split(",");
             productOrgMapper.batchInsertOrg(product.getId(), orgIds);
         }
-        for (ProductInvestPictureDesc productInvestPictureDesc : explainList.getList()) {
-            productDescMapper.updateByPrimaryKeySelective(productInvestPictureDesc);
+        if (explainList != null && explainList.getList() != null) {
+            for (ProductInvestPictureDesc productInvestPictureDesc : explainList.getList()) {
+                productDescMapper.updateByPrimaryKeySelective(productInvestPictureDesc);
+            }
         }
         return productMapper.updateByPrimaryKeySelective(product) > 0;
     }

@@ -172,9 +172,7 @@ public class OrganizationController extends BaseController<TOrganization> {
      */
     @GetMapping("/queryOrganizationByUser")
     public ResultTo queryOrganizationByUser() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("topId", ShiroKit.getOrgId());
-        List<TOrganizationVo> organization = tOrganizationService.queryAll(map);
+        List<TOrganizationVo> organization = tOrganizationService.queryAll(ShiroKit.getOrgId());
         return new ResultTo().setData(organization);
     }
 }
