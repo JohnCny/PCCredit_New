@@ -120,7 +120,7 @@
     </select>
 
     <!--查询此用户是否是此团队的负责人-->
-    <select id="selectIfTeamPrincipal" >
+    <select id="selectIfTeamPrincipal">
         SELECT COUNT(1) FROM T_TEAM WHERE TEAM_LEADER_ID = #{principalId}
         AND TEAM_ID = #{teamId}
     </select>
@@ -129,5 +129,27 @@
     <select id="querySonTeamById" resultMap="BaseResultMap">
     SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
     AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
+    </select>
+
+    <!--按团队所属用户信-->
+    <select id="queryTeamInUser" parameterType="Map" resultType="com.cardpay.mgt.user.model.User">
+        SELECT DISTINCT usr.*
+        FROM
+        T_USER usr,
+        T_USER_TEAM uteam,
+        T_TEAM team
+        <where>
+            team.TEAM_ID = uteam.TEAM_ID
+            AND uteam.USER_ID = usr."ID"
+            <if test="teamId == 0">
+                AND team.ORGANIZATION_ID = #{orgId}
+            </if>
+            <if test="teamId !=null and teamId!=''">
+                AND team.TEAM_ID = #{teamId}
+            </if>
+            <if test="userName!=null and userName!=''">
+                AND USER_CNAME LIKE CONCAT (CONCAT('%', #{userName}), '%')
+            </if>
+        </where>
     </select>
 </mapper>

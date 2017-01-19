@@ -144,10 +144,10 @@ public class DataTablePage {
                     }
                 }
             }
-            data = (List<Object>) baseService.pageList(example, this.start, this.length);
+
         }
         PageInfo pageInfo = new PageInfo(this.data);
-        setRecordsTotal(pageInfo.getTotal());
+        setRecordsTotal(pageInfo.getTotal()); data = (List<Object>) baseService.pageList(example, this.start, this.length);
         setRecordsFiltered(pageInfo.getTotal());
         setCode(ResultEnum.SUCCESS.getValue());
     }
