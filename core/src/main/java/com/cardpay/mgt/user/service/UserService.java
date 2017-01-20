@@ -4,6 +4,7 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -115,4 +116,12 @@ public interface UserService extends BaseService<User> {
      * @return 成功或失败
      */
     boolean addUserByOrg(User user, Integer orgId);
+
+    /**
+     * 按机构查询某个所属角色的用户信息
+     * @param roleType 角色类型
+     * @param orgId 机构id
+     * @return 用户信息
+     */
+    List<User> queryRoleByOrg(Integer orgId, Integer roleType);
 }

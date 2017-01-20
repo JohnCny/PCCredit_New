@@ -2,6 +2,7 @@ package com.cardpay.mgt.user.dao;
 
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.user.model.Role;
+import com.cardpay.mgt.user.model.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface RoleMapper extends BasicMapper<Role> {
      * @return 角色集合
      */
     List<String> selectByUser(@Param("userId") Integer userId, @Param("orgId") Integer orgId);
+
 }

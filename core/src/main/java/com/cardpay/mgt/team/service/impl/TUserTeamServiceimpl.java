@@ -11,6 +11,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
     private TeamService teamService;
 
     @Override
+    @Transactional
     public int batchInsert(int teamId, String userIds) {
         String[] split = userIds.split(",");
         List<Integer> userIdList = new ArrayList<>();
@@ -41,7 +43,7 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
         }
         Map<String, Object> map = new HashedMap();
         map.put("teamId", teamId);
-        map.put("userId", userIdList);
+        map.put("userIds", userIdList);
         return tUserTeamDao.batchInsert(map);
     }
 
@@ -51,7 +53,17 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
     }
 
     @Override
-    public int bathDelete(Map<String, Object> map) {
+    @Transactional
+    public int bathDelete(int teamId, String userIds) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("teamId", teamId);
+        List<Integer> list = new ArrayList<>();
+        String[] split = userIds.split(",");
+        for (String userId : split) {
+            int id = Integer.parseInt(userId);
+            list.add(id);
+        }
+        map.put("userIds", list);
         return tUserTeamDao.bathDelete(map);
     }
 

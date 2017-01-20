@@ -9,17 +9,17 @@
     <!--批量添加团队,成员关联信息-->
     <insert id="batchInsert" parameterType="Map">
         INSERT INTO T_USER_TEAM (TEAM_ID, USER_ID)
-        <foreach collection="map" open="(" close=")" index="index" item="item" separator="union">
-            SELECT #{teamId}, #{userId} FROM DUAL
+        <foreach collection="userIds" open="(" close=")" index="index" item="item" separator="union">
+            SELECT #{teamId}, #{item} FROM DUAL
         </foreach>
     </insert>
 
     <!--批量更新团队客户关联信息-->
     <update id="batchUpdate" parameterType="Map">
-        <foreach collection="map" open="BEGIN" close=";END;" item="item" index="index" separator=";">
+        <foreach collection="userIds" open="BEGIN" close=";END;" item="item" index="index" separator=";">
             UPDATE T_USER_TEAM
             <set>
-                TEAM_ID = #{teamId}, USER_ID = #{userId}
+                TEAM_ID = #{teamId}, USER_ID = #{item}
             </set>
             WHERE TEAM_ID = #{teamId}
         </foreach>
@@ -31,14 +31,11 @@
   </select>
 
     <!--批量删除团队成员-->
-    <delete id="bathDelete" parameterType="Map">
-        DELETE FROM T_USER_TEAM
-        <where>
-            TEAM_ID = #{teamId}
-            <foreach collection="userIds" separator="or" index="index" close=")" open="(" item="item">
-                AND USER_ID = #{userId}
+    <delete id="bathDelete" parameterType="Map" >
+        DELETE FROM T_USER_TEAM WHERE TEAM_ID = #{teamId,jdbcType=DECIMAL} AND USER_ID IN
+            <foreach collection="userIds" separator="," index="index" close=")" open="(" item="item">
+                   #{item}
             </foreach>
-        </where>
     </delete>
 
     <!--按进件Id查询所属团队信息-->

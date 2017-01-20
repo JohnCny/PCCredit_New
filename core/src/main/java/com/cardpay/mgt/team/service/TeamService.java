@@ -6,7 +6,6 @@ import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.user.model.User;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -77,5 +76,13 @@ public interface TeamService extends BaseService<Team> {
      * @return 用户信息
      */
     List<User> queryTeamInUser(Map<String, Object> map);
+
+    /**
+     * 查询新增团队成员信息
+     * @param orgId 团队id
+     * @param teamId
+     * @return 成员信息
+     */
+    List<User> queryNewTeamMember(int orgId, int teamId);
 
 }
