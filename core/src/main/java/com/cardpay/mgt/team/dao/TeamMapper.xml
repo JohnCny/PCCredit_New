@@ -51,7 +51,8 @@
         <collection property="orgTeamList" select="queryOrgTeamList" column="TEAM_ID"/>
     </resultMap>
 
-    <resultMap id="UserMap" type="com.cardpay.mgt.user.model.User">
+    <!--用户信息-->
+    <resultMap id="userMap" type="com.cardpay.mgt.user.model.User">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
         <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
         <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
@@ -153,7 +154,7 @@
     </select>
 
     <!--按团队所属用户信-->
-    <select id="queryTeamInUser" parameterType="Map" resultMap="UserMap">
+    <select id="queryTeamInUser" parameterType="Map" resultMap="userMap">
         SELECT DISTINCT usr.*
         FROM
         T_USER usr,
@@ -168,8 +169,8 @@
             <if test="teamId !=null and teamId!=''">
                 AND team.TEAM_ID = #{teamId}
             </if>
-            <if test="userName!=null and userName!=''">
-                AND USER_CNAME LIKE CONCAT (CONCAT('%', #{userName}), '%')
+            <if test="userCname!=null and userCname!=''">
+                AND USER_CNAME LIKE CONCAT (CONCAT('%', #{userCname}), '%')
             </if>
         </where>
     </select>

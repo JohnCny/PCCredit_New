@@ -5,6 +5,8 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.application.ipc.normal.dao.TApplicationTemplateMapper;
+import com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplate;
 import com.cardpay.mgt.menu.exception.EndRecursionException;
 import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
@@ -132,6 +134,19 @@ public class MenuController {
     public ResultTo refresh(){
         ResultTo resultTo = new ResultTo();
         tMenuService.updateMenuCache();
+        return resultTo;
+    }
+
+    /**
+     * 初始化菜单
+     *
+     * @return 刷新菜单缓存
+     */
+    @GetMapping("/init")
+    @ApiOperation(value = "初始化菜单", notes = "初始化菜单",  httpMethod = "GET")
+    public ResultTo refresh(Integer orgId){
+        ResultTo resultTo = new ResultTo();
+        tMenuService.initMenu(orgId);
         return resultTo;
     }
 
