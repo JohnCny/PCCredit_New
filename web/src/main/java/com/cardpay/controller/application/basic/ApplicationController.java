@@ -65,7 +65,7 @@ public class ApplicationController extends BaseController<TApplication> {
     @PostMapping("/{productId}/{customerId}")
     public ResultTo insertApplication(@PathVariable int productId, @PathVariable int customerId) {
         boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
-        if (flag) {
+        if (true) {
             Integer managerId = ShiroKit.getUserId();
             TApplication tApplication = new TApplication();
             tApplication.setCreateTime(new Date());

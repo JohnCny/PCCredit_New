@@ -32,8 +32,9 @@ public interface TUserTeamService extends BaseService<TUserTeam> {
 
     /**
      * 批量删除团队成员信息
-     * @param map 参数
-     * @return 成员信息
+     * @param teamId 团队Id
+     * @param userIds 成员id
+     * @return 数据库变记录
      */
-    int bathDelete(Map<String, Object> map);
+    int bathDelete(int teamId, String userIds);
 }

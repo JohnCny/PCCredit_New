@@ -13,6 +13,7 @@ import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TUserTeamService;
 import com.cardpay.mgt.team.service.TeamService;
+import com.cardpay.mgt.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -170,25 +171,38 @@ public class TeamController extends BaseController<Team> {
 
     /**
      * 查询所有机构团队信息
+     *
      * @return 机构团队信息
      */
     @GetMapping("/orgTeam")
-    public ResultTo orgTeam(){
+    public ResultTo orgTeam() {
         List<OrganizationTeamVo> teamVos = teamService.queryOrganization();
         return new ResultTo().setData(teamVos);
     }
 
     /**
      * 查询团队下的用户信息
+     *
      * @param teamId 团队id
      * @return 用户信息
      */
     @RequestMapping("/pageList")
-    public DataTablePage pageList(@RequestParam(defaultValue = "0") int teamId){
+    public DataTablePage pageList(@RequestParam(defaultValue = "0") int teamId) {
         Map<String, Object> map = new HashMap<>();
         map.put("teamId", teamId);
         map.put("orgId", ShiroKit.getOrgId());
         return dataTablePage("queryTeamInUser", map);
+    }
+
+    /**
+     * 查询新增团队成员信息
+     *
+     * @return 未在团队的成员
+     */
+    @GetMapping("/newMember")
+    public ResultTo newMember() {
+        List<User> userList = teamService.queryNewTeamMember(ShiroKit.getOrgId());
+        return new ResultTo().setData(userList);
     }
 
 }

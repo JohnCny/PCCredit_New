@@ -153,7 +153,7 @@
     AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
     </select>
 
-    <!--按团队所属用户信-->
+    <!--按团队所属用户信息-->
     <select id="queryTeamInUser" parameterType="Map" resultMap="userMap">
         SELECT DISTINCT usr.*
         FROM
@@ -173,5 +173,23 @@
                 AND USER_CNAME LIKE CONCAT (CONCAT('%', #{userCname}), '%')
             </if>
         </where>
+    </select>
+
+
+    <!--查询新增团队成员信息-->
+    <select id="queryNewTeamMember" resultMap="userMap">
+        SELECT usr.*
+        FROM
+        T_USER usr,
+        T_ORGANIZATION org,
+        T_USER_ORGANIZATION uorg,
+        T_USER_TEAM uteam,
+        T_TEAM team
+        WHERE
+        USR."ID" = UORG.USER_ID
+        AND UORG.ORGANIZATION_ID = ORG."ID"
+        AND TEAM.TEAM_ID = UTEAM.TEAM_ID
+        AND UTEAM.USER_ID !=USR."ID"
+        AND ORG."ID" = #{orgId}
     </select>
 </mapper>

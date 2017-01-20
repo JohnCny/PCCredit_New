@@ -1,7 +1,6 @@
 package com.cardpay.mgt.team.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
-import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.team.dao.TUserTeamMapper;
 import com.cardpay.mgt.team.dao.TeamMapper;
@@ -97,5 +96,10 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     @Override
     public List<User> queryTeamInUser(Map<String, Object> map) {
         return teamDao.queryTeamInUser(map);
+    }
+
+    @Override
+    public List<User> queryNewTeamMember(int orgId) {
+        return teamDao.queryNewTeamMember(orgId);
     }
 }

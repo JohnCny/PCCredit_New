@@ -41,7 +41,7 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
         }
         Map<String, Object> map = new HashedMap();
         map.put("teamId", teamId);
-        map.put("userId", userIdList);
+        map.put("userIds", userIdList);
         return tUserTeamDao.batchInsert(map);
     }
 
@@ -51,7 +51,16 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
     }
 
     @Override
-    public int bathDelete(Map<String, Object> map) {
+    public int bathDelete(int teamId, String userIds) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("teamId", teamId);
+        List<Integer> list = new ArrayList<>();
+        String[] split = userIds.split(",");
+        for (String userId : split) {
+            int id = Integer.parseInt(userId);
+            list.add(id);
+        }
+        map.put("userIds", list);
         return tUserTeamDao.bathDelete(map);
     }
 
