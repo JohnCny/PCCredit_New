@@ -196,6 +196,7 @@ public class TeamController extends BaseController<Team> {
         map.put("teamId", teamId);
         map.put("orgId", ShiroKit.getOrgId());
         return dataTablePage("queryTeamInUser", map);
+        return queryTeamInUser;
     }
 
     /**

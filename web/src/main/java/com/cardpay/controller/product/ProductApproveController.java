@@ -10,9 +10,11 @@ import com.cardpay.mgt.product.service.ProductApproveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.entity.Example;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,8 +49,11 @@ public class ProductApproveController extends BaseController<ProductApprove> {
      */
     @RequestMapping("/pageList")
     @ApiOperation(value = "产品审批数据列表")
-    public DataTablePage pageList() {
-        return dataTablePage();
+    public DataTablePage pageList(@RequestParam("productId") Integer productId) {
+        Example example = new Example(ProductApprove.class);
+        example.orderBy("preNodeId").asc();
+        example.createCriteria().andEqualTo("productId", productId);
+        return dataTablePage(example);
     }
 
     /**
@@ -99,15 +106,25 @@ public class ProductApproveController extends BaseController<ProductApprove> {
     }
 
     /**
-     * 根据产品ID或的审批流程集合
+     * 根据产品ID获得审批流程集合
      *
      * @param productId 产品ID
      * @return 批流程集合
      */
     @GetMapping(params = "productId")
     public ResultTo getApprove(@RequestParam("productId") Integer productId) {
-        ProductApprove productApprove = new ProductApprove();
-        productApprove.setProductId(productId);
-        return new ResultTo().setData(productApproveService.select(productApprove));
+        return new ResultTo().setData(productApproveService.selectAllByProductId(productId));
+    }
+
+    /**
+     * 删除节点
+     *
+     * @param approveId 审批ID
+     * @return 成功或失败
+     */
+    @DeleteMapping(params = "approveId")
+    public ResultTo delete(@RequestParam("approveId") Integer approveId) {
+        productApproveService.deleteApprove(approveId);
+        return new ResultTo();
     }
 }

@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class ExplainList {
 
-    List<ProductInvestPictureDesc> list;
+    List<ProductInvestPictureDesc> explainList;
 
-    public List<ProductInvestPictureDesc> getList() {
-        return list;
+    public List<ProductInvestPictureDesc> getExplainList() {
+        return explainList;
     }
 
-    public void setList(List<ProductInvestPictureDesc> list) {
-        this.list = list;
+    public void setExplainList(List<ProductInvestPictureDesc> explainList) {
+        this.explainList = explainList;
     }
 }
