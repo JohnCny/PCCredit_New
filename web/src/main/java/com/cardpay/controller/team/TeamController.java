@@ -170,25 +170,28 @@ public class TeamController extends BaseController<Team> {
 
     /**
      * 查询所有机构团队信息
+     *
      * @return 机构团队信息
      */
     @GetMapping("/orgTeam")
-    public ResultTo orgTeam(){
+    public ResultTo orgTeam() {
         List<OrganizationTeamVo> teamVos = teamService.queryOrganization();
         return new ResultTo().setData(teamVos);
     }
 
     /**
      * 查询团队下的用户信息
+     *
      * @param teamId 团队id
      * @return 用户信息
      */
-    @RequestMapping("/pageList")
-    public DataTablePage pageList(@RequestParam(defaultValue = "0") int teamId){
+    @PostMapping("/pageList")
+    public DataTablePage pageList(@RequestParam(defaultValue = "0") int teamId) {
         Map<String, Object> map = new HashMap<>();
         map.put("teamId", teamId);
         map.put("orgId", ShiroKit.getOrgId());
-        return dataTablePage("queryTeamInUser", map);
+        DataTablePage queryTeamInUser = dataTablePage("queryTeamInUser", map);
+        return queryTeamInUser;
     }
 
 }

@@ -211,6 +211,8 @@ subprojects {
                 libraries."jasperreports",
                 libraries."groovy-all",
 
+                libraries."thumbnailator",
+
         )
         testCompile(
                 libraries."junit",

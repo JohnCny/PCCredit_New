@@ -55,8 +55,9 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
             String[] orgIds = orgStr.split(",");
             productOrgMapper.batchInsertOrg(product.getId(), orgIds);
         }
-        if (explainList != null && explainList.getList() != null) {
-            for (ProductInvestPictureDesc productInvestPictureDesc : explainList.getList()) {
+        if (explainList != null && explainList.getExplainList() != null) {
+            for (ProductInvestPictureDesc productInvestPictureDesc : explainList.getExplainList()) {
+                productInvestPictureDesc.setProductId(product.getId());
                 productDescMapper.insertSelective(productInvestPictureDesc);
             }
         }
@@ -80,8 +81,15 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
             String[] orgIds = orgStr.split(",");
             productOrgMapper.batchInsertOrg(product.getId(), orgIds);
         }
-        for (ProductInvestPictureDesc productInvestPictureDesc : explainList.getList()) {
-            productDescMapper.updateByPrimaryKeySelective(productInvestPictureDesc);
+        if (explainList != null && explainList.getExplainList() != null) {
+            for (ProductInvestPictureDesc productInvestPictureDesc : explainList.getExplainList()) {
+                if (productInvestPictureDesc.getId() == null) {
+                    productInvestPictureDesc.setProductId(product.getId());
+                    productDescMapper.insertSelective(productInvestPictureDesc);
+                    continue;
+                }
+                productDescMapper.updateByPrimaryKeySelective(productInvestPictureDesc);
+            }
         }
         return productMapper.updateByPrimaryKeySelective(product) > 0;
     }
