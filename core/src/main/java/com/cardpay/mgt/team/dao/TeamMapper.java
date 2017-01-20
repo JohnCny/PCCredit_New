@@ -69,4 +69,12 @@ public interface TeamMapper extends BasicMapper<Team> {
      * @return 用户信息
      */
     List<User> queryTeamInUser(Map<String, Object> map);
+
+    /**
+     * 查询新增团队成员信息
+     * @param orgId 团队id
+     * @param teamId
+     * @return 成员信息
+     */
+    List<User> queryNewTeamMember(@Param("orgId") int orgId,@Param("teamId") int teamId);
 }

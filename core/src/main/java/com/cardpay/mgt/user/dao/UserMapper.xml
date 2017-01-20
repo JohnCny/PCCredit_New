@@ -126,7 +126,7 @@
         AND TUO.ORGANIZATION_ID = "TO"."ID"
     </select>
 
-    <!--按机构查询某个所属角色信息-->
+    <!--按机构查询某个所属角色的用户信息-->
     <select id="queryRoleByOrg" resultMap="RoleVoMap">
             SELECT usr.id AS userId,usr.USER_CNAME , role.*
             FROM

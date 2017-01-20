@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -302,5 +303,16 @@ public class UserController extends BaseController<User> {
         user.setEmail(email);
         User selectUser = userService.selectOne(user);
         return new ResultTo().setData(selectUser == null ? null : selectUser.getId());
+    }
+
+    /**
+     * 按机构查询某个所属角色的用户信息
+     * @param roleType 角色类型
+     * @return 角色信息
+     */
+    @GetMapping("/role/{roleType}")
+    public ResultTo queryRoleByOrg(@PathVariable("roleType") int roleType){
+        List<User> userList = userService.queryRoleByOrg(ShiroKit.getOrgId(), roleType);
+        return new ResultTo().setData(userList);
     }
 }

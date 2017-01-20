@@ -9,7 +9,9 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,17 +52,15 @@ public class TUserTeamController extends BaseController<TUserTeam> {
 
     /**
      * 删除团队成员信息
-     * @param teamId 团队id
+     *
+     * @param teamId  团队id
      * @param userIds 用户id(,分割)
      * @return 数据库变记录
      */
     @DeleteMapping
-    public ResultTo delete(int teamId, String userIds){
-        Map<String, Object> map = new HashMap<>();
-        map.put("teamId", teamId);
-        map.put("userIds", userIds);
-        int bathDelete = tUserTeamService.bathDelete(map);
-        return bathDelete!=0? new ResultTo().setData(bathDelete): new ResultTo(ResultEnum.SERVICE_ERROR);
+    public ResultTo delete(int teamId, String userIds) {
+        int bathDelete = tUserTeamService.bathDelete(teamId, userIds);
+        return bathDelete != 0 ? new ResultTo().setData(bathDelete) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
 }
