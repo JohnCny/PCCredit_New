@@ -11,6 +11,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
     private TeamService teamService;
 
     @Override
+    @Transactional
     public int batchInsert(int teamId, String userIds) {
         String[] split = userIds.split(",");
         List<Integer> userIdList = new ArrayList<>();
@@ -51,6 +53,7 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
     }
 
     @Override
+    @Transactional
     public int bathDelete(int teamId, String userIds) {
         Map<String, Object> map = new HashMap<>();
         map.put("teamId", teamId);

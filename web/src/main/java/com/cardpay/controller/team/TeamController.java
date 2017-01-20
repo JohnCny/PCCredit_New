@@ -97,8 +97,12 @@ public class TeamController extends BaseController<Team> {
         Integer userId = ShiroKit.getUserId();
         team.setCreateBy(userId);
         team.setCreateTime(new Date());
-        team.setTeamParentId(0);
+        team.setOrganizationId(ShiroKit.getOrgId());
         Integer flag = teamService.insertSelective(team);
+        TUserTeam tUserTeam = new TUserTeam();
+        tUserTeam.setTeamId(team.getTeamId());
+        tUserTeam.setUserId(team.getTeamLeaderId());
+        tUserTeamService.insert(tUserTeam);
         return flag != 0 ? new ResultTo().setData(team.getTeamId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -199,9 +203,9 @@ public class TeamController extends BaseController<Team> {
      *
      * @return 未在团队的成员
      */
-    @GetMapping("/newMember")
-    public ResultTo newMember() {
-        List<User> userList = teamService.queryNewTeamMember(ShiroKit.getOrgId());
+    @GetMapping("/newMember/{teamId}")
+    public ResultTo newMember(@PathVariable("teamId") int teamId) {
+        List<User> userList = teamService.queryNewTeamMember(ShiroKit.getOrgId(), teamId);
         return new ResultTo().setData(userList);
     }
 

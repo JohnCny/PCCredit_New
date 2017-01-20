@@ -35,11 +35,6 @@ public class ApplicationInvestPictureController {
      */
     @PostMapping
     public ResultTo upLoads(@RequestPart MultipartFile[] files, TApplicationInvestPicture tApplicationInvestPicture) {
-        try {
-            String urlEncoded = Base64.getUrlEncoder().encodeToString("files".getBytes("utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         int flag = tApplicationInvestPictureService.insertFile(files, tApplicationInvestPicture);
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }

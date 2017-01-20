@@ -12,15 +12,9 @@ import java.io.*;
  *         createTime 2017-01-2017/1/20 10:14
  */
 public class Base64Util {
-    public static void main(String[] args) {
-        String strImg = GetImageStr();
-        System.out.println(strImg);
-        GenerateImage(strImg);
-    }
 
     //图片转化成base64字符串
-    public static String GetImageStr() {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-        String imgFile = "d://test.jpg";//待处理的图片
+    public static String GetImageStr(String imgFile) {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
         InputStream in = null;
         byte[] data = null;
         //读取图片字节数组
@@ -51,7 +45,7 @@ public class Base64Util {
                 }
             }
             //生成jpeg图片
-            String imgFilePath = "d://222.jpg";//新生成的图片
+            String imgFilePath = "";//新生成的图片
             OutputStream out = new FileOutputStream(imgFilePath);
             out.write(b);
             out.flush();

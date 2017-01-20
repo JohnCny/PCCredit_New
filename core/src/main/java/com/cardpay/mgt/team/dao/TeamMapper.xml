@@ -178,7 +178,7 @@
 
     <!--查询新增团队成员信息-->
     <select id="queryNewTeamMember" resultMap="userMap">
-        SELECT usr.*
+        SELECT DISTINCT usr.*
         FROM
         T_USER usr,
         T_ORGANIZATION org,
@@ -191,5 +191,6 @@
         AND TEAM.TEAM_ID = UTEAM.TEAM_ID
         AND UTEAM.USER_ID !=USR."ID"
         AND ORG."ID" = #{orgId}
+        AND team.TEAM_ID != #{teamId}
     </select>
 </mapper>

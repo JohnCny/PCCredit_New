@@ -13,6 +13,7 @@ import com.cardpay.mgt.team.service.TeamService;
 import com.cardpay.mgt.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     }
 
     @Override
+    @Transactional
     public int deleteTeam(Integer teamId, int organizationId) {
         List<UserTeamVo> userTeamVos = teamDao.queryTeam(teamId, organizationId);
         int count = teamDao.querySubsidiary(teamId);
@@ -99,7 +101,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
     }
 
     @Override
-    public List<User> queryNewTeamMember(int orgId) {
-        return teamDao.queryNewTeamMember(orgId);
+    public List<User> queryNewTeamMember(int orgId, int teamId) {
+        return teamDao.queryNewTeamMember(orgId, teamId);
     }
 }
