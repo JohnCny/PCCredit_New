@@ -137,6 +137,8 @@ ext.libraries = [
         "jasperreports":"net.sf.jasperreports:jasperreports:5.5.1",
         "groovy-all":"org.codehaus.groovy:groovy-all:2.2.2",
 
+        "thumbnailator":"net.coobird:thumbnailator:0.4.8",
+
 
         //单元测试
         "junit":"junit:junit:4.12",

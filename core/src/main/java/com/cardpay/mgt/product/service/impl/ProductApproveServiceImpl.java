@@ -113,6 +113,7 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
     public void updateApprove(ProductApprove productApprove) {
         LogTemplate.debug(this.getClass(), "productApprove", productApprove);
         ProductApprove oldApprove = productApproveMapper.selectByPrimaryKey(productApprove.getId());
+        productApprove.setProductId(oldApprove.getId());
         if (oldApprove.getNodeType() != 0 && oldApprove.getNodeType() != 2) {
             if (!oldApprove.getPreNodeId().equals(productApprove.getPreNodeId())) {
                 //新增位置
