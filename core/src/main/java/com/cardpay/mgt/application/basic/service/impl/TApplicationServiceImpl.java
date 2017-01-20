@@ -74,11 +74,12 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
         tApplication.setCustomerId(customerId);
         tApplication.setProductId(productId);
         List<TApplication> applicationList = tApplicationDao.select(tApplication);
-        return applicationList.size() > 0 ? true : false;
+        return applicationList.size() > 0 ? false : true ;
     }
 
     @Override
-    public boolean queryProductIfOk(int managerId, int productId) {
+    public Map<String, Object> queryProductIfOk(int managerId, int productId) {
+        Map<String, Object> map = new HashMap<>();
         Product product = productService.selectByPrimaryKey(productId);
         TCustomerManager tCustomerManager = customerMangerService.selectByUserId(managerId);
         ProductOrganization productOrganization = new ProductOrganization();
@@ -86,13 +87,17 @@ public class TApplicationServiceImpl extends BaseServiceImpl<TApplication> imple
         List<ProductOrganization> productOrganizationList = productOrgService.select(productOrganization);
         for (ProductOrganization organization : productOrganizationList) {
             if (!organization.getOraganizationId().equals(tCustomerManager.getOrganizationId())) {
-                return false;
+                map.put("status", false);
+                map.put("message", "您所属机构不在此产品准入机构中!!!");
             }
         }
         if (tCustomerManager.getLevelId() > product.getCustomerManagerLevelId()) {
-            return true;
+            map.put("status", true);
+        }else {
+            map.put("status", false);
+            map.put("message", "您的级别过低,无法申请此产品.请继续努力!!!");
         }
-        return false;
+        return map;
     }
 
     @Override

@@ -49,6 +49,14 @@
         <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
     </resultMap>
 
+    <resultMap id="RoleVoMap" type="com.cardpay.mgt.user.model.vo.RoleVo">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName"/>
+        <result column="ROLE_NAME_ZH" jdbcType="VARCHAR" property="roleNameZh"/>
+        <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+        <result column="userId" jdbcType="DECIMAL" property="userId"/>
+    </resultMap>
+
     <select id="selectByAuthority" resultType="String">
         SELECT
             TA.AUTHORITY_NAME
@@ -118,5 +126,18 @@
         AND TUO.ORGANIZATION_ID = "TO"."ID"
     </select>
 
+    <!--按机构查询某个所属角色的用户信息-->
+    <select id="queryRoleByOrg" resultMap="RoleVoMap">
+            SELECT usr.id AS userId,usr.USER_CNAME , role.*
+            FROM
+            T_USER usr,
+            T_USER_ROLE urole,
+            T_ROLE role
+            WHERE
+            usr."ID" = urole.USER_ID
+            AND urole.ROLE_ID = role."ID"
+            AND role.ORGANIZATION_ID = #{orgId}
+            AND role.ROLE_TYPE = #{roleType}
+    </select>
 
 </mapper>

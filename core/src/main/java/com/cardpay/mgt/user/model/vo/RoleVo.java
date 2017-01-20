@@ -31,6 +31,32 @@ public class RoleVo {
      */
     private String roleNameZh;
 
+    /**
+     * 用户名称
+     */
+    private String userCname;
+
+    /**
+     * 用户id
+     */
+    private Integer userId;
+
+    public String getUserCname() {
+        return userCname;
+    }
+
+    public void setUserCname(String userCname) {
+        this.userCname = userCname;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     public Integer getId() {
         return id;
     }

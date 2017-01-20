@@ -5,6 +5,7 @@ import com.cardpay.mgt.team.model.Team;
 import com.cardpay.mgt.team.model.vo.OrganizationTeamVo;
 import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
+import com.cardpay.mgt.user.model.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -61,4 +62,19 @@ public interface TeamMapper extends BasicMapper<Team> {
      * @return 机构团队信息
      */
     List<OrganizationTeamVo> queryOrganization();
+
+    /**
+     * 按团队所属用户信息系
+     * @param map 参数
+     * @return 用户信息
+     */
+    List<User> queryTeamInUser(Map<String, Object> map);
+
+    /**
+     * 查询新增团队成员信息
+     * @param orgId 团队id
+     * @param teamId
+     * @return 成员信息
+     */
+    List<User> queryNewTeamMember(@Param("orgId") int orgId,@Param("teamId") int teamId);
 }

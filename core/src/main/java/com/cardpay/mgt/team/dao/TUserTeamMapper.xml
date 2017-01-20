@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.team.dao.TUserTeamMapper">
-  <resultMap id="BaseResultMap" type="com.cardpay.mgt.team.model.TUserTeam">
-    <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId" />
-    <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.team.model.TUserTeam">
+        <result column="TEAM_ID" jdbcType="DECIMAL" property="teamId"/>
+        <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+    </resultMap>
 
-  <!--批量添加团队,成员关联信息-->
-  <insert id="batchInsert" parameterType="Map">
-    INSERT INTO T_USER_TEAM (TEAM_ID, USER_ID)
-    <foreach collection="map" open="(" close=")" index="index" item="item" separator="union">
-      SELECT #{teamId}, #{userId} FROM DUAL
-    </foreach>
-  </insert>
+    <!--批量添加团队,成员关联信息-->
+    <insert id="batchInsert" parameterType="Map">
+        INSERT INTO T_USER_TEAM (TEAM_ID, USER_ID)
+        <foreach collection="userIds" open="(" close=")" index="index" item="item" separator="union">
+            SELECT #{teamId}, #{item} FROM DUAL
+        </foreach>
+    </insert>
 
-  <!--批量更新团队客户关联信息-->
-  <update id="batchUpdate" parameterType="Map">
-    <foreach collection="map" open="BEGIN" close=";END;" item="item" index="index" separator=";">
-      UPDATE T_USER_TEAM
-      <set>
-        TEAM_ID = #{teamId}, USER_ID = #{userId}
-      </set>
-      WHERE TEAM_ID = #{teamId}
-    </foreach>
-  </update>
+    <!--批量更新团队客户关联信息-->
+    <update id="batchUpdate" parameterType="Map">
+        <foreach collection="userIds" open="BEGIN" close=";END;" item="item" index="index" separator=";">
+            UPDATE T_USER_TEAM
+            <set>
+                TEAM_ID = #{teamId}, USER_ID = #{item}
+            </set>
+            WHERE TEAM_ID = #{teamId}
+        </foreach>
+    </update>
 
-  <!--按用户id查询关联团队id-->
-  <select id="queryByUserId" resultMap="BaseResultMap">
+    <!--按用户id查询关联团队id-->
+    <select id="queryByUserId" resultMap="BaseResultMap">
     SELECT * FROM T_USER_TEAM WHERE USER_ID = #{userId}
   </select>
 
-  <!--按进件Id查询所属团队信息-->
-  <select id="queryTeamByAppId" resultMap="BaseResultMap">
+    <!--批量删除团队成员-->
+    <delete id="bathDelete" parameterType="Map" >
+        DELETE FROM T_USER_TEAM WHERE TEAM_ID = #{teamId,jdbcType=DECIMAL} AND USER_ID IN
+            <foreach collection="userIds" separator="," index="index" close=")" open="(" item="item">
+                   #{item}
+            </foreach>
+    </delete>
+
+    <!--按进件Id查询所属团队信息-->
+    <select id="queryTeamByAppId" resultMap="BaseResultMap">
     SELECT UTEAM.*
     FROM
     T_USER_TEAM UTEAM,

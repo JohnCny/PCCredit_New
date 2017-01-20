@@ -40,4 +40,11 @@ public interface TUserTeamMapper extends BasicMapper<TUserTeam> {
      * @return 用户团队信息
      */
     List<TUserTeam> queryTeamByAppId(@Param("applicationId") int applicationId);
+
+    /**
+     * 批量删除团队成员信息
+     * @param map 参数
+     * @return 成员信息
+     */
+    int bathDelete(Map<String, Object> map);
 }

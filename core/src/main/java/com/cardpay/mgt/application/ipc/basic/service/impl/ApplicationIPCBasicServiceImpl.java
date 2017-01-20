@@ -14,6 +14,7 @@ import com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplate;
 import com.cardpay.mgt.application.ipc.normal.model.vo.TemplateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
     private TApplicationTemplateMapper applicationTemplateMapper;
 
     @Override
+    @Transactional
     public Integer initTemplate(Integer applicationId) {
         List<Integer> types = applicationIPCBasicMapper.selectTemplateTypeByApplicationId(applicationId);
         Integer result = 0;
@@ -60,9 +62,9 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
         //根据类型查询模板
         switch (TemplateTypeEnum.getTemplateTypeEnumById(template.getTemplateType())){
             case NORMAL:
-                List<TemplateGroup> normalTemplateGroups =
-                        normalTemplateMapper.selectGroupEntrance(applicationId, templateId);
-                return normalTemplateGroups;
+                return normalTemplateMapper.selectGroupEntrance(applicationId, templateId);
+            case APPLICATION_FROM:
+                return normalTemplateMapper.selectGroupEntrance(applicationId, templateId);
             case CASHFLOW_PROFIT:
                 List<CashProfitTemplateGroup> cashProfitTemplateGroups =
                         cashProfitTemplateMapper.selectGroupEntrance(applicationId, templateId);

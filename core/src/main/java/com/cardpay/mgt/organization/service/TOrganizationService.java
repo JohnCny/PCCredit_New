@@ -53,7 +53,7 @@ public interface TOrganizationService extends BaseService<TOrganization> {
     Integer getTopOrgId(Integer orgId);
 
     /**
-     * 查询所有机构信息
+     * 查询所有机构信息 分页
      * @param map 参数
      * @return 机构信息
      */

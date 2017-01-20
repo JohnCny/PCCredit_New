@@ -3,6 +3,7 @@ package com.cardpay.mgt.product.service;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.product.model.ProductApprove;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,4 +32,20 @@ public interface ProductApproveService extends BaseService<ProductApprove> {
      * @param productApprove ProductApprove实体对象
      */
     void updateApprove(ProductApprove productApprove);
+
+    /**
+     * 根据产品ID获取审批集合
+     *
+     * @param productId 产品ID
+     * @return 审批集合
+     */
+    List<ProductApprove> selectAllByProductId(Integer productId);
+
+    /**
+     * 删除节点
+     *
+     * @param approveId 审批ID
+     * @return 成功或失败
+     */
+    boolean deleteApprove(Integer approveId);
 }

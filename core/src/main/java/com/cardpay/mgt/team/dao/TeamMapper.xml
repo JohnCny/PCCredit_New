@@ -51,6 +51,28 @@
         <collection property="orgTeamList" select="queryOrgTeamList" column="TEAM_ID"/>
     </resultMap>
 
+    <!--用户信息-->
+    <resultMap id="userMap" type="com.cardpay.mgt.user.model.User">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+        <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="AGE" jdbcType="DECIMAL" property="age"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+        <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
+    </resultMap>
+
     <!--查询机构信息-->
     <select id="queryOrganization" resultMap="orgTeamVo">
         SELECT * FROM T_ORGANIZATION
@@ -120,7 +142,7 @@
     </select>
 
     <!--查询此用户是否是此团队的负责人-->
-    <select id="selectIfTeamPrincipal" >
+    <select id="selectIfTeamPrincipal">
         SELECT COUNT(1) FROM T_TEAM WHERE TEAM_LEADER_ID = #{principalId}
         AND TEAM_ID = #{teamId}
     </select>
@@ -129,5 +151,46 @@
     <select id="querySonTeamById" resultMap="BaseResultMap">
     SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
     AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
+    </select>
+
+    <!--按团队所属用户信息-->
+    <select id="queryTeamInUser" parameterType="Map" resultMap="userMap">
+        SELECT DISTINCT usr.*
+        FROM
+        T_USER usr,
+        T_USER_TEAM uteam,
+        T_TEAM team
+        <where>
+            team.TEAM_ID = uteam.TEAM_ID
+            AND uteam.USER_ID = usr."ID"
+            <if test="teamId == 0">
+                AND team.ORGANIZATION_ID = #{orgId}
+            </if>
+            <if test="teamId !=null and teamId!=''">
+                AND team.TEAM_ID = #{teamId}
+            </if>
+            <if test="userCname!=null and userCname!=''">
+                AND USER_CNAME LIKE CONCAT (CONCAT('%', #{userCname}), '%')
+            </if>
+        </where>
+    </select>
+
+
+    <!--查询新增团队成员信息-->
+    <select id="queryNewTeamMember" resultMap="userMap">
+        SELECT DISTINCT usr.*
+        FROM
+        T_USER usr,
+        T_ORGANIZATION org,
+        T_USER_ORGANIZATION uorg,
+        T_USER_TEAM uteam,
+        T_TEAM team
+        WHERE
+        USR."ID" = UORG.USER_ID
+        AND UORG.ORGANIZATION_ID = ORG."ID"
+        AND TEAM.TEAM_ID = UTEAM.TEAM_ID
+        AND UTEAM.USER_ID !=USR."ID"
+        AND ORG."ID" = #{orgId}
+        AND team.TEAM_ID != #{teamId}
     </select>
 </mapper>
