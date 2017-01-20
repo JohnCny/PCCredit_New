@@ -53,7 +53,8 @@
   <!--初始化一般IPC模版-->
   <insert id="initNormalTemplate">
   <choose>
-      <when test="templateType == @com.cardpay.mgt.application.enums.TemplateTypeEnum@NORMAL.getTemplateId()">
+      <when test="templateType == @com.cardpay.mgt.application.enums.TemplateTypeEnum@NORMAL.getTemplateId()
+               || templateType == @com.cardpay.mgt.application.enums.TemplateTypeEnum@APPLICATION_FROM.getTemplateId()">
           INSERT INTO T_APPLICATION_TEMPLATE_VAR (
           T_APPLICATION_TEMPLATE_VAR.TEMPLATE_VAR_ID,
           T_APPLICATION_TEMPLATE_VAR.APPLICATION_ID
