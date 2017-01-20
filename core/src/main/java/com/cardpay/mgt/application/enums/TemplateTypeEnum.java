@@ -9,14 +9,15 @@ package com.cardpay.mgt.application.enums;
 public enum TemplateTypeEnum {
 
     NORMAL("普通模板",1),
-    CASHFLOW_PROFIT("现金流类型模板",2);
+    CASHFLOW_PROFIT("现金流类型模板",2),
+    APPLICATION_FROM("申请表类型模板",3);
 
     private String templateName;
-    private Integer templateId;
+    private Integer templateType;
 
-    TemplateTypeEnum(String templateName, Integer templateId) {
+    TemplateTypeEnum(String templateName, Integer templateType) {
         this.templateName = templateName;
-        this.templateId = templateId;
+        this.templateType = templateType;
     }
 
     public String getTemplateName() {
@@ -27,12 +28,12 @@ public enum TemplateTypeEnum {
         this.templateName = templateName;
     }
 
-    public Integer getTemplateId() {
-        return templateId;
+    public Integer getTemplateType() {
+        return templateType;
     }
 
-    public void setTemplateId(Integer templateId) {
-        this.templateId = templateId;
+    public void setTemplateType(Integer templateType) {
+        this.templateType = templateType;
     }
 
     public static TemplateTypeEnum getTemplateTypeEnumById(Integer templateId){
@@ -41,6 +42,8 @@ public enum TemplateTypeEnum {
                 return NORMAL;
             case 2:
                 return CASHFLOW_PROFIT;
+            case 3:
+                return APPLICATION_FROM;
             default:
                 break;
         }

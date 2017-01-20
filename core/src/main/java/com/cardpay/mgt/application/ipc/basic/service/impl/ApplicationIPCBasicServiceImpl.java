@@ -62,9 +62,9 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
         //根据类型查询模板
         switch (TemplateTypeEnum.getTemplateTypeEnumById(template.getTemplateType())){
             case NORMAL:
-                List<TemplateGroup> normalTemplateGroups =
-                        normalTemplateMapper.selectGroupEntrance(applicationId, templateId);
-                return normalTemplateGroups;
+                return normalTemplateMapper.selectGroupEntrance(applicationId, templateId);
+            case APPLICATION_FROM:
+                return normalTemplateMapper.selectGroupEntrance(applicationId, templateId);
             case CASHFLOW_PROFIT:
                 List<CashProfitTemplateGroup> cashProfitTemplateGroups =
                         cashProfitTemplateMapper.selectGroupEntrance(applicationId, templateId);
