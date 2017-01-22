@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -73,6 +74,31 @@ public class FileManager implements FileManagerConfig {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            connectionPool.checkin(trackerServer);
+        }
+        return null;
+    }
+
+    /**
+     * base64 上传图片
+     * @param file 图片base64码
+     * @param valuePairs 文件分卷信息
+     * @return 文件路径
+     */
+    public String bufferUpload(String file, NameValuePair[] valuePairs){
+        try {
+            byte[] fileBuffer = Base64.getUrlEncoder().encode(file.getBytes("utf-8"));
+            StorageClient1 storageClient = into();
+            String[] uploadResults;
+            uploadResults = storageClient.upload_file(fileBuffer, 0, 0, "", valuePairs);
+            if (uploadResults.length > 0) {
+                String groupName = uploadResults[0];
+                String remoteFileName = uploadResults[1];
+                return groupName + "," + remoteFileName;
+            }
+        }catch (Exception e){
+
+        }finally {
             connectionPool.checkin(trackerServer);
         }
         return null;
@@ -132,6 +158,8 @@ public class FileManager implements FileManagerConfig {
         }
         return content == null ? null : new ByteArrayInputStream(content);
     }
+
+
 
     /**
      * 更新TFile信息

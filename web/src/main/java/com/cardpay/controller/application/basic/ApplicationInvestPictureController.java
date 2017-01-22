@@ -5,8 +5,12 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.mgt.application.basic.model.TApplicationInvestPicture;
 import com.cardpay.mgt.application.basic.service.TApplicationInvestPictureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
 /**
  * 调查图片表Controller

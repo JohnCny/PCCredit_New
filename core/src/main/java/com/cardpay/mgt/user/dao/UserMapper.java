@@ -42,4 +42,12 @@ public interface UserMapper extends BasicMapper<User> {
      * @return 用户信息以及用户机构和角色信息
      */
     UserUpdateVo selectUserUpdateVo(Integer userId);
+
+    /**
+     * 按机构查询某个所属角色的用户信息
+     * @param roleType 角色类型
+     * @param orgId 机构id
+     * @return 用户信息
+     */
+    List<User> queryRoleByOrg(@Param("orgId") Integer orgId, @Param("roleType") Integer roleType);
 }

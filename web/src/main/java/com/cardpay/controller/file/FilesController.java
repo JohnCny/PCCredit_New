@@ -100,4 +100,5 @@ public class FilesController {
         FileInfo fileInfo = fileManager.queryFile(groupName, fileName);
         return new ResultTo().setData(fileInfo);
     }
+
 }

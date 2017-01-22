@@ -34,6 +34,7 @@ import com.cardpay.mgt.user.model.UserRole;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.UserService;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -288,6 +289,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             addUser(user, orgId, role.getId());
         }
         return true;
+    }
+
+    @Override
+    public List<User> queryRoleByOrg(Integer orgId,  Integer roleType) {
+        return userMapper.queryRoleByOrg(orgId, roleType);
     }
 
 

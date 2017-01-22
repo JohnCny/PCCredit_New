@@ -13,6 +13,7 @@ import com.cardpay.mgt.team.model.vo.TeamVo;
 import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TUserTeamService;
 import com.cardpay.mgt.team.service.TeamService;
+import com.cardpay.mgt.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,8 +97,12 @@ public class TeamController extends BaseController<Team> {
         Integer userId = ShiroKit.getUserId();
         team.setCreateBy(userId);
         team.setCreateTime(new Date());
-        team.setTeamParentId(0);
+        team.setOrganizationId(ShiroKit.getOrgId());
         Integer flag = teamService.insertSelective(team);
+        TUserTeam tUserTeam = new TUserTeam();
+        tUserTeam.setTeamId(team.getTeamId());
+        tUserTeam.setUserId(team.getTeamLeaderId());
+        tUserTeamService.insert(tUserTeam);
         return flag != 0 ? new ResultTo().setData(team.getTeamId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
@@ -170,25 +175,38 @@ public class TeamController extends BaseController<Team> {
 
     /**
      * 查询所有机构团队信息
+     *
      * @return 机构团队信息
      */
     @GetMapping("/orgTeam")
-    public ResultTo orgTeam(){
+    public ResultTo orgTeam() {
         List<OrganizationTeamVo> teamVos = teamService.queryOrganization();
         return new ResultTo().setData(teamVos);
     }
 
     /**
      * 查询团队下的用户信息
+     *
      * @param teamId 团队id
      * @return 用户信息
      */
     @RequestMapping("/pageList")
-    public DataTablePage pageList(@RequestParam(defaultValue = "0") int teamId){
+    public DataTablePage pageList(@RequestParam(defaultValue = "0") int teamId) {
         Map<String, Object> map = new HashMap<>();
         map.put("teamId", teamId);
         map.put("orgId", ShiroKit.getOrgId());
         return dataTablePage("queryTeamInUser", map);
+    }
+
+    /**
+     * 查询新增团队成员信息
+     *
+     * @return 未在团队的成员
+     */
+    @GetMapping("/newMember/{teamId}")
+    public ResultTo newMember(@PathVariable("teamId") int teamId) {
+        List<User> userList = teamService.queryNewTeamMember(ShiroKit.getOrgId(), teamId);
+        return new ResultTo().setData(userList);
     }
 
 }
