@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.loan.dao.PostLoanMonitorMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.loan.model.PostLoanMonitor">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="CUSTOMER_NAME" jdbcType="VARCHAR" property="customerName"/>
+        <result column="CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="customerCardNum"/>
+        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName"/>
+        <result column="APPLY_AMOUNT" jdbcType="DECIMAL" property="applyAmount"/>
+        <result column="T_POST_LOAN_MONITOR_TYPE" jdbcType="DECIMAL" property="tPostLoanMonitorType"/>
+        <result column="TASK_STATUS" jdbcType="DECIMAL" property="taskStatus"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+    </resultMap>
+
+
+    <resultMap id="AddLoanVoMap" type="com.cardpay.mgt.loan.model.vo.AddLoanVo">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="customerName"/>
+        <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="customerCardId"/>
+        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName"/>
+        <result column="APPLY_AMOUNT" jdbcType="DECIMAL" property="applyAmount"/>
+    </resultMap>
+
+
+    <select id="loanMonitorAddPageList" resultMap="AddLoanVoMap">
+    SELECT
+        TA."ID",
+        TCB.CNAME,
+        TCB.CERTIFICATE_NUMBER,
+        TP.PRODUCT_NAME,
+        TA.APPLY_AMOUNT
+    FROM
+        T_APPLICATION TA,
+        T_CUSTOMER_MANAGER TCM,
+        T_CUSTOMER_BASIC TCB,
+        T_PRODUCT TP
+    WHERE
+        TA.CUSTOMER_ID = TCB."ID"
+    AND TA.PRODUCT_ID = TP."ID"
+    AND TCM."ID" = TA.CUSTOMER_MANAGER_ID
+    AND TCM."ID" = #{managerId}
+    <if test="customerCardId != null">
+        AND
+        TCB.CERTIFICATE_NUMBER=#{customerCardId}
+    </if>
+    <if test="customerName != null">
+        AND
+        TCB.CNAME=#{customerName}
+    </if>
+  </select>
+
+</mapper>
