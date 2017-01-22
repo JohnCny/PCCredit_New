@@ -209,4 +209,16 @@ public class TeamController extends BaseController<Team> {
         return new ResultTo().setData(userList);
     }
 
+    /**
+     * 团队管理员查询自己所管理的团队信息
+     * @return
+     */
+    @GetMapping("/myTeam")
+    public ResultTo getMyTeam(){
+        Team team = new Team();
+        team.setTeamLeaderId(ShiroKit.getOrgId());
+        List<Team> teamList = teamService.select(team);
+        return new ResultTo().setData(teamList);
+    }
+
 }
