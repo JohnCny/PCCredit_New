@@ -32,5 +32,5 @@ public interface TApplicationInvestPictureMapper extends BasicMapper<TApplicatio
      * @param map 产品id
      * @return 产品调查图片信息
      */
-    List<TApplicationInvestPictureVo>queryByProduct (Map<String, Object> map);
+    List<TApplicationInvestPictureVo> queryByApplicationId(Map<String, Object> map);
 }
