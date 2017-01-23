@@ -3,7 +3,6 @@ package com.cardpay.mgt.organization.dao;
 import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
-import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -51,5 +50,12 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
      * @return 是否为负责人
      */
     int selectIfOrgPrincipal(@Param("directorId")int directorId,@Param("orgId") int orgId);
+
+    /**
+     * 按机构id查询机构信息
+     * @param orgId
+     * @return
+     */
+     List<TOrganizationVo> queryOrgChildren(@Param("orgId") int orgId);
 
 }

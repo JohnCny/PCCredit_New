@@ -14,7 +14,7 @@
         <foreach collection="authorityIds" item="temp" index="index" open="(" close=")" separator="union">
             SELECT
             #{roleId,jdbcType=DECIMAL},
-            #{temp,jdbcType=DECIMAL}
+            #{temp.id,jdbcType=DECIMAL}
             FROM dual
         </foreach>
     </insert>
