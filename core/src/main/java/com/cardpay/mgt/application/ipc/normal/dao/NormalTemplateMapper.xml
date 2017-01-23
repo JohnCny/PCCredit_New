@@ -27,6 +27,7 @@
     <result column="TEMPLATE_VAR_IS_HAS_CHILD" jdbcType="DECIMAL" property="templateVarIsHasChild" />
     <result column="TEMPLATE_VAR_IS_COMPUTE" jdbcType="DECIMAL" property="templateVarIsCompute" />
     <result column="TEMPLATE_VAR_VALUE" jdbcType="VARCHAR" property="templateVarValue" />
+    <result column="APPLICATION_TEMPLATE_VAR_ID" jdbcType="VARCHAR" property="applicationTemplateVarId" />
     <collection property="vars" column="{applicationId=APPLICATION_ID,pid=TEMPLATE_VAR_ID}" select="selectVar"/>
     <collection property="extras" column="{applicationId=APPLICATION_ID,vid=TEMPLATE_VAR_ID}" select="selectExtra"/>
     <collection property="options" column="TEMPLATE_VAR_ID" select="selectOption"/>
@@ -76,7 +77,7 @@
     FROM
     (
       SELECT
-        TV.*, ATV.TEMPLATE_VAR_VALUE,
+        TV.*,ATV.APPLICATION_TEMPLATE_VAR_ID, ATV.TEMPLATE_VAR_VALUE,
         ATV.TEMPLATE_OPTION_ID,
         #{applicationId} APPLICATION_ID
       FROM
@@ -104,7 +105,7 @@
   <!--查询Var层级-->
   <select id="selectVar" resultMap="VarResultMap">
     SELECT
-      TV.*, ATV.TEMPLATE_VAR_VALUE,
+      TV.*,ATV.APPLICATION_TEMPLATE_VAR_ID, ATV.TEMPLATE_VAR_VALUE,
       ATV.TEMPLATE_OPTION_ID,
       #{applicationId} APPLICATION_ID
     FROM

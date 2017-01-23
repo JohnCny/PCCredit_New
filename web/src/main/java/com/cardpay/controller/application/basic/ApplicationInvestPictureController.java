@@ -45,8 +45,8 @@ public class ApplicationInvestPictureController {
      * @param applicationId 进件id
      * @return true/false
      */
-    @GetMapping("/ifFileNext")
-    public ResultTo fileIfNext(int applicationId) {
+    @GetMapping("/ifFileNext/{applicationId}")
+    public ResultTo fileIfNext(@PathVariable("applicationId") int applicationId) {
         boolean mark = tApplicationInvestPictureService.fileIfNext(applicationId);
         return new ResultTo().setData(mark);
     }

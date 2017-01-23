@@ -10,6 +10,7 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.redis.RedisClient;
 import com.cardpay.basic.redis.enums.RedisKeyPrefixEnum;
 import com.cardpay.basic.util.DozerUtil;
+import com.cardpay.basic.util.treeutil.exception.TreeInitializeException;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.menu.dao.TAuthorityMenuMapper;
@@ -20,8 +21,8 @@ import com.cardpay.mgt.menu.model.TMenu;
 import com.cardpay.mgt.menu.model.TMenuAuth;
 import com.cardpay.mgt.menu.model.TMenuAuthorityTemplate;
 import com.cardpay.mgt.menu.model.vo.TMenuAuthVo;
+import com.cardpay.mgt.menu.model.vo.TMenuVo;
 import com.cardpay.mgt.menu.service.TMenuService;
-import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.dao.AuthorityMapper;
 import com.cardpay.mgt.user.model.Authority;
@@ -144,7 +145,14 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
         //遍历组装树
         TreeUtil<T> treeUtil = new TreeUtil("menuOrder", TreeUtil.ASC);
         long start = System.currentTimeMillis();
-        List<T> childNodesByParentId = treeUtil.getChildNodesByParentId(sourceList, TOP_ID);
+        List<T> childNodesByParentId = null;
+        try {
+            childNodesByParentId = treeUtil.getChildNodesByParentId(sourceList, TOP_ID);
+        } catch (TreeInitializeException e) {
+            LogTemplate.error(e,"菜单数据组装层级错误",e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
         long end = System.currentTimeMillis();
         LogTemplate.debug("TreeUtil耗时",""+(end-start));
         return childNodesByParentId;
@@ -266,17 +274,47 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
     }
 
     /**
-     * 刷新菜单缓存（初始化菜单）
+     * 刷新全部菜单缓存（初始化菜单）
      */
     @Override
     public void updateMenuCache() {
         List<Role> roles = roleService.selectAll();
+        updateMenuCache(roles);
+    }
+
+    /**
+     * 刷新机构菜单缓存
+     */
+    @Override
+    public void updateMenuCache(Integer orgId) {
+        Integer topOrgId = null;
+        if(organizationService.selectByPrimaryKey(orgId).getOrgParentId() != TOP_ID){
+            topOrgId = organizationService.getTopOrgId(orgId);
+        }
+        Role criteria = new Role();
+        criteria.setOrganizationId(topOrgId);
+        List<Role> roles = roleService.select(criteria);
+        updateMenuCache(roles);
+    }
+
+    /**
+     * 更新角色菜单缓存
+     *
+     * @param roles 角色id
+     */
+    private void updateMenuCache(List<Role> roles) {
         for (Role role : roles) {
-            String menuString = JSON.toJSONString(convertMenu2Tree(tMenuMapper.selectMenuListByRoleAll(role.getId())));
+            List<TMenuVo> tMenuVos = tMenuMapper.selectMenuListByRoleAll(role.getId());
+            if(tMenuVos == null){
+                LogTemplate.warn(null,"菜单初始化异常","菜单角色:"+role.getRoleName()+"没有任何菜单权限！");
+                tMenuVos = new ArrayList<>();
+            }
+            String menuString = JSON.toJSONString(convertMenu2Tree(tMenuVos));
             LogTemplate.info("菜单初始化,"+"菜单角色:"+role.getRoleName(),menuString);
             redisClient.set(RedisKeyPrefixEnum.ROLE_MENU,role.getId().toString()
                     ,menuString);
         }
         LogTemplate.info("菜单初始化完毕",null);
     }
+
 }
