@@ -37,6 +37,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -184,6 +185,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
+    @Transactional
     public boolean addUser(User user, Integer orgId, Integer roleId) {
         user.setCreateTime(new Date());
         user.setCreateBy(ShiroKit.getUserId());
@@ -205,6 +207,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         UserOrganization userOrganization = new UserOrganization();
         userOrganization.setUserId(user.getId());
         userOrganization.setOrganizationId(orgId);
+        userOrganization.setIsDefault(1);
         userOrganizationMapper.insertSelective(userOrganization);
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleId);
@@ -232,6 +235,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
+    @Transactional
     public boolean updateUser(User user, String[] orgIds, String[] roleIds, MultipartFile file) {
         user.setModifyBy(ShiroKit.getUserId());
         user.setModifyTime(new Date());
@@ -270,6 +274,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
+    @Transactional
     public boolean addUserByOrg(User user, Integer orgId) {
         TOrganization organization = organizationMapper.selectByPrimaryKey(orgId);
         if (organization.getOrgParentId() == 0) {
@@ -280,6 +285,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             role.setRoleStatus(1);
             role.setRoleDescription("默认创建的admin角色");
             role.setRoleNameZh("机构管理员");
+            role.setRoleType(ShiroEnum.ADMIN.getValue());
             roleMapper.insertSelective(role);
             List<Authority> authorities = authorityMapper.selectAll();
             Map<String, Object> map = new HashedMap();

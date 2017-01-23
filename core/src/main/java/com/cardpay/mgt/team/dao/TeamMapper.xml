@@ -95,22 +95,21 @@
 
     <!--以上为机构团队信息(暂时弃用)-->
 
-
     <!--查询团队负责人信息-->
     <select id="queryLeader" resultType="com.cardpay.mgt.user.model.User">
         SELECT * FROM T_USER WHERE id = #{teamLeaderId}
     </select>
 
-    <!--查询子团队信息-->
-    <select id="queryTeamList" resultMap="BaseVo">
-   SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
-   AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
-    </select>
-
-    <!--查询所有团队信息-->
+    <!--查询所有顶级团队信息-->
     <select id="queryAll" parameterType="Map" resultMap="BaseVo">
         SELECT * FROM T_TEAM WHERE IS_MENU_TYPE = 0
         AND ORGANIZATION_ID = #{organizationId}
+    </select>
+
+    <!--查询子团队信息-->
+    <select id="queryTeamList" resultMap="BaseVo">
+        SELECT * FROM T_TEAM WHERE team_parent_id = #{teamId}
+        AND ORGANIZATION_ID = (select ORGANIZATION_ID FROM T_TEAM WHERE TEAM_ID = #{teamId})
     </select>
 
     <!--查询用户信息-->
@@ -175,7 +174,6 @@
         </where>
     </select>
 
-
     <!--查询新增团队成员信息-->
     <select id="queryNewTeamMember" resultMap="userMap">
         SELECT DISTINCT usr.*
@@ -193,4 +191,5 @@
         AND ORG."ID" = #{orgId}
         AND team.TEAM_ID != #{teamId}
     </select>
+
 </mapper>

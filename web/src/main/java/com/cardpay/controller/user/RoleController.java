@@ -82,7 +82,7 @@ public class RoleController extends BaseController<Role> {
      */
     @PostMapping
     @ApiOperation(value = "增加角色信息", httpMethod = "POST")
-    public ResultTo add(Role role, BindingResult result, Integer authorityIds[]) {
+    public ResultTo add(Role role, BindingResult result,@RequestParam("authorityIds[]") Integer[] authorityIds) {
         Map<String, String> map = new HashMap<>();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             LogTemplate.info(this.getClass(), "message", "增加角色参数有误");
