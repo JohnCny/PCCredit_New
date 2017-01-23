@@ -70,4 +70,11 @@ public interface TMenuService extends BaseService<TMenu> {
      * 更新菜单缓存
      */
     void updateMenuCache();
+
+    /**
+     * 更新机构菜单缓存
+     *
+     * @param orgId 机构id
+     */
+    void updateMenuCache(Integer orgId);
 }

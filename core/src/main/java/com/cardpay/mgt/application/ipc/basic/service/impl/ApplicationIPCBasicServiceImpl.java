@@ -2,6 +2,7 @@ package com.cardpay.mgt.application.ipc.basic.service.impl;
 
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.treeutil.TreeUtil;
+import com.cardpay.basic.util.treeutil.exception.TreeInitializeException;
 import com.cardpay.mgt.application.enums.TemplateTypeEnum;
 import com.cardpay.mgt.application.ipc.basic.dao.ApplicationIPCBasicMapper;
 import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
@@ -80,7 +81,13 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
     public List<IPCMenu> selectIPCMenu(Integer applicationId) {
         TreeUtil<IPCMenu> treeUtil = new TreeUtil<>("menuOrder",TreeUtil.ASC);
         List<IPCMenu> ipcMenus = applicationIPCBasicMapper.selectIPCMenu(applicationId);
-        List<IPCMenu> resultMenu = treeUtil.getChildNodesByParentId(ipcMenus, 0);
+        List<IPCMenu> resultMenu = null;
+        try {
+            resultMenu = treeUtil.getChildNodesByParentId(ipcMenus, 0);
+        } catch (TreeInitializeException e) {
+            LogTemplate.error(e,"IPC菜单数据组装层级错误",e.getMessage());
+            e.printStackTrace();
+        }
         return resultMenu;
     }
 }

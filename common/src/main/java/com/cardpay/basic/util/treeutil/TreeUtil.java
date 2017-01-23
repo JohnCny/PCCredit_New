@@ -6,6 +6,7 @@ import com.cardpay.basic.util.ReflectUtil;
 import com.cardpay.basic.util.treeutil.annotation.TreeChild;
 import com.cardpay.basic.util.treeutil.annotation.TreeId;
 import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
+import com.cardpay.basic.util.treeutil.exception.TreeInitializeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +53,10 @@ public class TreeUtil<T> {
      * @param parentId 父id
      * @return 层级结果
      */
-    public List<T> getChildNodesByParentId(List<T> sourceList, Object parentId) {
+    public List<T> getChildNodesByParentId(List<T> sourceList, Object parentId) throws TreeInitializeException {
         if (sourceList == null || sourceList.isEmpty() || parentId == null) {
             LogTemplate.info("sourceList="+sourceList+",parentId="+parentId,"菜单获取子节点");
-            throw new IllegalArgumentException("sourceList is Null or Empty or parentId is Null");
+            throw new TreeInitializeException("数据源为 Null 或 为空 或 parentId 为 Null");
         }
         if(order && sourceList!=null && !sourceList.isEmpty()){
             ListSortUtil.sortMap(sourceList,orderKey,sortMode);
@@ -77,9 +78,9 @@ public class TreeUtil<T> {
      * @param topId      根Id
      * @return 层级结果
      */
-    public List<T> getChildNodesByTopId(List<T> sourceList, Object topId) {
+    public List<T> getChildNodesByTopId(List<T> sourceList, Object topId) throws TreeInitializeException {
         if (sourceList == null || sourceList.isEmpty() || topId == null) {
-            throw new IllegalArgumentException("sourceList is Null or Empty or topId is Null");
+            throw new TreeInitializeException("数据源为 Null 或 为空 或 topId 为 Null");
         }
         if(order && sourceList!=null && !sourceList.isEmpty()){
             ListSortUtil.sortMap(sourceList,orderKey,sortMode);
