@@ -19,6 +19,9 @@
         <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
         <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
         <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
+        <result column="ENTERPRISE_CNAME" jdbcType="DECIMAL" property="enterpriseCname"/>
+        <result column="ENTERPRISE_ID_CARD" jdbcType="DECIMAL" property="enterpriseIdCard"/>
+        <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
         <association property="ifDel" select="ifDelete" column="ID"/>
     </resultMap>
 
@@ -57,6 +60,7 @@
         manager.id = customer.CUSTOMER_MANAGER_ID
         AND customer.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@TRANSFER.getValue()}
         AND manager.id = #{managerId}
+        AND customer.CUSTOMER_TYPE = #{customerType}
     </select>
 
     <!--更新客户状态-->
@@ -92,6 +96,7 @@
             )
             AND manager.id = #{customerManagerId}
             AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
+            AND basic.CUSTOMER_TYPE = #{customerType}
             <if test="cname!=null and cname!=''">
                 AND basic.cname LIKE CONCAT(CONCAT('%',#{cname}),'%')
             </if>
