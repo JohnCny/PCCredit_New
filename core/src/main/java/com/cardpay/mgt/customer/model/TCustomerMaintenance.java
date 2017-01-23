@@ -26,11 +26,23 @@ public class TCustomerMaintenance extends GenericEntity<Integer> {
     private Integer id;
 
     /**
-     * 维护名称
+     * 客户名称/企业名称
      */
     @Column(name = "CUSTOMER_CNAME")
     @ApiModelProperty(value="维护名称",required = true)
     private String customerCname;
+
+    /**
+     * 客户类型
+     */
+    @Column(name = "CUSTOMER_TYPE")
+    private Integer customerType;
+
+    /**
+     * 客户身份证号/企业工商登记号
+     */
+    @Column(name = "CUSTOMER_ID_CARD")
+    private String customerIdCard;
 
     /**
      * 维护类型(0 电话联系 1 上门拜访 2 其他渠道)
@@ -66,6 +78,22 @@ public class TCustomerMaintenance extends GenericEntity<Integer> {
     @Column(name = "OPERATION_TIME")
     @ApiModelProperty(value="维护时间",required = true)
     private Date operationTime;
+
+    public Integer getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
+    }
+
+    public String getCustomerIdCard() {
+        return customerIdCard;
+    }
+
+    public void setCustomerIdCard(String customerIdCard) {
+        this.customerIdCard = customerIdCard;
+    }
 
     /**
      * 获取客户id(需要生成规则生成)

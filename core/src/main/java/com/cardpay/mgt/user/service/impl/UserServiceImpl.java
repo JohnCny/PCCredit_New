@@ -31,6 +31,7 @@ import com.cardpay.mgt.user.model.RoleAuthority;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.UserOrganization;
 import com.cardpay.mgt.user.model.UserRole;
+import com.cardpay.mgt.user.model.vo.RoleVo;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.UserService;
 import org.apache.commons.collections.map.HashedMap;
@@ -300,6 +301,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Override
     public List<User> queryRoleByOrg(Integer orgId,  Integer roleType) {
         return userMapper.queryRoleByOrg(orgId, roleType);
+    }
+
+    @Override
+    public List<RoleVo> queryUserByOrgId(Integer orgId) {
+        return userMapper.queryUserByOrgId(orgId);
     }
 
 

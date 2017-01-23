@@ -53,8 +53,8 @@ public class TCustomerBasicServiceImplTest {
     public void queryCustomer() throws Exception {
         List<TCustomerTransferVo> list = new ArrayList<>();
         list.add(new TCustomerTransferVo());
-        when(customerBasicMapper.queryCustomer(1)).thenReturn(list);
-        List<TCustomerTransferVo> tCustomerBasics = customerBasicService.queryCustomer(1);
+        when(customerBasicMapper.queryCustomer(1, 1)).thenReturn(list);
+        List<TCustomerTransferVo> tCustomerBasics = customerBasicService.queryCustomer(1, 1 );
         assertTrue(tCustomerBasics.size() > 0);
     }
 

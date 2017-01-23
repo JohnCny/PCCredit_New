@@ -53,14 +53,15 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      *
      * @return 查询信息
      */
-    @RequestMapping("/condition")
+    @RequestMapping("/condition/{customerType}")
     @SystemControllerLog("按条件查询客户维护信息")
     @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
-    public DataTablePage queryByCondition() {
+    public DataTablePage queryByCondition(@PathVariable("customerType") int customerType) {
         Map<String, Object> map = new HashMap<>();
         Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
+        map.put("customerType", customerType);
         map.put("customerManagerId", managerId);
-        return dataTablePage("queryCustomerByCondition", map);
+        return dataTablePage("queryCustomerCondition", map);
     }
 
     /**

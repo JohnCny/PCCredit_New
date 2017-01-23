@@ -14,6 +14,9 @@ import com.cardpay.mgt.team.model.vo.UserTeamVo;
 import com.cardpay.mgt.team.service.TUserTeamService;
 import com.cardpay.mgt.team.service.TeamService;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserOrganization;
+import com.cardpay.mgt.user.model.vo.RoleVo;
+import com.cardpay.mgt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +35,12 @@ import java.util.Map;
 public class TeamController extends BaseController<Team> {
     @Autowired
     private TeamService teamService;
+
+    /**
+     * 用户Service
+     */
+    @Autowired
+    private UserService userService;
 
     /**
      * 团队成员关联Service
@@ -146,8 +155,9 @@ public class TeamController extends BaseController<Team> {
      */
     @DeleteMapping("/{id}")
     public ResultTo delete(@PathVariable("id") int teamId) {
-        int flag = teamService.deleteTeam(teamId, ShiroKit.getOrgId());
-        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        Map<String, Object> map = teamService.deleteTeam(teamId, ShiroKit.getOrgId());
+        int count = (Integer) map.get("count");
+        return count!=0? new ResultTo().setData(map) : new ResultTo(ResultEnum.SERVICE_ERROR).setData(map);
     }
 
     /**
@@ -211,14 +221,25 @@ public class TeamController extends BaseController<Team> {
 
     /**
      * 团队管理员查询自己所管理的团队信息
+     *
      * @return
      */
     @GetMapping("/myTeam")
-    public ResultTo getMyTeam(){
+    public ResultTo getMyTeam() {
         Team team = new Team();
         team.setTeamLeaderId(ShiroKit.getOrgId());
         List<Team> teamList = teamService.select(team);
         return new ResultTo().setData(teamList);
     }
 
+    /**
+     * 按机构查询某个所属角色的用户信息
+     *
+     * @return 角色信息
+     */
+    @GetMapping("/teamAdmin")
+    public ResultTo queryRoleByOrg() {
+        List<RoleVo> roleVos = userService.queryUserByOrgId(ShiroKit.getOrgId());
+        return new ResultTo().setData(roleVos);
+    }
 }

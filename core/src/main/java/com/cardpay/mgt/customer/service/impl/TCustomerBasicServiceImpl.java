@@ -108,8 +108,8 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public  List<TCustomerTransferVo> queryCustomer(int managerId) {
-        return customerBasicDao.queryCustomer(managerId);
+    public  List<TCustomerTransferVo> queryCustomer(int managerId, int customerType) {
+        return customerBasicDao.queryCustomer(managerId, customerType);
     }
 
     @Override

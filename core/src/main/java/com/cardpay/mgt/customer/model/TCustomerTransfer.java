@@ -73,7 +73,11 @@ public class TCustomerTransfer extends GenericEntity<Integer>{
     @Column(name = "TRANSFER_TIME")
     @ApiModelProperty(value="移交时间",required = true)
     private Date transferTime;
-
+    /**
+     * 客户类型
+     */
+    @Column(name = "CUSTOMER_TYPE")
+    private Integer customerType;
     /**
      * 客户id
      */
@@ -86,6 +90,14 @@ public class TCustomerTransfer extends GenericEntity<Integer>{
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public Integer getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
     }
 
     /**
