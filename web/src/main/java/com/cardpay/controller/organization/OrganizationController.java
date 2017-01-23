@@ -8,6 +8,8 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.core.shiro.enums.ShiroEnum;
+import com.cardpay.core.shiro.realm.ShiroRealm;
 import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
@@ -23,10 +25,7 @@ import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 机构Controller类
@@ -47,7 +46,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     private UserService userService;
 
     /**
-     *菜单
+     * 菜单
      */
     @Autowired
     private TMenuService tMenuService;
@@ -61,7 +60,12 @@ public class OrganizationController extends BaseController<TOrganization> {
     @GetMapping
     @ApiOperation(value = "查询所有机构层级信息接口", notes = "查询机构层级信息", httpMethod = "GET")
     public ResultTo queryOrganization(@ApiParam(value = "顶级ID(默认最高级开始)") @RequestParam(defaultValue = "0") int topId) {
-        List<TOrganizationVo> organization = tOrganizationService.queryAll(topId);
+        List<TOrganizationVo> organization;
+        if (ShiroKit.getRole().getRoleType().equals(ShiroEnum.SUPER.getValue())) {
+            organization = tOrganizationService.queryAll(topId);
+        } else {
+            organization = tOrganizationService.queryOrgChildren(ShiroKit.getTopOrgId());
+        }
         return new ResultTo().setData(organization);
     }
 
@@ -71,9 +75,9 @@ public class OrganizationController extends BaseController<TOrganization> {
      * @return 机构列表
      */
     @PostMapping("/pageList")
-    public DataTablePage pageList(@RequestParam(defaultValue = "0") int topId) {
+    public DataTablePage pageList(@RequestParam(defaultValue = "0") int orgId) {
         Map<String, Object> map = new HashMap<>();
-        map.put("topId", topId);
+        map.put("orgId", orgId);
         return dataTablePage("selectOrganization", map);
     }
 
@@ -102,18 +106,19 @@ public class OrganizationController extends BaseController<TOrganization> {
     @SystemControllerLog("新增机构")
     @ApiOperation(value = "新增机构接口", httpMethod = "POST", notes = "新增机构(默认新增机构为最顶级机构)")
     public ResultTo insertOrganization(@ApiParam("机构信息") @ModelAttribute TOrganization tOrganization
-    , String account) {
-
+            , @ModelAttribute User user) {
         tOrganization.setCreateBy(ShiroKit.getUserId());
         tOrganization.setCreateTime(new Date());
         tOrganizationService.insertSelective(tOrganization);
         logger.info(OrganizationController.class, "新增机构", "机构id:" + tOrganization.getId());
         int orgParentId = tOrganization.getOrgParentId();
-        if (orgParentId == 0){
-            User user = new User();
-            user.setUsername(account);
+        if (orgParentId == 0) {
             userService.addUserByOrg(user, tOrganization.getId());
             tMenuService.initMenu(tOrganization.getId());
+            tOrganization.setOrgDirectorId(user.getId());
+            tOrganization.setOrgDirectorName(user.getUserCname());
+            tOrganizationService.updateSelectiveByPrimaryKey(tOrganization);
+            tMenuService.updateMenuCache();
         }
         return new ResultTo().setData(tOrganization.getId());
     }
