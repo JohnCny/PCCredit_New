@@ -9,77 +9,77 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "T_APPLICATION")
-@ApiModel(value="进件信息管理表")
+@ApiModel(value = "进件信息管理表")
 public class TApplication extends GenericEntity<Integer> {
     /**
      * 进件id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_SEQ.nextval from dual")
-    @ApiModelProperty(value="进件id",required = true)
+    @ApiModelProperty(value = "进件id", required = true)
     private Integer id;
 
     /**
      * 客户id
      */
     @Column(name = "customer_id")
-    @ApiModelProperty(value="客户id",required = true)
+    @ApiModelProperty(value = "客户id", required = true)
     private Integer customerId;
 
     /**
      * 产品id
      */
     @Column(name = "product_id")
-    @ApiModelProperty(value="产品id",required = true)
+    @ApiModelProperty(value = "产品id", required = true)
     private Integer productId;
 
     /**
      * 进件退回原因
      */
     @Column(name = "repulse_reason")
-    @ApiModelProperty(value="进件退回原因",required = true)
+    @ApiModelProperty(value = "进件退回原因", required = true)
     private String repulseReason;
 
     /**
      * 进件状态(0 未完成，1 禁入，2 待审核，3 审核通过，4审核不通过)
      */
     @Column(name = "application_status")
-    @ApiModelProperty(value="进件状态(0 未完成，1 禁入，2 待审核，3 审核通过，4审核不通过)",required = true)
+    @ApiModelProperty(value = "进件状态(0 未完成，1 禁入，2 待审核，3 审核通过，4审核不通过)", required = true)
     private Integer applicationStatus;
 
     /**
      * 进件申请金额
      */
     @Column(name = "apply_amount")
-    @ApiModelProperty(value="进件申请金额",required = true)
+    @ApiModelProperty(value = "进件申请金额", required = true)
     private BigDecimal applyAmount;
 
     /**
      * 进件审批金额
      */
     @Column(name = "approve_amount")
-    @ApiModelProperty(value="进件审批金额",required = true)
+    @ApiModelProperty(value = "进件审批金额", required = true)
     private BigDecimal approveAmount;
 
     /**
      * 进件申请原因
      */
     @Column(name = "apply_reason")
-    @ApiModelProperty(value="进件申请原因",required = true)
+    @ApiModelProperty(value = "进件申请原因", required = true)
     private String applyReason;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
-    @ApiModelProperty(value="创建时间",required = true)
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 客户经理id
      */
     @Column(name = "customer_manager_id")
-    @ApiModelProperty(value="客户经理id",required = true)
+    @ApiModelProperty(value = "客户经理id", required = true)
     private Integer customerManagerId;
 
     /**

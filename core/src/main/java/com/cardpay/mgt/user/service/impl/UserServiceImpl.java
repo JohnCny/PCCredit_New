@@ -299,7 +299,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public List<User> queryRoleByOrg(Integer orgId,  Integer roleType) {
+    public List<RoleVo> queryRoleByOrg(Integer orgId, Integer roleType) {
         return userMapper.queryRoleByOrg(orgId, roleType);
     }
 
