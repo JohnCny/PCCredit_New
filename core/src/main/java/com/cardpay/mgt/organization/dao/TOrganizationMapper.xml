@@ -29,29 +29,25 @@
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
 
-    <resultMap id="treeMap" type="com.cardpay.mgt.organization.model.vo.TreeOrgVO">
-        <id column="ID" jdbcType="DECIMAL" property="id"/>
-        <result column="ORG_NAME" jdbcType="VARCHAR" property="name"/>
-        <result column="ORG_PARENT_ID" jdbcType="DECIMAL" property="pId"/>
-    </resultMap>
-
     <!--查询所有机构信息-->
-    <select id="queryAll" resultMap="BaseResultMapVo" >
-        SELECT * FROM T_ORGANIZATION
+    <select id="queryAll" resultMap="BaseResultMapVo">
+         SELECT * FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ORG_PARENT_ID = 0
+    </select>
+
+    <!--按机构id查询其所属所有子机构-->
+    <select id="queryOrgChildren" resultMap="BaseResultMapVo">
+        SELECT * FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{orgId}
     </select>
 
     <!--查询所有机构信息-->
     <select id="selectOrganization" resultMap="BaseResultMap" parameterType="Map">
         SELECT * FROM T_ORGANIZATION
         <where>
-            1=1
             <if test="orgName !=null and orgName !=''">
-                AND ORG_NAME LIKE CONCAT(CONCAT('%',#{orgName}),'%')
-            </if>
-            <if test="topId !=null ">
-                AND  ORG_PARENT_ID = #{topId}
+                ORG_NAME LIKE CONCAT(CONCAT('%',#{orgName}),'%')
             </if>
         </where>
+        CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{orgId}
     </select>
 
     <!--递归删除机构信息-->

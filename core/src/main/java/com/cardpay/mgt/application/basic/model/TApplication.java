@@ -14,6 +14,7 @@ public class TApplication extends GenericEntity<Integer> {
     /**
      * 进件id
      */
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APPLICATION_SEQ.nextval from dual")
     @ApiModelProperty(value="进件id",required = true)
     private Integer id;
