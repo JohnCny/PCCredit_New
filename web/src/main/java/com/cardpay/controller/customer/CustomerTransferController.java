@@ -5,7 +5,6 @@ import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.common.annotation.SystemControllerLog;
 import com.cardpay.basic.common.constant.ConstantEnum;
 import com.cardpay.basic.common.enums.ResultEnum;
-import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -14,8 +13,6 @@ import com.cardpay.mgt.customer.model.TCustomerTransfer;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
 import com.cardpay.mgt.customer.service.TCustomerBasicService;
 import com.cardpay.mgt.customer.service.TCustomerTransferService;
-import com.cardpay.mgt.customermanager.basic.model.vo.TCustomerManagerBaseVo;
-import com.cardpay.mgt.customermanager.basic.service.CustomerManagerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -105,29 +102,31 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param status 状态(默认为待确认)
      * @return 客户接收列表
      */
-    @RequestMapping("/queryTransfer")
+    @RequestMapping("/queryTransfer/{customerType}")
     @SystemControllerLog("查询客户接收列表")
     @ApiOperation(value = "客户接受", notes = "查询客户接收列表", httpMethod = "GET")
-    public DataTablePage queryTransfer(@ApiParam("状态(默认为待确认)") @RequestParam(defaultValue = "0") int status) {
+    public DataTablePage queryTransfer(@ApiParam("状态(默认为待确认)") @RequestParam(defaultValue = "0") int status
+            , @PathVariable("customerType") int customerType) {
         Map<String, Object> map = new HashMap<>();
         Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
         map.put("status", status);
         map.put("managerId", managerId);
+        map.put("customerType", customerType);
         return dataTablePage("queryTransfer", map);
     }
 
     /**
      * 查询客户经理所属客户(客户移交)
-     *
-     * @return 客户id:客户名称
+     * @param customerType 客户类型
+     * @return 客户信息
      */
-    @GetMapping
+    @GetMapping("/list/{customerType}")
     @SystemControllerLog("查询客户经理所属客户(客户移交)")
     @ApiOperation(value = "客户移交页面跳转", notes = "客户移交页面跳转 ", httpMethod = "GET")
-    public ResultTo queryCustomer() {
+    public ResultTo queryCustomer(@PathVariable("customerType") int customerType) {
         Integer userId = ShiroKit.getUserId();
         Integer managerId = customerBasicService.getManagerId(userId);
-        List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(managerId);
+        List<TCustomerTransferVo> tCustomerVos = customerBasicService.queryCustomer(managerId, customerType);
         return new ResultTo().setData(tCustomerVos);
     }
 

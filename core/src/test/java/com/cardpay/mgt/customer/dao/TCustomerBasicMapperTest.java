@@ -26,7 +26,7 @@ public class TCustomerBasicMapperTest extends TestEnv {
 
     @Test
     public void queryCustomer() throws Exception {
-        List<TCustomerTransferVo> tCustomerTransferVos = tCustomerBasicMapper.queryCustomer(1);
+        List<TCustomerTransferVo> tCustomerTransferVos = tCustomerBasicMapper.queryCustomer(1, 1);
         assertTrue(tCustomerTransferVos.size() > 0);
     }
 

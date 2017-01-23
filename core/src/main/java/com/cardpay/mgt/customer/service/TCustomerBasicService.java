@@ -3,10 +3,7 @@ package com.cardpay.mgt.customer.service;
 import com.cardpay.basic.base.model.SelectModel;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
-import com.cardpay.mgt.customer.model.vo.TCustomerIndustryVo;
-import com.cardpay.mgt.customer.model.vo.TCustomerVo;
 import com.cardpay.mgt.customer.model.vo.TCustomerTransferVo;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -52,9 +49,10 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
     /**
      * 查询客户经理所属客户
      * @param managerId managerId
+     * @param customerType 客户类型
      * @return 客户id, 客户名称
      */
-    List<TCustomerTransferVo> queryCustomer(@Param("managerId") int managerId);
+    List<TCustomerTransferVo> queryCustomer(@Param("managerId") int managerId, int customerType);
 
     /**
      * 更新客户状态
