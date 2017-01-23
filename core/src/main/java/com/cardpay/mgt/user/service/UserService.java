@@ -3,6 +3,7 @@ package com.cardpay.mgt.user.service;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.vo.RoleVo;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
@@ -124,4 +125,11 @@ public interface UserService extends BaseService<User> {
      * @return 用户信息
      */
     List<User> queryRoleByOrg(Integer orgId, Integer roleType);
+
+    /**
+     * 按机构查询用户信息
+     * @param orgId 机构id
+     * @return 用户信息
+     */
+    List<RoleVo>queryUserByOrgId(Integer orgId);
 }

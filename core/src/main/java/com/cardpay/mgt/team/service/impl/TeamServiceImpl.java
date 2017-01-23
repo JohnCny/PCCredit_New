@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,13 +53,18 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
 
     @Override
     @Transactional
-    public int deleteTeam(Integer teamId, int organizationId) {
+    public Map<String, Object> deleteTeam(Integer teamId, int organizationId) {
+        Map<String, Object> map = new HashMap<>();
         List<UserTeamVo> userTeamVos = teamDao.queryTeam(teamId, organizationId);
         int count = teamDao.querySubsidiary(teamId);
-        if (count > 0 && userTeamVos.size() > 0) {
-            return 0;
+        if (count == 0 && userTeamVos.size() > 0) {
+            map.put("message", "该团队下有成员无法进行删除操作!");
+            map.put("count", 0);
+        } else {
+            map.put("message", "删除成功");
+            map.put("count", teamDao.deleteTeam(teamId));
         }
-        return teamDao.deleteTeam(teamId);
+        return map;
     }
 
     @Override

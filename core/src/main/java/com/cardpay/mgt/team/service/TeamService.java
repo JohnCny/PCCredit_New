@@ -38,9 +38,9 @@ public interface TeamService extends BaseService<Team> {
      * 递归删除团队信息
      * @param teamId 团队id
      * @param organizationId 机构id
-     * @return 数据库变记录
+     * @return 删除信息
      */
-    int deleteTeam(Integer teamId, int organizationId);
+    Map<String, Object> deleteTeam(Integer teamId, int organizationId);
 
     /**
      * 查询此用户负责的团队信息

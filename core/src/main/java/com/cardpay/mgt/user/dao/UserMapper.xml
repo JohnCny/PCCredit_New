@@ -140,4 +140,15 @@
             AND role.ROLE_TYPE = #{roleType}
     </select>
 
+    <!--按机构查询用户信息-->
+    <select id="queryUserByOrgId" resultMap="RoleVoMap">
+        SELECT usr.id AS userId,usr.USER_CNAME
+            FROM
+            T_USER usr,
+            T_USER_ORGANIZATION org
+            WHERE
+            usr.id = org.USER_ID
+            AND org.ORGANIZATION_ID = #{orgId}
+    </select>
+
 </mapper>
