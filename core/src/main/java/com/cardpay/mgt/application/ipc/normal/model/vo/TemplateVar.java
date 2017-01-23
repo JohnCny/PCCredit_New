@@ -64,6 +64,16 @@ public class TemplateVar {
     private Integer templateVarIsCompute;
 
     /**
+     * 值
+     */
+    private String templateVarValue;
+
+    /**
+     * application_var Id
+     */
+    private Integer applicationTemplateVarId;
+
+    /**
      * children
      */
     private List<TemplateVar> vars;
@@ -77,6 +87,22 @@ public class TemplateVar {
      * extras
      */
     private List<TApplicationTemplateVarExt> extras;
+
+    public Integer getApplicationTemplateVarId() {
+        return applicationTemplateVarId;
+    }
+
+    public void setApplicationTemplateVarId(Integer applicationTemplateVarId) {
+        this.applicationTemplateVarId = applicationTemplateVarId;
+    }
+
+    public String getTemplateVarValue() {
+        return templateVarValue;
+    }
+
+    public void setTemplateVarValue(String templateVarValue) {
+        this.templateVarValue = templateVarValue;
+    }
 
     public Integer getApplicationId() {
         return applicationId;

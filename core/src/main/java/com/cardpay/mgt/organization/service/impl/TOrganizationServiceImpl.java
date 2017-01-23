@@ -3,6 +3,7 @@ package com.cardpay.mgt.organization.service.impl;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.treeutil.TreeUtil;
+import com.cardpay.basic.util.treeutil.exception.TreeInitializeException;
 import com.cardpay.mgt.menu.exception.EndRecursionException;
 import com.cardpay.mgt.organization.dao.TOrganizationMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
@@ -47,7 +48,11 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
         TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
         List<TOrganizationVo> tOrganizationVos = tOrganizationDao.queryAll();
         if (!tOrganizationVos.isEmpty()) {
-            return tree.getChildNodesByParentId(tOrganizationVos, topId);
+            try {
+                return tree.getChildNodesByParentId(tOrganizationVos, topId);
+            } catch (TreeInitializeException e) {
+                e.printStackTrace();
+            }
         }
         return new ArrayList<>();
     }
@@ -102,7 +107,11 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
         TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
         List<TOrganizationVo> tOrganizations = tOrganizationDao.queryOrgChildren(orgId);
         if (!tOrganizations.isEmpty()) {
-            return tree.getChildNodesByParentId(tOrganizations, 0);
+            try {
+                return tree.getChildNodesByParentId(tOrganizations, 0);
+            } catch (TreeInitializeException e) {
+                e.printStackTrace();
+            }
         }
         return new ArrayList<>();
     }
