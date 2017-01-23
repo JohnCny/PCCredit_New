@@ -2,7 +2,11 @@ package com.cardpay.mgt.application.basic.service;
 
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.application.basic.model.TApplicationInvestPicture;
+import com.cardpay.mgt.application.basic.model.vo.TApplicationInvestPictureVo;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 调查图片表Service
@@ -26,4 +30,11 @@ public interface TApplicationInvestPictureService extends BaseService<TApplicati
      * @return true/false
      */
     boolean fileIfNext(int applicationId);
+
+    /**
+     *  查询产品调查图片
+     * @param map 产品id
+     * @return 产品调查图片信息
+     */
+    List<TApplicationInvestPictureVo> queryByApplicationId(Map<String, Object> map);
 }

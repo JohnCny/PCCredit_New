@@ -9,6 +9,9 @@
         <result column="OPERATION_ID" jdbcType="DECIMAL" property="operationId"/>
         <result column="OPERATION_NAME" jdbcType="VARCHAR" property="operationName"/>
         <result column="OPERATION_TIME" jdbcType="TIMESTAMP" property="operationTime"/>
+        <result column="CUSTOMER_ID_CARD" jdbcType="TIMESTAMP" property="customerIdCard"/>
+        <result column="CUSTOMER_TYPE" jdbcType="TIMESTAMP" property="customerType"/>
+        <result column="CUSTOMER_CNAME" jdbcType="TIMESTAMP" property="customerCname"/>
     </resultMap>
 
     <!--客户维护信息Vo-->
@@ -18,6 +21,9 @@
         <result column="TEL" jdbcType="VARCHAR" property="tel"/>
         <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="cname"/>
         <result column="OPERATION_ID" jdbcType="DECIMAL" property="operationId"/>
+        <result column="CUSTOMER_ID_CARD" jdbcType="TIMESTAMP" property="customerIdCard"/>
+        <result column="CUSTOMER_TYPE" jdbcType="TIMESTAMP" property="customerType"/>
+        <result column="CUSTOMER_CNAME" jdbcType="TIMESTAMP" property="customerCname"/>
         <association property="operation" column="OPERATION_ID" select="queryUserById"/>
     </resultMap>
 
@@ -28,8 +34,7 @@
 
     <!--按条件查询客户维护信息-->
     <select id="queryCustomerByCondition" resultMap="BaseResultMapVo">
-        SELECT basic.id AS id, basic.CERTIFICATE_NUMBER AS certificateNumber, basic.tel AS tel
-        , maintenance.CUSTOMER_CNAME AS cname, maintenance.OPERATION_ID AS operationId
+        SELECT basic.*
         FROM
         T_CUSTOMER_BASIC basic, T_CUSTOMER_MANAGER manager, T_CUSTOMER_MAINTENANCE maintenance
         <where>
@@ -43,6 +48,7 @@
             )
             AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
             AND manager.id = #{customerManagerId}
+            AND maintenance.CUSTOMER_TYPE = #{customerType}
             <if test="cname!=null and cname!=''">
                 AND basic.cname LIKE CONCAT (CONCAT('%',#{cname}),'%')
             </if>

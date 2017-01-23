@@ -131,9 +131,13 @@ public class MenuController {
      */
     @GetMapping("/refresh")
     @ApiOperation(value = "刷新菜单缓存", notes = "刷新菜单缓存",  httpMethod = "GET")
-    public ResultTo refresh(){
+    public ResultTo refresh(Integer orgId){
         ResultTo resultTo = new ResultTo();
-        tMenuService.updateMenuCache();
+        if(orgId != null){
+            tMenuService.updateMenuCache(orgId);
+        }else{
+            tMenuService.updateMenuCache();
+        }
         return resultTo;
     }
 
@@ -144,7 +148,7 @@ public class MenuController {
      */
     @GetMapping("/init")
     @ApiOperation(value = "初始化菜单", notes = "初始化菜单",  httpMethod = "GET")
-    public ResultTo refresh(Integer orgId){
+    public ResultTo initMenu(Integer orgId){
         ResultTo resultTo = new ResultTo();
         tMenuService.initMenu(orgId);
         return resultTo;

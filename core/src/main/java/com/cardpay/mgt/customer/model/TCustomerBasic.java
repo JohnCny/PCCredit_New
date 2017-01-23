@@ -3,8 +3,6 @@ package com.cardpay.mgt.customer.model;
 import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.dozer.Mapping;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
@@ -139,11 +137,54 @@ public class TCustomerBasic extends GenericEntity<Integer> {
     @Column(name = "ORGANIZATION_ID")
     private Integer organizationId;
 
+    /**
+     * 企业法人
+     */
+    @Column(name = "ENTERPRISE_CNAME")
+    private String enterpriseCname;
+
+    /**
+     * 企业法人身份证号
+     */
+    @Column(name = "ENTERPRISE_ID_CARD")
+    private String enterpriseIdCard;
+
+    /**
+     * 客户类型
+     */
+    @Column(name = "CUSTOMER_TYPE")
+    private Integer customerType;
+
     @Transient
     /**
      * 此客户是否可以删除
      */
     private Integer ifDel;
+
+    public String getEnterpriseCname() {
+        return enterpriseCname;
+    }
+
+    public void setEnterpriseCname(String enterpriseCname) {
+        this.enterpriseCname = enterpriseCname;
+    }
+
+    public String getEnterpriseIdCard() {
+        return enterpriseIdCard;
+    }
+
+    public void setEnterpriseIdCard(String enterpriseIdCard) {
+        this.enterpriseIdCard = enterpriseIdCard;
+    }
+
+    public Integer getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
+    }
+
 
     public Integer getOrganizationId() {
         return organizationId;

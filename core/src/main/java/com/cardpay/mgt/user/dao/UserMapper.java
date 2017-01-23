@@ -50,5 +50,12 @@ public interface UserMapper extends BasicMapper<User> {
      * @param orgId 机构id
      * @return 用户信息
      */
-    List<RoleVo> queryRoleByOrg(@Param("orgId") Integer orgId, @Param("roleType") Integer roleType);
+    List<User> queryRoleByOrg(@Param("orgId") Integer orgId, @Param("roleType") Integer roleType);
+
+    /**
+     * 按机构查询用户信息
+     * @param orgId 机构id
+     * @return 用户信息
+     */
+    List<RoleVo>queryUserByOrgId(@Param("orgId") Integer orgId);
 }

@@ -55,9 +55,9 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @SystemControllerLog("验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
     public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam String identityCard) {
-        if (!IDcardUtil.verify(String.valueOf(identityCard))) {
+    /*    if (!IDcardUtil.verify(String.valueOf(identityCard))) {
             return new ResultTo(ResultEnum.ID_CARD_ERROR);
-        }
+        }*/
         boolean idCardExist = customerBasicService.isIdCardExist(identityCard, ShiroKit.getOrgId());
         return new ResultTo().setData(idCardExist);
     }
@@ -107,7 +107,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
 
     /**
-     * 新建客戶经理
+     * 新建客戶
      *
      * @param tCustomerBasic 客户基本信息
      * @param industry       行业id
@@ -137,15 +137,16 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
 
     /**
      * 按条件查询客户信息
-     *
+     * @param customerType 客户类型
      * @return 客户信息
      */
-    @RequestMapping("/condition")
+    @RequestMapping("/condition/{customerType}")
     @ApiOperation(value = "按条件查询客户信息", notes = "按条件查询客户信息", httpMethod = "GET")
-    public DataTablePage queryCondition() {
+    public DataTablePage queryCondition(@PathVariable("customerType") int customerType) {
         Map<String, Object> map = new HashMap<>();
         Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());
         map.put("customerManagerId", managerId);
+        map.put("customerType", customerType);
         return dataTablePage("queryCustomerByCondition", map);
     }
 

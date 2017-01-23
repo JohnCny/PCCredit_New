@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Lazy;
 
+import javax.persistence.Column;
 
 
 /**
@@ -50,6 +51,45 @@ public class TCustomerMaintenanceVo extends GenericEntity<Integer> {
      */
     @ApiModelProperty(value="维护人信息",required = true)
     private User operation;
+
+    /**
+     * 客户名称/企业名称
+     */
+    private String customerCname;
+
+    /**
+     * 客户类型
+     */
+    private Integer customerType;
+
+    /**
+     * 客户身份证号/企业工商登记号
+     */
+    private String customerIdCard;
+
+    public String getCustomerCname() {
+        return customerCname;
+    }
+
+    public void setCustomerCname(String customerCname) {
+        this.customerCname = customerCname;
+    }
+
+    public Integer getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
+    }
+
+    public String getCustomerIdCard() {
+        return customerIdCard;
+    }
+
+    public void setCustomerIdCard(String customerIdCard) {
+        this.customerIdCard = customerIdCard;
+    }
 
     public User getOperation() {
         return operation;

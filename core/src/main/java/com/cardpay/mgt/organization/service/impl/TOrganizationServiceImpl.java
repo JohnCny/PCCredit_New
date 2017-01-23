@@ -3,14 +3,12 @@ package com.cardpay.mgt.organization.service.impl;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.treeutil.TreeUtil;
+import com.cardpay.basic.util.treeutil.exception.TreeInitializeException;
 import com.cardpay.mgt.menu.exception.EndRecursionException;
 import com.cardpay.mgt.organization.dao.TOrganizationMapper;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
-import com.cardpay.mgt.organization.model.vo.TreeOrgVO;
 import com.cardpay.mgt.organization.service.TOrganizationService;
-import com.cardpay.mgt.team.model.TUserTeam;
-import com.cardpay.mgt.team.model.Team;
 import com.cardpay.mgt.user.dao.UserOrganizationMapper;
 import com.cardpay.mgt.user.model.UserOrganization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +48,11 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
         TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
         List<TOrganizationVo> tOrganizationVos = tOrganizationDao.queryAll();
         if (!tOrganizationVos.isEmpty()) {
-            return tree.getChildNodesByParentId(tOrganizationVos, topId);
+            try {
+                return tree.getChildNodesByParentId(tOrganizationVos, topId);
+            } catch (TreeInitializeException e) {
+                e.printStackTrace();
+            }
         }
         return new ArrayList<>();
     }
@@ -98,6 +100,20 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     @Override
     public List<TOrganization> selectOrganization(Map<String, Object> map) {
         return tOrganizationDao.selectOrganization(map);
+    }
+
+    @Override
+    public List<TOrganizationVo> queryOrgChildren(int orgId) {
+        TreeUtil<TOrganizationVo> tree = new TreeUtil<>();
+        List<TOrganizationVo> tOrganizations = tOrganizationDao.queryOrgChildren(orgId);
+        if (!tOrganizations.isEmpty()) {
+            try {
+                return tree.getChildNodesByParentId(tOrganizations, 0);
+            } catch (TreeInitializeException e) {
+                e.printStackTrace();
+            }
+        }
+        return new ArrayList<>();
     }
 
     /**

@@ -39,7 +39,7 @@ public class TCustomerMaintenanceServiceImpl extends BaseServiceImpl<TCustomerMa
     }
 
     @Override
-    public List<TCustomerMaintenanceVo> queryCustomerByCondition(Map<String, Object> map) {
+    public List<TCustomerMaintenanceVo> queryCustomerCondition(Map<String, Object> map) {
         return tCustomerMaintenanceDao.queryCustomerByCondition(map);
     }
 

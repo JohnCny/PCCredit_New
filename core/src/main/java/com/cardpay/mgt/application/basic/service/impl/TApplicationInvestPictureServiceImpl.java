@@ -4,6 +4,7 @@ import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.context.ContextProperty;
 import com.cardpay.mgt.application.basic.dao.TApplicationInvestPictureMapper;
 import com.cardpay.mgt.application.basic.model.TApplicationInvestPicture;
+import com.cardpay.mgt.application.basic.model.vo.TApplicationInvestPictureVo;
 import com.cardpay.mgt.application.basic.service.TApplicationInvestPictureService;
 import com.cardpay.mgt.file.model.TFile;
 import com.cardpay.mgt.file.service.TFileService;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 调查图片表Service实现类
@@ -47,5 +49,10 @@ public class TApplicationInvestPictureServiceImpl extends BaseServiceImpl<TAppli
         int mark = tApplicationInvestPictureDao.queryApplicationFileNext(applicationId);
         int flag = tApplicationInvestPictureDao.queryProductFileNext(applicationId);
         return mark != flag ? false : true;
+    }
+
+    @Override
+    public List<TApplicationInvestPictureVo> queryByApplicationId(Map<String, Object> map) {
+        return tApplicationInvestPictureDao.queryByApplicationId(map);
     }
 }
