@@ -52,7 +52,7 @@ public class TApplicationInvestPictureServiceImpl extends BaseServiceImpl<TAppli
     }
 
     @Override
-    public List<TApplicationInvestPictureVo> queryByProduct(Map<String, Object> map) {
-        return tApplicationInvestPictureDao.queryByProduct(map);
+    public List<TApplicationInvestPictureVo> queryByApplicationId(Map<String, Object> map) {
+        return tApplicationInvestPictureDao.queryByApplicationId(map);
     }
 }

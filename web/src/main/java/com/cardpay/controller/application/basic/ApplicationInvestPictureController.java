@@ -61,14 +61,15 @@ public class ApplicationInvestPictureController extends BaseController<TApplicat
 
     /**
      * 查询产品调查图片
-     * @param productId 产品id
+     *
+     * @param applicationId 进件Id
      * @return 产品调查图片信息
      */
-    @GetMapping("/{productId}")
-    public DataTablePage queryByProduct(@PathVariable("productId") int productId){
+    @GetMapping("/{applicationId}")
+    public DataTablePage queryByProduct(@PathVariable("applicationId") int applicationId){
         Map<String, Object> map = new HashMap();
-        map.put("productId", productId);
-        return dataTablePage("queryByProduct", map);
+        map.put("applicationId", applicationId);
+        return dataTablePage("queryByApplicationId", map);
     }
 
 
