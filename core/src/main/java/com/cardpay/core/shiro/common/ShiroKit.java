@@ -1,5 +1,6 @@
 package com.cardpay.core.shiro.common;
 
+import com.cardpay.core.shiro.enums.ShiroEnum;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
@@ -134,6 +135,15 @@ public class ShiroKit {
      */
     public static Role getRole() {
         return (Role) getSession().getAttribute(ROLE_SESSION_KEY);
+    }
+
+    /**
+     * 获取当前登陆用户的角色类型
+     *
+     * @return ShiroEnum
+     */
+    public static ShiroEnum getRoleType() {
+        return ShiroEnum.getEnumById(getRole().getRoleType());
     }
 
     /**

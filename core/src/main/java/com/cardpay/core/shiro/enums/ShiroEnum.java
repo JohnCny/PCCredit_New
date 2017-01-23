@@ -3,7 +3,7 @@ package com.cardpay.core.shiro.enums;
 /**
  * shrio相关的宏定义
  *
- * @author ramlaio
+ * @author rankai
  */
 public enum ShiroEnum {
 
@@ -12,13 +12,9 @@ public enum ShiroEnum {
     MANAGER(3),
     EXPERT(4),
     /**
-     * 机构负责人
-     */
-    ORG_CHARGE(5),
-    /**
      * 团队负责人
      */
-    TEAM_CHARGE(6);
+    TEAM_CHARGE(5);
 
     private Integer value;
 
@@ -41,8 +37,6 @@ public enum ShiroEnum {
             case 4:
                 return EXPERT;
             case 5:
-                return ORG_CHARGE;
-            case 6:
                 return TEAM_CHARGE;
             default:
                 break;

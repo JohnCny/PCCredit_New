@@ -6,15 +6,11 @@
           WARNING - @mbg.generated
         -->
         <id column="ID" jdbcType="DECIMAL" property="id"/>
-        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
-        <result column="CUSTOMER_NAME" jdbcType="VARCHAR" property="customerName"/>
-        <result column="CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="customerCardNum"/>
-        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName"/>
-        <result column="APPLY_AMOUNT" jdbcType="DECIMAL" property="applyAmount"/>
         <result column="T_POST_LOAN_MONITOR_TYPE" jdbcType="DECIMAL" property="tPostLoanMonitorType"/>
         <result column="TASK_STATUS" jdbcType="DECIMAL" property="taskStatus"/>
         <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
-        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+        <result column="OTHER" jdbcType="VARCHAR" property="other"/>
+        <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
     </resultMap>
 
 
@@ -28,30 +24,71 @@
 
 
     <select id="loanMonitorAddPageList" resultMap="AddLoanVoMap">
-    SELECT
+        SELECT
         TA."ID",
         TCB.CNAME,
         TCB.CERTIFICATE_NUMBER,
         TP.PRODUCT_NAME,
         TA.APPLY_AMOUNT
-    FROM
+        FROM
         T_APPLICATION TA,
         T_CUSTOMER_MANAGER TCM,
         T_CUSTOMER_BASIC TCB,
         T_PRODUCT TP
-    WHERE
+        WHERE
         TA.CUSTOMER_ID = TCB."ID"
-    AND TA.PRODUCT_ID = TP."ID"
-    AND TCM."ID" = TA.CUSTOMER_MANAGER_ID
-    AND TCM."ID" = #{managerId}
-    <if test="customerCardId != null">
+        AND TA.PRODUCT_ID = TP."ID"
+        AND TCM."ID" = TA.CUSTOMER_MANAGER_ID
+        AND TCM."ORGANIZATION_ID" = #{orgId,jdbcType=DECIMAL}
+        <if test="managerId != null">
+            AND
+            TCM."ID" = #{managerId}
+        </if>
+        <if test="customerCardId != null">
+            AND
+            TCB.CERTIFICATE_NUMBER=#{customerCardId}
+        </if>
+        <if test="customerName != null">
+            AND
+            TCB.CNAME=#{customerName}
+        </if>
+    </select>
+
+    <select id="loanMonitorPageList" resultMap="AddLoanVoMap">
+        SELECT
+        TPLM."ID",
+        TCB.CNAME,
+        TCB.CERTIFICATE_NUMBER,
+        TP.PRODUCT_NAME,
+        TA.APPLY_AMOUNT
+        FROM
+        T_POST_LOAN_MONITOR TPLM,
+        T_PRODUCT TP,
+        T_CUSTOMER_BASIC TCB,
+        T_APPLICATION TA,
+        T_CUSTOMER_MANAGER TCM
+        WHERE
+        TPLM.APPLICATION_ID = TA."ID"
         AND
-        TCB.CERTIFICATE_NUMBER=#{customerCardId}
-    </if>
-    <if test="customerName != null">
+        TA.PRODUCT_ID=TP."ID"
         AND
-        TCB.CNAME=#{customerName}
-    </if>
-  </select>
+        TA.CUSTOMER_ID=TCB."ID"
+        AND
+        TA.CUSTOMER_MANAGER_ID=TCM."ID"
+        AND
+        TCM.ORGANIZATION_ID=#{orgId,jdbcType=DECIMAL}
+        <if test="managerId != null">
+            AND
+            TCM."ID"=#{managerId}
+        </if>
+        <if test="customerCardId != null">
+            AND
+            TCB.CERTIFICATE_NUMBER=#{customerCardId}
+        </if>
+        <if test="customerName != null">
+            AND
+            TCB.CNAME=#{customerName}
+        </if>
+    </select>
 
 </mapper>

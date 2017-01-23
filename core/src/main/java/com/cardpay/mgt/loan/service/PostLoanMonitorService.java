@@ -31,4 +31,12 @@ public interface PostLoanMonitorService extends BaseService<PostLoanMonitor> {
      * @return 成功或失败
      */
     ResultTo addLoan(Integer applicationId);
+
+    /**
+     * 贷后监控分页数据(反射调用)
+     *
+     * @param map 参数map
+     * @return 分页数据
+     */
+    List<AddLoanVo> loanMonitorPageList(Map<String, Object> map);
 }

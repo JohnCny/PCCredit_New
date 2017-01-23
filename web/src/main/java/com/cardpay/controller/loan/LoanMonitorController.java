@@ -5,19 +5,16 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.core.shiro.enums.ShiroEnum;
 import com.cardpay.mgt.loan.model.PostLoanMonitor;
 import com.cardpay.mgt.loan.service.PostLoanMonitorService;
-import jdk.nashorn.internal.ir.ReturnNode;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +41,7 @@ public class LoanMonitorController extends BaseController<PostLoanMonitor> {
     @PostMapping("/add/pageList")
     public DataTablePage addPageList() {
         Map<String, Object> map = new HashMap<>();
-        map.put("managerId", ShiroKit.getUserId());
+        setMap(map);
         return dataTablePage("loanMonitorAddPageList", map);
     }
 
@@ -56,9 +53,9 @@ public class LoanMonitorController extends BaseController<PostLoanMonitor> {
      */
     @PostMapping("/pageList")
     public DataTablePage pageList() {
-        Example example = new Example(PostLoanMonitor.class);
-        example.createCriteria().andEqualTo("orgId", ShiroKit.getOrgId());
-        return dataTablePage(example);
+        Map<String, Object> map = new HashMap<>();
+        setMap(map);
+        return dataTablePage("loanMonitorPageList", map);
     }
 
 
@@ -68,7 +65,7 @@ public class LoanMonitorController extends BaseController<PostLoanMonitor> {
      * @param applicationId 进件ID
      * @return 成功或失败
      */
-    @RequestMapping("/{applicationId}")
+    @RequestMapping(value = "/{applicationId}", method = RequestMethod.GET)
     public ResultTo add(@PathVariable("applicationId") Integer applicationId) {
         return postLoanMonitorService.addLoan(applicationId);
     }
@@ -81,14 +78,34 @@ public class LoanMonitorController extends BaseController<PostLoanMonitor> {
      */
     @PutMapping
     public ResultTo update(PostLoanMonitor postLoanMonitor) {
-        if (postLoanMonitor.getTaskStatus() != null || postLoanMonitor.gettPostLoanMonitorType() == null) {
+        if (postLoanMonitor.getTaskStatus() == null || postLoanMonitor.gettPostLoanMonitorType() == null) {
             return new ResultTo(ResultEnum.PARAM_ERROR);
         }
         PostLoanMonitor newPostLoanMonitor = new PostLoanMonitor();
         newPostLoanMonitor.setId(postLoanMonitor.getId());
         newPostLoanMonitor.setTaskStatus(postLoanMonitor.getTaskStatus());
         newPostLoanMonitor.settPostLoanMonitorType(postLoanMonitor.gettPostLoanMonitorType());
+        newPostLoanMonitor.setOther(postLoanMonitor.getOther());
         postLoanMonitorService.updateSelectiveByPrimaryKey(newPostLoanMonitor);
         return new ResultTo();
+    }
+
+    /**
+     * 设置通用参数
+     *
+     * @param map Map
+     */
+    private void setMap(Map<String, Object> map) {
+        ShiroEnum roleType = ShiroKit.getRoleType();
+        switch (roleType) {
+            case ADMIN:
+                break;
+            case MANAGER:
+                map.put("managerId", ShiroKit.getUserId());
+                break;
+            default:
+                break;
+        }
+        map.put("orgId", ShiroKit.getOrgId());
     }
 }

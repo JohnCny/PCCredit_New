@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.loan.dao.CustomerCollectionMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.loan.model.CustomerCollection">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="COLLECTION_ID" jdbcType="DECIMAL" property="collectionId"/>
+        <result column="BAD_CUSTOMER_ID" jdbcType="DECIMAL" property="badCustomerId"/>
+        <result column="COLLECTION_TYPE" jdbcType="DECIMAL" property="collectionType"/>
+        <result column="COLLECTION_RESULT" jdbcType="DECIMAL" property="collectionResult"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+    </resultMap>
+</mapper>

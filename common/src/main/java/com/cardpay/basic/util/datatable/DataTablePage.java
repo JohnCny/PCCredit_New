@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * DataTable工具类
  *
@@ -129,7 +128,7 @@ public class DataTablePage {
             PageHelper.orderBy(finalOrder);
             data = (List<Object>) method.invoke(baseService, map);
         } else {
-            if (null == example) {
+            if (null != example) {
                 map = removeNull(map);
                 example = new Example(clazz);
                 example.orderBy(finalOrder);

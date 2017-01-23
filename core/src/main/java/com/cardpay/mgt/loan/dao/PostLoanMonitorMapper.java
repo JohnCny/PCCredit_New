@@ -17,4 +17,12 @@ public interface PostLoanMonitorMapper extends BasicMapper<PostLoanMonitor> {
      * @return 分页数据
      */
     List<AddLoanVo> loanMonitorAddPageList(Map<String, Object> map);
+
+    /**
+     * 贷后监控分页数据(反射调用)
+     *
+     * @param map 参数map
+     * @return 分页数据
+     */
+    List<AddLoanVo> loanMonitorPageList(Map<String, Object> map);
 }

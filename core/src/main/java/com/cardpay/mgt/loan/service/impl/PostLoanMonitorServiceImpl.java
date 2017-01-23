@@ -6,7 +6,6 @@ import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.basic.dao.TApplicationMapper;
 import com.cardpay.mgt.application.basic.model.TApplication;
-import com.cardpay.mgt.application.basic.service.TApplicationService;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.loan.dao.PostLoanMonitorMapper;
@@ -59,17 +58,17 @@ public class PostLoanMonitorServiceImpl extends BaseServiceImpl<PostLoanMonitor>
             return new ResultTo(ResultEnum.OPERATION_FAILED);
         }
         PostLoanMonitor postLoanMonitor = new PostLoanMonitor();
-        postLoanMonitor.setProductId(product.getId());
         postLoanMonitor.setApplicationId(applicationId);
-        postLoanMonitor.setApplyAmount(application.getApplyAmount());
-        postLoanMonitor.setCustomerCardNum(customerBasic.getCertificateNumber());
-        postLoanMonitor.setProductName(product.getProductName());
-        postLoanMonitor.setCustomerId(customerBasic.getId());
-        postLoanMonitor.setOrgId(ShiroKit.getOrgId());
+
         int count = postLoanMonitorMapper.insertSelective(postLoanMonitor);
         if (count > 0) {
             return new ResultTo();
         }
         return new ResultTo(ResultEnum.OPERATION_FAILED);
+    }
+
+    @Override
+    public List<AddLoanVo> loanMonitorPageList(Map<String, Object> map) {
+        return postLoanMonitorMapper.loanMonitorPageList(map);
     }
 }

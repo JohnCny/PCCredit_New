@@ -11,6 +11,7 @@ import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.vo.RoleVo;
 import com.cardpay.mgt.user.model.vo.UserUpdateVo;
 import com.cardpay.mgt.user.service.RoleService;
 import com.cardpay.mgt.user.service.UserService;
@@ -312,7 +313,7 @@ public class UserController extends BaseController<User> {
      */
     @GetMapping("/role/{roleType}")
     public ResultTo queryRoleByOrg(@PathVariable("roleType") int roleType){
-        List<User> userList = userService.queryRoleByOrg(ShiroKit.getOrgId(), roleType);
+        List<RoleVo> userList = userService.queryRoleByOrg(ShiroKit.getOrgId(), roleType);
         return new ResultTo().setData(userList);
     }
 }
