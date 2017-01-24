@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.riskblack.dao.BlackCustomerMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.riskblack.model.BlackCustomer">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="BLACK_ID" jdbcType="DECIMAL" property="blackId" />
+    <result column="T_BLACK_CUSTOMER_ID" jdbcType="DECIMAL" property="tBlackCustomerId" />
+    <result column="T_BLACK_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="tBlackCustomerCardNum" />
+    <result column="BLACK_REASON" jdbcType="VARCHAR" property="blackReason" />
+    <result column="T_BLACK_CUSTOMER_STATUS" jdbcType="DECIMAL" property="tBlackCustomerStatus" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
+    <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId" />
+    <result column="CUSTOMER_MANAGER_CNAME" jdbcType="VARCHAR" property="customerManagerCname" />
+  </resultMap>
+</mapper>

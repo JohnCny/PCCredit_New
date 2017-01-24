@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.riskblack.dao.RiskBlackCustomerApproveMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.riskblack.model.RiskBlackCustomerApprove">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="RISK_BLACK_APPROVE_ID" jdbcType="DECIMAL" property="riskBlackApproveId"/>
+        <result column="RISK_BLACK_OPERATION_TYPE" jdbcType="DECIMAL" property="riskBlackOperationType"/>
+        <result column="RISK_BLACK_APPROVE_STATUS" jdbcType="DECIMAL" property="riskBlackApproveStatus"/>
+        <result column="RISK_BLACK_TRANSFOR_REASON" jdbcType="VARCHAR" property="riskBlackTransforReason"/>
+        <result column="APPROVE_TIME" jdbcType="TIMESTAMP" property="approveTime"/>
+        <result column="APPROVE_BY" jdbcType="DECIMAL" property="approveBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="RISK_BLACK_CUSTOMER_ID" jdbcType="DECIMAL" property="riskBlackCustomerId"/>
+        <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
+    </resultMap>
+
+</mapper>
