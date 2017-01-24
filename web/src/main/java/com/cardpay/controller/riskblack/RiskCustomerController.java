@@ -1,19 +1,13 @@
 package com.cardpay.controller.riskblack;
 
-import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
-import com.cardpay.mgt.riskblack.model.RiskBlackCustomerApprove;
 import com.cardpay.mgt.riskblack.model.RiskCustomer;
 import com.cardpay.mgt.riskblack.service.RiskCustomerService;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -26,7 +20,7 @@ import java.util.Map;
  *         createTime 2017-01-2017/1/24 11:12
  */
 @RestController
-@RequestMapping("/riskCustomer")
+@RequestMapping("/api/riskCustomer")
 public class RiskCustomerController extends BaseController<RiskCustomer> {
 
     @Autowired

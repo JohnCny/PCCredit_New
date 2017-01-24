@@ -7,71 +7,58 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "T_BLACK_CUSTOMER")
-@ApiModel(value="黑名单客户管理")
+@ApiModel(value = "黑名单客户管理")
 public class BlackCustomer {
     /**
      * 黑名单客户列表id
      */
     @Id
     @Column(name = "BLACK_ID")
-    @ApiModelProperty(value="黑名单客户列表id",required = true)
+    @ApiModelProperty(value = "黑名单客户列表id", required = true)
     private Integer blackId;
 
     /**
      * 黑名单客户id
      */
     @Column(name = "T_BLACK_CUSTOMER_ID")
-    @ApiModelProperty(value="黑名单客户id",required = true)
+    @ApiModelProperty(value = "黑名单客户id", required = true)
     private Integer tBlackCustomerId;
-
-    /**
-     * 黑名单客户证件号码
-     */
-    @Column(name = "T_BLACK_CUSTOMER_CARD_NUM")
-    @ApiModelProperty(value="黑名单客户证件号码",required = true)
-    private String tBlackCustomerCardNum;
 
     /**
      * 黑名单进入原因
      */
     @Column(name = "BLACK_REASON")
-    @ApiModelProperty(value="黑名单进入原因",required = true)
+    @ApiModelProperty(value = "黑名单进入原因", required = true)
     private String blackReason;
 
     /**
      * 黑名单客户状态(0 正常 1 转出审核中)
      */
     @Column(name = "T_BLACK_CUSTOMER_STATUS")
-    @ApiModelProperty(value="黑名单客户状态(0 正常 1 转出审核中)",required = true)
+    @ApiModelProperty(value = "黑名单客户状态(0 正常 1 转出审核中)", required = true)
     private Integer tBlackCustomerStatus;
 
     /**
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value="创建时间",required = true)
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 操作人
      */
     @Column(name = "CREATE_BY")
-    @ApiModelProperty(value="操作人",required = true)
+    @ApiModelProperty(value = "操作人", required = true)
     private Integer createBy;
 
     /**
      * 黑名单客户所属客户经理id
      */
     @Column(name = "CUSTOMER_MANAGER_ID")
-    @ApiModelProperty(value="黑名单客户所属客户经理id",required = true)
+    @ApiModelProperty(value = "黑名单客户所属客户经理id", required = true)
     private Integer customerManagerId;
 
-    /**
-     * 黑名单客户所属客户经理姓名
-     */
-    @Column(name = "CUSTOMER_MANAGER_CNAME")
-    @ApiModelProperty(value="黑名单客户所属客户经理姓名",required = true)
-    private String customerManagerCname;
 
     /**
      * 获取黑名单客户列表id
@@ -107,24 +94,6 @@ public class BlackCustomer {
      */
     public void settBlackCustomerId(Integer tBlackCustomerId) {
         this.tBlackCustomerId = tBlackCustomerId;
-    }
-
-    /**
-     * 获取黑名单客户证件号码
-     *
-     * @return T_BLACK_CUSTOMER_CARD_NUM - 黑名单客户证件号码
-     */
-    public String gettBlackCustomerCardNum() {
-        return tBlackCustomerCardNum;
-    }
-
-    /**
-     * 设置黑名单客户证件号码
-     *
-     * @param tBlackCustomerCardNum 黑名单客户证件号码
-     */
-    public void settBlackCustomerCardNum(String tBlackCustomerCardNum) {
-        this.tBlackCustomerCardNum = tBlackCustomerCardNum;
     }
 
     /**
@@ -215,23 +184,5 @@ public class BlackCustomer {
      */
     public void setCustomerManagerId(Integer customerManagerId) {
         this.customerManagerId = customerManagerId;
-    }
-
-    /**
-     * 获取黑名单客户所属客户经理姓名
-     *
-     * @return CUSTOMER_MANAGER_CNAME - 黑名单客户所属客户经理姓名
-     */
-    public String getCustomerManagerCname() {
-        return customerManagerCname;
-    }
-
-    /**
-     * 设置黑名单客户所属客户经理姓名
-     *
-     * @param customerManagerCname 黑名单客户所属客户经理姓名
-     */
-    public void setCustomerManagerCname(String customerManagerCname) {
-        this.customerManagerCname = customerManagerCname;
     }
 }

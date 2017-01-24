@@ -7,77 +7,77 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "T_RISKBLACK_CUSTOMER_APPROVE")
-@ApiModel(value="风险客户或者黑名单操作审批表")
+@ApiModel(value = "风险客户或者黑名单操作审批表")
 public class RiskBlackCustomerApprove {
     /**
      * 风险客户审核信息id
      */
     @Id
     @Column(name = "RISK_BLACK_APPROVE_ID")
-    @ApiModelProperty(value="风险客户审核信息id",required = true)
+    @ApiModelProperty(value = "风险客户审核信息id", required = true)
     private Integer riskBlackApproveId;
 
     /**
      * 风险客户申请操作类型(0 转入黑名单 1 转出黑名单 2 转出风险名单)
      */
     @Column(name = "RISK_BLACK_OPERATION_TYPE")
-    @ApiModelProperty(value="风险客户申请操作类型(0 转入黑名单 1 转出黑名单 2 转出风险名单)",required = true)
+    @ApiModelProperty(value = "风险客户申请操作类型(0 转入黑名单 1 转出黑名单 2 转出风险名单)", required = true)
     private Integer riskBlackOperationType;
 
     /**
      * 风险客户审批状态(0 待审核 1 已审核)
      */
     @Column(name = "RISK_BLACK_APPROVE_STATUS")
-    @ApiModelProperty(value="风险客户审批状态(0 待审核 1 已审核)",required = true)
+    @ApiModelProperty(value = "风险客户审批状态(0 待审核 1 已审核)", required = true)
     private Integer riskBlackApproveStatus;
 
     /**
      * 转入转出风险或者黑名单原因
      */
     @Column(name = "RISK_BLACK_TRANSFOR_REASON")
-    @ApiModelProperty(value="转入转出风险或者黑名单原因",required = true)
+    @ApiModelProperty(value = "转入转出风险或者黑名单原因", required = true)
     private String riskBlackTransforReason;
 
     /**
      * 审核时间
      */
     @Column(name = "APPROVE_TIME")
-    @ApiModelProperty(value="审核时间",required = true)
+    @ApiModelProperty(value = "审核时间", required = true)
     private Date approveTime;
 
     /**
      * 审核人
      */
     @Column(name = "APPROVE_BY")
-    @ApiModelProperty(value="审核人",required = true)
+    @ApiModelProperty(value = "审核人", required = true)
     private Integer approveBy;
 
     /**
      * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value="创建时间",required = true)
+    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 创建人
      */
     @Column(name = "CREATE_BY")
-    @ApiModelProperty(value="创建人",required = true)
+    @ApiModelProperty(value = "创建人", required = true)
     private Integer createBy;
 
     /**
      * 客户id
      */
     @Column(name = "RISK_BLACK_CUSTOMER_ID")
-    @ApiModelProperty(value="客户id",required = true)
+    @ApiModelProperty(value = "客户id", required = true)
     private Integer riskBlackCustomerId;
 
     /**
      * 客户类型(0 个人客户 1 企业客户)
      */
     @Column(name = "CUSTOMER_TYPE")
-    @ApiModelProperty(value="客户类型(0 个人客户 1 企业客户)",required = true)
+    @ApiModelProperty(value = "客户类型(0 个人客户 1 企业客户)", required = true)
     private Integer customerType;
 
     /**

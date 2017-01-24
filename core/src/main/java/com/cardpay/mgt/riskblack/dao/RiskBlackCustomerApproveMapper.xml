@@ -17,4 +17,51 @@
         <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
     </resultMap>
 
+
+    <resultMap id="RiskBlackCustomerVoMap" type="com.cardpay.mgt.riskblack.model.vo.RiskBlackCustomerApproveVo">
+        <id column="RISK_BLACK_APPROVE_ID" jdbcType="DECIMAL" property="riskBlackApproveId"/>
+        <result column="RISK_BLACK_OPERATION_TYPE" jdbcType="DECIMAL" property="riskBlackOperationType"/>
+        <result column="RISK_BLACK_APPROVE_STATUS" jdbcType="DECIMAL" property="riskBlackApproveStatus"/>
+        <result column="RISK_BLACK_TRANSFOR_REASON" jdbcType="VARCHAR" property="riskBlackTransforReason"/>
+        <result column="APPROVE_TIME" jdbcType="TIMESTAMP" property="approveTime"/>
+        <result column="APPROVE_BY" jdbcType="DECIMAL" property="approveBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="RISK_BLACK_CUSTOMER_ID" jdbcType="DECIMAL" property="riskBlackCustomerId"/>
+        <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="customerName"/>
+        <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="idCard"/>
+    </resultMap>
+
+    <select id="riskBlackCustomerPageList" resultMap="RiskBlackCustomerVoMap">
+        SELECT
+        TRCA.*,TCB.CNAME,TCB.CERTIFICATE_NUMBER
+        FROM
+        T_RISKBLACK_CUSTOMER_APPROVE TRCA,
+        T_CUSTOMER_BASIC TCB,
+        T_CUSTOMER_MANAGER TCM,
+        <if test="userCname !=null || employeeNumber != null">
+            ,T_USER TU
+        </if>
+        WHERE
+        TRCA.RISK_BLACK_OPERATION_TYPE=0
+        AND
+        TRCA.RISK_BLACK_CUSTOMER_ID=TCB."ID"
+        AND
+        TCB.CUSTOMER_MANAGER_ID=TCM."ID"
+        AND
+        TCM.ORGANIZATION_ID=#{orgId,jdbcType=DECIMAL}
+        <if test="createTime != null">
+            AND
+            CREATE_TIME=#{createTime}
+        </if>
+        <if test="userCname !=null || employeeNumber != null">
+            AND
+            TCM.USER_ID=TU."ID"
+        </if>
+        <if test="employeeNumber != null">
+            AND
+            TU.EMPLOYEE_NUMBER=#{employeeNumber}
+        </if>
+    </select>
 </mapper>
