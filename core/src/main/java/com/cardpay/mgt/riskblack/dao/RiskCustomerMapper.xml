@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.riskblack.dao.RiskCustomerMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.riskblack.model.RiskCustomer">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="COLLECTION_ID" jdbcType="DECIMAL" property="collectionId"/>
+        <result column="BAD_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="badCustomerCardNum"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="BAD_REASON" jdbcType="VARCHAR" property="badReason"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
+    </resultMap>
+
+    <resultMap id="RiskCustomerVoMap" type="com.cardpay.mgt.riskblack.model.vo.RiskCustomerVo">
+        <id column="COLLECTION_ID" jdbcType="DECIMAL" property="collectionId"/>
+        <result column="BAD_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="badCustomerCardNum"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="BAD_REASON" jdbcType="VARCHAR" property="badReason"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="customerName"/>
+        <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="idCard"/>
+    </resultMap>
+
+
+    <select id="riskCustomerPageList" resultMap="RiskCustomerVoMap">
+        SELECT
+        TRC.*,TCB.CNAME,TCB.CERTIFICATE_NUMBER
+        FROM
+        T_RISK_CUSTOMER TRC,
+        T_CUSTOMER_BASIC TCB,
+        T_USER TU,
+        T_CUSTOMER_MANAGER TCM
+        WHERE
+        TRC.CUSTOMER_ID=TCB."ID"
+        AND
+        TCB.CUSTOMER_MANAGER_ID=TCM."ID"
+        AND
+        TCM.ORGANIZATION_ID=#{orgId,jdbcType=DECIMAL}
+        <if test="createTime != null">
+            AND
+            to_char(TRC.CREATE_TIME,'yyyy-mm-dd')='2017-1-24'
+        </if>
+        <if test="userCname !=null || employeeNumber != null">
+            AND
+            TCM.USER_ID=TU."ID"
+        </if>
+        <if test="userCname != null">
+            AND
+            TU.USER_CNAME=#{userCname}
+        </if>
+        <if test="employeeNumber != null">
+            AND
+            TU.EMPLOYEE_NUMBER=#{employeeNumber}
+        </if>
+    </select>
+
+</mapper>
