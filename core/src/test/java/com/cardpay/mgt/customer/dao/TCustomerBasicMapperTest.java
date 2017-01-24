@@ -25,18 +25,21 @@ public class TCustomerBasicMapperTest extends TestEnv {
     private TCustomerBasicMapper tCustomerBasicMapper;
 
     @Test
+    @Ignore
     public void queryCustomer() throws Exception {
         List<TCustomerTransferVo> tCustomerTransferVos = tCustomerBasicMapper.queryCustomer(1, 1);
         assertTrue(tCustomerTransferVos.size() > 0);
     }
 
     @Test
+    @Ignore
     public void isIdCardExist() throws Exception {
         Integer idCardExist = tCustomerBasicMapper.isIdCardExist("11", 1);
         assertTrue(idCardExist > 0);
     }
 
     @Test
+    @Ignore
     public void updateStatus() throws Exception {
         Map<String, Object> map = new HashedMap();
         map.put("status", 1);
@@ -50,6 +53,7 @@ public class TCustomerBasicMapperTest extends TestEnv {
     }
 
     @Test
+    @Ignore
     public void queryCustomerByCondition() throws Exception {
         Map<String, Object> map = new HashedMap();
         map.put("customerManagerId", 4);
