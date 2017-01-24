@@ -11,6 +11,7 @@
         <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
         <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
         <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="CUSTOMER_TYPE" jdbcType="TIMESTAMP" property="customerType"/>
     </resultMap>
 
     <!--客户信息Vo-->
@@ -72,6 +73,7 @@
         AND transfer.TRANSFER_STATUS = ${@com.cardpay.basic.common.constant.CustomerStatusEnum@ORDINARY.getValue()}
         AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
         AND transfer.NOW_CUSTOMER_MANAGER = #{managerId,jdbcType=DECIMAL}
+        AND transfer.CUSTOMER_TYPE = #{customerType}
     </select>
 
     <!--客户接收(批量更新)-->

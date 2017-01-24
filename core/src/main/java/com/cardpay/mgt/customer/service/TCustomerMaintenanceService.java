@@ -25,5 +25,5 @@ public interface TCustomerMaintenanceService extends BaseService<TCustomerMainte
      * @param map 客户基本信息
      * @return 客户列表
      */
-    List<TCustomerMaintenanceVo> queryCustomerByCondition(Map<String, Object> map);
+    List<TCustomerMaintenanceVo> queryCustomerCondition(Map<String, Object> map);
 }

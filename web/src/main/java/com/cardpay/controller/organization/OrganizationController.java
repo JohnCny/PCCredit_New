@@ -110,17 +110,18 @@ public class OrganizationController extends BaseController<TOrganization> {
         tOrganization.setCreateBy(ShiroKit.getUserId());
         tOrganization.setCreateTime(new Date());
         tOrganizationService.insertSelective(tOrganization);
-        logger.info(OrganizationController.class, "新增机构", "机构id:" + tOrganization.getId());
+        Integer tOrganizationId = tOrganization.getId();
+        logger.info(OrganizationController.class, "新增机构", "机构id:" + tOrganizationId);
         int orgParentId = tOrganization.getOrgParentId();
         if (orgParentId == 0) {
-            userService.addUserByOrg(user, tOrganization.getId());
-            tMenuService.initMenu(tOrganization.getId());
+            userService.addUserByOrg(user, tOrganizationId);
+            tMenuService.initMenu(tOrganizationId);
             tOrganization.setOrgDirectorId(user.getId());
             tOrganization.setOrgDirectorName(user.getUserCname());
             tOrganizationService.updateSelectiveByPrimaryKey(tOrganization);
-            tMenuService.updateMenuCache();
+            tMenuService.updateMenuCache(tOrganizationId);
         }
-        return new ResultTo().setData(tOrganization.getId());
+        return new ResultTo().setData(tOrganizationId);
     }
 
     /**

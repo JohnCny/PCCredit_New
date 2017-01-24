@@ -43,7 +43,7 @@ public class TCustomerMaintenanceServiceImplTest {
             }
         };
         when(tCustomerMaintenanceDao.queryCustomerByCondition(map)).thenReturn(tCustomerMaintenanceVos);
-        List<TCustomerMaintenanceVo> maintenanceVos = tCustomerMaintenanceService.queryCustomerByCondition(map);
+        List<TCustomerMaintenanceVo> maintenanceVos = tCustomerMaintenanceService.queryCustomerCondition(map);
         assertTrue(maintenanceVos.size() > 0);
     }
 

@@ -12,7 +12,7 @@
     <resultMap id="BaseVo" type="com.cardpay.mgt.application.basic.model.vo.TApplicationInvestPictureVo">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
         <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
-        <result column="PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="investPritureDescription"/>
+        <result column="INVEST_PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="investPritureDescription"/>
         <result column="IS_NEED" jdbcType="DECIMAL" property="isNeed"/>
         <collection property="pictureList" select="queryByPicture" column="ID"/>
     </resultMap>
@@ -23,8 +23,15 @@
     </select>
 
     <!--查询产品调查图片信息-->
-    <select id="queryByProduct" resultType="Map" resultMap="BaseVo">
-        SELECT * FROM T_PRODUCT_INVEST_PICTURE_DESC WHERE PRODUCT_ID = #{productId}
+    <select id="queryByApplicationId" resultType="Map" resultMap="BaseVo">
+        SELECT
+            PIPD.*
+        FROM
+            T_PRODUCT_INVEST_PICTURE_DESC PIPD,
+            T_APPLICATION APP
+        WHERE
+            APP.PRODUCT_ID = PIPD.PRODUCT_ID
+        AND APP. ID = #{applicationId}
     </select>
 
     <!--统计进件表中图片上传个数-->
