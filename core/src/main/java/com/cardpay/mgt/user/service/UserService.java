@@ -124,7 +124,7 @@ public interface UserService extends BaseService<User> {
      * @param orgId 机构id
      * @return 用户信息
      */
-    List<User> queryRoleByOrg(Integer orgId, Integer roleType);
+    List<RoleVo> queryRoleByOrg(Integer orgId, Integer roleType);
 
     /**
      * 按机构查询用户信息
