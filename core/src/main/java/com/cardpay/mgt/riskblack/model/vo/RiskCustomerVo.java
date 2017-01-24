@@ -50,6 +50,11 @@ public class RiskCustomerVo {
      */
     private String idCard;
 
+    /**
+     * 用户状态(0正常,1高风险用户 2黑名单用户 3高风险转黑名单审核 4黑名单转出 5禁用客户 6客户移交中)
+     */
+    private Integer customerStatus;
+
     public Integer getCollectionId() {
         return collectionId;
     }
@@ -112,5 +117,13 @@ public class RiskCustomerVo {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    public Integer getCustomerStatus() {
+        return customerStatus;
+    }
+
+    public void setCustomerStatus(Integer customerStatus) {
+        this.customerStatus = customerStatus;
     }
 }
