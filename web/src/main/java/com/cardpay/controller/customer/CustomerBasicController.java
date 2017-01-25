@@ -46,6 +46,17 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     private TCustomerIndustryService tCustomerIndustryService;
 
     /**
+     * 客户信息验重
+     * @param tCustomerBasic 客户信息
+     * @return 验重结果
+     */
+    @GetMapping("/validate")
+    public ResultTo validate(TCustomerBasic tCustomerBasic){
+        boolean validate = customerBasicService.validate(tCustomerBasic);
+        return new ResultTo().setData(validate);
+    }
+
+    /**
      * 验证证件号码是否已经存在
      *
      * @param identityCard 证件号码
@@ -129,6 +140,8 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
         tCustomerBasic.setModifyBy(userId);
         tCustomerBasic.setModifyTime(new Date());
         tCustomerBasic.setCustomerStatus(ConstantEnum.CustomerStatus.STATUS0.getVal());
+        tCustomerBasic.setUserId(ShiroKit.getUserId());
+        tCustomerBasic.setOrganizationId(ShiroKit.getOrgId());
         Integer count = customerBasicService.insertSelective(tCustomerBasic);
         if (count != null && count != 0) {
             List<TCustomerIndustry> list = customerIndustry(tCustomerBasic.getId(), industry);

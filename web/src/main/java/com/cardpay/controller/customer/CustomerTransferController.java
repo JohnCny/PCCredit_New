@@ -86,7 +86,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             tCustomerTransfer.setNowCustomerManager(customerBasicServiceManagerId);
             tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
             tCustomerTransfer.setTransferTime(new Date());
-            customerTransferService.insertSelective(tCustomerTransfer);
+            customerTransferService.insert(tCustomerTransfer);
             customerIdList.add(customerId);
         }
         Map<String, Object> map = new HashMap();

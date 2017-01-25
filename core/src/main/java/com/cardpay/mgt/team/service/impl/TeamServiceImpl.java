@@ -57,7 +57,7 @@ public class TeamServiceImpl extends BaseServiceImpl<Team> implements TeamServic
         Map<String, Object> map = new HashMap<>();
         List<UserTeamVo> userTeamVos = teamDao.queryTeam(teamId, organizationId);
         int count = teamDao.querySubsidiary(teamId);
-        if (count == 0 && userTeamVos.size() > 0) {
+        if (count == 0 || userTeamVos.size() > 0) {
             map.put("message", "该团队下有成员无法进行删除操作!");
             map.put("count", 0);
         } else {

@@ -40,7 +40,7 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
     public int deleteOrganization(int organizationId) {
         int number = tOrganizationDao.querySubsidiary(organizationId);
         int count = userOrganizationDao.queryUserOrg(organizationId);
-        return number != 0 || count != 0 ? 0 : tOrganizationDao.deleteOrganization(organizationId);
+        return number > 0 || count > 0 ? 0 : tOrganizationDao.deleteOrganization(organizationId);
     }
 
     @Override
@@ -114,6 +114,11 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
             }
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public TOrganizationVo queryByOrgId(int orgId) {
+        return tOrganizationDao.queryByOrgId(orgId);
     }
 
     /**

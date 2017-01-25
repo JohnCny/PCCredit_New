@@ -31,11 +31,11 @@
   </select>
 
     <!--批量删除团队成员-->
-    <delete id="bathDelete" parameterType="Map" >
+    <delete id="bathDelete" parameterType="Map">
         DELETE FROM T_USER_TEAM WHERE TEAM_ID = #{teamId,jdbcType=DECIMAL} AND USER_ID IN
-            <foreach collection="userIds" separator="," index="index" close=")" open="(" item="item">
-                   #{item}
-            </foreach>
+        <foreach collection="userIds" separator="," index="index" close=")" open="(" item="item">
+            #{item}
+        </foreach>
     </delete>
 
     <!--按进件Id查询所属团队信息-->

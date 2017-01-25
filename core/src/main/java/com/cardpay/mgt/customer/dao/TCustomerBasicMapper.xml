@@ -98,10 +98,10 @@
             AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
             AND basic.CUSTOMER_TYPE = #{customerType}
             <if test="cname!=null and cname!=''">
-                AND basic.cname LIKE CONCAT(CONCAT('%',#{cname}),'%')
+                AND basic.cname LIKE CONCAT(CONCAT('%',TRIM(#{cname})),'%')
             </if>
             <if test="certificateNumber!=null and certificateNumber!=''">
-                AND basic.CERTIFICATE_NUMBER LIKE CONCAT(CONCAT('%',#{certificateNumber}),'%')
+                AND basic.CERTIFICATE_NUMBER LIKE CONCAT(CONCAT('%',TRIM(#{certificateNumber})),'%')
             </if>
         </where>
     </select>

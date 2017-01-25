@@ -55,6 +55,19 @@ public class TUserVo extends GenericEntity<Integer>{
      */
     private Integer teamId;
 
+    /**
+     * 所属团队名称
+     */
+    private String teamName;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
     public Integer getId() {
         return id;
     }

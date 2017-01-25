@@ -3,6 +3,7 @@ package com.cardpay.mgt.organization.service;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -63,5 +64,12 @@ public interface TOrganizationService extends BaseService<TOrganization> {
      * @return
      */
     List<TOrganizationVo> queryOrgChildren(int orgId);
+
+    /**
+     * 按id查询机构信息
+     * @param orgId 机构id
+     * @return 机构信息
+     */
+    TOrganizationVo queryByOrgId(int orgId);
 
 }
