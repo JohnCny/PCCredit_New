@@ -3,7 +3,6 @@
 <mapper namespace="com.cardpay.mgt.customer.dao.TCustomerMaintenanceMapper">
     <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.model.TCustomerMaintenance">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
-        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
         <result column="MAINTENANCE_TYPE" jdbcType="DECIMAL" property="maintenanceType"/>
         <result column="MAINTENNACE_SUMMARY" jdbcType="VARCHAR" property="maintennaceSummary"/>
         <result column="OPERATION_ID" jdbcType="DECIMAL" property="operationId"/>
@@ -11,7 +10,6 @@
         <result column="OPERATION_TIME" jdbcType="TIMESTAMP" property="operationTime"/>
         <result column="CUSTOMER_ID_CARD" jdbcType="TIMESTAMP" property="customerIdCard"/>
         <result column="CUSTOMER_TYPE" jdbcType="TIMESTAMP" property="customerType"/>
-        <result column="CUSTOMER_CNAME" jdbcType="TIMESTAMP" property="customerCname"/>
     </resultMap>
 
     <!--客户维护信息Vo-->
@@ -21,9 +19,9 @@
         <result column="TEL" jdbcType="VARCHAR" property="tel"/>
         <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="cname"/>
         <result column="OPERATION_ID" jdbcType="DECIMAL" property="operationId"/>
-        <result column="CUSTOMER_ID_CARD" jdbcType="TIMESTAMP" property="customerIdCard"/>
-        <result column="CUSTOMER_TYPE" jdbcType="TIMESTAMP" property="customerType"/>
-        <result column="CUSTOMER_CNAME" jdbcType="TIMESTAMP" property="customerCname"/>
+        <result column="ENTERPRISE_CNAME" jdbcType="TIMESTAMP" property="enterpriseCname"/>
+        <result column="ENTERPRISE_ID_CARD" jdbcType="VARCHAR" property="enterpriseIdCard"/>
+        <association property="customer" column="ID" select="queryIsCustomer"/>
         <association property="operation" column="OPERATION_ID" select="queryUserById"/>
     </resultMap>
 
@@ -31,6 +29,12 @@
     <select id="queryUserById" resultType="com.cardpay.mgt.user.model.User">
         SELECT usr.* FROM T_USER usr WHERE usr.id = #{operationId}
     </select>
+
+    <!--查询客户信息-->
+    <select id="queryIsCustomer" resultType="com.cardpay.mgt.customer.model.TCustomerBasic">
+        SELECT * FROM T_CUSTOMER_BASIC WHERE ID = #{id}
+    </select>
+
 
     <!--按条件查询客户维护信息-->
     <select id="queryCustomerByCondition" resultMap="BaseResultMapVo">

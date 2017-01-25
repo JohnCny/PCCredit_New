@@ -61,6 +61,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerIds 客户id(,分割)
      * @param reason      移交原因
      * @param managerId   客户经理id
+     * @param customerType   客户类型
      * @return 数据库变记录
      */
     @PutMapping
@@ -68,7 +69,7 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
     @ApiOperation(value = "客户移交", notes = "客户移交确定按钮", httpMethod = "PUT")
     public ResultTo changeCustomer(@ApiParam(value = "客户id(,分割)", required = true) @RequestParam String customerIds
             , @ApiParam(value = "移交原因", required = true) @RequestParam String reason,
-                                   @RequestParam int managerId) {
+                                   @RequestParam int managerId, @RequestParam int customerType) {
         List<Integer> customerIdList = new ArrayList<>();
         //添加客户移交记录
         String[] split = customerIds.split(",");
@@ -78,10 +79,9 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
             TCustomerTransfer tCustomerTransfer = new TCustomerTransfer();
             tCustomerTransfer.setTransferTime(new Date());
             tCustomerTransfer.setCustomerId(customerId);
-            tCustomerTransfer.setCustomerCname(tCustomerBasic.getCname());
-            tCustomerTransfer.setCustomerCertificateNumber(tCustomerBasic.getCertificateNumber());
             tCustomerTransfer.setOriginCustomerManager(tCustomerBasic.getCustomerManagerId());
             tCustomerTransfer.setTransferReason(reason);
+            tCustomerTransfer.setCustomerType(customerType);
             Integer customerBasicServiceManagerId = customerBasicService.getManagerId(managerId);
             tCustomerTransfer.setNowCustomerManager(customerBasicServiceManagerId);
             tCustomerTransfer.setTransferStatus(ConstantEnum.TransferStatus.STATUS0.getVal());
