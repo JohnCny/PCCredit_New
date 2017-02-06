@@ -1,6 +1,7 @@
 package com.cardpay.mgt.customer.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -40,6 +41,11 @@ public class TCustomerTransferVo extends GenericEntity<String> {
     private Integer transferStatus;
 
     /**
+     * 客户信息
+     */
+    private TCustomerBasic customer;
+
+    /**
      * 移交时间
      */
     @ApiModelProperty(value="移交时间",required = true)
@@ -66,6 +72,14 @@ public class TCustomerTransferVo extends GenericEntity<String> {
      * 移交后客户经理信息
      */
     private User newManager;
+
+    public TCustomerBasic getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(TCustomerBasic customer) {
+        this.customer = customer;
+    }
 
     public String getTransferReason() {
         return transferReason;

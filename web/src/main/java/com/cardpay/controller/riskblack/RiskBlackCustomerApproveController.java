@@ -7,9 +7,11 @@ import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.riskblack.model.RiskBlackCustomerApprove;
 import com.cardpay.mgt.riskblack.service.RiskBlackCustomerApproveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,11 +25,19 @@ import java.util.Map;
  *         createTime 2017-01-2017/1/24 9:38
  */
 @RestController
-@RequestMapping("/riskBlackCustomerApprove")
+@RequestMapping("/api/riskBlackCustomerApprove")
 public class RiskBlackCustomerApproveController extends BaseController<RiskBlackCustomerApprove> {
 
     @Autowired
     private RiskBlackCustomerApproveService riskBlackCustomerApproveService;
+
+    @PostMapping("/pageList")
+    public DataTablePage pageList() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("orgId", ShiroKit.getOrgId());
+        return dataTablePage("riskBlackCustomerApprovePageList", map);
+    }
+
 
     /**
      * 申请转出风险名单或转入黑名单
@@ -37,7 +47,8 @@ public class RiskBlackCustomerApproveController extends BaseController<RiskBlack
      * @return 成功或失败
      */
     @PutMapping(value = "/approve", params = "riskCustomerId")
-    public ResultTo approve(RiskBlackCustomerApprove riskBlackCustomerApprove, @RequestParam("riskCustomerId") Integer riskCustomerId) {
+    public ResultTo approve(RiskBlackCustomerApprove riskBlackCustomerApprove,
+                            @RequestParam("riskCustomerId") Integer riskCustomerId) {
         return riskBlackCustomerApproveService.approve(riskBlackCustomerApprove, riskCustomerId);
     }
 
@@ -45,11 +56,12 @@ public class RiskBlackCustomerApproveController extends BaseController<RiskBlack
     /**
      * 审批操作
      *
-     * @param riskBlackCustomerApprove RiskBlackCustomerApprove
+     * @param customerId 客户ID
+     * @param flag       操作类型(0:拒绝1:同意)
      * @return 成功或失败
      */
-    @PutMapping
-    public ResultTo approveResult(RiskBlackCustomerApprove riskBlackCustomerApprove) {
-        return riskBlackCustomerApproveService.approveResult(riskBlackCustomerApprove);
+    @RequestMapping(value = "/{customerId}", params = "flag", method = RequestMethod.PUT)
+    public ResultTo approveResult(@PathVariable("customerId") Integer customerId, @RequestParam("flag") Integer flag){
+        return riskBlackCustomerApproveService.approveResult(customerId, flag);
     }
 }

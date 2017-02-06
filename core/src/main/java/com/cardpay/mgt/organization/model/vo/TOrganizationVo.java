@@ -5,6 +5,7 @@ import com.cardpay.basic.util.treeutil.annotation.TreeChild;
 import com.cardpay.basic.util.treeutil.annotation.TreeId;
 import com.cardpay.basic.util.treeutil.annotation.TreeParentId;
 import com.cardpay.mgt.organization.model.TOrganization;
+import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.context.annotation.Lazy;
@@ -23,84 +24,86 @@ public class TOrganizationVo extends GenericEntity<Integer> {
     /**
      * id
      */
-    @Id
     @TreeId
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select ORGANIZATION_SEQ.nextval from dual")
-    @ApiModelProperty(value = "机构Id", required = true)
     private Integer id;
 
     /**
      * 机构名称
      */
-    @Column(name = "ORG_NAME")
-    @ApiModelProperty(value = "机构名称", required = true)
     private String orgName;
 
     /**
      * 机构编号
      */
-    @Column(name = "ORG_ID")
-    @ApiModelProperty(value = "机构编号", required = true)
     private String orgId;
 
     /**
      * 机构级别(0 法人机构 1 分支机构)
      */
-    @Column(name = "ORG_LEVEL")
-    @ApiModelProperty(value = "机构级别(0 法人机构 1 分支机构)", required = true)
     private Integer orgLevel;
 
     /**
      * 父机构id
      */
-    @Column(name = "ORG_PARENT_ID")
-    @ApiModelProperty(value = "父机构id", required = true)
     @TreeParentId
     private Integer orgParentId;
 
     /**
      * 机构负责人
      */
-    @Column(name = "ORG_DIRECTOR_ID")
-    @ApiModelProperty(value = "机构负责人", required = true)
     private Integer orgDirectorId;
 
     /**
      * 机构负责人名字
      */
-    @Column(name = "ORG_DIRECTOR_NAME")
-    @ApiModelProperty(value = "机构负责人名字", required = true)
     private String orgDirectorName;
 
     /**
      * 机构后勤人员id
      */
-    @Column(name = "ORG_LOGISTICS_ID")
-    @ApiModelProperty(value = "机构后勤人员id", required = true)
     private Integer orgLogisticsId;
 
     /**
      * 创建用户id
      */
-    @Column(name = "CREATE_BY")
-    @ApiModelProperty(value = "创建用户id", required = true)
     private Integer createBy;
 
     /**
      * 创建时间
      */
-    @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
+
+    /**
+     * 父机构信息
+     */
+    private TOrganization parentOrg;
 
     /**
      * 子机构列表
      */
-    @ApiModelProperty(value = "子机构列表", required = true)
-    @Transient
     @TreeChild
     private List<TOrganizationVo> organizationList;
+
+    /**
+     * 后勤信息
+     */
+    private User user;
+
+    public TOrganization getParentOrg() {
+        return parentOrg;
+    }
+
+    public void setParentOrg(TOrganization parentOrg) {
+        this.parentOrg = parentOrg;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     /**
      * 获取id

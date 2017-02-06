@@ -1,6 +1,7 @@
 package com.cardpay.mgt.customer.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.user.model.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -53,26 +54,47 @@ public class TCustomerMaintenanceVo extends GenericEntity<Integer> {
     private User operation;
 
     /**
-     * 客户名称/企业名称
-     */
-    private String customerCname;
-
-    /**
      * 客户类型
      */
     private Integer customerType;
 
     /**
-     * 客户身份证号/企业工商登记号
+     * 企业法人姓名
      */
-    private String customerIdCard;
+    private String enterpriseCname;
 
-    public String getCustomerCname() {
-        return customerCname;
+    /**
+     * 企业法人身份证号
+     */
+    private String enterpriseIdCard;
+
+    /**
+     * 客户信息
+     */
+    private TCustomerBasic customer;
+
+    public TCustomerBasic getCustomer() {
+        return customer;
     }
 
-    public void setCustomerCname(String customerCname) {
-        this.customerCname = customerCname;
+    public void setCustomer(TCustomerBasic customer) {
+        this.customer = customer;
+    }
+
+    public String getEnterpriseCname() {
+        return enterpriseCname;
+    }
+
+    public void setEnterpriseCname(String enterpriseCname) {
+        this.enterpriseCname = enterpriseCname;
+    }
+
+    public String getEnterpriseIdCard() {
+        return enterpriseIdCard;
+    }
+
+    public void setEnterpriseIdCard(String enterpriseIdCard) {
+        this.enterpriseIdCard = enterpriseIdCard;
     }
 
     public Integer getCustomerType() {
@@ -83,13 +105,6 @@ public class TCustomerMaintenanceVo extends GenericEntity<Integer> {
         this.customerType = customerType;
     }
 
-    public String getCustomerIdCard() {
-        return customerIdCard;
-    }
-
-    public void setCustomerIdCard(String customerIdCard) {
-        this.customerIdCard = customerIdCard;
-    }
 
     public User getOperation() {
         return operation;

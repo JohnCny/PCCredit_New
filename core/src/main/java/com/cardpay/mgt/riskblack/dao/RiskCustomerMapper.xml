@@ -24,17 +24,20 @@
         <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
         <result column="CNAME" jdbcType="VARCHAR" property="customerName"/>
         <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="idCard"/>
+        <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
     </resultMap>
 
 
     <select id="riskCustomerPageList" resultMap="RiskCustomerVoMap">
         SELECT
-        TRC.*,TCB.CNAME,TCB.CERTIFICATE_NUMBER
+        TRC.*,TCB.CNAME,TCB.CERTIFICATE_NUMBER,TCB.CUSTOMER_STATUS
         FROM
         T_RISK_CUSTOMER TRC,
         T_CUSTOMER_BASIC TCB,
-        T_USER TU,
         T_CUSTOMER_MANAGER TCM
+        <if test="userCname !=null || employeeNumber != null">
+            ,T_USER TU
+        </if>
         WHERE
         TRC.CUSTOMER_ID=TCB."ID"
         AND

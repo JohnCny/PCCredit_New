@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 /**
  * 客户基本信息服务实现类
+ *
  * @author chenkai
  */
 @Lazy
@@ -57,8 +59,8 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     @Override
     public List<SelectModel> getCert() {
         List<SelectModel> selects = new ArrayList<>();
-        for (ConstantEnum.CertificateType value : ConstantEnum.CertificateType.values()){
-            SelectModel selectModel=new SelectModel();
+        for (ConstantEnum.CertificateType value : ConstantEnum.CertificateType.values()) {
+            SelectModel selectModel = new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
             selects.add(selectModel);
@@ -67,10 +69,10 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public List<SelectModel> getEducationDegree(){
+    public List<SelectModel> getEducationDegree() {
         List<SelectModel> selects = new ArrayList<>();
-        for (ConstantEnum.EducationDegree value : ConstantEnum.EducationDegree.values()){
-            SelectModel selectModel=new SelectModel();
+        for (ConstantEnum.EducationDegree value : ConstantEnum.EducationDegree.values()) {
+            SelectModel selectModel = new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
             selects.add(selectModel);
@@ -79,10 +81,10 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public List<SelectModel> getMarriageStatus(){
+    public List<SelectModel> getMarriageStatus() {
         List<SelectModel> selects = new ArrayList<>();
-        for (ConstantEnum.MarriageStatus value : ConstantEnum.MarriageStatus.values()){
-            SelectModel selectModel=new SelectModel();
+        for (ConstantEnum.MarriageStatus value : ConstantEnum.MarriageStatus.values()) {
+            SelectModel selectModel = new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
             selects.add(selectModel);
@@ -91,10 +93,10 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public List<SelectModel> getCustomerStatus(){
+    public List<SelectModel> getCustomerStatus() {
         List<SelectModel> selects = new ArrayList<>();
-        for (ConstantEnum.CustomerStatus value : ConstantEnum.CustomerStatus.values()){
-            SelectModel selectModel=new SelectModel();
+        for (ConstantEnum.CustomerStatus value : ConstantEnum.CustomerStatus.values()) {
+            SelectModel selectModel = new SelectModel();
             selectModel.setId(value.getVal());
             selectModel.setValue(value.getName());
             selects.add(selectModel);
@@ -103,12 +105,12 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
     }
 
     @Override
-    public boolean isIdCardExist(String idCard, Integer organizationId){
+    public boolean isIdCardExist(String idCard, Integer organizationId) {
         return customerBasicDao.isIdCardExist(idCard, organizationId) > 0 ? true : false;
     }
 
     @Override
-    public  List<TCustomerTransferVo> queryCustomer(int managerId, int customerType) {
+    public List<TCustomerTransferVo> queryCustomer(int managerId, int customerType) {
         return customerBasicDao.queryCustomer(managerId, customerType);
     }
 
@@ -137,13 +139,19 @@ public class TCustomerBasicServiceImpl extends BaseServiceImpl<TCustomerBasic> i
         TCustomerTransfer transfer = new TCustomerTransfer();
         transfer.setCustomerId(customerId);
         Integer integer3 = tCustomerTransferService.delete(transfer);
-        return integer0+integer1+integer2+integer3;
+        return integer0 + integer1 + integer2 + integer3;
     }
 
     @Override
     public Integer getManagerId(int userId) {
         TCustomerManagerBaseVo tCustomerManagerBaseVo = customerManagerService.selectBaseVoByUserId(userId);
         return tCustomerManagerBaseVo.getManagerId();
+    }
+
+    @Override
+    public boolean validate(TCustomerBasic tCustomerBasic) {
+        int mark = customerBasicDao.selectCount(tCustomerBasic);
+        return mark > 0 ? false : true;
     }
 
 }

@@ -52,10 +52,17 @@ public interface TOrganizationMapper extends BasicMapper<TOrganization> {
     int selectIfOrgPrincipal(@Param("directorId")int directorId,@Param("orgId") int orgId);
 
     /**
-     * 按机构id查询机构信息
-     * @param orgId
-     * @return
+     * 按机构id查询机构及子机构信息
+     * @param orgId 机构id
+     * @return 机构信息
      */
      List<TOrganizationVo> queryOrgChildren(@Param("orgId") int orgId);
+
+    /**
+     * 按id查询机构信息
+     * @param orgId 机构id
+     * @return 机构信息
+     */
+     TOrganizationVo queryByOrgId(@Param("orgId") int orgId);
 
 }

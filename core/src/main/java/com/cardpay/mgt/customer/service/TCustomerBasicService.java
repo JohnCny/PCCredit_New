@@ -88,4 +88,11 @@ public interface TCustomerBasicService extends BaseService<TCustomerBasic> {
      * @return
      */
     Integer getManagerId(int userId);
+
+    /**
+     * 客户信息验重
+     * @param tCustomerBasic 客户信息
+     * @return true/false
+     */
+    boolean validate(TCustomerBasic tCustomerBasic);
 }
