@@ -1,6 +1,7 @@
 package com.cardpay.core.fastdfs;
 
 
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.core.fastdfs.pool.ConnectionPool;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.file.model.TFile;
@@ -49,7 +50,7 @@ public class FileManager implements FileManagerConfig {
      * @throws Exception 异常信息
      */
     private StorageClient1 into() throws Exception {
-         trackerServer = connectionPool.checkout();
+        trackerServer = connectionPool.checkout();
         StorageClient1 storageClient1 = new StorageClient1(trackerServer, storageServer);
         return storageClient1;
     }
@@ -73,6 +74,7 @@ public class FileManager implements FileManagerConfig {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            LogTemplate.error(e, "上传文件", e.getMessage());
         } finally {
             connectionPool.checkin(trackerServer);
         }
@@ -81,11 +83,12 @@ public class FileManager implements FileManagerConfig {
 
     /**
      * base64 上传图片
-     * @param file 图片base64码
+     *
+     * @param file       图片base64码
      * @param valuePairs 文件分卷信息
      * @return 文件路径
      */
-    public String bufferUpload(String file, NameValuePair[] valuePairs){
+    public String bufferUpload(String file, NameValuePair[] valuePairs) {
         try {
             byte[] fileBuffer = Base64.getUrlEncoder().encode(file.getBytes("utf-8"));
             StorageClient1 storageClient = into();
@@ -96,9 +99,10 @@ public class FileManager implements FileManagerConfig {
                 String remoteFileName = uploadResults[1];
                 return groupName + "," + remoteFileName;
             }
-        }catch (Exception e){
-
-        }finally {
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogTemplate.error(e, "base64 上传图片", e.getMessage());
+        } finally {
             connectionPool.checkin(trackerServer);
         }
         return null;
@@ -126,6 +130,7 @@ public class FileManager implements FileManagerConfig {
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         } catch (Exception e) {
             e.printStackTrace();
+            LogTemplate.error(e, "下载文件", e.getMessage());
         } finally {
             connectionPool.checkin(trackerServer);
         }
@@ -149,16 +154,18 @@ public class FileManager implements FileManagerConfig {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            LogTemplate.error(e, "下载文件(返回InputStream)", e.getMessage());
         } catch (MyException e) {
             e.printStackTrace();
+            LogTemplate.error(e, "下载文件(返回InputStream)", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+            LogTemplate.error(e, "下载文件(返回InputStream)", e.getMessage());
         } finally {
             connectionPool.checkin(trackerServer);
         }
         return content == null ? null : new ByteArrayInputStream(content);
     }
-
 
 
     /**
@@ -192,10 +199,13 @@ public class FileManager implements FileManagerConfig {
             return null != flag ? storageClient.delete_file(groupName, remoteFileName) : 0;
         } catch (IOException e) {
             e.printStackTrace();
+            LogTemplate.error(e, "删除文件", e.getMessage());
         } catch (MyException e) {
             e.printStackTrace();
+            LogTemplate.error(e, "删除文件", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+            LogTemplate.error(e, "删除文件", e.getMessage());
         } finally {
             connectionPool.checkin(trackerServer);
         }
@@ -216,10 +226,13 @@ public class FileManager implements FileManagerConfig {
             fileInfo = storageClient.query_file_info(groupName, remoteFileName);
         } catch (IOException e) {
             e.printStackTrace();
+            LogTemplate.error(e, "查询文件", e.getMessage());
         } catch (MyException e) {
             e.printStackTrace();
+            LogTemplate.error(e, "查询文件", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+            LogTemplate.error(e, "查询文件", e.getMessage());
         } finally {
             connectionPool.checkin(trackerServer);
         }
@@ -303,6 +316,7 @@ public class FileManager implements FileManagerConfig {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            LogTemplate.error(e, "文件上传核心方法", e.getMessage());
         }
         return fileName;
     }

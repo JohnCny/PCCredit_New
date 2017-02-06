@@ -34,6 +34,9 @@ import static com.cardpay.basic.common.constant.CustomerStatusEnum.*;
 @RestController
 @RequestMapping("/api/customerTransfer")
 public class CustomerTransferController extends BaseController<TCustomerTransfer> {
+    /**
+     * 客户移交
+     */
     @Autowired
     private TCustomerTransferService customerTransferService;
     /**

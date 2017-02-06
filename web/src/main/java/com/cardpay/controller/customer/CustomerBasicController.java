@@ -66,6 +66,7 @@ public class CustomerBasicController extends BaseController<TCustomerBasic> {
     @SystemControllerLog("验证证件号码是否已经存在")
     @ApiOperation(value = "证件号码验重", notes = "证件号码验重", httpMethod = "GET")
     public ResultTo validate(@ApiParam(value = "证件号码", required = true) @RequestParam String identityCard) {
+        // TODO 暂时移除身份证规则验证
     /*    if (!IDcardUtil.verify(String.valueOf(identityCard))) {
             return new ResultTo(ResultEnum.ID_CARD_ERROR);
         }*/

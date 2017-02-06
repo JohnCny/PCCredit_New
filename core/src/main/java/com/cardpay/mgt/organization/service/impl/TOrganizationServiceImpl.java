@@ -52,6 +52,7 @@ public class TOrganizationServiceImpl extends BaseServiceImpl<TOrganization> imp
                 return tree.getChildNodesByParentId(tOrganizationVos, topId);
             } catch (TreeInitializeException e) {
                 e.printStackTrace();
+                LogTemplate.error(e,"机构",e.getMessage());
             }
         }
         return new ArrayList<>();
