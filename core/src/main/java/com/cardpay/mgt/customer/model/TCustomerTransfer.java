@@ -26,20 +26,6 @@ public class TCustomerTransfer extends GenericEntity<Integer>{
     private Integer id;
 
     /**
-     * 维护名称
-     */
-    @Column(name = "CUSTOMER_CNAME")
-    @ApiModelProperty(value="维护名称",required = true)
-    private String customerCname;
-
-    /**
-     * 客户证件号码
-     */
-    @Column(name = "CUSTOMER_CERTIFICATE_NUMBER")
-    @ApiModelProperty(value="客户证件号码",required = true)
-    private String customerCertificateNumber;
-
-    /**
      * 原有客户经理id
      */
     @Column(name = "ORIGIN_CUSTOMER_MANAGER")
@@ -118,41 +104,6 @@ public class TCustomerTransfer extends GenericEntity<Integer>{
         this.id = id;
     }
 
-    /**
-     * 获取维护名称
-     *
-     * @return CUSTOMER_CNAME - 维护名称
-     */
-    public String getCustomerCname() {
-        return customerCname;
-    }
-
-    /**
-     * 设置维护名称
-     *
-     * @param customerCname 维护名称
-     */
-    public void setCustomerCname(String customerCname) {
-        this.customerCname = customerCname;
-    }
-
-    /**
-     * 获取客户证件号码
-     *
-     * @return CUSTOMER_CERTIFICATE_NUMBER - 客户证件号码
-     */
-    public String getCustomerCertificateNumber() {
-        return customerCertificateNumber;
-    }
-
-    /**
-     * 设置客户证件号码
-     *
-     * @param customerCertificateNumber 客户证件号码
-     */
-    public void setCustomerCertificateNumber(String customerCertificateNumber) {
-        this.customerCertificateNumber = customerCertificateNumber;
-    }
 
     /**
      * 获取原有客户经理id

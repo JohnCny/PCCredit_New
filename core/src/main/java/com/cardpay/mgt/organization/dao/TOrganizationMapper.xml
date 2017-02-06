@@ -27,7 +27,46 @@
         <result column="ORG_LOGISTICS_ID" jdbcType="DECIMAL" property="orgLogisticsId"/>
         <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <association property="user" select="queryLogistics" column="ORG_LOGISTICS_ID"/>
+        <association property="parentOrg" select="queryParentOrg" column="ORG_PARENT_ID"/>
     </resultMap>
+
+    <!--用户信息-->
+    <resultMap id="userMap" type="com.cardpay.mgt.user.model.User">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+        <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="AGE" jdbcType="DECIMAL" property="age"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+        <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
+    </resultMap>
+
+    <!--查询父机构信息-->
+    <select id="queryParentOrg" resultMap="BaseResultMap">
+        SELECT * FROM T_ORGANIZATION WHERE ID = #{orgParentId}
+    </select>
+
+    <!--查询后勤人员信息-->
+    <select id="queryLogistics" resultMap="userMap">
+        SELECT * FROM T_USER WHERE ID = #{orgLogisticsId}
+    </select>
+
+    <!--按机构id查询机构信息-->
+    <select id="queryByOrgId" resultMap="BaseResultMapVo">
+        SELECT * FROM T_ORGANIZATION WHERE ID = #{orgId}
+    </select>
 
     <!--查询所有机构信息-->
     <select id="queryAll" resultMap="BaseResultMapVo">
@@ -40,11 +79,12 @@
     </select>
 
     <!--查询所有机构信息-->
-    <select id="selectOrganization" resultMap="BaseResultMap" parameterType="Map">
+    <select id="selectOrganization" resultMap="BaseResultMapVo" parameterType="Map">
         SELECT * FROM T_ORGANIZATION
         <where>
+            ORG_PARENT_ID != -1
             <if test="orgName !=null and orgName !=''">
-                ORG_NAME LIKE CONCAT(CONCAT('%',#{orgName}),'%')
+                AND ORG_NAME LIKE CONCAT(CONCAT('%',TRIM(#{orgName})),'%')
             </if>
         </where>
         CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{orgId}
@@ -57,14 +97,14 @@
     </delete>
 
     <!--查询此机构是否有子机构-->
-    <select id="querySubsidiary">
+    <select id="querySubsidiary" resultType="Integer">
         SELECT COUNT(1) FROM T_ORGANIZATION WHERE ORG_PARENT_ID = (
         SELECT id FROM T_ORGANIZATION WHERE id = #{organizationId}
         )
     </select>
 
     <!--查询此用户是否是此机构的负责人-->
-    <select id="selectIfOrgPrincipal">
+    <select id="selectIfOrgPrincipal" resultType="Integer">
         SELECT COUNT(1) FROM T_ORGANIZATION WHERE ORG_DIRECTOR_ID = #{directorId}
         AND ID = #{orgId}
     </select>

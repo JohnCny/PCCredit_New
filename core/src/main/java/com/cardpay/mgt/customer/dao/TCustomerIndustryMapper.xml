@@ -43,6 +43,9 @@
             UPDATE T_CUSTOMER_INDUSTRY
             SET INDUSTRY_ID = #{item.industryId}
             WHERE CUSTOMER_ID = #{item.customerId}
+            AND INDUSTRY_ID = #{item.industryId}
         </foreach>
     </update>
+
+
 </mapper>

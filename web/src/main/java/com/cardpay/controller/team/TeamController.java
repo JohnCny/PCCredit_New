@@ -107,7 +107,7 @@ public class TeamController extends BaseController<Team> {
         team.setCreateBy(userId);
         team.setCreateTime(new Date());
         team.setOrganizationId(ShiroKit.getOrgId());
-        Integer flag = teamService.insertSelective(team);
+        Integer flag = teamService.insert(team);
         TUserTeam tUserTeam = new TUserTeam();
         tUserTeam.setTeamId(team.getTeamId());
         tUserTeam.setUserId(team.getTeamLeaderId());
@@ -127,9 +127,6 @@ public class TeamController extends BaseController<Team> {
         int flag = 0;
         for (Team teamBean : teamList) {
             flag = teamService.updateSelectiveByPrimaryKey(teamBean);
-            TUserTeam tUserTeam = new TUserTeam();
-            tUserTeam.setTeamId(teamBean.getTeamId());
-            tUserTeamService.updateSelectiveByPrimaryKey(tUserTeam);
             flag++;
         }
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
