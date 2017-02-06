@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Table(name = "T_OPERATION_LOG")
 @ApiModel(value="操作日志")
-public class TOperationLog {
+public class TOperationLog{
     /**
      * 操作日志id
      */
@@ -59,6 +59,21 @@ public class TOperationLog {
     @Column(name = "OPERATION_RESULT")
     @ApiModelProperty(value="操作结果",required = true)
     private String operationResult;
+
+    /**
+     * 操作用户所在机构
+     */
+    @Column(name = "ORGANIZATION_ID")
+    @ApiModelProperty(value="操作用户所在机构",required = true)
+    private Integer organizationId;
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
+    }
 
     /**
      * 获取操作日志id
