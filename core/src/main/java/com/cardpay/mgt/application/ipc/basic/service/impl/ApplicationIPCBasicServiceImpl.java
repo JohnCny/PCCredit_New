@@ -4,6 +4,7 @@ import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.basic.util.treeutil.exception.TreeInitializeException;
 import com.cardpay.mgt.application.enums.TemplateTypeEnum;
+import com.cardpay.mgt.application.exception.NoSuchApplicationTemplateError;
 import com.cardpay.mgt.application.ipc.basic.dao.ApplicationIPCBasicMapper;
 import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
 import com.cardpay.mgt.application.ipc.basic.service.ApplicationIPCBasicService;
@@ -52,11 +53,11 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
     }
 
     @Override
-    public Object selectGroupEntrance(Integer applicationId, Integer templateId) {
+    public Object selectGroupEntrance(Integer applicationId, Integer templateId) throws NoSuchApplicationTemplateError {
         //查询模板对应的类型
         TApplicationTemplate template = applicationTemplateMapper.selectByPrimaryKey(templateId);
         if(template==null){
-            IllegalArgumentException exception = new IllegalArgumentException("进件id：" + applicationId + "模板id：" + templateId + "模板不存在");
+            NoSuchApplicationTemplateError exception = new NoSuchApplicationTemplateError("进件id：" + applicationId + "模板id：" + templateId + "模板不存在");
             LogTemplate.error(exception,"模板不存在","进件id：" + applicationId + "模板id：" + templateId + "模板不存在");
             throw exception;
         }
@@ -73,8 +74,8 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
             default:
                 break;
         }
-        LogTemplate.error(null,"模板类型错误","进件id：" + applicationId + "模板id：" + templateId + "模板不存在");
-        throw new IllegalArgumentException("模板类型错误");
+        LogTemplate.error(null,"模板类型错误","进件id：" + applicationId + "模板id：" + templateId + "模板类型错误");
+        throw new NoSuchApplicationTemplateError("进件id：" + applicationId + "模板id：" + templateId + "模板类型错误");
     }
 
     @Override

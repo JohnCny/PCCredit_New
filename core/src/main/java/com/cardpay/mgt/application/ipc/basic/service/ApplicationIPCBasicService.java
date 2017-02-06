@@ -1,5 +1,6 @@
 package com.cardpay.mgt.application.ipc.basic.service;
 
+import com.cardpay.mgt.application.exception.NoSuchApplicationTemplateError;
 import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface ApplicationIPCBasicService{
      * @param templateId 模板Id
      * @return 模板树
      */
-    Object selectGroupEntrance(Integer applicationId, Integer templateId);
+    Object selectGroupEntrance(Integer applicationId, Integer templateId) throws NoSuchApplicationTemplateError;
 
     /**
      * IPC 菜单

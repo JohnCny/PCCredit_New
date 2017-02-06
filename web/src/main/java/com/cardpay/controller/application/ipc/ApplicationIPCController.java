@@ -1,6 +1,8 @@
 package com.cardpay.controller.application.ipc;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.mgt.application.exception.NoSuchApplicationTemplateError;
 import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
 import com.cardpay.mgt.application.ipc.basic.service.ApplicationIPCBasicService;
 import com.cardpay.mgt.application.ipc.cashflowprofit.model.TApplicationCashProfitExt;
@@ -59,8 +61,12 @@ public class ApplicationIPCController {
     public ResultTo selectIPC(@PathVariable("applicationId") Integer applicationId
             , @PathVariable("templateId") Integer templateId) {
         ResultTo resultTo = new ResultTo();
-        Object template = applicationIPCBasicService.selectGroupEntrance(applicationId, templateId);
-        resultTo.setData(template);
+        try {
+            Object template = applicationIPCBasicService.selectGroupEntrance(applicationId, templateId);
+            resultTo.setData(template);
+        } catch (NoSuchApplicationTemplateError noSuchApplicationTemplateError) {
+            resultTo.setMsg(ResultEnum.OPERATION_FAILED.getValue(),noSuchApplicationTemplateError.getMessage());
+        }
         return resultTo;
     }
 
