@@ -3,8 +3,6 @@
 <mapper namespace="com.cardpay.mgt.customer.dao.TCustomerTransferMapper">
     <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.model.TCustomerTransfer">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
-        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
-        <result column="CUSTOMER_CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="customerCertificateNumber"/>
         <result column="ORIGIN_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="originCustomerManager"/>
         <result column="NOW_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="nowCustomerManager"/>
         <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
@@ -26,15 +24,22 @@
     <!--客户移交Vo-->
     <resultMap id="BaseVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
-        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="name"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="name"/>
         <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
         <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
         <result column="ORIGIN_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="originCustomerManager"/>
         <result column="NOW_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="nowCustomerManager"/>
         <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
+        <association property="customer" column="ID" select="queryIsCustomer"/>
         <association property="oldManager" column="ORIGIN_CUSTOMER_MANAGER" select="queryOldManager"/>
         <association property="newManager" column="NOW_CUSTOMER_MANAGER" select="queryNewManager"/>
     </resultMap>
+
+    <!--查询客户信息-->
+    <select id="queryIsCustomer" resultType="com.cardpay.mgt.customer.model.TCustomerBasic">
+        SELECT * FROM T_CUSTOMER_BASIC WHERE ID = #{id}
+    </select>
+
 
     <!--原客户经理信息-->
     <select id="queryOldManager" resultType="com.cardpay.mgt.user.model.User">

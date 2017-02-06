@@ -11,10 +11,7 @@ import com.cardpay.mgt.industry.service.IndustryService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,11 +51,13 @@ public class CustomerIndustryController extends BaseController<TCustomerIndustry
      * @param customerId 客户id
      * @return 更新页面
      */
-    @GetMapping("/industries")
+    @GetMapping("/{customerId}")
     @SystemControllerLog("客户更新页面跳转")
     @ApiOperation(value = "查询客户所属行业信息", notes = "查询客户所属行业信息", httpMethod = "GET")
-    public ResultTo returnUpdate(@ApiParam(value = "客户id", required = true) @RequestParam("customerId") int customerId) {
+    public ResultTo returnUpdate(@ApiParam(value = "客户id", required = true) @PathVariable("customerId") int customerId) {
         List<TCustomerIndustryVo> tCustomerIndustryVos = tCustomerIndustryService.queryById(customerId);
         return new ResultTo().setData(tCustomerIndustryVos);
     }
+
+
 }
