@@ -58,10 +58,10 @@ public class LoginLogServiceImpl extends BaseServiceImpl<LoginLog> implements Lo
         if (map != null) {
             Example.Criteria criteria = example.createCriteria();
             if (StringUtils.isNotBlank(map.get(PAGELIST_PRAM_LOGINACCOUNT))) {
-                criteria.andEqualTo("LOGIN_ACCOUNT", map.get(PAGELIST_PRAM_LOGINACCOUNT));
+                criteria.andEqualTo("loginAccount", map.get(PAGELIST_PRAM_LOGINACCOUNT));
             }
             if (StringUtils.isNotBlank(map.get(PAGELIST_PRAM_LOGINOPERATION))) {
-                criteria.andEqualTo("LOGIN_OPERATION", map.get(PAGELIST_PRAM_LOGINOPERATION));
+                criteria.andEqualTo("loginOperation", map.get(PAGELIST_PRAM_LOGINOPERATION));
             }
             if (StringUtils.isNotBlank(map.get(PAGELIST_PRAM_LOGINTIME))) {
                 criteria.andCondition("to_char(LOGIN_TIME,'yyyy-mm-dd')=", map.get(PAGELIST_PRAM_LOGINTIME));

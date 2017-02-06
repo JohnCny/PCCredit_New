@@ -9,19 +9,17 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.core.shiro.enums.ShiroEnum;
-import com.cardpay.core.shiro.realm.ShiroRealm;
 import com.cardpay.mgt.menu.service.TMenuService;
 import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
-import com.cardpay.mgt.team.model.Team;
 import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.service.RoleService;
+import com.cardpay.mgt.user.model.UserOrganization;
+import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,7 +91,8 @@ public class OrganizationController extends BaseController<TOrganization> {
     public ResultTo deleteOrganization(@ApiParam(value = "机构id", required = true) @PathVariable("id") int organizationId) {
         int flag = tOrganizationService.deleteOrganization(organizationId);
         logger.info(OrganizationController.class, "递归删除层级信息", "层级id:" + organizationId);
-        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR)
+                .setDataMap("message", "请先移除此机构成员或其子机构");
     }
 
     /**
@@ -145,8 +144,8 @@ public class OrganizationController extends BaseController<TOrganization> {
     @SystemControllerLog("按id查询机构信息")
     @ApiOperation(value = "按id查询机构信息", notes = "按id查询机构信息", httpMethod = "GET")
     public ResultTo queryById(@ApiParam(value = "机构id", required = true) @PathVariable("id") int organizationId) {
-        TOrganization tOrganization = tOrganizationService.selectByPrimaryKey(organizationId);
-        return new ResultTo().setData(tOrganization);
+        TOrganizationVo tOrganizationVos = tOrganizationService.queryByOrgId(organizationId);
+        return new ResultTo().setData(tOrganizationVos);
     }
 
     /**
