@@ -122,12 +122,12 @@
     <!--</mvc:interceptors>-->
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="synchronizeOnSession" value="true" />
         <property name="customArgumentResolvers">
             <list>
                 <bean class="com.cardpay.mgt.application.resolver.IPCArgumentResolver" />
             </list>
         </property>
+        <property name="order" value="0" />
     </bean>
     
     <!-- Token拦截器 -->

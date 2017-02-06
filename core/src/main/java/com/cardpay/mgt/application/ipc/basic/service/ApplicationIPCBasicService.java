@@ -37,4 +37,32 @@ public interface ApplicationIPCBasicService{
      * @return 菜单
      */
     List<IPCMenu> selectIPCMenu(Integer applicationId);
+
+
+    /**
+     * 更新进件IPC模版var
+     *
+     * @param object 实体
+     * @param ipcCRUDType 类型
+     * @return 更新结果
+     */
+    Integer updateIPC(Object object,Integer ipcCRUDType);
+
+    /**
+     * 添加IPC模版额外值
+     *
+     * @param object 实体
+     * @param ipcCRUDType 类型
+     * @return 添加结果
+     */
+    Integer addIPC(Object object,Integer ipcCRUDType);
+
+    /**
+     * 删除IPC模版额外值
+     *
+     * @param object 实体
+     * @param ipcCRUDType 类型
+     * @return 删除结果
+     */
+    Integer deleteIPC(Object object,Integer ipcCRUDType);
 }

@@ -5,11 +5,13 @@ apply plugin: 'com.google.protobuf'
 dependencies {
     compile(
             libraries."spring-core",
-            libraries."spring-context"
+            libraries."spring-context",
+            libraries."spring-test",
     )
     compile project(':common')
     testCompile(
-            group: 'junit', name: 'junit', version: '4.11'
+            libraries."junit",
+            libraries."spring-test",
     )
 }
 
@@ -41,7 +43,6 @@ dependencies {
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"
-    testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 protobuf {
