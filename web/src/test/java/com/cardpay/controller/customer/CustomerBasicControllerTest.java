@@ -20,15 +20,16 @@ public class CustomerBasicControllerTest extends TestEnv {
     private User user = User.UserBuilder.get().withId(1).build();
 
     @Test
+    @Ignore
     public void returnCustomerList() throws Exception {
 
     }
 
     @Test
+    @Ignore
     public void queryCondition() throws Exception {
 
     }
-
 
     @Test
     @Ignore
