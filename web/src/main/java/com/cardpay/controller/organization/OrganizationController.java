@@ -14,8 +14,6 @@ import com.cardpay.mgt.organization.model.TOrganization;
 import com.cardpay.mgt.organization.model.vo.TOrganizationVo;
 import com.cardpay.mgt.organization.service.TOrganizationService;
 import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.model.UserOrganization;
-import com.cardpay.mgt.user.service.UserOrganizationService;
 import com.cardpay.mgt.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,11 +32,11 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/organization")
 public class OrganizationController extends BaseController<TOrganization> {
+    /**
+     * 机构service
+     */
     @Autowired
     private TOrganizationService tOrganizationService;
-
-    @Autowired
-    private static LogTemplate logger;
 
     @Autowired
     private UserService userService;
@@ -90,7 +88,7 @@ public class OrganizationController extends BaseController<TOrganization> {
     @ApiOperation(value = "递归删除层级接口", notes = "删除机构以及其资机构信息", httpMethod = "DELETE")
     public ResultTo deleteOrganization(@ApiParam(value = "机构id", required = true) @PathVariable("id") int organizationId) {
         int flag = tOrganizationService.deleteOrganization(organizationId);
-        logger.info(OrganizationController.class, "递归删除层级信息", "层级id:" + organizationId);
+        LogTemplate.info(OrganizationController.class, "递归删除层级信息", "层级id:" + organizationId);
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR)
                 .setDataMap("message", "请先移除此机构成员或其子机构");
     }
@@ -110,7 +108,7 @@ public class OrganizationController extends BaseController<TOrganization> {
         tOrganization.setCreateTime(new Date());
         tOrganizationService.insertSelective(tOrganization);
         Integer tOrganizationId = tOrganization.getId();
-        logger.info(OrganizationController.class, "新增机构", "机构id:" + tOrganizationId);
+        LogTemplate.info(OrganizationController.class, "新增机构", "机构id:" + tOrganizationId);
         int orgParentId = tOrganization.getOrgParentId();
         if (orgParentId == 0) {
             userService.addUserByOrg(user, tOrganizationId);

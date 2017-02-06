@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.application.basic.dao.TApplicationContractMapper">
-  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplicationContract">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="CONTRACT_ID" jdbcType="DECIMAL" property="contractId" />
-    <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname" />
-    <result column="CUSTOMER_CARD_NUMBER" jdbcType="VARCHAR" property="customerCardNumber" />
-    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
-    <result column="APPROVE_AMOUNT" jdbcType="DECIMAL" property="approveAmount" />
-    <result column="APPROVE_RATE" jdbcType="DECIMAL" property="approveRate" />
-    <result column="LOAN_START_TIME" jdbcType="TIMESTAMP" property="loanStartTime" />
-    <result column="LOAN_END_TIME" jdbcType="TIMESTAMP" property="loanEndTime" />
-    <result column="CONTRACT_NUMBER" jdbcType="VARCHAR" property="contractNumber" />
-    <result column="LOAN_ACCOUNT" jdbcType="VARCHAR" property="loanAccount" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
-    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplicationContract">
+        <id column="CONTRACT_ID" jdbcType="DECIMAL" property="contractId"/>
+        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
+        <result column="CUSTOMER_CARD_NUMBER" jdbcType="VARCHAR" property="customerCardNumber"/>
+        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName"/>
+        <result column="APPROVE_AMOUNT" jdbcType="DECIMAL" property="approveAmount"/>
+        <result column="APPROVE_RATE" jdbcType="DECIMAL" property="approveRate"/>
+        <result column="LOAN_START_TIME" jdbcType="TIMESTAMP" property="loanStartTime"/>
+        <result column="LOAN_END_TIME" jdbcType="TIMESTAMP" property="loanEndTime"/>
+        <result column="CONTRACT_NUMBER" jdbcType="VARCHAR" property="contractNumber"/>
+        <result column="LOAN_ACCOUNT" jdbcType="VARCHAR" property="loanAccount"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+    </resultMap>
+    <!--客户签约信息Vo-->
+    <resultMap id="BaseVo" type="com.cardpay.mgt.application.basic.model.vo.TApplicationContractVo">
+        <result column="CONTRACT_ID" jdbcType="DECIMAL" property="contractId"/>
+        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="customerCname"/>
+        <result column="CUSTOMER_CARD_NUMBER" jdbcType="VARCHAR" property="customerCardNumber"/>
+        <result column="APPLY_AMOUNT" jdbcType="DECIMAL" property="applyAmount"/>
+        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName"/>
+        <result column="APPLICATION_STATUS" jdbcType="DECIMAL" property="applicationStatus"/>
+        <result column="id" jdbcType="DECIMAL" property="applicationId"/>
+    </resultMap>
+
+    <!--查询客户签约信息-->
+    <select id="queryAll" parameterType="Map" resultMap="BaseVo">
+        SELECT application.APPLICATION_STATUS, application.APPLY_AMOUNT, application.id
+        , contract.CONTRACT_ID, contract.CUSTOMER_CNAME, contract.CUSTOMER_CARD_NUMBER
+        , contract.PRODUCT_NAME
+        FROM
+        T_APPLICATION application,
+        T_APPLICATION_CONTRACT contract
+        <where>
+            application.ID = contract.APPLICATION_ID
+            <if test="customerCname !=null and customerCname !=''">
+                contract.customerCname LIKE CONCAT(CONCAT('%', TRIM(#{customerCname})), '%')
+            </if>
+        </where>
+    </select>
 </mapper>
