@@ -35,6 +35,7 @@ public class ApplicationIPCController {
 
     @RequestMapping("/test")
     public ResultTo test(){
+        
         return new ResultTo();
     }
 
