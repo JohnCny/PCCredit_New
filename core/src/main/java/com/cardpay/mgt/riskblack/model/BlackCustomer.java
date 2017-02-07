@@ -14,6 +14,7 @@ public class BlackCustomer {
      */
     @Id
     @Column(name = "BLACK_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select BLACK_CUSTOMER_SEQ.nextval from dual")
     @ApiModelProperty(value = "黑名单客户列表id", required = true)
     private Integer blackId;
 
