@@ -33,13 +33,13 @@
         <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="idCard"/>
     </resultMap>
 
-    <select id="riskBlackCustomerPageList" resultMap="RiskBlackCustomerVoMap">
+    <select id="riskBlackCustomerApprovePageList" resultMap="RiskBlackCustomerVoMap">
         SELECT
         TRCA.*,TCB.CNAME,TCB.CERTIFICATE_NUMBER
         FROM
         T_RISKBLACK_CUSTOMER_APPROVE TRCA,
         T_CUSTOMER_BASIC TCB,
-        T_CUSTOMER_MANAGER TCM,
+        T_CUSTOMER_MANAGER TCM
         <if test="userCname !=null || employeeNumber != null">
             ,T_USER TU
         </if>
@@ -63,5 +63,22 @@
             AND
             TU.EMPLOYEE_NUMBER=#{employeeNumber}
         </if>
+    </select>
+
+    <select id="getCustomerApprove" resultMap="RiskBlackCustomerVoMap">
+        SELECT
+        TRCA.*,TCB.CNAME,TCB.CERTIFICATE_NUMBER
+        FROM
+        T_RISKBLACK_CUSTOMER_APPROVE TRCA,
+        T_CUSTOMER_BASIC TCB,
+        T_CUSTOMER_MANAGER TCM
+        WHERE
+        TRCA.RISK_BLACK_CUSTOMER_ID=TCB."ID"
+        AND
+        TCB.CUSTOMER_MANAGER_ID=TCM."ID"
+        AND
+        TCM.ORGANIZATION_ID=#{orgId,jdbcType=DECIMAL}
+        AND
+        TRCA.RISK_BLACK_APPROVE_ID=#{riskBlackApproveId,jdbcType=DECIMAL}
     </select>
 </mapper>

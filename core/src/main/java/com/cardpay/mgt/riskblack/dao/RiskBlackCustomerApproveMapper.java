@@ -15,4 +15,12 @@ public interface RiskBlackCustomerApproveMapper extends BasicMapper<RiskBlackCus
      * @return 审批分页列表
      */
     List<RiskBlackCustomerApproveVo> riskBlackCustomerApprovePageList(Map<String, Object> map);
+
+    /**
+     * 根据用户ID获取风险审批信息
+     *
+     * @param map 参数Map
+     * @return 风险审批信息
+     */
+    RiskBlackCustomerApproveVo getCustomerApprove(Map<String, Object> map);
 }
