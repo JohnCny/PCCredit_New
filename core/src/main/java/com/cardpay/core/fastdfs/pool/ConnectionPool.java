@@ -15,6 +15,7 @@ import com.cardpay.core.fastdfs.FileManager;
 import org.csource.fastdfs.ClientGlobal;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import static com.cardpay.core.fastdfs.FileManagerConfig.CLIENT_CONFIG_FILE;
@@ -188,8 +189,11 @@ public class ConnectionPool {
     }
 
     private void initClientGlobal() throws Exception {
-        String classPath = new File(FileManager.class.getResource("/").getFile()).getCanonicalPath();
-        String fastDfsClientConfigFilePath = classPath + "../../../\\resources\\main" + File.separator + CLIENT_CONFIG_FILE;
+       // String classPath = new File(FileManager.class.getResource(File.separator).getFile()).getCanonicalPath();
+        //String fastDfsClientConfigFilePath = classPath + "../../../\\resources\\main" + File.separator + CLIENT_CONFIG_FILE;
+       // String fastDfsClientConfigFilePath = classPath + File.separator + CLIENT_CONFIG_FILE;
+        ClassPathResource classPath = new ClassPathResource(CLIENT_CONFIG_FILE);
+        String fastDfsClientConfigFilePath = classPath.getClassLoader().getResource(CLIENT_CONFIG_FILE).getPath();
         ClientGlobal.init(fastDfsClientConfigFilePath);
     }
 

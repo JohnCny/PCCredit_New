@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -24,9 +25,15 @@ import java.util.Map;
  */
 @Service
 public class TApplicationInvestPictureServiceImpl extends BaseServiceImpl<TApplicationInvestPicture> implements TApplicationInvestPictureService {
+    /**
+     * 图片调查Service
+     */
     @Autowired
     private TApplicationInvestPictureMapper tApplicationInvestPictureDao;
 
+    /**
+     * 文件service
+     */
     @Autowired
     private TFileService tFileService;
 
@@ -37,7 +44,7 @@ public class TApplicationInvestPictureServiceImpl extends BaseServiceImpl<TAppli
         List<TFile> fileList = tFileService.uploads(files);
         int flag = 0;
         for (TFile file : fileList) {
-            tApplicationInvestPicture.setInvestPictureUrl(serverPort + "/" + file.getGroupName() + "/"+ file.getFastName());
+            tApplicationInvestPicture.setInvestPictureUrl(serverPort + File.separator + file.getGroupName() + File.separator + file.getFastName());
             flag = tApplicationInvestPictureDao.insert(tApplicationInvestPicture);
             flag++;
         }

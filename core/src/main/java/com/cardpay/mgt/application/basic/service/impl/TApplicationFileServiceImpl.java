@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class TApplicationFileServiceImpl extends BaseServiceImpl<TApplicationFil
         String serverPort = (String) ContextProperty.getContextProperty("tracker_server");
         for (TFile file : fileList) {
             tApplicationFile.setFileType(file.getImageType());
-            tApplicationFile.setFileUrl(serverPort + "/" + file.getGroupName() + "/"+ file.getFastName());
+            tApplicationFile.setFileUrl(serverPort + File.separator + file.getGroupName() + File.separator + file.getFastName());
             flag = tApplicationFileDao.insertSelective(tApplicationFile);
             flag++;
         }

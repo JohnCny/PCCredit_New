@@ -47,17 +47,6 @@ public class ApplicationInvestPictureController extends BaseController<TApplicat
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
-    /**
-     * 判断图片是否能继续下一步
-     *
-     * @param applicationId 进件id
-     * @return true/false
-     */
-    @GetMapping("/ifFileNext/{applicationId}")
-    public ResultTo fileIfNext(@PathVariable("applicationId") int applicationId) {
-        boolean mark = tApplicationInvestPictureService.fileIfNext(applicationId);
-        return new ResultTo().setData(mark);
-    }
 
     /**
      * 查询产品调查图片
