@@ -1,45 +1,32 @@
 package com.cardpay.controller.index;
 
-import com.cardpay.core.shiro.common.ShiroKit;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
+import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.mgt.index.dao.IndexOrgApplicationMapper;
+import com.cardpay.mgt.index.model.IndexOrgApplicationInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * BaseLogin控制层
  *
  * @author rankai
  */
-@Controller
+@RestController
 @RequestMapping("/api/index")
-@Api(value = "/api/index", description = "首页请求地址")
 public class IndexController {
 
-    private static final String ADMIN_INDEX_PAGE = "/dashboard/admin";
+    @Autowired
+    private IndexOrgApplicationMapper indexOrgApplicationMapper;
 
-    private static final String EXPERT_INDEX_PAGE = "/dashboard/expert";
-
-    private static final String MANAGER_INDEX_PAGE = "/dashboard/manager";
-
-    @ApiResponses({@ApiResponse(code = 405, message = "请求类型错误"), @ApiResponse(code = 500, message = "服务器异常")})
-    @ApiOperation(value = "首页跳转", httpMethod = "GET")
-    @RequestMapping(method = RequestMethod.GET)
-    public String index() {
-        Subject subject = ShiroKit.getSubject();
-        if (subject.hasRole("admin")) {
-            return ADMIN_INDEX_PAGE;
-        }
-        if (subject.hasRole("manager")) {
-            return MANAGER_INDEX_PAGE;
-        }
-        if (subject.hasRole("expert")) {
-            return EXPERT_INDEX_PAGE;
-        }
-        return "/error/403";
+    @GetMapping
+    public ResultTo index() {
+        ResultTo resultTo = new ResultTo();
+        List<IndexOrgApplicationInfo> indexOrgApplicationInfo = indexOrgApplicationMapper.selectOrgApplicationInfo(1);
+        resultTo.setData(indexOrgApplicationInfo);
+        return resultTo;
     }
 }

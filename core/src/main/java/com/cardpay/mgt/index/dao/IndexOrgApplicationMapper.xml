@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.index.dao.IndexOrgApplicationMapper">
+
+    <resultMap id="IndexOrgApplicationInfoMap" type="com.cardpay.mgt.index.model.IndexOrgApplicationInfo">
+        <result column="ID" jdbcType="DECIMAL" property="orgId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <collection property="indexApplicationInfoList" column="ID" select="selectApplicationInfo"/>
+    </resultMap>
+
+    <resultMap id="IndexApplicationInfoMap" type="com.cardpay.mgt.index.model.IndexApplicationInfo">
+        <result column="APP_NUM" jdbcType="DECIMAL" property="count"/>
+        <result column="APPLICATION_STATUS" jdbcType="DECIMAL" property="applicationStatus"/>
+    </resultMap>
+
+    <select id="selectOrgApplicationInfo" resultMap="IndexOrgApplicationInfoMap">
+        SELECT * FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{topOrgId}
+    </select>
+
+    <select id="selectApplicationInfo" resultMap="IndexApplicationInfoMap">
+      SELECT
+          COUNT(1) APP_NUM,APP.APPLICATION_STATUS
+      FROM
+          T_APPLICATION APP,
+          T_CUSTOMER_MANAGER CM
+      WHERE
+          APP.CUSTOMER_MANAGER_ID = CM.USER_ID
+      AND CM.ORGANIZATION_ID = #{ID} GROUP BY APP.APPLICATION_STATUS ORDER BY APP.APPLICATION_STATUS
+    </select>
+</mapper>
