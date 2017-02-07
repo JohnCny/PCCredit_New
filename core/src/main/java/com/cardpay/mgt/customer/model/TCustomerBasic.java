@@ -155,6 +155,12 @@ public class TCustomerBasic extends GenericEntity<Integer> {
     @Column(name = "CUSTOMER_TYPE")
     private Integer customerType;
 
+    /**
+     * 户籍 1:本地2:外地
+     */
+    @Column(name = "ADDRESS_TYPE")
+    private Integer addressType;
+
     @Transient
     /**
      * 此客户是否可以删除
@@ -489,6 +495,14 @@ public class TCustomerBasic extends GenericEntity<Integer> {
      */
     public void setCustomerStatus(Integer customerStatus) {
         this.customerStatus = customerStatus;
+    }
+
+    public Integer getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(Integer addressType) {
+        this.addressType = addressType;
     }
 
     @Override

@@ -5,8 +5,10 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.riskblack.model.RiskBlackCustomerApprove;
+import com.cardpay.mgt.riskblack.model.vo.RiskBlackCustomerApproveVo;
 import com.cardpay.mgt.riskblack.service.RiskBlackCustomerApproveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -54,6 +56,19 @@ public class RiskBlackCustomerApproveController extends BaseController<RiskBlack
 
 
     /**
+     * 根据用户ID获取风险审批信息
+     *
+     * @param riskBlackApproveId 风险审批ID
+     * @return 风险审批信息
+     */
+    @RequestMapping(value = "/{riskBlackApproveId}", method = RequestMethod.GET)
+    public ResultTo customerApprove(@PathVariable("riskBlackApproveId") Integer riskBlackApproveId) {
+        RiskBlackCustomerApproveVo riskBlackCustomerApproveVo = riskBlackCustomerApproveService
+                .getCustomerApprove(riskBlackApproveId);
+        return new ResultTo().setData(riskBlackCustomerApproveVo);
+    }
+
+    /**
      * 审批操作
      *
      * @param customerId 客户ID
@@ -61,7 +76,7 @@ public class RiskBlackCustomerApproveController extends BaseController<RiskBlack
      * @return 成功或失败
      */
     @RequestMapping(value = "/{customerId}", params = "flag", method = RequestMethod.PUT)
-    public ResultTo approveResult(@PathVariable("customerId") Integer customerId, @RequestParam("flag") Integer flag){
+    public ResultTo approveResult(@PathVariable("customerId") Integer customerId, @RequestParam("flag") Integer flag) {
         return riskBlackCustomerApproveService.approveResult(customerId, flag);
     }
 }

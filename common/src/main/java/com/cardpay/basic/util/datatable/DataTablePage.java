@@ -128,7 +128,7 @@ public class DataTablePage {
             PageHelper.orderBy(finalOrder);
             data = (List<Object>) method.invoke(baseService, map);
         } else {
-            if (null != example) {
+            if (null == example) {
                 map = removeNull(map);
                 example = new Example(clazz);
                 example.orderBy(finalOrder);

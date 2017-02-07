@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,6 +89,7 @@ public class RiskBlackCustomerApproveServiceImpl extends BaseServiceImpl<RiskBla
                 .selectOne(riskBlackCustomerApprove);
         switch (flag) {
             case 0: //拒绝
+                riskBlackCustomerApproveMapper.delete(riskBlackCustomerApproveOne);
                 break;
             case 1: //同意
                 Integer type = riskBlackCustomerApproveOne.getRiskBlackOperationType();
@@ -126,9 +128,18 @@ public class RiskBlackCustomerApproveServiceImpl extends BaseServiceImpl<RiskBla
             default:
                 return new ResultTo(ResultEnum.OPERATION_FAILED);
         }
-        riskBlackCustomerApprove.setApproveBy(ShiroKit.getUserId());
-        riskBlackCustomerApprove.setApproveTime(new Date());
-        riskBlackCustomerApproveMapper.updateByPrimaryKeySelective(riskBlackCustomerApprove);
-        return null;
+        riskBlackCustomerApproveOne.setApproveBy(ShiroKit.getUserId());
+        riskBlackCustomerApproveOne.setApproveTime(new Date());
+        riskBlackCustomerApproveOne.setRiskBlackApproveStatus(1);
+        riskBlackCustomerApproveMapper.updateByPrimaryKeySelective(riskBlackCustomerApproveOne);
+        return new ResultTo();
+    }
+
+    @Override
+    public RiskBlackCustomerApproveVo getCustomerApprove(Integer riskBlackApproveId) {
+        Map<String, Object> map = new HashMap();
+        map.put("riskBlackApproveId", riskBlackApproveId);
+        map.put("orgId", ShiroKit.getOrgId());
+        return riskBlackCustomerApproveMapper.getCustomerApprove(map);
     }
 }
