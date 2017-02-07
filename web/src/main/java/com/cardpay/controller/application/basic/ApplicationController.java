@@ -90,7 +90,7 @@ public class ApplicationController extends BaseController<TApplication> {
     public DataTablePage queryByManagerId(final HttpServletRequest request) {
         Integer userId = ShiroKit.getUserId();
         Map<String, Object> map = new HashMap();
-
+        //客户经理
         if (ShiroEnum.MANAGER.getValue().equals(ShiroKit.getRole().getRoleType())) {
             map.put("managerId", userId);
             return dataTablePage("queryByManagerId", map);

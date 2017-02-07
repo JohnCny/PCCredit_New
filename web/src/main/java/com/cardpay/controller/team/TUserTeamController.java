@@ -59,8 +59,14 @@ public class TUserTeamController extends BaseController<TUserTeam> {
      */
     @DeleteMapping
     public ResultTo delete(int teamId, String userIds) {
-        int bathDelete = tUserTeamService.bathDelete(teamId, userIds);
-        return bathDelete != 0 ? new ResultTo().setData(bathDelete) : new ResultTo(ResultEnum.SERVICE_ERROR);
+        Map<String, Object> map = tUserTeamService.bathDelete(teamId, userIds);
+        int mark = (Integer) map.get("mark");
+        if (mark == 6000) {
+            return new ResultTo(ResultEnum.OPERATION_FAILED).setData(map);
+        } else if (mark == 6001) {
+            return new ResultTo().setData(map);
+        }
+        return new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
 }

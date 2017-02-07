@@ -2,8 +2,6 @@ package com.cardpay.mgt.team.service;
 
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.mgt.team.model.TUserTeam;
-import com.cardpay.mgt.user.model.User;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -36,5 +34,5 @@ public interface TUserTeamService extends BaseService<TUserTeam> {
      * @param userIds 成员id
      * @return 数据库变记录
      */
-    int bathDelete(int teamId, String userIds);
+    Map<String, Object> bathDelete(int teamId, String userIds);
 }

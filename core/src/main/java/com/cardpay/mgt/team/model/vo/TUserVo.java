@@ -1,6 +1,10 @@
 package com.cardpay.mgt.team.model.vo;
 
 import com.cardpay.basic.base.model.GenericEntity;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.persistence.Column;
+import java.util.Date;
 
 /**
  * 团队所属用户信息
@@ -59,6 +63,19 @@ public class TUserVo extends GenericEntity<Integer>{
      * 所属团队名称
      */
     private String teamName;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getTeamName() {
         return teamName;
