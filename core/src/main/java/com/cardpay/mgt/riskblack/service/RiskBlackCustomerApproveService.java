@@ -17,7 +17,7 @@ import java.util.Map;
 public interface RiskBlackCustomerApproveService extends BaseService<RiskBlackCustomerApprove> {
 
     /**
-     * 获取审批分页列表
+     * 获取审批分页列表(反射获取)
      *
      * @param map 参数map
      * @return 审批分页列表
@@ -42,4 +42,12 @@ public interface RiskBlackCustomerApproveService extends BaseService<RiskBlackCu
      * @return 成功或失败
      */
     ResultTo approveResult(Integer customerId, Integer flag);
+
+    /**
+     * 根据用户ID获取风险审批信息
+     *
+     * @param riskBlackApproveId 风险审批ID
+     * @return 风险审批信息
+     */
+    RiskBlackCustomerApproveVo getCustomerApprove(Integer riskBlackApproveId);
 }
