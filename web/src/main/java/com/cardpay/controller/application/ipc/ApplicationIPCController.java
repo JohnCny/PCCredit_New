@@ -35,7 +35,6 @@ public class ApplicationIPCController {
 
     @RequestMapping("/test")
     public ResultTo test(){
-        
         return new ResultTo();
     }
 
@@ -44,7 +43,7 @@ public class ApplicationIPCController {
      *
      * @param applicationId 进件Id
      * @param templateId    模板Id
-     * @return
+     * @return ipc财务报表
      */
     @GetMapping("/{applicationId}/{templateId}")
     public ResultTo selectIPC(@PathVariable("applicationId") Integer applicationId
@@ -60,10 +59,10 @@ public class ApplicationIPCController {
     }
 
     /**
-     * 根据模板查询ipc财务报表
+     * 根据模板查询ipc财务报表菜单
      *
      * @param applicationId 进件Id
-     * @return
+     * @return ipc财务报表菜单
      */
     @GetMapping("/menu/{applicationId}")
     public ResultTo selectIPCMenu(@PathVariable("applicationId") Integer applicationId) {
@@ -81,7 +80,7 @@ public class ApplicationIPCController {
      * @return 更新结果
      */
     @PutMapping()
-    public ResultTo updateNormalVar(@IpcCRUD Object object,@RequestParam("ipcCRUDType") Integer ipcCRUDType){
+    public ResultTo update(@IpcCRUD Object object,@RequestParam("ipcCRUDType") Integer ipcCRUDType){
         ResultTo resultTo = new ResultTo();
         Integer result = applicationIPCBasicService.updateIPC(object,ipcCRUDType);
         resultTo.setIsSuccess(result);
@@ -96,7 +95,7 @@ public class ApplicationIPCController {
      * @return 添加结果
      */
     @PostMapping()
-    public ResultTo addNormalVarExt(@IpcCRUD Object object,@RequestParam("ipcCRUDType") Integer ipcCRUDType){
+    public ResultTo addExt(@IpcCRUD Object object,@RequestParam("ipcCRUDType") Integer ipcCRUDType){
         ResultTo resultTo = new ResultTo();
         Integer result = applicationIPCBasicService.addIPC(object,ipcCRUDType);
         resultTo.setIsSuccess(result);
@@ -111,7 +110,7 @@ public class ApplicationIPCController {
      * @return 删除结果
      */
     @DeleteMapping()
-    public ResultTo deleteNormalVarExt(@IpcCRUD Object object,@RequestParam("ipcCRUDType") Integer ipcCRUDType){
+    public ResultTo deleteExt(@IpcCRUD Object object,@RequestParam("ipcCRUDType") Integer ipcCRUDType){
         ResultTo resultTo = new ResultTo();
         Integer result = applicationIPCBasicService.deleteIPC(object,ipcCRUDType);
         resultTo.setIsSuccess(result);
