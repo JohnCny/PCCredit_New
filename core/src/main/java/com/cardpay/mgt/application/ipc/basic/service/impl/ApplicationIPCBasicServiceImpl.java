@@ -3,16 +3,26 @@ package com.cardpay.mgt.application.ipc.basic.service.impl;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.treeutil.TreeUtil;
 import com.cardpay.basic.util.treeutil.exception.TreeInitializeException;
+import com.cardpay.mgt.application.enums.IpcCRUDType;
 import com.cardpay.mgt.application.enums.TemplateTypeEnum;
+import com.cardpay.mgt.application.exception.NoSuchApplicationTemplateError;
 import com.cardpay.mgt.application.ipc.basic.dao.ApplicationIPCBasicMapper;
 import com.cardpay.mgt.application.ipc.basic.model.IPCMenu;
 import com.cardpay.mgt.application.ipc.basic.service.ApplicationIPCBasicService;
 import com.cardpay.mgt.application.ipc.cashflowprofit.dao.CashProfitTemplateMapper;
+import com.cardpay.mgt.application.ipc.cashflowprofit.model.TApplicationCashProfitExt;
+import com.cardpay.mgt.application.ipc.cashflowprofit.model.TApplicationCashProfitVar;
 import com.cardpay.mgt.application.ipc.cashflowprofit.model.vo.CashProfitTemplateGroup;
+import com.cardpay.mgt.application.ipc.cashflowprofit.service.ApplicationCashProfitExtService;
+import com.cardpay.mgt.application.ipc.cashflowprofit.service.ApplicationCashProfitVarService;
 import com.cardpay.mgt.application.ipc.normal.dao.NormalTemplateMapper;
 import com.cardpay.mgt.application.ipc.normal.dao.TApplicationTemplateMapper;
 import com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplate;
+import com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplateVar;
+import com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplateVarExt;
 import com.cardpay.mgt.application.ipc.normal.model.vo.TemplateGroup;
+import com.cardpay.mgt.application.ipc.normal.service.ApplicationTemplateVarExtService;
+import com.cardpay.mgt.application.ipc.normal.service.ApplicationTemplateVarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +50,18 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
     @Autowired
     private TApplicationTemplateMapper applicationTemplateMapper;
 
+    @Autowired
+    private ApplicationTemplateVarService applicationTemplateVarService;
+
+    @Autowired
+    private ApplicationTemplateVarExtService applicationTemplateVarExtService;
+
+    @Autowired
+    private ApplicationCashProfitVarService applicationCashProfitVarService;
+
+    @Autowired
+    private ApplicationCashProfitExtService applicationCashProfitExtService;
+
     @Override
     @Transactional
     public Integer initTemplate(Integer applicationId) {
@@ -52,11 +74,11 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
     }
 
     @Override
-    public Object selectGroupEntrance(Integer applicationId, Integer templateId) {
+    public Object selectGroupEntrance(Integer applicationId, Integer templateId) throws NoSuchApplicationTemplateError {
         //查询模板对应的类型
         TApplicationTemplate template = applicationTemplateMapper.selectByPrimaryKey(templateId);
         if(template==null){
-            IllegalArgumentException exception = new IllegalArgumentException("进件id：" + applicationId + "模板id：" + templateId + "模板不存在");
+            NoSuchApplicationTemplateError exception = new NoSuchApplicationTemplateError("进件id：" + applicationId + "模板id：" + templateId + "模板不存在");
             LogTemplate.error(exception,"模板不存在","进件id：" + applicationId + "模板id：" + templateId + "模板不存在");
             throw exception;
         }
@@ -73,8 +95,8 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
             default:
                 break;
         }
-        LogTemplate.error(null,"模板类型错误","进件id：" + applicationId + "模板id：" + templateId + "模板不存在");
-        throw new IllegalArgumentException("模板类型错误");
+        LogTemplate.error(null,"模板类型错误","进件id：" + applicationId + "模板id：" + templateId + "模板类型错误");
+        throw new NoSuchApplicationTemplateError("进件id：" + applicationId + "模板id：" + templateId + "模板类型错误");
     }
 
     @Override
@@ -89,5 +111,70 @@ public class ApplicationIPCBasicServiceImpl implements ApplicationIPCBasicServic
             e.printStackTrace();
         }
         return resultMenu;
+    }
+
+    @Override
+    public Integer updateIPC(Object object, Integer ipcCRUDType) {
+        IpcCRUDType ipcCRUDTypeEnum = IpcCRUDType.getIpcCRUDTypeById(ipcCRUDType);
+        Integer result = null;
+        switch (ipcCRUDTypeEnum){
+            case NORMAL_VAR:
+                TApplicationTemplateVar applicationTemplateVar = (TApplicationTemplateVar) object;
+                result = applicationTemplateVarService.updateSelectiveByPrimaryKey(applicationTemplateVar);
+                break;
+            case NORMAL_EXT:
+                TApplicationTemplateVarExt applicationTemplateVarExt = (TApplicationTemplateVarExt) object;
+                result = applicationTemplateVarExtService.updateSelectiveByPrimaryKey(applicationTemplateVarExt);
+                break;
+            case CASHFLOW_PROFIT_VAR:
+                TApplicationCashProfitVar applicationCashProfitVar = (TApplicationCashProfitVar) object;
+                result = applicationCashProfitVarService.updateSelectiveByPrimaryKey(applicationCashProfitVar);
+                break;
+            case CASHFLOW_PROFIT_EXT:
+                TApplicationCashProfitExt applicationCashProfitExt = (TApplicationCashProfitExt) object;
+                result = applicationCashProfitExtService.updateSelectiveByPrimaryKey(applicationCashProfitExt);
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
+    @Override
+    public Integer addIPC(Object object, Integer ipcCRUDType) {
+        IpcCRUDType ipcCRUDTypeEnum = IpcCRUDType.getIpcCRUDTypeById(ipcCRUDType);
+        Integer result = null;
+        switch (ipcCRUDTypeEnum){
+            case NORMAL_EXT:
+                TApplicationTemplateVarExt applicationTemplateVarExt = (TApplicationTemplateVarExt) object;
+                result = applicationTemplateVarExtService.insertSelective(applicationTemplateVarExt);
+                break;
+            case CASHFLOW_PROFIT_EXT:
+                TApplicationCashProfitExt applicationCashProfitExt = (TApplicationCashProfitExt) object;
+                result = applicationCashProfitExtService.insertSelective(applicationCashProfitExt);
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
+    @Override
+    public Integer deleteIPC(Object object, Integer ipcCRUDType) {
+        IpcCRUDType ipcCRUDTypeEnum = IpcCRUDType.getIpcCRUDTypeById(ipcCRUDType);
+        Integer result = null;
+        switch (ipcCRUDTypeEnum){
+            case NORMAL_EXT:
+                TApplicationTemplateVarExt applicationTemplateVarExt = (TApplicationTemplateVarExt) object;
+                result = applicationTemplateVarExtService.delete(applicationTemplateVarExt);
+                break;
+            case CASHFLOW_PROFIT_EXT:
+                TApplicationCashProfitExt applicationCashProfitExt = (TApplicationCashProfitExt) object;
+                result = applicationCashProfitExtService.delete(applicationCashProfitExt);
+                break;
+            default:
+                break;
+        }
+        return result;
     }
 }
