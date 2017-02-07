@@ -1,9 +1,11 @@
 package com.cardpay.basic.util.datatable;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.basic.httpClient.HttpResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -96,19 +98,13 @@ public class DataTablePage {
         String start = request.getParameter(DataTableCode.PAGE_START_NAME);
         String length = request.getParameter(DataTableCode.PAGE_LENGTH_NAME);
         String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
-        String order = request.getParameter(DataTableCode.PAGE_ORDER_NAME);
-        LogTemplate.info(this.getClass(), "message(BasePage)", "[pageStart:" + start + "][pageLength" + length + "][pageSearch" + search + "][pageOrder" + order + "]");
+        LogTemplate.info(this.getClass(), "message(BasePage)", "[pageStart:" + start + "][pageLength" + length + "][pageSearch" + search + "]");
         this.start = start != null ? Integer.parseInt(start) : this.start;
         this.length = length != null ? Integer.parseInt(length) : this.length;
-        String finalOrder = null;
-        if (StringUtils.isNotBlank(order)) {  //是否按照规则排序
-            Map<String, String> map = JSON.parseObject(order, Map.class);
-            if (null != map) {
-                for (Map.Entry<String, String> entry : map.entrySet()) {
-                    finalOrder = entry.getKey() + " " + entry.getValue();
-                    break;
-                }
-            }
+        String finalOrder = getOrder(request);
+
+        if (StringUtils.isNotBlank(finalOrder)) {
+            example.orderBy(finalOrder);
         }
 
         Map<String, Object> map = JSON.parseObject(search, Map.class);
@@ -132,7 +128,7 @@ public class DataTablePage {
                 map = removeNull(map);
                 example = new Example(clazz);
                 example.orderBy(finalOrder);
-                if (map != null) {
+                if (map != null && map.size() != 0) {
                     Example.Criteria criteria = example.createCriteria();
                     for (Map.Entry<String, Object> entry : map.entrySet()) {
                         criteria.andEqualTo(entry.getKey(), entry.getValue());
@@ -165,6 +161,28 @@ public class DataTablePage {
         }
         return newMap;
     }
+
+    /**
+     * 获取排序字段
+     * @param request request
+     * @return 字段
+     */
+    public static String getOrder(HttpServletRequest request) {
+        String order = request.getParameter(DataTableCode.PAGE_ORDER_NAME);
+        if (StringUtils.isNotBlank(order)) {
+            String finalOrder = "";
+            Map<String, String> map = JSON.parseObject(order, Map.class);
+            if (null != map) {
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    finalOrder = entry.getKey() + " " + entry.getValue();
+                    break;
+                }
+            }
+            return finalOrder;
+        }
+        return new String();
+    }
+
 
     public int getStart() {
         return start;

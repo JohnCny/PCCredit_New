@@ -4,12 +4,11 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.basic.model.TApplicationContract;
 import com.cardpay.mgt.application.basic.service.TApplicationContractService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -35,18 +34,46 @@ public class TApplicationContractController extends BaseController<TApplicationC
      */
     @RequestMapping("/pageList")
     public DataTablePage pageList() {
-        return dataTablePage();
+        return dataTablePage("queryAll");
     }
 
     /**
-     * 添加客户签约信息
+     * 新增客户签约信息
+     *
      * @param contract 签约信息
      * @return 数据库变记录
      */
     @PostMapping
-    public ResultTo insert(TApplicationContract contract) {
+    public ResultTo insert(@ModelAttribute TApplicationContract contract) {
         contract.setCreateTime(new Date());
+        contract.setCreateBy(ShiroKit.getUserId());
         Integer mark = tApplicationContractService.insertSelective(contract);
         return mark != 0 ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
+
+    /**
+     * 更新客户签约信息
+     *
+     * @param contract 签约信息
+     * @return 数据库变记录
+     */
+    @PutMapping
+    public ResultTo update(@ModelAttribute TApplicationContract contract) {
+        Integer mark = tApplicationContractService.updateSelectiveByPrimaryKey(contract);
+        return mark != 0 ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
+
+    /**
+     * 按进件id查询客户签约信息
+     *
+     * @param applicationId 进件id
+     * @return 客户签约信息
+     */
+    @GetMapping("/{applicationId}")
+    public ResultTo queryById(@PathVariable int applicationId) {
+        TApplicationContract contract = new TApplicationContract();
+        contract.setApplicationId(applicationId);
+        TApplicationContract tApplicationContract = tApplicationContractService.selectOne(contract);
+        return new ResultTo().setData(tApplicationContract);
     }
 }

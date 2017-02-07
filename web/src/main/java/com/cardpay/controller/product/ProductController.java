@@ -1,10 +1,12 @@
 package com.cardpay.controller.product;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ErrorMessageUtil;
+import com.cardpay.basic.util.datatable.DataTableCode;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -71,10 +74,18 @@ public class ProductController extends BaseController<Product> {
      */
     @RequestMapping("/pageList")
     @ApiOperation(value = "产品分页数据")
-    public DataTablePage pageList() {
+    public DataTablePage pageList(HttpServletRequest request) {
+        String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
+        JSONObject parse = JSONObject.parseObject(search);
         Example example = new Example(Product.class);
-        example.createCriteria().andEqualTo("organizationId", ShiroKit.getOrgId());
-        return dataTablePage();
+        Example.Criteria criteria = example.createCriteria();
+        if (parse != null && parse.containsKey("productName")) {
+            criteria.andCondition("PRODUCT_NAME LIKE '%" + parse.get("productName") + "%' ");
+        }
+        criteria.andEqualTo("organizationId", ShiroKit.getOrgId());
+        String order = DataTablePage.getOrder(request);
+        example.orderBy(order);
+        return dataTablePage(example);
     }
 
     /**

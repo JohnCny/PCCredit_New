@@ -307,6 +307,4 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public List<RoleVo> queryUserByOrgId(Integer orgId) {
         return userMapper.queryUserByOrgId(orgId);
     }
-
-
 }
