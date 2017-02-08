@@ -50,27 +50,34 @@ public class RiskBlackCustomerApproveServiceImpl extends BaseServiceImpl<RiskBla
     }
 
     @Override
-    public ResultTo approve(RiskBlackCustomerApprove riskBlackCustomerApprove, Integer riskCustomerId) {
+    public ResultTo approve(RiskBlackCustomerApprove riskBlackCustomerApprove, Integer customerId) {
         Integer type = riskBlackCustomerApprove.getRiskBlackOperationType();
         LogTemplate.debug(this.getClass(), "type", type);
         if (type == 1 || type == 2 || type == 0) {
-            RiskCustomer riskCustomer = riskCustomerMapper.selectByPrimaryKey(riskCustomerId);
-            TCustomerBasic tCustomerBasic = customerBasicMapper.selectByPrimaryKey(riskCustomer.getCustomerId());
-            if (riskCustomer == null) {
+            TCustomerBasic tCustomerBasic = customerBasicMapper.selectByPrimaryKey(customerId);
+            if (tCustomerBasic == null) {
                 return new ResultTo(ResultEnum.OPERATION_FAILED);
             }
             switch (type) {
-                case 1: //0 转入黑名单
+                case 0: //0 转入黑名单
                     tCustomerBasic.setCustomerStatus(3);
                     break;
-                case 2://1 转出黑名单
+                case 1: //1 转出黑名单
                     tCustomerBasic.setCustomerStatus(4);
+                    BlackCustomer blackCustomer = new BlackCustomer();
+                    blackCustomer.settBlackCustomerId(tCustomerBasic.getId());
+                    BlackCustomer blackCustomerOne = blackCustomerMapper.selectOne(blackCustomer);
+                    blackCustomerOne.settBlackCustomerStatus(1);
+                    blackCustomerMapper.updateByPrimaryKeySelective(blackCustomerOne);
+                    break;
+                case 2: //2 转出风险名单
+                    tCustomerBasic.setCustomerStatus(7);
                     break;
                 default:
-                    customerBasicMapper.updateByPrimaryKeySelective(tCustomerBasic);
                     break;
             }
-            riskBlackCustomerApprove.setCustomerType(riskCustomer.getCustomerType());
+            customerBasicMapper.updateByPrimaryKeySelective(tCustomerBasic);
+            riskBlackCustomerApprove.setCustomerType(tCustomerBasic.getCustomerType());
             riskBlackCustomerApprove.setRiskBlackCustomerId(tCustomerBasic.getId());
             riskBlackCustomerApprove.setRiskBlackApproveStatus(0);
             riskBlackCustomerApprove.setCreateTime(new Date());
@@ -85,16 +92,43 @@ public class RiskBlackCustomerApproveServiceImpl extends BaseServiceImpl<RiskBla
     public ResultTo approveResult(Integer customerId, Integer flag) {
         RiskBlackCustomerApprove riskBlackCustomerApprove = new RiskBlackCustomerApprove();
         riskBlackCustomerApprove.setRiskBlackCustomerId(customerId);
+        riskBlackCustomerApprove.setRiskBlackApproveStatus(0);
         RiskBlackCustomerApprove riskBlackCustomerApproveOne = riskBlackCustomerApproveMapper
                 .selectOne(riskBlackCustomerApprove);
+        if (riskBlackCustomerApproveOne.getRiskBlackApproveStatus() != 0) {
+            LogTemplate.debug(this.getClass(), "message", "该条信息已审批过");
+            return new ResultTo(ResultEnum.PARAM_ERROR);
+        }
+        Integer type = riskBlackCustomerApproveOne.getRiskBlackOperationType();
+        TCustomerBasic customerBasic = customerBasicMapper.selectByPrimaryKey(customerId);
+        if (customerBasic == null) {
+            return new ResultTo(ResultEnum.OPERATION_FAILED);
+        }
         switch (flag) {
             case 0: //拒绝
-                riskBlackCustomerApproveMapper.delete(riskBlackCustomerApproveOne);
+                riskBlackCustomerApproveOne.setRiskBlackApproveStatus(2);
+                riskBlackCustomerApproveMapper.updateByPrimaryKeySelective(riskBlackCustomerApproveOne);
+                if (type == 0) {
+
+                }
+                if (type == 1) {
+                    BlackCustomer blackCustomer = new BlackCustomer();
+                    blackCustomer.settBlackCustomerId(customerId);
+                    blackCustomer.settBlackCustomerStatus(1);
+                    BlackCustomer blackCustomerOne = blackCustomerMapper.selectOne(blackCustomer);
+                    blackCustomerOne.settBlackCustomerStatus(0);
+                    blackCustomerMapper.updateByPrimaryKeySelective(blackCustomerOne);
+                }
+                if (type == 2) {
+
+                }
+                customerBasic.setCustomerStatus(0);
+                customerBasicMapper.updateByPrimaryKeySelective(customerBasic);
                 break;
             case 1: //同意
-                Integer type = riskBlackCustomerApproveOne.getRiskBlackOperationType();
+
+                riskBlackCustomerApproveOne.setRiskBlackApproveStatus(1);
                 if (type == 0) {//转入黑名单
-                    TCustomerBasic customerBasic = customerBasicMapper.selectByPrimaryKey(customerId);
                     BlackCustomer blackCustomer = new BlackCustomer();
                     blackCustomer.setCreateBy(ShiroKit.getUserId());
                     blackCustomer.setCreateTime(new Date());
@@ -110,8 +144,6 @@ public class RiskBlackCustomerApproveServiceImpl extends BaseServiceImpl<RiskBla
                     riskCustomerMapper.delete(riskCustomer);
                 }
                 if (type == 1) {//转出黑名单
-                    TCustomerBasic customerBasic = new TCustomerBasic();
-                    customerBasic.setId(riskBlackCustomerApproveOne.getRiskBlackCustomerId());
                     customerBasic.setCustomerStatus(1);
                     customerBasicMapper.updateByPrimaryKeySelective(customerBasic);
                     BlackCustomer blackCustomer = new BlackCustomer();
@@ -130,7 +162,6 @@ public class RiskBlackCustomerApproveServiceImpl extends BaseServiceImpl<RiskBla
         }
         riskBlackCustomerApproveOne.setApproveBy(ShiroKit.getUserId());
         riskBlackCustomerApproveOne.setApproveTime(new Date());
-        riskBlackCustomerApproveOne.setRiskBlackApproveStatus(1);
         riskBlackCustomerApproveMapper.updateByPrimaryKeySelective(riskBlackCustomerApproveOne);
         return new ResultTo();
     }

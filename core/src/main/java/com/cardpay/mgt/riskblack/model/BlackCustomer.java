@@ -60,6 +60,11 @@ public class BlackCustomer {
     @ApiModelProperty(value = "黑名单客户所属客户经理id", required = true)
     private Integer customerManagerId;
 
+    /**
+     * 客户类型(0 个人用户 1 企业用户)
+     */
+    @Column(name = "CUSTOMER_TYPE")
+    private Integer customerType;
 
     /**
      * 获取黑名单客户列表id
@@ -185,5 +190,13 @@ public class BlackCustomer {
      */
     public void setCustomerManagerId(Integer customerManagerId) {
         this.customerManagerId = customerManagerId;
+    }
+
+    public Integer getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
     }
 }

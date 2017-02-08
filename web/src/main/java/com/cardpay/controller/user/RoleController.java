@@ -53,9 +53,6 @@ public class RoleController extends BaseController<Role> {
     @RequestMapping("/pageList")
     @ApiOperation(value = "获取角色分页数据")
     public DataTablePage pageList() {
-        if (ShiroEnum.ADMIN.getValue().equals(ShiroKit.getRole().getRoleType())) {
-            return dataTablePage();
-        }
         Example example = new Example(Role.class);
         example.createCriteria().andEqualTo("organizationId", ShiroKit.getTopOrgId());
         return dataTablePage(example);

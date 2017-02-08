@@ -14,6 +14,7 @@ public class RiskCustomer {
      */
     @Id
     @Column(name = "COLLECTION_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select RISK_CUSTOMER_SEQ.nextval from dual")
     @ApiModelProperty(value = "不良客户列表id", required = true)
     private Integer collectionId;
 

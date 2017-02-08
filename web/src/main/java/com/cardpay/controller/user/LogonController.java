@@ -132,6 +132,7 @@ public class LogonController extends BaseController<User> {
         UserRole selectUserOne = userRoleService.selectOne(userRole);
         Role role = roleService.selectByPrimaryKey(selectUserOne.getRoleId());
         ShiroKit.getSession().setAttribute(ShiroKit.ROLE_SESSION_KEY, role);
+        map.put("roleId", role.getRoleStatus() == 1 ? role.getId() : null);
         map.put("roleType", role.getRoleStatus() == 1 ? role.getRoleType() : null);
 
         LoginLog loginLog = loginLogBuilder.withLoginResult(LogEnum.SUCCESS.getValue()).build();

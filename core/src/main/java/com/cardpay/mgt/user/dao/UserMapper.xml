@@ -151,4 +151,19 @@
             AND org.ORGANIZATION_ID = #{orgId}
     </select>
 
+    <select id="selectUserByRoleIds" resultMap="BaseResultMap">
+        SELECT
+        TU.*
+        FROM
+        T_USER TU,
+        T_USER_ROLE TUR
+        WHERE
+        TUR.USER_ID=TU."ID"
+        AND
+        TUR.ROLE_ID IN
+        <foreach collection="array" item="roleIds" open="(" close=")" separator="," index="index">
+            #{roleIds}
+        </foreach>
+    </select>
+
 </mapper>

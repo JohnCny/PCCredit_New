@@ -45,13 +45,13 @@ public class RiskBlackCustomerApproveController extends BaseController<RiskBlack
      * 申请转出风险名单或转入黑名单
      *
      * @param riskBlackCustomerApprove RiskBlackCustomerApprove
-     * @param riskCustomerId           风险客户ID
+     * @param customerId               客户ID
      * @return 成功或失败
      */
-    @PutMapping(value = "/approve", params = "riskCustomerId")
+    @PutMapping(value = "/approve", params = "customerId")
     public ResultTo approve(RiskBlackCustomerApprove riskBlackCustomerApprove,
-                            @RequestParam("riskCustomerId") Integer riskCustomerId) {
-        return riskBlackCustomerApproveService.approve(riskBlackCustomerApprove, riskCustomerId);
+                            @RequestParam("customerId") Integer customerId) {
+        return riskBlackCustomerApproveService.approve(riskBlackCustomerApprove, customerId);
     }
 
 
