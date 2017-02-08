@@ -3,17 +3,32 @@ package com.cardpay.mgt.riskblack.model.vo;
 import java.util.Date;
 
 /**
- * 风险客户VO
+ * 黑名单VO
  *
  * @author rankai
- *         createTime 2017-01-2017/1/24 10:03
+ *         createTime 2017-02-2017/2/7 11:02
  */
-public class RiskCustomerVo {
+public class BlackCustomerVo {
 
     /**
-     * 不良客户列表id
+     * 黑名单客户列表id
      */
-    private Integer collectionId;
+    private Integer blackId;
+
+    /**
+     * 黑名单客户id
+     */
+    private Integer tBlackCustomerId;
+
+    /**
+     * 黑名单进入原因
+     */
+    private String blackReason;
+
+    /**
+     * 黑名单客户状态(0 正常 1 转出审核中)
+     */
+    private Integer tBlackCustomerStatus;
 
     /**
      * 创建时间
@@ -21,22 +36,17 @@ public class RiskCustomerVo {
     private Date createTime;
 
     /**
-     * 进入不良客户原因
+     * 操作人
      */
-    private String badReason;
+    private Integer createBy;
 
     /**
-     * 不良客户所属客户经理id
+     * 黑名单客户所属客户经理id
      */
     private Integer customerManagerId;
 
     /**
-     * 客户id
-     */
-    private Integer customerId;
-
-    /**
-     * 客户类型(0 个人用户 1 企业用户)
+     * 客户类型
      */
     private Integer customerType;
 
@@ -55,12 +65,36 @@ public class RiskCustomerVo {
      */
     private Integer customerStatus;
 
-    public Integer getCollectionId() {
-        return collectionId;
+    public Integer getBlackId() {
+        return blackId;
     }
 
-    public void setCollectionId(Integer collectionId) {
-        this.collectionId = collectionId;
+    public void setBlackId(Integer blackId) {
+        this.blackId = blackId;
+    }
+
+    public Integer gettBlackCustomerId() {
+        return tBlackCustomerId;
+    }
+
+    public void settBlackCustomerId(Integer tBlackCustomerId) {
+        this.tBlackCustomerId = tBlackCustomerId;
+    }
+
+    public String getBlackReason() {
+        return blackReason;
+    }
+
+    public void setBlackReason(String blackReason) {
+        this.blackReason = blackReason;
+    }
+
+    public Integer gettBlackCustomerStatus() {
+        return tBlackCustomerStatus;
+    }
+
+    public void settBlackCustomerStatus(Integer tBlackCustomerStatus) {
+        this.tBlackCustomerStatus = tBlackCustomerStatus;
     }
 
     public Date getCreateTime() {
@@ -71,12 +105,12 @@ public class RiskCustomerVo {
         this.createTime = createTime;
     }
 
-    public String getBadReason() {
-        return badReason;
+    public Integer getCreateBy() {
+        return createBy;
     }
 
-    public void setBadReason(String badReason) {
-        this.badReason = badReason;
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 
     public Integer getCustomerManagerId() {
@@ -85,14 +119,6 @@ public class RiskCustomerVo {
 
     public void setCustomerManagerId(Integer customerManagerId) {
         this.customerManagerId = customerManagerId;
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
     }
 
     public Integer getCustomerType() {
@@ -126,6 +152,4 @@ public class RiskCustomerVo {
     public void setCustomerStatus(Integer customerStatus) {
         this.customerStatus = customerStatus;
     }
-
-
 }

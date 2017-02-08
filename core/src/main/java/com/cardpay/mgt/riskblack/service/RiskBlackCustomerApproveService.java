@@ -29,10 +29,10 @@ public interface RiskBlackCustomerApproveService extends BaseService<RiskBlackCu
      * 申请转出风险名单或转入黑名单
      *
      * @param riskBlackCustomerApprove RiskBlackCustomerApprove
-     * @param riskCustomerId           风险客户ID
+     * @param customerId               客户ID
      * @return 成功或失败
      */
-    ResultTo approve(RiskBlackCustomerApprove riskBlackCustomerApprove, Integer riskCustomerId);
+    ResultTo approve(RiskBlackCustomerApprove riskBlackCustomerApprove, Integer customerId);
 
     /**
      * 审批操作

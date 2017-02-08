@@ -14,6 +14,7 @@ public class RiskBlackCustomerApprove {
      */
     @Id
     @Column(name = "RISK_BLACK_APPROVE_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select RISKBLACK_CUSTOMER_APPROVE_SEQ.nextval from dual")
     @ApiModelProperty(value = "风险客户审核信息id", required = true)
     private Integer riskBlackApproveId;
 
@@ -25,7 +26,7 @@ public class RiskBlackCustomerApprove {
     private Integer riskBlackOperationType;
 
     /**
-     * 风险客户审批状态(0 待审核 1 已审核)
+     * 风险客户审批状态(0 待审核 1 已同意 2已拒绝)
      */
     @Column(name = "RISK_BLACK_APPROVE_STATUS")
     @ApiModelProperty(value = "风险客户审批状态(0 待审核 1 已审核)", required = true)
