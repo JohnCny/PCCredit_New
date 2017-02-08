@@ -2,7 +2,7 @@ package com.cardpay.mgt.application.auditing.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.application.auditing.model.TApplicationApprovalReview;
-import com.cardpay.mgt.application.auditing.service.TApplicationApprovalReviewServcie;
+import com.cardpay.mgt.application.auditing.service.TApplicationApprovalReviewService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,5 +13,5 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class TApplicationApprovalReviewServcieImpl extends BaseServiceImpl<TApplicationApprovalReview> implements TApplicationApprovalReviewServcie {
+public class TApplicationApprovalReviewServcieImpl extends BaseServiceImpl<TApplicationApprovalReview> implements TApplicationApprovalReviewService {
 }

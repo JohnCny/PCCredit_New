@@ -20,7 +20,6 @@ import java.util.List;
  * @author rankai
  *         Timecreate 2016-12-2016/12/21 10:22
  */
-@Transactional
 public class BaseServiceImpl<T> implements BaseService<T> {
     /**
      * mapper定义
@@ -112,6 +111,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return 影响数据库行数
      */
     @Override
+    @Transactional
     public Integer insert(T record) {
         return mapper.insert(record);
     }
@@ -123,6 +123,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return 影响数据库行数
      */
     @Override
+    @Transactional
     public Integer insertSelective(T record) {
         return mapper.insertSelective(record);
     }
@@ -134,6 +135,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return 影响数据库行数
      */
     @Override
+    @Transactional
     public Integer updateByPrimaryKey(T record) {
         return mapper.updateByPrimaryKey(record);
     }
@@ -145,6 +147,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return 影响数据库行数
      */
     @Override
+    @Transactional
     public Integer updateSelectiveByPrimaryKey(T record) {
         return mapper.updateByPrimaryKeySelective(record);
     }
@@ -156,6 +159,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return 影响数据库行数
      */
     @Override
+    @Transactional
     public Integer delete(T record) {
         return mapper.delete(record);
     }
@@ -167,6 +171,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return 影响数据库行数
      */
     @Override
+    @Transactional
     public Integer deleteByPrimaryKey(Object key) {
         return mapper.deleteByPrimaryKey(key);
     }

@@ -78,9 +78,9 @@ public class TApplicationApproval extends GenericEntity<Integer>{
     /**
      * 当前所属产品审批节点id
      */
-    @Column(name = "PRIDUCT_APPROVAL_ID")
+    @Column(name = "PRODUCT_APPROVAL_ID")
     @ApiModelProperty(value="当前所属产品审批节点id",required = true)
-    private Integer priductApprovalId;
+    private Integer productApprovalId;
 
     /**
      * 进件审批人节点名称
@@ -263,17 +263,17 @@ public class TApplicationApproval extends GenericEntity<Integer>{
      *
      * @return PRIDUCT_APPROVAL_ID - 当前所属产品审批节点id
      */
-    public Integer getPriductApprovalId() {
-        return priductApprovalId;
+    public Integer getProductApprovalId() {
+        return productApprovalId;
     }
 
     /**
      * 设置当前所属产品审批节点id
      *
-     * @param priductApprovalId 当前所属产品审批节点id
+     * @param productApprovalId 当前所属产品审批节点id
      */
-    public void setPriductApprovalId(Integer priductApprovalId) {
-        this.priductApprovalId = priductApprovalId;
+    public void setProductApprovalId(Integer productApprovalId) {
+        this.productApprovalId = productApprovalId;
     }
 
     /**

@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * 进件审批表
+ * 进件审批
  *
  * @author chenkai
  *         createTime 2017-02-2017/2/6 14:29
  */
-@Controller
+@RestController
 @RequestMapping("/api/applicationApproval")
 public class ApplicationApprovalController extends BaseController<TApplicationApproval> {
     /**
@@ -39,12 +39,12 @@ public class ApplicationApprovalController extends BaseController<TApplicationAp
     }
 
     /**
-     * 根据进件id查询审批信息(新增审批)
+     * 根据进件id查询审批信息(签约信息,审批信息,客户信息)
      * @param applicationId 进件id
      * @return 审批信息
      */
     @GetMapping("/{applicationId}")
-    public ResultTo queryByAppId(@PathVariable int applicationId){
+    public ResultTo queryByAppId(@PathVariable("applicationId") int applicationId){
         Map<String, Object> map = tApplicationApprovalService.queryApproval(applicationId);
         return new ResultTo().setData(map);
     }
