@@ -25,20 +25,7 @@ public enum ApplicationStatus {
     /**
      * 审核未通过
      */
-    APP_REJECT("审核未通过", 4),
-    /**
-     * 征信报告
-     */
-    FILE_REFERENCE("征信报告", 0),
-    /**
-     * 图片
-     */
-    FILE_IMAGE("图片", 1),
-    /**
-     * 其他
-     */
-    FILE_OTHER("其他", 2);
-
+    APP_REJECT("审核未通过", 4);
 
     private int value;
     private String key;
