@@ -8,8 +8,14 @@ package com.cardpay.mgt.index.model;
  */
 public class IndexApplicationInfo {
 
+    /**
+     * 数量
+     */
     private Integer count;
 
+    /**
+     * 进件状态
+     */
     private Integer applicationStatus;
 
     public Integer getCount() {

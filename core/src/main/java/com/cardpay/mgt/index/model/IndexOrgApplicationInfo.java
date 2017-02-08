@@ -10,10 +10,19 @@ import java.util.List;
  */
 public class IndexOrgApplicationInfo {
 
+    /**
+     * 机构id
+     */
     private Integer orgId;
 
+    /**
+     * 机构名称
+     */
     private String orgName;
 
+    /**
+     * 机构下的进件所有状态统计列表
+     */
     private List<IndexApplicationInfo> indexApplicationInfoList;
 
     public Integer getOrgId() {
