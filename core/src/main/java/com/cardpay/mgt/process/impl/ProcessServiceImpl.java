@@ -1,6 +1,7 @@
 package com.cardpay.mgt.process.impl;
 
 import com.cardpay.basic.common.log.LogTemplate;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.basic.dao.TApplicationMapper;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
@@ -15,11 +16,12 @@ import com.cardpay.mgt.product.dao.ProductMapper;
 import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.ProductApprove;
 import com.cardpay.mgt.user.dao.UserMapper;
+import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.User;
+import com.cardpay.mgt.user.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -176,7 +178,7 @@ public class ProcessServiceImpl implements ProcessService {
             return null;
         }
 
-
+        //获取审批用户
 
 
         return new ReturnData(Boolean.TRUE);
@@ -217,5 +219,23 @@ public class ProcessServiceImpl implements ProcessService {
             }
         }
         return productApproveLink;
+    }
+
+    /**
+     * 筛选审批用户
+     *
+     * @param productApprove 审批节点信息
+     * @return 筛选出的审批用户
+     */
+    private List<User> getApproveUser(ProductApprove productApprove) {
+        String approveRoles = productApprove.getApproveRoles();
+        String[] roleIds = approveRoles.split(",");
+        List<User> users = userMapper.selectUserByRoleIds(roleIds);
+        if (productApprove.getIsRandomDivision() == 1) { //随机
+
+        } else { //不随机
+
+        }
+        return null;
     }
 }
