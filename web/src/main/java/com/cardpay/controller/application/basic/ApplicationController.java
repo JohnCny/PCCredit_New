@@ -120,8 +120,8 @@ public class ApplicationController extends BaseController<TApplication> {
      * @param applicationId 进件id
      * @return 进件列表
      */
-    @GetMapping("/{id}")
-    public ResultTo queryByApplication(@PathVariable("id") int applicationId) {
+    @GetMapping("/{applicationId}")
+    public ResultTo queryByApplication(@PathVariable("applicationId") int applicationId) {
         TApplicationVo tApplicationVo = tApplicationService.queryByApplication(applicationId);
         return new ResultTo().setData(tApplicationVo);
     }

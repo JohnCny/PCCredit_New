@@ -78,7 +78,7 @@ public class ProductController extends BaseController<Product> {
         Example example = new Example(Product.class);
         Example.Criteria criteria = example.createCriteria();
         if (parse != null && parse.containsKey("productName")) {
-            criteria.andCondition("PRODUCT_NAME LIKE '%" + parse.get("productName") + "%' ");
+            criteria.andCondition("PRODUCT_NAME LIKE '%" + parse.get("productName") + "%'");
         }
         criteria.andEqualTo("organizationId", ShiroKit.getOrgId());
         String order = DataTablePage.getOrder(request);

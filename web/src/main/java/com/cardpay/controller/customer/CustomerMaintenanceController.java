@@ -55,7 +55,6 @@ public class CustomerMaintenanceController extends BaseController<TCustomerMaint
      */
     @RequestMapping("/condition/{customerType}")
     @SystemControllerLog("按条件查询客户维护信息")
-    @ApiOperation(value = "按条件查询客户维护列表", notes = "查询客户维护列表", httpMethod = "GET")
     public DataTablePage queryByCondition(@PathVariable("customerType") int customerType) {
         Map<String, Object> map = new HashMap<>();
         Integer managerId = customerBasicService.getManagerId(ShiroKit.getUserId());

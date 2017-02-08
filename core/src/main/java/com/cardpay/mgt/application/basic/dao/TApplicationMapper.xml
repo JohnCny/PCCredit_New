@@ -79,7 +79,6 @@
         <result column="ENTERPRISE_CNAME" jdbcType="DECIMAL" property="enterpriseCname"/>
         <result column="ENTERPRISE_ID_CARD" jdbcType="DECIMAL" property="enterpriseIdCard"/>
         <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
-        <association property="ifDel" select="ifDelete" column="ID"/>
     </resultMap>
 
     <!--查询进件相关产品信息-->

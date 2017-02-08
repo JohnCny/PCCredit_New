@@ -9,5 +9,5 @@ import com.cardpay.mgt.application.auditing.model.TApplicationApprovalReview;
  * @author chenkai
  *         createTime 2017-01-2017/1/13 17:13
  */
-public interface TApplicationApprovalReviewServcie extends BaseService<TApplicationApprovalReview>{
+public interface TApplicationApprovalReviewService extends BaseService<TApplicationApprovalReview>{
 }
