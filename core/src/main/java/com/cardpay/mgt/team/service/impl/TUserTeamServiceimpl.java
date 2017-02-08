@@ -3,12 +3,10 @@ package com.cardpay.mgt.team.service.impl;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.mgt.team.dao.TUserTeamMapper;
 import com.cardpay.mgt.team.model.TUserTeam;
+import com.cardpay.mgt.team.model.Team;
 import com.cardpay.mgt.team.service.TUserTeamService;
 import com.cardpay.mgt.team.service.TeamService;
-import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.service.UserService;
 import org.apache.commons.collections.map.HashedMap;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +52,7 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
 
     @Override
     @Transactional
-    public int bathDelete(int teamId, String userIds) {
+    public Map<String, Object> bathDelete(int teamId, String userIds) {
         Map<String, Object> map = new HashMap<>();
         map.put("teamId", teamId);
         List<Integer> list = new ArrayList<>();
@@ -63,8 +61,21 @@ public class TUserTeamServiceimpl extends BaseServiceImpl<TUserTeam> implements 
             int id = Integer.parseInt(userId);
             list.add(id);
         }
-        map.put("userIds", list);
-        return tUserTeamDao.bathDelete(map);
+        //团队负责人不能删除
+        Team team = teamService.selectByPrimaryKey(teamId);
+        list.remove(team.getTeamLeaderId());
+        Map<String, Object> markMap = new HashMap<>();
+        if (list.isEmpty()) {
+            markMap.put("message", "团队负责人无法删除");
+            markMap.put("mark", 6000);
+        } else {
+            map.put("userIds", list);
+            markMap.put("message", "删除成功");
+            markMap.put("mark", 6001);
+            tUserTeamDao.bathDelete(map);
+
+        }
+        return markMap;
     }
 
 }

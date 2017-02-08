@@ -154,10 +154,10 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerId 客户Id
      * @return 单个客户移交记录
      */
-    @RequestMapping("/transfer/{id}")
+    @RequestMapping("/transfer/{customerId}")
     @SystemControllerLog("按id查询客户移交记录(返回分页)")
     @ApiOperation(value = "查看客户移交记录", notes = "查看客户移交记录", httpMethod = "GET")
-    public DataTablePage queryAccept(@ApiParam("客户id") @PathVariable("id") int customerId) {
+    public DataTablePage queryAccept(@ApiParam("客户id") @PathVariable("customerId") int customerId) {
         Example example = new Example(TCustomerTransfer.class);
         example.createCriteria().andEqualTo("id", customerId);
         return dataTablePage(example);
@@ -169,10 +169,10 @@ public class CustomerTransferController extends BaseController<TCustomerTransfer
      * @param customerId 客户Id
      * @return 客户移交记录
      */
-    @GetMapping("/{id}")
+    @GetMapping("/{customerId}")
     @SystemControllerLog("按id查询移交记录")
     @ApiOperation(value = "按id查询移交记录", notes = "按id查询移交记录 ", httpMethod = "GET")
-    public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("id") int customerId) {
+    public ResultTo queryById(@ApiParam(value = "客户id", required = true) @PathVariable("customerId") int customerId) {
         List<TCustomerTransferVo> tCustomerTransferVos = customerTransferService.queryById(customerId);
         return new ResultTo().setData(tCustomerTransferVos);
     }

@@ -15,7 +15,6 @@ import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.ProductInvestPictureDesc;
 import com.cardpay.mgt.product.model.ProductOrganization;
 import com.cardpay.mgt.product.model.vo.ExplainList;
-import com.cardpay.mgt.product.service.ProductApproveService;
 import com.cardpay.mgt.product.service.ProductDescService;
 import com.cardpay.mgt.product.service.ProductOrgService;
 import com.cardpay.mgt.product.service.ProductService;
@@ -30,7 +29,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,7 +78,7 @@ public class ProductController extends BaseController<Product> {
         Example example = new Example(Product.class);
         Example.Criteria criteria = example.createCriteria();
         if (parse != null && parse.containsKey("productName")) {
-            criteria.andCondition("PRODUCT_NAME LIKE '%" + parse.get("productName") + "%' ");
+            criteria.andCondition("PRODUCT_NAME LIKE '%" + parse.get("productName") + "%'");
         }
         criteria.andEqualTo("organizationId", ShiroKit.getOrgId());
         String order = DataTablePage.getOrder(request);
