@@ -13,6 +13,17 @@
         <result column="APPLICATION_STATUS" jdbcType="DECIMAL" property="applicationStatus"/>
     </resultMap>
 
+    <resultMap id="TopOrgAndChildrenOrgMap" type="com.cardpay.mgt.index.model.OrgAndChildrenOrg">
+        <result column="ID" jdbcType="DECIMAL" property="orgId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <collection property="orgList" column="ID" select="selectChildrenOrg"/>
+    </resultMap>
+
+    <resultMap id="OrgMap" type="com.cardpay.mgt.index.model.Org">
+        <result column="ID" jdbcType="DECIMAL" property="orgId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+    </resultMap>
+
     <!--查询该顶级机构下所有机构（包含自己）所有进件状态统计信息-->
     <select id="selectOrgApplicationInfo" resultMap="IndexOrgApplicationInfoMap">
         SELECT * FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{topOrgId}
@@ -27,6 +38,31 @@
         WHERE
             APP.CUSTOMER_MANAGER_ID = CM.USER_ID
             AND CM.ORGANIZATION_ID = #{ID} GROUP BY APP.APPLICATION_STATUS ORDER BY APP.APPLICATION_STATUS
+    </select>
+
+    <!--查询所有顶级机构-->
+    <select id="selectTopOrgAndChildrenOrg" resultMap="TopOrgAndChildrenOrgMap">
+        SELECT * FROM T_ORGANIZATION WHERE T_ORGANIZATION.ORG_PARENT_ID = 0
+    </select>
+
+    <select id="selectChildrenOrg" resultMap="OrgMap">
+        SELECT * FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{ID}
+    </select>
+
+    <!--查询多个机构下的进件统计信息-->
+    <select id="selectMoreOrgApplicationInfo" resultMap="IndexApplicationInfoMap">
+        SELECT
+            COUNT(1) APP_NUM,APP.APPLICATION_STATUS
+        FROM
+            T_APPLICATION APP,
+            T_CUSTOMER_MANAGER CM
+        WHERE
+            APP.CUSTOMER_MANAGER_ID = CM.USER_ID
+            AND CM.ORGANIZATION_ID IN
+            <foreach item="item" collection="list" separator="," open="(" close=")" index="">
+                #{item.orgId}
+            </foreach>
+            GROUP BY APP.APPLICATION_STATUS ORDER BY APP.APPLICATION_STATUS
     </select>
 
     <!--查询该用户下所有进件状态统计信息-->

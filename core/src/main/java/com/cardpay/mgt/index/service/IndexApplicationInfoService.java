@@ -53,4 +53,11 @@ public interface IndexApplicationInfoService {
      * @return 进件数量
      */
     BigDecimal selectUserApplicationInfoApproveAmountSum(Integer userId);
+
+    /**
+     * 查询多个机构下的进件统计信息
+     *
+     * @return 多个机构下的进件统计信息
+     */
+    List<IndexOrgApplicationInfo> selectMoreOrgApplicationInfo();
 }
