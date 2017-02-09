@@ -14,7 +14,7 @@
     <result column="APPROVAL_OPINION" jdbcType="VARCHAR" property="approvalOpinion" />
     <result column="APPROVAL_PERSON_CNAME" jdbcType="VARCHAR" property="approvalPersonCname" />
     <result column="APPROVAL_PERSON_ID" jdbcType="VARCHAR" property="approvalPersonId" />
-    <result column="PRIDUCT_APPROVAL_ID" jdbcType="DECIMAL" property="priductApprovalId" />
+    <result column="PRODUCT_APPROVAL_ID" jdbcType="DECIMAL" property="productApprovalId" />
     <result column="APPROVAL_NODE_NAME" jdbcType="VARCHAR" property="approvalNodeName" />
     <result column="APPROVAL_STATUS" jdbcType="DECIMAL" property="approvalStatus" />
   </resultMap>

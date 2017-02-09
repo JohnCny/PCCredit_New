@@ -57,13 +57,37 @@
         <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
     </resultMap>
 
+    <!--客户信息-->
+    <resultMap id="customerBasicVo" type="com.cardpay.mgt.customer.model.TCustomerBasic">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="cname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="CERTIFICATE_TYPE" jdbcType="DECIMAL" property="certificateType"/>
+        <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="certificateNumber"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="HOME_ADDRESS" jdbcType="VARCHAR" property="homeAddress"/>
+        <result column="MARRIAGE_STATUS" jdbcType="DECIMAL" property="marriageStatus"/>
+        <result column="EDUCATION_DEGREE" jdbcType="DECIMAL" property="educationDegree"/>
+        <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
+        <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
+        <result column="ENTERPRISE_CNAME" jdbcType="DECIMAL" property="enterpriseCname"/>
+        <result column="ENTERPRISE_ID_CARD" jdbcType="DECIMAL" property="enterpriseIdCard"/>
+        <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
+    </resultMap>
+
     <!--查询进件相关产品信息-->
     <select id="queryProduct" resultMap="productMap">
       SELECT * FROM T_PRODUCT WHERE id = #{productId}
     </select>
 
     <!--查询进件相关客户信息-->
-    <select id="queryCustomer" resultType="com.cardpay.mgt.customer.model.TCustomerBasic">
+    <select id="queryCustomer" resultMap="customerBasicVo">
       SELECT * FROM T_CUSTOMER_BASIC WHERE id =#{customerId}
     </select>
 

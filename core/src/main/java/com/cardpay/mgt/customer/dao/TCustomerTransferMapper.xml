@@ -63,8 +63,7 @@
         T_CUSTOMER_TRANSFER transfer,
         T_CUSTOMER_BASIC basic
         WHERE
-        basic.CUSTOMER_STATUS = ${@com.cardpay.basic.common.constant.CustomerStatusEnum@TRANSFER.getValue()}
-        AND basic.id = transfer.id
+        basic.id = transfer.CUSTOMER_ID
         AND transfer.CUSTOMER_ID = #{customerId}
     </select>
 

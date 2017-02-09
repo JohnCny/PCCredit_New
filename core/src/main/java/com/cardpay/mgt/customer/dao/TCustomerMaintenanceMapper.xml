@@ -43,7 +43,7 @@
         T_CUSTOMER_BASIC basic, T_CUSTOMER_MANAGER manager, T_CUSTOMER_MAINTENANCE maintenance
         <where>
             basic.CUSTOMER_MANAGER_ID = MANAGER.id
-            AND maintenance.id = basic.id
+            AND maintenance.CUSTOMER_ID = basic.id
             AND MANAGER.ORGANIZATION_ID =
             (
             SELECT ORGANIZATION_ID
@@ -51,7 +51,7 @@
             WHERE ID = #{customerManagerId}
             )
             AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
-            AND manager.id = #{customerManagerId}
+            AND manager.ID = #{customerManagerId}
             AND maintenance.CUSTOMER_TYPE = #{customerType}
             <if test="cname!=null and cname!=''">
                 AND basic.cname LIKE CONCAT (CONCAT('%',TRIM(#{cname})),'%')

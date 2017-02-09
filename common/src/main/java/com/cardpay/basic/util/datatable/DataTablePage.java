@@ -163,7 +163,7 @@ public class DataTablePage {
     }
 
     /**
-     * 获取排序字段
+     * 获取排序字段 格式{"id":"desc"}
      * @param request request
      * @return 字段
      */
