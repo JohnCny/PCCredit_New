@@ -4,6 +4,8 @@ import com.cardpay.basic.base.mapper.BasicMapper;
 import com.cardpay.mgt.application.ipc.normal.model.TTemplateGroup;
 import com.cardpay.mgt.index.model.IndexApplicationInfo;
 import com.cardpay.mgt.index.model.IndexOrgApplicationInfo;
+import com.cardpay.mgt.index.model.Org;
+import com.cardpay.mgt.index.model.OrgAndChildrenOrg;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -49,4 +51,19 @@ public interface IndexApplicationMapper extends BasicMapper<TTemplateGroup> {
      * @return 进件数量
      */
     BigDecimal selectUserApplicationInfoApproveAmountSum(@Param("userId") Integer userId);
+
+    /**
+     * 查询多个机构下的进件统计信息
+     *
+     * @param list 机构id列表
+     * @return 多个机构下的进件统计信息
+     */
+    List<IndexApplicationInfo> selectMoreOrgApplicationInfo(List<Org> list);
+
+    /**
+     * 查询所有顶级机构的子机构
+     *
+     * @return 所有顶级机构的子机构
+     */
+    List<OrgAndChildrenOrg> selectTopOrgAndChildrenOrg();
 }

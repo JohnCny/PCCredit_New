@@ -50,7 +50,10 @@ public class IndexServiceImpl implements IndexService {
     }
 
     private ResultTo getSuperIndexInfo() {
-        return null;
+        ResultTo resultTo = new ResultTo();
+        List<IndexOrgApplicationInfo> indexOrgApplicationInfoList = indexApplicationInfoService.selectMoreOrgApplicationInfo();
+        resultTo.setDataMap("indexOrgApplicationInfoList",indexOrgApplicationInfoList);
+        return resultTo;
     }
 
     private ResultTo getManagerIndexInfo() {
