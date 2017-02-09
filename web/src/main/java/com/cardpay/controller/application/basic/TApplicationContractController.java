@@ -7,10 +7,13 @@ import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.basic.model.TApplicationContract;
 import com.cardpay.mgt.application.basic.service.TApplicationContractService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 客户签约信息Controller
@@ -34,7 +37,9 @@ public class TApplicationContractController extends BaseController<TApplicationC
      */
     @RequestMapping("/pageList")
     public DataTablePage pageList() {
-        return dataTablePage("queryAll");
+        Map<String, Object> map = new HashMap();
+        map.put("userId", ShiroKit.getUserId());
+        return dataTablePage("queryAll", map);
     }
 
     /**
