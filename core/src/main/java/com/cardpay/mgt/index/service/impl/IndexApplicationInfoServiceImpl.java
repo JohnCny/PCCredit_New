@@ -6,6 +6,8 @@ import com.cardpay.mgt.application.enums.ApplicationStatus;
 import com.cardpay.mgt.index.dao.IndexApplicationMapper;
 import com.cardpay.mgt.index.model.IndexApplicationInfo;
 import com.cardpay.mgt.index.model.IndexOrgApplicationInfo;
+import com.cardpay.mgt.index.model.Org;
+import com.cardpay.mgt.index.model.OrgAndChildrenOrg;
 import com.cardpay.mgt.index.service.IndexApplicationInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,13 +79,29 @@ public class IndexApplicationInfoServiceImpl implements IndexApplicationInfoServ
         return indexApplicationMapper.selectUserApplicationInfoApproveAmountSum(userId);
     }
 
+    @Override
+    public List<IndexOrgApplicationInfo> selectMoreOrgApplicationInfo() {
+        List<IndexOrgApplicationInfo> indexOrgApplicationInfoList = new ArrayList<>();
+        List<OrgAndChildrenOrg> orgAndChildrenOrgList = indexApplicationMapper.selectTopOrgAndChildrenOrg();
+        for (OrgAndChildrenOrg orgAndChildrenOrg : orgAndChildrenOrgList) {
+            List<Org> orgList = orgAndChildrenOrg.getOrgList();
+            List<IndexApplicationInfo> indexApplicationInfoList = indexApplicationMapper.selectMoreOrgApplicationInfo(orgList);
+            emptyHandle(indexApplicationInfoList);
+            IndexOrgApplicationInfo indexOrgApplicationInfo = new IndexOrgApplicationInfo();
+            indexOrgApplicationInfo.setIndexApplicationInfoList(indexApplicationInfoList);
+            indexOrgApplicationInfo.setOrgId(orgAndChildrenOrg.getOrgId());
+            indexOrgApplicationInfo.setOrgName(orgAndChildrenOrg.getOrgName());
+            indexOrgApplicationInfoList.add(indexOrgApplicationInfo);
+        }
+        return indexOrgApplicationInfoList;
+    }
+
     /**
      * 处理进件不存在状态的统计信息
      *
      * @param indexApplicationInfoList 进件统计信息
      * @return 处理后的统计信息
      */
-
     private void emptyHandle(List<IndexApplicationInfo> indexApplicationInfoList) {
         if(indexApplicationInfoList.isEmpty()){
             indexApplicationInfoList.addAll(zeroIndexApplicationInfoList);

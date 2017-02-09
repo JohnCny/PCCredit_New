@@ -16,7 +16,7 @@
 
     <resultMap id="RiskCustomerVoMap" type="com.cardpay.mgt.riskblack.model.vo.RiskCustomerVo">
         <id column="COLLECTION_ID" jdbcType="DECIMAL" property="collectionId"/>
-        <result column="BAD_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="badCustomerCardNum"/>
+        <result column="BAD_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="idCard"/>
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="BAD_REASON" jdbcType="VARCHAR" property="badReason"/>
         <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
@@ -46,7 +46,7 @@
         TCM.ORGANIZATION_ID=#{orgId,jdbcType=DECIMAL}
         <if test="createTime != null">
             AND
-            to_char(TRC.CREATE_TIME,'yyyy-mm-dd')='2017-1-24'
+            to_char(TRC.CREATE_TIME,'yyyy-mm-dd')=#{createTime,jdbcType=TIMESTAMP}
         </if>
         <if test="userCname !=null || employeeNumber != null">
             AND
@@ -54,11 +54,11 @@
         </if>
         <if test="userCname != null">
             AND
-            TU.USER_CNAME=#{userCname}
+            TU.USER_CNAME=#{userCname,jdbcType=VARCHAR}
         </if>
         <if test="employeeNumber != null">
             AND
-            TU.EMPLOYEE_NUMBER=#{employeeNumber}
+            TU.EMPLOYEE_NUMBER=#{employeeNumber,jdbcType=VARCHAR}
         </if>
     </select>
 
