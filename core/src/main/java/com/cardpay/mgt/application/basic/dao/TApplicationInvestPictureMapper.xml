@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cardpay.mgt.application.basic.dao.TApplicationInvestPictureMapper">
     <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplicationInvestPicture">
-        <id column="INVEST_PICTURE_ID" jdbcType="DECIMAL" property="investPritureId"/>
-        <result column="INVEST_PICTURE_URL" jdbcType="VARCHAR" property="investPritureUrl"/>
+        <id column="INVEST_PICTURE_ID" jdbcType="DECIMAL" property="investPictureId"/>
+        <result column="INVEST_PICTURE_URL" jdbcType="VARCHAR" property="investPictureUrl"/>
         <result column="PRODUCT_INVEST_PICTURE_IDD" jdbcType="DECIMAL" property="productInvestPictureIdd"/>
         <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
         <result column="PRODUCT_INVEST_PICTURE_DESC" jdbcType="VARCHAR" property="productInvestPictureDesc"/>
@@ -12,7 +12,7 @@
     <resultMap id="BaseVo" type="com.cardpay.mgt.application.basic.model.vo.TApplicationInvestPictureVo">
         <result column="ID" jdbcType="DECIMAL" property="id"/>
         <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
-        <result column="INVEST_PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="investPritureDescription"/>
+        <result column="INVEST_PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="investPictureDescription"/>
         <result column="IS_NEED" jdbcType="DECIMAL" property="isNeed"/>
         <collection property="pictureList" select="queryByPicture" column="ID"/>
     </resultMap>

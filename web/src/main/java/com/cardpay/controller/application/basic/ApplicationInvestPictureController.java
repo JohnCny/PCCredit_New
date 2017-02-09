@@ -45,7 +45,6 @@ public class ApplicationInvestPictureController extends BaseController<TApplicat
         return flag != 0 ? new ResultTo().setData(flag) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
-
     /**
      * 查询产品调查图片
      *

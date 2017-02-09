@@ -46,6 +46,14 @@ public class TApplicationContractVo  extends GenericEntity<Integer>{
      */
     private Integer applicationStatus;
 
+    public Integer getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(Integer applicationId) {
+        this.applicationId = applicationId;
+    }
+
     public Integer getContractId() {
         return contractId;
     }
@@ -78,6 +86,13 @@ public class TApplicationContractVo  extends GenericEntity<Integer>{
         this.productName = productName;
     }
 
+    public Long getApplyAmount() {
+        return applyAmount;
+    }
+
+    public void setApplyAmount(Long applyAmount) {
+        this.applyAmount = applyAmount;
+    }
 
     public Integer getApplicationStatus() {
         return applicationStatus;
@@ -85,23 +100,6 @@ public class TApplicationContractVo  extends GenericEntity<Integer>{
 
     public void setApplicationStatus(Integer applicationStatus) {
         this.applicationStatus = applicationStatus;
-    }
-
-
-    public Integer getApplicationId() {
-        return applicationId;
-    }
-
-    public void setApplicationId(Integer applicationId) {
-        this.applicationId = applicationId;
-    }
-
-    public Long getApplyAmount() {
-        return applyAmount;
-    }
-
-    public void setApplyAmount(Long applyAmount) {
-        this.applyAmount = applyAmount;
     }
 
     @Override

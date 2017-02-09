@@ -24,19 +24,22 @@
         <result column="APPLY_AMOUNT" jdbcType="DECIMAL" property="applyAmount"/>
         <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName"/>
         <result column="APPLICATION_STATUS" jdbcType="DECIMAL" property="applicationStatus"/>
-        <result column="id" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="ID" jdbcType="DECIMAL" property="applicationId"/>
     </resultMap>
 
     <!--查询客户签约信息-->
     <select id="queryAll" parameterType="Map" resultMap="BaseVo">
-        SELECT application.APPLICATION_STATUS, application.APPLY_AMOUNT, application.id
+        SELECT application.APPLICATION_STATUS, application.APPLY_AMOUNT, application.ID
         , contract.CONTRACT_ID, contract.CUSTOMER_CNAME, contract.CUSTOMER_CARD_NUMBER
         , contract.PRODUCT_NAME
         FROM
         T_APPLICATION application,
-        T_APPLICATION_CONTRACT contract
+        T_APPLICATION_CONTRACT contract,
+        T_CUSTOMER_MANAGER manager
         <where>
             application.ID = contract.APPLICATION_ID
+            AND manager.USER_ID = application.CUSTOMER_MANAGER_ID
+            AND manager.USER_ID = #{userId,jdbcType=DECIMAL}
             <if test="customerCname !=null and customerCname !=''">
                 contract.customerCname LIKE CONCAT(CONCAT('%', TRIM(#{customerCname})), '%')
             </if>
