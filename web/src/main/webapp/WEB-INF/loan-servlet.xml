@@ -24,7 +24,7 @@
     <aop:aspectj-autoproxy proxy-target-class="false"/>
 
     <!--配置静态资源访问路径 -->
-    <mvc:resources location="/static/" mapping="/static/**"/>
+    <mvc:resources location="/WEB-INF/static/" mapping="/static/**"/>
 
     <!-- 开启shiro spring AOP权限注解支持 -->
     <aop:config proxy-target-class="true"></aop:config>
@@ -124,12 +124,12 @@
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="customArgumentResolvers">
             <list>
-                <bean class="com.cardpay.mgt.application.resolver.IPCArgumentResolver" />
+                <bean class="com.cardpay.mgt.application.resolver.IPCArgumentResolver"/>
             </list>
         </property>
-        <property name="order" value="0" />
+        <property name="order" value="0"/>
     </bean>
-    
+
     <!-- Token拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>
@@ -148,10 +148,10 @@
     <!-- API 接口跨域配置-->
     <mvc:cors>
         <mvc:mapping
-        path="/**"
-        allowed-origins="*"
-        allowed-methods="POST,GET,OPTIONS,DELETE,PUT"
-        allowed-headers="Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-        allow-credentials="true"/>
+                path="/**"
+                allowed-origins="*"
+                allowed-methods="POST,GET,OPTIONS,DELETE,PUT"
+                allowed-headers="Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+                allow-credentials="true"/>
     </mvc:cors>
 </beans>

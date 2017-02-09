@@ -1,4 +1,4 @@
-package com.cardpay.mgt.process;
+package com.cardpay.mgt.process.service;
 
 import com.cardpay.mgt.process.core.ReturnData;
 

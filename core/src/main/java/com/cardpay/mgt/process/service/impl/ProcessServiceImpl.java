@@ -1,7 +1,6 @@
-package com.cardpay.mgt.process.impl;
+package com.cardpay.mgt.process.service.impl;
 
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.basic.dao.TApplicationMapper;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
@@ -9,19 +8,22 @@ import com.cardpay.mgt.customer.dao.TCustomerIndustryMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper;
-import com.cardpay.mgt.process.ProcessService;
 import com.cardpay.mgt.process.core.ReturnData;
+import com.cardpay.mgt.process.dao.AppApproveMapper;
+import com.cardpay.mgt.process.dao.AppApproveUserMapper;
+import com.cardpay.mgt.process.model.AppApprove;
+import com.cardpay.mgt.process.model.AppApproveUser;
+import com.cardpay.mgt.process.service.ProcessService;
 import com.cardpay.mgt.product.dao.ProductApproveMapper;
 import com.cardpay.mgt.product.dao.ProductMapper;
 import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.ProductApprove;
 import com.cardpay.mgt.user.dao.UserMapper;
-import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,6 +56,12 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Autowired
     private TCustomerIndustryMapper customerIndustryMapper;
+
+    @Autowired
+    private AppApproveUserMapper appApproveUserMapper;
+
+    @Autowired
+    private AppApproveMapper appApproveMapper;
 
 
     @Override
@@ -179,6 +187,27 @@ public class ProcessServiceImpl implements ProcessService {
         }
 
         //获取审批用户
+        List<User> approveUser = getApproveUser(productApproveLink.get(0));
+        if (approveUser == null) {
+            LogTemplate.debug(this.getClass(), "message", "获取的产品审批人信息错误");
+            return null;
+        }
+
+        //插入审批顺序链
+        for (int i = 0; productApproveLink.size() > 0; i++) {
+            AppApprove appApprove = new AppApprove();
+            appApprove.setAppId(application.getId());
+            appApprove.setCreateTime(new Date());
+            appApprove.setProductApproveId(productApproveLink.get(i).getId());
+            appApprove.setSort(i + 1);
+            if (i == 0) {
+                appApprove.setStatus(1);//审批中
+            } else {
+                appApprove.setStatus(0);
+            }
+            appApproveMapper.insertSelective(appApprove);
+        }
+
 
 
         return new ReturnData(Boolean.TRUE);
@@ -232,10 +261,32 @@ public class ProcessServiceImpl implements ProcessService {
         String[] roleIds = approveRoles.split(",");
         List<User> users = userMapper.selectUserByRoleIds(roleIds);
         if (productApprove.getIsRandomDivision() == 1) { //随机
-
-        } else { //不随机
-
+            List<Integer> AppApproveUserVos = appApproveUserMapper.selectOrderUser(users);
+            if (AppApproveUserVos == null) {
+                return null;
+            }
+            List<User> usersLinked = new LinkedList<>();
+            for (User user : users) {
+                boolean flag = Boolean.TRUE;
+                for (Integer userId : AppApproveUserVos) {
+                    if (userId == user.getId()) {
+                        flag = Boolean.FALSE;
+                        break;
+                    }
+                }
+                if (flag) {
+                    usersLinked.add(user);
+                }
+            }
+            for (Integer userId : AppApproveUserVos) {
+                for (User user : users) {
+                    if (userId == user.getId()) {
+                        usersLinked.add(user);
+                    }
+                }
+            }
+            return usersLinked;
         }
-        return null;
+        return users;
     }
 }
