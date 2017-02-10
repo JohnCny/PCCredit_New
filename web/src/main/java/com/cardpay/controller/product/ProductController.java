@@ -26,12 +26,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.entity.Example;
 
@@ -70,9 +65,9 @@ public class ProductController extends BaseController<Product> {
      *
      * @return 产品分页数据
      */
-    @RequestMapping("/pageList")
+    @RequestMapping("/pageList/{type}")
     @ApiOperation(value = "产品分页数据")
-    public DataTablePage pageList(HttpServletRequest request) {
+    public DataTablePage pageList(@PathVariable("type") int productLimitType, HttpServletRequest request) {
         String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
         JSONObject parse = JSONObject.parseObject(search);
         Example example = new Example(Product.class);
@@ -80,7 +75,8 @@ public class ProductController extends BaseController<Product> {
         if (parse != null && parse.containsKey("productName")) {
             criteria.andCondition("PRODUCT_NAME LIKE '%" + parse.get("productName") + "%'");
         }
-        criteria.andEqualTo("organizationId", ShiroKit.getOrgId());
+        criteria.andEqualTo("organizationId", ShiroKit.getOrgId())
+                .andEqualTo("productLimitType", productLimitType);
         String order = DataTablePage.getOrder(request);
         example.orderBy(order);
         return dataTablePage(example);
