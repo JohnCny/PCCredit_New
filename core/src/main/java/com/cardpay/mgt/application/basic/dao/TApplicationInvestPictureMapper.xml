@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplicationInvestPicture">
         <id column="INVEST_PICTURE_ID" jdbcType="DECIMAL" property="investPictureId"/>
         <result column="INVEST_PICTURE_URL" jdbcType="VARCHAR" property="investPictureUrl"/>
-        <result column="PRODUCT_INVEST_PICTURE_IDD" jdbcType="DECIMAL" property="productInvestPictureIdd"/>
+        <result column="PRODUCT_INVEST_PICTURE_ID" jdbcType="DECIMAL" property="productInvestPictureId"/>
         <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
         <result column="PRODUCT_INVEST_PICTURE_DESC" jdbcType="VARCHAR" property="productInvestPictureDesc"/>
     </resultMap>
@@ -20,7 +20,7 @@
 
     <!--查询进件调查图片信息-->
     <select id="queryByPicture" resultMap="BaseResultMap">
-        SELECT * FROM T_APPLICATION_INVEST_PICTURE WHERE PRODUCT_INVEST_PICTURE_IDD = #{id,jdbcType=DECIMAL}
+        SELECT * FROM T_APPLICATION_INVEST_PICTURE WHERE PRODUCT_INVEST_PICTURE_ID = #{id,jdbcType=DECIMAL}
          AND APPLICATION_ID = #{applicationId,jdbcType=DECIMAL}
     </select>
 
@@ -38,7 +38,7 @@
 
     <!--统计进件表中图片上传个数-->
     <select id="queryApplicationFileNext" resultType="Integer">
-        SELECT COUNT (DISTINCT (PRODUCT_INVEST_PICTURE_IDD))
+        SELECT COUNT (DISTINCT (PRODUCT_INVEST_PICTURE_ID))
         FROM
         T_APPLICATION_INVEST_PICTURE
         WHERE

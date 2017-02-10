@@ -28,9 +28,9 @@ public class TApplicationInvestPicture extends GenericEntity<Integer>{
     /**
      * 产品调查图片id
      */
-    @Column(name = "PRODUCT_INVEST_PICTURE_IDD")
+    @Column(name = "PRODUCT_INVEST_PICTURE_ID")
     @ApiModelProperty(value="产品调查图片id",required = true)
-    private Integer productInvestPictureIdd;
+    private Integer productInvestPictureId;
 
     /**
      * 进件id
@@ -67,17 +67,17 @@ public class TApplicationInvestPicture extends GenericEntity<Integer>{
      *
      * @return PRODUCT_INVEST_PICTURE_IDD - 产品调查图片id
      */
-    public Integer getProductInvestPictureIdd() {
-        return productInvestPictureIdd;
+    public Integer getProductInvestPictureId() {
+        return productInvestPictureId;
     }
 
     /**
      * 设置产品调查图片id
      *
-     * @param productInvestPictureIdd 产品调查图片id
+     * @param productInvestPictureId 产品调查图片id
      */
-    public void setProductInvestPictureIdd(Integer productInvestPictureIdd) {
-        this.productInvestPictureIdd = productInvestPictureIdd;
+    public void setProductInvestPictureId(Integer productInvestPictureId) {
+        this.productInvestPictureId = productInvestPictureId;
     }
 
     /**

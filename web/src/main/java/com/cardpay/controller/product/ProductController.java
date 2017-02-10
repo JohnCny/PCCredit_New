@@ -76,7 +76,7 @@ public class ProductController extends BaseController<Product> {
             criteria.andCondition("PRODUCT_NAME LIKE '%" + parse.get("productName") + "%'");
         }
         criteria.andEqualTo("organizationId", ShiroKit.getOrgId())
-        .andEqualTo("productLimitType", productLimitType);
+                .andEqualTo("productLimitType", productLimitType);
         String order = DataTablePage.getOrder(request);
         example.orderBy(order);
         return dataTablePage(example);
