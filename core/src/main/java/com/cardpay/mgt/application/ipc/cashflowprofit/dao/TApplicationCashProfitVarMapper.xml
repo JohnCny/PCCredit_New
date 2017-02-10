@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.ipc.cashflowprofit.dao.TApplicationCashProfitVarMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.ipc.cashflowprofit.model.TApplicationCashProfitVar">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="APPLICATION_CASH_PROFIT_VAR_ID" jdbcType="DECIMAL" property="applicationCashProfitVarId" />
+    <result column="CASH_PROFIT_VAR_ID" jdbcType="DECIMAL" property="cashProfitVarId" />
+    <result column="CASH_PROFIT_VAR_VALUE" jdbcType="VARCHAR" property="cashProfitVarValue" />
+    <result column="CASH_PROFIT_OPTION_ID" jdbcType="DECIMAL" property="cashProfitOptionId" />
+    <result column="VAR_MONTH_ONE" jdbcType="DECIMAL" property="varMonthOne" />
+    <result column="VAR_MONTH_TWO" jdbcType="DECIMAL" property="varMonthTwo" />
+    <result column="VAR_MONTH_THREE" jdbcType="DECIMAL" property="varMonthThree" />
+    <result column="VAR_MONTH_FOUR" jdbcType="DECIMAL" property="varMonthFour" />
+    <result column="VAR_MONTH_FIVE" jdbcType="DECIMAL" property="varMonthFive" />
+    <result column="VAR_MONTH_SIX" jdbcType="DECIMAL" property="varMonthSix" />
+    <result column="VAR_MONTH_SEVEN" jdbcType="DECIMAL" property="varMonthSeven" />
+    <result column="VAR_MONTH_EIGHT" jdbcType="DECIMAL" property="varMonthEight" />
+    <result column="VAR_MONTH_NINE" jdbcType="DECIMAL" property="varMonthNine" />
+    <result column="VAR_MONTH_TEN" jdbcType="DECIMAL" property="varMonthTen" />
+    <result column="VAR_MONTH_ELEVEN" jdbcType="DECIMAL" property="varMonthEleven" />
+    <result column="VAR_MONTH_TWELVE" jdbcType="DECIMAL" property="varMonthTwelve" />
+    <result column="VAR_CROSS_VALIDATE_ALL" jdbcType="DECIMAL" property="varCrossValidateAll" />
+    <result column="VAR_CROSS_VALIDATE_MONTH_AVG" jdbcType="DECIMAL" property="varCrossValidateMonthAvg" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+  </resultMap>
+</mapper>

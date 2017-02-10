@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.index.dao.IndexApplicationMapper">
+
+    <resultMap id="IndexOrgApplicationInfoMap" type="com.cardpay.mgt.index.model.IndexOrgApplicationInfo">
+        <result column="ID" jdbcType="DECIMAL" property="orgId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <collection property="indexApplicationInfoList" column="ID" select="selectApplicationInfo"/>
+    </resultMap>
+
+    <resultMap id="IndexApplicationInfoMap" type="com.cardpay.mgt.index.model.IndexApplicationInfo">
+        <result column="APP_NUM" jdbcType="DECIMAL" property="count"/>
+        <result column="APPLICATION_STATUS" jdbcType="DECIMAL" property="applicationStatus"/>
+    </resultMap>
+
+    <resultMap id="TopOrgAndChildrenOrgMap" type="com.cardpay.mgt.index.model.OrgAndChildrenOrg">
+        <result column="ID" jdbcType="DECIMAL" property="orgId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <collection property="orgList" column="ID" select="selectChildrenOrg"/>
+    </resultMap>
+
+    <resultMap id="OrgMap" type="com.cardpay.mgt.index.model.Org">
+        <result column="ID" jdbcType="DECIMAL" property="orgId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+    </resultMap>
+
+    <!--查询该顶级机构下所有机构（包含自己）所有进件状态统计信息-->
+    <select id="selectOrgApplicationInfo" resultMap="IndexOrgApplicationInfoMap">
+        SELECT * FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{topOrgId}
+    </select>
+
+    <select id="selectApplicationInfo" resultMap="IndexApplicationInfoMap">
+        SELECT
+            COUNT(1) APP_NUM,APP.APPLICATION_STATUS
+        FROM
+            T_APPLICATION APP,
+            T_CUSTOMER_MANAGER CM
+        WHERE
+            APP.CUSTOMER_MANAGER_ID = CM.USER_ID
+            AND CM.ORGANIZATION_ID = #{ID} GROUP BY APP.APPLICATION_STATUS ORDER BY APP.APPLICATION_STATUS
+    </select>
+
+    <!--查询所有顶级机构-->
+    <select id="selectTopOrgAndChildrenOrg" resultMap="TopOrgAndChildrenOrgMap">
+        SELECT * FROM T_ORGANIZATION WHERE T_ORGANIZATION.ORG_PARENT_ID = 0
+    </select>
+
+    <select id="selectChildrenOrg" resultMap="OrgMap">
+        SELECT * FROM T_ORGANIZATION CONNECT BY PRIOR ID = ORG_PARENT_ID START WITH ID = #{ID}
+    </select>
+
+    <!--查询多个机构下的进件统计信息-->
+    <select id="selectMoreOrgApplicationInfo" resultMap="IndexApplicationInfoMap">
+        SELECT
+            COUNT(1) APP_NUM,APP.APPLICATION_STATUS
+        FROM
+            T_APPLICATION APP,
+            T_CUSTOMER_MANAGER CM
+        WHERE
+            APP.CUSTOMER_MANAGER_ID = CM.USER_ID
+            AND CM.ORGANIZATION_ID IN
+            <foreach item="item" collection="list" separator="," open="(" close=")" index="">
+                #{item.orgId}
+            </foreach>
+            GROUP BY APP.APPLICATION_STATUS ORDER BY APP.APPLICATION_STATUS
+    </select>
+
+    <!--查询该用户下所有进件状态统计信息-->
+    <select id="selectUserApplicationInfo" resultMap="IndexApplicationInfoMap">
+        SELECT
+            COUNT(1) APP_NUM,APP.APPLICATION_STATUS
+        FROM
+            T_APPLICATION APP,
+            T_CUSTOMER_MANAGER CM
+        WHERE
+            APP.CUSTOMER_MANAGER_ID = CM.USER_ID
+            AND CM.USER_ID = #{userId} GROUP BY APP.APPLICATION_STATUS ORDER BY APP.APPLICATION_STATUS
+    </select>
+
+    <!--查询该用户下当月所有进件数量-->
+    <select id="selectUserApplicationInfoMonth" resultType="Integer">
+        SELECT
+            COUNT(1) APP_NUM
+        FROM
+            T_APPLICATION APP
+        WHERE
+        APP.CREATE_TIME BETWEEN TRUNC(ADD_MONTHS (LAST_DAY(SYSDATE), - 1) + 1) AND LAST_DAY (TRUNC (SYSDATE, 'mm') + 86399 / 86400)
+        AND APP.CUSTOMER_MANAGER_ID = #{userId}
+    </select>
+
+    <!--查询该用户下所有进件审核额度总额-->
+    <select id="selectUserApplicationInfoApproveAmountSum" resultType="BigDecimal">
+        SELECT
+            SUM(APP.APPROVE_AMOUNT)
+        FROM
+            T_APPLICATION APP
+        WHERE
+        APP.APPLICATION_STATUS = ${@com.cardpay.mgt.application.enums.ApplicationStatus@APP_ADOPT.getValue()}
+        AND APP.CUSTOMER_MANAGER_ID = #{userId}
+    </select>
+</mapper>

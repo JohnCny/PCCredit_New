@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.basic.dao.TApplicationInvestPictureMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplicationInvestPicture">
+        <id column="INVEST_PICTURE_ID" jdbcType="DECIMAL" property="investPictureId"/>
+        <result column="INVEST_PICTURE_URL" jdbcType="VARCHAR" property="investPictureUrl"/>
+        <result column="PRODUCT_INVEST_PICTURE_IDD" jdbcType="DECIMAL" property="productInvestPictureIdd"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="PRODUCT_INVEST_PICTURE_DESC" jdbcType="VARCHAR" property="productInvestPictureDesc"/>
+    </resultMap>
+
+    <resultMap id="BaseVo" type="com.cardpay.mgt.application.basic.model.vo.TApplicationInvestPictureVo">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+        <result column="INVEST_PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="investPictureDescription"/>
+        <result column="IS_NEED" jdbcType="DECIMAL" property="isNeed"/>
+        <collection property="pictureList" select="queryByPicture" column="ID"/>
+    </resultMap>
+
+    <!--查询进件调查图片信息-->
+    <select id="queryByPicture" resultMap="BaseResultMap">
+        SELECT * FROM T_APPLICATION_INVEST_PICTURE WHERE PRODUCT_INVEST_PICTURE_IDD = #{id}
+    </select>
+
+    <!--查询产品调查图片信息-->
+    <select id="queryByApplicationId" resultType="Map" resultMap="BaseVo">
+        SELECT
+            PIPD.*
+        FROM
+            T_PRODUCT_INVEST_PICTURE_DESC PIPD,
+            T_APPLICATION APP
+        WHERE
+            APP.PRODUCT_ID = PIPD.PRODUCT_ID
+        AND APP. ID = #{applicationId}
+    </select>
+
+    <!--统计进件表中图片上传个数-->
+    <select id="queryApplicationFileNext" resultType="Integer">
+        SELECT COUNT (DISTINCT (PRODUCT_INVEST_PICTURE_IDD))
+        FROM
+        T_APPLICATION_INVEST_PICTURE
+        WHERE
+        APPLICATION_ID = #{applicationId}
+  </select>
+
+    <!--统计产品表中图片上传个数-->
+    <select id="queryProductFileNext" resultType="Integer">
+        SELECT COUNT(1) FROM T_PRODUCT_INVEST_PICTURE_DESC
+        WHERE IS_NEED = 1
+        AND PRODUCT_ID =
+        (
+        SELECT PRODUCT_ID
+        FROM T_APPLICATION_INVEST_PICTURE
+        WHERE APPLICATION_ID = #{applicationId}
+        )
+  </select>
+
+</mapper>

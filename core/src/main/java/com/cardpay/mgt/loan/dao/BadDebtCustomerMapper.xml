@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.loan.dao.BadDebtCustomerMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.loan.model.BadDebtCustomer">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="COLLECTION_ID" jdbcType="DECIMAL" property="collectionId"/>
+        <result column="BAD_CUSTOMER_ID" jdbcType="DECIMAL" property="badCustomerId"/>
+        <result column="BAD_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="badCustomerCardNum"/>
+        <result column="BAD_CUSTOMER_PRODUCT_NAME" jdbcType="VARCHAR" property="badCustomerProductName"/>
+        <result column="BAD_DEBT_AMOUNT" jdbcType="DECIMAL" property="badDebtAmount"/>
+        <result column="BAD_CUSTOMER_PRODUCT_ID" jdbcType="DECIMAL" property="badCustomerProductId"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+    </resultMap>
+
+    <resultMap id="BadDebtCustomerVoMap" type="com.cardpay.mgt.loan.model.vo.BadDebtCustomerVo">
+        <id column="COLLECTION_ID" jdbcType="DECIMAL" property="collectionId"/>
+        <result column="BAD_CUSTOMER_ID" jdbcType="DECIMAL" property="badCustomerId"/>
+        <result column="BAD_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="badCustomerCardNum"/>
+        <result column="BAD_DEBT_AMOUNT" jdbcType="DECIMAL" property="badDebtAmount"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="CUATOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
+        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="customerName"/>
+    </resultMap>
+
+
+    <select id="badDebtCustomerPageList" resultMap="BadDebtCustomerVoMap">
+        SELECT
+        TBDC.*, TP.PRODUCT_NAME,TCB.CNAME
+        FROM
+        T_BAD_DEBT_CUSTOMER TBDC,
+        T_APPLICATION TA,
+        T_PRODUCT TP,
+        T_CUSTOMER_MANAGER TCM,
+        T_CUSTOMER_BASIC TCB
+        WHERE
+        TBDC.APPLICATION_ID = TA."ID"
+        AND TA.CUSTOMER_ID=TCB."ID"
+        AND TA.PRODUCT_ID = TP."ID"
+        AND TA.CUSTOMER_MANAGER_ID = TCM."ID"
+        AND TCM.ORGANIZATION_ID = #{orgId,jdbcType=DECIMAL}
+        <if test="managerId != null">
+            AND TCM."ID" = #{managerId}
+        </if>
+        <if test="badCustomerCardNum != null">
+            AND TBDC."BAD_CUSTOMER_CARD_NUM" = #{badCustomerCardNum}
+        </if>
+        <if test="customerName != null">
+            AND TCB.CNAME = #{customerName}
+        </if>
+        <if test="customerType != null">
+            AND TBDC.CUATOMER_TYPE = #{customerType}
+        </if>
+    </select>
+
+</mapper>

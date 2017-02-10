@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.basic.dao.TApplicationMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.basic.model.TApplication">
+        <result column="id" jdbcType="DECIMAL" property="id"/>
+        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+        <result column="REPULSE_REASON" jdbcType="VARCHAR" property="repulseReason"/>
+        <result column="APPLICATION_STATUS" jdbcType="DECIMAL" property="applicationStatus"/>
+        <result column="APPLY_AMOUNT" jdbcType="DECIMAL" property="applyAmount"/>
+        <result column="APPROVE_AMOUNT" jdbcType="DECIMAL" property="approveAmount"/>
+        <result column="APPLY_REASON" jdbcType="VARCHAR" property="applyReason"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+    </resultMap>
+
+    <!--进件Vo类-->
+    <resultMap id="BaseVo" type="com.cardpay.mgt.application.basic.model.vo.TApplicationVo">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+        <result column="APPLICATION_STATUS" jdbcType="DECIMAL" property="applicationStatus"/>
+        <result column="APPLY_AMOUNT" jdbcType="DECIMAL" property="applyAmount"/>
+        <result column="APPROVE_AMOUNT" jdbcType="DECIMAL" property="approveAmount"/>
+        <result column="APPLY_REASON" jdbcType="VARCHAR" property="applyReason"/>
+        <association property="product" select="queryProduct" column="PRODUCT_ID"/>
+        <association property="customer" select="queryCustomer" column="CUSTOMER_ID"/>
+    </resultMap>
+
+    <!--产品类型-->
+    <resultMap id="productMap" type="com.cardpay.mgt.product.model.Product">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName"/>
+        <result column="PRODUCT_LIMIT_MAX" jdbcType="DECIMAL" property="productLimitMax"/>
+        <result column="PRODUCT_LIMIT_MIN" jdbcType="DECIMAL" property="productLimitMin"/>
+        <result column="PRODUCT_INTEREST_MAX" jdbcType="DECIMAL" property="productInterestMax"/>
+        <result column="PRODUCT_INTEREST_MIN" jdbcType="DECIMAL" property="productInterestMin"/>
+        <result column="PRODUCT_STATE" jdbcType="DECIMAL" property="productState"/>
+        <result column="PRODUCT_TYPE" jdbcType="DECIMAL" property="productType"/>
+        <result column="PRODUCT_DESCRIPTION" jdbcType="VARCHAR" property="productDescription"/>
+        <result column="PRODUCT_PICTURE_URL" jdbcType="VARCHAR" property="productPictureUrl"/>
+        <result column="PRODUCT_LOAN_PERIOD" jdbcType="DECIMAL" property="productLoanPeriod"/>
+        <result column="PRODUCT_REPAYMENT_MODE" jdbcType="DECIMAL" property="productRepaymentMode"/>
+        <result column="PRODUCT_APPLY_TEMPLATE_ID" jdbcType="DECIMAL" property="productApplyTemplateId"/>
+        <result column="PRODUCT_SEND_PRODUCT_NUMBER" jdbcType="VARCHAR" property="productSendProductNumber"/>
+        <result column="PRODUCT_HOUSEHOLD_LEVEL_LIMIT" jdbcType="DECIMAL" property="productHouseholdLevelLimit"/>
+        <result column="PRODUCT_CREDIT_LEVEL_LIMIT" jdbcType="VARCHAR" property="productCreditLevelLimit"/>
+        <result column="PRODUCT_AGE_MAX_LIMIT" jdbcType="DECIMAL" property="productAgeMaxLimit"/>
+        <result column="PRODUCT_AGE_MIN_LIMIT" jdbcType="DECIMAL" property="productAgeMinLimit"/>
+        <result column="PRODUCT_INDUSTRY_LIMIT" jdbcType="VARCHAR" property="productIndustryLimit"/>
+        <result column="PRODUCT_MARRIAGE_LIMIT" jdbcType="DECIMAL" property="productMarriageLimit"/>
+        <result column="CUSTOMER_MANAGER_LEVEL_ID" jdbcType="DECIMAL" property="customerManagerLevelId"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+    </resultMap>
+
+    <!--客户信息-->
+    <resultMap id="customerBasicVo" type="com.cardpay.mgt.customer.model.TCustomerBasic">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="cname"/>
+        <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+        <result column="CERTIFICATE_TYPE" jdbcType="DECIMAL" property="certificateType"/>
+        <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="certificateNumber"/>
+        <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+        <result column="HOME_ADDRESS" jdbcType="VARCHAR" property="homeAddress"/>
+        <result column="MARRIAGE_STATUS" jdbcType="DECIMAL" property="marriageStatus"/>
+        <result column="EDUCATION_DEGREE" jdbcType="DECIMAL" property="educationDegree"/>
+        <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
+        <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
+        <result column="ENTERPRISE_CNAME" jdbcType="DECIMAL" property="enterpriseCname"/>
+        <result column="ENTERPRISE_ID_CARD" jdbcType="DECIMAL" property="enterpriseIdCard"/>
+        <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType"/>
+    </resultMap>
+
+    <!--查询进件相关产品信息-->
+    <select id="queryProduct" resultMap="productMap">
+      SELECT * FROM T_PRODUCT WHERE id = #{productId}
+    </select>
+
+    <!--查询进件相关客户信息-->
+    <select id="queryCustomer" resultMap="customerBasicVo">
+      SELECT * FROM T_CUSTOMER_BASIC WHERE id =#{customerId}
+    </select>
+
+    <!--按客户经理Id查询进件信息-->
+    <select id="queryByManagerId" resultMap="BaseVo" parameterType="Map">
+        SELECT APP.*
+        FROM T_APPLICATION APP,
+        T_PRODUCT PRO,
+        T_CUSTOMER_BASIC CUS
+        <where>
+            APP.PRODUCT_ID = PRO.ID
+            AND APP.CUSTOMER_ID = CUS.ID
+            AND APP.CUSTOMER_MANAGER_ID = #{managerId}
+            <if test="customerName!=null and customerName!=''">
+                AND CUS.CNAME LIKE CONCAT(CONCAT('%', TRIM (#{customerName})), '%')
+            </if>
+            <if test="productName!=null and productName!=''">
+                AND PRO.PRODUCT_NAME LIKE CONCAT(CONCAT('%', TRIM (#{productName})), '%')
+            </if>
+        </where>
+    </select>
+
+    <!--按进件id查询进件信息-->
+    <select id="queryByApplication" resultMap="BaseVo">
+      SELECT * FROM T_APPLICATION WHERE id = #{applicationId}
+    </select>
+
+    <!--按机构id查询进件信息-->
+    <select id="queryAppByOrgId" resultMap="BaseVo" parameterType="Map">
+        SELECT ORGANIZATION.*
+        FROM
+        T_USER_ORGANIZATION ORGANIZATION ,
+        T_USER USR,
+        T_CUSTOMER_MANAGER MANAGER,
+        T_APPLICATION APPLICATION
+        WHERE
+        ORGANIZATION.USER_ID = USR.ID
+        AND USR.ID = MANAGER.USER_ID
+        AND MANAGER.ID = APPLICATION.CUSTOMER_MANAGER_ID
+        AND USORGANIZATIONR.ORGANIZATION_ID = #{orgId}
+    </select>
+
+    <!--按团队Id查询进件信息-->
+    <select id="queryAppByTeamId" resultMap="BaseVo" parameterType="Map">
+        SELECT UTEAM.*
+        FROM
+        T_USER_TEAM UTEAM,
+        T_USER USR,
+        T_CUSTOMER_MANAGER MANAGER,
+        T_APPLICATION APPLICATION
+        WHERE
+        UTEAM.USER_ID = USR.ID
+        AND USR.ID = MANAGER.USER_ID
+        AND MANAGER.ID = APPLICATION.CUSTOMER_MANAGER_ID
+        AND UTEAM.TEAM_ID = #{teamId}
+    </select>
+</mapper>

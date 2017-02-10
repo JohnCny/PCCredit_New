@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.customer.dao.TCustomerTransferMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.customer.model.TCustomerTransfer">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="ORIGIN_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="originCustomerManager"/>
+        <result column="NOW_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="nowCustomerManager"/>
+        <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
+        <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
+        <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
+        <result column="CUSTOMER_ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="CUSTOMER_TYPE" jdbcType="TIMESTAMP" property="customerType"/>
+    </resultMap>
+
+    <!--客户信息Vo-->
+    <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.customer.model.vo.TCustomerVo">
+        <result column="ID" jdbcType="DECIMAL" property="customerId"/>
+        <result column="CUSTOMER_CNAME" jdbcType="VARCHAR" property="cname"/>
+        <result column="CUSTOMER_CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="certificateNumber"/>
+        <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
+        <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
+    </resultMap>
+
+    <!--客户移交Vo-->
+    <resultMap id="BaseVo" type="com.cardpay.mgt.customer.model.vo.TCustomerTransferVo">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="name"/>
+        <result column="TRANSFER_REASON" jdbcType="VARCHAR" property="transferReason"/>
+        <result column="TRANSFER_STATUS" jdbcType="DECIMAL" property="transferStatus"/>
+        <result column="ORIGIN_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="originCustomerManager"/>
+        <result column="NOW_CUSTOMER_MANAGER" jdbcType="DECIMAL" property="nowCustomerManager"/>
+        <result column="TRANSFER_TIME" jdbcType="TIMESTAMP" property="transferTime"/>
+        <association property="customer" column="ID" select="queryIsCustomer"/>
+        <association property="oldManager" column="ORIGIN_CUSTOMER_MANAGER" select="queryOldManager"/>
+        <association property="newManager" column="NOW_CUSTOMER_MANAGER" select="queryNewManager"/>
+    </resultMap>
+
+    <!--查询客户信息-->
+    <select id="queryIsCustomer" resultType="com.cardpay.mgt.customer.model.TCustomerBasic">
+        SELECT * FROM T_CUSTOMER_BASIC WHERE ID = #{id}
+    </select>
+
+
+    <!--原客户经理信息-->
+    <select id="queryOldManager" resultType="com.cardpay.mgt.user.model.User">
+        SELECT * FROM T_CUSTOMER_MANAGER manager, T_USER usr
+        WHERE
+        manager.user_id= usr.id
+        AND MANAGER.id = #{oldManager}
+    </select>
+
+    <!--移交后客户经理信息-->
+    <select id="queryNewManager" resultType="com.cardpay.mgt.user.model.User">
+        SELECT * FROM T_CUSTOMER_MANAGER manager, T_USER usr
+        WHERE
+        manager.user_id= usr.id
+        AND MANAGER.id = #{newManager}
+    </select>
+
+    <!--查询移交记录返回vo信息-->
+    <select id="queryById" resultMap="BaseVo">
+        SELECT * FROM
+        T_CUSTOMER_TRANSFER transfer,
+        T_CUSTOMER_BASIC basic
+        WHERE
+        basic.id = transfer.CUSTOMER_ID
+        AND transfer.CUSTOMER_ID = #{customerId}
+    </select>
+
+    <!--查询客户接受列表-->
+    <select id="queryTransfer" resultMap="BaseResultMapVo">
+        SELECT basic.ID AS customerId, basic.CERTIFICATE_NUMBER AS certificateNumber,
+        basic.CNAME AS cname, transfer.TRANSFER_REASON AS transferReason, transfer.TRANSFER_STATUS AS transferStatus
+        FROM
+        T_CUSTOMER_BASIC basic, T_CUSTOMER_TRANSFER transfer
+        WHERE basic.id = transfer.CUSTOMER_ID
+        AND transfer.TRANSFER_STATUS = ${@com.cardpay.basic.common.constant.CustomerStatusEnum@ORDINARY.getValue()}
+        AND basic.CUSTOMER_STATUS != ${@com.cardpay.basic.common.constant.CustomerStatusEnum@FORBIDDEN.getValue()}
+        AND transfer.NOW_CUSTOMER_MANAGER = #{managerId,jdbcType=DECIMAL}
+        AND transfer.CUSTOMER_TYPE = #{customerType}
+    </select>
+
+    <!--客户接收(批量更新)-->
+    <update id="accept" parameterType="Map">
+        <foreach item="item" index="index" collection="customerIds" open="BEGIN" separator=";" close=";END;">
+            UPDATE T_CUSTOMER_TRANSFER
+            <set>
+                TRANSFER_STATUS = #{transferStatus}
+            </set>
+            where CUSTOMER_ID = #{item}
+        </foreach>
+    </update>
+
+
+</mapper>
