@@ -27,5 +27,6 @@
     <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy" />
     <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
     <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy" />
+    <result column="PRODUCT_LIMIT_TYPE" jdbcType="DECIMAL" property="productLimitType" />
   </resultMap>
 </mapper>
