@@ -14,24 +14,26 @@
         <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
         <result column="INVEST_PRITURE_DESCRIPTION" jdbcType="VARCHAR" property="investPictureDescription"/>
         <result column="IS_NEED" jdbcType="DECIMAL" property="isNeed"/>
-        <collection property="pictureList" select="queryByPicture" column="ID"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+        <collection property="pictureList" select="queryByPicture" column="{id = ID, applicationId = APPLICATION_ID}"/>
     </resultMap>
 
     <!--查询进件调查图片信息-->
     <select id="queryByPicture" resultMap="BaseResultMap">
-        SELECT * FROM T_APPLICATION_INVEST_PICTURE WHERE PRODUCT_INVEST_PICTURE_IDD = #{id}
+        SELECT * FROM T_APPLICATION_INVEST_PICTURE WHERE PRODUCT_INVEST_PICTURE_IDD = #{id,jdbcType=DECIMAL}
+         AND APPLICATION_ID = #{applicationId,jdbcType=DECIMAL}
     </select>
 
     <!--查询产品调查图片信息-->
     <select id="queryByApplicationId" resultType="Map" resultMap="BaseVo">
         SELECT
-            PIPD.*
+            PIPD.*, APP.id AS APPLICATION_ID
         FROM
             T_PRODUCT_INVEST_PICTURE_DESC PIPD,
             T_APPLICATION APP
         WHERE
             APP.PRODUCT_ID = PIPD.PRODUCT_ID
-        AND APP. ID = #{applicationId}
+        AND APP. ID = #{applicationId,jdbcType=DECIMAL}
     </select>
 
     <!--统计进件表中图片上传个数-->

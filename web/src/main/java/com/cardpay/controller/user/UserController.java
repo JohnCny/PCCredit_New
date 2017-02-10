@@ -1,6 +1,7 @@
 package com.cardpay.controller.user;
 
 import com.cardpay.basic.base.model.ResultTo;
+import com.cardpay.basic.common.context.ContextProperty;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.ErrorMessageUtil;
@@ -9,6 +10,8 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.PasswordUtil;
 import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.file.model.TFile;
+import com.cardpay.mgt.file.service.TFileService;
 import com.cardpay.mgt.user.model.Role;
 import com.cardpay.mgt.user.model.User;
 import com.cardpay.mgt.user.model.vo.RoleVo;
@@ -23,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +45,11 @@ public class UserController extends BaseController<User> {
 
     @Autowired
     private RoleService roleService;
+    /**
+     * 文件service
+     */
+    @Autowired
+    private TFileService tFileService;
 
     /**
      * 用户分页
@@ -105,12 +114,15 @@ public class UserController extends BaseController<User> {
      * @param user   User对象
      * @param result 错误信息
      * @param orgId  机构ID
+     * @param files  用户头像
      * @return 成功或失败
      */
     @PostMapping
     @ApiOperation(value = "增加用实现", httpMethod = "POST")
-    public ResultTo addUser(User user, BindingResult result, @RequestParam("orgId") Integer orgId,
-                            @RequestParam("roleId") Integer roleId) {
+    public ResultTo addUser(@ModelAttribute User user, BindingResult result
+            , @RequestParam("orgId") Integer orgId, @RequestParam("roleId") Integer roleId
+            , @RequestPart(value = "file", required = false) MultipartFile[] files) {
+        String serverPort = (String) ContextProperty.getContextProperty("tracker_server");
         if (orgId == null || roleId == null) {
             LogTemplate.info(this.getClass(), "orgId", orgId);
             LogTemplate.info(this.getClass(), "roleId", roleId);
@@ -119,6 +131,12 @@ public class UserController extends BaseController<User> {
         Map<String, String> map = new HashedMap();
         if (ErrorMessageUtil.setValidErrorMessage(map, result)) {
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
+        }
+        //头像上传
+        List<TFile> fileList = tFileService.uploads(files);
+        for (TFile file : fileList) {
+            user.setUserProfile(serverPort + File.separator + file.getGroupName() + File.separator + file.getFastName());
+            LogTemplate.info(this.getClass(), "fileUpload", serverPort + File.separator + file.getGroupName() + File.separator + file.getFastName());
         }
         if (userService.addUser(user, orgId, roleId)) {
             return new ResultTo();
@@ -308,11 +326,12 @@ public class UserController extends BaseController<User> {
 
     /**
      * 按机构查询某个所属角色的用户信息
+     *
      * @param roleType 角色类型
      * @return 角色信息
      */
     @GetMapping("/role/{roleType}")
-    public ResultTo queryRoleByOrg(@PathVariable("roleType") int roleType){
+    public ResultTo queryRoleByOrg(@PathVariable("roleType") int roleType) {
         List<RoleVo> userList = userService.queryRoleByOrg(ShiroKit.getOrgId(), roleType);
         return new ResultTo().setData(userList);
     }
