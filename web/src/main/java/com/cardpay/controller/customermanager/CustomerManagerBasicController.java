@@ -49,10 +49,9 @@ public class CustomerManagerBasicController extends BaseController<TCustomerMana
     @RequestMapping("/pageList")
     @ApiOperation(value = "获取客户经理列表", notes = "获取客户经理列表 levelId = -1 查询所有级别", httpMethod = "GET")
     public DataTablePage pageList() {
-        TCustomerManager customerManager = customerManagerService.selectByUserId(ShiroKit.getUserId());
         Map<String, Object> map = new HashMap();
         //查看当前机构下的客户经理
-        map.put("organizationId", customerManager.getOrganizationId());
+        map.put("organizationId", ShiroKit.getOrgId());
         map.put("status", UserStatus.NORMAL.getStatus());
         return dataTablePage("selectBaseVoList", map);
     }

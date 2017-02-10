@@ -1,11 +1,10 @@
 package com.cardpay.basic.util.datatable;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.basic.httpClient.HttpResult;
+import com.cardpay.basic.util.Underline2Camel;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -103,10 +102,6 @@ public class DataTablePage {
         this.length = length != null ? Integer.parseInt(length) : this.length;
         String finalOrder = getOrder(request);
 
-        if (StringUtils.isNotBlank(finalOrder)) {
-            example.orderBy(finalOrder);
-        }
-
         Map<String, Object> map = JSON.parseObject(search, Map.class);
 
         if (StringUtils.isNotBlank(methodName)) { //是否制定方法名称,若没有则执行默认的查询方法
@@ -121,13 +116,15 @@ public class DataTablePage {
             Method method;
             method = baseService.getClass().getDeclaredMethod(methodName, Map.class);
             PageHelper.startPage(this.start, this.length);
-            PageHelper.orderBy(finalOrder);
+            PageHelper.orderBy(getOrder2Underline(request));
             data = (List<Object>) method.invoke(baseService, map);
         } else {
             if (null == example) {
                 map = removeNull(map);
                 example = new Example(clazz);
-                example.orderBy(finalOrder);
+                if (StringUtils.isNotBlank(finalOrder)) {
+                    example.orderBy(finalOrder);
+                }
                 if (map != null && map.size() != 0) {
                     Example.Criteria criteria = example.createCriteria();
                     for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -175,6 +172,22 @@ public class DataTablePage {
             if (null != map) {
                 for (Map.Entry<String, String> entry : map.entrySet()) {
                     finalOrder = entry.getKey() + " " + entry.getValue();
+                    break;
+                }
+            }
+            return finalOrder;
+        }
+        return new String();
+    }
+
+    public static String getOrder2Underline(HttpServletRequest request) {
+        String order = request.getParameter(DataTableCode.PAGE_ORDER_NAME);
+        if (StringUtils.isNotBlank(order)) {
+            String finalOrder = "";
+            Map<String, String> map = JSON.parseObject(order, Map.class);
+            if (null != map) {
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    finalOrder = Underline2Camel.camel2Underline(entry.getKey()) + " " + entry.getValue();
                     break;
                 }
             }

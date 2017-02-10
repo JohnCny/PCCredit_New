@@ -1,37 +1,25 @@
 package com.cardpay.mgt.customermanager.daily.model;
 
-import com.cardpay.basic.base.model.GenericEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 import javax.persistence.*;
 
-/**
- * 客户经理日报信息实体类
- * @author yanweichen
- */
 @Table(name = "T_CUSTOMER_MANAGER_DAY")
 @ApiModel(value="客户经理日报数据管理")
-public class TCustomerManagerDay extends GenericEntity<Integer> {
-    /**
-     * 客户经理id(需要生成规则生成)
-     */
-    @Column(name = "CUS_ID")
-    @ApiModelProperty(value="客户经理id(需要生成规则生成)",required = true)
-    private Long cusId;
-
+public class TCustomerManagerDay {
     /**
      * 客户经理日报id
      */
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select CUSTOMER_MANAGER_DAY_SEQ.nextval from dual")
     @ApiModelProperty(value="客户经理日报id",required = true)
     private Integer id;
 
     /**
      * 客户经理id
      */
+    @Id
     @Column(name = "CUSTOMER_MANAGER_ID")
     @ApiModelProperty(value="客户经理id",required = true)
     private Integer customerManagerId;
@@ -44,54 +32,46 @@ public class TCustomerManagerDay extends GenericEntity<Integer> {
     private Date dailyTime;
 
     /**
-     * 新增或者拜访客户数
+     * 创建时间
      */
     @Column(name = "CREATE_TIME")
-    @ApiModelProperty(value="新增或者拜访客户数",required = true)
+    @ApiModelProperty(value="创建时间",required = true)
     private Date createTime;
+
+    /**
+     * 拜访/新增客户数
+     */
+    @Column(name = "VISIT_NEW_NUMBER")
+    @ApiModelProperty(value="拜访/新增客户数",required = true)
+    private Integer visitNewNumber;
 
     /**
      * 客户维护数
      */
-    @Column(name = "VISIT_NEW_NUMBER")
+    @Column(name = "MAINTENANCE_NUMBER")
     @ApiModelProperty(value="客户维护数",required = true)
-    private Integer visitNewNumber;
+    private Integer maintenanceNumber;
 
     /**
      * 新申请贷款数
      */
-    @Column(name = "MAINTENANCE_NUMBER")
-    @ApiModelProperty(value="新申请贷款数",required = true)
-    private Integer maintenanceNumber;
-
-    /**
-     * 贷前调查书
-     */
     @Column(name = "LOAN_NEW_NUMBER")
-    @ApiModelProperty(value="贷前调查书",required = true)
+    @ApiModelProperty(value="新申请贷款数",required = true)
     private Integer loanNewNumber;
 
-    @Column(name = "PRELOAN_NUMBER")
-    @ApiModelProperty(value="null",required = true)
-    private Integer preloanNumber;
+    /**
+     * 贷前调查数
+     */
+    @Column(name = "PRE_LOAN_NUMBER")
+    @ApiModelProperty(value="贷前调查数",required = true)
+    private Integer preLoanNumber;
 
     /**
-     * 获取客户经理id(需要生成规则生成)
-     *
-     * @return CUS_ID - 客户经理id(需要生成规则生成)
+     * 贷后调查数
      */
-    public Long getCusId() {
-        return cusId;
-    }
-
-    /**
-     * 设置客户经理id(需要生成规则生成)
-     *
-     * @param cusId 客户经理id(需要生成规则生成)
-     */
-    public void setCusId(Long cusId) {
-        this.cusId = cusId;
-    }
+    @Column(name = "POST_LOAN_NUMBER")
+    @ApiModelProperty(value="贷后调查数",required = true)
+    private Integer postLoanNumber;
 
     /**
      * 获取客户经理日报id
@@ -148,93 +128,111 @@ public class TCustomerManagerDay extends GenericEntity<Integer> {
     }
 
     /**
-     * 获取新增或者拜访客户数
+     * 获取创建时间
      *
-     * @return CREATE_TIME - 新增或者拜访客户数
+     * @return CREATE_TIME - 创建时间
      */
     public Date getCreateTime() {
         return createTime;
     }
 
     /**
-     * 设置新增或者拜访客户数
+     * 设置创建时间
      *
-     * @param createTime 新增或者拜访客户数
+     * @param createTime 创建时间
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     /**
-     * 获取客户维护数
+     * 获取拜访/新增客户数
      *
-     * @return VISIT_NEW_NUMBER - 客户维护数
+     * @return VISIT_NEW_NUMBER - 拜访/新增客户数
      */
     public Integer getVisitNewNumber() {
         return visitNewNumber;
     }
 
     /**
-     * 设置客户维护数
+     * 设置拜访/新增客户数
      *
-     * @param visitNewNumber 客户维护数
+     * @param visitNewNumber 拜访/新增客户数
      */
     public void setVisitNewNumber(Integer visitNewNumber) {
         this.visitNewNumber = visitNewNumber;
     }
 
     /**
-     * 获取新申请贷款数
+     * 获取客户维护数
      *
-     * @return MAINTENANCE_NUMBER - 新申请贷款数
+     * @return MAINTENANCE_NUMBER - 客户维护数
      */
     public Integer getMaintenanceNumber() {
         return maintenanceNumber;
     }
 
     /**
-     * 设置新申请贷款数
+     * 设置客户维护数
      *
-     * @param maintenanceNumber 新申请贷款数
+     * @param maintenanceNumber 客户维护数
      */
     public void setMaintenanceNumber(Integer maintenanceNumber) {
         this.maintenanceNumber = maintenanceNumber;
     }
 
     /**
-     * 获取贷前调查书
+     * 获取新申请贷款数
      *
-     * @return LOAN_NEW_NUMBER - 贷前调查书
+     * @return LOAN_NEW_NUMBER - 新申请贷款数
      */
     public Integer getLoanNewNumber() {
         return loanNewNumber;
     }
 
     /**
-     * 设置贷前调查书
+     * 设置新申请贷款数
      *
-     * @param loanNewNumber 贷前调查书
+     * @param loanNewNumber 新申请贷款数
      */
     public void setLoanNewNumber(Integer loanNewNumber) {
         this.loanNewNumber = loanNewNumber;
     }
 
     /**
-     * @return PRELOAN_NUMBER
+     * 获取贷前调查数
+     *
+     * @return PRE_LOAN_NUMBER - 贷前调查数
      */
-    public Integer getPreloanNumber() {
-        return preloanNumber;
+    public Integer getPreLoanNumber() {
+        return preLoanNumber;
     }
 
     /**
-     * @param preloanNumber 贷前调查
+     * 设置贷前调查数
+     *
+     * @param preLoanNumber 贷前调查数
      */
-    public void setPreloanNumber(Integer preloanNumber) {
-        this.preloanNumber = preloanNumber;
+    public void setPreLoanNumber(Integer preLoanNumber) {
+        this.preLoanNumber = preLoanNumber;
     }
 
-    @Override
-    public Integer getPK() {
-        return id;
+
+    /**
+     * 获取贷后调查数
+     *
+     * @return POST_LOAN_NUMBER - 贷前调查数
+     */
+    public Integer getPostLoanNumber() {
+        return postLoanNumber;
+    }
+
+    /**
+     * 设置贷后调查数
+     *
+     * @param postLoanNumber 贷后调查数
+     */
+    public void setPostLoanNumber(Integer postLoanNumber) {
+        this.postLoanNumber = postLoanNumber;
     }
 }
