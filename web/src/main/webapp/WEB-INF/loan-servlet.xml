@@ -24,7 +24,7 @@
     <aop:aspectj-autoproxy proxy-target-class="false"/>
 
     <!--配置静态资源访问路径 -->
-    <mvc:resources location="/static/" mapping="/static/**"/>
+    <mvc:resources location="/WEB-INF/static/" mapping="/static/**"/>
 
     <!-- 开启shiro spring AOP权限注解支持 -->
     <aop:config proxy-target-class="true"></aop:config>

@@ -101,8 +101,8 @@
             APP.PRODUCT_ID = PRO.ID
             AND APP.CUSTOMER_ID = CUS.ID
             AND APP.CUSTOMER_MANAGER_ID = #{managerId}
-            <if test="customerName!=null and customerName!=''">
-                AND CUS.CNAME LIKE CONCAT(CONCAT('%', TRIM (#{customerName})), '%')
+            <if test="cname!=null and cname!=''">
+                AND CUS.CNAME LIKE CONCAT(CONCAT('%', TRIM (#{cname})), '%')
             </if>
             <if test="productName!=null and productName!=''">
                 AND PRO.PRODUCT_NAME LIKE CONCAT(CONCAT('%', TRIM (#{productName})), '%')
