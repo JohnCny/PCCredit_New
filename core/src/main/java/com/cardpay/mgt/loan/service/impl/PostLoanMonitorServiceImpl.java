@@ -3,6 +3,7 @@ package com.cardpay.mgt.loan.service.impl;
 import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
 import com.cardpay.basic.common.enums.ResultEnum;
+import com.cardpay.basic.util.DateTimeUtil;
 import com.cardpay.mgt.application.basic.dao.TApplicationMapper;
 import com.cardpay.mgt.application.basic.model.TApplication;
 import com.cardpay.mgt.application.basic.service.TApplicationService;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static com.cardpay.basic.util.DateTimeUtil.dateSubtraction;
 
 /**
  * 贷后监控服务层实现
@@ -145,37 +148,4 @@ public class PostLoanMonitorServiceImpl extends BaseServiceImpl<PostLoanMonitor>
         }
     }
 
-
-    /**
-     * 计算两个日期间隔时间
-     *
-     * @param beginTime 开始时间
-     * @param nowTime   现在时间
-     * @return 间隔时间
-     */
-    private Map<String, Object> dateSubtraction(Date beginTime, Date nowTime) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(beginTime);
-        int beginDay = calendar.get(Calendar.DAY_OF_MONTH);
-        int beginMonth = calendar.get(Calendar.MONTH);
-        int beginYear = calendar.get(Calendar.YEAR);
-
-        calendar.setTime(nowTime);
-        int nowDay = calendar.get(Calendar.DAY_OF_MONTH);
-        int nowMonth = calendar.get(Calendar.MONTH);
-        int nowYear = calendar.get(Calendar.YEAR);
-        Map<String, Object> map = new HashMap<>();
-        int result;
-        if (beginYear == nowYear && nowMonth != beginMonth) {
-            result = nowMonth - beginMonth; //返回相差月份
-            map.put("month", result);
-        } else if (beginYear == nowYear && nowMonth == beginMonth && beginDay != nowYear) {
-            result = nowDay - beginDay; //返回相差天数
-            map.put("day", result);
-        } else {
-            result = nowYear - beginYear;
-            map.put("year", result); //返回相差年份
-        }
-        return map;
-    }
 }
