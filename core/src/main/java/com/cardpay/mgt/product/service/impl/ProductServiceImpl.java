@@ -47,6 +47,7 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         product.setCreateBy(ShiroKit.getUserId());
         product.setCreateTime(new Date());
         product.setProductState(2);//状态:创建中
+        product.setOrganizationId(ShiroKit.getOrgId());
         if (productImg != null) {
             product.setProductPictureUrl(fileManager.upLoadExt(productImg));
         }

@@ -6,10 +6,16 @@ import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.auditing.model.TApplicationApprovalReview;
+import com.cardpay.mgt.application.auditing.model.vo.TApplicationApprovalReviewVo;
 import com.cardpay.mgt.application.auditing.service.TApplicationApprovalReviewService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 审贷会排审
@@ -33,9 +39,10 @@ public class ApplicationApprovalReviewController extends BaseController<TApplica
      */
     @RequestMapping("/pageList")
     public DataTablePage queryAll() {
-        Example example = new Example(TApplicationApprovalReview.class);
-        example.createCriteria().andCondition("REVIEW_PERSON_ID = " + ShiroKit.getUserId());
-        return dataTablePage(example);
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", "REVIEW_PERSON_ID");
+        map.put("value", ShiroKit.getUserId());
+        return dataTablePage("queryByKeyAndValue", map);
     }
 
     /**
@@ -46,10 +53,11 @@ public class ApplicationApprovalReviewController extends BaseController<TApplica
      */
     @GetMapping("/{applicationId}")
     public ResultTo getByAppId(@PathVariable int applicationId) {
-        TApplicationApprovalReview review = new TApplicationApprovalReview();
-        review.setApplicationId(applicationId);
-        TApplicationApprovalReview approvalReview = tApplicationApprovalReviewService.selectOne(review);
-        return new ResultTo().setData(approvalReview);
+        Map<Object, Object> map = new HashMap<>();
+        map.put("key", "APPLICATION_ID");
+        map.put("value", applicationId);
+        List<TApplicationApprovalReviewVo> approvalReviewVos = tApplicationApprovalReviewService.queryByKeyAndValue(map);
+        return new ResultTo().setData(approvalReviewVos);
     }
 
     /**

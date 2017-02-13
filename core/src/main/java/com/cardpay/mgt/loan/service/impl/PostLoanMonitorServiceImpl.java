@@ -114,7 +114,6 @@ public class PostLoanMonitorServiceImpl extends BaseServiceImpl<PostLoanMonitor>
                 Map<String, Object> intervalMap = dateSubtraction(beginTime, nowTime);
                 Integer month = (Integer) intervalMap.get("month");
                 Integer day = (Integer) intervalMap.get("day");
-
                 PostLoanMonitor postLoanMonitor = new PostLoanMonitor();
                 postLoanMonitor.setApplicationId(tApplication.getId());
                 postLoanMonitor.setCustomerType(customerBasic.getCustomerType());
