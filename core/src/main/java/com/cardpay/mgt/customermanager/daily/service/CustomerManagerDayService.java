@@ -38,11 +38,21 @@ public interface CustomerManagerDayService extends BaseService<TCustomerManagerD
     List<TCustomerManagerDayAndUser> selectDailyAndUser(Map<String,Object> map);
 
     /**
-     * 导出excel
+     * 导出日报
      *
      * @param request request
      * @param response response
      * @return excel
      */
-    void expertExcel(HttpServletRequest request, HttpServletResponse response);
+    void expertDayExcel(HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 导出周报
+     *
+     * @param date 日期
+     * @param request request
+     * @param response response
+     * @return excel
+     */
+    void expertWeeklyExcel(String date,HttpServletRequest request, HttpServletResponse response);
 }

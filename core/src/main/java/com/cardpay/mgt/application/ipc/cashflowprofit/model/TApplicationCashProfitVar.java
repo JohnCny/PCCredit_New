@@ -3,7 +3,6 @@ package com.cardpay.mgt.application.ipc.cashflowprofit.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.math.BigDecimal;
 import javax.persistence.*;
 
 @Table(name = "T_APPLICATION_CASHPROFIT_VAR")
@@ -43,98 +42,105 @@ public class TApplicationCashProfitVar {
      */
     @Column(name = "VAR_MONTH_ONE")
     @ApiModelProperty(value="第一个月",required = true)
-    private BigDecimal varMonthOne;
+    private String varMonthOne;
 
     /**
      * 第二个月
      */
     @Column(name = "VAR_MONTH_TWO")
     @ApiModelProperty(value="第二个月",required = true)
-    private BigDecimal varMonthTwo;
+    private String varMonthTwo;
 
     /**
      * 第三个月
      */
     @Column(name = "VAR_MONTH_THREE")
     @ApiModelProperty(value="第三个月",required = true)
-    private BigDecimal varMonthThree;
+    private String varMonthThree;
 
     /**
      * 第四个月
      */
     @Column(name = "VAR_MONTH_FOUR")
     @ApiModelProperty(value="第四个月",required = true)
-    private Long varMonthFour;
+    private String varMonthFour;
 
     /**
      * 第五个月
      */
     @Column(name = "VAR_MONTH_FIVE")
     @ApiModelProperty(value="第五个月",required = true)
-    private Long varMonthFive;
+    private String varMonthFive;
 
     /**
      * 第六个月
      */
     @Column(name = "VAR_MONTH_SIX")
     @ApiModelProperty(value="第六个月",required = true)
-    private Long varMonthSix;
+    private String varMonthSix;
 
     /**
      * 第七个月
      */
     @Column(name = "VAR_MONTH_SEVEN")
     @ApiModelProperty(value="第七个月",required = true)
-    private BigDecimal varMonthSeven;
+    private String varMonthSeven;
 
     /**
      * 第八个月
      */
     @Column(name = "VAR_MONTH_EIGHT")
     @ApiModelProperty(value="第八个月",required = true)
-    private BigDecimal varMonthEight;
+    private String varMonthEight;
 
     /**
      * 第九个月
      */
     @Column(name = "VAR_MONTH_NINE")
     @ApiModelProperty(value="第九个月",required = true)
-    private BigDecimal varMonthNine;
+    private String varMonthNine;
 
     /**
      * 第十个月
      */
     @Column(name = "VAR_MONTH_TEN")
     @ApiModelProperty(value="第十个月",required = true)
-    private BigDecimal varMonthTen;
+    private String varMonthTen;
 
     /**
      * 第十一个月
      */
     @Column(name = "VAR_MONTH_ELEVEN")
     @ApiModelProperty(value="第十一个月",required = true)
-    private BigDecimal varMonthEleven;
+    private String varMonthEleven;
 
     /**
      * 第十二个月
      */
     @Column(name = "VAR_MONTH_TWELVE")
     @ApiModelProperty(value="第十二个月",required = true)
-    private BigDecimal varMonthTwelve;
+    private String varMonthTwelve;
+
+    /**
+     * 调查当月
+     */
+    @Column(name = "VAR_SURVEY_CURRENT_MONTH")
+    @ApiModelProperty(value="调查当月",required = true)
+    private String varSurveyCurrentMonth;
 
     /**
      * 总计
      */
     @Column(name = "VAR_CROSS_VALIDATE_ALL")
     @ApiModelProperty(value="总计",required = true)
-    private BigDecimal varCrossValidateAll;
+    private String varCrossValidateAll;
 
     /**
      * 月平均
      */
     @Column(name = "VAR_CROSS_VALIDATE_MONTH_AVG")
     @ApiModelProperty(value="月平均",required = true)
-    private BigDecimal varCrossValidateMonthAvg;
+    private String varCrossValidateMonthAvg;
 
     /**
      * 进件id
@@ -220,7 +226,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_ONE - 第一个月
      */
-    public BigDecimal getVarMonthOne() {
+    public String getVarMonthOne() {
         return varMonthOne;
     }
 
@@ -229,7 +235,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthOne 第一个月
      */
-    public void setVarMonthOne(BigDecimal varMonthOne) {
+    public void setVarMonthOne(String varMonthOne) {
         this.varMonthOne = varMonthOne;
     }
 
@@ -238,7 +244,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_TWO - 第二个月
      */
-    public BigDecimal getVarMonthTwo() {
+    public String getVarMonthTwo() {
         return varMonthTwo;
     }
 
@@ -247,7 +253,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthTwo 第二个月
      */
-    public void setVarMonthTwo(BigDecimal varMonthTwo) {
+    public void setVarMonthTwo(String varMonthTwo) {
         this.varMonthTwo = varMonthTwo;
     }
 
@@ -256,7 +262,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_THREE - 第三个月
      */
-    public BigDecimal getVarMonthThree() {
+    public String getVarMonthThree() {
         return varMonthThree;
     }
 
@@ -265,7 +271,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthThree 第三个月
      */
-    public void setVarMonthThree(BigDecimal varMonthThree) {
+    public void setVarMonthThree(String varMonthThree) {
         this.varMonthThree = varMonthThree;
     }
 
@@ -274,7 +280,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_FOUR - 第四个月
      */
-    public Long getVarMonthFour() {
+    public String getVarMonthFour() {
         return varMonthFour;
     }
 
@@ -283,7 +289,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthFour 第四个月
      */
-    public void setVarMonthFour(Long varMonthFour) {
+    public void setVarMonthFour(String varMonthFour) {
         this.varMonthFour = varMonthFour;
     }
 
@@ -292,7 +298,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_FIVE - 第五个月
      */
-    public Long getVarMonthFive() {
+    public String getVarMonthFive() {
         return varMonthFive;
     }
 
@@ -301,7 +307,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthFive 第五个月
      */
-    public void setVarMonthFive(Long varMonthFive) {
+    public void setVarMonthFive(String varMonthFive) {
         this.varMonthFive = varMonthFive;
     }
 
@@ -310,7 +316,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_SIX - 第六个月
      */
-    public Long getVarMonthSix() {
+    public String getVarMonthSix() {
         return varMonthSix;
     }
 
@@ -319,7 +325,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthSix 第六个月
      */
-    public void setVarMonthSix(Long varMonthSix) {
+    public void setVarMonthSix(String varMonthSix) {
         this.varMonthSix = varMonthSix;
     }
 
@@ -328,7 +334,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_SEVEN - 第七个月
      */
-    public BigDecimal getVarMonthSeven() {
+    public String getVarMonthSeven() {
         return varMonthSeven;
     }
 
@@ -337,7 +343,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthSeven 第七个月
      */
-    public void setVarMonthSeven(BigDecimal varMonthSeven) {
+    public void setVarMonthSeven(String varMonthSeven) {
         this.varMonthSeven = varMonthSeven;
     }
 
@@ -346,7 +352,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_EIGHT - 第八个月
      */
-    public BigDecimal getVarMonthEight() {
+    public String getVarMonthEight() {
         return varMonthEight;
     }
 
@@ -355,7 +361,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthEight 第八个月
      */
-    public void setVarMonthEight(BigDecimal varMonthEight) {
+    public void setVarMonthEight(String varMonthEight) {
         this.varMonthEight = varMonthEight;
     }
 
@@ -364,7 +370,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_NINE - 第九个月
      */
-    public BigDecimal getVarMonthNine() {
+    public String getVarMonthNine() {
         return varMonthNine;
     }
 
@@ -373,7 +379,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthNine 第九个月
      */
-    public void setVarMonthNine(BigDecimal varMonthNine) {
+    public void setVarMonthNine(String varMonthNine) {
         this.varMonthNine = varMonthNine;
     }
 
@@ -382,7 +388,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_TEN - 第十个月
      */
-    public BigDecimal getVarMonthTen() {
+    public String getVarMonthTen() {
         return varMonthTen;
     }
 
@@ -391,7 +397,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthTen 第十个月
      */
-    public void setVarMonthTen(BigDecimal varMonthTen) {
+    public void setVarMonthTen(String varMonthTen) {
         this.varMonthTen = varMonthTen;
     }
 
@@ -400,7 +406,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_ELEVEN - 第十一个月
      */
-    public BigDecimal getVarMonthEleven() {
+    public String getVarMonthEleven() {
         return varMonthEleven;
     }
 
@@ -409,7 +415,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthEleven 第十一个月
      */
-    public void setVarMonthEleven(BigDecimal varMonthEleven) {
+    public void setVarMonthEleven(String varMonthEleven) {
         this.varMonthEleven = varMonthEleven;
     }
 
@@ -418,7 +424,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_MONTH_TWELVE - 第十二个月
      */
-    public BigDecimal getVarMonthTwelve() {
+    public String getVarMonthTwelve() {
         return varMonthTwelve;
     }
 
@@ -427,8 +433,26 @@ public class TApplicationCashProfitVar {
      *
      * @param varMonthTwelve 第十二个月
      */
-    public void setVarMonthTwelve(BigDecimal varMonthTwelve) {
+    public void setVarMonthTwelve(String varMonthTwelve) {
         this.varMonthTwelve = varMonthTwelve;
+    }
+
+    /**
+     * 获取调查当月
+     *
+     * @return VAR_SURVEY_CURRENT_MONTH - 调查当月
+     */
+    public String getVarSurveyCurrentMonth() {
+        return varSurveyCurrentMonth;
+    }
+
+    /**
+     * 设置调查当月
+     *
+     * @param varSurveyCurrentMonth 调查当月
+     */
+    public void setVarSurveyCurrentMonth(String varSurveyCurrentMonth) {
+        this.varSurveyCurrentMonth = varSurveyCurrentMonth;
     }
 
     /**
@@ -436,7 +460,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_CROSS_VALIDATE_ALL - 总计
      */
-    public BigDecimal getVarCrossValidateAll() {
+    public String getVarCrossValidateAll() {
         return varCrossValidateAll;
     }
 
@@ -445,7 +469,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varCrossValidateAll 总计
      */
-    public void setVarCrossValidateAll(BigDecimal varCrossValidateAll) {
+    public void setVarCrossValidateAll(String varCrossValidateAll) {
         this.varCrossValidateAll = varCrossValidateAll;
     }
 
@@ -454,7 +478,7 @@ public class TApplicationCashProfitVar {
      *
      * @return VAR_CROSS_VALIDATE_MONTH_AVG - 月平均
      */
-    public BigDecimal getVarCrossValidateMonthAvg() {
+    public String getVarCrossValidateMonthAvg() {
         return varCrossValidateMonthAvg;
     }
 
@@ -463,7 +487,7 @@ public class TApplicationCashProfitVar {
      *
      * @param varCrossValidateMonthAvg 月平均
      */
-    public void setVarCrossValidateMonthAvg(BigDecimal varCrossValidateMonthAvg) {
+    public void setVarCrossValidateMonthAvg(String varCrossValidateMonthAvg) {
         this.varCrossValidateMonthAvg = varCrossValidateMonthAvg;
     }
 
