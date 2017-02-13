@@ -76,4 +76,20 @@ public interface TApplicationService extends BaseService<TApplication> {
      * @return true/false
      */
     boolean userIfOrgBoss(int orgId, int userId);
+
+    /**
+     * 删除进件
+     * @param applicationId 进件ID
+     * @return true/false
+     */
+    boolean deleteApplication(int applicationId);
+
+    /**
+     * 新建进件
+     * @param productId 产品id
+     * @param customerId 客户id
+     * @param userId 用户id
+     * @return true/flase
+     */
+    int insertApplication(int productId, int customerId, int userId);
 }
