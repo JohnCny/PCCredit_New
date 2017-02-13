@@ -123,6 +123,13 @@ public class TApplicationCashProfitVar {
     private BigDecimal varMonthTwelve;
 
     /**
+     * 调查当月
+     */
+    @Column(name = "VAR_SURVEY_CURRENT_MONTH")
+    @ApiModelProperty(value="调查当月",required = true)
+    private BigDecimal varSurveyCurrentMonth;
+
+    /**
      * 总计
      */
     @Column(name = "VAR_CROSS_VALIDATE_ALL")
@@ -429,6 +436,24 @@ public class TApplicationCashProfitVar {
      */
     public void setVarMonthTwelve(BigDecimal varMonthTwelve) {
         this.varMonthTwelve = varMonthTwelve;
+    }
+
+    /**
+     * 获取调查当月
+     *
+     * @return VAR_SURVEY_CURRENT_MONTH - 调查当月
+     */
+    public BigDecimal getVarSurveyCurrentMonth() {
+        return varSurveyCurrentMonth;
+    }
+
+    /**
+     * 设置调查当月
+     *
+     * @param varSurveyCurrentMonth 调查当月
+     */
+    public void setVarSurveyCurrentMonth(BigDecimal varSurveyCurrentMonth) {
+        this.varSurveyCurrentMonth = varSurveyCurrentMonth;
     }
 
     /**

@@ -140,6 +140,11 @@ public class CashProfitTemplateVar {
     private Integer varMonthTwelve;
 
     /**
+     * 调查当月
+     */
+    private Integer varSurveyCurrentMonth;
+
+    /**
      * 总计
      */
     private Integer varCrossValidateAll;
@@ -248,6 +253,14 @@ public class CashProfitTemplateVar {
 
     public void setTemplateVarIsHasChild(Integer templateVarIsHasChild) {
         this.templateVarIsHasChild = templateVarIsHasChild;
+    }
+
+    public Integer getVarSurveyCurrentMonth() {
+        return varSurveyCurrentMonth;
+    }
+
+    public void setVarSurveyCurrentMonth(Integer varSurveyCurrentMonth) {
+        this.varSurveyCurrentMonth = varSurveyCurrentMonth;
     }
 
     public Integer getTemplateVarIsCompute() {

@@ -38,6 +38,7 @@
     <result column="VAR_MONTH_TEN" jdbcType="DECIMAL" property="varMonthTen" />
     <result column="VAR_MONTH_ELEVEN" jdbcType="DECIMAL" property="varMonthEleven" />
     <result column="VAR_MONTH_TWELVE" jdbcType="DECIMAL" property="varMonthTwelve" />
+    <result column="VAR_SURVEY_CURRENT_MONTH" jdbcType="DECIMAL" property="varSurveyCurrentMonth" />
     <result column="VAR_CROSS_VALIDATE_ALL" jdbcType="DECIMAL" property="varCrossValidateAll" />
     <result column="VAR_CROSS_VALIDATE_MONTH_AVG" jdbcType="DECIMAL" property="varCrossValidateMonthAvg" />
     <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
@@ -73,6 +74,7 @@
     <result column="EXTRA_MONTH_TEN" jdbcType="DECIMAL" property="extraMonthTen" />
     <result column="EXTRA_MONTH_ELEVEN" jdbcType="DECIMAL" property="extraMonthEleven" />
     <result column="EXTRA_MONTH_TWELVE" jdbcType="DECIMAL" property="extraMonthTwelve" />
+    <result column="EXTRA_SURVEY_CURRENT_MONTH" jdbcType="DECIMAL" property="extraSurveyCurrentMonth" />
     <result column="EXTRA_CROSS_VALIDATE_ALL" jdbcType="DECIMAL" property="extraCrossValidateAll" />
     <result column="EXTRA_CROSS_VALIDATE_MONTH_AVG" jdbcType="DECIMAL" property="extraCrossValidateMonthAvg" />
   </resultMap>

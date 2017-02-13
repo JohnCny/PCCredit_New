@@ -131,6 +131,13 @@ public class TApplicationCashProfitExt {
     private BigDecimal extraMonthTwelve;
 
     /**
+     * 额外调查当月
+     */
+    @Column(name = "EXTRA_SURVEY_CURRENT_MONTH")
+    @ApiModelProperty(value="额外调查当月",required = true)
+    private BigDecimal extraSurveyCurrentMonth;
+
+    /**
      * 额外总计
      */
     @Column(name = "EXTRA_CROSS_VALIDATE_ALL")
@@ -448,6 +455,24 @@ public class TApplicationCashProfitExt {
      */
     public void setExtraMonthTwelve(BigDecimal extraMonthTwelve) {
         this.extraMonthTwelve = extraMonthTwelve;
+    }
+
+    /**
+     * 获取额外调查当月
+     *
+     * @return EXTRA_SURVEY_CURRENT_MONTH - 额外调查当月
+     */
+    public BigDecimal getExtraSurveyCurrentMonth() {
+        return extraSurveyCurrentMonth;
+    }
+
+    /**
+     * 设置额外调查当月
+     *
+     * @param extraSurveyCurrentMonth 额外调查当月
+     */
+    public void setExtraSurveyCurrentMonth(BigDecimal extraSurveyCurrentMonth) {
+        this.extraSurveyCurrentMonth = extraSurveyCurrentMonth;
     }
 
     /**
