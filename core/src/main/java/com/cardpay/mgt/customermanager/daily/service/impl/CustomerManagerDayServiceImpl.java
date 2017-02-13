@@ -76,7 +76,7 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
         map.put("status", UserStatus.NORMAL.getStatus());
         List<TCustomerManagerDayAndUser> customerManagerDayAndUserList = getCustomerManagerDayAndUsers(request, map);
         Date dailyTime = customerManagerDayAndUserList.get(0).getCustomerManagerDay().getDailyTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String dailyTimeStr = sdf.format(dailyTime);
         String sheetName = "客户经理日报("+dailyTimeStr+")";
         String title = "客户经理日报";
@@ -124,11 +124,9 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
         if (date != null){
             calendar.setTime(date);
         }
-        Date time = calendar.getTime();
         while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
             calendar.add(Calendar.DAY_OF_WEEK, -1);
         }
-        Date time1 = calendar.getTime();
         Date[] dates = new Date[5];
         for (int i = 0; i < 5; i++) {
             dates[i] = calendar.getTime();
