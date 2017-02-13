@@ -16,7 +16,7 @@ public class TApplicationTemplateVarExt {
     @Column(name = "EXTRA_VAR_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select APP_TEMPLATE_VAR_EXT_SEQ.NEXTVAL from dual")
     @ApiModelProperty(value="进件模板额外值id",required = true)
-    private BigDecimal extraVarId;
+    private Integer extraVarId;
 
     /**
      * 进件模板值id
@@ -51,7 +51,7 @@ public class TApplicationTemplateVarExt {
      *
      * @return EXTRA_VAR_ID - 进件模板额外值id
      */
-    public BigDecimal getExtraVarId() {
+    public Integer getExtraVarId() {
         return extraVarId;
     }
 
@@ -60,7 +60,7 @@ public class TApplicationTemplateVarExt {
      *
      * @param extraVarId 进件模板额外值id
      */
-    public void setExtraVarId(BigDecimal extraVarId) {
+    public void setExtraVarId(Integer extraVarId) {
         this.extraVarId = extraVarId;
     }
 

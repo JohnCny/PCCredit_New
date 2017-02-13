@@ -82,77 +82,77 @@ public class CashProfitTemplateVar {
     /**
      * 第一个月
      */
-    private Integer varMonthOne;
+    private String varMonthOne;
 
     /**
      * 第二个月
      */
-    private Integer varMonthTwo;
+    private String varMonthTwo;
 
     /**
      * 第三个月
      */
-    private Integer varMonthThree;
+    private String varMonthThree;
 
     /**
      * 第四个月
      */
-    private Long varMonthFour;
+    private String varMonthFour;
 
     /**
      * 第五个月
      */
-    private Long varMonthFive;
+    private String varMonthFive;
 
     /**
      * 第六个月
      */
-    private Long varMonthSix;
+    private String varMonthSix;
 
     /**
      * 第七个月
      */
-    private Integer varMonthSeven;
+    private String varMonthSeven;
 
     /**
      * 第八个月
      */
-    private Integer varMonthEight;
+    private String varMonthEight;
 
     /**
      * 第九个月
      */
-    private Integer varMonthNine;
+    private String varMonthNine;
 
     /**
      * 第十个月
      */
-    private Integer varMonthTen;
+    private String varMonthTen;
 
     /**
      * 第十一个月
      */
-    private Integer varMonthEleven;
+    private String varMonthEleven;
 
     /**
      * 第十二个月
      */
-    private Integer varMonthTwelve;
+    private String varMonthTwelve;
 
     /**
      * 调查当月
      */
-    private Integer varSurveyCurrentMonth;
+    private String varSurveyCurrentMonth;
 
     /**
      * 总计
      */
-    private Integer varCrossValidateAll;
+    private String varCrossValidateAll;
 
     /**
      * 月平均
      */
-    private Integer varCrossValidateMonthAvg;
+    private String varCrossValidateMonthAvg;
 
     /**
      * 进件id
@@ -255,14 +255,6 @@ public class CashProfitTemplateVar {
         this.templateVarIsHasChild = templateVarIsHasChild;
     }
 
-    public Integer getVarSurveyCurrentMonth() {
-        return varSurveyCurrentMonth;
-    }
-
-    public void setVarSurveyCurrentMonth(Integer varSurveyCurrentMonth) {
-        this.varSurveyCurrentMonth = varSurveyCurrentMonth;
-    }
-
     public Integer getTemplateVarIsCompute() {
         return templateVarIsCompute;
     }
@@ -289,255 +281,123 @@ public class CashProfitTemplateVar {
         this.applicationCashProfitVarId = applicationCashProfitVarId;
     }
 
-    /**
-     * 获取第一个月
-     *
-     * @return VAR_MONTH_ONE - 第一个月
-     */
-    public Integer getVarMonthOne() {
+    public String getVarMonthOne() {
         return varMonthOne;
     }
 
-    /**
-     * 设置第一个月
-     *
-     * @param varMonthOne 第一个月
-     */
-    public void setVarMonthOne(Integer varMonthOne) {
+    public void setVarMonthOne(String varMonthOne) {
         this.varMonthOne = varMonthOne;
     }
 
-    /**
-     * 获取第二个月
-     *
-     * @return VAR_MONTH_TWO - 第二个月
-     */
-    public Integer getVarMonthTwo() {
+    public String getVarMonthTwo() {
         return varMonthTwo;
     }
 
-    /**
-     * 设置第二个月
-     *
-     * @param varMonthTwo 第二个月
-     */
-    public void setVarMonthTwo(Integer varMonthTwo) {
+    public void setVarMonthTwo(String varMonthTwo) {
         this.varMonthTwo = varMonthTwo;
     }
 
-    /**
-     * 获取第三个月
-     *
-     * @return VAR_MONTH_THREE - 第三个月
-     */
-    public Integer getVarMonthThree() {
+    public String getVarMonthThree() {
         return varMonthThree;
     }
 
-    /**
-     * 设置第三个月
-     *
-     * @param varMonthThree 第三个月
-     */
-    public void setVarMonthThree(Integer varMonthThree) {
+    public void setVarMonthThree(String varMonthThree) {
         this.varMonthThree = varMonthThree;
     }
 
-    /**
-     * 获取第四个月
-     *
-     * @return VAR_MONTH_FOUR - 第四个月
-     */
-    public Long getVarMonthFour() {
+    public String getVarMonthFour() {
         return varMonthFour;
     }
 
-    /**
-     * 设置第四个月
-     *
-     * @param varMonthFour 第四个月
-     */
-    public void setVarMonthFour(Long varMonthFour) {
+    public void setVarMonthFour(String varMonthFour) {
         this.varMonthFour = varMonthFour;
     }
 
-    /**
-     * 获取第五个月
-     *
-     * @return VAR_MONTH_FIVE - 第五个月
-     */
-    public Long getVarMonthFive() {
+    public String getVarMonthFive() {
         return varMonthFive;
     }
 
-    /**
-     * 设置第五个月
-     *
-     * @param varMonthFive 第五个月
-     */
-    public void setVarMonthFive(Long varMonthFive) {
+    public void setVarMonthFive(String varMonthFive) {
         this.varMonthFive = varMonthFive;
     }
 
-    /**
-     * 获取第六个月
-     *
-     * @return VAR_MONTH_SIX - 第六个月
-     */
-    public Long getVarMonthSix() {
+    public String getVarMonthSix() {
         return varMonthSix;
     }
 
-    /**
-     * 设置第六个月
-     *
-     * @param varMonthSix 第六个月
-     */
-    public void setVarMonthSix(Long varMonthSix) {
+    public void setVarMonthSix(String varMonthSix) {
         this.varMonthSix = varMonthSix;
     }
 
-    /**
-     * 获取第七个月
-     *
-     * @return VAR_MONTH_SEVEN - 第七个月
-     */
-    public Integer getVarMonthSeven() {
+    public String getVarMonthSeven() {
         return varMonthSeven;
     }
 
-    /**
-     * 设置第七个月
-     *
-     * @param varMonthSeven 第七个月
-     */
-    public void setVarMonthSeven(Integer varMonthSeven) {
+    public void setVarMonthSeven(String varMonthSeven) {
         this.varMonthSeven = varMonthSeven;
     }
 
-    /**
-     * 获取第八个月
-     *
-     * @return VAR_MONTH_EIGHT - 第八个月
-     */
-    public Integer getVarMonthEight() {
+    public String getVarMonthEight() {
         return varMonthEight;
     }
 
-    /**
-     * 设置第八个月
-     *
-     * @param varMonthEight 第八个月
-     */
-    public void setVarMonthEight(Integer varMonthEight) {
+    public void setVarMonthEight(String varMonthEight) {
         this.varMonthEight = varMonthEight;
     }
 
-    /**
-     * 获取第九个月
-     *
-     * @return VAR_MONTH_NINE - 第九个月
-     */
-    public Integer getVarMonthNine() {
+    public String getVarMonthNine() {
         return varMonthNine;
     }
 
-    /**
-     * 设置第九个月
-     *
-     * @param varMonthNine 第九个月
-     */
-    public void setVarMonthNine(Integer varMonthNine) {
+    public void setVarMonthNine(String varMonthNine) {
         this.varMonthNine = varMonthNine;
     }
 
-    /**
-     * 获取第十个月
-     *
-     * @return VAR_MONTH_TEN - 第十个月
-     */
-    public Integer getVarMonthTen() {
+    public String getVarMonthTen() {
         return varMonthTen;
     }
 
-    /**
-     * 设置第十个月
-     *
-     * @param varMonthTen 第十个月
-     */
-    public void setVarMonthTen(Integer varMonthTen) {
+    public void setVarMonthTen(String varMonthTen) {
         this.varMonthTen = varMonthTen;
     }
 
-    /**
-     * 获取第十一个月
-     *
-     * @return VAR_MONTH_ELEVEN - 第十一个月
-     */
-    public Integer getVarMonthEleven() {
+    public String getVarMonthEleven() {
         return varMonthEleven;
     }
 
-    /**
-     * 设置第十一个月
-     *
-     * @param varMonthEleven 第十一个月
-     */
-    public void setVarMonthEleven(Integer varMonthEleven) {
+    public void setVarMonthEleven(String varMonthEleven) {
         this.varMonthEleven = varMonthEleven;
     }
 
-    /**
-     * 获取第十二个月
-     *
-     * @return VAR_MONTH_TWELVE - 第十二个月
-     */
-    public Integer getVarMonthTwelve() {
+    public String getVarMonthTwelve() {
         return varMonthTwelve;
     }
 
-    /**
-     * 设置第十二个月
-     *
-     * @param varMonthTwelve 第十二个月
-     */
-    public void setVarMonthTwelve(Integer varMonthTwelve) {
+    public void setVarMonthTwelve(String varMonthTwelve) {
         this.varMonthTwelve = varMonthTwelve;
     }
 
-    /**
-     * 获取总计
-     *
-     * @return VAR_CROSS_VALIDATE_ALL - 总计
-     */
-    public Integer getVarCrossValidateAll() {
+    public String getVarSurveyCurrentMonth() {
+        return varSurveyCurrentMonth;
+    }
+
+    public void setVarSurveyCurrentMonth(String varSurveyCurrentMonth) {
+        this.varSurveyCurrentMonth = varSurveyCurrentMonth;
+    }
+
+    public String getVarCrossValidateAll() {
         return varCrossValidateAll;
     }
 
-    /**
-     * 设置总计
-     *
-     * @param varCrossValidateAll 总计
-     */
-    public void setVarCrossValidateAll(Integer varCrossValidateAll) {
+    public void setVarCrossValidateAll(String varCrossValidateAll) {
         this.varCrossValidateAll = varCrossValidateAll;
     }
 
-    /**
-     * 获取月平均
-     *
-     * @return VAR_CROSS_VALIDATE_MONTH_AVG - 月平均
-     */
-    public Integer getVarCrossValidateMonthAvg() {
+    public String getVarCrossValidateMonthAvg() {
         return varCrossValidateMonthAvg;
     }
 
-    /**
-     * 设置月平均
-     *
-     * @param varCrossValidateMonthAvg 月平均
-     */
-    public void setVarCrossValidateMonthAvg(Integer varCrossValidateMonthAvg) {
+    public void setVarCrossValidateMonthAvg(String varCrossValidateMonthAvg) {
         this.varCrossValidateMonthAvg = varCrossValidateMonthAvg;
     }
 

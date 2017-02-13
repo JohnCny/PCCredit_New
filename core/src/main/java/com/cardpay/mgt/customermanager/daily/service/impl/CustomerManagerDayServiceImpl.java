@@ -79,15 +79,16 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dailyTimeStr = sdf.format(dailyTime);
         String sheetName = "客户经理日报("+dailyTimeStr+")";
+        String title = "客户经理日报";
         //创建HSSFWorkbook对象(excel的文档对象)
         HSSFWorkbook wb = new HSSFWorkbook();
-        createSheet(wb,customerManagerDayAndUserList, sheetName);
+        createSheet(wb,customerManagerDayAndUserList, sheetName,title);
         outPut(response, sheetName, wb);
     }
 
     @Override
     public void expertWeeklyExcel(String dateStr,HttpServletRequest request, HttpServletResponse response) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = null;
         try {
             date = sdf.parse(dateStr);
@@ -96,17 +97,20 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
             LogTemplate.error(e,"客户经理周报日期错误","导出excel周报传入日期错误");
         }
         String [] weekDayStr = {"星期一","星期二","星期三","星期四","星期五"};
+        String title = "客户经理周报";
         HSSFWorkbook wb = new HSSFWorkbook();
-        for (int i = 0; i < getWeekDay(date).length; i++) {
+        Date[] weekDay = getWeekDay(date);
+        for (int i = 0; i < weekDay.length; i++) {
             Map<String, Object> map = new HashMap();
             //查看当前机构下的客户经理
             map.put("organizationId", ShiroKit.getOrgId());
             map.put("status", UserStatus.NORMAL.getStatus());
-            map.put("dailyTime", sdf.format(getWeekDay(date)[i]));
+            map.put("dailyTime", sdf.format(weekDay[i]));
             List<TCustomerManagerDayAndUser> customerManagerDayAndUserList = getCustomerManagerDayAndUsers(request, map);
-            createSheet(wb,customerManagerDayAndUserList,weekDayStr[i]);
+            createSheet(wb,customerManagerDayAndUserList,weekDayStr[i],title);
         }
-        outPut(response, "客户经理周报("+sdf.format(getWeekDay(date)[0])+"—"+sdf.format(getWeekDay(date)[getWeekDay(date).length-1])+")", wb);
+        SimpleDateFormat sdfNoHour = new SimpleDateFormat("yyyy-MM-dd");
+        outPut(response, "客户经理周报("+sdfNoHour.format(weekDay[0])+"—"+sdfNoHour.format(weekDay[weekDay.length-1])+")", wb);
     }
 
     /**
@@ -120,9 +124,11 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
         if (date != null){
             calendar.setTime(date);
         }
+        Date time = calendar.getTime();
         while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
             calendar.add(Calendar.DAY_OF_WEEK, -1);
         }
+        Date time1 = calendar.getTime();
         Date[] dates = new Date[5];
         for (int i = 0; i < 5; i++) {
             dates[i] = calendar.getTime();
@@ -178,7 +184,7 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
      * @param customerManagerDayAndUserList 数据源
      * @param sheetName sheet名称
      */
-    private void createSheet(HSSFWorkbook wb,List<TCustomerManagerDayAndUser> customerManagerDayAndUserList, String sheetName) {
+    private void createSheet(HSSFWorkbook wb,List<TCustomerManagerDayAndUser> customerManagerDayAndUserList, String sheetName,String title) {
         //建立新的sheet对象（excel的表单）
         HSSFSheet sheet= wb.createSheet(sheetName);
         //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
@@ -186,7 +192,7 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
         //创建单元格（excel的单元格，参数为列索引，可以是0～255之间的任何一个
         HSSFCell cell=row1.createCell(0);
         //设置单元格内容
-        cell.setCellValue("客户经理日报");
+        cell.setCellValue(title);
         //合并单元格CellRangeAddress构造参数依次表示起始行，截至行，起始列， 截至列
         sheet.addMergedRegion(new CellRangeAddress(0,0,0,6));
         //在sheet里创建第二行

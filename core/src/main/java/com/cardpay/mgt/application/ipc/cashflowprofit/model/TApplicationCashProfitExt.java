@@ -3,7 +3,6 @@ package com.cardpay.mgt.application.ipc.cashflowprofit.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.math.BigDecimal;
 import javax.persistence.*;
 
 @Table(name = "T_APPLICATION_CASHPROFIT_EXT")
@@ -23,7 +22,7 @@ public class TApplicationCashProfitExt {
      */
     @Column(name = "CASH_PROFIT_VAR_ID")
     @ApiModelProperty(value="进件利润现金值id",required = true)
-    private BigDecimal cashProfitVarId;
+    private Integer cashProfitVarId;
 
     /**
      * 建议额外字段值name
@@ -51,105 +50,105 @@ public class TApplicationCashProfitExt {
      */
     @Column(name = "EXTRA_MONTH_ONE")
     @ApiModelProperty(value="额外第一个月",required = true)
-    private BigDecimal extraMonthOne;
+    private String extraMonthOne;
 
     /**
      * 额外第二个月
      */
     @Column(name = "EXTRA_MONTH_TWO")
     @ApiModelProperty(value="额外第二个月",required = true)
-    private BigDecimal extraMonthTwo;
+    private String extraMonthTwo;
 
     /**
      * 额外第三个月
      */
     @Column(name = "EXTRA_MONTH_THREE")
     @ApiModelProperty(value="额外第三个月",required = true)
-    private BigDecimal extraMonthThree;
+    private String extraMonthThree;
 
     /**
      * 额外第四个月
      */
     @Column(name = "EXTRA_MONTH_FOUR")
     @ApiModelProperty(value="额外第四个月",required = true)
-    private Long extraMonthFour;
+    private String extraMonthFour;
 
     /**
      * 额外第五个月
      */
     @Column(name = "EXTRA_MONTH_FIVE")
     @ApiModelProperty(value="额外第五个月",required = true)
-    private Long extraMonthFive;
+    private String extraMonthFive;
 
     /**
      * 额外第六个月
      */
     @Column(name = "EXTRA_MONTH_SIX")
     @ApiModelProperty(value="额外第六个月",required = true)
-    private Long extraMonthSix;
+    private String extraMonthSix;
 
     /**
      * 额外第七个月
      */
     @Column(name = "EXTRA_MONTH_SEVEN")
     @ApiModelProperty(value="额外第七个月",required = true)
-    private BigDecimal extraMonthSeven;
+    private String extraMonthSeven;
 
     /**
      * 额外第八个月
      */
     @Column(name = "EXTRA_MONTH_EIGHT")
     @ApiModelProperty(value="额外第八个月",required = true)
-    private BigDecimal extraMonthEight;
+    private String extraMonthEight;
 
     /**
      * 额外第九个月
      */
     @Column(name = "EXTRA_MONTH_NINE")
     @ApiModelProperty(value="额外第九个月",required = true)
-    private BigDecimal extraMonthNine;
+    private String extraMonthNine;
 
     /**
      * 额外第十个月
      */
     @Column(name = "EXTRA_MONTH_TEN")
     @ApiModelProperty(value="额外第十个月",required = true)
-    private BigDecimal extraMonthTen;
+    private String extraMonthTen;
 
     /**
      * 额外第十一个月
      */
     @Column(name = "EXTRA_MONTH_ELEVEN")
     @ApiModelProperty(value="额外第十一个月",required = true)
-    private BigDecimal extraMonthEleven;
+    private String extraMonthEleven;
 
     /**
      * 额外第十二个月
      */
     @Column(name = "EXTRA_MONTH_TWELVE")
     @ApiModelProperty(value="额外第十二个月",required = true)
-    private BigDecimal extraMonthTwelve;
+    private String extraMonthTwelve;
 
     /**
      * 额外调查当月
      */
     @Column(name = "EXTRA_SURVEY_CURRENT_MONTH")
     @ApiModelProperty(value="额外调查当月",required = true)
-    private BigDecimal extraSurveyCurrentMonth;
+    private String extraSurveyCurrentMonth;
 
     /**
      * 额外总计
      */
     @Column(name = "EXTRA_CROSS_VALIDATE_ALL")
     @ApiModelProperty(value="额外总计",required = true)
-    private BigDecimal extraCrossValidateAll;
+    private String extraCrossValidateAll;
 
     /**
      * 额外月平均
      */
     @Column(name = "EXTRA_CROSS_VALIDATE_MONTH_AVG")
     @ApiModelProperty(value="额外月平均",required = true)
-    private BigDecimal extraCrossValidateMonthAvg;
+    private String extraCrossValidateMonthAvg;
 
     /**
      * 获取进件利润现金额外值id
@@ -174,7 +173,7 @@ public class TApplicationCashProfitExt {
      *
      * @return CASH_PROFIT_VAR_ID - 进件利润现金值id
      */
-    public BigDecimal getCashProfitVarId() {
+    public Integer getCashProfitVarId() {
         return cashProfitVarId;
     }
 
@@ -183,7 +182,7 @@ public class TApplicationCashProfitExt {
      *
      * @param cashProfitVarId 进件利润现金值id
      */
-    public void setCashProfitVarId(BigDecimal cashProfitVarId) {
+    public void setCashProfitVarId(Integer cashProfitVarId) {
         this.cashProfitVarId = cashProfitVarId;
     }
 
@@ -246,7 +245,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_ONE - 额外第一个月
      */
-    public BigDecimal getExtraMonthOne() {
+    public String getExtraMonthOne() {
         return extraMonthOne;
     }
 
@@ -255,7 +254,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthOne 额外第一个月
      */
-    public void setExtraMonthOne(BigDecimal extraMonthOne) {
+    public void setExtraMonthOne(String extraMonthOne) {
         this.extraMonthOne = extraMonthOne;
     }
 
@@ -264,7 +263,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_TWO - 额外第二个月
      */
-    public BigDecimal getExtraMonthTwo() {
+    public String getExtraMonthTwo() {
         return extraMonthTwo;
     }
 
@@ -273,7 +272,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthTwo 额外第二个月
      */
-    public void setExtraMonthTwo(BigDecimal extraMonthTwo) {
+    public void setExtraMonthTwo(String extraMonthTwo) {
         this.extraMonthTwo = extraMonthTwo;
     }
 
@@ -282,7 +281,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_THREE - 额外第三个月
      */
-    public BigDecimal getExtraMonthThree() {
+    public String getExtraMonthThree() {
         return extraMonthThree;
     }
 
@@ -291,7 +290,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthThree 额外第三个月
      */
-    public void setExtraMonthThree(BigDecimal extraMonthThree) {
+    public void setExtraMonthThree(String extraMonthThree) {
         this.extraMonthThree = extraMonthThree;
     }
 
@@ -300,7 +299,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_FOUR - 额外第四个月
      */
-    public Long getExtraMonthFour() {
+    public String getExtraMonthFour() {
         return extraMonthFour;
     }
 
@@ -309,7 +308,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthFour 额外第四个月
      */
-    public void setExtraMonthFour(Long extraMonthFour) {
+    public void setExtraMonthFour(String extraMonthFour) {
         this.extraMonthFour = extraMonthFour;
     }
 
@@ -318,7 +317,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_FIVE - 额外第五个月
      */
-    public Long getExtraMonthFive() {
+    public String getExtraMonthFive() {
         return extraMonthFive;
     }
 
@@ -327,7 +326,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthFive 额外第五个月
      */
-    public void setExtraMonthFive(Long extraMonthFive) {
+    public void setExtraMonthFive(String extraMonthFive) {
         this.extraMonthFive = extraMonthFive;
     }
 
@@ -336,7 +335,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_SIX - 额外第六个月
      */
-    public Long getExtraMonthSix() {
+    public String getExtraMonthSix() {
         return extraMonthSix;
     }
 
@@ -345,7 +344,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthSix 额外第六个月
      */
-    public void setExtraMonthSix(Long extraMonthSix) {
+    public void setExtraMonthSix(String extraMonthSix) {
         this.extraMonthSix = extraMonthSix;
     }
 
@@ -354,7 +353,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_SEVEN - 额外第七个月
      */
-    public BigDecimal getExtraMonthSeven() {
+    public String getExtraMonthSeven() {
         return extraMonthSeven;
     }
 
@@ -363,7 +362,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthSeven 额外第七个月
      */
-    public void setExtraMonthSeven(BigDecimal extraMonthSeven) {
+    public void setExtraMonthSeven(String extraMonthSeven) {
         this.extraMonthSeven = extraMonthSeven;
     }
 
@@ -372,7 +371,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_EIGHT - 额外第八个月
      */
-    public BigDecimal getExtraMonthEight() {
+    public String getExtraMonthEight() {
         return extraMonthEight;
     }
 
@@ -381,7 +380,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthEight 额外第八个月
      */
-    public void setExtraMonthEight(BigDecimal extraMonthEight) {
+    public void setExtraMonthEight(String extraMonthEight) {
         this.extraMonthEight = extraMonthEight;
     }
 
@@ -390,7 +389,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_NINE - 额外第九个月
      */
-    public BigDecimal getExtraMonthNine() {
+    public String getExtraMonthNine() {
         return extraMonthNine;
     }
 
@@ -399,7 +398,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthNine 额外第九个月
      */
-    public void setExtraMonthNine(BigDecimal extraMonthNine) {
+    public void setExtraMonthNine(String extraMonthNine) {
         this.extraMonthNine = extraMonthNine;
     }
 
@@ -408,7 +407,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_TEN - 额外第十个月
      */
-    public BigDecimal getExtraMonthTen() {
+    public String getExtraMonthTen() {
         return extraMonthTen;
     }
 
@@ -417,7 +416,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthTen 额外第十个月
      */
-    public void setExtraMonthTen(BigDecimal extraMonthTen) {
+    public void setExtraMonthTen(String extraMonthTen) {
         this.extraMonthTen = extraMonthTen;
     }
 
@@ -426,7 +425,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_ELEVEN - 额外第十一个月
      */
-    public BigDecimal getExtraMonthEleven() {
+    public String getExtraMonthEleven() {
         return extraMonthEleven;
     }
 
@@ -435,7 +434,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthEleven 额外第十一个月
      */
-    public void setExtraMonthEleven(BigDecimal extraMonthEleven) {
+    public void setExtraMonthEleven(String extraMonthEleven) {
         this.extraMonthEleven = extraMonthEleven;
     }
 
@@ -444,7 +443,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_MONTH_TWELVE - 额外第十二个月
      */
-    public BigDecimal getExtraMonthTwelve() {
+    public String getExtraMonthTwelve() {
         return extraMonthTwelve;
     }
 
@@ -453,7 +452,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraMonthTwelve 额外第十二个月
      */
-    public void setExtraMonthTwelve(BigDecimal extraMonthTwelve) {
+    public void setExtraMonthTwelve(String extraMonthTwelve) {
         this.extraMonthTwelve = extraMonthTwelve;
     }
 
@@ -462,7 +461,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_SURVEY_CURRENT_MONTH - 额外调查当月
      */
-    public BigDecimal getExtraSurveyCurrentMonth() {
+    public String getExtraSurveyCurrentMonth() {
         return extraSurveyCurrentMonth;
     }
 
@@ -471,7 +470,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraSurveyCurrentMonth 额外调查当月
      */
-    public void setExtraSurveyCurrentMonth(BigDecimal extraSurveyCurrentMonth) {
+    public void setExtraSurveyCurrentMonth(String extraSurveyCurrentMonth) {
         this.extraSurveyCurrentMonth = extraSurveyCurrentMonth;
     }
 
@@ -480,7 +479,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_CROSS_VALIDATE_ALL - 额外总计
      */
-    public BigDecimal getExtraCrossValidateAll() {
+    public String getExtraCrossValidateAll() {
         return extraCrossValidateAll;
     }
 
@@ -489,7 +488,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraCrossValidateAll 额外总计
      */
-    public void setExtraCrossValidateAll(BigDecimal extraCrossValidateAll) {
+    public void setExtraCrossValidateAll(String extraCrossValidateAll) {
         this.extraCrossValidateAll = extraCrossValidateAll;
     }
 
@@ -498,7 +497,7 @@ public class TApplicationCashProfitExt {
      *
      * @return EXTRA_CROSS_VALIDATE_MONTH_AVG - 额外月平均
      */
-    public BigDecimal getExtraCrossValidateMonthAvg() {
+    public String getExtraCrossValidateMonthAvg() {
         return extraCrossValidateMonthAvg;
     }
 
@@ -507,7 +506,7 @@ public class TApplicationCashProfitExt {
      *
      * @param extraCrossValidateMonthAvg 额外月平均
      */
-    public void setExtraCrossValidateMonthAvg(BigDecimal extraCrossValidateMonthAvg) {
+    public void setExtraCrossValidateMonthAvg(String extraCrossValidateMonthAvg) {
         this.extraCrossValidateMonthAvg = extraCrossValidateMonthAvg;
     }
 }
