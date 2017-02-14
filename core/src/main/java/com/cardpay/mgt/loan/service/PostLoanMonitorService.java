@@ -39,4 +39,10 @@ public interface PostLoanMonitorService extends BaseService<PostLoanMonitor> {
      * @return 分页数据
      */
     List<AddLoanVo> loanMonitorPageList(Map<String, Object> map);
+
+    /**
+     * 定时任务添加进件贷后监控实施
+     */
+    void scanLoanByApplication();
+
 }
