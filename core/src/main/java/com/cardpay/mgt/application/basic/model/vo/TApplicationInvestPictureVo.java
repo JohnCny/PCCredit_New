@@ -24,9 +24,14 @@ public class TApplicationInvestPictureVo  extends GenericEntity<Integer>{
     private Integer productId;
 
     /**
+     * 进件id
+     */
+    private Integer applicationId;
+
+    /**
      * 产品调查图片说明
      */
-    private String investPritureDescription;
+    private String investPictureDescription;
 
     /**
      * 产品调查说明是否必须
@@ -38,6 +43,14 @@ public class TApplicationInvestPictureVo  extends GenericEntity<Integer>{
      */
     private List<TApplicationInvestPicture> pictureList;
 
+    public Integer getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(Integer applicationId) {
+        this.applicationId = applicationId;
+    }
+
     public Integer getProductId() {
         return productId;
     }
@@ -46,12 +59,12 @@ public class TApplicationInvestPictureVo  extends GenericEntity<Integer>{
         this.productId = productId;
     }
 
-    public String getInvestPritureDescription() {
-        return investPritureDescription;
+    public String getInvestPictureDescription() {
+        return investPictureDescription;
     }
 
-    public void setInvestPritureDescription(String investPritureDescription) {
-        this.investPritureDescription = investPritureDescription;
+    public void setInvestPictureDescription(String investPictureDescription) {
+        this.investPictureDescription = investPictureDescription;
     }
 
     public Integer getIsNeed() {

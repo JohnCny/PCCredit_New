@@ -145,7 +145,7 @@ public class TMenuServiceImpl extends BaseServiceImpl<TMenu> implements TMenuSer
         //遍历组装树
         TreeUtil<T> treeUtil = new TreeUtil("menuOrder", TreeUtil.ASC);
         long start = System.currentTimeMillis();
-        List<T> childNodesByParentId = null;
+        List<T> childNodesByParentId;
         try {
             childNodesByParentId = treeUtil.getChildNodesByParentId(sourceList, TOP_ID);
         } catch (TreeInitializeException e) {

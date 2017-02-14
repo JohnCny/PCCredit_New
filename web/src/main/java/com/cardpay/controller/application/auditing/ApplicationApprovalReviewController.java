@@ -4,10 +4,12 @@ import com.cardpay.basic.base.model.ResultTo;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.controller.base.BaseController;
+import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.application.auditing.model.TApplicationApprovalReview;
 import com.cardpay.mgt.application.auditing.service.TApplicationApprovalReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 审贷会排审
@@ -31,7 +33,9 @@ public class ApplicationApprovalReviewController extends BaseController<TApplica
      */
     @RequestMapping("/pageList")
     public DataTablePage queryAll() {
-        return dataTablePage();
+        Example example = new Example(TApplicationApprovalReview.class);
+        example.createCriteria().andCondition("REVIEW_PERSON_ID = " + ShiroKit.getUserId());
+        return dataTablePage(example);
     }
 
     /**
