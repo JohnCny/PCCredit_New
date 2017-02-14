@@ -41,10 +41,10 @@ public class TApplication extends GenericEntity<Integer> {
     private String repulseReason;
 
     /**
-     * 进件状态(0 未完成，1 禁入，2 待审核，3 审核通过，4审核不通过)
+     * 进件状态(0 未完成，1 禁入，2 待审核，3 审核通过，4审核不通过, 5已放贷)
      */
     @Column(name = "application_status")
-    @ApiModelProperty(value = "进件状态(0 未完成，1 禁入，2 待审核，3 审核通过，4审核不通过)", required = true)
+    @ApiModelProperty(value = "进件状态(0 未完成，1 禁入，2 待审核，3 审核通过，4审核不通过, 5已放贷)", required = true)
     private Integer applicationStatus;
 
     /**
@@ -81,6 +81,20 @@ public class TApplication extends GenericEntity<Integer> {
     @Column(name = "customer_manager_id")
     @ApiModelProperty(value = "客户经理id", required = true)
     private Integer customerManagerId;
+
+    /**
+     * 放贷时间
+     */
+    @Column(name = "LOAN_TIME")
+    private Date loanTime;
+
+    public Date getLoanTime() {
+        return loanTime;
+    }
+
+    public void setLoanTime(Date loanTime) {
+        this.loanTime = loanTime;
+    }
 
     /**
      * 获取进件id

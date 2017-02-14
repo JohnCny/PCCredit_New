@@ -5,6 +5,7 @@ import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.product.model.Product;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 进件Vo类
@@ -60,9 +61,22 @@ public class TApplicationVo extends GenericEntity<Integer> {
     private Product product;
 
     /**
+     * 放贷时间
+     */
+    private Date loanTime;
+
+    /**
      * 客户信息
      */
     private TCustomerBasic customer;
+
+    public Date getLoanTime() {
+        return loanTime;
+    }
+
+    public void setLoanTime(Date loanTime) {
+        this.loanTime = loanTime;
+    }
 
     public Integer getId() {
         return id;

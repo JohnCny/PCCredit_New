@@ -12,6 +12,7 @@
         <result column="APPLY_REASON" jdbcType="VARCHAR" property="applyReason"/>
         <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+        <result column="LOAN_TIME" jdbcType="TIMESTAMP" property="loanTime"/>
     </resultMap>
 
     <!--进件Vo类-->
@@ -24,6 +25,7 @@
         <result column="APPLY_AMOUNT" jdbcType="DECIMAL" property="applyAmount"/>
         <result column="APPROVE_AMOUNT" jdbcType="DECIMAL" property="approveAmount"/>
         <result column="APPLY_REASON" jdbcType="VARCHAR" property="applyReason"/>
+        <result column="LOAN_TIME" jdbcType="TIMESTAMP" property="loanTime"/>
         <association property="product" select="queryProduct" column="PRODUCT_ID"/>
         <association property="customer" select="queryCustomer" column="CUSTOMER_ID"/>
     </resultMap>

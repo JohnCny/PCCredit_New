@@ -25,7 +25,12 @@ public enum ApplicationStatus {
     /**
      * 审核未通过
      */
-    APP_REJECT("审核未通过", 4);
+    APP_REJECT("审核未通过", 4),
+
+    /**
+     * 已放贷
+     */
+    APP_LENDING("已放贷", 5);
 
     private int value;
     private String key;
@@ -37,5 +42,9 @@ public enum ApplicationStatus {
 
     public int getValue() {
         return value;
+    }
+
+    public String getKey() {
+        return key;
     }
 }
