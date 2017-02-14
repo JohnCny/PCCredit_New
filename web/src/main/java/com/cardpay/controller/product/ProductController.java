@@ -70,7 +70,7 @@ public class ProductController extends BaseController<Product> {
      *
      * @return 产品分页数据
      */
-    @RequestMapping("/pageList")
+    @PostMapping("/pageList")
     @ApiOperation(value = "产品分页数据")
     public DataTablePage pageList(HttpServletRequest request) {
         String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);

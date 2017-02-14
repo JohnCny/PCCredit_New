@@ -15,4 +15,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/productType")
 @Api(value = "/api/productType", description = "产品类型")
 public class ProductTypeController extends BaseController<ProductType> {
+
 }

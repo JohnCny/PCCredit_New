@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class AppApproveLog extends GenericEntity<Integer> {
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select 你的序列名.nextval from dual")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select T_APP_APPROVE_LOG_SEQ.nextval from dual")
     @ApiModelProperty(value = "null", required = true)
     private Integer id;
 

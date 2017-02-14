@@ -33,7 +33,7 @@ public class ProductApproveServiceImpl extends BaseServiceImpl<ProductApprove> i
     @Override
     public Map<String, Object> getApprove(Integer productId, Integer approveId) {
         List<Role> roles = roleMapper.select(Role.RoleBuilder.get()
-                .withOrganizationId(ShiroKit.getOrgId()).withRoleStatus(1).build());
+                .withOrganizationId(ShiroKit.getTopOrgId()).withRoleStatus(1).build());
         ProductApprove.ProductApproveBuilder productApproveBuilder = ProductApprove
                 .ProductApproveBuilder.get().withProductId(productId);
         Map<String, Object> map = new HashedMap();

@@ -1,11 +1,9 @@
 package com.cardpay.basic.util.datatable;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.basic.httpClient.HttpResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -97,18 +95,17 @@ public class DataTablePage {
             , InvocationTargetException, IllegalAccessException, InstantiationException {
         String start = request.getParameter(DataTableCode.PAGE_START_NAME);
         String length = request.getParameter(DataTableCode.PAGE_LENGTH_NAME);
-        String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
-        LogTemplate.info(this.getClass(), "message(BasePage)", "[pageStart:" + start + "][pageLength" + length + "][pageSearch" + search + "]");
+
+        LogTemplate.info(this.getClass(), "message(BasePage)", "[pageStart:" + start + "][pageLength" + length + "]");
         this.start = start != null ? Integer.parseInt(start) : this.start;
         this.length = length != null ? Integer.parseInt(length) : this.length;
         String finalOrder = getOrder(request);
 
-        if (StringUtils.isNotBlank(finalOrder)) {
-            example.orderBy(finalOrder);
+        Map<String, Object> map = null;
+        if (example == null) {
+            String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
+            map = JSON.parseObject(search, Map.class);
         }
-
-        Map<String, Object> map = JSON.parseObject(search, Map.class);
-
         if (StringUtils.isNotBlank(methodName)) { //是否制定方法名称,若没有则执行默认的查询方法
             if (null != parameterMap) {
                 if (null != map) {
@@ -127,13 +124,15 @@ public class DataTablePage {
             if (null == example) {
                 map = removeNull(map);
                 example = new Example(clazz);
-                example.orderBy(finalOrder);
                 if (map != null && map.size() != 0) {
                     Example.Criteria criteria = example.createCriteria();
                     for (Map.Entry<String, Object> entry : map.entrySet()) {
                         criteria.andEqualTo(entry.getKey(), entry.getValue());
                     }
                 }
+            }
+            if (StringUtils.isNotBlank(finalOrder)) {
+                example.orderBy(finalOrder);
             }
             data = (List<Object>) baseService.pageList(example, this.start, this.length);
         }
@@ -164,6 +163,7 @@ public class DataTablePage {
 
     /**
      * 获取排序字段 格式{"id":"desc"}
+     *
      * @param request request
      * @return 字段
      */

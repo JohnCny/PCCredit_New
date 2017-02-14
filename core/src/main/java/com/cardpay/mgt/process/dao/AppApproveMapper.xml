@@ -12,5 +12,6 @@
     <result column="STATUS" jdbcType="DECIMAL" property="status" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="COMPLETE_TIME" jdbcType="TIMESTAMP" property="completeTime" />
+    <result column="IS_REVIEW" jdbcType="DECIMAL" property="isReview" />
   </resultMap>
 </mapper>
