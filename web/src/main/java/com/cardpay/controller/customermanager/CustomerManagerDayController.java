@@ -60,6 +60,7 @@ public class CustomerManagerDayController extends BaseController<TCustomerManage
         resultTo.setData(customerManagerDay);
         return resultTo;
     }
+
     /**
      * 导出客户经理日报
      *
@@ -67,10 +68,24 @@ public class CustomerManagerDayController extends BaseController<TCustomerManage
      * @param response response
      * @return 导出结果
      */
-    @RequestMapping("/excel")
-    public ResultTo expertExcel(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping("/excelDay")
+    public ResultTo expertDayExcel(HttpServletRequest request, HttpServletResponse response){
         ResultTo resultTo = new ResultTo();
-        customerManagerDayService.expertExcel(request,response);
+        customerManagerDayService.expertDayExcel(request,response);
+        return resultTo;
+    }
+
+    /**
+     * 导出客户经理周报
+     *
+     * @param request request
+     * @param response response
+     * @return 导出结果
+     */
+    @RequestMapping("/excelWeekly")
+    public ResultTo expertExcel(@RequestParam("date") String date,HttpServletRequest request, HttpServletResponse response){
+        ResultTo resultTo = new ResultTo();
+        customerManagerDayService.expertWeeklyExcel(date,request,response);
         return resultTo;
     }
 

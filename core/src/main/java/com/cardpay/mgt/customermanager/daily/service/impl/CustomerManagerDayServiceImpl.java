@@ -1,6 +1,7 @@
 package com.cardpay.mgt.customermanager.daily.service.impl;
 
 import com.cardpay.basic.base.service.impl.BaseServiceImpl;
+import com.cardpay.basic.common.log.LogTemplate;
 import com.cardpay.basic.util.datatable.DataTablePage;
 import com.cardpay.core.shiro.common.ShiroKit;
 import com.cardpay.mgt.customermanager.daily.dao.TCustomerManagerDayMapper;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -67,30 +69,128 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
     }
 
     @Override
-    public void expertExcel(HttpServletRequest request,HttpServletResponse response) {
+    public void expertDayExcel(HttpServletRequest request,HttpServletResponse response) {
         Map<String, Object> map = new HashMap();
         //查看当前机构下的客户经理
         map.put("organizationId", ShiroKit.getOrgId());
         map.put("status", UserStatus.NORMAL.getStatus());
+        List<TCustomerManagerDayAndUser> customerManagerDayAndUserList = getCustomerManagerDayAndUsers(request, map);
+        Date dailyTime = customerManagerDayAndUserList.get(0).getCustomerManagerDay().getDailyTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String dailyTimeStr = sdf.format(dailyTime);
+        String sheetName = "客户经理日报("+dailyTimeStr+")";
+        String title = "客户经理日报";
+        //创建HSSFWorkbook对象(excel的文档对象)
+        HSSFWorkbook wb = new HSSFWorkbook();
+        createSheet(wb,customerManagerDayAndUserList, sheetName,title);
+        outPut(response, sheetName, wb);
+    }
+
+    @Override
+    public void expertWeeklyExcel(String dateStr,HttpServletRequest request, HttpServletResponse response) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            LogTemplate.error(e,"客户经理周报日期错误","导出excel周报传入日期错误");
+        }
+        String [] weekDayStr = {"星期一","星期二","星期三","星期四","星期五"};
+        String title = "客户经理周报";
+        HSSFWorkbook wb = new HSSFWorkbook();
+        Date[] weekDay = getWeekDay(date);
+        for (int i = 0; i < weekDay.length; i++) {
+            Map<String, Object> map = new HashMap();
+            //查看当前机构下的客户经理
+            map.put("organizationId", ShiroKit.getOrgId());
+            map.put("status", UserStatus.NORMAL.getStatus());
+            map.put("dailyTime", sdf.format(weekDay[i]));
+            List<TCustomerManagerDayAndUser> customerManagerDayAndUserList = getCustomerManagerDayAndUsers(request, map);
+            createSheet(wb,customerManagerDayAndUserList,weekDayStr[i],title);
+        }
+        SimpleDateFormat sdfNoHour = new SimpleDateFormat("yyyy-MM-dd");
+        outPut(response, "客户经理周报("+sdfNoHour.format(weekDay[0])+"—"+sdfNoHour.format(weekDay[weekDay.length-1])+")", wb);
+    }
+
+    /**
+     * 根据传递的日期返回本周一至周五
+     *
+     * @param date 日期
+     * @return 周一至周五的日期数组
+     */
+    public static Date[] getWeekDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        if (date != null){
+            calendar.setTime(date);
+        }
+        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            calendar.add(Calendar.DAY_OF_WEEK, -1);
+        }
+        Date[] dates = new Date[5];
+        for (int i = 0; i < 5; i++) {
+            dates[i] = calendar.getTime();
+            calendar.add(Calendar.DATE, 1);
+        }
+        return dates;
+    }
+
+    /**
+     * 下载excel
+     *
+     * @param response response
+     * @param excelName 文件名
+     * @param wb excel文档对象
+     */
+    private void outPut(HttpServletResponse response, String excelName, HSSFWorkbook wb) {
+        //输出Excel文件
+        try {
+            OutputStream output=response.getOutputStream();
+            response.reset();
+            response.setHeader("Content-disposition", "attachment; filename="+ URLEncoder.encode(excelName,"UTF-8")+".xls");
+            response.setContentType("application/msexcel");
+            response.setCharacterEncoding("UTF-8");
+            wb.write(output);
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogTemplate.error(e,"周报文档下载失败","周报文档下载异常");
+        }
+    }
+
+    /**
+     * 按条件查询日报
+     *
+     * @param request request
+     * @param map 参数条件
+     * @return 日报列表
+     */
+    private List<TCustomerManagerDayAndUser> getCustomerManagerDayAndUsers(HttpServletRequest request, Map<String, Object> map) {
         DataTablePage dataTablePage = new DataTablePage("selectDailyAndUser",this,request,map);
         List<Object> objects = dataTablePage.getData();
         List<TCustomerManagerDayAndUser> customerManagerDayAndUserList = new ArrayList<>();
         for (Object object : objects) {
             customerManagerDayAndUserList.add((TCustomerManagerDayAndUser) object);
         }
-        Date dailyTime = customerManagerDayAndUserList.get(0).getCustomerManagerDay().getDailyTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String dailyTimeStr = sdf.format(dailyTime);
-        //创建HSSFWorkbook对象(excel的文档对象)
-        HSSFWorkbook wb = new HSSFWorkbook();
+        return customerManagerDayAndUserList;
+    }
+
+    /**
+     * 创建Sheet
+     *
+     * @param wb 文档对象
+     * @param customerManagerDayAndUserList 数据源
+     * @param sheetName sheet名称
+     */
+    private void createSheet(HSSFWorkbook wb,List<TCustomerManagerDayAndUser> customerManagerDayAndUserList, String sheetName,String title) {
         //建立新的sheet对象（excel的表单）
-        HSSFSheet sheet= wb.createSheet("客户经理日报("+dailyTimeStr+")");
+        HSSFSheet sheet= wb.createSheet(sheetName);
         //在sheet里创建第一行，参数为行索引(excel的行)，可以是0～65535之间的任何一个
         HSSFRow row1=sheet.createRow(0);
         //创建单元格（excel的单元格，参数为列索引，可以是0～255之间的任何一个
         HSSFCell cell=row1.createCell(0);
         //设置单元格内容
-        cell.setCellValue("客户经理日报");
+        cell.setCellValue(title);
         //合并单元格CellRangeAddress构造参数依次表示起始行，截至行，起始列， 截至列
         sheet.addMergedRegion(new CellRangeAddress(0,0,0,6));
         //在sheet里创建第二行
@@ -115,24 +215,6 @@ public class CustomerManagerDayServiceImpl extends BaseServiceImpl<TCustomerMana
             row.createCell(4).setCellValue(customerManagerDay.getLoanNewNumber());
             row.createCell(5).setCellValue(customerManagerDay.getPreLoanNumber());
             row.createCell(6).setCellValue(customerManagerDay.getPostLoanNumber());
-//            row.createCell(2).setCellValue(customerManagerDayAndUser.getVisitNewNumber());
-//            row.createCell(3).setCellValue(customerManagerDayAndUser.getMaintenanceNumber());
-//            row.createCell(4).setCellValue(customerManagerDayAndUser.getLoanNewNumber());
-//            row.createCell(5).setCellValue(customerManagerDayAndUser.getPreLoanNumber());
-//            row.createCell(6).setCellValue(customerManagerDayAndUser.getPostLoanNumber());
-        }
-
-        //输出Excel文件
-        try {
-            OutputStream output=response.getOutputStream();
-            response.reset();
-            response.setHeader("Content-disposition", "attachment; filename="+ URLEncoder.encode("客户经理日报("+dailyTimeStr+")","UTF-8")+".xls");
-            response.setContentType("application/msexcel");
-            response.setCharacterEncoding("UTF-8");
-            wb.write(output);
-            output.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

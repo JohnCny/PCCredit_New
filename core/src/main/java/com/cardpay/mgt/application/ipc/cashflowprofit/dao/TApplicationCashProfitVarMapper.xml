@@ -9,20 +9,21 @@
     <result column="CASH_PROFIT_VAR_ID" jdbcType="DECIMAL" property="cashProfitVarId" />
     <result column="CASH_PROFIT_VAR_VALUE" jdbcType="VARCHAR" property="cashProfitVarValue" />
     <result column="CASH_PROFIT_OPTION_ID" jdbcType="DECIMAL" property="cashProfitOptionId" />
-    <result column="VAR_MONTH_ONE" jdbcType="DECIMAL" property="varMonthOne" />
-    <result column="VAR_MONTH_TWO" jdbcType="DECIMAL" property="varMonthTwo" />
-    <result column="VAR_MONTH_THREE" jdbcType="DECIMAL" property="varMonthThree" />
-    <result column="VAR_MONTH_FOUR" jdbcType="DECIMAL" property="varMonthFour" />
-    <result column="VAR_MONTH_FIVE" jdbcType="DECIMAL" property="varMonthFive" />
-    <result column="VAR_MONTH_SIX" jdbcType="DECIMAL" property="varMonthSix" />
-    <result column="VAR_MONTH_SEVEN" jdbcType="DECIMAL" property="varMonthSeven" />
-    <result column="VAR_MONTH_EIGHT" jdbcType="DECIMAL" property="varMonthEight" />
-    <result column="VAR_MONTH_NINE" jdbcType="DECIMAL" property="varMonthNine" />
-    <result column="VAR_MONTH_TEN" jdbcType="DECIMAL" property="varMonthTen" />
-    <result column="VAR_MONTH_ELEVEN" jdbcType="DECIMAL" property="varMonthEleven" />
-    <result column="VAR_MONTH_TWELVE" jdbcType="DECIMAL" property="varMonthTwelve" />
-    <result column="VAR_CROSS_VALIDATE_ALL" jdbcType="DECIMAL" property="varCrossValidateAll" />
-    <result column="VAR_CROSS_VALIDATE_MONTH_AVG" jdbcType="DECIMAL" property="varCrossValidateMonthAvg" />
+    <result column="VAR_MONTH_ONE" jdbcType="VARCHAR" property="varMonthOne" />
+    <result column="VAR_MONTH_TWO" jdbcType="VARCHAR" property="varMonthTwo" />
+    <result column="VAR_MONTH_THREE" jdbcType="VARCHAR" property="varMonthThree" />
+    <result column="VAR_MONTH_FOUR" jdbcType="VARCHAR" property="varMonthFour" />
+    <result column="VAR_MONTH_FIVE" jdbcType="VARCHAR" property="varMonthFive" />
+    <result column="VAR_MONTH_SIX" jdbcType="VARCHAR" property="varMonthSix" />
+    <result column="VAR_MONTH_SEVEN" jdbcType="VARCHAR" property="varMonthSeven" />
+    <result column="VAR_MONTH_EIGHT" jdbcType="VARCHAR" property="varMonthEight" />
+    <result column="VAR_MONTH_NINE" jdbcType="VARCHAR" property="varMonthNine" />
+    <result column="VAR_MONTH_TEN" jdbcType="VARCHAR" property="varMonthTen" />
+    <result column="VAR_MONTH_ELEVEN" jdbcType="VARCHAR" property="varMonthEleven" />
+    <result column="VAR_MONTH_TWELVE" jdbcType="VARCHAR" property="varMonthTwelve" />
+    <result column="VAR_SURVEY_CURRENT_MONTH" jdbcType="VARCHAR" property="varSurveyCurrentMonth" />
+    <result column="VAR_CROSS_VALIDATE_ALL" jdbcType="VARCHAR" property="varCrossValidateAll" />
+    <result column="VAR_CROSS_VALIDATE_MONTH_AVG" jdbcType="VARCHAR" property="varCrossValidateMonthAvg" />
     <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
   </resultMap>
 </mapper>
