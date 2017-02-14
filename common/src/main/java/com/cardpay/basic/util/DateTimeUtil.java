@@ -2,10 +2,14 @@ package com.cardpay.basic.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 时间工具类
+ *
  * @author liduo
  */
 public class DateTimeUtil {
@@ -164,5 +168,38 @@ public class DateTimeUtil {
 
     public static void main(String[] args) {
         System.out.println(stringPattern("20151225", DIGIT_DATE_PATTERN, NORM_DATE_PATTERN));
+    }
+
+    /**
+     * 计算两个日期间隔时间
+     *
+     * @param beginTime 开始时间
+     * @param nowTime   现在时间
+     * @return 间隔时间
+     */
+    public static Map<String, Object> dateSubtraction(Date beginTime, Date nowTime) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(beginTime);
+        int beginDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int beginMonth = calendar.get(Calendar.MONTH);
+        int beginYear = calendar.get(Calendar.YEAR);
+
+        calendar.setTime(nowTime);
+        int nowDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int nowMonth = calendar.get(Calendar.MONTH);
+        int nowYear = calendar.get(Calendar.YEAR);
+        Map<String, Object> map = new HashMap<>();
+        int result;
+        if (beginYear == nowYear && nowMonth != beginMonth) {
+            result = nowMonth - beginMonth; //返回相差月份
+            map.put("month", result);
+        } else if (beginYear == nowYear && nowMonth == beginMonth && beginDay != nowYear) {
+            result = nowDay - beginDay; //返回相差天数
+            map.put("day", result);
+        } else {
+            result = nowYear - beginYear;
+            map.put("year", result); //返回相差年份
+        }
+        return map;
     }
 }

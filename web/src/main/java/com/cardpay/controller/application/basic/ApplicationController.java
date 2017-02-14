@@ -38,12 +38,6 @@ public class ApplicationController extends BaseController<TApplication> {
     private TApplicationService tApplicationService;
 
     /**
-     * ipc模板
-     */
-    @Autowired
-    private ApplicationIPCBasicService applicationIPCBasicService;
-
-    /**
      * 查询此产品是否可进行进件申请
      *
      * @param productId 产品Id
@@ -60,28 +54,17 @@ public class ApplicationController extends BaseController<TApplication> {
      *
      * @param productId  产品id
      * @param customerId 客户id
-     * @return 进件Id
+     * @return true/false
      */
     @PostMapping("/{productId}/{customerId}")
     public ResultTo insertApplication(@PathVariable int productId, @PathVariable int customerId) {
-        boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
-        if (flag) {
-            Integer managerId = ShiroKit.getUserId();
-            TApplication tApplication = new TApplication();
-            tApplication.setCreateTime(new Date());
-            tApplication.setProductId(productId);
-            tApplication.setCustomerId(customerId);
-            tApplication.setCustomerManagerId(managerId);
-            tApplication.setApplicationStatus(APP_UNFINISHED.getValue());
-            tApplicationService.insertSelective(tApplication);
-            Integer mark = applicationIPCBasicService.initTemplate(tApplication.getId());
-            return mark != 0 ? new ResultTo().setData(tApplication.getId()) : new ResultTo(ResultEnum.SERVICE_ERROR);
-        }
-        return new ResultTo().setData(flag);
+        int mark = tApplicationService.insertApplication(productId, customerId, ShiroKit.getUserId());
+        return mark != 0 ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
     /**
      * 查询客户经理下的所有进件
+     *
      * @param request
      * @return 进件列表
      */
@@ -125,5 +108,28 @@ public class ApplicationController extends BaseController<TApplication> {
         return new ResultTo().setData(tApplicationVo);
     }
 
+    /**
+     * 进件删除
+     *
+     * @param applicationId 进件id
+     * @return true/false
+     */
+    @DeleteMapping("/{applicationId}")
+    public ResultTo deleteApplication(@PathVariable int applicationId) {
+        boolean mark = tApplicationService.deleteApplication(applicationId);
+        return mark ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
+
+    /**
+     * 按id更新进件基本信息
+     *
+     * @param tApplication 进件信息
+     * @return 数据库变更记录
+     */
+    @PutMapping
+    public ResultTo update(@ModelAttribute TApplication tApplication) {
+        Integer mark = tApplicationService.updateSelectiveByPrimaryKey(tApplication);
+        return mark != 0 ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
 
 }

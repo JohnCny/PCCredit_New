@@ -28,8 +28,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/loanMonitor")
 public class LoanMonitorController extends BaseController<PostLoanMonitor> {
-
-
     @Autowired
     private PostLoanMonitorService postLoanMonitorService;
 
