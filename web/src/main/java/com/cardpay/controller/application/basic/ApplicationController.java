@@ -64,9 +64,8 @@ public class ApplicationController extends BaseController<TApplication> {
      */
     @PostMapping("/{productId}/{customerId}")
     public ResultTo insertApplication(@PathVariable int productId, @PathVariable int customerId) {
-        // TODO 为测试进件申请暂时关闭验证
         boolean flag = tApplicationService.queryCustomerIfHaveProduct(customerId, productId);
-        if (true) {
+        if (flag) {
             Integer managerId = ShiroKit.getUserId();
             TApplication tApplication = new TApplication();
             tApplication.setCreateTime(new Date());

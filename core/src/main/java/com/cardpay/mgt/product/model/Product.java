@@ -210,12 +210,26 @@ public class Product extends GenericEntity<Integer> {
     private Integer organizationId;
 
     /**
+     * 产品类型企业还是个人(0 个人 1 企业)
+     */
+    @Column(name = "PRODUCT_LIMIT_TYPE")
+    private Integer productLimitType;
+
+    /**
      * 获取产品id
      *
      * @return ID - 产品id
      */
     public Integer getId() {
         return id;
+    }
+
+    public Integer getProductLimitType() {
+        return productLimitType;
+    }
+
+    public void setProductLimitType(Integer productLimitType) {
+        this.productLimitType = productLimitType;
     }
 
     /**
