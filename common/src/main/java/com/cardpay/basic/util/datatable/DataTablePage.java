@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.cardpay.basic.base.service.BaseService;
 import com.cardpay.basic.common.enums.ResultEnum;
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.basic.util.Underline2Camel;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -96,14 +95,17 @@ public class DataTablePage {
             , InvocationTargetException, IllegalAccessException, InstantiationException {
         String start = request.getParameter(DataTableCode.PAGE_START_NAME);
         String length = request.getParameter(DataTableCode.PAGE_LENGTH_NAME);
-        String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
-        LogTemplate.info(this.getClass(), "message(BasePage)", "[pageStart:" + start + "][pageLength" + length + "][pageSearch" + search + "]");
+
+        LogTemplate.info(this.getClass(), "message(BasePage)", "[pageStart:" + start + "][pageLength" + length + "]");
         this.start = start != null ? Integer.parseInt(start) : this.start;
         this.length = length != null ? Integer.parseInt(length) : this.length;
         String finalOrder = getOrder(request);
 
-        Map<String, Object> map = JSON.parseObject(search, Map.class);
-
+        Map<String, Object> map = null;
+        if (example == null) {
+            String search = request.getParameter(DataTableCode.PAGE_SEARCH_NAME);
+            map = JSON.parseObject(search, Map.class);
+        }
         if (StringUtils.isNotBlank(methodName)) { //是否制定方法名称,若没有则执行默认的查询方法
             if (null != parameterMap) {
                 if (null != map) {
@@ -116,21 +118,21 @@ public class DataTablePage {
             Method method;
             method = baseService.getClass().getDeclaredMethod(methodName, Map.class);
             PageHelper.startPage(this.start, this.length);
-            PageHelper.orderBy(getOrder2Underline(request));
+            PageHelper.orderBy(finalOrder);
             data = (List<Object>) method.invoke(baseService, map);
         } else {
             if (null == example) {
                 map = removeNull(map);
                 example = new Example(clazz);
-                if (StringUtils.isNotBlank(finalOrder)) {
-                    example.orderBy(finalOrder);
-                }
                 if (map != null && map.size() != 0) {
                     Example.Criteria criteria = example.createCriteria();
                     for (Map.Entry<String, Object> entry : map.entrySet()) {
                         criteria.andEqualTo(entry.getKey(), entry.getValue());
                     }
                 }
+            }
+            if (StringUtils.isNotBlank(finalOrder)) {
+                example.orderBy(finalOrder);
             }
             data = (List<Object>) baseService.pageList(example, this.start, this.length);
         }
@@ -161,6 +163,7 @@ public class DataTablePage {
 
     /**
      * 获取排序字段 格式{"id":"desc"}
+     *
      * @param request request
      * @return 字段
      */
@@ -172,22 +175,6 @@ public class DataTablePage {
             if (null != map) {
                 for (Map.Entry<String, String> entry : map.entrySet()) {
                     finalOrder = entry.getKey() + " " + entry.getValue();
-                    break;
-                }
-            }
-            return finalOrder;
-        }
-        return new String();
-    }
-
-    public static String getOrder2Underline(HttpServletRequest request) {
-        String order = request.getParameter(DataTableCode.PAGE_ORDER_NAME);
-        if (StringUtils.isNotBlank(order)) {
-            String finalOrder = "";
-            Map<String, String> map = JSON.parseObject(order, Map.class);
-            if (null != map) {
-                for (Map.Entry<String, String> entry : map.entrySet()) {
-                    finalOrder = Underline2Camel.camel2Underline(entry.getKey()) + " " + entry.getValue();
                     break;
                 }
             }

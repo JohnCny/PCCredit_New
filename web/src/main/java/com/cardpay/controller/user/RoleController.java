@@ -88,8 +88,6 @@ public class RoleController extends BaseController<Role> {
             LogTemplate.info(this.getClass(), "message", "增加角色参数有误");
             return new ResultTo(ResultEnum.PARAM_ERROR).setData(map);
         }
-        role.setCreateBy(ShiroKit.getUserId());
-        role.setCreateTime(new Date());
         if (!roleService.insertRole(role, authorityIds)) {
             LogTemplate.info(this.getClass(), "message", "增加角色失败");
             return new ResultTo(ResultEnum.OPERATION_FAILED);

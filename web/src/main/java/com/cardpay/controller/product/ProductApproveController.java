@@ -47,7 +47,7 @@ public class ProductApproveController extends BaseController<ProductApprove> {
      *
      * @return 产品审批数据分页列表
      */
-    @RequestMapping("/pageList")
+    @PostMapping("/pageList")
     @ApiOperation(value = "产品审批数据列表")
     public DataTablePage pageList(@RequestParam("productId") Integer productId) {
         Example example = new Example(ProductApprove.class);

@@ -1,4 +1,4 @@
-package com.cardpay.mgt.process;
+package com.cardpay.mgt.process.service;
 
 import com.cardpay.mgt.process.core.ReturnData;
 
@@ -18,5 +18,20 @@ public interface ProcessService {
      * @return ReturnData对象
      */
     ReturnData applicationApproval(Integer applicationId);
+
+    /**
+     * 添加审批用户
+     *
+     * @param appApproveOneId
+     * @return 成功或者失败
+     */
+    ReturnData addAppApproveUser(Integer appApproveOneId);
+
+    /**
+     * 批量根性状态
+     *
+     * @param appId 进件ID
+     */
+    void updateAppApprove(Integer appId);
 
 }

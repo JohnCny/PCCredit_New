@@ -1,27 +1,33 @@
-package com.cardpay.mgt.process.impl;
+package com.cardpay.mgt.process.service.impl;
 
 import com.cardpay.basic.common.log.LogTemplate;
-import com.cardpay.core.shiro.common.ShiroKit;
+import com.cardpay.mgt.application.auditing.model.TApplicationApprovalReview;
 import com.cardpay.mgt.application.basic.dao.TApplicationMapper;
 import com.cardpay.mgt.application.basic.model.TApplication;
+import com.cardpay.mgt.application.enums.ApplicationStatus;
 import com.cardpay.mgt.customer.dao.TCustomerBasicMapper;
 import com.cardpay.mgt.customer.dao.TCustomerIndustryMapper;
 import com.cardpay.mgt.customer.model.TCustomerBasic;
 import com.cardpay.mgt.customer.model.TCustomerIndustry;
 import com.cardpay.mgt.customermanager.basic.dao.TCustomerManagerMapper;
-import com.cardpay.mgt.process.ProcessService;
 import com.cardpay.mgt.process.core.ReturnData;
+import com.cardpay.mgt.process.dao.AppApproveMapper;
+import com.cardpay.mgt.process.dao.AppApproveUserMapper;
+import com.cardpay.mgt.process.model.AppApprove;
+import com.cardpay.mgt.process.model.AppApproveUser;
+import com.cardpay.mgt.process.service.ProcessService;
 import com.cardpay.mgt.product.dao.ProductApproveMapper;
 import com.cardpay.mgt.product.dao.ProductMapper;
 import com.cardpay.mgt.product.model.Product;
 import com.cardpay.mgt.product.model.ProductApprove;
 import com.cardpay.mgt.user.dao.UserMapper;
-import com.cardpay.mgt.user.dao.UserRoleMapper;
 import com.cardpay.mgt.user.model.User;
-import com.cardpay.mgt.user.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,9 +50,6 @@ public class ProcessServiceImpl implements ProcessService {
     private TCustomerBasicMapper customerBasicMapper;
 
     @Autowired
-    private TCustomerManagerMapper customerManagerMapper;
-
-    @Autowired
     private ProductApproveMapper productApproveMapper;
 
     @Autowired
@@ -54,6 +57,12 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Autowired
     private TCustomerIndustryMapper customerIndustryMapper;
+
+    @Autowired
+    private AppApproveUserMapper appApproveUserMapper;
+
+    @Autowired
+    private AppApproveMapper appApproveMapper;
 
 
     @Override
@@ -68,6 +77,71 @@ public class ProcessServiceImpl implements ProcessService {
             return returnData;
         }
         return null;
+    }
+
+    /**
+     * 插入审批
+     *
+     * @param appApproveOneId appApproveOneId
+     * @param flag            是否为
+     */
+    @Override
+    public ReturnData addAppApproveUser(Integer appApproveOneId) {
+        LogTemplate.debug(this.getClass(), "appApproveOneId", appApproveOneId);
+        AppApprove appApprove = appApproveMapper.selectByPrimaryKey(appApproveOneId);
+        if (appApprove.getIsReview() == 1 && appApprove.getStatus() == 1) { //复核节点
+            List<User> approveUser = getApproveUser(appApprove);
+            AppApproveUser appApproveUser = new AppApproveUser();
+            appApproveUser.setUserId(approveUser.get(0).getId());
+            appApproveUser.setCreateTime(new Date());
+            appApproveUser.setAppApproveId(appApproveOneId);
+            appApproveUser.setIsReview(1);
+            appApproveUserMapper.insertSelective(appApproveUser);
+            appApprove.setStatus(2);
+            appApproveMapper.updateByPrimaryKeySelective(appApprove);
+        } else if (appApprove.getIsReview() == 0 || (appApprove.getIsReview() == 1 && appApprove.getStatus() == 2)) {
+            if (appApprove.getIsEnd() == 1) {
+                TApplication application = applicationMapper.selectByPrimaryKey(appApprove.getAppId());
+                application.setApplicationStatus(ApplicationStatus.APP_ADOPT.getValue());
+                applicationMapper.updateByPrimaryKeySelective(application);
+                appApprove.setStatus(3);
+                appApproveMapper.updateByPrimaryKeySelective(appApprove);
+            } else if (appApprove.getIsEnd() == 0) {
+                AppApprove appApproveOne = new AppApprove();
+                appApproveOne.setAppId(appApprove.getAppId());
+                appApproveOne.setSort(appApprove.getAppId() + 1);
+                AppApprove appApproveNext = appApproveMapper.selectOne(appApproveOne);
+                List<User> approveUser = getApproveUser(appApproveNext);
+                if (appApproveNext.getLoanMeetingType() == 0) {//非审贷会
+                    AppApproveUser appApproveUser = new AppApproveUser();
+                    appApproveUser.setUserId(approveUser.get(0).getId());
+                    appApproveUser.setCreateTime(new Date());
+                    appApproveUser.setAppApproveId(appApproveOneId);
+                    appApproveUser.setIsReview(0);
+                    appApproveUserMapper.insertSelective(appApproveUser);
+                    appApprove.setStatus(1);
+                    appApproveMapper.updateByPrimaryKeySelective(appApprove);
+                } else if (appApproveNext.getLoanMeetingType() == 1) { //审贷会
+                    TApplicationApprovalReview applicationApprovalReview = new TApplicationApprovalReview();
+
+
+                    appApprove.setStatus(1);
+                    appApproveMapper.updateByPrimaryKeySelective(appApprove);
+                }
+            }
+        }
+        return new ReturnData(Boolean.TRUE);
+    }
+
+    @Override
+    public void updateAppApprove(Integer appId) {
+        AppApprove appApprove = new AppApprove();
+        appApprove.setAppId(appId);
+        List<AppApprove> appApproves = appApproveMapper.select(appApprove);
+        for (AppApprove appApproveOne : appApproves) {
+            appApprove.setStatus(2);
+            appApproveMapper.updateByPrimaryKeySelective(appApproveOne);
+        }
     }
 
 
@@ -178,9 +252,43 @@ public class ProcessServiceImpl implements ProcessService {
             return null;
         }
 
-        //获取审批用户
-
-
+        //插入审批顺序链
+        for (int i = 0; productApproveLink.size() > 0; i++) {
+            if ((productApproveLink.get(i).getIsLoanLimit() == 1) && (productApproveLink.get(i).getLoanLimit() >=
+                    application.getApplyAmount().longValue())) {
+                ProductApprove productApproveOne = productApproveLink.get(i);
+                AppApprove appApprove = AppApprove.AppApproveBuilder.get()
+                        .withAppId(application.getId())
+                        .withProductApproveId(productApproveOne.getId())
+                        .withSort(i + 1)
+                        .withCreateTime(new Date())
+                        .withIsReview(productApproveOne.getIsReviewNode())
+                        .withApproveRoles(productApproveOne.getApproveRoles())
+                        .withIsRandomDivision(productApproveOne.getIsRandomDivision())
+                        .withIsLoanLimit(productApproveOne.getIsLoanLimit())
+                        .withLoanLimit(productApproveOne.getLoanLimit())
+                        .withLoanMeetingType(productApproveOne.getLoanMeetingType())
+                        .build();
+                if (i == 0) {
+                    appApprove.setStatus(1);//审批中
+                } else {
+                    appApprove.setStatus(0);//待审批
+                }
+                if (i == productApproveLink.size() - 1) {
+                    appApprove.setIsEnd(1);
+                }
+                appApproveMapper.insertSelective(appApprove);
+                if (i == 0) {
+                    List<User> approveUser = getApproveUser(appApprove);
+                    AppApproveUser appApproveUser = new AppApproveUser();
+                    appApproveUser.setUserId(approveUser.get(0).getId());
+                    appApproveUser.setCreateTime(new Date());
+                    appApproveUser.setAppApproveId(appApprove.getId());
+                    appApproveUser.setIsReview(0);
+                    appApproveUserMapper.insertSelective(appApproveUser);
+                }
+            }
+        }
         return new ReturnData(Boolean.TRUE);
     }
 
@@ -224,18 +332,41 @@ public class ProcessServiceImpl implements ProcessService {
     /**
      * 筛选审批用户
      *
-     * @param productApprove 审批节点信息
+     * @param appApprove 审批节点信息
      * @return 筛选出的审批用户
      */
-    private List<User> getApproveUser(ProductApprove productApprove) {
-        String approveRoles = productApprove.getApproveRoles();
+    private List<User> getApproveUser(AppApprove appApprove) {
+        String approveRoles = appApprove.getApproveRoles();
         String[] roleIds = approveRoles.split(",");
         List<User> users = userMapper.selectUserByRoleIds(roleIds);
-        if (productApprove.getIsRandomDivision() == 1) { //随机
-
-        } else { //不随机
-
+        List<User> userList = new ArrayList<>();
+        if (users != null && appApprove.getIsLoanLimit() == 0) {
+            for (User user : users) {
+                if (200 >= appApprove.getLoanLimit()) {
+                    userList.add(user);
+                }
+            }
         }
-        return null;
+        if (appApprove.getLoanMeetingType() != 1) { //审贷会
+            List<Integer> AppApproveUserVos = appApproveUserMapper.selectOrderUser(users);
+            List<User> usersLinked = new LinkedList<>();
+            List<User> usersLinkedOne = new LinkedList<>();
+            for (User user : userList) {
+                boolean flag = Boolean.TRUE;
+                for (Integer userId : AppApproveUserVos) {
+                    if (userId == user.getId()) {
+                        flag = Boolean.FALSE;
+                        usersLinkedOne.add(user);
+                        break;
+                    }
+                }
+                if (flag) {
+                    usersLinked.add(user);
+                }
+            }
+            usersLinked.addAll(usersLinkedOne);
+            return usersLinked;
+        }
+        return userList;
     }
 }
