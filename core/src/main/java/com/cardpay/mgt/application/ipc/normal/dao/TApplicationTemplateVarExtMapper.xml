@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.ipc.normal.dao.TApplicationTemplateVarExtMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.ipc.normal.model.TApplicationTemplateVarExt">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="EXTRA_VAR_ID" jdbcType="DECIMAL" property="extraVarId" />
+    <result column="TEMPLATE_VAR_ID" jdbcType="DECIMAL" property="templateVarId" />
+    <result column="TEMPLATE_VAR_EXTRA_NAME" jdbcType="VARCHAR" property="templateVarExtraName" />
+    <result column="TEMPLATE_VAR_EXTRA_VALUE" jdbcType="VARCHAR" property="templateVarExtraValue" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+  </resultMap>
+</mapper>

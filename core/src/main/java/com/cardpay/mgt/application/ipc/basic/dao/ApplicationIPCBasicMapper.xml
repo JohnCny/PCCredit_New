@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.ipc.basic.dao.ApplicationIPCBasicMapper">
+
+  <resultMap id="MenuResultMap" type="com.cardpay.mgt.application.ipc.basic.model.IPCMenu">
+    <result column="GROUP_ID" jdbcType="DECIMAL" property="menuId" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="GROUP_PARENT_ID" jdbcType="DECIMAL" property="menuParentId" />
+    <result column="GROUP_MENU_URL" jdbcType="VARCHAR" property="menuURL" />
+    <result column="GROUP_MENU_ORDER" jdbcType="VARCHAR" property="menuOrder" />
+    <result column="TEMPLATE_ID" jdbcType="VARCHAR" property="templateId" />
+    <result column="TEMPLATE_TYPE" jdbcType="VARCHAR" property="templateType" />
+  </resultMap>
+
+  <!--根据进件查询IPC菜单-->
+  <select id="selectIPCMenu" resultMap="MenuResultMap">
+    SELECT
+        TG.*,
+        AT.TEMPLATE_ID,
+        AT.TEMPLATE_TYPE
+    FROM
+        T_APPLICATION_TEMPLATE AT,
+        T_APPLICATION_TEMPLATE_GROUP ATG,
+        T_TEMPLATE_GROUP TG,
+        T_PRODUCT_TEMPLATE PT,
+        T_PRODUCT PRO,
+        T_APPLICATION APP
+    WHERE
+        APP.PRODUCT_ID = PRO.ID
+    AND	AT.TEMPLATE_ID = ATG.TEMPLATE_ID
+    AND	ATG. GROUP_ID = TG. GROUP_ID
+    AND ATG.TEMPLATE_ID = PT.TEMPLATE_ID
+    AND TG.IS_GROUP_MENU = ${@com.cardpay.mgt.application.enums.IPCConstant@IS_GROUP_MENU}
+    AND AT.IS_NEED_GENERATE = ${@com.cardpay.mgt.application.enums.IPCConstant@IS_NEED_GENERATE}
+    AND APP.ID = #{applicationId}
+  </select>
+
+  <!--查询进件对于的模板类型-->
+  <select id="selectTemplateTypeByApplicationId" resultType="Integer">
+    SELECT
+        AT .TEMPLATE_TYPE
+    FROM
+        T_APPLICATION_TEMPLATE AT,
+        T_PRODUCT_TEMPLATE PT,
+        T_APPLICATION APP
+    WHERE
+        APP.PRODUCT_ID = PT.PRODUCT_ID
+    AND AT .TEMPLATE_ID = PT.TEMPLATE_ID
+    AND APP. ID = #{applicationId}
+    GROUP BY AT.TEMPLATE_TYPE
+  </select>
+
+  <!--初始化一般IPC模版-->
+  <insert id="initNormalTemplate">
+  <choose>
+      <when test="templateType == @com.cardpay.mgt.application.enums.TemplateTypeEnum@NORMAL.getTemplateType()
+               || templateType == @com.cardpay.mgt.application.enums.TemplateTypeEnum@APPLICATION_FROM.getTemplateType()">
+          INSERT INTO T_APPLICATION_TEMPLATE_VAR (
+          T_APPLICATION_TEMPLATE_VAR.TEMPLATE_VAR_ID,
+          T_APPLICATION_TEMPLATE_VAR.APPLICATION_ID
+          )
+      </when>
+      <when test="templateType == @com.cardpay.mgt.application.enums.TemplateTypeEnum@CASHFLOW_PROFIT.getTemplateType()">
+          INSERT INTO T_APPLICATION_CASHPROFIT_VAR (
+          T_APPLICATION_CASHPROFIT_VAR.CASH_PROFIT_VAR_ID,
+          T_APPLICATION_CASHPROFIT_VAR.APPLICATION_ID
+          )
+      </when>
+      <otherwise>
+      </otherwise>
+  </choose>
+    SELECT
+          TV.TEMPLATE_VAR_ID,
+          #{applicationId} APPLICATION_ID
+      FROM
+          T_APPLICATION_TEMPLATE AT,
+          T_APPLICATION_TEMPLATE_GROUP ATG,
+          T_TEMPLATE_GROUP TG,
+          T_PRODUCT_TEMPLATE PT,
+          T_PRODUCT PRO,
+          T_APPLICATION APP,
+          T_TEMPLATE_VAR TV
+      WHERE
+              ATG.GROUP_ID = TV.TEMPLATE_VAR_GROUP_ID
+      AND APP.PRODUCT_ID = PRO. ID
+      AND AT .TEMPLATE_ID = ATG.TEMPLATE_ID
+      AND ATG. GROUP_ID = TG. GROUP_ID
+      AND ATG.TEMPLATE_ID = PT.TEMPLATE_ID
+      AND AT .IS_NEED_GENERATE = ${@com.cardpay.mgt.application.enums.IPCConstant@IS_NEED_GENERATE}
+      AND AT .TEMPLATE_TYPE = #{templateType}
+      AND APP. ID = #{applicationId}
+  </insert>
+
+</mapper>

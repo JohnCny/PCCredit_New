@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.auditing.dao.TApplicationApprovalReviewMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.auditing.model.TApplicationApprovalReview">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="REVIEW_ID" jdbcType="DECIMAL" property="reviewId"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="REVIEW_START_TIME" jdbcType="TIMESTAMP" property="reviewStartTime"/>
+        <result column="REVIEW_END_TIME" jdbcType="TIMESTAMP" property="reviewEndTime"/>
+        <result column="REVIEW_CONCLUTION" jdbcType="DECIMAL" property="reviewConclution"/>
+        <result column="REVIEW_CONDITIONS" jdbcType="VARCHAR" property="reviewConditions"/>
+        <result column="REVIEW_AMOUNT" jdbcType="DECIMAL" property="reviewAmount"/>
+        <result column="REVIEW_RATE" jdbcType="DECIMAL" property="reviewRate"/>
+        <result column="REVIEW_OPINION" jdbcType="VARCHAR" property="reviewOpinion"/>
+        <result column="REVIEW_PERSON_CNAME" jdbcType="VARCHAR" property="reviewPersonCname"/>
+        <result column="REVIEW_PERSON_ID" jdbcType="VARCHAR" property="reviewPersonId"/>
+        <result column="APPROVAL_ID" jdbcType="DECIMAL" property="approvalId"/>
+        <result column="REVIEW_STATUS" jdbcType="DECIMAL" property="reviewStatus"/>
+    </resultMap>
+
+    <!--审贷会成员VO-->
+    <resultMap id="BaseVo" type="com.cardpay.mgt.application.auditing.model.vo.TApplicationApprovalReviewVo">
+        <id column="REVIEW_ID" jdbcType="DECIMAL" property="reviewId"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="REVIEW_START_TIME" jdbcType="TIMESTAMP" property="reviewStartTime"/>
+        <result column="REVIEW_END_TIME" jdbcType="TIMESTAMP" property="reviewEndTime"/>
+        <result column="REVIEW_CONCLUTION" jdbcType="DECIMAL" property="reviewConclution"/>
+        <result column="REVIEW_CONDITIONS" jdbcType="VARCHAR" property="reviewConditions"/>
+        <result column="REVIEW_AMOUNT" jdbcType="DECIMAL" property="reviewAmount"/>
+        <result column="REVIEW_RATE" jdbcType="DECIMAL" property="reviewRate"/>
+        <result column="REVIEW_OPINION" jdbcType="VARCHAR" property="reviewOpinion"/>
+        <result column="REVIEW_PERSON_CNAME" jdbcType="VARCHAR" property="reviewPersonCname"/>
+        <result column="REVIEW_PERSON_ID" jdbcType="VARCHAR" property="reviewPersonId"/>
+        <result column="APPROVAL_ID" jdbcType="DECIMAL" property="approvalId"/>
+        <result column="REVIEW_STATUS" jdbcType="DECIMAL" property="reviewStatus"/>
+        <collection property="tApplicationApprovalUsers" column="REVIEW_ID" select="queryReviewUser"/>
+    </resultMap>
+
+    <!--审贷会人员信息-->
+    <resultMap id="ApprovalUserMap" type="com.cardpay.mgt.application.auditing.model.TApplicationApprovalUsers">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="REVIEW_ID" jdbcType="DECIMAL" property="reviewId"/>
+        <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId"/>
+        <result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+    </resultMap>
+
+    <!--审贷会成员信息-->
+    <select id="queryReviewUser" resultMap="ApprovalUserMap">
+    SELECT * FROM T_APPLICATION_APPROVAL_USERS WHERE REVIEW_ID = #{reviewId}
+  </select>
+
+    <!--按字段查询审贷会成员信息-->
+    <select id="queryByKeyValue" resultMap="BaseVo" parameterType="Map">
+        SELECT * FROM T_APPLICATION_APPROVAL_REVIEW
+        <where>
+            <if test="key == 'REVIEW_PERSON_ID'">
+                REVIEW_PERSON_ID = #{value}
+            </if>
+            <if test="key == 'APPLICATION_ID'">
+                APPLICATION_ID = #{value}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.riskblack.dao.BlackCustomerMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.riskblack.model.BlackCustomer">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="BLACK_ID" jdbcType="DECIMAL" property="blackId"/>
+        <result column="T_BLACK_CUSTOMER_ID" jdbcType="DECIMAL" property="tBlackCustomerId"/>
+        <result column="T_BLACK_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="tBlackCustomerCardNum"/>
+        <result column="BLACK_REASON" jdbcType="VARCHAR" property="blackReason"/>
+        <result column="T_BLACK_CUSTOMER_STATUS" jdbcType="DECIMAL" property="tBlackCustomerStatus"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapVo" type="com.cardpay.mgt.riskblack.model.vo.BlackCustomerVo">
+        <id column="BLACK_ID" jdbcType="DECIMAL" property="blackId"/>
+        <result column="T_BLACK_CUSTOMER_ID" jdbcType="DECIMAL" property="tBlackCustomerId"/>
+        <result column="T_BLACK_CUSTOMER_CARD_NUM" jdbcType="VARCHAR" property="tBlackCustomerCardNum"/>
+        <result column="BLACK_REASON" jdbcType="VARCHAR" property="blackReason"/>
+        <result column="T_BLACK_CUSTOMER_STATUS" jdbcType="DECIMAL" property="tBlackCustomerStatus"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+        <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId"/>
+        <result column="CNAME" jdbcType="VARCHAR" property="customerName"/>
+        <result column="CERTIFICATE_NUMBER" jdbcType="VARCHAR" property="idCard"/>
+        <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus"/>
+    </resultMap>
+
+    <select id="blackCustomerPageList" resultMap="BaseResultMapVo">
+        SELECT
+        TBC.*,TCB.CNAME,TCB.CERTIFICATE_NUMBER,TCB.CUSTOMER_STATUS
+        FROM
+        T_BLACK_CUSTOMER TBC,
+        T_CUSTOMER_BASIC TCB,
+        T_CUSTOMER_MANAGER TCM
+        <if test="userCname !=null || employeeNumber != null">
+            ,T_USER TU
+        </if>
+        WHERE
+        TBC.T_BLACK_CUSTOMER_ID=TCB."ID"
+        AND
+        TCB.CUSTOMER_MANAGER_ID=TCM."ID"
+        AND
+        TCM.ORGANIZATION_ID=#{orgId,jdbcType=DECIMAL}
+        <if test="createTime != null">
+            AND
+            to_char(TRC.CREATE_TIME,'yyyy-mm-dd')=#{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="userCname !=null || employeeNumber != null">
+            AND
+            TCM.USER_ID=TU."ID"
+        </if>
+        <if test="userCname != null">
+            AND
+            TU.USER_CNAME=#{userCname,jdbcType=VARCHAR}
+        </if>
+        <if test="employeeNumber != null">
+            AND
+            TU.EMPLOYEE_NUMBER=#{employeeNumber,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

@@ -39,6 +39,9 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
     @Autowired
     private RoleAuthorityMapper roleAuthorityMapper;
 
+    @Autowired
+    private TOrganizationMapper organizationMapper;
+
     @Override
     public List<AuthorityGroup> selectAuthorityGroup() {
         List<String> authorityGroups = authorityMapper.selectAuthorityGroup();
@@ -89,9 +92,9 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
 
     @Override
     public boolean insertRole(Role role, Integer[] authorityIds) {
-        User user = (User) ShiroKit.getPrincipal();
-        role.setCreateBy(user.getId());
+        role.setCreateBy(ShiroKit.getUserId());
         role.setCreateTime(new Date());
+        role.setOrganizationId(ShiroKit.getTopOrgId());
         role.setRoleStatus(1);
         int roleId = roleMapper.insertSelective(role);
         if (roleId <= 0) {

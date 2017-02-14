@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.core.validation.service.UniquenessMapper">
+
+    <select id="selectUniqueness" resultType="Integer"
+            parameterType="com.cardpay.core.validation.service.UniquenessModel">
+          SELECT COUNT(1) FROM ${table} WHERE ${field}=#{value}
+    </select>
+</mapper>

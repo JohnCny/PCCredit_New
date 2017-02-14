@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.ipc.cashflowprofit.dao.TApplicationCashProfitExtMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.ipc.cashflowprofit.model.TApplicationCashProfitExt">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="CASH_PROFIT_VAR_EXTRA_ID" jdbcType="DECIMAL" property="cashProfitVarExtraId" />
+    <result column="CASH_PROFIT_VAR_ID" jdbcType="DECIMAL" property="cashProfitVarId" />
+    <result column="CASH_PROFIT_EXTRA_NAME" jdbcType="VARCHAR" property="cashProfitExtraName" />
+    <result column="CASH_PROFIT_VAR_VALUE" jdbcType="VARCHAR" property="cashProfitVarValue" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+    <result column="EXTRA_MONTH_ONE" jdbcType="VARCHAR" property="extraMonthOne" />
+    <result column="EXTRA_MONTH_TWO" jdbcType="VARCHAR" property="extraMonthTwo" />
+    <result column="EXTRA_MONTH_THREE" jdbcType="VARCHAR" property="extraMonthThree" />
+    <result column="EXTRA_MONTH_FOUR" jdbcType="VARCHAR" property="extraMonthFour" />
+    <result column="EXTRA_MONTH_FIVE" jdbcType="VARCHAR" property="extraMonthFive" />
+    <result column="EXTRA_MONTH_SIX" jdbcType="VARCHAR" property="extraMonthSix" />
+    <result column="EXTRA_MONTH_SEVEN" jdbcType="VARCHAR" property="extraMonthSeven" />
+    <result column="EXTRA_MONTH_EIGHT" jdbcType="VARCHAR" property="extraMonthEight" />
+    <result column="EXTRA_MONTH_NINE" jdbcType="VARCHAR" property="extraMonthNine" />
+    <result column="EXTRA_MONTH_TEN" jdbcType="VARCHAR" property="extraMonthTen" />
+    <result column="EXTRA_MONTH_ELEVEN" jdbcType="VARCHAR" property="extraMonthEleven" />
+    <result column="EXTRA_MONTH_TWELVE" jdbcType="VARCHAR" property="extraMonthTwelve" />
+    <result column="EXTRA_SURVEY_CURRENT_MONTH" jdbcType="VARCHAR" property="extraSurveyCurrentMonth" />
+    <result column="EXTRA_CROSS_VALIDATE_ALL" jdbcType="VARCHAR" property="extraCrossValidateAll" />
+    <result column="EXTRA_CROSS_VALIDATE_MONTH_AVG" jdbcType="VARCHAR" property="extraCrossValidateMonthAvg" />
+  </resultMap>
+</mapper>

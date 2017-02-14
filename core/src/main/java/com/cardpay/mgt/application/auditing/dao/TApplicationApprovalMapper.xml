@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.application.auditing.dao.TApplicationApprovalMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.application.auditing.model.TApplicationApproval">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="APPROVAL_ID" jdbcType="DECIMAL" property="approvalId" />
+    <result column="APPLICATION_ID" jdbcType="DECIMAL" property="applicationId" />
+    <result column="APPROVAL_CONCLUTION" jdbcType="DECIMAL" property="approvalConclution" />
+    <result column="APPROVAL_CONDITIONS" jdbcType="VARCHAR" property="approvalConditions" />
+    <result column="APPROVAL_AMOUNT" jdbcType="DECIMAL" property="approvalAmount" />
+    <result column="APPROVAL_RATE" jdbcType="DECIMAL" property="approvalRate" />
+    <result column="APPROVAL_OPINION" jdbcType="VARCHAR" property="approvalOpinion" />
+    <result column="APPROVAL_PERSON_CNAME" jdbcType="VARCHAR" property="approvalPersonCname" />
+    <result column="APPROVAL_PERSON_ID" jdbcType="VARCHAR" property="approvalPersonId" />
+    <result column="PRODUCT_APPROVAL_ID" jdbcType="DECIMAL" property="productApprovalId" />
+    <result column="APPROVAL_NODE_NAME" jdbcType="VARCHAR" property="approvalNodeName" />
+    <result column="APPROVAL_STATUS" jdbcType="DECIMAL" property="approvalStatus" />
+  </resultMap>
+</mapper>

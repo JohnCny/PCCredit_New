@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.customermanager.daily.dao.TCustomerManagerDayMapper">
+  <resultMap id="BaseResultMap" type="com.cardpay.mgt.customermanager.daily.model.TCustomerManagerDay">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId" />
+    <result column="DAILY_TIME" jdbcType="TIMESTAMP" property="dailyTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="VISIT_NEW_NUMBER" jdbcType="DECIMAL" property="visitNewNumber" />
+    <result column="MAINTENANCE_NUMBER" jdbcType="DECIMAL" property="maintenanceNumber" />
+    <result column="LOAN_NEW_NUMBER" jdbcType="DECIMAL" property="loanNewNumber" />
+    <result column="PRE_LOAN_NUMBER" jdbcType="DECIMAL" property="preLoanNumber" />
+    <result column="POST_LOAN_NUMBER" jdbcType="DECIMAL" property="postLoanNumber" />
+  </resultMap>
+
+  <resultMap id="DailyAndUserMap" type="com.cardpay.mgt.customermanager.daily.model.TCustomerManagerDayAndUser">
+      <!--如果使用了association必须外部有一个id或者result标签,否则映射会失败-->
+      <id column="CMD_ID" jdbcType="DECIMAL" property="id" />
+      <association property="customerManagerDay" javaType="com.cardpay.mgt.customermanager.daily.model.TCustomerManagerDay">
+          <id column="CMD_ID" jdbcType="DECIMAL" property="id" />
+          <result column="CUSTOMER_MANAGER_ID" jdbcType="DECIMAL" property="customerManagerId" />
+          <result column="DAILY_TIME" jdbcType="TIMESTAMP" property="dailyTime" />
+          <result column="CMD_CT" jdbcType="DECIMAL" property="createTime" />
+          <result column="VISIT_NEW_NUMBER" jdbcType="DECIMAL" property="visitNewNumber" />
+          <result column="MAINTENANCE_NUMBER" jdbcType="DECIMAL" property="maintenanceNumber" />
+          <result column="LOAN_NEW_NUMBER" jdbcType="DECIMAL" property="loanNewNumber" />
+          <result column="PRE_LOAN_NUMBER" jdbcType="DECIMAL" property="preLoanNumber" />
+          <result column="POST_LOAN_NUMBER" jdbcType="DECIMAL" property="postLoanNumber" />
+      </association>
+      <association property="user" javaType="com.cardpay.mgt.user.model.User">
+          <id column="ID" jdbcType="DECIMAL" property="id"/>
+          <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+          <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+          <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+          <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+          <result column="TEL" jdbcType="VARCHAR" property="tel"/>
+          <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+          <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+          <result column="USER_CNAME" jdbcType="VARCHAR" property="userCname"/>
+          <result column="SEX" jdbcType="DECIMAL" property="sex"/>
+          <result column="CREATE_BY" jdbcType="DECIMAL" property="createBy"/>
+          <result column="AGE" jdbcType="DECIMAL" property="age"/>
+          <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+          <result column="ID_CARD_NUMBER" jdbcType="VARCHAR" property="idCardNumber"/>
+          <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber"/>
+          <result column="MODIFY_BY" jdbcType="DECIMAL" property="modifyBy"/>
+          <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime"/>
+          <result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
+      </association>
+  </resultMap>
+
+  <!--初始化所有客户经理日报-->
+  <insert id="initDaily">
+    INSERT INTO T_CUSTOMER_MANAGER_DAY (
+        ID,
+        CUSTOMER_MANAGER_ID,
+        DAILY_TIME,
+        CREATE_TIME,
+        VISIT_NEW_NUMBER,
+        MAINTENANCE_NUMBER,
+        PRE_LOAN_NUMBER,
+        LOAN_NEW_NUMBER,
+        POST_LOAN_NUMBER
+    ) SELECT
+        0,
+        CM.USER_ID,
+        TRUNC (SYSDATE, 'dd'),
+        SYSDATE,
+        0,
+        0,
+        0,
+        0,
+        0
+    FROM
+        T_CUSTOMER_MANAGER CM
+  </insert>
+
+  <!--按条件查询日报-->
+  <select id="selectDailyAndUser" resultMap="DailyAndUserMap">
+    SELECT
+        USR.*,
+        CMD.ID CMD_ID,
+        CMD.CUSTOMER_MANAGER_ID,
+        CMD.DAILY_TIME,
+        CMD.CREATE_TIME CMD_CT,
+        CMD.VISIT_NEW_NUMBER,
+        CMD.MAINTENANCE_NUMBER,
+        CMD.LOAN_NEW_NUMBER,
+        CMD.PRE_LOAN_NUMBER,
+        CMD.POST_LOAN_NUMBER
+    FROM
+        T_USER USR,
+        T_CUSTOMER_MANAGER_DAY CMD,
+        T_CUSTOMER_MANAGER CM
+    WHERE
+          USR. ID = CMD.CUSTOMER_MANAGER_ID
+      AND USR. ID = CM.USER_ID
+      AND USR.STATUS = #{status,jdbcType=DECIMAL}
+    <if test="organizationId != null">
+      AND CM.ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+    </if>
+    <if test="userCname != null">
+      AND USR.USER_CNAME LIKE CONCAT(CONCAT('%',#{userCname}),'%')
+    </if>
+    <if test="employeeNumber != null">
+      AND USR.EMPLOYEE_NUMBER = #{employeeNumber,jdbcType=VARCHAR}
+    </if>
+    <if test="dailyTime != null and dailyTime != ''">
+      AND CMD.DAILY_TIME = TRUNC(TO_DATE(#{dailyTime}, 'yyyy-mm-dd hh:mi:ss') ,'dd')
+    </if>
+  </select>
+</mapper>

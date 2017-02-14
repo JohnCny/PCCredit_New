@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cardpay.mgt.product.dao.ProductOrgMapper">
+    <resultMap id="BaseResultMap" type="com.cardpay.mgt.product.model.ProductOrganization">
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+        <result column="ORAGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapPo" type="com.cardpay.mgt.product.model.vo.ProductOrganizationVo">
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId"/>
+        <result column="ORAGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+        <result column="ORG_PARENT_ID" jdbcType="DECIMAL" property="orgParentId" />
+    </resultMap>
+
+    <!--批量插入产品机构信息-->
+    <insert id="batchInsertOrg" parameterType="Map">
+        INSERT INTO T_PRODUCT_ORGANIZATION (PRODUCT_ID, ORAGANIZATION_ID)
+        <foreach item="item" index="index" collection="orgIds" open="(" close=")" separator="union">
+            SELECT #{productId}, #{item} FROM DUAL
+        </foreach>
+    </insert>
+
+    <!--查询产品关联机构信息-->
+    <select id="queryProductOrg" resultMap="BaseResultMapPo">
+        SELECT org.ORG_NAME, org.ORG_PARENT_ID, productOrg.PRODUCT_ID, productOrg.ORAGANIZATION_ID
+        FROM T_ORGANIZATION org, T_PRODUCT_ORGANIZATION productOrg
+        WHERE org.id = productOrg.ORAGANIZATION_ID AND productOrg.PRODUCT_ID = #{productId}
+    </select>
+
+</mapper>
