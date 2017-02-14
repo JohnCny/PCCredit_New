@@ -1,13 +1,6 @@
 package com.cardpay.mgt.application.auditing.model.vo;
 
-import com.cardpay.mgt.application.auditing.model.TApplicationApprovalReview;
 import com.cardpay.mgt.application.auditing.model.TApplicationApprovalUsers;
-import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;

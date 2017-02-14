@@ -120,4 +120,16 @@ public class ApplicationController extends BaseController<TApplication> {
         return mark ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 
+    /**
+     * 按id更新进件基本信息
+     *
+     * @param tApplication 进件信息
+     * @return 数据库变更记录
+     */
+    @PutMapping
+    public ResultTo update(@ModelAttribute TApplication tApplication) {
+        Integer mark = tApplicationService.updateSelectiveByPrimaryKey(tApplication);
+        return mark != 0 ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
+    }
+
 }

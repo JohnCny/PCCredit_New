@@ -52,7 +52,7 @@ public class ApplicationApprovalReviewController extends BaseController<TApplica
      * @return 审贷会排审信息
      */
     @GetMapping("/{applicationId}")
-    public ResultTo getByAppId(@PathVariable int applicationId) {
+    public ResultTo getByAppId(@PathVariable("applicationId") int applicationId) {
         Map<Object, Object> map = new HashMap<>();
         map.put("key", "APPLICATION_ID");
         map.put("value", applicationId);
@@ -67,8 +67,8 @@ public class ApplicationApprovalReviewController extends BaseController<TApplica
      * @return 数据库变记录
      */
     @PostMapping
-    public ResultTo insert(@ModelAttribute TApplicationApprovalReview review) {
-        Integer mark = tApplicationApprovalReviewService.insert(review);
+    public ResultTo insert(@ModelAttribute TApplicationApprovalReview review, String userIds) {
+        Integer mark = tApplicationApprovalReviewService.insertReview(review, userIds);
         return mark != 0 ? new ResultTo().setData(mark) : new ResultTo(ResultEnum.SERVICE_ERROR);
     }
 

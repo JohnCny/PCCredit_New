@@ -21,4 +21,12 @@ public interface TApplicationApprovalReviewService extends BaseService<TApplicat
      * @return 审贷会信息
      */
     List<TApplicationApprovalReviewVo> queryByKeyAndValue(Map<Object, Object> map);
+
+    /**
+     * 新增审贷会成员信息
+     * @param review 审贷会信息
+     * @param userIds 用户id逗号分隔
+     * @return 数据库变记录
+     */
+    int insertReview(TApplicationApprovalReview review, String userIds);
 }
